@@ -17,7 +17,6 @@ function make_local()
 	XY = zeros(360,200);
 	XY[GRD["ID"]] =[1:GRD["N"]]
 	#ID = XY[272,156] # Iberian location
-	#ID = [XY[272,156],XY[272,156],XY[272,156]] # Iberian location
 	ID = [1:48111]
 
 	####! Initialize variables

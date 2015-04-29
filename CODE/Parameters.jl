@@ -1,30 +1,73 @@
 #============== Parameters of the model =============#
 #============ VARIABLE TYPE==========#
 #! i.e. those things that change with time
-type fish
-	bio::Array{Float64} # biomass g 
+type piscivore
+	bio::Array{Any} # biomass g 
+	tmet::Array{Float64} # temperature multiplier for metabolism
+	tdif::Array{Float64} # fraction of time spent in the pelagic
 	met::Array{Any} # metabolism g g-1 d-1
-	I::Array{Float64} # total ingestion g d-1
-	tau::Array{Float64}  # handling time d g-1 g
-	nu::Array{Float64}  # total energy for growth g g-1 d-1
-	gamma::Array{Float64} # energy for somatic growth g g-1 d-1
-	d::Array{Float64} # total death g d-1
-	REP::Array{Float64} # total biomass reproduced g d-1 
-	GRW::Array{Float64} # total biomass somatic growth g d-1
-	MAT::Array{Float64} # total biomass maturing g d-1
-	MRT::Array{Float64} # mortality rate (background and fishing potentially) g d-1
-	enc_pi::Array{Float64} # encouter rate with specific prey g g-1 d-1
-	enc_pl::Array{Float64} # encouter rate with specific prey g g-1 d-1
-	enc_de::Array{Float64} # encouter rate with specific prey g g-1 d-1
-	enc_z::Array{Float64} # encouter rate with specific prey g g-1 d-1
-	enc_w::Array{Float64} # encouter rate with specific prey g g-1 d-1
-	ENC::Array{Float64} # ecounter rate with total prey g g-1 d-1
+	I::Array{Any} # total ingestion g d-1
+	I_z::Array{Any} # total zoo ingestion g d-1
+	tau::Array{Any}  # handling time d g-1 g
+	nu::Array{Any}  # total energy for growth g g-1 d-1
+	gamma::Array{Any} # energy for somatic growth g g-1 d-1
+	d::Array{Any} # total death g d-1
+	REP::Array{Any} # total biomass reproduced g d-1 
+	GRW::Array{Any} # total biomass somatic growth g d-1
+	MAT::Array{Any} # total biomass maturing g d-1
+	MRT::Array{Any} # mortality rate (background and fishing potentially) g d-1
+	enc_pi::Array{Any} # encounter rate with specific prey g g-1 d-1
+	enc_pl::Array{Any} # encounter rate with specific prey g g-1 d-1
+	enc_de::Array{Any} # encounter rate with specific prey g g-1 d-1
+	enc_z::Array{Any} # encounter rate with specific prey g g-1 d-1
+	ENC_pi::Array{Any} # total encounter rates...
+	ENC_pl::Array{Any} 
+	ENC_de::Array{Any}
+	ENC_z::Array{Any} #...
+	ENC::Array{Any} # ecounter rate with total prey g g-1 d-1
+end
+
+type planktivore
+	bio::Array{Any} # biomass g 
+	tmet::Array{Float64} # temperature multiplier for metabolism
+	met::Array{Any} # metabolism g g-1 d-1
+	I::Array{Any} # total ingestion g d-1
+	I_z::Array{Any} # total zoo ingestion g d-1
+	tau::Array{Any}  # handling time d g-1 g
+	nu::Array{Any}  # total energy for growth g g-1 d-1
+	gamma::Array{Any} # energy for somatic growth g g-1 d-1
+	d::Array{Any} # total death g d-1
+	REP::Array{Any} # total biomass reproduced g d-1 
+	GRW::Array{Any} # total biomass somatic growth g d-1
+	MAT::Array{Any} # total biomass maturing g d-1
+	MRT::Array{Any} # mortality rate (background and fishing potentially) g d-1
+	enc_z::Array{Any} # encounter rate with specific prey g g-1 d-1
+	ENC::Array{Any} # ecounter rate with total prey g g-1 d-1
+end
+
+type detrivore
+	bio::Array{Any} # biomass g 
+	tmet::Array{Float64} # temperature multiplier for metabolism
+	met::Array{Any} # metabolism g g-1 d-1
+	I::Array{Any} # total ingestion g d-1
+	tau::Array{Any}  # handling time d g-1 g
+	nu::Array{Any}  # total energy for growth g g-1 d-1
+	gamma::Array{Any} # energy for somatic growth g g-1 d-1
+	d::Array{Any} # total death g d-1
+	REP::Array{Any} # total biomass reproduced g d-1 
+	GRW::Array{Any} # total biomass somatic growth g d-1
+	MAT::Array{Any} # total biomass maturing g d-1
+	MRT::Array{Any} # mortality rate (background and fishing potentially) g d-1
+	enc_de::Array{Any} # encounter rate with specific prey g g-1 d-1
+	ENC_de::Array{Any}
+	ENC_w::Array{Any} #...
+	ENC::Array{Any} # ecounter rate with total prey g g-1 d-1
 end
 
 type detritus
-	bio::Array{Float64} # biomass in detrital pool g m-2
-	I::Array{Float64} # biomass flux from COBALT g m-2 d-1
-	d::Array{Float64} # biomass lost from predation g m-2 d-1
+	bio::Array{Any} # biomass in detrital pool g m-2
+	I::Array{Any} # biomass flux from COBALT g m-2 d-1
+	d::Array{Any} # biomass lost from predation g m-2 d-1
 end
 
 #============= PARAMETER TYPE ==========#
@@ -205,13 +248,6 @@ function make_parameters()
 	const global DE_phi_PL = zeros(PL_N,DE_N)
 	const global DE_phi_Z  = zeros(2,DE_N)
 
-	#! Return
-	#return PI_N,PI_smin,PI_smax,PI_s,PI_slog,PI_z,PI_lambda,PI_K,PI_a,
-	#       PI_mrt,PI_phi_Z,PI_phi_PI,PI_phi_PL,PI_phi_DE,PI_phi_W,
-	#       PL_N,PL_smin,PL_smax,PL_s,PL_slog,PL_z,PL_lambda,PL_K,PL_a,
-	#       PL_mrt,PL_phi_Z,PL_phi_PI,PL_phi_PL,PL_phi_DE,PL_phi_W,
-	#       DE_N,DE_smin,DE_smax,DE_s,DE_slog,DE_z,DE_lambda,DE_K,DE_a,
-    #       DE_mrt,DE_phi_Z,DE_phi_PI,DE_phi_PL,DE_phi_DE,DE_phi_W
 end
 
 

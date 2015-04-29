@@ -96,17 +96,17 @@ b = map(easy,a,DATA) # broadcasts function over all cells
 ID = [1:48111] # number of grid cells
 MET = cell(length(ID))
 for i = 1:length(ID)
-	MET[i] = Array(Float64,PRM_PL.N)
+	MET[i] = Array(Float64,PL_N)
 end
 
 DY = 1
 TEMP_p   = float64(COBALT["Tp"][:,DY])
 temp = exp(0.0548*TEMP_p)
-U = 3.9*PRM_PL.s.^0.13
+U = 3.9*PL_s.^0.13
 
 const N = 15
 const act = exp(0.03*U)
-const bas = 0.0033*PRM_PL.s.^-0.13
+const bas = 0.0033*PL_s.^-0.13
 
 function met(met,temp)
 	for i = 1:N
@@ -119,16 +119,14 @@ end
 
 ###! Apply to MODEL
 TEMP_p   = float64(COBALT["Tp"][:,DY])
-
-
-function sub_metabolism!(met::Array{Float64},TEMP_p::Array{Float64})
-	temp = Array(Float64,48111)
-	temp = exp(0.0548*TEMP_p)
+@devec temp = exp(0.0548.*TEMP_p)
+function sub_metabolism!(met::Array{Float64},temp::Array{Float64})
 	for i = 1:PL_N
 		met[i] = PL_bas[i] * temp * PL_act[i] * 5.258
 	end
+	nothing
 end
-@time map(sub_metabolism!,PLAN.met,TEMP_p);
+@time map(sub_metabolism!,PLAN.met,PLAN.tmet);
 
 
 
