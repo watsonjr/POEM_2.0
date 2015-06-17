@@ -60,11 +60,14 @@ dZl_mu = dZl_mu / 94;
 det_mu = det_mu / 94;
 
 ###! Pull out time series for one place(Iberian sea)
-#GRD = load("./JLD/Data_grid.jld")
-#XY = zeros(360,200);
-#XY[GRD["ID"]] =[1:GRD["N"]]
-#id = XY[272,156] # Iberian location
-#
+GRD = load("./Data_grid.jld")
+XY = zeros(360,200);
+XY[GRD["ID"]] =[1:GRD["N"]]
+id = XY[270,156] # Iberian location
+id = XY[265,156] # further off shore ...
+id = XY[260,156]
+id = XY[255,156]
+
 ##! get data
 #Tp_x = squeeze(Tp_mu[id,:],1);
 #Tb_x = squeeze(Tb_mu[id,:],1);

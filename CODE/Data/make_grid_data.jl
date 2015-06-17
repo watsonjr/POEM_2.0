@@ -23,11 +23,15 @@ using NetCDF, HDF5, JLD
 ##! Time and Grid data
 #! Time = days since 2006-01-01
 #! GRD  = Lon,Lat of ESM grid cell centroids
-TIME = ncread("./GCM/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
+TIME = ncread("./NC/ocean_cobalt_biomass_100.200601-210012.nlgz_100.nc",
 	"average_T1"); # timeLAT = ncread("./GCM/grid_spec.nc","geolat_t"); # lat
 LON = ncread("./GCM/grid_spec.nc","geolon_t"); # lon
 LAT = ncread("./GCM/grid_spec.nc","geolat_t"); # lon
 Z   = ncread("./GCM/grid_spec.nc","ht"); # depth
+dx = ncread("./GCM/grid_spec.nc","dxt")
+dy = ncread("./GCM/grid_spec.nc","dyt")
+AREA = dx.*dy # area in m
+
 
 ## Pressure from depth (1 atm per 10m depth)
 Pr = (Z / 10) * 1013.25
@@ -38,12 +42,13 @@ LON = LON[ID];
 LAT = LAT[ID];
 Z   = Z[ID];
 Pr  = Pr[ID];
+AREA = AREA[ID]
 
 #xy  = zeros(360,200); # coordinates of index
 #xy[GRD_ID] = [1:length(GRD_ID)];
 
 #! save
-save("./JLD/Data_grid.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,
+save("./Data_grid.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,"AREA",AREA,
 	"Pr",Pr,"ID",ID,"N",length(ID));
 
 

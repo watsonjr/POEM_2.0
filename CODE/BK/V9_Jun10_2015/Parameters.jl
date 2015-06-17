@@ -84,7 +84,7 @@ function make_parameters()
 
 	#! Integration parameters
 	const global DT = 1.; # time step
-    const global YEARS = 25; # integration period in years
+    const global YEARS = 1; # integration period in years
     const global DAYS = 365; # number of days
 
 	#! Amount of fishing

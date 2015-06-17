@@ -122,74 +122,25 @@ function sub_enc_dew!(enc,prey)
 	nothing
 end
 
-##### DOH! offline coupling occurs wrt biomass consumed NOT encountered
-####! Offline coupling with COBALT
-#function sub_offline!(enc_pi,enc_pl,env_dZm,env_dZl)
-#	# Calculate total zooplankton encountered
-#	ENC_pi = zeros(2)
-#	ENC_pl = zeros(2)
-#	for j = 1:PI_N
-#		ENC_pi[1] += enc_pi[1,j]
-#		ENC_pi[2] += enc_pi[2,j]
-#	end
-#	for j = 1:PL_N
-#		ENC_pl[1] += enc_pl[1,j]
-#		ENC_pl[2] += enc_pl[2,j]
-#	end
-#	ENC = ENC_pi + ENC_pl
-#	# Check if you've exeeded COBALT
-#	if ENC[1] .> env_dZm
-#		enc_pi[1,:] = (enc_pi[1,:]./ENC[1]) .* env_dZm
-#		enc_pl[1,:] = (enc_pl[1,:]./ENC[1]) .* env_dZm
-#	end
-#	if ENC[2] .> env_dZl
-#		enc_pi[2,:] = (enc_pi[2,:]./ENC[2]) .* env_dZl
-#		enc_pl[2,:] = (enc_pl[2,:]./ENC[2]) .* env_dZl
-#	end
-#end
 
-
-###! zooplankton consumption
-function sub_consume_zoo!(I_piz,I_plz,bio_pi,bio_pl,enc_piz,enc_plz,
-						  tau_pi,tau_pl,ENC_pi,ENC_pl,dZm,dZl)
-	#I_piz = PISC.I_z[1]
-	#I_plz = PLAN.I_z[1];
-	#bio_pi = PISC.bio[1]
-	#bio_pl = PLAN.bio[1];
-	#enc_piz = PISC.enc_z[1]
-	#enc_plz = PLAN.enc_z[1];
-	#tau_pi = PISC.tau[1]
-	#tau_pl = PLAN.tau[1];
-	#ENC_pi = PISC.ENC[1]
-	#ENC_pl = PLAN.ENC[1];
-	#dZm = ENV_dZm[1]
-	#dZl = ENV_dZl[1];
-
-	I_pizm = (bio_pi .* squeeze(enc_piz[1,:],1)) ./ (1 + tau_pi .* ENC_pi[:])
-	I_pizl = (bio_pi .* squeeze(enc_piz[2,:],1)) ./ (1 + tau_pi .* ENC_pi[:])
-	I_plzm = (bio_pl .* squeeze(enc_plz[1,:],1)) ./ (1 + tau_pl .* ENC_pl[:])
-	I_plzl = (bio_pl .* squeeze(enc_plz[2,:],1)) ./ (1 + tau_pl .* ENC_pl[:])
-	S_zm = sum(I_pizm) + sum(I_plzm)
-	S_zl = sum(I_plzl) + sum(I_plzl)
-	if S_zm > dZm
-		I_pizm = (I_pizm./S_zm) * dZm
-		I_plzm = (I_plzm./S_zm) * dZm
-	end
-	if S_zl > dZl
-		I_pizl = (I_pizl./S_zl) * dZl
-		I_plzl = (I_plzl./S_zl) * dZl
-	end
-	I_piz = [I_pizm I_pizl]';
-	I_plz = [I_plzm I_plzl]';
-end
-
-
-###! reset consumption
-function sub_reset_con(I_pi::Array{Any},I_pl::Array{Any},I_de::Array{Any})
+###! reset consumption and mortality
+function sub_reset_con_fish(I_pi::Array{Any},I_pl::Array{Any},I_de::Array{Any})
 	I_pi = I_pi .* 0.0
 	I_pl = I_pl .* 0.0
 	I_de = I_de .* 0.0
 	return I_pi,I_pl,I_de
+end
+function sub_reset_con_zoo(I_pi::Array{Any},I_pl::Array{Any})
+	I_pi = I_pi .* 0.0
+	I_pl = I_pl .* 0.0
+	return I_pi,I_pl
+end
+function sub_reset_mort(d_pi::Array{Any},d_pl::Array{Any},d_de::Array{Any},d_w::Array{Any})
+	d_pi = d_pi .* 0.0
+	d_pl = d_pl .* 0.0
+	d_de = d_de .* 0.0
+	d_w  = d_w .* 0.0
+	return d_pi, d_pl, d_de, d_w
 end
 
 
@@ -197,27 +148,24 @@ end
 function sub_consume_pipi!(I_pi,d_pi,bio_pi,enc_pipi,ENC_pi,tau_pi)
 	for i = 1:PI_N #pred 
 		for j = 1:PI_N #prey
-			con = (bio_pi[i]*enc_pipi[j,i]*PI_lambda[i]) / (1 + (tau_pi[i]*ENC_pi[i]))
-			I_pi[i] += con
-			d_pi[j] -= con	
+			con = (bio_pi[i]*enc_pipi[j,i]) / (1 + (tau_pi[i]*ENC_pi[i]))
+			I_pi[i] = d_pi[j] += con
 		end
 	end
 end
 function sub_consume_pipl!(I_pi,d_pl,bio_pi,enc_pipl,ENC_pi,tau_pi)
 	for i = 1:PI_N #pred 
 		for j = 1:PL_N #prey
-			con = (bio_pi[i]*enc_pipl[j,i]*PI_lambda[i]) / (1 + (tau_pi[i]*ENC_pi[i]))
-			I_pi[i] += con
-			d_pl[j] -= con	
+			con = (bio_pi[i]*enc_pipl[j,i]) / (1 + (tau_pi[i]*ENC_pi[i]))
+			I_pi[i] = d_pl[j] += con
 		end
 	end
 end
 function sub_consume_pide!(I_pi,d_de,bio_pi,enc_pide,ENC_pi,tau_pi)
 	for i = 1:PI_N #pred 
 		for j = 1:DE_N #prey
-			con = (bio_pi[i]*enc_pide[j,i]*PI_lambda[i]) / (1 + (tau_pi[i]*ENC_pi[i]))
-			I_pi[i] += con
-			d_de[j] -= con	
+			con = (bio_pi[i]*enc_pide[j,i]) / (1 + (tau_pi[i]*ENC_pi[i]))
+			I_pi[i] = d_de[j] += con
 		end
 	end
 end
@@ -226,19 +174,50 @@ end
 function sub_consume_dede!(I_de,d_de,bio_de,enc_dede,ENC_de,tau_de)
 	for i = 1:DE_N #pred 
 		for j = 1:DE_N #prey
-			con = (bio_de[i]*enc_dede[j,i]*DE_lambda[i]) / (1 + (tau_de[i]*ENC_de[i]))
-			I_de[i] += con
-			d_de[j] -= con	
+			con = (bio_de[i]*enc_dede[j,i]) / (1 + (tau_de[i]*ENC_de[i]))
+			I_de[i] = d_de[j] += con
 		end
 	end
 end
 function sub_consume_dew!(I_de,d_w,bio_de,enc_dew,ENC_de,tau_de)
 	for i = 1:DE_N #pred 
-		con = (bio_de[i]*enc_dew[i]*DE_lambda[i]) / (1 + (tau_de[i]*ENC_de[i]))
-		I_de[i] += con
-		d_w[1] -= con	
+		con = (bio_de[i]*enc_dew[i]) / (1 + (tau_de[i]*ENC_de[i]))
+		I_de[i] = d_w[1] += con
 	end
 end
+
+###! Consumption of zooplankton
+#! by piscivore
+function sub_consume_piz!(I_z,bio_pi,enc_piz,ENC_pi,tau_pi)
+	for i = 1:PI_N #pred 
+		for j = 1:2 #prey
+			con = (bio_pi[i]*enc_piz[j,i]) / (1 + (tau_pi[i]*ENC_pi[i]))
+			I_z[j,i] += con
+		end
+	end
+end
+function sub_consume_plz!(I_z,bio_pl,enc_plz,ENC_pl,tau_pl)
+	for i = 1:PL_N #pred 
+		for j = 1:2 #prey
+			con = (bio_pl[i]*enc_plz[j,i]) / (1 + (tau_pl[i]*ENC_pl[i]))
+			I_z[j,i] += con
+		end
+	end
+end
+
+###! Offline coupling
+function sub_offline!(pi_z,pl_z,dZm,dZl)
+	ZOO = sum(pi_z,2) + sum(pl_z,2)
+	if ZOO[1] > dZm
+		pi_z[1,:] = (pi_z[1,:]./ZOO[1]) .* dZm
+		pl_z[1,:] = (pl_z[1,:]./ZOO[1]) .* dZm
+	end
+	if ZOO[2] > dZl
+		pi_z[2,:] = (pi_z[2,:]./ZOO[2]) .* dZl
+		pl_z[2,:] = (pl_z[2,:]./ZOO[2]) .* dZl
+	end
+end
+
 
 ###! ENERGY AVAILABLE FOR GROWTH NU
 function sub_nu_pi!(nu,bio,I,met)
@@ -256,6 +235,7 @@ function sub_nu_de!(nu,bio,I,met)
 		nu[i] = (I[i]/bio[i]*DE_lambda[i]) - met[i]
 	end
 end
+
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
 function sub_gamma_pi!(gamma,nu,bio,d)
@@ -300,6 +280,7 @@ function sub_rep_pi!(rep,nu,bio)
 			rep[i] = (1-PI_K[i]) * nu[i] * bio[i]
 		else
 			rep[i] = 0.
+			#nu[i] = 0.
 		end
 	end
 end
@@ -309,6 +290,7 @@ function sub_rep_pl!(rep,nu,bio)
 			rep[i] = (1-PL_K[i]) * nu[i] * bio[i]
 		else
 			rep[i] = 0.
+			#nu[i] = 0.
 		end
 	end
 end
@@ -318,6 +300,7 @@ function sub_rep_de!(rep,nu,bio)
 			rep[i] = (1-DE_K[i]) * nu[i] * bio[i]
 		else
 			rep[i] = 0.
+			#nu[i] = 0.
 		end
 	end
 end

@@ -11,8 +11,7 @@ function sub_init_env(ID)
 	ENV_dZm = Array(Float64,NX)
 	ENV_dZl = Array(Float64,NX)
 	ENV_det = Array(Float64,NX)
-	#return ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det
-	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det)
+	return ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det
 end
 
 function sub_init_fish(ID)
@@ -28,12 +27,12 @@ function sub_init_fish(ID)
 	bio_pi = Array(Any,NX)
 	bio_pl = Array(Any,NX)
 	bio_de = Array(Any,NX)
-	bio_be = Array(Any,NX)
+	bio_W = Array(Any,NX)
 	for i = 1:NX
 		bio_pi[i] = ones(Float64,PI_N) .* X
 		bio_pl[i] = ones(Float64,PL_N) .* X
 		bio_de[i] = ones(Float64,DE_N) .* X
-		bio_be[i] = ones(Float64,1) .* X
+		bio_W[i] = ones(Float64,1) .* X
 	end
 
 	# fraction of time spent in the pelagic
@@ -88,12 +87,12 @@ function sub_init_fish(ID)
     d_pi = Array(Any,NX)
     d_pl = Array(Any,NX)
     d_de = Array(Any,NX)
-    d_be = Array(Any,NX)
+    d_w = Array(Any,NX)
     for i = 1:NX
     	d_pi[i] = Array(Float64,PI_N)
     	d_pl[i] = Array(Float64,PL_N)
     	d_de[i] = Array(Float64,DE_N)
-    	d_be[i] = Array(Float64,1,1)
+    	d_w[i] = Array(Float64,1,1)
     end
 
     # total energy available for growtha
@@ -188,18 +187,18 @@ function sub_init_fish(ID)
 	
 	#! detrivore encounter rates
 	enc_dede = Array(Any,NX)
-	enc_debe = Array(Any,NX)
+	enc_dew = Array(Any,NX)
     for i = 1:NX
         enc_dede[i] = Array(Float64,DE_N,DE_N)
-        enc_debe[i] = Array(Float64,1,DE_N)
+        enc_dew[i] = Array(Float64,1,DE_N)
     end
 
 	#! total detrivore Encounter rates
 	ENC_dede = Array(Any,NX)
-	ENC_debe = Array(Any,NX)
+	ENC_dew = Array(Any,NX)
     for i = 1:NX
         ENC_dede[i] = Array(Float64,1,DE_N)
-        ENC_debe[i] = Array(Float64,1,DE_N)
+        ENC_dew[i] = Array(Float64,1,DE_N)
     end
 
  	# total biomass encoutered
@@ -214,19 +213,20 @@ function sub_init_fish(ID)
 
 	# assign to types
 	PISC = piscivore(bio_pi,tmet_pi,tdif_pi,met_pi,I_pi,I_piz,tau_pi,
-                nu_pi,gamma_pi,d_pi,REP_PI,GRW_PI,MAT_PI,MRT_PI,
-                enc_pipi,enc_pipl,enc_pide,enc_piz,ENC_pi)
+				nu_pi,gamma_pi,d_pi,REP_PI,GRW_PI,MAT_PI,MRT_PI,
+				enc_pipi,enc_pipl,enc_pide,enc_piz,
+				ENC_pipi,ENC_pipl,ENC_pide,ENC_piz,ENC_pi)
 	PLAN = planktivore(bio_pl,tmet_pl,met_pl,I_pl,I_plz,tau_pl,
 				nu_pl,gamma_pl,d_pl,REP_PL,GRW_PL,MAT_PL,MRT_PL,
 				enc_plz,ENC_pl)
 	DETR = detrivore(bio_de,tmet_de,met_de,I_de,tau_de,
-                nu_de,gamma_de,d_de,REP_DE,GRW_DE,MAT_DE,MRT_DE,
-                enc_dede,enc_debe,ENC_de)
+				nu_de,gamma_de,d_de,REP_DE,GRW_DE,MAT_DE,MRT_DE,
+				enc_dede,ENC_dede,ENC_dew,ENC_de)
 
 	###! Detritus
-    BENT = detritus(bio_be,d_be)
+	W = detritus(bio_W,zeros(Float64,1),d_w)
 
-	return PISC,PLAN,DETR,BENT
+	return PISC,PLAN,DETR,W
 end
 
 

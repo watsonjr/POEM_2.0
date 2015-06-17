@@ -7,13 +7,13 @@ from numpy import genfromtxt
 PISC = genfromtxt('../Data/CSV/Spinup_PISC.csv', delimiter=',')
 PLAN = genfromtxt('../Data/CSV/Spinup_PLAN.csv', delimiter=',')
 DETR = genfromtxt('../Data/CSV/Spinup_DETR.csv', delimiter=',')
-W = genfromtxt('../Data/CSV/Spinup_W.csv', delimiter=',')
+BENT = genfromtxt('../Data/CSV/Spinup_BENT.csv', delimiter=',')
 
 ##! Plot
 #x = np.arange(1,PISC.shape[0]+1,1);
-lookback = 2000 # number of days to look back at
+lookback = 10*365 # number of years to look back at
 #lookback = PISC.shape[0]-1
-x = np.arange(0,lookback) # plot last two years
+x = (np.arange(0,lookback))/365. # plot last two years
 
 plt.figure(figsize=(10,5))
 ax = plt.axes()
@@ -25,7 +25,7 @@ plt.legend(['small','','','','','','','','big'],bbox_to_anchor=(1.05, 1),loc=2, 
 pos1 = ax.get_position()
 pos2 = [pos1.x0, pos1.y0,  pos1.width / 1.2, pos1.height]
 ax.set_position(pos2) 
-plt.xlabel('Time (days)',fontsize=14)
+plt.xlabel('Time (years)',fontsize=14)
 plt.ylabel('Piscivore biomass (g m-2)',fontsize=14)
 plt.savefig('./PDF/Fig_POEM_pisc.pdf',dpi=200)
 
@@ -40,7 +40,7 @@ plt.legend(['small','','','','','','','','','','big'],bbox_to_anchor=(1.05, 1),l
 pos1 = ax.get_position()
 pos2 = [pos1.x0, pos1.y0,  pos1.width / 1.2, pos1.height]
 ax.set_position(pos2)
-plt.xlabel('Time (days)',fontsize=14)
+plt.xlabel('Time (years)',fontsize=14)
 plt.ylabel('Planktivore biomass (g m-2)',fontsize=14)
 plt.savefig('./PDF/Fig_POEM_plan.pdf',dpi=200)
 
@@ -54,14 +54,14 @@ plt.legend(['small','','','','big'],bbox_to_anchor=(1.05, 1),loc=2,             
 pos1 = ax.get_position()
 pos2 = [pos1.x0, pos1.y0,  pos1.width / 1.2, pos1.height]
 ax.set_position(pos2)
-plt.xlabel('Time (days)')
+plt.xlabel('Time (years)')
 plt.ylabel('Detritivore biomass (g m-2)')
 plt.savefig('./PDF/Fig_POEM_detr.pdf',dpi=200)
 
 
 plt.figure(); ax = plt.axes()
-plt.plot(x,W[-lookback-1:-1])
-plt.xlabel('Time (days)')
+plt.plot(x,BENT[-lookback-1:-1])
+plt.xlabel('Time (years)')
 plt.ylabel('Detrital pool biomass (g m-2)')
 
 

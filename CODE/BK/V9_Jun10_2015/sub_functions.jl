@@ -434,34 +434,45 @@ function sub_update_be!(bio,d,det)
 end
 
 ###! Fishing
-function sub_fishing(bio_pi,bio_pl,bio_de,AREA)
-	if FISHING > 0.0
-		# first hack
-		#bio_pi = PISC.bio; bio_pl = PLAN.bio; bio_de = DETR.bio; AREA = GRD_A;
-		ALL_pi  = Array(Float64,NX,PI_N)
-		ALL_pl  = Array(Float64,NX,PI_N)
-		ALL_de  = Array(Float64,NX,PI_N)
+function sub_fishing!(bio_pi,bio_pl,bio_de,AREA)
+	ALL_BIO = Array(Float64,NX*(PI_N+PL_N+DE_N))
+	ALL_pi = Array(Float64,NX,PI_N)
+	ALL_pl = Array(Float64,NX,PI_N)
+	ALL_de = Array(Float64,NX,PI_N)
 
-		for i = 1:NX
-			ALL_pi[i,:] = bio_pi[i] * AREA[i]
-			ALL_pl[i,:] = bio_pl[i] * AREA[i]
-			ALL_de[i,:] = bio_de[i] * AREA[i]
-		end
+	#! Calc total biomass of fish in the ocean
+	bio_pi .*= AREA;
+	bio_pl .*= AREA;
+	bio_de .*= AREA;
 
-		#! Total fish biomass
-		TOT = sum(ALL_pi) + sum(ALL_pl) + sum(ALL_de)
-		ALL_pi -= (ALL_pi./TOT).*FISHING
-		ALL_pl -= (ALL_pl./TOT).*FISHING
-		ALL_de -= (ALL_de./TOT).*FISHING
+	#for i = 1:NX
+	#	ALL_pi[i,:] = bio_pi[i] * AREA[i]
+	#	ALL_pl[i,:] = bio_pl[i] * AREA[i]
+	#	ALL_de[i,:] = bio_de[i] * AREA[i]
+	#end
 
-		#! Calc total biomass of fish in the ocean
-		for i = 1:NX
-			bio_pi[i] = squeeze(ALL_pi[i,:],1) ./ AREA[i]
-			bio_pl[i] = squeeze(ALL_pl[i,:],1) ./ AREA[i]
-			bio_de[i] = squeeze(ALL_de[i,:],1) ./ AREA[i]
-		end
+	#! Total fish biomass
+	ALL_BIO[:] = [bio_pi[:]; bio_pl[:]; bio_de[:]]
+	#ALL_BIO[:] = [ALL_pi[:]; ALL_pl[:]; ALL_de[:]]
+
+	#! Calc Fishing using Ideal Free Distribution
+	#! i.e. fishing in proportion to biomass
+	ALL_BIO[:] -= (ALL_BIO/sum(ALL_BIO)) * FISHING # 80MT in kg
+
+	#! Recalc biomasses
+	ALL_pi = reshape(ALL_BIO[1:NX*PI_N],(NX,PI_N))
+	splice!(ALL_BIO,1:NX*PI_N)
+	ALL_pl = reshape(ALL_BIO[1:NX*PL_N],(NX,PL_N))
+	splice!(ALL_BIO,1:NX*PI_N)
+	ALL_de = reshape(ALL_BIO[1:NX*DE_N],(NX,DE_N))
+
+	#! Calc total biomass of fish in the ocean
+	for i = 1:NX
+		bio_pi[i] = ALL_pi[i,:] ./ AREA[i]
+		bio_pl[i] = ALL_pl[i,:] ./ AREA[i]
+		bio_de[i] = ALL_de[i,:] ./ AREA[i]
 	end
-	return bio_pi, bio_pl, bio_de
+	
 end
 
 
