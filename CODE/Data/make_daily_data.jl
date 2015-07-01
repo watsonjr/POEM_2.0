@@ -21,27 +21,27 @@
 using NetCDF, HDF5, JLD, Grid
 
 #! Time
-TIME = ncread("./GCM/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
+TIME = ncread("./GCM/Forecast/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
     "average_T1"); # time
 
 #! Physical Scalers: (Pelagic Temp, Bottom Temp (potential temp)), deg C
-Tb = ncread("./GCM/ocean.200601-210012.bottom_temp.nc","bottom_temp");
-Tp = ncread("./GCM/ocean.200601-210012.temp_100_avg.nc","TEMP_100");
+Tb = ncread("./GCM/Forecast/ocean.200601-210012.bottom_temp.nc","bottom_temp");
+Tp = ncread("./GCM/Forecast/ocean.200601-210012.temp_100_avg.nc","TEMP_100");
 
 #! Zooplankton abundances: medium and large (mol(N) m-2)
-Zm=ncread("./GCM/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
+Zm=ncread("./GCM/Forecast/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
 	"nmdz_100");
-Zl=ncread("./GCM/ocean_cobalt_biomass_100.200601-210012.nlgz_100.nc",
+Zl=ncread("./GCM/Forecast/ocean_cobalt_biomass_100.200601-210012.nlgz_100.nc",
 	"nlgz_100");
 
 #! Zooplankton mortality rates: medium and large size: (mol(N) m-2 s-1)
-dZm=ncread("./GCM/ocean_cobalt_miscflux_100.200601-210012.jhploss_nmdz_100.nc",
+dZm=ncread("./GCM/Forecast/ocean_cobalt_miscflux_100.200601-210012.jhploss_nmdz_100.nc",
 	"jhploss_nmdz_100");
-dZl=ncread("./GCM/ocean_cobalt_miscflux_100.200601-210012.jhploss_nlgz_100.nc",
+dZl=ncread("./GCM/Forecast/ocean_cobalt_miscflux_100.200601-210012.jhploss_nlgz_100.nc",
 	"jhploss_nlgz_100");
 
 #! Detrital flux at the sea floor (mol(N) m-2 s-1)
-dDet=ncread("./GCM/ocean_cobalt_btm.200601-210012.fndet_btm.nc","fndet_btm");
+dDet=ncread("./GCM/Forecast/ocean_cobalt_btm.200601-210012.fndet_btm.nc","fndet_btm");
 
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
@@ -67,9 +67,9 @@ ID  = [id1 id2];
 #! x 12.01  mol C --> grams C
 #! / 0.32 grams C --> dry weight.
 #! *60 *60 *24 --> per day (if flux)
-for i = 1:94
-	id = ID[i,:];
-	I  = find(TIME[TIME.>=id[1]].<=id[2]);
+for i in [1:95]
+	id = float64(ID[i,:])
+	I = find(id[1].<=TIME.<=id[2])
 
 	#! pull raw data out
 	time = TIME[I];
@@ -99,16 +99,16 @@ for i = 1:94
 		Y = zeros(size(time))
 		Y[:] = tp[m,n,:] - 273;
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [1:365];
-		Yi = yi[Xi];
+		Xi= [time[1]:1:time[end]];
+		Yi = yi[Xi[1:end-1]];
 		D_Tp[j,:] = Yi;
 
 		#! bottom temperature (correcting for pressure)
 		Y = zeros(size(time))
 		Y[:] = tb[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [1:365];
-		Yi = yi[Xi];
+		Xi= [time[1]:1:time[end]];
+		Yi = yi[Xi[1:end-1]];
 		D_Tb[j,:] = Yi ## FIX THIS LATER FOR POT TEMP
 		#D_Tb[j,:] = ((Yi+273) / ((Po/Pr[j])^R_Cp) ) - 273
 
@@ -116,52 +116,52 @@ for i = 1:94
 		Y = zeros(size(time))
 		Y[:] = zm[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [1:365];
-		Yi = yi[Xi];
+		Xi= [time[1]:1:time[end]];
+        Yi = yi[Xi[1:end-1]];
 		D_Zm[j,:] = Yi * (106/16) * 12.01 / 0.32;
 
 		#! large zoo: g(DW) m-2
 		Y = zeros(size(time))
 		Y[:] = zl[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [1:365];
-		Yi = yi[Xi];
+		Xi= [time[1]:1:time[end]];
+        Yi = yi[Xi[1:end-1]];
 		D_Zl[j,:] = Yi * (106/16) * 12.01 / 0.32;
 
 		#! medium zoo mortality: g(DW) m-2 day-1
 		Y = zeros(size(time))
 		Y[:] = dzm[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [1:365];
-		Yi = yi[Xi];
+		Xi= [time[1]:1:time[end]];
+		Yi = yi[Xi[1:end-1]];
 		D_dZm[j,:] = Yi * (106/16) * 12.01 / 0.32 * 60 * 60 *24 ;
 		
 		#! large zoo mortality: g(DW) m-2 day-1
 		Y = zeros(size(time))
 		Y[:] = dzl[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [1:365];
-		Yi = yi[Xi];
+		Xi= [time[1]:1:time[end]];
+        Yi = yi[Xi[1:end-1]];
 		D_dZl[j,:] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
 
 		#! detrital flux to benthos: g(DW) m-2 day-1
 		Y = zeros(size(time))
 		Y[:] = det[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [1:365];
-		Yi = yi[Xi];
+		Xi= [time[1]:1:time[end]];
+        Yi = yi[Xi[1:end-1]];
 		D_det[j,:] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
 	
 	end
 
 	#! convert to single precision to save space
-	D_Tp  = float32(D_Tp);
-	D_Tb  = float32(D_Tb);
-	D_Zm  = float32(D_Zm);
-	D_Zl  = float32(D_Zl);
-	D_dZm = float32(D_dZm);
-	D_dZl = float32(D_dZl);
-	D_det = float32(D_det);
+	D_Tp  = float64(D_Tp);
+	D_Tb  = float64(D_Tb);
+	D_Zm  = float64(D_Zm);
+	D_Zl  = float64(D_Zl);
+	D_dZm = float64(D_dZm);
+	D_dZl = float64(D_dZl);
+	D_det = float64(D_det);
 	
 	#! save
 	println(i)

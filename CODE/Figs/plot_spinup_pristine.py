@@ -23,7 +23,7 @@ def plot_globe(X,Y,Z,Name):
     #! Plot
     fig = plt.figure(figsize=(15,6))
     im = m.pcolormesh(X2,Y2,Z2,cmap=plt.cm.jet,latlon=True,
-                      vmin=Z.min(),vmax=np.percentile(Z,100))
+                      vmin=Z.min(),vmax=np.percentile(Z,90))
     m.fillcontinents(color=[.6,.6,.6],lake_color=[0,0,0])
 
     ax = plt.gca()
