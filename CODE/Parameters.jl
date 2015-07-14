@@ -103,6 +103,11 @@ function make_parameters(harv)
 	#! Benthic-pelagic coupling cutoff (depth, m)
 	const global PI_be_cutoff = 500
 
+	#! Max length (L_inf)
+
+	#! Size at maturation
+
+
 	#! Min body size (g)
 	const global PI_smin = 10;
 	const global PL_smin = .1;
@@ -237,23 +242,23 @@ function make_parameters(harv)
 		pij_pi = fnc_pij(PI_s[i],PI_s,2,1) # prey preference for PI
 		pij_pl = fnc_pij(PI_s[i],PL_s,2,1) # prey preference for PL
 		pij_z  = fnc_pij(PI_s[i],Z_s,2,1) # prey preference for Zoo
-		#pij_de = fnc_pij(PI_s[i],DE_s,2,1) # prey preference for DE
+		pij_de = fnc_pij(PI_s[i],DE_s,2,1) # prey preference for DE
 
 		# normalize
-		#Sj = [pij_pi; pij_pl; pij_de; pij_z];
-		Sj = [pij_pi; pij_pl; pij_z];
+		Sj = [pij_pi; pij_pl; pij_de; pij_z];
+		#Sj = [pij_pi; pij_pl; pij_z];
 		if sum(Sj)!=0.
 			max = maximum(Sj);
 			pij_pi = pij_pi / max;
 			pij_pl = pij_pl / max;
-			#pij_de = pij_de / max;
+			pij_de = pij_de / max;
 			pij_z  = pij_z  / max;
 		end
 
 		#! put in diet preference kernels
 		PI_phi_PI[:,i] = pij_pi
 		PI_phi_PL[:,i] = pij_pl
-		#PI_phi_DE[:,i] = pij_de
+		PI_phi_DE[:,i] = pij_de
 		PI_phi_Z[:,i]  = pij_z
 	end
 	#! detritus and zoo feeding preference
@@ -291,8 +296,8 @@ function make_parameters(harv)
 	const global DE_phi_DE = zeros(DE_N,DE_N);
 	const global DE_phi_BE = zeros(1,DE_N);
 	for i = 1:DE_N
-		pij_de = fnc_pij(DE_s[i],DE_s,2,1) # prey preference for DE
-		pij_be = fnc_pij(DE_s[i],DE_s[1]/100,2,1) # prey preference for DE
+		pij_de = fnc_pij(DE_s[i],DE_s,3,1) # prey preference for DE
+		pij_be = fnc_pij(DE_s[i],DE_s[1]/100,3,1) # prey preference for DE
 
 		# normalize
 		Sj = [pij_de; pij_be];

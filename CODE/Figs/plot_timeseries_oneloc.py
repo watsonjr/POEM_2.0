@@ -22,8 +22,8 @@ DETR = np.asarray(nc_detr.variables['biomass'])
 BENT = np.asarray(nc_bent.variables['biomass'])
 
 #! Slice timeseries for one loc
-ID = 41093 # Iberian
-#! ID = 28073 # Humboldt
+#ID = 41093 # Iberian
+ID = 28073 # Humboldt
 
 bio_pi = PISC[:,:,ID]
 bio_pl = PLAN[:,:,ID]
@@ -43,7 +43,7 @@ font = {'family' : 'serif',
 fig = plt.figure(figsize=(7,10.5))
 gs = gridspec.GridSpec(3, 2,width_ratios=[1,1])
 FS = 17 # fontsize
-X = np.arange(2006,2100,1./12.)
+X = np.arange(2005,2100,1./12.)
 
 ax0 = plt.subplot(gs[0,:])
 mu = np.mean(bio_pi,1)
@@ -66,16 +66,16 @@ plt.ylabel(r'Plan ($kg$ $m^{-2}$)',fontsize=FS)
 plt.gca().yaxis.labelpad = 0
 
 ax2 = plt.subplot(gs[2,:])
-mu = np.mean(bio_de,1)
+mu = np.mean(bio_de[500:-1,:],1)
 for i in np.arange(0,bio_de.shape[1]):
-    plt.plot(X,bio_de[:,i],'k',alpha=0.2)
-plt.plot(X,mu,color='k',lw=2)
+    plt.plot(X[500:-1],bio_de[500:-1,i],'k',alpha=0.2)
+plt.plot(X[500:-1],mu,color='k',lw=2)
 plt.ylabel(r'Detr ($kg$ $m^{-2}$)',fontsize=FS)
 plt.gca().yaxis.labelpad = 0
 plt.xlabel(r'Time',fontsize=FS)
 
 #plt.tight_layout(h_pad=1.0)
-gs.tight_layout(fig)
+#gs.tight_layout(fig)
 plt.savefig('./PDF/Fig_timeseries_oneloc.pdf',dpi=200,bbox='tight')
 
 

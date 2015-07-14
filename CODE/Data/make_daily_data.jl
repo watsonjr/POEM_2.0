@@ -101,7 +101,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
 		Yi = yi[Xi[1:end-1]];
-		D_Tp[j,:] = Yi;
+		D_Tp[j,1:length(Yi)] = Yi;
 
 		#! bottom temperature (correcting for pressure)
 		Y = zeros(size(time))
@@ -109,7 +109,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
 		Yi = yi[Xi[1:end-1]];
-		D_Tb[j,:] = Yi ## FIX THIS LATER FOR POT TEMP
+		D_Tb[j,1:length(Yi)] = Yi ## FIX THIS LATER FOR POT TEMP
 		#D_Tb[j,:] = ((Yi+273) / ((Po/Pr[j])^R_Cp) ) - 273
 
 		#! medium zoo: g(DW) m-2
@@ -118,7 +118,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_Zm[j,:] = Yi * (106/16) * 12.01 / 0.32;
+		D_Zm[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32;
 
 		#! large zoo: g(DW) m-2
 		Y = zeros(size(time))
@@ -126,7 +126,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_Zl[j,:] = Yi * (106/16) * 12.01 / 0.32;
+		D_Zl[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32;
 
 		#! medium zoo mortality: g(DW) m-2 day-1
 		Y = zeros(size(time))
@@ -134,7 +134,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
 		Yi = yi[Xi[1:end-1]];
-		D_dZm[j,:] = Yi * (106/16) * 12.01 / 0.32 * 60 * 60 *24 ;
+		D_dZm[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 * 60 * 60 *24 ;
 		
 		#! large zoo mortality: g(DW) m-2 day-1
 		Y = zeros(size(time))
@@ -142,7 +142,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_dZl[j,:] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
+		D_dZl[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
 
 		#! detrital flux to benthos: g(DW) m-2 day-1
 		Y = zeros(size(time))
@@ -150,7 +150,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_det[j,:] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
+		D_det[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
 	
 	end
 

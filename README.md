@@ -3,7 +3,7 @@ POEM_2.0
 
 The Princeton Ocean Ecosystem Model 2.0
 
-- James Watson, Susa Niiranen
+- James Watson, Susa Niiranen, Charlie Stock... so far
 
 ## Goals
 - develop the size-based ecosystem modeling approach of Watson et al. 2014

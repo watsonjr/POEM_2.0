@@ -7,6 +7,8 @@ function Testoneloc()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/Data_000001.jld"); # first year's data 
+	YEARS = 100
+	DAYS = 365
 
 	#! choose where to run the model
 	GRD = load("./Data/Data_grid.jld")
@@ -66,7 +68,7 @@ function Spinup_pristine()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/Data_000001.jld"); # first year's data 
+	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
 
 	#! choose where and when to run the model
 	const global YEARS = 30; # integration period in years
@@ -186,7 +188,7 @@ function Forecast_pristine()
 	make_parameters(0) # make core parameters/constants
 	const global NX = 48111
 	const global ID = [1:NX]
-	const global YEARS = 94; # integration period in years
+	const global YEARS = 95; # integration period in years
 	const global DAYS = 365; # number of days 
 	const global MNTH = [31,28,31,30,31,30,31,31,30,31,30,31] # days in month
 

@@ -9,9 +9,9 @@ include("Experiments.jl")
 
 
 ####!! EXPERIMENTS
-testoneloc = false
+testoneloc = true
 spinup_pristine = false
-forecast_pristine = true
+forecast_pristine = false
 spinup_fished = false
 forecast_fished = false
 

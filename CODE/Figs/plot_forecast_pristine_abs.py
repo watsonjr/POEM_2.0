@@ -56,7 +56,6 @@ PLAN = np.asarray(nc_plan.variables['biomass'])
 DETR = np.asarray(nc_detr.variables['biomass'])
 BENT = np.asarray(nc_bent.variables['biomass'])
 
-
 #! PLOT
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib import gridspec
@@ -119,7 +118,8 @@ ax0 = plt.subplot(gs[0,:])
 plot_abs(Lon,Lat,bio_de_early,ID)
 ax0 = plt.subplot(gs[1,:])
 plot_abs(Lon,Lat,bio_de_late,ID)
-plt.tight_layout(h_pad=0.5)
+
+#plt.tight_layout(h_pad=0.5)
 fig.savefig('./PNG/Fig_forecast_pristine_abs_detr.png',dpi=600,bbox_inches='tight')
 
 

@@ -423,6 +423,11 @@ function sub_update_pl!(bio,rep,grw,mat,d,mrt)
 		bio[i] += (mat[i-1] + grw[i] - mrt[i] - rep[i] - mat[i] - d[i]) * DT
 	end
 end
+#function sub_update_de!(bio,rep,grw,mat,d,mrt)
+#	for i = 1:DE_N
+#		bio[i] += (grw[i] - mrt[i] - d[i]) * DT
+#	end
+#end
 function sub_update_de!(bio,rep,grw,mat,d,mrt)
 	bio[1] += (sum(rep) + grw[1] - mat[1] - d[1] - mrt[1]) * DT
 	for i = 2:DE_N
@@ -430,7 +435,7 @@ function sub_update_de!(bio,rep,grw,mat,d,mrt)
 	end
 end
 function sub_update_be!(bio,d,det)
-    bio[1] += (det - d[1] - (bio[1]*0.01)) * DT # with sedimentation
+    bio[1] += (det - d[1] - (bio[1]*0.00001)) * DT # with sedimentation
 end
 
 ###! Fishing
