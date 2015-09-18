@@ -105,11 +105,15 @@ function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
 	#! Fishing
 	PISC.bio,PLAN.bio,DETR.bio = sub_fishing(PISC.bio,PLAN.bio,DETR.bio,GRD_A);
 
-	#! Forward Euler checks
+	#! Forward Euler checks for demographics
 	map(sub_check_pi!,PISC.bio);
 	map(sub_check_pl!,PLAN.bio);
 	map(sub_check_de!,DETR.bio);
 	map(sub_check_be!,BENT.bio);
+
+	#! Movement
+
 end
+
 
 

@@ -11,7 +11,6 @@ function sub_init_env(ID)
 	ENV_dZm = Array(Float64,NX)
 	ENV_dZl = Array(Float64,NX)
 	ENV_det = Array(Float64,NX)
-	#return ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det
 	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det)
 end
 
@@ -23,8 +22,8 @@ function sub_init_fish(ID)
 
 	###! fish
 	#! biomass
-	#X = 0.17981663628808964; # mean Zm off Spain
-	X = 0.00001; # very small amount
+	X = 0.17981663628808964; # mean Zm off Spain
+	#X = 0.00001; # very small amount
 	bio_pi = Array(Any,NX)
 	bio_pl = Array(Any,NX)
 	bio_de = Array(Any,NX)

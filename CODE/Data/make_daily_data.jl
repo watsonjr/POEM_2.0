@@ -69,7 +69,8 @@ ID  = [id1 id2];
 #! *60 *60 *24 --> per day (if flux)
 for i in [1:95]
 	id = float64(ID[i,:])
-	I = find(id[1].<=TIME.<=id[2])
+	#I = find(id[1].<=TIME.<=id[2])
+	I = find(id[1] .<= TIME .< id[2])
 
 	#! pull raw data out
 	time = TIME[I];

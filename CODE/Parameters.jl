@@ -115,8 +115,8 @@ function make_parameters(harv)
 
 	#! Max body size (g)
 	const global PI_smax = 10000;
-	const global PL_smax = 1000;
-	const global DE_smax = 1000;
+	const global PL_smax = 500;
+	const global DE_smax = 500;
 
 	##! Body mass linearly distributed (g)
 	const global PI_s = linspace((PI_smin),(PI_smax),PI_N)
@@ -179,7 +179,7 @@ function make_parameters(harv)
 	const global DE_act = exp(0.03*(3.9*DE_s.^0.13))
 	const global PI_bas = 0.0033*PI_s.^-0.13
 	const global PL_bas = 0.0033*PL_s.^-0.13
-	const global DE_bas = 0.00033*DE_s.^-0.13 ### NOTE Changed to account for slow met
+	const global DE_bas = 0.0033*DE_s.^-0.13 ### NOTE Changed to account for slow met
 
 	###! Maximum search rate a as a function of body size
 	# calculate swimming speed (m d-1)
@@ -192,7 +192,7 @@ function make_parameters(harv)
 		a = U .* (L.*2) .* p; #length x2 for visual diameter 
 		return a
 	end
-	const global DE_a = fnc_a(DE_s)./10 # Anieke says detritivores move around less
+	const global DE_a = fnc_a(DE_s).1#Anieke says detritivores move around less
 	const global PI_a = fnc_a(PI_s)./1
 	const global PL_a = fnc_a(PL_s)./1
 
@@ -296,8 +296,8 @@ function make_parameters(harv)
 	const global DE_phi_DE = zeros(DE_N,DE_N);
 	const global DE_phi_BE = zeros(1,DE_N);
 	for i = 1:DE_N
-		pij_de = fnc_pij(DE_s[i],DE_s,3,1) # prey preference for DE
-		pij_be = fnc_pij(DE_s[i],DE_s[1]/100,3,1) # prey preference for DE
+		pij_de = fnc_pij(DE_s[i],DE_s,2,1) # prey preference for DE
+		pij_be = fnc_pij(DE_s[i],DE_s[1]/100,2,1) # prey preference for DE
 
 		# normalize
 		Sj = [pij_de; pij_be];

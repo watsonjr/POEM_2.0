@@ -435,7 +435,7 @@ function sub_update_de!(bio,rep,grw,mat,d,mrt)
 	end
 end
 function sub_update_be!(bio,d,det)
-    bio[1] += (det - d[1] - (bio[1]*0.00001)) * DT # with sedimentation
+    bio[1] += (det - d[1] - (bio[1]*0.01)) * DT # with sedimentation
 end
 
 ###! Fishing
