@@ -7,7 +7,6 @@ include("sub_routines.jl")
 include("sub_functions.jl")
 include("Experiments.jl")
 
-
 ####!! EXPERIMENTS
 testoneloc = true
 spinup_pristine = false

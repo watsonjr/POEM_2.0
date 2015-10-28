@@ -115,6 +115,9 @@ function Spinup_pristine()
 
 end
 
+
+
+
 ####!! RUN SPINUP FOR ALL LOCATION WITH FISHING
 function Spinup_fished()
 

@@ -45,6 +45,16 @@ function sub_init_fish(ID)
 	tmet_pl = Array(Float64,NX)
 	tmet_de = Array(Float64,NX)
 
+	# activity multiplier
+	umet_pi = Array(Any,NX)
+	umet_pl = Array(Any,NX)
+	umet_de = Array(Any,NX)
+	for i = 1:NX
+		umet_pi[i] = Array(Float64,PI_N)
+		umet_pl[i] = Array(Float64,PL_N)
+		umet_de[i] = Array(Float64,DE_N)
+	end
+
 	# metabolism
 	met_pi = Array(Any,NX)
 	met_pl = Array(Any,NX)
@@ -96,7 +106,7 @@ function sub_init_fish(ID)
     	#d_be[i] = zeros(Float64,1,1)
     end
 
-    # total energy available for growtha
+    # total energy available for growth
     nu_pi = Array(Any,NX)
     nu_pl = Array(Any,NX)
     nu_de = Array(Any,NX)
@@ -213,13 +223,13 @@ function sub_init_fish(ID)
     end
 
 	# assign to types
-	PISC = piscivore(bio_pi,tmet_pi,tdif_pi,met_pi,I_pi,I_piz,tau_pi,
+	PISC = piscivore(bio_pi,tmet_pi,umet_pi,tdif_pi,met_pi,I_pi,I_piz,tau_pi,
                 nu_pi,gamma_pi,d_pi,REP_PI,GRW_PI,MAT_PI,MRT_PI,
                 enc_pipi,enc_pipl,enc_pide,enc_piz,ENC_pi)
-	PLAN = planktivore(bio_pl,tmet_pl,met_pl,I_pl,I_plz,tau_pl,
+	PLAN = planktivore(bio_pl,tmet_pl,umet_pl,met_pl,I_pl,I_plz,tau_pl,
 				nu_pl,gamma_pl,d_pl,REP_PL,GRW_PL,MAT_PL,MRT_PL,
 				enc_plz,ENC_pl)
-	DETR = detrivore(bio_de,tmet_de,met_de,I_de,tau_de,
+	DETR = detrivore(bio_de,tmet_de,umet_de,met_de,I_de,tau_de,
                 nu_de,gamma_de,d_de,REP_DE,GRW_DE,MAT_DE,MRT_DE,
                 enc_dede,enc_debe,ENC_de)
 

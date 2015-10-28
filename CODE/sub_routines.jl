@@ -16,10 +16,15 @@ function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
 	PLAN.tmet = map(sub_tmet,PLAN.tmet,ENVR.Tp);
 	DETR.tmet = map(sub_tmet,DETR.tmet,ENVR.Tb);
 
+	#! activity multiplier
+	map(sub_umet_pi!,PISC.umet);
+	map(sub_umet_pl!,PLAN.umet);
+	map(sub_umet_de!,DETR.umet);
+
 	#! metabolism
-	map(sub_metabolism_pi!,PISC.met,PISC.tmet);
-	map(sub_metabolism_pl!,PLAN.met,PLAN.tmet);
-	map(sub_metabolism_de!,DETR.met,DETR.tmet);
+	map(sub_metabolism_pi!,PISC.met,PISC.tmet,PISC.umet);
+	map(sub_metabolism_pl!,PLAN.met,PLAN.tmet,PLAN.umet);
+	map(sub_metabolism_de!,DETR.met,DETR.tmet,DETR.umet);
 
 	#! fraction of time piscivore spends in pelagic
 	PISC.tdif = map(sub_tdif,GRD_Z[ID],PLAN.bio,DETR.bio);

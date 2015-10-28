@@ -17,22 +17,43 @@ function sub_tmet(tmet,T)
 end
 
 
+###! Activity multiplier for metabolism
+function sub_umet_pi!(umet::Array{Float64})
+	for i = 1:PI_N
+		umet[i] = exp(0.03*(PI_U[i]*100/60/60/24))
+	end
+	nothing
+end
+function sub_umet_pl!(umet::Array{Float64})
+	for i = 1:PL_N
+		umet[i] = exp(0.03*(PL_U[i]*100/60/60/24))
+	end
+	nothing
+end
+function sub_umet_de!(umet::Array{Float64})
+	for i = 1:DE_N
+		umet[i] = exp(0.03*(DE_U[i]*100/60/60/24))
+	end
+	nothing
+end
+
+
 ###! Metabolism
-function sub_metabolism_pi!(met::Array{Float64},tmet::Float64)
+function sub_metabolism_pi!(met::Array{Float64},tmet::Float64,umet::Array{Float64})
     for i = 1:PI_N
-        met[i] = PI_bas[i] * tmet * 5.258
+        met[i] = PI_bas[i] * tmet * umet[i] * 5.258
     end
     nothing
 end
-function sub_metabolism_pl!(met::Array{Float64},tmet::Float64)
+function sub_metabolism_pl!(met::Array{Float64},tmet::Float64,umet::Array{Float64})
     for i = 1:PL_N
-        met[i] = PL_bas[i] * tmet * 5.258
+        met[i] = PL_bas[i] * tmet * umet[i] * 5.258
     end
     nothing
 end
-function sub_metabolism_de!(met::Array{Float64},tmet::Float64)
+function sub_metabolism_de!(met::Array{Float64},tmet::Float64,umet::Array{Float64})
     for i = 1:DE_N
-        met[i] = DE_bas[i] * tmet * 5.258
+        met[i] = DE_bas[i] * tmet * umet[i] * 5.258
     end
     nothing
 end
@@ -443,8 +464,8 @@ function sub_fishing(bio_pi,bio_pl,bio_de,AREA)
 	if FISHING > 0.0
 		#bio_pi = PISC.bio; bio_pl = PLAN.bio; bio_de = DETR.bio; AREA = GRD_A;
 		ALL_pi  = Array(Float64,NX,PI_N)
-		ALL_pl  = Array(Float64,NX,PI_N)
-		ALL_de  = Array(Float64,NX,PI_N)
+		ALL_pl  = Array(Float64,NX,PL_N)
+		ALL_de  = Array(Float64,NX,DE_N)
 
 		for i = 1:NX
 			ALL_pi[i,:] = bio_pi[i] * AREA[i]

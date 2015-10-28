@@ -4,6 +4,7 @@
 type piscivore
 	bio::Array{Any} # biomass g 
 	tmet::Array{Float64} # temperature multiplier for metabolism
+	umet::Array{Any} # activity multiplier for metabolism
 	tdif::Array{Float64} # fraction of time spent in the pelagic
 	met::Array{Any} # metabolism g g-1 d-1
 	I::Array{Any} # total ingestion g d-1
@@ -26,6 +27,7 @@ end
 type planktivore
 	bio::Array{Any} # biomass g 
 	tmet::Array{Float64} # temperature multiplier for metabolism
+	umet::Array{Any} # activity multiplier for metabolism
 	met::Array{Any} # metabolism g g-1 d-1
 	I::Array{Any} # total ingestion g d-1
 	I_z::Array{Any} # total zoo ingestion g d-1
@@ -44,6 +46,7 @@ end
 type detrivore
 	bio::Array{Any} # biomass g 
 	tmet::Array{Float64} # temperature multiplier for metabolism
+	umet::Array{Any} # activity multiplier for metabolism
 	met::Array{Any} # metabolism g g-1 d-1
 	I::Array{Any} # total ingestion g d-1
 	tau::Array{Any}  # handling time d g-1 g
@@ -65,13 +68,13 @@ type detritus
 end
 
 type environment
-	Tp::Array{Any}
-	Tb::Array{Any}
-	Zm::Array{Any}
-	Zl::Array{Any}
-	dZm::Array{Any}
-	dZl::Array{Any}
-	det::Array{Any}
+	Tp::Array{Any} # pelagic temperature
+	Tb::Array{Any} # bottom temperature
+	Zm::Array{Any} # medium zooplankton 
+	Zl::Array{Any} # large zoo
+	dZm::Array{Any} # mortality rate of med zoo (COBALT)
+	dZl::Array{Any} # mortality rate of large zoo (COBALT)
+	det::Array{Any} # detrital flux
 end
 
 #============= PARAMETER TYPE ==========#
@@ -94,7 +97,6 @@ function make_parameters(harv)
 		const global FISHING = 0
 	end
 
-
 	#! Number of size classes (#)
 	const global PI_N = 10;
 	const global PL_N = 10;
@@ -104,9 +106,7 @@ function make_parameters(harv)
 	const global PI_be_cutoff = 500
 
 	#! Max length (L_inf)
-
 	#! Size at maturation
-
 
 	#! Min body size (g)
 	const global PI_smin = 10;
@@ -181,6 +181,11 @@ function make_parameters(harv)
 	const global PL_bas = 0.0033*PL_s.^-0.13
 	const global DE_bas = 0.0033*DE_s.^-0.13 ### NOTE Changed to account for slow met
 
+	###! Swimming speed (Megrey 2007)
+	const global PI_U = ((3.9*PI_s.^0.13)/100*60*60*24) .* linspace(0.8,0.1,length(PI_s))
+	const global PL_U = ((3.9*PL_s.^0.13)/100*60*60*24) .* linspace(0.8,0.1,length(PL_s))
+	const global DE_U = ((3.9*DE_s.^0.13)/100*60*60*24) .* linspace(0.8,0.1,length(DE_s))
+
 	###! Maximum search rate a as a function of body size
 	# calculate swimming speed (m d-1)
 	# factor in time spent swimming (low - Anieke's paper)
@@ -192,7 +197,7 @@ function make_parameters(harv)
 		a = U .* (L.*2) .* p; #length x2 for visual diameter 
 		return a
 	end
-	const global DE_a = fnc_a(DE_s).1#Anieke says detritivores move around less
+	const global DE_a = fnc_a(DE_s)./1 # Anieke says detritivores move around less
 	const global PI_a = fnc_a(PI_s)./1
 	const global PL_a = fnc_a(PL_s)./1
 
@@ -207,7 +212,6 @@ function make_parameters(harv)
 	const global PI_mrt = [zeros(pid); linspace(0,0.01,PI_N - pid)]
 	const global PL_mrt = [zeros(pld); linspace(0,0.01,PL_N - pld)]
 	const global DE_mrt = [zeros(ded); linspace(0,0.01,DE_N - ded)]
-
 
 	###! Diet Preference Phi (j = prey, i = pred)
 	#for each fish, get all prey and calculate preference

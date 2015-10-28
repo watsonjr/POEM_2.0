@@ -45,19 +45,19 @@ plt.ylabel('Planktivore biomass (g m-2)',fontsize=14)
 plt.savefig('./PDF/Fig_POEM_plan.pdf',dpi=200)
 
 
-plt.figure(figsize=(10,5))
-ax = plt.axes()
-ax.set_color_cycle([plt.cm.winter_r(i) for i in np.linspace(0, 1, DETR.shape[1])])
-for i in np.arange(0,DETR.shape[1]-1):
-    plt.plot(x,(DETR[-lookback-1:-1,i]))
-plt.legend(['small','','','','big'],bbox_to_anchor=(1.05, 1),loc=2,                            borderaxespad=0.)
-pos1 = ax.get_position()
-pos2 = [pos1.x0, pos1.y0,  pos1.width / 1.2, pos1.height]
-ax.set_position(pos2)
-plt.xlabel('Time (years)')
-plt.ylabel('Detritivore biomass (g m-2)')
-plt.savefig('./PDF/Fig_POEM_detr.pdf',dpi=200)
-
+#plt.figure(figsize=(10,5))
+#ax = plt.axes()
+#ax.set_color_cycle([plt.cm.winter_r(i) for i in np.linspace(0, 1, DETR.shape[1])])
+#for i in np.arange(0,DETR.shape[1]-1):
+#    plt.plot(x,(DETR[-lookback-1:-1,i]))
+#plt.legend(['small','','','','big'],bbox_to_anchor=(1.05, 1),loc=2,                            borderaxespad=0.)
+#pos1 = ax.get_position()
+#pos2 = [pos1.x0, pos1.y0,  pos1.width / 1.2, pos1.height]
+#ax.set_position(pos2)
+#plt.xlabel('Time (years)')
+#plt.ylabel('Detritivore biomass (g m-2)')
+#plt.savefig('./PDF/Fig_POEM_detr.pdf',dpi=200)
+#
 
 plt.figure(); ax = plt.axes()
 plt.plot(x,BENT[-lookback-1:-1])
