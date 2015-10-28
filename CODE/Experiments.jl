@@ -6,7 +6,7 @@ function Testoneloc()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/Data_000001.jld"); # first year's data 
+	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
 	YEARS = 100
 	DAYS = 365
 

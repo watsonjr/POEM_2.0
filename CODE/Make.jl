@@ -8,8 +8,8 @@ include("sub_functions.jl")
 include("Experiments.jl")
 
 ####!! EXPERIMENTS
-testoneloc = true
-spinup_pristine = false
+testoneloc = false
+spinup_pristine = true
 forecast_pristine = false
 spinup_fished = false
 forecast_fished = false

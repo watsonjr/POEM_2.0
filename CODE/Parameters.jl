@@ -84,7 +84,7 @@ function make_parameters(harv)
 	#! Grid parameters
 	global GRD = load("./Data/Data_grid.jld"); # spatial information
     const global GRD_Z = GRD["Z"]
-    const global GRD_A = GRD["AREA"][GRD["ID"]] # change this once rerun make_grid
+    const global GRD_A = GRD["AREA"]#[GRD["ID"]] # change this once rerun make_grid
 
 	#! Integration parameters
 	const global DT = 1.; # time step
