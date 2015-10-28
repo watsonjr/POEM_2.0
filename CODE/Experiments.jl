@@ -72,11 +72,15 @@ function Spinup_pristine()
 
 	#! choose where and when to run the model
 	const global YEARS = 30; # integration period in years
-	const global NX = 48111
+	const global NX = 10     # 48111
 	const global ID = [1:NX]
 
 	#! Storage
-	S_PISC = zeros(48111,PI_N)
+	f_PISC = matopen("./Data/NPZ/Spinup_pristine_PISC.mat","w")
+    f_PLAN = matopen("./Data/NPZ/Spinup_pristine_PLAN.mat","w")
+    f_DETR = matopen("./Data/NPZ/Spinup_pristine_DETR.mat","w")
+    f_BENT = matopen("./Data/NPZ/Spinup_pristine_BENT.mat","w")
+    S_PISC = zeros(48111,PI_N)
 	S_PLAN = zeros(48111,PL_N)
 	S_DETR = zeros(48111,DE_N)
 	S_BENT = zeros(48111,1)
@@ -108,10 +112,16 @@ function Spinup_pristine()
 	end
 
 	#! Save
-	npzwrite("./Data/NPZ/Spinup_pristine_PISC.npy",S_PISC)
-	npzwrite("./Data/NPZ/Spinup_pristine_PLAN.npy",S_PLAN)
-	npzwrite("./Data/NPZ/Spinup_pristine_DETR.npy",S_DETR)
-	npzwrite("./Data/NPZ/Spinup_pristine_BENT.npy",S_BENT)
+	write(f_PISC,"S_PISC",S_PISC)
+	write(f_PLAN,"S_PLAN",S_PLAN)
+	write(f_DETR,"S_DETR",S_DETR)
+	write(f_BENT,"S_BENT",S_BENT)
+	### close save
+    close(f_PISC)
+    close(f_PLAN)
+    close(f_DETR)
+    close(f_BENT)
+	
 
 end
 
