@@ -15,10 +15,11 @@ function Testoneloc()
 	XY = zeros(Int,360,200); # choose a particulat place or everywhere
 	XY[GRD["ID"]] =[1:GRD["N"]]
 	#ID = XY[195,102] # Humboldt
-	ID = XY[270,156] # Iberian location
+	#ID = XY[270,156] # Iberian location
 	#ID = XY[265,156] # Iberian location off shore
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
+	ID = 1 # 70 m depth
 	const global NX = length(ID)
 
 	#! Initialize

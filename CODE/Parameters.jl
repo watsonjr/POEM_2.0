@@ -84,10 +84,10 @@ function make_parameters(harv)
 	#! Grid parameters
 	global GRD = load("./Data/Data_grid.jld"); # spatial information
     const global GRD_Z = GRD["Z"]
-    const global GRD_A = GRD["AREA"][GRD["ID"]] # change this once rerun make_grid
+    const global GRD_A = GRD["AREA"]#[GRD["ID"]] # change this once rerun make_grid
 
 	#! Integration parameters
-	const global DT = 1.; # time step
+	const global DT = 1; # time step
     const global DAYS = 365; # number of days
 
 	#! Amount of fishing
@@ -98,9 +98,10 @@ function make_parameters(harv)
 	end
 
 	#! Number of size classes (#)
-	const global PI_N = 10;
-	const global PL_N = 10;
-	const global DE_N = 10;
+	const global PI_N = 10
+	const global PL_N = 10
+	const global DE_N = 10
+	const global BE_N = 10
 
 	#! Benthic-pelagic coupling cutoff (depth, m)
 	const global PI_be_cutoff = 500
@@ -134,10 +135,14 @@ function make_parameters(harv)
 	const global Z_s = [exp(1.953 + (2.399*log(2)))*1.0e-6; 
 						exp(1.953 + (2.399*log(20)))*1.0e-6]; 
 
+	#! Benthic particle sizes
+	const global BE_s = linspace((DE_smin/1000),(DE_smax/1000),BE_N)
+
 	#! Log body mass  (log10 g)
 	const global DE_slog = log10(DE_s)
 	const global PI_slog = log10(PI_s)
 	const global PL_slog = log10(PL_s)
+	const global BE_slog = log10(BE_s)
 	const global Z_slog  = log10(Z_s)
 
 	#! Ratio of initial and final body sizes per size-class
@@ -179,12 +184,13 @@ function make_parameters(harv)
 	const global DE_act = exp(0.03*(3.9*DE_s.^0.13))
 	const global PI_bas = 0.0033*PI_s.^-0.13
 	const global PL_bas = 0.0033*PL_s.^-0.13
-	const global DE_bas = 0.0033*DE_s.^-0.13 ### NOTE Changed to account for slow met
+	const global DE_bas = 0.00033*DE_s.^-0.13 ### NOTE Change to account for slow met
 
 	###! Swimming speed (Megrey 2007)
+	DE_norm = 10 # how much less detrivores swim than pelagics
 	const global PI_U = ((3.9*PI_s.^0.13)/100*60*60*24) .* linspace(0.8,0.1,length(PI_s))
 	const global PL_U = ((3.9*PL_s.^0.13)/100*60*60*24) .* linspace(0.8,0.1,length(PL_s))
-	const global DE_U = ((3.9*DE_s.^0.13)/100*60*60*24) .* linspace(0.8,0.1,length(DE_s))
+	const global DE_U = ((3.9*DE_s.^0.13)/100*60*60*24) .* linspace(0.8,0.1,length(DE_s))/DE_norm
 
 	###! Maximum search rate a as a function of body size
 	# calculate swimming speed (m d-1)
@@ -197,7 +203,7 @@ function make_parameters(harv)
 		a = U .* (L.*2) .* p; #length x2 for visual diameter 
 		return a
 	end
-	const global DE_a = fnc_a(DE_s)./1 # Anieke says detritivores move around less
+	const global DE_a = fnc_a(DE_s)./DE_norm # Anieke says detritivores move around less
 	const global PI_a = fnc_a(PI_s)./1
 	const global PL_a = fnc_a(PL_s)./1
 
@@ -233,6 +239,7 @@ function make_parameters(harv)
 				pij = 0.
 			end
 			PIJ[i] = pij;
+	#const global DE_phi_DE = zeros(DE_N,DE_N)
 		end
 		return PIJ
 	end
@@ -266,10 +273,11 @@ function make_parameters(harv)
 		PI_phi_Z[:,i]  = pij_z
 	end
 	#! detritus and zoo feeding preference
-	const global PI_phi_BE  = zeros(1,PI_N)
+	const global PI_phi_BE  = zeros(BE_N,PI_N)
 	#PI_phi_Z = zeros(2,PI_N) # Forcing piscivore to not eat zoo
 	#PI_phi_Z[:,2:end] = zeros(2,PI_N-1)
 	#PI_phi_Z[:,1] = 1.; ## Forcing piscivore smallest to eat zoo
+	#const global DE_phi_DE = zeros(DE_N,DE_N)
 	#PI_phi_DE  = zeros(DE_N,PI_N)
 	#PI_phi_Z  = zeros(1,PI_N)
 
@@ -277,10 +285,10 @@ function make_parameters(harv)
 	####! Planktivore (eats only zooplankton)
 	const global PL_phi_Z = zeros(2,PL_N);
 	for i = 1:PL_N
-		pij_z = fnc_pij(PL_s[i],Z_s,3,1) # prey preference for PL
+		pij_z = fnc_pij(PL_s[i],Z_s,2,1) # prey preference for PL
 
 		# normalize
-		Sj = [pij_z];
+		Sj = collect(pij_z);
 		if sum(Sj)!=0.
 			max = maximum(Sj);
 			pij_z = pij_z / max;
@@ -290,7 +298,7 @@ function make_parameters(harv)
 		PL_phi_Z[:,i]  = pij_z
 	end
 	#! other feeding kernels
-	const global PL_phi_BE = zeros(1,PL_N)
+	const global PL_phi_BE = zeros(BE_N,PL_N)
 	const global PL_phi_PI = zeros(PI_N,PL_N)
 	const global PL_phi_PL = zeros(PL_N,PL_N)
 	const global PL_phi_DE = zeros(DE_N,PL_N)
@@ -298,13 +306,15 @@ function make_parameters(harv)
 
 	####! Detritivore (eats only detritus and other detritivores)
 	const global DE_phi_DE = zeros(DE_N,DE_N);
-	const global DE_phi_BE = zeros(1,DE_N);
+	#const global DE_phi_BE = ones(BE_N,DE_N);
+	const global DE_phi_BE = zeros(BE_N,DE_N);
 	for i = 1:DE_N
 		pij_de = fnc_pij(DE_s[i],DE_s,2,1) # prey preference for DE
-		pij_be = fnc_pij(DE_s[i],DE_s[1]/100,2,1) # prey preference for DE
+		pij_be = fnc_pij(DE_s[i],BE_s,2,1) # prey preference for DE
 
 		# normalize
 		Sj = [pij_de; pij_be];
+		#Sj = [pij_be];
 		if sum(Sj)!=0.
 			max = maximum(Sj);
 			pij_de = pij_de / max;

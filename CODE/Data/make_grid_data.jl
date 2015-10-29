@@ -25,11 +25,11 @@ using NetCDF, HDF5, JLD
 #! GRD  = Lon,Lat of ESM grid cell centroids
 TIME = ncread("./NC/ocean_cobalt_biomass_100.200601-210012.nlgz_100.nc",
 	"average_T1"); # timeLAT = ncread("./GCM/grid_spec.nc","geolat_t"); # lat
-LON = ncread("./GCM/grid_spec.nc","geolon_t"); # lon
-LAT = ncread("./GCM/grid_spec.nc","geolat_t"); # lon
-Z   = ncread("./GCM/grid_spec.nc","ht"); # depth
-dx = ncread("./GCM/grid_spec.nc","dxt")
-dy = ncread("./GCM/grid_spec.nc","dyt")
+LON = ncread("./GCM/Forecast/grid_spec.nc","geolon_t"); # lon
+LAT = ncread("./GCM/Forecast/grid_spec.nc","geolat_t"); # lon
+Z   = ncread("./GCM/Forecast/grid_spec.nc","ht"); # depth
+dx = ncread("./GCM/Forecast/grid_spec.nc","dxt")
+dy = ncread("./GCM/Forecast/grid_spec.nc","dyt")
 AREA = dx.*dy # area in m
 
 

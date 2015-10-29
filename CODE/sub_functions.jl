@@ -133,7 +133,7 @@ function sub_enc_plz!(enc::Array{Float64},Zm,Zl)
 	nothing
 end
 
-###! Planktivore encounter rates
+###! DEtrivore encounter rates
 function sub_enc_dede!(enc::Array{Float64},prey::Array{Float64})
 	for i = 1:DE_N # pred
 		for j = 1:DE_N # prey
@@ -143,8 +143,20 @@ function sub_enc_dede!(enc::Array{Float64},prey::Array{Float64})
 	nothing
 end
 function sub_enc_debe!(enc::Array{Float64},prey::Array{Float64})
+	##! prey switching
+	#PHI = zeros(size(DE_phi_BE))
+	#for i = 1:DE_N
+	#	for j = 1:BE_N
+	#		tot = sum(DE_phi_BE[i,:] * prey)
+	#		PHI[i,j] = DE_phi_BE[i,j] * ((DE_phi_BE[i,j]*prey[j]) / tot)
+	#	end
+	#end
+	#! encounter rate
 	for i = 1:DE_N # pred
-		enc[i] = prey[1]*DE_phi_BE[i]*DE_a[i]
+		for j = 1:BE_N
+			#enc[j,i] = prey[j]*PHI[j,i]*DE_a[i] # variable diet prey
+			enc[j,i] = prey[j]*DE_phi_BE[j,i]*DE_a[i] # fixed diet prey
+		end
 	end
 	nothing
 end
@@ -173,7 +185,9 @@ function sub_ENC_de!(ENC,enc_de,enc_be)
 		for j = 1:DE_N
 			ENC[i] += enc_de[j,i]
 		end
-		ENC[i] += enc_be[i]
+		for j = 1:BE_N
+			ENC[i] += enc_be[j,i]
+		end
 	end
 end
 function sub_ENC_pl!(ENC,enc_z)
@@ -245,10 +259,10 @@ function sub_consume_dede!(I_de,d_de,bio_de,enc_dede,ENC_de,tau_de)
 	end
 end
 function sub_consume_debe!(I_de,d_be,bio_de,enc_debe,ENC_de,tau_de)
-	for i = 1:DE_N #pred 
-		con = sub_typeII(bio_de[i],enc_debe[1,i],tau_de[i],ENC_de[i])
+	for i = 1:DE_N, j = 1:BE_N #pred 
+		con = sub_typeII(bio_de[i],enc_debe[j,i],tau_de[i],ENC_de[i])
 		I_de[i] += con
-		d_be[1] += con
+		d_be[j] += con
 	end
 end
 
@@ -444,19 +458,23 @@ function sub_update_pl!(bio,rep,grw,mat,d,mrt)
 		bio[i] += (mat[i-1] + grw[i] - mrt[i] - rep[i] - mat[i] - d[i]) * DT
 	end
 end
-#function sub_update_de!(bio,rep,grw,mat,d,mrt)
+#function sub_update_de!(bio,grw,d,mrt) #! reduced detrivore model
 #	for i = 1:DE_N
-#		bio[i] += (grw[i] - mrt[i] - d[i]) * DT
+#		bio[i] += (grw[i] - d[i] - mrt[i]) * DT
 #	end
 #end
-function sub_update_de!(bio,rep,grw,mat,d,mrt)
+function sub_update_de!(bio,rep,grw,mat,d,mrt) #! Van Leeuven detrivore model
 	bio[1] += (sum(rep) + grw[1] - mat[1] - d[1] - mrt[1]) * DT
 	for i = 2:DE_N
 		bio[i] += (mat[i-1] + grw[i] - mrt[i] - rep[i] - mat[i] - d[i]) * DT
 	end
 end
 function sub_update_be!(bio,d,det)
-    bio[1] += (det - d[1] - (bio[1]*0.01)) * DT # with sedimentation
+    #bio[1] += (det - (bio[1]*0.01)) * DT # with sedimentation
+    for i = 1:BE_N
+    	#bio[i] += ((det/BE_N) - d[i]) * DT # with sedimentation
+    	bio[i] += ((det/BE_N) - d[i] - (bio[i]*0.001)) * DT # with sedimentation
+    end
 end
 
 ###! Fishing
@@ -513,8 +531,10 @@ function sub_check_de!(bio)
 	end
 end
 function sub_check_be!(bio)
-	if bio[1] <= 0.0 || isnan(bio[1])==1
-		bio[1] = eps()
+	for i = 1:BE_N
+		if bio[i] <= 0.0 || isnan(bio[1])==1
+			bio[i] = eps()
+		end
 	end
 end
 

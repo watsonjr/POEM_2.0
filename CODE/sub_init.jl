@@ -32,7 +32,7 @@ function sub_init_fish(ID)
 		bio_pi[i] = ones(Float64,PI_N) .* X
 		bio_pl[i] = ones(Float64,PL_N) .* X
 		bio_de[i] = ones(Float64,DE_N) .* X
-		bio_be[i] = ones(Float64,1) .* X
+		bio_be[i] = ones(Float64,BE_N) .* X
 	end
 
 	# fraction of time spent in the pelagic
@@ -102,7 +102,7 @@ function sub_init_fish(ID)
     	d_pi[i] = zeros(Float64,PI_N)
     	d_pl[i] = zeros(Float64,PL_N)
     	d_de[i] = zeros(Float64,DE_N)
-    	d_be[i] = zeros(Float64,1)
+    	d_be[i] = zeros(Float64,BE_N)
     	#d_be[i] = zeros(Float64,1,1)
     end
 
@@ -201,7 +201,7 @@ function sub_init_fish(ID)
 	enc_debe = Array(Any,NX)
     for i = 1:NX
         enc_dede[i] = Array(Float64,DE_N,DE_N)
-        enc_debe[i] = Array(Float64,1,DE_N)
+        enc_debe[i] = Array(Float64,BE_N,DE_N)
     end
 
 	#! total detrivore Encounter rates

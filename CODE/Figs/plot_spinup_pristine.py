@@ -8,6 +8,7 @@ from scipy import ndimage
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Polygon
 import matplotlib.patches as patches
+import seaborn
 
 
 #! Define plotting function
@@ -61,7 +62,7 @@ BENT_M = np.zeros((200,360))
 PISC_M[ID] = np.sum(PISC,1)
 PLAN_M[ID] = np.sum(PLAN,1)
 DETR_M[ID] = np.sum(DETR,1)
-BENT_M[ID] = BENT[:,0]
+BENT_M[ID] = np.sum(BENT,1)
 
 #! Plot
 plot_globe(Lon,Lat,PISC_M,"Fig_fish_pisc.png")

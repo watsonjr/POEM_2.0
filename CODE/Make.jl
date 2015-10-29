@@ -1,6 +1,6 @@
 
 ####!! NUTS AND BOLTS
-using HDF5, JLD, Devectorize, NPZ, NetCDF
+using HDF5, JLD, Devectorize, NetCDF
 include("Parameters.jl")
 include("sub_init.jl")
 include("sub_routines.jl")
@@ -8,8 +8,8 @@ include("sub_functions.jl")
 include("Experiments.jl")
 
 ####!! EXPERIMENTS
-testoneloc = true
-spinup_pristine = false
+testoneloc = false
+spinup_pristine = true
 forecast_pristine = false
 spinup_fished = false
 forecast_fished = false

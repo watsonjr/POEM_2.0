@@ -5,11 +5,11 @@ function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
 	###! COBALT information
 	get_COBALT!(COBALT,ID,DY,ENVR)
 
-	#! Forward Euler checks
-	map(sub_check_pi!,PISC.bio);
-	map(sub_check_pl!,PLAN.bio);
-	map(sub_check_de!,DETR.bio);
-	map(sub_check_be!,BENT.bio);
+	##! Forward Euler checks
+	#map(sub_check_pi!,PISC.bio);
+	#map(sub_check_pl!,PLAN.bio);
+	#map(sub_check_de!,DETR.bio);
+	#map(sub_check_be!,BENT.bio);
 
 	#! temperature multiplier
 	PISC.tmet = map(sub_tmet,PISC.tmet,ENVR.Tp);
@@ -71,12 +71,12 @@ function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
 	map(sub_consume_pizoo!,PISC.I,PISC.I_z);
 	map(sub_consume_plzoo!,PLAN.I,PLAN.I_z);
 
-	#! total energy available for growth nu
+	#! energy available for somatic growth nu
 	map(sub_nu_pi!,PISC.nu,PISC.bio,PISC.I,PISC.met);
 	map(sub_nu_pl!,PLAN.nu,PLAN.bio,PLAN.I,PLAN.met);
 	map(sub_nu_de!,DETR.nu,DETR.bio,DETR.I,DETR.met);
 
-	#! somatic growth
+	#! maturation
 	map(sub_gamma_pi!,PISC.gamma,PISC.nu,PISC.bio,PISC.d);
 	map(sub_gamma_pl!,PLAN.gamma,PLAN.nu,PLAN.bio,PLAN.d);
 	map(sub_gamma_de!,DETR.gamma,DETR.nu,DETR.bio,DETR.d);
@@ -104,6 +104,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
 	#! Mass balance	
 	map(sub_update_pi!,PISC.bio,PISC.REP,PISC.GRW,PISC.MAT,PISC.d,PISC.MRT);
 	map(sub_update_pl!,PLAN.bio,PLAN.REP,PLAN.GRW,PLAN.MAT,PLAN.d,PLAN.MRT);
+	#map(sub_update_de!,DETR.bio,DETR.GRW,DETR.d,DETR.MRT);
 	map(sub_update_de!,DETR.bio,DETR.REP,DETR.GRW,DETR.MAT,DETR.d,DETR.MRT);
 	map(sub_update_be!,BENT.bio,BENT.d,ENVR.det);
 
@@ -116,7 +117,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
 	map(sub_check_de!,DETR.bio);
 	map(sub_check_be!,BENT.bio);
 
-	#! Movement
+#! Movement
 
 end
 
