@@ -49,13 +49,64 @@ de_bsum = squeeze(sum(de_b,1));
 
 %Piscivore
 figure(1)
-%subplot(1,2,1)
+subplot(1,2,1)
 plot(time,pi_bsum);
 xlim([time(1) time(end)])
 title('Piscivore')
 xlabel('Time (mo)')
 ylabel('Biomass (g km^-^2)')
 legend(num2str(pi_s))
+subplot(2,2,2)
+plot(time(1:24),pi_bsum(:,1:24),'Linewidth',2)
+xlim([1 24])
+subplot(2,2,4)
+plot(time(336:360),pi_bsum(:,336:360),'Linewidth',2)
+xlim([336 360])
 
+%Planktivore
+figure(2)
+subplot(1,2,1)
+plot(time,pl_bsum)
+xlim([time(1) time(end)])
+title('Planktivore')
+xlabel('Time (d)')
+ylabel('Biomass (g km^-^2)')
+legend(num2str(pl_s))
+subplot(2,2,2)
+plot(time(1:24),pl_bsum(:,1:24),'Linewidth',2)
+xlim([1 24])
+subplot(2,2,4)
+plot(time(336:360),pl_bsum(:,336:360),'Linewidth',2)
+xlim([336 360])
+
+%Detritivore
+figure(3)
+subplot(1,2,1)
+plot(time,de_bsum)
+xlim([time(1) time(end)])
+title('Detritivore')
+xlabel('Time (d)')
+ylabel('Biomass (g km^-^2)')
+legend(num2str(de_s))
+subplot(2,2,2)
+plot(time(1:24),de_bsum(:,1:24),'Linewidth',2)
+xlim([1 24])
+subplot(2,2,4)
+plot(time(336:360),de_bsum(:,336:360),'Linewidth',2)
+xlim([336 360])
+
+%% Plots in space
+% Sum or average over time
+%What amount of time?
+
+gpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
+grid = csvread([gpath 'grid_csv.csv']);
+%fix lon shift
+id=find(grid(:,2)<-180);
+grid(id,2)=grid(id,2)+360;
+x=-180:180;
+y=-90:90;
+[X,Y]=meshgrid(x,y);
+Z=griddata(grid(:,2),grid(:,3),grid(:,4),X,Y);
 
 
