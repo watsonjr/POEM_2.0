@@ -72,55 +72,156 @@ function Spinup_pristine()
 
 	#! choose where and when to run the model
 	const global YEARS = 30; # integration period in years
-	const global NX = 10     # 48111
-	const global ID = [1:NX]
+	const global NX = 48111;
+	const global ID =[1:NX];
+	const global DAYS = 365; # number of days 
+	const global MNTH = [31,28,31,30,31,30,31,31,30,31,30,31] # days in month
 
-	#! Storage
-	f_PISC = matopen("./Data/NPZ/Spinup_pristine_PISC.mat","w")
-    f_PLAN = matopen("./Data/NPZ/Spinup_pristine_PLAN.mat","w")
-    f_DETR = matopen("./Data/NPZ/Spinup_pristine_DETR.mat","w")
-    f_BENT = matopen("./Data/NPZ/Spinup_pristine_BENT.mat","w")
-    S_PISC = zeros(48111,PI_N)
-	S_PLAN = zeros(48111,PL_N)
-	S_DETR = zeros(48111,DE_N)
-	S_BENT = zeros(48111,1)
+	#! Storage Matlab cell 
+#	f_PISC = matopen("./Data/NPZ/Spinup_pristine_PISC.mat","w")
+#   f_PLAN = matopen("./Data/NPZ/Spinup_pristine_PLAN.mat","w")
+#   f_DETR = matopen("./Data/NPZ/Spinup_pristine_DETR.mat","w")
+#   f_BENT = matopen("./Data/NPZ/Spinup_pristine_BENT.mat","w")
+#   S_PISC = zeros(NX,PI_N)
+#	S_PLAN = zeros(NX,PL_N)
+#	S_DETR = zeros(NX,DE_N)
+#	S_BENT = zeros(NX,1)
+#	A_PISC = Array(Any,YEARS,DAYS)
+#	A_PLAN = Array(Any,YEARS,DAYS)
+#	A_DETR = Array(Any,YEARS,DAYS)
+#	A_BENT = Array(Any,YEARS,DAYS)
+#	for i=1:YEARS
+#		for j=1:DAYS
+#			A_PISC[i,j] = Array(Float64,NX,PI_N)
+#			A_PLAN[i,j] = Array(Float64,NX,PL_N)
+#			A_DETR[i,j] = Array(Float64,NX,DE_N)
+#			A_BENT[i,j] = Array(Float64,NX,1)
+#		end
+#	end
+
+	#! Storage arrays (daily)
+	DAY_PISC = zeros(NX,PI_N,DAYS);
+	DAY_PLAN = zeros(NX,PL_N,DAYS);
+	DAY_DETR = zeros(NX,DE_N,DAYS);
+	DAY_BENT = zeros(NX,1,DAYS);
+
+	#! Init netcdf file for storage
+	varatts = {"longname" => "Biomass",
+           "units"    => "kg/m^2"}
+	X_atts = {"longname" => "Space",
+			"units"    => "grid cell"}
+	S_atts = {"longname" => "Size classes",
+			"units"    => "g"}
+	timatts = {"longname" => "Time",
+			"units"    => "hours since 01-01-2000 00:00:00"}
+
+	#! Init dims of netcdf file
+	S_pi=[1:PI_N] ;	S_pl=[1:PL_N] ; S_de=[1:DE_N] ;	S_be=[1:1] 
+	X=[1:NX] ; tim=[1:12*YEARS]
+
+	#! setup netcdf path to store to
+	file_pisc = "./Data/NC/Spinup_pristine_pisc.nc"
+	file_plan = "./Data/NC/Spinup_pristine_plan.nc"
+	file_detr = "./Data/NC/Spinup_pristine_detr.nc"
+	file_bent = "./Data/NC/Spinup_pristine_bent.nc"
+
+	#! remove if already in existence
+	isfile(file_pisc) ? rm(file_pisc) : nothing 
+	isfile(file_plan) ? rm(file_plan) : nothing 
+	isfile(file_detr) ? rm(file_detr) : nothing 
+	isfile(file_bent) ? rm(file_bent) : nothing 
+
+	#! create netcdf files
+	nccreate(file_pisc,"biomass","X",X,X_atts,"S",S_pi,S_atts,"time",tim,timatts,atts=varatts)
+	nccreate(file_plan,"biomass","X",X,X_atts,"S",S_pl,S_atts,"time",tim,timatts,atts=varatts)
+	nccreate(file_detr,"biomass","X",X,X_atts,"S",S_de,S_atts,"time",tim,timatts,atts=varatts)
+	nccreate(file_bent,"biomass","X",X,X_atts,"S",S_be,S_atts,"time",tim,timatts,atts=varatts)
+
+	#! Initializing netcdf files
+	println("Initializing file system (takes about 2 minutes)")
+	ncwrite(zeros(NX,PI_N,1),file_pisc,"biomass",[1,1,1])
+	ncwrite(zeros(NX,PL_N,1),file_plan,"biomass",[1,1,1])
+	ncwrite(zeros(NX,DE_N,1),file_detr,"biomass",[1,1,1])
+	ncwrite(zeros(NX,1,1),file_bent,"biomass",[1,1,1])
+
+
 
 	#! Initialize
 	PISC,PLAN,DETR,BENT = sub_init_fish(ID);
 	ENVR = sub_init_env(ID);
-
+	
 	#! Run model with no fishing
+	#! Iterate Model forward in time
+	MNT = 0; # monthly ticker
 	for YR = 1:YEARS # years
+	
+		#! Load a year's COBALT data
+		ti = string(YR+1000000)
+		#COBALT = load(string("./Data/Data_",ti[2:end],".jld")); # first year's data 
+		COBALT = load(string("./Data/JLD/Data_",ti[2:end],".jld")); # first year's data 
+
 
 		for DAY = 1:DT:DAYS # days 
 
+			###! ticker
 			###! Future time step
 			DY  = int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT);
+			
+			###! Daily storage Matlab
+#			for i = 1:NX
+#				S_PISC[i,:] = PISC.bio[i]
+#				S_PLAN[i,:] = PLAN.bio[i]
+#				S_DETR[i,:] = DETR.bio[i]
+#				S_BENT[i,1] = BENT.bio[i][1]
+#			end
+#			A_PISC[YR,DAY] = S_PISC
+#			A_PLAN[YR,DAY] = S_PLAN
+#			A_DETR[YR,DAY] = S_DETR
+#			A_BENT[YR,DAY] = S_BENT
 
+			###! Daily storage NetCDF
+			for i = 1:NX
+				DAY_PISC[i,:,DAY] = PISC.bio[i]
+				DAY_PLAN[i,:,DAY] = PLAN.bio[i]
+				DAY_DETR[i,:,DAY] = DETR.bio[i]
+				DAY_BENT[i,1,DAY] = BENT.bio[i][1]
+			end
+			
+
+		end
+		
+		#! Calculate monthly means and save
+		a = [1,(cumsum(MNTH)+1)[1:end-1]] # start of the month
+		b = cumsum(MNTH) # end of the month
+		for i = 1:12
+			MNT += 1 # Update monthly ticker
+			ncwrite(mean(DAY_PISC[:,:,a[i]:b[i]],3),file_pisc,"biomass",[1,1,MNT])
+			ncwrite(mean(DAY_PLAN[:,:,a[i]:b[i]],3),file_plan,"biomass",[1,1,MNT])
+			ncwrite(mean(DAY_DETR[:,:,a[i]:b[i]],3),file_detr,"biomass",[1,1,MNT])
+			ncwrite(mean(DAY_BENT[:,:,a[i]:b[i]],3),file_bent,"biomass",[1,1,MNT])
 		end
 
 	end
 
-	#! Store
-	for i = 1:NX
-		S_PISC[i,:] = PISC.bio[i]'
-		S_PLAN[i,:] = PLAN.bio[i]'
-		S_DETR[i,:] = DETR.bio[i]'
-		S_BENT[i,:] = BENT.bio[i]'
-	end
+	
+	#! Save Matlab
+#	write(f_PISC,"A_PISC",A_PISC)
+#	write(f_PLAN,"A_PLAN",A_PLAN)
+#	write(f_DETR,"A_DETR",A_DETR)
+#	write(f_BENT,"A_BENT",A_BENT)
+#	### close save Matlab
+#    close(f_PISC)
+#    close(f_PLAN)
+#    close(f_DETR)
+#    close(f_BENT)
 
-	#! Save
-	write(f_PISC,"S_PISC",S_PISC)
-	write(f_PLAN,"S_PLAN",S_PLAN)
-	write(f_DETR,"S_DETR",S_DETR)
-	write(f_BENT,"S_BENT",S_BENT)
-	### close save
-    close(f_PISC)
-    close(f_PLAN)
-    close(f_DETR)
-    close(f_BENT)
+#! Close save 
+	ncclose(file_pisc)
+	ncclose(file_plan)
+	ncclose(file_detr)
+	ncclose(file_bent)
 	
 
 end
@@ -142,10 +243,10 @@ function Spinup_fished()
 	const global ID = [1:NX]
 
 	#! Storage
-	S_PISC = zeros(48111,PI_N)
-	S_PLAN = zeros(48111,PL_N)
-	S_DETR = zeros(48111,DE_N)
-	S_BENT = zeros(48111,1)
+	S_PISC = zeros(NX,PI_N)
+	S_PLAN = zeros(NX,PL_N)
+	S_DETR = zeros(NX,DE_N)
+	S_BENT = zeros(NX,1)
 
 	#! Initialize using pristine run
 	ENVR = sub_init_env(ID);
