@@ -7,6 +7,7 @@ function Testoneloc()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+	S = readdlm("./Data/spawn_test.csv",',');
 	YEARS = 100
 	DAYS = 365
 
@@ -15,10 +16,11 @@ function Testoneloc()
 	XY = zeros(Int,360,200); # choose a particulat place or everywhere
 	XY[GRD["ID"]] =[1:GRD["N"]]
 	#ID = XY[195,102] # Humboldt
-	ID = XY[270,156] # Iberian location
+	#ID = XY[270,156] # Iberian location
 	#ID = XY[265,156] # Iberian location off shore
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
+	ID = 40319		 # GB, -66.5,41.5, 
 	const global NX = length(ID)
 
 	#! Initialize
@@ -26,10 +28,10 @@ function Testoneloc()
 	ENVR = sub_init_env(ID);
 
 	#! Storage
-	Spinup_PISC = open("./Data/CSV/Spinup_PISC.csv","w")
-    Spinup_PLAN = open("./Data/CSV/Spinup_PLAN.csv","w")
-    Spinup_DETR = open("./Data/CSV/Spinup_DETR.csv","w")
-    Spinup_BENT = open("./Data/CSV/Spinup_BENT.csv","w")
+	Spinup_PISC = open("./Data/CSV/Spinup_vspawn_PISC.csv","w")
+    Spinup_PLAN = open("./Data/CSV/Spinup_vspawn_PLAN.csv","w")
+    Spinup_DETR = open("./Data/CSV/Spinup_vspawn_DETR.csv","w")
+    Spinup_BENT = open("./Data/CSV/Spinup_vspawn_BENT.csv","w")
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
@@ -41,7 +43,7 @@ function Testoneloc()
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT);
+			sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT);
 
 			#! Save
 			writecsv(Spinup_PISC,PISC.bio[1]')
@@ -69,6 +71,8 @@ function Spinup_pristine()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+	#S = zeros(size(COBALT["Tp"]));
+	S = load("./Data/spawn_test.csv");
 
 	#! choose where and when to run the model
 	const global YEARS = 30; # integration period in years

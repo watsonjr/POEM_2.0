@@ -7,41 +7,45 @@ close all
 
 dpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 
-pi = csvread([dpath 'Spinup_PISC.csv']);
-pl = csvread([dpath 'Spinup_PLAN.csv']);
-de = csvread([dpath 'Spinup_DETR.csv']);
+% pi = csvread([dpath 'Spinup_PISC.csv']);
+% pl = csvread([dpath 'Spinup_PLAN.csv']);
+% de = csvread([dpath 'Spinup_DETR.csv']);
+pi = csvread([dpath 'Spinup_vspawn_PISC.csv']);
+pl = csvread([dpath 'Spinup_vspawn_PLAN.csv']);
+de = csvread([dpath 'Spinup_vspawn_DETR.csv']);
 
 %% Plots over time
 x=1:length(pi);
+x=x/365;
 
-%Piscivore
+%% Piscivore
 figure(1)
 subplot(1,2,1)
 plot(x,pi)
 xlim([x(1) x(end)])
 title('Piscivore')
-xlabel('Time (d)')
+xlabel('Time (y)')
 ylabel('Biomass (g km^-^2)')
 legend('1','2','3','4','5','6','7','8','9','10')
 subplot(2,2,2)
 plot(x(1:730),pi(1:730,:),'Linewidth',2)
-xlim([1 730])
+xlim([x(1) x(730)])
 subplot(2,2,4)
 plot(x((end-731):end),pi((end-731):end,:),'Linewidth',2)
 xlim([x(end-731) x(end)])
 
-%Planktivore
+% Planktivore
 figure(2)
 subplot(1,2,1)
 plot(x,pl)
 xlim([x(1) x(end)])
 title('Planktivore')
-xlabel('Time (d)')
+xlabel('Time (y)')
 ylabel('Biomass (g km^-^2)')
 legend('1','2','3','4','5','6','7','8','9','10')
 subplot(2,2,2)
 plot(x(1:730),pl(1:730,:),'Linewidth',2)
-xlim([1 730])
+xlim([x(1) x(730)])
 subplot(2,2,4)
 plot(x((end-366):end),pl((end-366):end,:),'Linewidth',2)
 xlim([x(end-366) x(end)])
@@ -52,12 +56,12 @@ subplot(1,2,1)
 plot(x,de)
 xlim([x(1) x(end)])
 title('Detritivore')
-xlabel('Time (d)')
+xlabel('Time (y)')
 ylabel('Biomass (g km^-^2)')
 legend('1','2','3','4','5','6','7','8','9','10')
 subplot(2,2,2)
 plot(x(1:730),de(1:730,:),'Linewidth',2)
-xlim([1 730])
+xlim([x(1) x(730)])
 subplot(2,2,4)
 plot(x((end-366):end),de((end-366):end,:),'Linewidth',2)
 xlim([x(end-366) x(end)])
@@ -69,7 +73,7 @@ for i=1:10
     plot(x(36134:36500),pi(36134:36500,i),'k','Linewidth',2); hold on
     xlim([x(36134) x(end)])
     ylim([0 5e-3])
-    xlabel('Time (d)')
+    xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
 end
 %
@@ -79,7 +83,7 @@ for i=1:10
     plot(x(36134:36500),pl(36134:36500,i),'b','Linewidth',2); hold on
     xlim([x(36134) x(end)])
     %ylim([0 2.5e-16])
-    xlabel('Time (d)')
+    xlabel('Time (y)')
     ylabel('(g km^-^2)')
 end
 %
@@ -89,7 +93,7 @@ for i=1:10
     plot(x(36134:36500),de(36134:36500,i),'r','Linewidth',2); hold on
     xlim([x(36134) x(end)])
     %ylim([0 1.2e-8])
-    xlabel('Time (d)')
+    xlabel('Time (y)')
     ylabel('log Biomass (g km^-^2)')
 end
 
@@ -102,7 +106,7 @@ for i=1:10
     plot(x(36134:36500),log(de(36134:36500,i)),'r','Linewidth',2); hold on
     xlim([x(36134) x(end)])
     ylim([-100 0])
-    xlabel('Time (d)')
+    xlabel('Time (y)')
     ylabel('log Biomass (g km^-^2)')
 end
 legend('Piscivore','Planktivore','Detritivore')
