@@ -6,13 +6,13 @@ clear all
 close all
 
 dpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
+fpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-% pi = csvread([dpath 'Spinup_PISC.csv']);
-% pl = csvread([dpath 'Spinup_PLAN.csv']);
-% de = csvread([dpath 'Spinup_DETR.csv']);
-pi = csvread([dpath 'Spinup_vspawn_PISC.csv']);
-pl = csvread([dpath 'Spinup_vspawn_PLAN.csv']);
-de = csvread([dpath 'Spinup_vspawn_DETR.csv']);
+%sname = 'Spinup_';
+sname = 'Spinup_vspawn_';
+pi = csvread([dpath sname 'PISC.csv']);
+pl = csvread([dpath sname 'PLAN.csv']);
+de = csvread([dpath sname 'DETR.csv']);
 
 %% Plots over time
 x=1:length(pi);
@@ -33,6 +33,7 @@ xlim([x(1) x(730)])
 subplot(2,2,4)
 plot(x((end-731):end),pi((end-731):end,:),'Linewidth',2)
 xlim([x(end-731) x(end)])
+print('-dpng',[fpath sname 'oneloc_pisc_time.png'])
 
 % Planktivore
 figure(2)
@@ -49,6 +50,7 @@ xlim([x(1) x(730)])
 subplot(2,2,4)
 plot(x((end-366):end),pl((end-366):end,:),'Linewidth',2)
 xlim([x(end-366) x(end)])
+print('-dpng',[fpath sname 'oneloc_plan_time.png'])
 
 %Detritivore
 figure(3)
@@ -65,6 +67,7 @@ xlim([x(1) x(730)])
 subplot(2,2,4)
 plot(x((end-366):end),de((end-366):end,:),'Linewidth',2)
 xlim([x(end-366) x(end)])
+print('-dpng',[fpath sname 'oneloc_detr_time.png'])
 
 % All size classes of all
 figure(4)
@@ -76,6 +79,7 @@ for i=1:10
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
 end
+print('-dpng',[fpath sname 'oneloc_pisc_sizes.png'])
 %
 figure(5)
 for i=1:10
@@ -86,6 +90,7 @@ for i=1:10
     xlabel('Time (y)')
     ylabel('(g km^-^2)')
 end
+print('-dpng',[fpath sname 'oneloc_plan_sizes.png'])
 %
 figure(6)
 for i=1:10
@@ -96,7 +101,7 @@ for i=1:10
     xlabel('Time (y)')
     ylabel('log Biomass (g km^-^2)')
 end
-
+print('-dpng',[fpath sname 'oneloc_detr_sizes.png'])
 %
 figure(7)
 for i=1:10
@@ -110,9 +115,11 @@ for i=1:10
     ylabel('log Biomass (g km^-^2)')
 end
 legend('Piscivore','Planktivore','Detritivore')
+print('-dpng',[fpath sname 'oneloc_all_sizes.png'])
 
 %% Final mean biomass size spectrum
-lyr=x((end-365):end);
+t=1:length(pi);
+lyr=t((end-365):end);
 pi_sum=sum(pi(lyr,:));
 pi_mean=mean(pi(lyr,:));
 pl_sum=sum(pl(lyr,:));
@@ -148,6 +155,7 @@ title('Detritivores')
 subplot(2,3,6)
 bar(de_mean,'r')
 xlim([0 11])
+print('-dpng',[fpath sname 'oneloc_all_biomass_spec.png'])
 
 %% log scale with weight
 %Number of size classes
@@ -184,6 +192,7 @@ plot(log(PL_s),log(pl_mean),'b','Linewidth',2); hold on;
 plot(log(DE_s),log(de_mean),'r','Linewidth',2); hold on;
 xlabel('log Weight of size class (g)')
 ylabel('log Mean Annual Biomass (g km^-^2)')
+print('-dpng',[fpath sname 'oneloc_all_logbiomass_spec.png'])
 
 %
 figure(10)
@@ -203,7 +212,7 @@ plot(log(DE_s),log(de_mean),'r','Linewidth',2); hold on;
 xlim([-3 10])
 xlabel('log Weight of size class (g)')
 title('Detritivores')
-
+print('-dpng',[fpath sname 'oneloc_each_logbiomass_spec.png'])
 
 
 
