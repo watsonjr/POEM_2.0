@@ -20,12 +20,12 @@ function Testoneloc()
 	#ID = XY[265,156] # Iberian location off shore
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
-	#ID = 40319 # Georges Bank
+	ID = 40319 # Georges Bank
     #ID = 42639 # Eastern Bering Sea
     #ID = 41782 # Ocean Station Papa
     #ID = 36334 # HOT
     #ID = 38309 # BATS
- 	ID = 42744 # North Sea
+    #ID = 42744 # North Sea
     const global NX = length(ID)
 
 	#! Initialize
@@ -33,10 +33,10 @@ function Testoneloc()
 	ENVR = sub_init_env(ID);
 
 	#! Storage
-	Spinup_PISC = open("./Data/CSV/Spinup_NS_vspawn_PISC.csv","w")
-    Spinup_PLAN = open("./Data/CSV/Spinup_NS_vspawn_PLAN.csv","w")
-    Spinup_DETR = open("./Data/CSV/Spinup_NS_vspawn_DETR.csv","w")
-    Spinup_BENT = open("./Data/CSV/Spinup_NS_vspawn_BENT.csv","w")
+	Spinup_PISC = open("./Data/CSV/Spinup_GB_vspawn_PISC.csv","w")
+    Spinup_PLAN = open("./Data/CSV/Spinup_GB_vspawn_PLAN.csv","w")
+    Spinup_DETR = open("./Data/CSV/Spinup_GB_vspawn_DETR.csv","w")
+    Spinup_BENT = open("./Data/CSV/Spinup_GB_vspawn_BENT.csv","w")
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years

@@ -8,8 +8,8 @@ close all
 dpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-sname = 'Spinup_OSP_';
-loc = 'OSP';
+sname = 'Spinup_NS_vspawn_';
+loc = 'NS';
 pi = csvread([dpath sname 'PISC.csv']);
 pl = csvread([dpath sname 'PLAN.csv']);
 de = csvread([dpath sname 'DETR.csv']);
@@ -82,7 +82,7 @@ for i=1:10
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
 end
-print('-dpng',[fpath sname 'oneloc_pisc_sizes.png'])
+%print('-dpng',[fpath sname 'oneloc_pisc_sizes.png'])
 %
 figure(5)
 for i=1:10
@@ -93,7 +93,7 @@ for i=1:10
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
 end
-print('-dpng',[fpath sname 'oneloc_plan_sizes.png'])
+%print('-dpng',[fpath sname 'oneloc_plan_sizes.png'])
 %
 figure(6)
 for i=1:10
@@ -104,7 +104,7 @@ for i=1:10
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
 end
-print('-dpng',[fpath sname 'oneloc_detr_sizes.png'])
+%print('-dpng',[fpath sname 'oneloc_detr_sizes.png'])
 %%
 figure(7)
 for i=1:9
@@ -127,7 +127,7 @@ xlabel('Time (y)')
 ylabel('log Biomass (g km^-^2)')
 legend('Piscivore','Planktivore','Detritivore')
 legend('location','eastoutside')
-print('-dpng',[fpath sname 'oneloc_all_sizes.png'])
+%print('-dpng',[fpath sname 'oneloc_all_sizes.png'])
 
 %% Final mean biomass size spectrum
 t=1:length(pi);
@@ -204,7 +204,7 @@ plot(log(PL_s),log(pl_mean),'b','Linewidth',2); hold on;
 plot(log(DE_s),log(de_mean),'r','Linewidth',2); hold on;
 xlabel('log Weight of size class (g)')
 ylabel('log Mean Annual Biomass (g km^-^2)')
-print('-dpng',[fpath sname 'oneloc_all_logbiomass_spec.png'])
+%print('-dpng',[fpath sname 'oneloc_all_logbiomass_spec.png'])
 
 %
 figure(10)
