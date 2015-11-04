@@ -1,5 +1,5 @@
 ###! Get COBALT data
-function get_COBALT!(COBALT,ID,DY,ENVR)
+function get_COBALT!(COBALT,ID,DY,ENVR,S)
     ## Get data
     ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY]
     ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY]
@@ -8,6 +8,7 @@ function get_COBALT!(COBALT,ID,DY,ENVR)
     ENVR.det[:,1] = COBALT["det"][ID,DY]
     ENVR.dZm[:,1] = COBALT["dZm"][ID,DY]
     ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
+    ENVR.K[:,1] = S[ID,DY]
 end
 
 ###! Temperature multiplier for metabolism
@@ -312,10 +313,16 @@ end
 
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
-function sub_gamma_pi!(gamma,nu,bio,d)
+function sub_gamma_pi!(gamma,nu,bio,d,k)
     # note: divide by bio to get biomass specific units
     for i = 1:PI_N
-		gg = ((PI_K[i]*nu[i]) - (d[i]/bio[i]))/(1-(PI_z[i]^(1-((d[i]/bio[i])/(PI_K[i]*nu[i])))))
+    	# Spawning flag
+		if k==1
+			kap=PI_K[i];
+		else
+			kap=1;
+		end
+		gg = ((kap*nu[i]) - (d[i]/bio[i]))/(1-(PI_z[i]^(1-((d[i]/bio[i])/(kap*nu[i])))))
 		if gg < 0 || isnan(gg)==true
 			gamma[i] = 0.0
 		else
@@ -323,10 +330,16 @@ function sub_gamma_pi!(gamma,nu,bio,d)
 		end
 	end
 end
-function sub_gamma_pl!(gamma,nu,bio,d)
+function sub_gamma_pl!(gamma,nu,bio,d,k)
     # note: divide by bio to get biomass specific units
     for i = 1:PL_N
-		gg = ((PL_K[i]*nu[i]) - (d[i]/bio[i]))/(1-(PL_z[i]^(1-((d[i]/bio[i])/(PL_K[i]*nu[i])))))
+    	# Spawning flag
+		if k==1
+			kap=PL_K[i];
+		else
+			kap=1;
+		end
+		gg = ((kap*nu[i]) - (d[i]/bio[i]))/(1-(PL_z[i]^(1-((d[i]/bio[i])/(kap*nu[i])))))
 		if gg < 0 || isnan(gg)==true
 			gamma[i] = 0.0
 		else
@@ -334,10 +347,16 @@ function sub_gamma_pl!(gamma,nu,bio,d)
 		end
 	end
 end
-function sub_gamma_de!(gamma,nu,bio,d)
+function sub_gamma_de!(gamma,nu,bio,d,k)
     # note: divide by bio to get biomass specific units
     for i = 1:DE_N
-		gg = ((DE_K[i]*nu[i]) - (d[i]/bio[i]))/(1-(DE_z[i]^(1-((d[i]/bio[i])/(DE_K[i]*nu[i])))))
+    	# Spawning flag
+		if k==1
+			kap=DE_K[i];
+		else
+			kap=1;
+		end
+		gg = ((kap*nu[i]) - (d[i]/bio[i]))/(1-(DE_z[i]^(1-((d[i]/bio[i])/(kap*nu[i])))))
 		if gg < 0 || isnan(gg)==true
 			gamma[i] = 0.0
 		else
@@ -348,28 +367,46 @@ end
 
 
 ###! TOTAL BIOMASS MADE FROM REPRODUCTION
-function sub_rep_pi!(rep,nu,bio)
+function sub_rep_pi!(rep,nu,bio,k)
 	for i = 1:PI_N
 		if nu[i] > 0.
-			rep[i] = (1-PI_K[i]) * nu[i] * bio[i]
+			# Spawning flag
+			if k==1
+				kap=PI_K[i];
+			else
+				kap=1;
+			end
+			rep[i] = (1-kap) * nu[i] * bio[i]
 		else
 			rep[i] = 0.
 		end
 	end
 end
-function sub_rep_pl!(rep,nu,bio)
+function sub_rep_pl!(rep,nu,bio,k)
 	for i = 1:PL_N
 		if nu[i] > 0.
-			rep[i] = (1-PL_K[i]) * nu[i] * bio[i]
+			# Spawning flag
+			if k==1
+				kap=PL_K[i];
+			else
+				kap=1;
+			end
+			rep[i] = (1-kap) * nu[i] * bio[i]
 		else
 			rep[i] = 0.
 		end
 	end
 end
-function sub_rep_de!(rep,nu,bio)
+function sub_rep_de!(rep,nu,bio,k)
 	for i = 1:DE_N
 		if nu[i] > 0.
-			rep[i] = (1-DE_K[i]) * nu[i] * bio[i]
+			# Spawning flag
+			if k==1
+				kap=DE_K[i];
+			else
+				kap=1;
+			end
+			rep[i] = (1-kap) * nu[i] * bio[i]
 		else
 			rep[i] = 0.
 		end

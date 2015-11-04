@@ -75,6 +75,7 @@ type environment
 	dZm::Array{Any} # mortality rate of med zoo (COBALT)
 	dZl::Array{Any} # mortality rate of large zoo (COBALT)
 	det::Array{Any} # detrital flux
+	K::Array{Any} #spawning flag
 end
 
 #============= PARAMETER TYPE ==========#

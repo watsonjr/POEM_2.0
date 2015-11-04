@@ -1,9 +1,9 @@
 
 #### THE MODEL
 ###! DEMOGRAPHIC CALCULATIONS
-function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
+function sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT)
 	###! COBALT information
-	get_COBALT!(COBALT,ID,DY,ENVR)
+	get_COBALT!(COBALT,ID,DY,ENVR,S)
 
 	#! Forward Euler checks
 	map(sub_check_pi!,PISC.bio);
@@ -77,14 +77,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
 	map(sub_nu_de!,DETR.nu,DETR.bio,DETR.I,DETR.met);
 
 	#! somatic growth
-	map(sub_gamma_pi!,PISC.gamma,PISC.nu,PISC.bio,PISC.d);
-	map(sub_gamma_pl!,PLAN.gamma,PLAN.nu,PLAN.bio,PLAN.d);
-	map(sub_gamma_de!,DETR.gamma,DETR.nu,DETR.bio,DETR.d);
+	map(sub_gamma_pi!,PISC.gamma,PISC.nu,PISC.bio,PISC.d,ENVR.K);
+	map(sub_gamma_pl!,PLAN.gamma,PLAN.nu,PLAN.bio,PLAN.d,ENVR.K);
+	map(sub_gamma_de!,DETR.gamma,DETR.nu,DETR.bio,DETR.d,ENVR.K);
 
 	#! egg production
-	map(sub_rep_pi!,PISC.REP,PISC.nu,PISC.bio);
-	map(sub_rep_pl!,PLAN.REP,PLAN.nu,PLAN.bio);
-	map(sub_rep_de!,DETR.REP,DETR.nu,DETR.bio);
+	map(sub_rep_pi!,PISC.REP,PISC.nu,PISC.bio,ENVR.K);
+	map(sub_rep_pl!,PLAN.REP,PLAN.nu,PLAN.bio,ENVR.K);
+	map(sub_rep_de!,DETR.REP,DETR.nu,DETR.bio,ENVR.K);
 
 	#! total biomass somatic growth
 	map(sub_grw_pi!,PISC.GRW,PISC.nu,PISC.bio);

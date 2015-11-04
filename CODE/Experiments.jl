@@ -7,6 +7,7 @@ function Testoneloc()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+	S = readdlm("./Data/spawn_test.csv",',');
 	YEARS = 100
 	DAYS = 365
 
@@ -19,23 +20,23 @@ function Testoneloc()
 	#ID = XY[265,156] # Iberian location off shore
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
-        #ID = 40319 # Georges Bank
-        #ID = 42639 # Eastern Bering Sea
-        #ID = 41782 # Ocean Station Papa
-        #ID = 36334 # HOT
-        #ID = 38309 # BATS
-        ID = 42744 # North Sea
-	const global NX = length(ID)
+	#ID = 40319 # Georges Bank
+    #ID = 42639 # Eastern Bering Sea
+    #ID = 41782 # Ocean Station Papa
+    #ID = 36334 # HOT
+    #ID = 38309 # BATS
+ 	ID = 42744 # North Sea
+    const global NX = length(ID)
 
 	#! Initialize
 	PISC,PLAN,DETR,BENT = sub_init_fish(ID);
 	ENVR = sub_init_env(ID);
 
 	#! Storage
-	Spinup_PISC = open("./Data/CSV/Spinup_NS_PISC.csv","w")
-        Spinup_PLAN = open("./Data/CSV/Spinup_NS_PLAN.csv","w")
-        Spinup_DETR = open("./Data/CSV/Spinup_NS_DETR.csv","w")
-        Spinup_BENT = open("./Data/CSV/Spinup_NS_BENT.csv","w")
+	Spinup_PISC = open("./Data/CSV/Spinup_NS_vspawn_PISC.csv","w")
+    Spinup_PLAN = open("./Data/CSV/Spinup_NS_vspawn_PLAN.csv","w")
+    Spinup_DETR = open("./Data/CSV/Spinup_NS_vspawn_DETR.csv","w")
+    Spinup_BENT = open("./Data/CSV/Spinup_NS_vspawn_BENT.csv","w")
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
@@ -47,7 +48,7 @@ function Testoneloc()
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT);
+			sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT);
 
 			#! Save
 			writecsv(Spinup_PISC,PISC.bio[1]')
@@ -75,6 +76,8 @@ function Spinup_pristine()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+	#S = zeros(size(COBALT["Tp"]));
+	S = load("./Data/spawn_test.csv");
 
 	#! choose where and when to run the model
 	const global YEARS = 30; # integration period in years
@@ -83,27 +86,6 @@ function Spinup_pristine()
 	const global DAYS = 365; # number of days 
 	const global MNTH = [31,28,31,30,31,30,31,31,30,31,30,31] # days in month
 
-	#! Storage Matlab cell 
-#	f_PISC = matopen("./Data/NPZ/Spinup_pristine_PISC.mat","w")
-#   f_PLAN = matopen("./Data/NPZ/Spinup_pristine_PLAN.mat","w")
-#   f_DETR = matopen("./Data/NPZ/Spinup_pristine_DETR.mat","w")
-#   f_BENT = matopen("./Data/NPZ/Spinup_pristine_BENT.mat","w")
-#   S_PISC = zeros(NX,PI_N)
-#	S_PLAN = zeros(NX,PL_N)
-#	S_DETR = zeros(NX,DE_N)
-#	S_BENT = zeros(NX,1)
-#	A_PISC = Array(Any,YEARS,DAYS)
-#	A_PLAN = Array(Any,YEARS,DAYS)
-#	A_DETR = Array(Any,YEARS,DAYS)
-#	A_BENT = Array(Any,YEARS,DAYS)
-#	for i=1:YEARS
-#		for j=1:DAYS
-#			A_PISC[i,j] = Array(Float64,NX,PI_N)
-#			A_PLAN[i,j] = Array(Float64,NX,PL_N)
-#			A_DETR[i,j] = Array(Float64,NX,DE_N)
-#			A_BENT[i,j] = Array(Float64,NX,1)
-#		end
-#	end
 
 	#! Storage arrays (daily)
 	DAY_PISC = zeros(NX,PI_N,DAYS);
@@ -151,7 +133,6 @@ function Spinup_pristine()
 	ncwrite(zeros(NX,1,1),file_bent,"biomass",[1,1,1])
 
 
-
 	#! Initialize
 	PISC,PLAN,DETR,BENT = sub_init_fish(ID);
 	ENVR = sub_init_env(ID);
@@ -163,7 +144,6 @@ function Spinup_pristine()
 	
 		#! Load a year's COBALT data
 		ti = string(YR+1000000)
-		#COBALT = load(string("./Data/Data_",ti[2:end],".jld")); # first year's data 
 		COBALT = load(string("./Data/JLD/Data_",ti[2:end],".jld")); # first year's data 
 
 
@@ -175,18 +155,6 @@ function Spinup_pristine()
 			println(YR," , ", mod(DY,365))
 			sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT);
 			
-			###! Daily storage Matlab
-#			for i = 1:NX
-#				S_PISC[i,:] = PISC.bio[i]
-#				S_PLAN[i,:] = PLAN.bio[i]
-#				S_DETR[i,:] = DETR.bio[i]
-#				S_BENT[i,1] = BENT.bio[i][1]
-#			end
-#			A_PISC[YR,DAY] = S_PISC
-#			A_PLAN[YR,DAY] = S_PLAN
-#			A_DETR[YR,DAY] = S_DETR
-#			A_BENT[YR,DAY] = S_BENT
-
 			###! Daily storage NetCDF
 			for i = 1:NX
 				DAY_PISC[i,:,DAY] = PISC.bio[i]
@@ -212,17 +180,6 @@ function Spinup_pristine()
 	end
 
 	
-	#! Save Matlab
-#	write(f_PISC,"A_PISC",A_PISC)
-#	write(f_PLAN,"A_PLAN",A_PLAN)
-#	write(f_DETR,"A_DETR",A_DETR)
-#	write(f_BENT,"A_BENT",A_BENT)
-#	### close save Matlab
-#    close(f_PISC)
-#    close(f_PLAN)
-#    close(f_DETR)
-#    close(f_BENT)
-
 #! Close save 
 	ncclose(file_pisc)
 	ncclose(file_plan)

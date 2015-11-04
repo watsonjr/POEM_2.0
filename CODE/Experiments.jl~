@@ -7,6 +7,10 @@ function Testoneloc()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+<<<<<<< HEAD
+=======
+	#S = readdlm("./Data/spawn_test.csv",',');
+>>>>>>> cp_testing
 	YEARS = 100
 	DAYS = 365
 
@@ -19,12 +23,16 @@ function Testoneloc()
 	#ID = XY[265,156] # Iberian location off shore
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
+<<<<<<< HEAD
         #ID = 40319 # Georges Bank
         #ID = 42639 # Eastern Bering Sea
         #ID = 41782 # Ocean Station Papa
         #ID = 36334 # HOT
         ID = 38309 # BATS
         #ID = 42744 # North Sea
+=======
+	ID = 40319		 # GB, -66.5,41.5, 
+>>>>>>> cp_testing
 	const global NX = length(ID)
 
 	#! Initialize
@@ -32,10 +40,17 @@ function Testoneloc()
 	ENVR = sub_init_env(ID);
 
 	#! Storage
+<<<<<<< HEAD
 	Spinup_PISC = open("./Data/CSV/Spinup_BAT_PISC.csv","w")
         Spinup_PLAN = open("./Data/CSV/Spinup_BAT_PLAN.csv","w")
         Spinup_DETR = open("./Data/CSV/Spinup_BAT_DETR.csv","w")
         Spinup_BENT = open("./Data/CSV/Spinup_BAT_BENT.csv","w")
+=======
+	Spinup_PISC = open("./Data/CSV/Spinup_PISC.csv","w")
+    Spinup_PLAN = open("./Data/CSV/Spinup_PLAN.csv","w")
+    Spinup_DETR = open("./Data/CSV/Spinup_DETR.csv","w")
+    Spinup_BENT = open("./Data/CSV/Spinup_BENT.csv","w")
+>>>>>>> cp_testing
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
@@ -47,7 +62,11 @@ function Testoneloc()
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
+<<<<<<< HEAD
 			sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT);
+=======
+			sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT);
+>>>>>>> cp_testing
 
 			#! Save
 			writecsv(Spinup_PISC,PISC.bio[1]')
@@ -75,6 +94,11 @@ function Spinup_pristine()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+<<<<<<< HEAD
+=======
+	#S = zeros(size(COBALT["Tp"]));
+	S = load("./Data/spawn_test.csv");
+>>>>>>> cp_testing
 
 	#! choose where and when to run the model
 	const global YEARS = 30; # integration period in years
