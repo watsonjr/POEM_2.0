@@ -8,8 +8,8 @@ close all
 dpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-sname = 'Spinup_OSP_';
-loc = 'OSP';
+sname = 'Spinup_BAT_';
+loc = 'BATS';
 pi = csvread([dpath sname 'PISC.csv']);
 pl = csvread([dpath sname 'PLAN.csv']);
 de = csvread([dpath sname 'DETR.csv']);
@@ -78,7 +78,7 @@ for i=1:10
     subplot(3,4,i)
     plot(x(36134:36500),pi(36134:36500,i),'k','Linewidth',2); hold on
     xlim([x(36134) x(end)])
-    %ylim([0 5e-3])
+    ylim([0 5e-3])
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
 end
@@ -91,7 +91,7 @@ for i=1:10
     xlim([x(36134) x(end)])
     %ylim([0 2.5e-16])
     xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
+    ylabel('(g km^-^2)')
 end
 print('-dpng',[fpath sname 'oneloc_plan_sizes.png'])
 %
@@ -102,7 +102,7 @@ for i=1:10
     xlim([x(36134) x(end)])
     %ylim([0 1.2e-8])
     xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
+    ylabel('log Biomass (g km^-^2)')
 end
 print('-dpng',[fpath sname 'oneloc_detr_sizes.png'])
 %%
@@ -117,7 +117,7 @@ for i=1:9
     xlabel('Time (y)')
     ylabel('log Biomass (g km^-^2)')
 end
-subplot('position',[0.372 0.12 0.305 0.21])
+subplot('position',[0.5 0.15 0.3 0.1])
 plot(x(36134:36500),log(pi(36134:36500,i)),'k','Linewidth',2); hold on
 plot(x(36134:36500),log(pl(36134:36500,i)),'b','Linewidth',2); hold on
 plot(x(36134:36500),log(de(36134:36500,i)),'r','Linewidth',2); hold on
