@@ -6,7 +6,7 @@ function Testoneloc()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data
 	S = readdlm("./Data/spawn_test.csv",',');
 	YEARS = 100
 	DAYS = 365
@@ -21,12 +21,12 @@ function Testoneloc()
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
 	ID = 40319 # Georges Bank
-    #ID = 42639 # Eastern Bering Sea
-    #ID = 41782 # Ocean Station Papa
-    #ID = 36334 # HOT
-    #ID = 38309 # BATS
-    #ID = 42744 # North Sea
-    const global NX = length(ID)
+  #ID = 42639 # Eastern Bering Sea
+  #ID = 41782 # Ocean Station Papa
+  #ID = 36334 # HOT
+	#ID = 38309 # BATS
+  #ID = 42744 # North Sea
+  const global NX = length(ID)
 
 	#! Initialize
 	PISC,PLAN,DETR,BENT = sub_init_fish(ID);
@@ -34,14 +34,14 @@ function Testoneloc()
 
 	#! Storage
 	Spinup_PISC = open("./Data/CSV/Spinup_GB_vspawn_PISC.csv","w")
-    Spinup_PLAN = open("./Data/CSV/Spinup_GB_vspawn_PLAN.csv","w")
-    Spinup_DETR = open("./Data/CSV/Spinup_GB_vspawn_DETR.csv","w")
-    Spinup_BENT = open("./Data/CSV/Spinup_GB_vspawn_BENT.csv","w")
+  Spinup_PLAN = open("./Data/CSV/Spinup_GB_vspawn_PLAN.csv","w")
+  Spinup_DETR = open("./Data/CSV/Spinup_GB_vspawn_DETR.csv","w")
+  Spinup_BENT = open("./Data/CSV/Spinup_GB_vspawn_BENT.csv","w")
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
 
-		for DAY = 1:DT:DAYS # days 
+		for DAY = 1:DT:DAYS # days
 
 			###! ticker
 			DY  = int(ceil(DAY))
@@ -75,7 +75,7 @@ function Spinup_pristine()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data 
+	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data
 	#S = zeros(size(COBALT["Tp"]));
 	S = load("./Data/spawn_test.csv");
 
@@ -83,7 +83,7 @@ function Spinup_pristine()
 	const global YEARS = 30; # integration period in years
 	const global NX = 48111;
 	const global ID =[1:NX];
-	const global DAYS = 365; # number of days 
+	const global DAYS = 365; # number of days
 	const global MNTH = [31,28,31,30,31,30,31,31,30,31,30,31] # days in month
 
 
@@ -104,7 +104,7 @@ function Spinup_pristine()
 			"units"    => "hours since 01-01-2000 00:00:00"}
 
 	#! Init dims of netcdf file
-	S_pi=[1:PI_N] ;	S_pl=[1:PL_N] ; S_de=[1:DE_N] ;	S_be=[1:1] 
+	S_pi=[1:PI_N] ;	S_pl=[1:PL_N] ; S_de=[1:DE_N] ;	S_be=[1:1]
 	X=[1:NX] ; tim=[1:12*YEARS]
 
 	#! setup netcdf path to store to
@@ -114,10 +114,10 @@ function Spinup_pristine()
 	file_bent = "./Data/NC/Spinup_pristine_bent.nc"
 
 	#! remove if already in existence
-	isfile(file_pisc) ? rm(file_pisc) : nothing 
-	isfile(file_plan) ? rm(file_plan) : nothing 
-	isfile(file_detr) ? rm(file_detr) : nothing 
-	isfile(file_bent) ? rm(file_bent) : nothing 
+	isfile(file_pisc) ? rm(file_pisc) : nothing
+	isfile(file_plan) ? rm(file_plan) : nothing
+	isfile(file_detr) ? rm(file_detr) : nothing
+	isfile(file_bent) ? rm(file_bent) : nothing
 
 	#! create netcdf files
 	nccreate(file_pisc,"biomass","X",X,X_atts,"S",S_pi,S_atts,"time",tim,timatts,atts=varatts)
@@ -136,25 +136,25 @@ function Spinup_pristine()
 	#! Initialize
 	PISC,PLAN,DETR,BENT = sub_init_fish(ID);
 	ENVR = sub_init_env(ID);
-	
+
 	#! Run model with no fishing
 	#! Iterate Model forward in time
 	MNT = 0; # monthly ticker
 	for YR = 1:YEARS # years
-	
+
 		#! Load a year's COBALT data
 		ti = string(YR+1000000)
-		COBALT = load(string("./Data/JLD/Data_",ti[2:end],".jld")); # first year's data 
+		COBALT = load(string("./Data/JLD/Data_",ti[2:end],".jld")); # first year's data
 
 
-		for DAY = 1:DT:DAYS # days 
+		for DAY = 1:DT:DAYS # days
 
 			###! ticker
 			###! Future time step
 			DY  = int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT);
-			
+
 			###! Daily storage NetCDF
 			for i = 1:NX
 				DAY_PISC[i,:,DAY] = PISC.bio[i]
@@ -162,10 +162,10 @@ function Spinup_pristine()
 				DAY_DETR[i,:,DAY] = DETR.bio[i]
 				DAY_BENT[i,1,DAY] = BENT.bio[i][1]
 			end
-			
+
 
 		end
-		
+
 		#! Calculate monthly means and save
 		a = [1,(cumsum(MNTH)+1)[1:end-1]] # start of the month
 		b = cumsum(MNTH) # end of the month
@@ -179,13 +179,13 @@ function Spinup_pristine()
 
 	end
 
-	
-#! Close save 
+
+#! Close save
 	ncclose(file_pisc)
 	ncclose(file_plan)
 	ncclose(file_detr)
 	ncclose(file_bent)
-	
+
 
 end
 
@@ -199,7 +199,7 @@ function Spinup_fished()
 	make_parameters(1) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/Data_000001.jld"); # first year's data 
+	COBALT = load("./Data/Data_000001.jld"); # first year's data
 
 	#! choose where to run the model and for how long
 	const global NX = 48111
@@ -228,7 +228,7 @@ function Spinup_fished()
 	#! Run model with no fishing
 	for YR = 1:YEARS # years
 
-		for DAY = 1:DT:DAYS # days 
+		for DAY = 1:DT:DAYS # days
 
 			###! Future time step
 			DY  = int(ceil(DAY))
@@ -266,11 +266,11 @@ function Forecast_pristine()
 	const global NX = 48111
 	const global ID = [1:NX]
 	const global YEARS = 95; # integration period in years
-	const global DAYS = 365; # number of days 
+	const global DAYS = 365; # number of days
 	const global MNTH = [31,28,31,30,31,30,31,31,30,31,30,31] # days in month
 
 	#! Initialize
-	ENVR = sub_init_env(ID); 
+	ENVR = sub_init_env(ID);
 	PISC,PLAN,DETR,BENT = sub_init_fish(ID);
 	bio_pi = npzread("./Data/NPZ/Spinup_pristine_PISC.npy")
 	bio_pl = npzread("./Data/NPZ/Spinup_pristine_PLAN.npy")
@@ -300,7 +300,7 @@ function Forecast_pristine()
 			"units"    => "hours since 01-01-2000 00:00:00"}
 
 	#! Init dims of netcdf file
-	S_pi=[1:PI_N] ;	S_pl=[1:PL_N] ; S_de=[1:DE_N] ;	S_be=[1:1] 
+	S_pi=[1:PI_N] ;	S_pl=[1:PL_N] ; S_de=[1:DE_N] ;	S_be=[1:1]
 	X=[1:NX] ; tim=[1:12*YEARS]
 
 	#! setup netcdf path to store to
@@ -310,10 +310,10 @@ function Forecast_pristine()
 	file_bent = "./Data/NC/Data_forecast_pristine_bent.nc"
 
 	#! remove if already in existence
-	isfile(file_pisc) ? rm(file_pisc) : nothing 
-	isfile(file_plan) ? rm(file_plan) : nothing 
-	isfile(file_detr) ? rm(file_detr) : nothing 
-	isfile(file_bent) ? rm(file_bent) : nothing 
+	isfile(file_pisc) ? rm(file_pisc) : nothing
+	isfile(file_plan) ? rm(file_plan) : nothing
+	isfile(file_detr) ? rm(file_detr) : nothing
+	isfile(file_bent) ? rm(file_bent) : nothing
 
 	#! create netcdf files
 	nccreate(file_pisc,"biomass","X",X,X_atts,"S",S_pi,S_atts,"time",tim,timatts,atts=varatts)
@@ -334,10 +334,10 @@ function Forecast_pristine()
 
 		#! Load a year's COBALT data
 		ti = string(YR+1000000)
-		#COBALT = load(string("./Data/Data_",ti[2:end],".jld")); # first year's data 
-		COBALT = load(string("./Data/JLD/Data_",ti[2:end],".jld")); # first year's data 
+		#COBALT = load(string("./Data/Data_",ti[2:end],".jld")); # first year's data
+		COBALT = load(string("./Data/JLD/Data_",ti[2:end],".jld")); # first year's data
 
-		for DAY = 1:DT:DAYS # days 
+		for DAY = 1:DT:DAYS # days
 
 			###! ticker
 			DY  = int(ceil(DAY))
@@ -383,12 +383,10 @@ function Forecast_pristine()
 
 	end
 
-	#! Close save 
+	#! Close save
 	ncclose(file_pisc)
 	ncclose(file_plan)
 	ncclose(file_detr)
 	ncclose(file_bent)
 
 end
-
-

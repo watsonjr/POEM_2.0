@@ -29,7 +29,3 @@ end
 if forecast_fished
 	@time Forecast_fished()
 end
-
-
-
-
