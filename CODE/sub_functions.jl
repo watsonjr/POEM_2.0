@@ -134,7 +134,7 @@ function sub_enc_plz!(enc::Array{Float64},Zm,Zl)
 	nothing
 end
 
-###! Planktivore encounter rates
+###! Detritivore encounter rates
 function sub_enc_dede!(enc::Array{Float64},prey::Array{Float64})
 	for i = 1:DE_N # pred
 		for j = 1:DE_N # prey
@@ -216,37 +216,38 @@ end
 
 ###! piscivore consumption
 function sub_consume_pipi!(I_pi,d_pi,bio_pi,enc_pipi,ENC_pi,tau_pi)
-	for i = 1:PI_N, j = 1:PI_N#pred 
+	for i = 1:PI_N, j = 1:PI_N#pred
 		con = sub_typeII(bio_pi[i],enc_pipi[j,i],tau_pi[i],ENC_pi[i])
 		I_pi[i] += con
 		d_pi[j] += con
 	end
 end
 function sub_consume_pipl!(I_pi,d_pl,bio_pi,enc_pipl,ENC_pi,tau_pi)
-	for i = 1:PI_N, j = 1:PL_N #pred 
+	for i = 1:PI_N, j = 1:PL_N #pred
 		con = sub_typeII(bio_pi[i],enc_pipl[j,i],tau_pi[i],ENC_pi[i])
 		I_pi[i] += con
 		d_pl[j] += con
 	end
 end
 function sub_consume_pide!(I_pi,d_de,bio_pi,enc_pide,ENC_pi,tau_pi)
-	for i = 1:PI_N, j=1:DE_N #pred 
+	for i = 1:PI_N, j=1:DE_N #pred
 		con = sub_typeII(bio_pi[i],enc_pide[j,i],tau_pi[i],ENC_pi[i])
-		I_pi[i] += con 
+		I_pi[i] += con
 		d_de[j] += con
 	end
 end
+# Zooplankton consumption is further below
 
 ###! Detrivore consumption
 function sub_consume_dede!(I_de,d_de,bio_de,enc_dede,ENC_de,tau_de)
-	for i = 1:DE_N, j = 1:DE_N #pred 
+	for i = 1:DE_N, j = 1:DE_N #pred
 		con = sub_typeII(bio_de[i],enc_dede[j,i],tau_de[i],ENC_de[i])
 		I_de[i] += con
 		d_de[j] += con
 	end
 end
 function sub_consume_debe!(I_de,d_be,bio_de,enc_debe,ENC_de,tau_de)
-	for i = 1:DE_N #pred 
+	for i = 1:DE_N #pred
 		con = sub_typeII(bio_de[i],enc_debe[1,i],tau_de[i],ENC_de[i])
 		I_de[i] += con
 		d_be[1] += con
@@ -256,13 +257,14 @@ end
 ###! Consumption of zooplankton
 #! by piscivore
 function sub_consume_piz!(I_z,bio_pi,enc_piz,ENC_pi,tau_pi)
-	for i = 1:PI_N #pred 
+	for i = 1:PI_N #pred
 		I_z[1,i] += sub_typeII(bio_pi[i],enc_piz[1,i],tau_pi[i],ENC_pi[i])
 		I_z[2,i] += sub_typeII(bio_pi[i],enc_piz[2,i],tau_pi[i],ENC_pi[i])
 	end
 end
+#! by Planktivore
 function sub_consume_plz!(I_z,bio_pl,enc_plz,ENC_pl,tau_pl)
-	for i = 1:PL_N #pred 
+	for i = 1:PL_N #pred
 		I_z[1,i] += sub_typeII(bio_pl[i],enc_plz[1,i],tau_pl[i],ENC_pl[i])
 		I_z[2,i] += sub_typeII(bio_pl[i],enc_plz[2,i],tau_pl[i],ENC_pl[i])
 	end
@@ -554,8 +556,3 @@ function sub_check_be!(bio)
 		bio[1] = eps()
 	end
 end
-
-
-
-
-		
