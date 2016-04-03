@@ -1,0 +1,61 @@
+!<NAMELIST NAME="ocean_tracer_advect_nml">
+!  <DATA NAME="limit_with_upwind" TYPE="logical">
+!  If true, will compute tracer fluxes entering a cell using upwind
+!  if the tracer value is outside a specified range. Implemented
+!  only for quick at this time. This is an ad hoc and incomplete attempt
+!  to maintain monotonicity with the quicker scheme.
+!  </DATA>
+!  <DATA NAME="advect_sweby_all" TYPE="logical">
+!  For running all tracers with sweby, thereby utilizing a bitwise same
+!  routine that reorganizes loops and can be faster for certain configurations.
+!  Default advect_sweby_all=.false.
+!  </DATA>
+!  <DATA NAME="zero_tracer_advect_horz" TYPE="logical">
+!  For debugging.  Set to .true. to turn off horizontal advection.
+!  </DATA>
+!  <DATA NAME="zero_tracer_advect_vert" TYPE="logical">
+!  For debugging.  Set to .true. to turn off vertical advection.
+!  </DATA>
+!  <DATA NAME="psom_limit_prather" TYPE="logical">
+!  For running with the original Prather limiter for the PSOM scheme.
+!  The limiter is positive definite, but not monotonic.  This limiter
+!  is NOT recommended for most applications.  The default is
+!  psom_limit_prather=.false., since we prefer to use the limiter
+!  from Merryfield and Holloway (2003).
+!  </DATA>
+!
+!  <DATA NAME="debug_this_module" TYPE="logical">
+!  For debugging
+!  </DATA>
+!
+!  <DATA NAME="write_a_restart" TYPE="logical">
+!  Set true to write a restart.  False setting only for rare
+!  cases where wish to benchmark model without measuring the cost
+!  of writing restarts and associated chksums.
+!  Default is write_a_restart=.true.
+!  </DATA>
+!
+!  <DATA NAME="read_basin_mask" TYPE="logical">
+!  For reading in a mask that selects regions of the domain
+!  for performing gyre and overturning diagnostics.
+!  The basin-mask convention used at GFDL has
+!  Southern=1.0,Atlantic=2.0,Pacific=3.0,Arctic=4.0,Indian=5.0
+!  Default read_basin_mask=.false., whereby basin_mask
+!  is set to tmask(k=1).
+!  </DATA>
+!
+!</NAMELIST>
+
+logical :: limit_with_upwind       = .false.
+logical :: debug_this_module       = .false.
+logical :: advect_sweby_all        = .false.
+logical :: zero_tracer_advect_horz = .false.
+logical :: zero_tracer_advect_vert = .false.
+logical :: write_a_restart         = .true.
+logical :: psom_limit_prather      = .false.
+logical :: async_domain_update     = .false.
+
+namelist /ocean_tracer_advect_nml/ debug_this_module, limit_with_upwind, advect_sweby_all,   &
+                                   zero_tracer_advect_horz, zero_tracer_advect_vert,         &
+                                   write_a_restart, psom_limit_prather, read_basin_mask,     &
+                                   async_domain_update
