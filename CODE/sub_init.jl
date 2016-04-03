@@ -12,7 +12,9 @@ function sub_init_env(ID)
 	ENV_dZl = Array(Float64,NX)
 	ENV_det = Array(Float64,NX)
 	ENV_K = Array(Int,NX)
-	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_K)
+	ENV_T0 = Array(Float64,NX)
+	ENV_Dthresh = Array(Float64,NX)
+	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_K,ENV_T0,ENV_Dthresh)
 end
 
 function sub_init_fish(ID)
@@ -65,7 +67,7 @@ function sub_init_fish(ID)
 		met_pl[i] = Array(Float64,PL_N)
 		met_de[i] = Array(Float64,DE_N)
 	end
-	
+
     # handling times
     tau_pi = Array(Any,NX)
     tau_pl = Array(Any,NX)
@@ -75,7 +77,7 @@ function sub_init_fish(ID)
 		tau_pl[i] = Array(Float64,PL_N)
 		tau_de[i] = Array(Float64,DE_N)
 	end
-	
+
     # mass ingested (I)
     I_pi = Array(Any,NX)
     I_pl = Array(Any,NX)
@@ -196,7 +198,7 @@ function sub_init_fish(ID)
     for i = 1:NX
         enc_plz[i] = Array(Float64,2,PL_N)
     end
-	
+
 	#! detrivore encounter rates
 	enc_dede = Array(Any,NX)
 	enc_debe = Array(Any,NX)
@@ -216,7 +218,7 @@ function sub_init_fish(ID)
  	# total biomass encoutered
 	ENC_pl  = Array(Any,NX)
     ENC_pi = Array(Any,NX)
-    ENC_de = Array(Any,NX) 
+    ENC_de = Array(Any,NX)
     for i = 1:NX
     	ENC_pi[i] = Array(Float64,1,PI_N)
 		ENC_pl[i] = Array(Float64,1,PL_N)
@@ -239,5 +241,3 @@ function sub_init_fish(ID)
 
 	return PISC,PLAN,DETR,BENT
 end
-
-

@@ -7,14 +7,17 @@ function Testoneloc()
 
 	#! setup spinup (loop first year of COBALT)
 	COBALT = load("./Data/JLD/Data_000001.jld"); # first year's data
-	S = readdlm("./Data/spawn_test.csv",',');
+	#S = readdlm("./Data/spawn_test.csv",',');
+	#! Add phenology params from csv file with ID as row
+	Tref = readdlm("./Data/grid_phenol_T0comb.csv",',');
+	Dthresh = readdlm("./Data/grid_phenol_DTcomb.csv",',');
 	YEARS = 100
 	DAYS = 365
 
 	#! choose where to run the model
 	GRD = load("./Data/Data_grid.jld")
 	XY = zeros(Int,360,200); # choose a particulat place or everywhere
-	XY[GRD["ID"]] =[1:GRD["N"]]
+	XY[GRD["ID"]] =[1:GRD["N"]] #[a] concatenation is deprecated; use collect(a) instead
 	#ID = XY[195,102] # Humboldt
 	#ID = XY[270,156] # Iberian location
 	#ID = XY[265,156] # Iberian location off shore
@@ -33,10 +36,10 @@ function Testoneloc()
 	ENVR = sub_init_env(ID);
 
 	#! Storage
-	Spinup_PISC = open("./Data/CSV/Spinup_GB_vspawn_PISC.csv","w")
-  Spinup_PLAN = open("./Data/CSV/Spinup_GB_vspawn_PLAN.csv","w")
-  Spinup_DETR = open("./Data/CSV/Spinup_GB_vspawn_DETR.csv","w")
-  Spinup_BENT = open("./Data/CSV/Spinup_GB_vspawn_BENT.csv","w")
+	Spinup_PISC = open("./Data/CSV/Spinup_GB_phenol_PISC.csv","w")
+  Spinup_PLAN = open("./Data/CSV/Spinup_GB_phenol_PLAN.csv","w")
+  Spinup_DETR = open("./Data/CSV/Spinup_GB_phenol_DETR.csv","w")
+  Spinup_BENT = open("./Data/CSV/Spinup_GB_phenol_BENT.csv","w")
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
@@ -44,7 +47,7 @@ function Testoneloc()
 		for DAY = 1:DT:DAYS # days
 
 			###! ticker
-			DY  = int(ceil(DAY))
+			DY  = Int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
@@ -94,14 +97,15 @@ function Spinup_pristine()
 	DAY_BENT = zeros(NX,1,DAYS);
 
 	#! Init netcdf file for storage
-	varatts = {"longname" => "Biomass",
-           "units"    => "kg/m^2"}
-	X_atts = {"longname" => "Space",
-			"units"    => "grid cell"}
-	S_atts = {"longname" => "Size classes",
-			"units"    => "g"}
-	timatts = {"longname" => "Time",
-			"units"    => "hours since 01-01-2000 00:00:00"}
+	#Use "Dict{Any,Any}(a=>b, ...)" instead.
+	varatts = Dict("longname" => "Biomass",
+           "units"    => "kg/m^2")
+	X_atts = Dict("longname" => "Space",
+			"units"    => "grid cell")
+	S_atts = Dict("longname" => "Size classes",
+			"units"    => "g")
+	timatts = Dict("longname" => "Time",
+			"units"    => "hours since 01-01-2000 00:00:00")
 
 	#! Init dims of netcdf file
 	S_pi=[1:PI_N] ;	S_pl=[1:PL_N] ; S_de=[1:DE_N] ;	S_be=[1:1]
@@ -290,14 +294,14 @@ function Forecast_pristine()
 	DAY_BENT = zeros(NX,1,DAYS);
 
 	#! Init netcdf file for storage
-	varatts = {"longname" => "Biomass",
-           "units"    => "kg/m^2"}
-	X_atts = {"longname" => "Space",
-			"units"    => "grid cell"}
-	S_atts = {"longname" => "Size classes",
-			"units"    => "g"}
-	timatts = {"longname" => "Time",
-			"units"    => "hours since 01-01-2000 00:00:00"}
+	varatts = Dict{Any,Any}("longname" => "Biomass",
+           "units"    => "kg/m^2")
+	X_atts = Dict{Any,Any}("longname" => "Space",
+			"units"    => "grid cell")
+	S_atts = Dict{Any,Any}("longname" => "Size classes",
+			"units"    => "g")
+	timatts = Dict{Any,Any}("longname" => "Time",
+			"units"    => "hours since 01-01-2000 00:00:00")
 
 	#! Init dims of netcdf file
 	S_pi=[1:PI_N] ;	S_pl=[1:PL_N] ; S_de=[1:DE_N] ;	S_be=[1:1]

@@ -1,5 +1,6 @@
 ###! Get COBALT data
-function get_COBALT!(COBALT,ID,DY,ENVR,S)
+#function get_COBALT!(COBALT,ID,DY,ENVR,S)
+function get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
     ## Get data
     ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY]
     ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY]
@@ -8,7 +9,9 @@ function get_COBALT!(COBALT,ID,DY,ENVR,S)
     ENVR.det[:,1] = COBALT["det"][ID,DY]
     ENVR.dZm[:,1] = COBALT["dZm"][ID,DY]
     ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
-    ENVR.K[:,1] = S[ID,DY]
+    #ENVR.K[:,1] = S[ID,DY]
+    ENVR.T0[:,1] = Tref[ID]
+    ENVR.Dthresh[:,1] = Dthresh[ID]
 end
 
 ###! Temperature multiplier for metabolism

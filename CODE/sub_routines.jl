@@ -3,7 +3,8 @@
 ###! DEMOGRAPHIC CALCULATIONS
 function sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT)
 	###! COBALT information
-	get_COBALT!(COBALT,ID,DY,ENVR,S)
+	#get_COBALT!(COBALT,ID,DY,ENVR,S)
+	get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
 
 	#! Forward Euler checks
 	map(sub_check_pi!,PISC.bio);
@@ -101,7 +102,7 @@ function sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT)
 	map(sub_mrt_pl!,PLAN.MRT,PLAN.bio);
 	map(sub_mrt_de!,DETR.MRT,DETR.bio);
 
-	#! Mass balance	
+	#! Mass balance
 	map(sub_update_pi!,PISC.bio,PISC.REP,PISC.GRW,PISC.MAT,PISC.d,PISC.MRT);
 	map(sub_update_pl!,PLAN.bio,PLAN.REP,PLAN.GRW,PLAN.MAT,PLAN.d,PLAN.MRT);
 	map(sub_update_de!,DETR.bio,DETR.REP,DETR.GRW,DETR.MAT,DETR.d,DETR.MRT);
@@ -119,6 +120,3 @@ function sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT)
 	#! Movement
 
 end
-
-
-

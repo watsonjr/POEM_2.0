@@ -2,7 +2,7 @@
 #============ VARIABLE TYPE==========#
 #! i.e. those things that change with time
 type piscivore
-	bio::Array{Any} # biomass g 
+	bio::Array{Any} # biomass g
 	tmet::Array{Float64} # temperature multiplier for metabolism
 	umet::Array{Any} # activity multiplier for metabolism
 	tdif::Array{Float64} # fraction of time spent in the pelagic
@@ -13,7 +13,7 @@ type piscivore
 	nu::Array{Any}  # total energy for growth g g-1 d-1
 	gamma::Array{Any} # energy for somatic growth g g-1 d-1
 	d::Array{Any} # total death g d-1
-	REP::Array{Any} # total biomass reproduced g d-1 
+	REP::Array{Any} # total biomass reproduced g d-1
 	GRW::Array{Any} # total biomass somatic growth g d-1
 	MAT::Array{Any} # total biomass maturing g d-1
 	MRT::Array{Any} # mortality rate (background and fishing potentially) g d-1
@@ -25,7 +25,7 @@ type piscivore
 end
 
 type planktivore
-	bio::Array{Any} # biomass g 
+	bio::Array{Any} # biomass g
 	tmet::Array{Float64} # temperature multiplier for metabolism
 	umet::Array{Any} # activity multiplier for metabolism
 	met::Array{Any} # metabolism g g-1 d-1
@@ -35,7 +35,7 @@ type planktivore
 	nu::Array{Any}  # total energy for growth g g-1 d-1
 	gamma::Array{Any} # energy for somatic growth g g-1 d-1
 	d::Array{Any} # total death g d-1
-	REP::Array{Any} # total biomass reproduced g d-1 
+	REP::Array{Any} # total biomass reproduced g d-1
 	GRW::Array{Any} # total biomass somatic growth g d-1
 	MAT::Array{Any} # total biomass maturing g d-1
 	MRT::Array{Any} # mortality rate (background and fishing potentially) g d-1
@@ -44,7 +44,7 @@ type planktivore
 end
 
 type detrivore
-	bio::Array{Any} # biomass g 
+	bio::Array{Any} # biomass g
 	tmet::Array{Float64} # temperature multiplier for metabolism
 	umet::Array{Any} # activity multiplier for metabolism
 	met::Array{Any} # metabolism g g-1 d-1
@@ -53,7 +53,7 @@ type detrivore
 	nu::Array{Any}  # total energy for growth g g-1 d-1
 	gamma::Array{Any} # energy for somatic growth g g-1 d-1
 	d::Array{Any} # total death g d-1
-	REP::Array{Any} # total biomass reproduced g d-1 
+	REP::Array{Any} # total biomass reproduced g d-1
 	GRW::Array{Any} # total biomass somatic growth g d-1
 	MAT::Array{Any} # total biomass maturing g d-1
 	MRT::Array{Any} # mortality rate (background and fishing potentially) g d-1
@@ -68,14 +68,16 @@ type detritus
 end
 
 type environment
-	Tp::Array{Any} # pelagic temperature
-	Tb::Array{Any} # bottom temperature
-	Zm::Array{Any} # medium zooplankton 
-	Zl::Array{Any} # large zoo
-	dZm::Array{Any} # mortality rate of med zoo (COBALT)
-	dZl::Array{Any} # mortality rate of large zoo (COBALT)
-	det::Array{Any} # detrital flux
-	K::Array{Any} #spawning flag
+	Tp::Array{Any} 					# pelagic temperature
+	Tb::Array{Any} 					# bottom temperature
+	Zm::Array{Any} 					# medium zooplankton
+	Zl::Array{Any} 					# large zoo
+	dZm::Array{Any} 				# mortality rate of med zoo (COBALT)
+	dZl::Array{Any} 				# mortality rate of large zoo (COBALT)
+	det::Array{Any} 				# detrital flux
+	K::Array{Any} 					# spawning flag
+	ENV_T0::Array{Any}			# spawning reference temp
+	ENV_Dthresh::Array{Any}	# spawning degree day threshold
 end
 
 #============= PARAMETER TYPE ==========#
@@ -84,12 +86,12 @@ function make_parameters(harv)
 
 	#! Grid parameters
 	global GRD = load("./Data/Data_grid.jld"); # spatial information
-    const global GRD_Z = GRD["Z"]
-    const global GRD_A = GRD["AREA"]#[GRD["ID"]] # change this once rerun make_grid
+  const global GRD_Z = GRD["Z"]
+  const global GRD_A = GRD["AREA"]#[GRD["ID"]] # change this once rerun make_grid
 
 	#! Integration parameters
 	const global DT = 1.; # time step
-    const global DAYS = 365; # number of days
+  const global DAYS = 365; # number of days
 
 	#! Amount of fishing
 	if harv == 1
@@ -124,16 +126,16 @@ function make_parameters(harv)
 	const global PL_s = linspace((PL_smin),(PL_smax),PL_N)
 	const global DE_s = linspace((DE_smin),(DE_smax),DE_N)
 
-	#! Median Zooplankton body mass 
-	# 2.96 + 2.73ln(ESD) McCauly 1984, James Watkins, 
+	#! Median Zooplankton body mass
+	# 2.96 + 2.73ln(ESD) McCauly 1984, James Watkins,
 	# Lars Rudstam and Kristen Holeck later
 	# Zm ESD = 1.1mm, Zl ESD = 11mm (from Charlie/COBALT)
-	#const global Z_s = [exp(2.96 + (2.73*log(1.1)))*1.0e-6; 
-	#					exp(2.96 + (2.73*log(11)))*1.0e-6]; 
-	#const global Z_s = [exp(1.953 + (2.399*log(1.1)))*1.0e-6; 
-	#					exp(1.953 + (2.399*log(11)))*1.0e-6]; 
-	const global Z_s = [exp(1.953 + (2.399*log(2)))*1.0e-6; 
-						exp(1.953 + (2.399*log(20)))*1.0e-6]; 
+	#const global Z_s = [exp(2.96 + (2.73*log(1.1)))*1.0e-6;
+	#					exp(2.96 + (2.73*log(11)))*1.0e-6];
+	#const global Z_s = [exp(1.953 + (2.399*log(1.1)))*1.0e-6;
+	#					exp(1.953 + (2.399*log(11)))*1.0e-6];
+	const global Z_s = [exp(1.953 + (2.399*log(2)))*1.0e-6;
+						exp(1.953 + (2.399*log(20)))*1.0e-6];
 
 	#! Log body mass  (log10 g)
 	const global DE_slog = log10(DE_s)
@@ -162,7 +164,7 @@ function make_parameters(harv)
 	const global PI_lambda = ones(PI_N) .* 0.7;
 	const global PL_lambda = ones(PL_N) .* 0.7;
 
-	###! Kappa rule K as a function of body size 
+	###! Kappa rule K as a function of body size
 	# K = fraction of energy consumed diverted to somatic growth
 	ds_pi = abs(PI_s - (PI_s[end] * 0.1))
 	pid = find(ds_pi .== minimum(ds_pi))[1]
@@ -194,8 +196,8 @@ function make_parameters(harv)
 	function fnc_a(s) # function to calc search rate from speed and length
 		U = (3.9*s.^0.13) / 100 *60 *60 *24 #Speed: Megrey 2007
 		L = (s/2.444).^(1/3.903) / 100 #Length: Anieke's supp 2008
-		p = linspace(0.8,0.1,length(s));#Fraction of time: Anieke 2008 
-		a = U .* (L.*2) .* p; #length x2 for visual diameter 
+		p = linspace(0.8,0.1,length(s));#Fraction of time: Anieke 2008
+		a = U .* (L.*2) .* p; #length x2 for visual diameter
 		return a
 	end
 	const global DE_a = fnc_a(DE_s)./1 # Anieke says detritivores move around less
@@ -238,7 +240,7 @@ function make_parameters(harv)
 		return PIJ
 	end
 
-	####! Piscivore 
+	####! Piscivore
 	const global PI_phi_PI = zeros(PI_N,PI_N);
 	const global PI_phi_PL = zeros(PL_N,PI_N);
 	const global PI_phi_DE = zeros(DE_N,PI_N);
@@ -281,7 +283,7 @@ function make_parameters(harv)
 		pij_z = fnc_pij(PL_s[i],Z_s,3,1) # prey preference for PL
 
 		# normalize
-		Sj = [pij_z];
+		Sj = collect(pij_z); #use Sj = collect(pij_z) instead of Sj = [pij_z]
 		if sum(Sj)!=0.
 			max = maximum(Sj);
 			pij_z = pij_z / max;
@@ -322,7 +324,3 @@ function make_parameters(harv)
 	const global DE_phi_Z  = zeros(2,DE_N)
 
 end
-
-
-
-
