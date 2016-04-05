@@ -1,123 +1,161 @@
 
 #### THE MODEL
 ###! DEMOGRAPHIC CALCULATIONS
-function sub_futbio!(ID,DY,COBALT,ENVR,PISC,PLAN,DETR,BENT)
+function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT)
+
 	###! COBALT information
 	get_COBALT!(COBALT,ID,DY,ENVR)
 
-	##! Forward Euler checks
-	#map(sub_check_pi!,PISC.bio);
-	#map(sub_check_pl!,PLAN.bio);
-	#map(sub_check_de!,DETR.bio);
-	#map(sub_check_be!,BENT.bio);
+	for JD = 1:NX
 
-	#! temperature multiplier
-	PISC.tmet = map(sub_tmet,PISC.tmet,ENVR.Tp);
-	PLAN.tmet = map(sub_tmet,PLAN.tmet,ENVR.Tp);
-	DETR.tmet = map(sub_tmet,DETR.tmet,ENVR.Tb);
+		#! metabolism
+		Sml_f.met[JD] = sub_met(Bas_s,ENVR.Tp[JD],U_s)
+		Med_f.met[JD] = sub_met(Bas_m,ENVR.Tp[JD],U_m)
+		Sml_p.met[JD] = sub_met(Bas_s,ENVR.Tp[JD],U_s)
+		Med_p.met[JD] = sub_met(Bas_m,ENVR.Tp[JD],U_m)
+		Lrg_p.met[JD] = sub_met(Bas_l,ENVR.Tp[JD],U_l)
+		Sml_d.met[JD] = sub_met(Bas_s,ENVR.Tb[JD],U_s)
+		Med_d.met[JD] = sub_met(Bas_m,ENVR.Tb[JD],U_m)
 
-	#! activity multiplier
-	map(sub_umet_pi!,PISC.umet);
-	map(sub_umet_pl!,PLAN.umet);
-	map(sub_umet_de!,DETR.umet);
 
-	#! metabolism
-	map(sub_metabolism_pi!,PISC.met,PISC.tmet,PISC.umet);
-	map(sub_metabolism_pl!,PLAN.met,PLAN.tmet,PLAN.umet);
-	map(sub_metabolism_de!,DETR.met,DETR.tmet,DETR.umet);
+		#! fraction of time large piscivores spends in pelagic
+	    Lrg_p.td[JD] = sub_tdif(GRD_Z[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
 
-	#! fraction of time piscivore spends in pelagic
-	PISC.tdif = map(sub_tdif,GRD_Z[ID],PLAN.bio,DETR.bio);
 
-	#! handling times
-	map(sub_tau_pi!,PISC.tau,PISC.met);
-	map(sub_tau_pl!,PLAN.tau,PLAN.met);
-	map(sub_tau_de!,DETR.tau,DETR.met);
+		#! encounter rates
+		Sml_f.enc_zm[JD] = sub_enc(Sml_f.bio[JD],ENVR.Zm[JD],A_s,1.0)
+		Sml_p.enc_zm[JD] = sub_enc(Sml_p.bio[JD],ENVR.Zm[JD],A_s,1.0)
+		Sml_d.enc_d[JD]  = sub_enc(Sml_d.bio[JD],BENT.bio[JD],A_s,1.0)
 
-	#! encounter rates
-	map(sub_enc_pipi!,PISC.enc_pi,PISC.bio,PISC.tdif);
-	map(sub_enc_pipl!,PISC.enc_pl,PLAN.bio,PISC.tdif);
-	map(sub_enc_pide!,PISC.enc_de,DETR.bio,PISC.tdif);
-	map(sub_enc_piz!,PISC.enc_z,ENVR.Zm,ENVR.Zl,PISC.tdif);
-	map(sub_enc_plz!,PLAN.enc_z,ENVR.Zm,ENVR.Zl);
-	map(sub_enc_dede!,DETR.enc_de,DETR.bio);
-	map(sub_enc_debe!,DETR.enc_be,BENT.bio);
+		Med_f.enc_zl[JD] = sub_enc(Med_f.bio[JD],ENVR.Zl[JD],A_m,1.0)
+		Med_f.enc_zm[JD] = sub_enc(Med_f.bio[JD],ENVR.Zm[JD],A_m,1.0)
+		#Med_f.enc_f[JD]  = sub_enc(Med_f.bio[JD],Sml_f.bio[JD],A_m,1.0)
+		#Med_f.enc_p[JD]  = sub_enc(Med_f.bio[JD],Sml_p.bio[JD],A_m,1.0)
 
-	#! total biomass encountered of each group
-	map(sub_ENC_pi!,PISC.ENC,PISC.enc_pi,PISC.enc_pl,PISC.enc_de,PISC.enc_z);
-	map(sub_ENC_pl!,PLAN.ENC,PLAN.enc_z);
-	map(sub_ENC_de!,DETR.ENC,DETR.enc_de,DETR.enc_be);
+		#Med_p.enc_zl[JD] = sub_enc(Med_p.bio[JD],ENVR.Zl[JD],A_m,1.0)
+		Med_p.enc_f[JD]  = sub_enc(Med_p.bio[JD],Sml_f.bio[JD],A_m,1.0)
+		Med_p.enc_p[JD]  = sub_enc(Med_p.bio[JD],Sml_p.bio[JD],A_m,1.0)
 
-	#! reset consumption and mortality
-	map(sub_reset_pisc!,PISC.I,PISC.I_z,PISC.d)
-	map(sub_reset_plan!,PLAN.I,PLAN.I_z,PLAN.d)
-	map(sub_reset_detr!,DETR.I,DETR.d)
+		Med_d.enc_d[JD]  = sub_enc(Med_d.bio[JD],Sml_d.bio[JD],A_m,1.0)
 
-	#! total biomass consumed and lost to predation SPEED UP
-	map(sub_consume_pipi!,PISC.I,PISC.d,PISC.bio,PISC.enc_pi,PISC.ENC,PISC.tau);
-	map(sub_consume_pipl!,PISC.I,PLAN.d,PISC.bio,PISC.enc_pl,PISC.ENC,PISC.tau);
-	map(sub_consume_pide!,PISC.I,DETR.d,PISC.bio,PISC.enc_de,PISC.ENC,PISC.tau);
-	map(sub_consume_dede!,DETR.I,DETR.d,DETR.bio,DETR.enc_de,DETR.ENC,DETR.tau);
-	map(sub_consume_debe!,DETR.I,BENT.d,DETR.bio,DETR.enc_be,DETR.ENC,DETR.tau);
+		Lrg_p.enc_f[JD]  = sub_enc(Lrg_p.bio[JD],Med_f.bio[JD],A_l,Lrg_p.td[JD])
+		Lrg_p.enc_p[JD]  = sub_enc(Lrg_p.bio[JD],Med_p.bio[JD],A_l,Lrg_p.td[JD])
+		Lrg_p.enc_d[JD]  = sub_enc(Lrg_p.bio[JD],Med_d.bio[JD],A_l,1-Lrg_p.td[JD])
 
-	#! zooplankton consumption
-	map(sub_consume_piz!,PISC.I_z,PISC.bio,PISC.enc_z,PISC.ENC,PISC.tau);
-	map(sub_consume_plz!,PLAN.I_z,PLAN.bio,PLAN.enc_z,PLAN.ENC,PLAN.tau);
+		#! Consumption rates
+		Sml_f.con_zm[JD] = sub_cons(Sml_f.enc_zm[JD],Sml_f.met[JD])
+		Sml_p.con_zm[JD] = sub_cons(Sml_p.enc_zm[JD],Sml_p.met[JD])
+		Sml_d.con_zm[JD] = sub_cons(Sml_d.enc_d[JD],Sml_d.met[JD])
+		Med_f.con_zm[JD] = sub_cons(Med_f.enc_zm[JD],Med_f.met[JD])
+		Med_f.con_zl[JD] = sub_cons(Med_f.enc_zl[JD],Med_f.met[JD])
+		#Med_p.con_zl[JD] = sub_cons([Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD]],Med_p.met[JD])
+		#Med_p.con_f[JD]  = sub_cons([Med_p.enc_f[JD],Med_p.enc_zl[JD],Med_p.enc_p[JD]],Med_p.met[JD])
+		#Med_p.con_p[JD]  = sub_cons([Med_p.enc_p[JD],Med_p.enc_f[JD],Med_p.enc_zl[JD]],Med_p.met[JD])
+		Med_p.con_f[JD]  = sub_cons([Med_p.enc_f[JD],Med_p.enc_p[JD]],Med_p.met[JD])
+		Med_p.con_p[JD]  = sub_cons([Med_p.enc_p[JD],Med_p.enc_f[JD]],Med_p.met[JD])
+		Med_d.con_d[JD]  = sub_cons(Med_d.enc_d[JD],Med_d.met[JD])
+		Lrg_p.con_f[JD]  = sub_cons([Lrg_p.enc_f[JD],Lrg_p.enc_p[JD],Lrg_p.enc_d[JD]],Lrg_p.met[JD])
+		Lrg_p.con_p[JD]  = sub_cons([Lrg_p.enc_p[JD],Lrg_p.enc_f[JD],Lrg_p.enc_d[JD]],Lrg_p.met[JD])
+		Lrg_p.con_d[JD]  = sub_cons([Lrg_p.enc_d[JD],Lrg_p.enc_p[JD],Lrg_p.enc_f[JD]],Lrg_p.met[JD])
+	
 
-	#! OFFLINE Coupling
-	map(sub_offline!,PISC.I_z,PLAN.I_z,ENVR.dZm,ENVR.dZl)
+		#! Offline coupling
+		Sml_f.con_zm[JD], Sml_p.con_zm[JD] = sub_offline(Sml_f.con_zm[JD],Sml_p.con_zm[JD],ENVR.dZm[JD])
+		Med_f.con_zl[JD], Med_p.con_zl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],ENVR.dZl[JD])
 
-	#! Add zooplankton consumption of PI and PL
-	map(sub_consume_pizoo!,PISC.I,PISC.I_z);
-	map(sub_consume_plzoo!,PLAN.I,PLAN.I_z);
 
-	#! energy available for somatic growth nu
-	map(sub_nu_pi!,PISC.nu,PISC.bio,PISC.I,PISC.met);
-	map(sub_nu_pl!,PLAN.nu,PLAN.bio,PLAN.I,PLAN.met);
-	map(sub_nu_de!,DETR.nu,DETR.bio,DETR.I,DETR.met);
+		#! total consumption rates (could factor in handling times here; g m-2 d-1)
+		Sml_f.I[JD] = Sml_f.con_zm[JD]
+		Sml_p.I[JD] = Sml_p.con_zm[JD]
+		Sml_d.I[JD] = Sml_d.con_d[JD]
+		Med_f.I[JD] = Med_f.con_zl[JD] + Med_f.con_zm[JD]
+		Med_p.I[JD] = Med_p.con_f[JD] + Med_p.con_p[JD]
+		#Med_p.I[JD] = Med_p.con_zl[JD] + Med_p.con_f[JD] + Med_p.con_p[JD]
+		Med_d.I[JD] = Med_d.con_d[JD]
+		Lrg_p.I[JD] = Lrg_p.con_f[JD] + Lrg_p.con_p[JD] + Lrg_p.con_d[JD]
 
-	#! maturation
-	map(sub_gamma_pi!,PISC.gamma,PISC.nu,PISC.bio,PISC.d);
-	map(sub_gamma_pl!,PLAN.gamma,PLAN.nu,PLAN.bio,PLAN.d);
-	map(sub_gamma_de!,DETR.gamma,DETR.nu,DETR.bio,DETR.d);
 
-	#! egg production
-	map(sub_rep_pi!,PISC.REP,PISC.nu,PISC.bio);
-	map(sub_rep_pl!,PLAN.REP,PLAN.nu,PLAN.bio);
-	map(sub_rep_de!,DETR.REP,DETR.nu,DETR.bio);
+		#! death rates (g m-2 d-1)
+		Sml_f.die[JD] = Med_p.con_f[JD]
+		Sml_p.die[JD] = Med_p.con_p[JD]
+		Sml_d.die[JD] = Med_d.con_d[JD]
+		Med_f.die[JD] = Lrg_p.con_f[JD]
+		Med_p.die[JD] = Lrg_p.con_p[JD]
+		Med_d.die[JD] = Lrg_p.con_d[JD]
 
-	#! total biomass somatic growth
-	map(sub_grw_pi!,PISC.GRW,PISC.nu,PISC.bio);
-	map(sub_grw_pl!,PLAN.GRW,PLAN.nu,PLAN.bio);
-	map(sub_grw_de!,DETR.GRW,DETR.nu,DETR.bio);
 
-	#! total biomass maturing
-	map(sub_mat_pi!,PISC.MAT,PISC.gamma,PISC.bio);
-	map(sub_mat_pl!,PLAN.MAT,PLAN.gamma,PLAN.bio);
-	map(sub_mat_de!,DETR.MAT,DETR.gamma,DETR.bio);
+		#! energy available for somatic growth nu
+		Sml_f.nu[JD] = sub_nu(Sml_f.I[JD],Sml_f.bio[JD],Sml_f.met[JD])
+		Sml_p.nu[JD] = sub_nu(Sml_p.I[JD],Sml_p.bio[JD],Sml_p.met[JD])
+		Sml_d.nu[JD] = sub_nu(Sml_d.I[JD],Sml_d.bio[JD],Sml_d.met[JD])
+		Med_f.nu[JD] = sub_nu(Med_f.I[JD],Med_f.bio[JD],Med_f.met[JD])
+		Med_p.nu[JD] = sub_nu(Med_p.I[JD],Med_p.bio[JD],Med_p.met[JD])
+		Med_d.nu[JD] = sub_nu(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
+		Lrg_p.nu[JD] = sub_nu(Lrg_p.I[JD],Lrg_p.bio[JD],Lrg_p.met[JD])
+			
 
-	#! total biomass lost to natural mortality
-	map(sub_mrt_pi!,PISC.MRT,PISC.bio);
-	map(sub_mrt_pl!,PLAN.MRT,PLAN.bio);
-	map(sub_mrt_de!,DETR.MRT,DETR.bio);
+		#! maturation (note subscript on Kappa is larvae, juv, adult)
+		Sml_f.gamma[JD] = sub_gamma(K_l,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD])  
+		Sml_p.gamma[JD] = sub_gamma(K_l,Z_s,Sml_p.nu[JD],Sml_p.die[JD],Sml_p.bio[JD])
+		Sml_d.gamma[JD] = sub_gamma(K_l,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD])
+		Med_f.gamma[JD] = sub_gamma(K_a,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD])
+		Med_p.gamma[JD] = sub_gamma(K_j,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD])
+		Med_d.gamma[JD] = sub_gamma(K_a,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD])
+		Lrg_p.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD])
 
-	#! Mass balance	
-	map(sub_update_pi!,PISC.bio,PISC.REP,PISC.GRW,PISC.MAT,PISC.d,PISC.MRT);
-	map(sub_update_pl!,PLAN.bio,PLAN.REP,PLAN.GRW,PLAN.MAT,PLAN.d,PLAN.MRT);
-	#map(sub_update_de!,DETR.bio,DETR.GRW,DETR.d,DETR.MRT);
-	map(sub_update_de!,DETR.bio,DETR.REP,DETR.GRW,DETR.MAT,DETR.d,DETR.MRT);
-	map(sub_update_be!,BENT.bio,BENT.d,ENVR.det);
+
+		#! egg production (by med and large size classes only)
+		Sml_f.rep[JD] = sub_rep(Sml_f.nu[JD],K_l)
+		Sml_p.rep[JD] = sub_rep(Sml_p.nu[JD],K_l)
+		Sml_d.rep[JD] = sub_rep(Sml_d.nu[JD],K_l)
+		Med_f.rep[JD] = sub_rep(Med_f.nu[JD],K_a)
+		Med_p.rep[JD] = sub_rep(Med_p.nu[JD],K_j)
+		Med_d.rep[JD] = sub_rep(Med_d.nu[JD],K_a)
+		Lrg_p.rep[JD] = sub_rep(Lrg_p.nu[JD],K_a)
+
+
+		#! recruitment (to small size classes only)
+		Sml_f.rec[JD] = sub_rec(Med_f.rep[JD],Med_f.bio[JD])
+		Sml_p.rec[JD] = sub_rec([Med_p.rep[JD],Lrg_p.rep[JD]],[Med_p.bio[JD],Lrg_p.bio[JD]])
+		Sml_d.rec[JD] = sub_rec(Med_d.rep[JD],Med_d.bio[JD])
+		Med_f.rec[JD] = sub_rec(Sml_f.gamma[JD],Sml_f.bio[JD])
+		Med_p.rec[JD] = sub_rec(Sml_p.gamma[JD],Sml_p.bio[JD])
+		Med_d.rec[JD] = sub_rec(Sml_d.gamma[JD],Sml_d.bio[JD])
+		Lrg_p.rec[JD] = sub_rec(Med_p.gamma[JD],Med_p.bio[JD])
+
+	
+		#! Mass balance	
+		Sml_f.bio[JD] = sub_update_fi(Sml_f.bio[JD],Sml_f.rec[JD],Sml_f.nu[JD],
+								   Sml_f.rep[JD],Sml_f.gamma[JD],Sml_f.die[JD])
+		Sml_p.bio[JD] = sub_update_fi(Sml_p.bio[JD],Sml_p.rec[JD],Sml_p.nu[JD],
+								   Sml_p.rep[JD],Sml_p.gamma[JD],Sml_p.die[JD])
+		Sml_d.bio[JD] = sub_update_fi(Sml_d.bio[JD],Sml_d.rec[JD],Sml_d.nu[JD],
+								   Sml_d.rep[JD],Sml_d.gamma[JD],Sml_d.die[JD])
+
+		Med_f.bio[JD] = sub_update_fi(Med_f.bio[JD],Med_f.rec[JD],Med_f.nu[JD],
+								   Med_f.rep[JD],Med_f.gamma[JD],Med_f.die[JD])
+		Med_p.bio[JD] = sub_update_fi(Med_p.bio[JD],Med_p.rec[JD],Med_p.nu[JD],
+								   Med_p.rep[JD],Med_p.gamma[JD],Med_p.die[JD])
+		Med_d.bio[JD] = sub_update_fi(Med_d.bio[JD],Med_d.rec[JD],Med_d.nu[JD],
+								   Med_d.rep[JD],Med_d.gamma[JD],Med_d.die[JD])
+
+		Lrg_p.bio[JD] = sub_update_fi(Lrg_p.bio[JD],Lrg_p.rec[JD],Lrg_p.nu[JD],
+								   Lrg_p.rep[JD],Lrg_p.gamma[JD],Lrg_p.die[JD])
+		
+		BENT.bio[JD] = sub_update_be(BENT.bio[JD],ENVR.det[JD],Sml_d.enc_d[JD],Sml_d.bio[JD])
+	end
 
 	#! Fishing
-	PISC.bio,PLAN.bio,DETR.bio = sub_fishing(PISC.bio,PLAN.bio,DETR.bio,GRD_A);
+	#PISC.bio,PLAN.bio,DETR.bio = sub_fishing(PISC.bio,PLAN.bio,DETR.bio,GRD_A);
 
-	#! Forward Euler checks for demographics
-	map(sub_check_pi!,PISC.bio);
-	map(sub_check_pl!,PLAN.bio);
-	map(sub_check_de!,DETR.bio);
-	map(sub_check_be!,BENT.bio);
-
-#! Movement
+	#! Forward Euler checks for demographics and movement
+	sub_check!(Sml_f.bio);
+	sub_check!(Sml_p.bio);
+	sub_check!(Sml_d.bio);
+	sub_check!(Med_f.bio);
+	sub_check!(Med_p.bio);
+	sub_check!(Med_d.bio);
+	sub_check!(Lrg_p.bio);
 
 end
 

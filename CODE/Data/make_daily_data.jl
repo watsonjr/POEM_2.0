@@ -9,6 +9,7 @@
 #! Tp: pelagic temperature averaged over the top 200m (deg C) 
 #! Tb: bottom temperature (deg C)
 #! Time and Lon and Lat
+#! U/V currents (m d-1)
 
 #! 1) data to be interpolated to daily resolution,
 #! and saved in monthly chunks
@@ -43,6 +44,15 @@ dZl=ncread("./GCM/Forecast/ocean_cobalt_miscflux_100.200601-210012.jhploss_nlgz_
 #! Detrital flux at the sea floor (mol(N) m-2 s-1)
 dDet=ncread("./GCM/Forecast/ocean_cobalt_btm.200601-210012.fndet_btm.nc","fndet_btm");
 
+#! Ocean currents
+U = ncread("./GCM/Forecast/ocean.200601-210012.u_100_avg.nc","U_100")
+V = ncread("./GCM/Forecast/ocean.200601-210012.v_100_avg.nc","V_100")
+
+#! test speeds
+using PyPlot
+WID = find(Depth .> 0.0); # spatial index of water cells
+U = ncread("./ocean.200601-210012.u_100_avg.nc","U_100")
+u = U[:,:,1]
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
@@ -52,7 +62,8 @@ R_Cp = 0.11 # R/Cp: gas constant over specific heat capacity
 Po = 1000 # millibars (air pressure at sea surface)
 
 #! index of water cells
-WID = find(Zm[:,:,1] .!= -1.0e10); # spatial index of water cells
+Depth   = abs(ncread("./grid_spec.nc","ht")); # depth in meters
+WID = find(Depth .> 0.0); # spatial index of water cells
 NID = length(WID); # number of water cells
 
 #! months in a year
@@ -62,7 +73,7 @@ id2 = [id2; 34644];
 ID  = [id1 id2];
 
 #! pull out annual information
-#! transform to size-based model units (g, day-1, m-2)
+#! transform to size-based model units (g[wet weight], day, m2)
 #! x (106./16) mol N --> mol C
 #! x 12.01  mol C --> grams C
 #! / 0.32 grams C --> dry weight.
@@ -70,7 +81,7 @@ ID  = [id1 id2];
 for i in [1:95]
 	id = float64(ID[i,:])
 	#I = find(id[1].<=TIME.<=id[2])
-	I = find(id[1] .<= TIME .< id[2])
+	I = find(id[1] .<= TIME .<= id[2])
 
 	#! pull raw data out
 	time = TIME[I];
@@ -81,6 +92,8 @@ for i in [1:95]
 	dzm = dZm[:,:,I];
 	dzl = dZl[:,:,I];
 	det = dDet[:,:,I];
+	u = U[:,:,I]
+	v = V[:,:,I]
 
 	#! setup POEM data files
 	D_Tp  = zeros(NID,365);
@@ -90,11 +103,33 @@ for i in [1:95]
 	D_dZm = zeros(NID,365);
  	D_dZl = zeros(NID,365);
  	D_det = zeros(NID,365);
+ 	D_u = zeros(NID,365);
+ 	D_v = zeros(NID,365);
+
+ 	#! NaN velocities
+ 	u[find(u.==minimum(u))] = 0.0
+ 	v[find(v.==minimum(v))] = 0.0
 
 	#! interpolate to daily resolution
 	for j = 1:NID
 		#! indexes
 		m,n = ind2sub((360,200),WID[j]); # spatial index of water cell
+
+		#! v currents
+		Y = zeros(size(time))
+		Y[:] = v[m,n,:];
+		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
+		Xi= [time[1]:1:time[end]];
+		Yi = yi[Xi[1:end-1]];
+		D_v[j,1:length(Yi)] = (Yi / 100 * 60 *60 * 24); # m d-1
+
+		#! u currents
+		Y = zeros(size(time))
+		Y[:] = u[m,n,:];
+		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
+		Xi= [time[1]:1:time[end]];
+		Yi = yi[Xi[1:end-1]];
+		D_u[j,1:length(Yi)] = Yi / 100 * 60 *60 * 24; # m d-1
 
 		#! pelagic temperature
 		Y = zeros(size(time))
@@ -163,13 +198,17 @@ for i in [1:95]
 	D_dZm = float64(D_dZm);
 	D_dZl = float64(D_dZl);
 	D_det = float64(D_det);
+	D_u = float64(D_u);
+	D_v = float64(D_v);
 	
 	#! save
 	println(i)
 	ti = string(1000000+i); di = "./JLD/Data_";
 	save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,
 									  "dZm",D_dZm,"dZl",D_dZl,
-									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det);
+									  "Tp",D_Tp,"Tb",D_Tb,
+									  "U",D_u,"V",D_v,
+									  "det",D_det);
 
 end
 

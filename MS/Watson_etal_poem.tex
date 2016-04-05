@@ -135,21 +135,26 @@ Diet preferences are defined using empirical predator-prey mass ratios (PPMRs). 
 
 \subsubsection*{Space and Movement}
 Following Watson et al. 2015, we implement a simple gradient ascent approach to model the active movement of fish biomass. First, in each grid-cell and for each size-class in all groups we calculate the gradient of prey biomass. We then assume that all size-classes of all groups swim/move in the direction of the steepest positive gradient, i.e. they essentially follow food. They move with speed $a_{i,m} = \nu_i + U_m$, where $U_m$ is the zonal or meridional ocean current speed depending on which direction fish are swimming. With this swimming speed we employ a XXX numerical advection-diffusion scheme to model active movement:
-\begin{equation}
-B_{mn}^{t+1} = D^{t+1}_{mn} + J^{t+1}_{mn}
-\end{equation}
+%\begin{equation}
+%B_{mn}^{t+1} = B^{-}_{mn} + B^{+}_{mn}
+%\end{equation}
 Diffusion is solved for using a 2D Forward in Time Centered Scheme:
 % http://pauli.uni-muenster.de/tp/fileadmin/lehre/NumMethoden/WS0910/ScriptPDE/Heat.pdf
 \begin{equation}
-D^{t+1}_{mn} = \alpha (B_{m+1n}^{*} + B_{m-1n}^{*}) + \beta (B_{mn+1}^{*} + B_{mn-1}^{*}) + (1-2\alpha-2\beta) B_{ij}^*,
+B^{-}_{mn} = \alpha (B_{m+1n}^{*} + B_{m-1n}^{*}) + \beta (B_{mn+1}^{*} + B_{mn-1}^{*}) + (1-2\alpha-2\beta) B_{ij}^*,
 \end{equation}
-where $\alpha = D \Delta t / \Delta x^2$ and $\beta = D \Delta t / \Delta y^2$. Advection is solved for using a 2D Lax Wendroff scheme:
+where $\alpha = D \Delta t / \Delta x^2$ and $\beta = D \Delta t / \Delta y^2$. Advection is solved for using a 2D Lax-Wendroff directional splitting (where the meridional and zonal directions are computed sequentially) scheme, first in the zonal direction:
 % http://www.lancs.ac.uk/~winterh/advectionCS.pdf
 \begin{align}
-J^{t+1}_{mn} = &B_{mn}^* - \frac{U}{2}(B_{m+1n}^* - B_{m-1n}^*) - \frac{V}{2}(B_{mn+1}^* - B_{mn-1}^*)\\
-&- \frac{U^2}{2}(B_{m+1n}^* - 2 B_{mn}^* + B_{m-1n}^*) - \frac{V^2}{2}(B_{mn+1}^* - 2 B_{mn}^* + B_{mn-1}^*)\\
-&+ \frac{UV}{4}(B_{m+1n+1}^* - B_{m-1n+1}^* - B_{m+1n-1}^* + B_{m-1n-1}^*),
+B^+_{mn} = &B_{mn}^- - \frac{U}{2}(B_{m+1n}^- - B_{m-1n}^-) - \frac{U^2}{2}(B_{m+1n}^- - 2 B_{mn}^- + B_{m-1n}^-),
 \end{align}
+then in the meridional direction:
+\begin{align}
+B^{t+1}_{mn} = &B_{mn}^+ - \frac{V}{2}(B_{mn+1}^+ - B_{mn-1}^+) - \frac{V^2}{2}(B_{mn+1}^+ - 2 B_{mn}^+ + B_{mn-1}^+)
+\end{align}
+
+
+
 where $U = u \Delta t / \Delta x$ and $V = u \Delta t / \Delta x$.
 
 If all resource gradients are negative then that predator size-class is at a local resource maxima and we treat this case slightly differently. Here, we assume that fish will swim against all ocean currents and try to maintain their position at this maxima. We model this as follows:

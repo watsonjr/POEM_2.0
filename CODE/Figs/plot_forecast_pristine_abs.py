@@ -46,10 +46,10 @@ Zoo = np.asarray(nc.variables['nlgz_100'])[1,:,:]
 ID = np.where(Zoo!=Zoo.min())
 
 #! Fish DATA
-nc_pisc = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_pisc.nc")
-nc_plan = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_plan.nc")
-nc_detr = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_detr.nc")
-nc_bent = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_bent.nc")
+nc_pisc = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_pisc_adv.nc")
+nc_plan = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_plan_adv.nc")
+nc_detr = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_detr_adv.nc")
+nc_bent = netCDF4.Dataset("../Data/NC/Data_forecast_pristine_bent_adv.nc")
 
 PISC = np.asarray(nc_pisc.variables['biomass'])
 PLAN = np.asarray(nc_plan.variables['biomass'])
