@@ -1,7 +1,8 @@
 
 #### THE MODEL
 ###! DEMOGRAPHIC CALCULATIONS
-function sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT)
+#function sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT)
+function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,PISC,PLAN,DETR,BENT)	
 	###! COBALT information
 	#get_COBALT!(COBALT,ID,DY,ENVR,S)
 	get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)

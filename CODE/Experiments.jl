@@ -17,7 +17,7 @@ function Testoneloc()
 	#! choose where to run the model
 	GRD = load("./Data/Data_grid.jld")
 	XY = zeros(Int,360,200); # choose a particulat place or everywhere
-	XY[GRD["ID"]] =[1:GRD["N"]] #[a] concatenation is deprecated; use collect(a) instead
+	XY[GRD["ID"]] = collect(1:GRD["N"]) #[a] concatenation is deprecated; use collect(a) instead
 	#ID = XY[195,102] # Humboldt
 	#ID = XY[270,156] # Iberian location
 	#ID = XY[265,156] # Iberian location off shore
@@ -51,7 +51,8 @@ function Testoneloc()
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT);
+			#sub_futbio!(ID,DY,COBALT,S,ENVR,PISC,PLAN,DETR,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,PISC,PLAN,DETR,BENT);
 
 			#! Save
 			writecsv(Spinup_PISC,PISC.bio[1]')

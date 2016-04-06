@@ -68,25 +68,25 @@ function sub_init_fish(ID)
 		met_de[i] = Array(Float64,DE_N)
 	end
 
-    # handling times
-    tau_pi = Array(Any,NX)
-    tau_pl = Array(Any,NX)
-    tau_de = Array(Any,NX)
+  # handling times
+  tau_pi = Array(Any,NX)
+  tau_pl = Array(Any,NX)
+  tau_de = Array(Any,NX)
 	for i = 1:NX
 		tau_pi[i] = Array(Float64,PI_N)
 		tau_pl[i] = Array(Float64,PL_N)
 		tau_de[i] = Array(Float64,DE_N)
 	end
 
-    # mass ingested (I)
-    I_pi = Array(Any,NX)
-    I_pl = Array(Any,NX)
-    I_de = Array(Any,NX)
-    for i = 1:NX
-    	I_pi[i] = Array(Float64,PI_N)
-    	I_pl[i] = Array(Float64,PL_N)
-    	I_de[i] = Array(Float64,DE_N)
-    end
+  # mass ingested (I)
+  I_pi = Array(Any,NX)
+  I_pl = Array(Any,NX)
+  I_de = Array(Any,NX)
+  for i = 1:NX
+  	I_pi[i] = Array(Float64,PI_N)
+  	I_pl[i] = Array(Float64,PL_N)
+  	I_de[i] = Array(Float64,DE_N)
+  end
 
 	# mass of zooplankton ingested (for COBALT link)
 	I_piz = Array(Any,NX)
@@ -96,134 +96,134 @@ function sub_init_fish(ID)
 		I_plz[i] = Array(Float64,2,PL_N)
 	end
 
-    # mass lost to predation (g d-1)
-    d_pi = Array(Any,NX)
-    d_pl = Array(Any,NX)
-    d_de = Array(Any,NX)
-    d_be = Array(Any,NX)
-    for i = 1:NX
-    	d_pi[i] = zeros(Float64,PI_N)
-    	d_pl[i] = zeros(Float64,PL_N)
-    	d_de[i] = zeros(Float64,DE_N)
-    	d_be[i] = zeros(Float64,1)
-    	#d_be[i] = zeros(Float64,1,1)
-    end
+  # mass lost to predation (g d-1)
+  d_pi = Array(Any,NX)
+  d_pl = Array(Any,NX)
+  d_de = Array(Any,NX)
+  d_be = Array(Any,NX)
+  for i = 1:NX
+  	d_pi[i] = zeros(Float64,PI_N)
+  	d_pl[i] = zeros(Float64,PL_N)
+  	d_de[i] = zeros(Float64,DE_N)
+  	d_be[i] = zeros(Float64,1)
+  	#d_be[i] = zeros(Float64,1,1)
+  end
 
-    # total energy available for growth
-    nu_pi = Array(Any,NX)
-    nu_pl = Array(Any,NX)
-    nu_de = Array(Any,NX)
-    for i = 1:NX
-    	nu_pi[i] = Array(Float64,PI_N)
-    	nu_pl[i] = Array(Float64,PL_N)
-    	nu_de[i] = Array(Float64,DE_N)
-    end
+  # total energy available for growth
+  nu_pi = Array(Any,NX)
+  nu_pl = Array(Any,NX)
+  nu_de = Array(Any,NX)
+  for i = 1:NX
+  	nu_pi[i] = Array(Float64,PI_N)
+  	nu_pl[i] = Array(Float64,PL_N)
+  	nu_de[i] = Array(Float64,DE_N)
+  end
 
-    # energy available for somatic growth
-    gamma_pi = Array(Any,NX)
-    gamma_pl = Array(Any,NX)
-    gamma_de = Array(Any,NX)
-    for i = 1:NX
-    	gamma_pi[i] = Array(Float64,PI_N)
-    	gamma_pl[i] = Array(Float64,PL_N)
-    	gamma_de[i] = Array(Float64,DE_N)
-    end
+  # energy available for somatic growth
+  gamma_pi = Array(Any,NX)
+  gamma_pl = Array(Any,NX)
+  gamma_de = Array(Any,NX)
+  for i = 1:NX
+  	gamma_pi[i] = Array(Float64,PI_N)
+  	gamma_pl[i] = Array(Float64,PL_N)
+  	gamma_de[i] = Array(Float64,DE_N)
+  end
 
-    #! total biomass to reproduction
-    REP_PI = Array(Any,NX)
-    REP_PL = Array(Any,NX)
-    REP_DE = Array(Any,NX)
-    for i = 1:NX
-		REP_PI[i] = Array(Float64,PI_N)
-		REP_PL[i] = Array(Float64,PL_N)
-		REP_DE[i] = Array(Float64,DE_N)
-    end
+  #! total biomass to reproduction
+  REP_PI = Array(Any,NX)
+  REP_PL = Array(Any,NX)
+  REP_DE = Array(Any,NX)
+  for i = 1:NX
+	REP_PI[i] = Array(Float64,PI_N)
+	REP_PL[i] = Array(Float64,PL_N)
+	REP_DE[i] = Array(Float64,DE_N)
+  end
 
-    #! total biomass to somatic growth
-    GRW_PI = Array(Any,NX)
-    GRW_PL = Array(Any,NX)
-    GRW_DE = Array(Any,NX)
-    for i = 1:NX
-    	GRW_PI[i] = Array(Float64,PI_N)
-    	GRW_PL[i] = Array(Float64,PL_N)
-    	GRW_DE[i] = Array(Float64,DE_N)
-    end
+  #! total biomass to somatic growth
+  GRW_PI = Array(Any,NX)
+  GRW_PL = Array(Any,NX)
+  GRW_DE = Array(Any,NX)
+  for i = 1:NX
+  	GRW_PI[i] = Array(Float64,PI_N)
+  	GRW_PL[i] = Array(Float64,PL_N)
+  	GRW_DE[i] = Array(Float64,DE_N)
+  end
 
-    #! total biomass maturing to next sizeclass
-    MAT_PI = Array(Any,NX)
-    MAT_PL = Array(Any,NX)
-    MAT_DE = Array(Any,NX)
-    for i = 1:NX
-    	MAT_PI[i] = Array(Float64,PI_N)
-    	MAT_PL[i] = Array(Float64,PL_N)
-    	MAT_DE[i] = Array(Float64,DE_N)
-    end
+  #! total biomass maturing to next sizeclass
+  MAT_PI = Array(Any,NX)
+  MAT_PL = Array(Any,NX)
+  MAT_DE = Array(Any,NX)
+  for i = 1:NX
+  	MAT_PI[i] = Array(Float64,PI_N)
+  	MAT_PL[i] = Array(Float64,PL_N)
+  	MAT_DE[i] = Array(Float64,DE_N)
+  end
 
 	#! background mortality + fishing
-    MRT_PI = Array(Any,NX)
-    MRT_PL = Array(Any,NX)
-    MRT_DE = Array(Any,NX)
-    for i = 1:NX
-    	MRT_PI[i] = Array(Float64,PI_N)
-    	MRT_PL[i] = Array(Float64,PL_N)
-    	MRT_DE[i] = Array(Float64,DE_N)
-    end
+  MRT_PI = Array(Any,NX)
+  MRT_PL = Array(Any,NX)
+  MRT_DE = Array(Any,NX)
+  for i = 1:NX
+  	MRT_PI[i] = Array(Float64,PI_N)
+  	MRT_PL[i] = Array(Float64,PL_N)
+  	MRT_DE[i] = Array(Float64,DE_N)
+  end
 
 	#! pisc encounter rates
 	enc_pipi = Array(Any,NX)
 	enc_pipl = Array(Any,NX)
 	enc_pide = Array(Any,NX)
 	enc_piz  = Array(Any,NX)
-    for i = 1:NX
-        enc_pipi[i] = Array(Float64,PI_N,PI_N)
-        enc_pipl[i] = Array(Float64,PL_N,PI_N)
-        enc_pide[i] = Array(Float64,DE_N,PI_N)
-        enc_piz[i] = Array(Float64,2,PI_N)
-    end
+  for i = 1:NX
+      enc_pipi[i] = Array(Float64,PI_N,PI_N)
+      enc_pipl[i] = Array(Float64,PL_N,PI_N)
+      enc_pide[i] = Array(Float64,DE_N,PI_N)
+      enc_piz[i] = Array(Float64,2,PI_N)
+  end
 
 	#! total pisc ENCounter rates
 	ENC_pipi = Array(Any,NX)
 	ENC_pipl = Array(Any,NX)
 	ENC_pide = Array(Any,NX)
 	ENC_piz  = Array(Any,NX)
-    for i = 1:NX
-        ENC_pipi[i] = Array(Float64,1,PI_N)
-        ENC_pipl[i] = Array(Float64,1,PI_N)
-        ENC_pide[i] = Array(Float64,1,PI_N)
-        ENC_piz[i] = Array(Float64,1,PI_N)
-    end
+  for i = 1:NX
+      ENC_pipi[i] = Array(Float64,1,PI_N)
+      ENC_pipl[i] = Array(Float64,1,PI_N)
+      ENC_pide[i] = Array(Float64,1,PI_N)
+      ENC_piz[i] = Array(Float64,1,PI_N)
+  end
 
 	#! planktivore encounter rates
 	enc_plz  = Array(Any,NX)
-    for i = 1:NX
-        enc_plz[i] = Array(Float64,2,PL_N)
-    end
+  for i = 1:NX
+      enc_plz[i] = Array(Float64,2,PL_N)
+  end
 
 	#! detrivore encounter rates
 	enc_dede = Array(Any,NX)
 	enc_debe = Array(Any,NX)
-    for i = 1:NX
-        enc_dede[i] = Array(Float64,DE_N,DE_N)
-        enc_debe[i] = Array(Float64,1,DE_N)
-    end
+  for i = 1:NX
+      enc_dede[i] = Array(Float64,DE_N,DE_N)
+      enc_debe[i] = Array(Float64,1,DE_N)
+  end
 
 	#! total detrivore Encounter rates
 	ENC_dede = Array(Any,NX)
 	ENC_debe = Array(Any,NX)
-    for i = 1:NX
-        ENC_dede[i] = Array(Float64,1,DE_N)
-        ENC_debe[i] = Array(Float64,1,DE_N)
-    end
+  for i = 1:NX
+      ENC_dede[i] = Array(Float64,1,DE_N)
+      ENC_debe[i] = Array(Float64,1,DE_N)
+  end
 
  	# total biomass encoutered
 	ENC_pl  = Array(Any,NX)
-    ENC_pi = Array(Any,NX)
-    ENC_de = Array(Any,NX)
-    for i = 1:NX
-    	ENC_pi[i] = Array(Float64,1,PI_N)
+  ENC_pi = Array(Any,NX)
+  ENC_de = Array(Any,NX)
+  for i = 1:NX
+  	ENC_pi[i] = Array(Float64,1,PI_N)
 		ENC_pl[i] = Array(Float64,1,PL_N)
-    	ENC_de[i] = Array(Float64,1,DE_N)
-    end
+  	ENC_de[i] = Array(Float64,1,DE_N)
+  end
 
 	# assign to types
 	PISC = piscivore(bio_pi,tmet_pi,umet_pi,tdif_pi,met_pi,I_pi,I_piz,tau_pi,
@@ -237,7 +237,7 @@ function sub_init_fish(ID)
                 enc_dede,enc_debe,ENC_de)
 
 	###! Detritus
-    BENT = detritus(bio_be,d_be)
+  BENT = detritus(bio_be,d_be)
 
 	return PISC,PLAN,DETR,BENT
 end
