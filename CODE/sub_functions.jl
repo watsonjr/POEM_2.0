@@ -9,553 +9,159 @@ function get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
     ENVR.det[:,1] = COBALT["det"][ID,DY]
     ENVR.dZm[:,1] = COBALT["dZm"][ID,DY]
     ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
-    #ENVR.K[:,1] = S[ID,DY]
-    ENVR.T0[:,1] = Tref[ID]
-    ENVR.Dthresh[:,1] = Dthresh[ID]
-end
-
-###! Temperature multiplier for metabolism
-function sub_tmet(tmet,T)
-	tmet = exp(0.0*T)
-	#tmet = exp(0.0548.*T)
-end
-
-
-###! Activity multiplier for metabolism
-function sub_umet_pi!(umet::Array{Float64})
-	for i = 1:PI_N
-		umet[i] = exp(0.03*(PI_U[i]*100/60/60/24))
-	end
-	nothing
-end
-function sub_umet_pl!(umet::Array{Float64})
-	for i = 1:PL_N
-		umet[i] = exp(0.03*(PL_U[i]*100/60/60/24))
-	end
-	nothing
-end
-function sub_umet_de!(umet::Array{Float64})
-	for i = 1:DE_N
-		umet[i] = exp(0.03*(DE_U[i]*100/60/60/24))
-	end
-	nothing
+    ENVR.U[:,1]   = COBALT["U"][ID,DY]
+    ENVR.V[:,1]   = COBALT["V"][ID,DY]
 end
 
 
 ###! Metabolism
-function sub_metabolism_pi!(met::Array{Float64},tmet::Float64,umet::Array{Float64})
-    for i = 1:PI_N
-        met[i] = PI_bas[i] * tmet * umet[i] * 5.258
-    end
-    nothing
-end
-function sub_metabolism_pl!(met::Array{Float64},tmet::Float64,umet::Array{Float64})
-    for i = 1:PL_N
-        met[i] = PL_bas[i] * tmet * umet[i] * 5.258
-    end
-    nothing
-end
-function sub_metabolism_de!(met::Array{Float64},tmet::Float64,umet::Array{Float64})
-    for i = 1:DE_N
-        met[i] = DE_bas[i] * tmet * umet[i] * 5.258
-    end
-    nothing
+function sub_met(bas,T,U)
+	#! I think I need to redo including Activity multiplier better
+	#! NOTE: keeping temp multiplier constant (at 12degC) across space
+	met = bas * exp(0.03*(U*100/60/60/24)) * 5.258
+	#met = bas * exp(0.0548*12) * exp(0.03*(U*100/60/60/24)) * 5.258
 end
 
 
 ###! Fraction of time spent in pelagic (for piscivore)
-function sub_tdif(Z,bio1::Array{Float64},bio2::Array{Float64})
+function sub_tdif(Z,bio1,bio2,biod)
+	biop = bio1+bio2
 	if Z < PI_be_cutoff
-		tdif = sum(bio1) ./ (sum(bio1).+sum(bio2))
+		tdif = biop ./ (biop+biod)
 	else
 		tdif = 1.0
 	end
-end
-
-###! Handling times
-function sub_tau_pi!(tau::Array{Float64},met::Array{Float64})
-	for i = 1:PI_N
-		tau[i] = 1 / (4*met[i])
-	end
-	nothing
-end
-function sub_tau_pl!(tau::Array{Float64},met::Array{Float64})
-	for i = 1:PL_N
-		tau[i] = 1 / (4*met[i])
-	end
-	nothing
-end
-function sub_tau_de!(tau::Array{Float64},met::Array{Float64})
-	for i = 1:DE_N
-		tau[i] = 1 / (4*met[i])
-	end
-	nothing
+	return tdif
 end
 
 
-###! Piscivore encounter rates
-function sub_enc_pipi!(enc::Array{Float64},prey::Array{Float64},tdif::Float64)
-	for i = 1:PI_N # pred
-		for j = 1:PI_N # prey
-			enc[j,i] = prey[j]*PI_phi_PI[j,i]*PI_a[i]*tdif
-		end
-	end
-	nothing
-end
-
-function sub_enc_pipl!(enc::Array{Float64},prey::Array{Float64},tdif::Float64)
-	for i = 1:PI_N # pred
-		for j = 1:PL_N # prey
-			enc[j,i] = prey[j]*PI_phi_PL[j,i]*PI_a[i]*tdif
-		end
-	end
-	nothing
-end
-
-function sub_enc_pide!(enc::Array{Float64},prey::Array{Float64},tdif::Float64)
-	for i = 1:PI_N # pred
-		for j = 1:DE_N # prey
-			enc[j,i] = prey[j]*PI_phi_DE[j,i]*PI_a[i]*(1-tdif)
-		end
-	end
-	nothing
-end
-function sub_enc_piz!(enc::Array{Float64},Zm,Zl,tdif::Float64)
-	for i = 1:PI_N # pred
-		enc[1,i] = Zm*PI_phi_Z[1,i]*PI_a[i]*tdif
-		enc[2,i] = Zl*PI_phi_Z[2,i]*PI_a[i]*tdif
-	end
-	nothing
-end
-
-###! Planktivore encounter rates
-function sub_enc_plz!(enc::Array{Float64},Zm,Zl)
-	for i = 1:PL_N # pred
-		enc[1,i] = Zm*PL_phi_Z[1,i]*PL_a[i]
-		enc[2,i] = Zl*PL_phi_Z[2,i]*PL_a[i]
-	end
-	nothing
-end
-
-###! Detritivore encounter rates
-function sub_enc_dede!(enc::Array{Float64},prey::Array{Float64})
-	for i = 1:DE_N # pred
-		for j = 1:DE_N # prey
-			enc[j,i] = prey[j]*DE_phi_DE[j,i]*DE_a[i]
-		end
-	end
-	nothing
-end
-function sub_enc_debe!(enc::Array{Float64},prey::Array{Float64})
-	for i = 1:DE_N # pred
-		enc[i] = prey[1]*DE_phi_BE[i]*DE_a[i]
-	end
-	nothing
-end
-
-###! Total biomass encountered
-function sub_ENC_pi!(ENC,enc_pi,enc_pl,enc_de,enc_z)
-	for i = 1:PI_N
-		ENC[i] = 0.0
-		for j = 1:PI_N
-			ENC[i] += enc_pi[j,i]
-		end
-		for j = 1:PL_N
-			ENC[i] += enc_pl[j,i]
-		end
-		for j = 1:DE_N
-			ENC[i] += enc_de[j,i]
-		end
-		for j = 1:2
-			ENC[i] += enc_z[j,i]
-		end
-	end
-end
-function sub_ENC_de!(ENC,enc_de,enc_be)
-	for i = 1:DE_N
-		ENC[i] = 0.0
-		for j = 1:DE_N
-			ENC[i] += enc_de[j,i]
-		end
-		ENC[i] += enc_be[i]
-	end
-end
-function sub_ENC_pl!(ENC,enc_z)
-	for i = 1:PL_N
-		ENC[i] = 0.0
-		ENC[i] += enc_z[1,i]
-		ENC[i] += enc_z[2,i]
-	end
+###!  Encounter rates
+function sub_enc(pred,prey,a,td)
+	# pred biomass density,
+	# prey biomass density,
+	# predator search rate,
+	# time spent in pelagic.
+	enc = pred*prey*a*td
 end
 
 
-###! reset consumption and mortality
-function sub_reset_pisc!(I,Iz,d)
-	for i = 1:PI_N
-		I[i] = 0.0
-		Iz[:,i] = [0.,0.];
-		d[i] = 0.0
-	end
-end
-function sub_reset_plan!(I,Iz,d)
-	for i = 1:PI_N
-		I[i] = 0.0
-		Iz[:,i] = [0.,0.];
-		d[i] = 0.0
-	end
-end
-function sub_reset_detr!(I,d)
-	for i = 1:DE_N
-		I[i] = 0.0
-		d[i] = 0.0
-	end
+###! Type I consumption
+function sub_cons(enc,met)
+	#! calculates consumption rate of first element of enc
+	ENC = sum(enc) # total biomass encountered
+	tau = 1/ (4*met) # handling time
+	out = enc[1] / (1+(tau*ENC)) # Type II
 end
 
-
-###! type II feeding
-function sub_typeII(pred,enc,tau,ENC)
-	return (pred*enc) / (1 + (tau*ENC))
-end
-
-###! piscivore consumption
-function sub_consume_pipi!(I_pi,d_pi,bio_pi,enc_pipi,ENC_pi,tau_pi)
-	for i = 1:PI_N, j = 1:PI_N#pred
-		con = sub_typeII(bio_pi[i],enc_pipi[j,i],tau_pi[i],ENC_pi[i])
-		I_pi[i] += con
-		d_pi[j] += con
-	end
-end
-function sub_consume_pipl!(I_pi,d_pl,bio_pi,enc_pipl,ENC_pi,tau_pi)
-	for i = 1:PI_N, j = 1:PL_N #pred
-		con = sub_typeII(bio_pi[i],enc_pipl[j,i],tau_pi[i],ENC_pi[i])
-		I_pi[i] += con
-		d_pl[j] += con
-	end
-end
-function sub_consume_pide!(I_pi,d_de,bio_pi,enc_pide,ENC_pi,tau_pi)
-	for i = 1:PI_N, j=1:DE_N #pred
-		con = sub_typeII(bio_pi[i],enc_pide[j,i],tau_pi[i],ENC_pi[i])
-		I_pi[i] += con
-		d_de[j] += con
-	end
-end
-# Zooplankton consumption is further below
-
-###! Detrivore consumption
-function sub_consume_dede!(I_de,d_de,bio_de,enc_dede,ENC_de,tau_de)
-	for i = 1:DE_N, j = 1:DE_N #pred
-		con = sub_typeII(bio_de[i],enc_dede[j,i],tau_de[i],ENC_de[i])
-		I_de[i] += con
-		d_de[j] += con
-	end
-end
-function sub_consume_debe!(I_de,d_be,bio_de,enc_debe,ENC_de,tau_de)
-	for i = 1:DE_N #pred
-		con = sub_typeII(bio_de[i],enc_debe[1,i],tau_de[i],ENC_de[i])
-		I_de[i] += con
-		d_be[1] += con
-	end
-end
-
-###! Consumption of zooplankton
-#! by piscivore
-function sub_consume_piz!(I_z,bio_pi,enc_piz,ENC_pi,tau_pi)
-	for i = 1:PI_N #pred
-		I_z[1,i] += sub_typeII(bio_pi[i],enc_piz[1,i],tau_pi[i],ENC_pi[i])
-		I_z[2,i] += sub_typeII(bio_pi[i],enc_piz[2,i],tau_pi[i],ENC_pi[i])
-	end
-end
-#! by Planktivore
-function sub_consume_plz!(I_z,bio_pl,enc_plz,ENC_pl,tau_pl)
-	for i = 1:PL_N #pred
-		I_z[1,i] += sub_typeII(bio_pl[i],enc_plz[1,i],tau_pl[i],ENC_pl[i])
-		I_z[2,i] += sub_typeII(bio_pl[i],enc_plz[2,i],tau_pl[i],ENC_pl[i])
-	end
-end
 
 ###! Offline coupling
-function sub_offline!(pi_z,pl_z,dZm,dZl)
-	ZOO = sum(pi_z,2) + sum(pl_z,2)
-	if ZOO[1] > dZm
-		pi_z[1,:] = (pi_z[1,:]./ZOO[1]) .* dZm
-		pl_z[1,:] = (pl_z[1,:]./ZOO[1]) .* dZm
+function sub_offline(enc_1,enc_2,dZ)
+	#! offline switch
+	if (enc_1 + enc_2) > dZ
+		frac = enc_1 / (enc_1 + enc_2)
+		out_1 = (frac * dZ)
+		out_2 = ((1-frac) * dZ)
+	else
+		out_1 = enc_1
+		out_2 = enc_2
 	end
-	if ZOO[2] > dZl
-		pi_z[2,:] = (pi_z[2,:]./ZOO[2]) .* dZl
-		pl_z[2,:] = (pl_z[2,:]./ZOO[2]) .* dZl
-	end
-end
-
-###! Add consumed zooplankton to diet
-function sub_consume_pizoo!(I,Iz)
-	for i = 1:PI_N
-		I[i] += (Iz[1,i] + Iz[2,i])
-	end
-end
-function sub_consume_plzoo!(I,Iz)
-	for i = 1:PL_N
-		I[i] += (Iz[1,i] + Iz[2,i])
-	end
+	return out_1, out_2
 end
 
 
 ###! ENERGY AVAILABLE FOR GROWTH NU
-function sub_nu_pi!(nu,bio,I,met)
-	for i = 1:PI_N
-		nu[i] = ((I[i]/bio[i])*PI_lambda[i]) - met[i]
-	end
-end
-function sub_nu_pl!(nu,bio,I,met)
-	for i = 1:PL_N
-		nu[i] = ((I[i]/bio[i])*PL_lambda[i]) - met[i]
-	end
-end
-function sub_nu_de!(nu,bio,I,met)
-	for i = 1:DE_N
-		nu[i] = ((I[i]/bio[i])*DE_lambda[i]) - met[i]
-	end
+function sub_nu(I,B,met)
+	# convert to biomass specific ingestion
+	nu = ((I/B)*Lambda) - met
 end
 
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
-function sub_gamma_pi!(gamma,nu,bio,d,k)
-    # note: divide by bio to get biomass specific units
-    for i = 1:PI_N
-    	# Spawning flag
-		if k==1
-			kap=PI_K[i];
-		else
-			kap=1;
-		end
-		gg = ((kap*nu[i]) - (d[i]/bio[i]))/(1-(PI_z[i]^(1-((d[i]/bio[i])/(kap*nu[i])))))
-		if gg < 0 || isnan(gg)==true
-			gamma[i] = 0.0
-		else
-			gamma[i] = gg
-		end
+function sub_gamma(K,Z,nu,d,B)
+	# convert mortality to biomass specific rate
+	gg = ((K*nu) - (d/B))/(1-(Z^(1-((d/B)/(K*nu)))))
+	if gg < 0 || isnan(gg)==true
+		gamma = 0.0
+	else
+		gamma = gg
 	end
-end
-function sub_gamma_pl!(gamma,nu,bio,d,k)
-    # note: divide by bio to get biomass specific units
-    for i = 1:PL_N
-    	# Spawning flag
-		if k==1
-			kap=PL_K[i];
-		else
-			kap=1;
-		end
-		gg = ((kap*nu[i]) - (d[i]/bio[i]))/(1-(PL_z[i]^(1-((d[i]/bio[i])/(kap*nu[i])))))
-		if gg < 0 || isnan(gg)==true
-			gamma[i] = 0.0
-		else
-			gamma[i] = gg
-		end
-	end
-end
-function sub_gamma_de!(gamma,nu,bio,d,k)
-    # note: divide by bio to get biomass specific units
-    for i = 1:DE_N
-    	# Spawning flag
-		if k==1
-			kap=DE_K[i];
-		else
-			kap=1;
-		end
-		gg = ((kap*nu[i]) - (d[i]/bio[i]))/(1-(DE_z[i]^(1-((d[i]/bio[i])/(kap*nu[i])))))
-		if gg < 0 || isnan(gg)==true
-			gamma[i] = 0.0
-		else
-			gamma[i] = gg
-		end
-	end
+	return gamma
 end
 
 
-###! TOTAL BIOMASS MADE FROM REPRODUCTION
-function sub_rep_pi!(rep,nu,bio,k)
-	for i = 1:PI_N
-		if nu[i] > 0.
-			# Spawning flag
-			if k==1
-				kap=PI_K[i];
-			else
-				kap=1;
-			end
-			rep[i] = (1-kap) * nu[i] * bio[i]
-		else
-			rep[i] = 0.
-		end
+###! BIOMASS MADE FROM REPRODUCTION
+function sub_rep(nu,K)
+	if nu > 0.
+		rep = (1-K) * nu
+	else
+		rep = 0.
 	end
-end
-function sub_rep_pl!(rep,nu,bio,k)
-	for i = 1:PL_N
-		if nu[i] > 0.
-			# Spawning flag
-			if k==1
-				kap=PL_K[i];
-			else
-				kap=1;
-			end
-			rep[i] = (1-kap) * nu[i] * bio[i]
-		else
-			rep[i] = 0.
-		end
-	end
-end
-function sub_rep_de!(rep,nu,bio,k)
-	for i = 1:DE_N
-		if nu[i] > 0.
-			# Spawning flag
-			if k==1
-				kap=DE_K[i];
-			else
-				kap=1;
-			end
-			rep[i] = (1-kap) * nu[i] * bio[i]
-		else
-			rep[i] = 0.
-		end
-	end
+	return rep
 end
 
-
-###! TOTAL BIOMASS SOMATIC GROWTH
-function sub_grw_pi!(grw,nu,bio)
-	for i = 1:PI_N
-		grw[i] = nu[i] * bio[i]
+###! Biomass recruiting to size-class (g m-2 d-1)
+function sub_rec(X,bio)
+	# X could be biomass of eggs (for larval class) or maturing from smaller sizes
+	rec = 0.0
+	for i = 1:length(X)
+		rec += X[i] * bio[i]
 	end
-end
-function sub_grw_pl!(grw,nu,bio)
-	for i = 1:PL_N
-		grw[i] = nu[i] * bio[i]
-	end
-end
-function sub_grw_de!(grw,nu,bio)
-	for i = 1:DE_N
-		grw[i] = nu[i] * bio[i]
-	end
-end
-
-
-###! TOTAL BIOMASS MATURING
-function sub_mat_pi!(mat,gam,bio)
-	for i = 1:PI_N
-		mat[i] = gam[i] * bio[i]
-	end
-end
-function sub_mat_pl!(mat,gam,bio)
-	for i = 1:PL_N
-		mat[i] = gam[i] * bio[i]
-	end
-end
-function sub_mat_de!(mat,gam,bio)
-	for i = 1:DE_N
-		mat[i] = gam[i] * bio[i]
-	end
-end
-
-
-###! TOTAL BIOMASS dying from background mortality
-function sub_mrt_pi!(mrt,bio)
-	for i = 1:PI_N
-		mrt[i] = PI_mrt[i] * bio[i]
-	end
-end
-function sub_mrt_pl!(mrt,bio)
-	for i = 1:PL_N
-		mrt[i] = PL_mrt[i] * bio[i]
-	end
-end
-function sub_mrt_de!(mrt,bio)
-	for i = 1:DE_N
-		mrt[i] = DE_mrt[i] * bio[i]
-	end
+	return rec
 end
 
 
 ###! Update biomass
-function sub_update_pi!(bio,rep,grw,mat,d,mrt)
-	bio[1] += (sum(rep) + grw[1] - mat[1] - d[1] - mrt[1]) * DT
-	for i = 2:PI_N
-		bio[i] += (mat[i-1] + grw[i] - mrt[i] - rep[i] - mat[i] - d[i]) * DT
-	end
+function sub_update_fi(bio_in,rec,nu,rep,gamma,die)
+	# all inputs except rec are in g g-1 d-1; rec is g d-1
+	# rec = rep from smaller size class = TOTAL biomass gained from recruitment
+	# grw = nu = somatic growth within size class
+	# rep = rep =  biomass lost to egg production
+	# mat = gamma = biomass maturing to larger size class
+	# Nat_mrt = natural mortality
+	# die = predator mort = biomass lost to predation
+	db = rec + ((nu - rep - gamma - Nat_mrt) * bio_in) - die
+	bio_out =  bio_in + db
 end
-function sub_update_pl!(bio,rep,grw,mat,d,mrt)
-	bio[1] += (sum(rep) + grw[1] - mat[1] - d[1] - mrt[1]) * DT
-	for i = 2:PL_N
-		bio[i] += (mat[i-1] + grw[i] - mrt[i] - rep[i] - mat[i] - d[i]) * DT
-	end
+
+function sub_update_be(bio_in,det,die,bio_p)
+	db = det - (die*bio_p)
+	bio_out = bio_in + db
 end
-#function sub_update_de!(bio,rep,grw,mat,d,mrt)
-#	for i = 1:DE_N
-#		bio[i] += (grw[i] - mrt[i] - d[i]) * DT
+
+
+####! Fishing
+#function sub_fishing(bio_pi,bio_pl,bio_de,AREA)
+#	if FISHING > 0.0
+#		#bio_pi = PISC.bio; bio_pl = PLAN.bio; bio_de = DETR.bio; AREA = GRD_A;
+#		ALL_pi  = Array(Float64,NX,PI_N)
+#		ALL_pl  = Array(Float64,NX,PL_N)
+#		ALL_de  = Array(Float64,NX,DE_N)
+#
+#		for i = 1:NX
+#			ALL_pi[i,:] = bio_pi[i] * AREA[i]
+#			ALL_pl[i,:] = bio_pl[i] * AREA[i]
+#			ALL_de[i,:] = bio_de[i] * AREA[i]
+#		end
+#
+#		#! Total fish biomass
+#		TOT = sum(ALL_pi) + sum(ALL_pl) + sum(ALL_de)
+#		ALL_pi -= (ALL_pi./TOT).*FISHING
+#		ALL_pl -= (ALL_pl./TOT).*FISHING
+#		ALL_de -= (ALL_de./TOT).*FISHING
+#
+#		#! Calc total biomass of fish in the ocean
+#		for i = 1:NX
+#			bio_pi[i] = squeeze(ALL_pi[i,:],1) ./ AREA[i]
+#			bio_pl[i] = squeeze(ALL_pl[i,:],1) ./ AREA[i]
+#			bio_de[i] = squeeze(ALL_de[i,:],1) ./ AREA[i]
+#		end
 #	end
+#	return bio_pi, bio_pl, bio_de
 #end
-function sub_update_de!(bio,rep,grw,mat,d,mrt)
-	bio[1] += (sum(rep) + grw[1] - mat[1] - d[1] - mrt[1]) * DT
-	for i = 2:DE_N
-		bio[i] += (mat[i-1] + grw[i] - mrt[i] - rep[i] - mat[i] - d[i]) * DT
-	end
-end
-function sub_update_be!(bio,d,det)
-    bio[1] += (det - d[1] - (bio[1]*0.01)) * DT # with sedimentation
-end
-
-###! Fishing
-function sub_fishing(bio_pi,bio_pl,bio_de,AREA)
-	if FISHING > 0.0
-		#bio_pi = PISC.bio; bio_pl = PLAN.bio; bio_de = DETR.bio; AREA = GRD_A;
-		ALL_pi  = Array(Float64,NX,PI_N)
-		ALL_pl  = Array(Float64,NX,PL_N)
-		ALL_de  = Array(Float64,NX,DE_N)
-
-		for i = 1:NX
-			ALL_pi[i,:] = bio_pi[i] * AREA[i]
-			ALL_pl[i,:] = bio_pl[i] * AREA[i]
-			ALL_de[i,:] = bio_de[i] * AREA[i]
-		end
-
-		#! Total fish biomass
-		TOT = sum(ALL_pi) + sum(ALL_pl) + sum(ALL_de)
-		ALL_pi -= (ALL_pi./TOT).*FISHING
-		ALL_pl -= (ALL_pl./TOT).*FISHING
-		ALL_de -= (ALL_de./TOT).*FISHING
-
-		#! Calc total biomass of fish in the ocean
-		for i = 1:NX
-			bio_pi[i] = squeeze(ALL_pi[i,:],1) ./ AREA[i]
-			bio_pl[i] = squeeze(ALL_pl[i,:],1) ./ AREA[i]
-			bio_de[i] = squeeze(ALL_de[i,:],1) ./ AREA[i]
-		end
-	end
-	return bio_pi, bio_pl, bio_de
-end
 
 
 ###! Forward Euler checks
-function sub_check_pi!(bio)
-	for i = 1:PI_N
-		if bio[i] <= 0.0 || isnan(bio[i])==1
-			bio[i] = eps()
-		end
-	end
-end
-function sub_check_pl!(bio)
-	for i = 1:PL_N
-		if bio[i] <= 0.0 || isnan(bio[i])==1
-			bio[i] = eps()
-		end
-	end
-end
-function sub_check_de!(bio)
-	for i = 1:DE_N
-		if bio[i] <= 0.0 || isnan(bio[i])==1
-			bio[i] = eps()
-		end
-	end
-end
-function sub_check_be!(bio)
-	if bio[1] <= 0.0 || isnan(bio[1])==1
-		bio[1] = eps()
-	end
+function sub_check!(bio)
+	ID = find(bio .< 0)
+	bio[ID] = eps()
 end

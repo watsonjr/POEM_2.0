@@ -257,11 +257,9 @@ do time=1,nt
 enddo
 
 call get_tracer_stats(Tracer%field, Grid%tmask, tmin, tmax)
-write(*,*) 'Tracer min : ', tmin
-write(*,*) 'Tracer max : ', tmax
 ! EQUAL -INF AND INF AFTER 2 TIME STEPS, MEANS THE MODEL BLOWS UP
 ! TRACER CONCENTRATION SHOULD NOT BE ABLE TO GO NEG
-! HOW FIX? 
+! HOW FIX?
 
 contains
 

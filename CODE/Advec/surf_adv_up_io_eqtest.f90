@@ -150,7 +150,7 @@ integer, parameter :: ADVECT_UPWIND            = 1
 integer, parameter :: ADVECT_QUICKER           = 5
 
 ! FROM OCEAN_TYPES_MOD
-integer, parameter :: ni = 360, nj = 200, nk = 50, nt = 24
+integer, parameter :: ni = 360, nj = 200, nk = 50, nt = 1, dt = 1440
 type :: ocean_grid_type
   character(len=32) :: name
   ! geometry and topology and rotation
@@ -162,7 +162,7 @@ type :: ocean_grid_type
   integer, dimension(ni,nj) :: kmt      ! # of t-levels
   real, dimension(ni,nj)    :: dxt      ! lon-width of T-cells at gridpt(m)
   real, dimension(ni,nj)    :: dyt      ! lat-width of T-cells at gridpt(m)
-  real, dimension(ni,nj)    :: dat      ! area of T-cells (m^2)
+  real, dimension(ni,nj)    :: dat      ! area of T-cells (m^1)
   real, dimension(ni,nj)    :: dxtn     ! lon-width of N face of T-cells(m)
   real, dimension(ni,nj)    :: dyte     ! lat-width of E face of T-cells(m)
   real, dimension(ni,nj)    :: datr     ! 1/[area of T-cells (m^2)]
@@ -180,9 +180,9 @@ type :: ocean_prog_tracer_type
   character(len=32) :: name
   integer :: horz_advect_scheme=1  ! id for horizontal advection scheme
   integer :: vert_advect_scheme=1  ! id for vertical advection scheme
-  real, dimension(ni,nj,nt)   :: field        !tracer concentration at 1 time
-  real, dimension(ni,nj)      :: wrk1         !work array
-  real, dimension(ni,nj,nt)   :: tendency     !advection tendency
+  real, dimension(ni,nj,nt*dt)   :: field        !tracer concentration at 1 time
+  real, dimension(ni,nj)         :: wrk1         !work array
+  real, dimension(ni,nj,nt*dt)   :: tendency     !advection tendency
 end type ocean_prog_tracer_type
 
 ! FROM OCEAN_TRACER_ADVECT_MOD
@@ -202,7 +202,7 @@ type(ocean_prog_tracer_type)  :: T_prog !If we pass all fish types at once, find
 type(ocean_prog_tracer_type)  :: Tracer
 real                          :: dtime
 logical                       :: store_flux
-integer                       :: i, j, time
+integer                       :: i, j, time, d, count
 integer                       :: isd, ied, jsd, jed, tsd, ted
 real,dimension(ni,nj,nt)      :: tempk
 real,dimension(ni,nj)         :: temp
@@ -232,7 +232,8 @@ Tracer%wrk1 = floor(temp)
 Tracer%tendency(:,:,1) = floor(temp)
 
 ! dtime
-dtime = 1.0/12.0
+dtime = 1.0/1440.0
+count = 0
 
 ! store_flux
 store_flux = .false.
@@ -248,21 +249,25 @@ call ocean_tracer_advect_init (Grid, T_prog)
 
 ! time loop
 do time=1,nt
-  call horz_advect_tracer(time, Adv_vel, Tracer, store_flux)
-  do j=jsd,jed
-    do i=isd,ied
-      Tracer%field(i,j,time+1) =  (Tracer%field(i,j,time) &
-      + dtime*Tracer%tendency(i,j,time))
+  do d=1,dt
+    count = count + 1
+    !write(*,*) 'count : ', count
+    call horz_advect_tracer(time, count, Adv_vel, Tracer, store_flux)
+    do j=jsd,jed
+      do i=isd,ied
+        Tracer%field(i,j,count+1) =  (Tracer%field(i,j,count) &
+        + dtime*Tracer%tendency(i,j,count))
+      enddo
     enddo
   enddo
 enddo
 
 call get_tracer_stats(Tracer%field, Grid%tmask, tmin, tmax)
-write(*,*) 'Tracer min : ', tmin
-write(*,*) 'Tracer max : ', tmax
+!write(*,*) 'Tracer min : ', tmin
+!write(*,*) 'Tracer max : ', tmax
 ! EQUAL -INF AND INF AFTER 2 TIME STEPS, MEANS THE MODEL BLOWS UP
 ! TRACER CONCENTRATION SHOULD NOT BE ABLE TO GO NEG
-! HOW FIX? 
+! HOW FIX?
 
 contains
 
@@ -430,7 +435,7 @@ contains
   subroutine adv_vel_data (Adv_vel, u_filename, v_filename)
     integer :: ncidu, ncidv, uVarID, vVarID
     integer :: isd, ied, jsd, jed, tsd, ted
-    integer, parameter :: ni = 360, nj = 200, nt=24
+    integer, parameter :: ni = 360, nj = 200, nt=1
     real, dimension(ni,nj,nt) :: uValues  ! lon-width of T-cells at grid point (m)
     real, dimension(ni,nj,nt) :: vValues  ! lat-width of T-cells at grid point (m)
     character(len=256) :: u_file
@@ -621,14 +626,15 @@ end subroutine adv_vel_data
 ! Compute horizontal advection of tracers
 ! </DESCRIPTION>
 !
-  subroutine horz_advect_tracer(time, Adv_vel, Tracer, store_flux)
+  subroutine horz_advect_tracer(time, count, Adv_vel, Tracer, store_flux)
 
-    integer, parameter :: ni = 360, nj = 200, nt = 24
+    integer, parameter :: ni = 360, nj = 200, nt = 1
     type(ocean_adv_vel_type),     intent(in)    :: Adv_vel
     type(ocean_prog_tracer_type), intent(inout) :: Tracer
     integer,                      intent(in)    :: time  !day/month of model run
+    integer,                      intent(in)    :: count
     logical,            optional, intent(in)    :: store_flux
-    integer                                     :: i, j, t
+    integer                                     :: i, j, t, c
     logical                                     :: store
     integer                                     :: isd, ied, jsd, jed
 
@@ -637,6 +643,7 @@ end subroutine adv_vel_data
     ied = Grd%ni
     jed = Grd%nj
     t = time
+    c = count
 
     if(zero_tracer_advect_horz) return
 
@@ -655,14 +662,14 @@ end subroutine adv_vel_data
       case (ADVECT_UPWIND)
         Tracer%wrk1(isd:ied,jsd:jed) =  &
         -horz_advect_tracer_upwind(Adv_vel%uhrho_et(:,:,t), Adv_vel%vhrho_nt(:,:,t), &
-        Tracer%field(:,:,t))
+        Tracer%field(:,:,c))
       case default
         write(*,*)'==>Error from ocean_tracer_advect_mod (horz_advect_tracer): chose invalid horz advection scheme'
       end select
 
       do j=jsd,jed
         do i=isd,ied
-            Tracer%tendency(i,j,t) = Tracer%tendency(i,j,t) + Tracer%wrk1(i,j)
+            Tracer%tendency(i,j,c) = Tracer%tendency(i,j,c) + Tracer%wrk1(i,j)
         enddo
       enddo
 
@@ -736,12 +743,12 @@ end subroutine adv_vel_data
 ! Compute the upper/lower values of a 3D field, returning values via arguments
 ! </DESCRIPTION>
   subroutine get_tracer_stats(A,Mask,tmin,tmax)
-    integer, parameter :: ni = 360, nj = 200, nt = 24
-    real, dimension(ni,nj,nt), intent(in) :: A
-    real, dimension(ni,nj),    intent(in) :: Mask
-    real, intent(out)                     :: tmin,tmax
-    integer                               :: i,j,k
-    integer                               :: isd, ied, jsd, jed
+    integer, parameter :: ni = 360, nj = 200, nt = 1, dt=1440
+    real, dimension(ni,nj,nt*dt), intent(in) :: A
+    real, dimension(ni,nj),       intent(in) :: Mask
+    real, intent(out)                        :: tmin,tmax
+    integer                                  :: i,j,k
+    integer                                  :: isd, ied, jsd, jed
 
     tmin=1.e30; tmax=-1.e30
     isd = 1
@@ -749,7 +756,7 @@ end subroutine adv_vel_data
     ied = Grd%ni
     jed = Grd%nj
 
-    do k=1,nt
+    do k=1,nt*dt
       do j=jsd,jed
         do i=isd,ied
           if (Mask(i,j)>0.) then
@@ -758,8 +765,10 @@ end subroutine adv_vel_data
           endif
         enddo
       enddo
+      write(*,*) 'Count : ', k
       write(*,*) 'Tracer min : ', tmin
       write(*,*) 'Tracer max : ', tmax
+      if (tmax > 1.0e30) stop
     enddo
   end subroutine get_tracer_stats
 ! </SUBROUTINE> NAME="get_tracer_stats"
