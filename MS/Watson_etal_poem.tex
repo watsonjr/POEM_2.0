@@ -135,9 +135,9 @@ Diet preferences are defined using empirical predator-prey mass ratios (PPMRs). 
 
 \subsubsection*{Space and Movement}
 Following Watson et al. 2015, we implement a simple gradient ascent approach to model the active movement of fish biomass. First, in each grid-cell and for each size-class in all groups we calculate the gradient of prey biomass. We then assume that all size-classes of all groups swim/move in the direction of the steepest positive gradient, i.e. they essentially follow food. They move with speed $a_{i,m} = \nu_i + U_m$, where $U_m$ is the zonal or meridional ocean current speed depending on which direction fish are swimming. With this swimming speed we employ a XXX numerical advection-diffusion scheme to model active movement:
-\begin{equation}
-B_{mn}^{t+1} = D^{t+1}_{mn} + J^{t+1}_{mn}
-\end{equation}
+%\begin{equation}
+%B_{mn}^{t+1} = B^{-}_{mn} + B^{+}_{mn}
+%\end{equation}
 Diffusion is solved for using a 2D Forward in Time Centered Scheme:
 % http://pauli.uni-muenster.de/tp/fileadmin/lehre/NumMethoden/WS0910/ScriptPDE/Heat.pdf
 \begin{equation}
