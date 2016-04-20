@@ -44,8 +44,8 @@ dZl=ncread("./GCM/Hindcast/ocean_cobalt_miscflux_100.186101-200512.jhploss_nlgz_
 dDet=ncread("./GCM/Hindcast/ocean_cobalt_btm.186101-200512.fndet_btm.nc","fndet_btm");
 
 #! Ocean currents
-U = ncread("./GCM/Hindcast/ocean.186101-200512.u_100_avg.nc","U_100")
-V = ncread("./GCM/Hindcast/ocean.186101-200512.v_100_avg.nc","V_100")
+U = ncread("./GCM/Hindcast/ocean.186101-200512.u_100_avg.nc","U_100");
+V = ncread("./GCM/Hindcast/ocean.186101-200512.v_100_avg.nc","V_100");
 
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
@@ -84,8 +84,8 @@ for i in [1:95]
 	dzm = dZm[:,:,I];
 	dzl = dZl[:,:,I];
 	det = dDet[:,:,I];
-  u = U[:,:,I]
-  v = V[:,:,I]
+  u = U[:,:,I];
+  v = V[:,:,I];
 
 	#! setup POEM data files
 	D_Tp  = zeros(NID,365);
@@ -129,7 +129,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
 		Yi = yi[Xi[1:end-1]];
-		D_Tp[j,:] = Yi;
+		D_Tp[j,1:length(Yi)] = Yi;
 
 		#! bottom temperature (correcting for pressure)
 		Y = zeros(size(time))
@@ -137,7 +137,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
 		Yi = yi[Xi[1:end-1]];
-		D_Tb[j,:] = Yi ## FIX THIS LATER FOR POT TEMP
+		D_Tb[j,1:length(Yi)] = Yi ## FIX THIS LATER FOR POT TEMP
 		#D_Tb[j,:] = ((Yi+273) / ((Po/Pr[j])^R_Cp) ) - 273
 
 		#! medium zoo: g(DW) m-2
@@ -146,7 +146,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_Zm[j,:] = Yi * (106/16) * 12.01 / 0.32;
+		D_Zm[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32;
 
 		#! large zoo: g(DW) m-2
 		Y = zeros(size(time))
@@ -154,7 +154,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_Zl[j,:] = Yi * (106/16) * 12.01 / 0.32;
+		D_Zl[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32;
 
 		#! medium zoo mortality: g(DW) m-2 day-1
 		Y = zeros(size(time))
@@ -162,7 +162,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
 		Yi = yi[Xi[1:end-1]];
-		D_dZm[j,:] = Yi * (106/16) * 12.01 / 0.32 * 60 * 60 *24 ;
+		D_dZm[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 * 60 * 60 *24 ;
 
 		#! large zoo mortality: g(DW) m-2 day-1
 		Y = zeros(size(time))
@@ -170,7 +170,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_dZl[j,:] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
+		D_dZl[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
 
 		#! detrital flux to benthos: g(DW) m-2 day-1
 		Y = zeros(size(time))
@@ -178,7 +178,7 @@ for i in [1:95]
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= [time[1]:1:time[end]];
         Yi = yi[Xi[1:end-1]];
-		D_det[j,:] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
+		D_det[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
 
 	end
 
@@ -197,6 +197,6 @@ for i in [1:95]
 	save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,
 									  "dZm",D_dZm,"dZl",D_dZl,
 									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det,
-                    "U",D_u,"V",D_v,);
+                    "U",D_u,"V",D_v);
 
 end

@@ -1,6 +1,6 @@
 ###! Get COBALT data
-#function get_COBALT!(COBALT,ID,DY,ENVR,S)
-function get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
+function get_COBALT!(COBALT,ID,DY,ENVR)
+#function get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
     ## Get data
     ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY]
     ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY]

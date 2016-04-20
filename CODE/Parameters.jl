@@ -45,7 +45,7 @@ function make_parameters(harv)
 	#! Input it switch for fishing (1 is yes, 0 is no)
 
 	#! Grid parameters
-	global GRD = load("./Data/Data_grid.jld"); # spatial information
+	global GRD = load("./Data/JLD/Data_grid_hindcast.jld"); # spatial information
   const global GRD_Z = GRD["Z"]
   const global GRD_A = GRD["AREA"]
 

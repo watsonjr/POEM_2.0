@@ -4,8 +4,8 @@
 function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT)
 
 	###! COBALT information
-	#get_COBALT!(COBALT,ID,DY,ENVR,S)
-	get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
+	get_COBALT!(COBALT,ID,DY,ENVR)
+	#get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
 
 	for JD = 1:NX
 
@@ -20,8 +20,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 
 		#! fraction of time large piscivores spends in pelagic
-	    Lrg_p.td[JD] = sub_tdif(GRD_Z[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
-
+	  Lrg_p.td[JD] = sub_tdif(GRD_Z[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
 
 		#! encounter rates
 		Sml_f.enc_zm[JD] = sub_enc(Sml_f.bio[JD],ENVR.Zm[JD],A_s,1.0)

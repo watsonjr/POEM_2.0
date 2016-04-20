@@ -6,12 +6,12 @@ function Testoneloc()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-  COBALT = load("./Data/Data_000001.jld"); # first year's data
+  COBALT = load("./Data/JLD/Data_forecast_000001.jld"); # first year's data
 	YEARS = 10
   DAYS = 365
 
 	#! choose where to run the model
-	GRD = load("./Data/Data_grid.jld")
+	GRD = load("./Data/JLD/Data_grid_hindcast.jld")
 	XY = zeros(Int,360,200); # choose a particulat place or everywhere
   XY[GRD["ID"]] = collect(1:GRD["N"])
 	#ID = XY[195,102] # Humboldt
@@ -153,43 +153,20 @@ function Spinup_pristine()
 	ncwrite(zeros(NX,1),file_med_d,"biomass",[1,1])
 	ncwrite(zeros(NX,1),file_lrg_p,"biomass",[1,1])
 
-
-
 	###################### Run the Model
 	#! Run model with no fishing
-	#! Iterate Model forward in time
-	MNT = 0; # monthly ticker
 	for YR = 1:YEARS # years
 
-			for DAY = 1:DT:365 # days
+		for DAY = 1:DT:365 # days
 
-			###! ticker
 			###! Future time step
 			DY  = int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
 
-			###! Daily storage NetCDF
-			for i = 1:NX
-				DAY_PISC[i,:,DAY] = PISC.bio[i]
-				DAY_PLAN[i,:,DAY] = PLAN.bio[i]
-				DAY_DETR[i,:,DAY] = DETR.bio[i]
-				DAY_BENT[i,1,DAY] = BENT.bio[i][1]
-			end
-
-
 		end
 
-		#! Calculate monthly means and save
-		a = [1,(cumsum(MNTH)+1)[1:end-1]] # start of the month
-		b = cumsum(MNTH) # end of the month
-		for i = 1:12
-			MNT += 1 # Update monthly ticker
-			ncwrite(mean(DAY_PISC[:,:,a[i]:b[i]],3),file_pisc,"biomass",[1,1,MNT])
-			ncwrite(mean(DAY_PLAN[:,:,a[i]:b[i]],3),file_plan,"biomass",[1,1,MNT])
-			ncwrite(mean(DAY_DETR[:,:,a[i]:b[i]],3),file_detr,"biomass",[1,1,MNT])
-			ncwrite(mean(DAY_BENT[:,:,a[i]:b[i]],3),file_bent,"biomass",[1,1,MNT])
-		end
+	end
 
 	##################### Clean up
 	#! Store
@@ -213,13 +190,13 @@ function Spinup_pristine()
 	ncwrite(S_Lrg_p,file_lrg_p,"biomass",[1,1])
 
 	#! Close save
-    ncclose(file_sml_f)
-    ncclose(file_sml_p)
-    ncclose(file_sml_d)
-    ncclose(file_med_f)
-    ncclose(file_med_p)
-    ncclose(file_med_d)
-    ncclose(file_lrg_p)
+  ncclose(file_sml_f)
+  ncclose(file_sml_p)
+  ncclose(file_sml_d)
+  ncclose(file_med_f)
+  ncclose(file_med_p)
+  ncclose(file_med_d)
+  ncclose(file_lrg_p)
 end
 
 
@@ -236,7 +213,7 @@ function Spinup_fished()
 	make_parameters(1) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-COBALT = load("./Data/Data_000001.jld"); # if on laptop
+	COBALT = load("./Data/Data_000001.jld"); # if on laptop
 	#COBALT = load("./Data/JLD/Data_000001.jld"); # if at school
 
 	#! choose where and when to run the model
