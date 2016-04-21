@@ -60,18 +60,18 @@ WID = find(Zm[:,:,1] .!= -1.0e10); # spatial index of water cells
 NID = length(WID); # number of water cells
 
 #! months in a year
-id1 = [0:365:34644]
-id2 = [365:365:34644]
-id2 = [id2; 34644];
+lstd = Int(TIME[length(TIME)])+31
+id1 = [0:365:(lstd-1)]
+id2 = [365:365:(lstd)]
 ID  = [id1 id2];
-
+nyr = Int(lstd/365)
 #! pull out annual information
 #! transform to size-based model units (g, day-1, m-2)
 #! x (106./16) mol N --> mol C
 #! x 12.01  mol C --> grams C
 #! / 0.32 grams C --> dry weight.
 #! *60 *60 *24 --> per day (if flux)
-for i in [1:95]
+for i in [1:nyr]
 	id = float64(ID[i,:])
 	I = find(id[1].<=TIME.<=id[2])
 
