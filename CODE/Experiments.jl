@@ -7,7 +7,7 @@ function Testoneloc()
 
 	#! setup spinup (loop first year of COBALT)
   COBALT = load("./Data/JLD/Data_forecast_000001.jld"); # first year's data
-	YEARS = 10
+	YEARS = 50
   DAYS = 365
 
 	#! choose where to run the model
@@ -19,12 +19,12 @@ function Testoneloc()
 	#ID = XY[265,156] # Iberian location off shore
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
-	ID = 40319 # Georges Bank
+	#ID = 40319 # Georges Bank
   #ID = 42639 # Eastern Bering Sea
   #ID = 41782 # Ocean Station Papa
   #ID = 36334 # HOT
 	#ID = 38309 # BATS
-  #ID = 42744 # North Sea
+  ID = 42744 # North Sea
 	const global NX = length(ID)
 
 	#! Initialize
@@ -32,13 +32,13 @@ function Testoneloc()
 	ENVR = sub_init_env(ID);
 
 	#! Storage
-	  Spinup_Sml_f = open("./Data/CSV/Spinup_Sml_f.csv","w")
-    Spinup_Sml_p = open("./Data/CSV/Spinup_Sml_p.csv","w")
-    Spinup_Sml_d = open("./Data/CSV/Spinup_Sml_d.csv","w")
-    Spinup_Med_f = open("./Data/CSV/Spinup_Med_f.csv","w")
-    Spinup_Med_p = open("./Data/CSV/Spinup_Med_p.csv","w")
-    Spinup_Med_d = open("./Data/CSV/Spinup_Med_d.csv","w")
-    Spinup_Lrg_p = open("./Data/CSV/Spinup_Lrg_p.csv","w")
+	  Spinup_Sml_f = open("./Data/CSV/Spinup_NS_Sml_f.csv","w")
+    Spinup_Sml_p = open("./Data/CSV/Spinup_NS_Sml_p.csv","w")
+    Spinup_Sml_d = open("./Data/CSV/Spinup_NS_Sml_d.csv","w")
+    Spinup_Med_f = open("./Data/CSV/Spinup_NS_Med_f.csv","w")
+    Spinup_Med_p = open("./Data/CSV/Spinup_NS_Med_p.csv","w")
+    Spinup_Med_d = open("./Data/CSV/Spinup_NS_Med_d.csv","w")
+    Spinup_Lrg_p = open("./Data/CSV/Spinup_NS_Lrg_p.csv","w")
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
@@ -64,6 +64,7 @@ function Testoneloc()
 
 		end
 	end
+
 	### close save
     close(Spinup_Sml_f)
     close(Spinup_Sml_p)
@@ -73,6 +74,72 @@ function Testoneloc()
     close(Spinup_Med_d)
     close(Spinup_Lrg_p)
 
+end
+
+
+####!! RUN HINDCAST FOR ONE LOCATION
+function Oneloc_pristine()
+	#! Make parameters
+	make_parameters(0) # make core parameters/constants
+	#! Setup
+	#! Load COBALT and grid data
+	GRD = load("./Data/JLD/Data_grid_hindcast.jld"); # spatial information
+	XY = zeros(Int,360,200); # choose a particulat place or everywhere
+	XY[GRD["ID"]] = collect(1:GRD["N"])
+	#ID = 40319 # Georges Bank
+	#ID = 42639 # Eastern Bering Sea
+	#ID = 41782 # Ocean Station Papa
+	#ID = 36334 # HOT
+	ID = 38309 # BATS
+	#ID = 42744 # North Sea
+	const global NX = length(ID)
+	const global YEARS = 94; # integration period in years
+	const global DAYS = 365; # number of days
+	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
+	#! Initialize
+	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, BENT = sub_init_fish(ID);
+	ENVR = sub_init_env(ID);
+	#! Storage
+  Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_BATS_Sml_f.csv","w")
+  Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_BATS_Sml_p.csv","w")
+  Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_BATS_Sml_d.csv","w")
+  Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_BATS_Med_f.csv","w")
+  Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_BATS_Med_p.csv","w")
+  Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_BATS_Med_d.csv","w")
+  Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_BATS_Lrg_p.csv","w")
+	################## RUN MODEL
+	#! Iterate Model forward in time
+	for YR = 1:YEARS # years
+		#! Load a year's COBALT data
+		ti = string(YR+1000000)
+		#COBALT = load("./Data/Data_000001.jld"); # testing one year
+		COBALT = load(string("./Data/JLD/Data_hindcast_",ti[2:end],".jld"));
+		for DAY = 1:DT:DAYS # days
+			###! ticker
+			DY  = Int(ceil(DAY))
+			println(YR," , ", mod(DY,365))
+			###! Future time step
+			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
+			DY+=1
+			###! Daily storage
+			#! Save
+			writecsv(Oneloc_pris_Sml_f,Sml_f.bio)
+			writecsv(Oneloc_pris_Sml_p,Sml_p.bio)
+			writecsv(Oneloc_pris_Sml_d,Sml_d.bio)
+			writecsv(Oneloc_pris_Med_f,Med_f.bio)
+			writecsv(Oneloc_pris_Med_p,Med_p.bio)
+			writecsv(Oneloc_pris_Med_d,Med_d.bio)
+			writecsv(Oneloc_pris_Lrg_p,Lrg_p.bio)
+		end
+	end
+	### close save
+  close(Oneloc_pris_Sml_f)
+  close(Oneloc_pris_Sml_p)
+  close(Oneloc_pris_Sml_d)
+  close(Oneloc_pris_Med_f)
+  close(Oneloc_pris_Med_p)
+  close(Oneloc_pris_Med_d)
+  close(Oneloc_pris_Lrg_p)
 end
 
 
@@ -312,11 +379,6 @@ function Spinup_fished()
     ncclose(file_bent)
 
 end
-
-
-
-
-
 
 
 

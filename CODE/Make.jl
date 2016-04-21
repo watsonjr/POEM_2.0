@@ -24,7 +24,8 @@ include("Experiments.jl")
 
 
 ####!! EXPERIMENTS
-testoneloc = true
+testoneloc = false
+oneloc_pristine = true
 spinup_pristine = false
 forecast_pristine = false
 spinup_fished = false
@@ -32,6 +33,9 @@ forecast_fished = false
 
 if testoneloc
 	@time Testoneloc()
+end
+if oneloc_pristine
+	@time Oneloc_pristine()
 end
 if spinup_pristine
 	@time Spinup_pristine()

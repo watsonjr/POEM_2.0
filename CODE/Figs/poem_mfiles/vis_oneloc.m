@@ -5,226 +5,142 @@
 clear all
 close all
 
-dpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
-fpath = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-sname = 'Spinup_NS_vspawn_';
+sname = 'Oneloc_pris_NS_';
 loc = 'NS';
-pi = csvread([dpath sname 'PISC.csv']);
-pl = csvread([dpath sname 'PLAN.csv']);
-de = csvread([dpath sname 'DETR.csv']);
+SP = csvread([dpath sname 'Sml_p.csv']);
+SF = csvread([dpath sname 'Sml_f.csv']);
+SD = csvread([dpath sname 'Sml_d.csv']);
+MP = csvread([dpath sname 'Med_p.csv']);
+MF = csvread([dpath sname 'Med_f.csv']);
+MD = csvread([dpath sname 'Med_d.csv']);
+LP = csvread([dpath sname 'Lrg_p.csv']);
 
 %% Plots over time
-x=1:length(pi);
-x=x/365;
+x=1:length(SP);
+yfrac=x/365;
+y=1861:(1/365):(1861+yfrac(end));
+%y=1861:(1/365):2005;
+y=y(1:(end-1));
+lstd=length(SP);
+id1 = 0:365:(lstd-1);
+id2 = 365:365:(lstd);
+ID  = [id1 id2];
+
 
 %% Piscivore
 figure(1)
-subplot(1,2,1)
-plot(x,pi)
-xlim([x(1) x(end)])
-title(['Piscivore ' loc])
+plot(y((end-(30*365)):end),SP((end-(30*365)):end),'b','Linewidth',2); hold on;
+plot(y((end-(30*365)):end),MP((end-(30*365)):end),'r','Linewidth',2); hold on;
+plot(y((end-(30*365)):end),LP((end-(30*365)):end),'k','Linewidth',2); hold on;
+xlim([y(end-(30*365)) y(end)])
+title(['Historic Pelagic Piscivores ' loc])
 xlabel('Time (y)')
 ylabel('Biomass (g km^-^2)')
-legend('1','2','3','4','5','6','7','8','9','10')
-subplot(2,2,2)
-plot(x(1:730),pi(1:730,:),'Linewidth',2)
-xlim([x(1) x(730)])
-title(['Piscivore ' loc])
-subplot(2,2,4)
-plot(x((end-731):end),pi((end-731):end,:),'Linewidth',2)
-xlim([x(end-731) x(end)])
+legend('Larvae','Juveniles','Adults')
 print('-dpng',[fpath sname 'oneloc_pisc_time.png'])
 
-% Planktivore
+%% Planktivore
 figure(2)
-subplot(1,2,1)
-plot(x,pl)
-xlim([x(1) x(end)])
-title(['Planktivore ' loc])
+plot(y((end-(30*365)):end),SF((end-(30*365)):end),'b','Linewidth',2); hold on;
+plot(y((end-(30*365)):end),MF((end-(30*365)):end),'r','Linewidth',2); hold on;
+xlim([y(end-(30*365)) y(end)])
 xlabel('Time (y)')
 ylabel('Biomass (g km^-^2)')
-legend('1','2','3','4','5','6','7','8','9','10')
-subplot(2,2,2)
-plot(x(1:730),pl(1:730,:),'Linewidth',2)
-xlim([x(1) x(730)])
-title(['Planktivore ' loc])
-subplot(2,2,4)
-plot(x((end-366):end),pl((end-366):end,:),'Linewidth',2)
-xlim([x(end-366) x(end)])
+legend('Immature','Adults')
+title(['Historic Forage Fishes ' loc])
 print('-dpng',[fpath sname 'oneloc_plan_time.png'])
 
-%Detritivore
+%% Detritivore
 figure(3)
-subplot(1,2,1)
-plot(x,de)
-xlim([x(1) x(end)])
-title(['Detritivore ' loc])
+plot(y((end-(30*365)):end),SD((end-(30*365)):end),'b','Linewidth',2); hold on;
+plot(y((end-(30*365)):end),MD((end-(30*365)):end),'r','Linewidth',2); hold on;
+xlim([y(end-(30*365)) y(end)])
 xlabel('Time (y)')
 ylabel('Biomass (g km^-^2)')
-legend('1','2','3','4','5','6','7','8','9','10')
-subplot(2,2,2)
-plot(x(1:730),de(1:730,:),'Linewidth',2)
-xlim([x(1) x(730)])
-title(['Detritivore ' loc])
-subplot(2,2,4)
-plot(x((end-366):end),de((end-366):end,:),'Linewidth',2)
-xlim([x(end-366) x(end)])
+legend('Immature','Adults')
+title(['Historic Demersal Fishes ' loc])
 print('-dpng',[fpath sname 'oneloc_detr_time.png'])
 
-% All size classes of all
+%% All size classes of all
+
 figure(4)
-for i=1:10
-    subplot(3,4,i)
-    plot(x(36134:36500),pi(36134:36500,i),'k','Linewidth',2); hold on
-    xlim([x(36134) x(end)])
-    %ylim([0 5e-3])
-    xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
-end
-%print('-dpng',[fpath sname 'oneloc_pisc_sizes.png'])
-%
-figure(5)
-for i=1:10
-    subplot(3,4,i)
-    plot(x(36134:36500),pl(36134:36500,i),'b','Linewidth',2); hold on
-    xlim([x(36134) x(end)])
-    %ylim([0 2.5e-16])
-    xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
-end
-%print('-dpng',[fpath sname 'oneloc_plan_sizes.png'])
-%
-figure(6)
-for i=1:10
-    subplot(3,4,i)
-    plot(x(36134:36500),de(36134:36500,i),'r','Linewidth',2); hold on
-    xlim([x(36134) x(end)])
-    %ylim([0 1.2e-8])
-    xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
-end
-%print('-dpng',[fpath sname 'oneloc_detr_sizes.png'])
-%%
-figure(7)
-for i=1:9
-    subplot(3,4,i)
-    plot(x(36134:36500),log(pi(36134:36500,i)),'k','Linewidth',2); hold on
-    plot(x(36134:36500),log(pl(36134:36500,i)),'b','Linewidth',2); hold on
-    plot(x(36134:36500),log(de(36134:36500,i)),'r','Linewidth',2); hold on
-    xlim([x(36134) x(end)])
-    ylim([-100 0])
-    xlabel('Time (y)')
-    ylabel('log Biomass (g km^-^2)')
-end
-subplot('position',[0.372 0.12 0.305 0.21])
-plot(x(36134:36500),log(pi(36134:36500,i)),'k','Linewidth',2); hold on
-plot(x(36134:36500),log(pl(36134:36500,i)),'b','Linewidth',2); hold on
-plot(x(36134:36500),log(de(36134:36500,i)),'r','Linewidth',2); hold on
-xlim([x(36134) x(end)])
-ylim([-100 0])
-xlabel('Time (y)')
-ylabel('log Biomass (g km^-^2)')
-legend('Piscivore','Planktivore','Detritivore')
+plot(y((end-(30*365)):end),SP((end-(30*365)):end,:),'Linewidth',2); hold on;
+plot(y((end-(30*365)):end),MP((end-(30*365)):end,:),'Linewidth',2); hold on;
+plot(y((end-(30*365)):end),LP((end-(30*365)):end,:),'Linewidth',2); hold on;
+plot(y((end-(30*365)):end),SF((end-(30*365)):end,:),'Linewidth',2); hold on;
+plot(y((end-(30*365)):end),MF((end-(30*365)):end,:),'Linewidth',2); hold on;
+plot(y((end-(30*365)):end),SD((end-(30*365)):end,:),'Linewidth',2); hold on;
+plot(y((end-(30*365)):end),MD((end-(30*365)):end,:),'Linewidth',2); hold on;
+legend('SP','MP','LP','SF','MF','SD','MD')
 legend('location','eastoutside')
-%print('-dpng',[fpath sname 'oneloc_all_sizes.png'])
+xlim([y(end-(30*365)) y(end)])
+xlabel('Time (y)')
+ylabel('Biomass (g km^-^2)')
+title(['Historic ' loc])
+print('-dpng',[fpath sname 'oneloc_all_sizes.png'])
 
 %% Final mean biomass size spectrum
-t=1:length(pi);
+t=1:length(SP);
 lyr=t((end-365):end);
-pi_sum=sum(pi(lyr,:));
-pi_mean=mean(pi(lyr,:));
-pl_sum=sum(pl(lyr,:));
-pl_mean=mean(pl(lyr,:));
-de_sum=sum(de(lyr,:));
-de_mean=mean(de(lyr,:));
+SP_sum=sum(SP(lyr));
+SF_sum=sum(SF(lyr));
+SD_sum=sum(SD(lyr));
+MP_sum=sum(MP(lyr));
+MF_sum=sum(MF(lyr));
+MD_sum=sum(MD(lyr));
+LP_sum=sum(LP(lyr));
 
-figure(8)
+SP_mean=mean(SP(lyr));
+SF_mean=mean(SF(lyr));
+SD_mean=mean(SD(lyr));
+MP_mean=mean(MP(lyr));
+MF_mean=mean(MF(lyr));
+MD_mean=mean(MD(lyr));
+LP_mean=mean(LP(lyr));
+
+P_sum=[SP_sum;MP_sum;LP_sum];
+F_sum=[SF_sum;MF_sum];
+D_sum=[SD_sum;MD_sum];
+P_mean=[SP_mean;MP_mean;LP_mean];
+F_mean=[SF_mean;MF_mean];
+D_mean=[SD_mean;MD_mean];
+
+Pwgt = [0.0025; 2.5298; 2.5298e3];
+Fwgt = [0.0025; 2.5298];
+Dwgt = [0.0025; 2.5298];
+
+figure(5)
 subplot(2,3,1)
-bar(pi_sum,'k')
-xlim([0 11])
-title('Piscivores')
+bar(P_sum,'k')
+xlim([0 4])
+title('Pelagic Piscivores')
 ylabel('Total Annual Biomass (g km^-^2)')
 subplot(2,3,4)
-bar(pi_mean,'k')
-xlim([0 11])
+bar(P_mean,'k')
+xlim([0 4])
 ylabel('Mean Annual Biomass (g km^-^2)')
 
 subplot(2,3,2)
-bar(pl_sum,'b')
-xlim([0 11])
-title({loc; 'Planktivores'})
-xlabel('Size class')
+bar(F_sum,'b')
+xlim([0 3])
+title({loc; 'Forage Fishes'})
+xlabel('Stage')
 subplot(2,3,5)
-bar(pl_mean,'b')
-xlim([0 11])
-xlabel('Size class')
+bar(F_mean,'b')
+xlim([0 3])
+xlabel('Stage')
 
 subplot(2,3,3)
-bar(de_sum,'r')
-xlim([0 11])
-title('Detritivores')
+bar(D_sum,'r')
+xlim([0 3])
+title('Demersal Fishes')
 subplot(2,3,6)
-bar(de_mean,'r')
-xlim([0 11])
+bar(D_mean,'r')
+xlim([0 3])
 print('-dpng',[fpath sname 'oneloc_all_biomass_spec.png'])
-
-%% log scale with weight
-%Number of size classes
-PI_N=10;
-PL_N=10;
-DE_N=10;
-
-%Min body size (g)
-PI_smin = 10;
-PL_smin = .1;
-DE_smin = .1;
-
-%Max body size (g)
-PI_smax = 10000;
-PL_smax = 500;
-DE_smax = 500;
-
-%Body mass linearly distributed (g)
-PI_s = linspace((PI_smin),(PI_smax),PI_N);
-PL_s = linspace((PL_smin),(PL_smax),PL_N);
-DE_s = linspace((DE_smin),(DE_smax),DE_N);
-
-figure(9)
-subplot(2,1,1)
-plot(log(PI_s),log(pi_sum),'k','Linewidth',2); hold on;
-plot(log(PL_s),log(pl_sum),'b','Linewidth',2); hold on;
-plot(log(DE_s),log(de_sum),'r','Linewidth',2); hold on;
-xlabel('log Weight of size class (g)')
-ylabel('log Total Annual Biomass (g km^-^2)')
-
-subplot(2,1,2)
-plot(log(PI_s),log(pi_mean),'k','Linewidth',2); hold on;
-plot(log(PL_s),log(pl_mean),'b','Linewidth',2); hold on;
-plot(log(DE_s),log(de_mean),'r','Linewidth',2); hold on;
-xlabel('log Weight of size class (g)')
-ylabel('log Mean Annual Biomass (g km^-^2)')
-%print('-dpng',[fpath sname 'oneloc_all_logbiomass_spec.png'])
-
-%
-figure(10)
-subplot(3,1,1)
-plot(log(PI_s),log(pi_sum),'k','Linewidth',2); hold on;
-xlim([-3 10])
-title({loc; 'Piscivores'})
-
-subplot(3,1,2)
-plot(log(PL_s),log(pl_mean),'b','Linewidth',2); hold on;
-xlim([-3 10])
-ylabel('log Mean Annual Biomass (g km^-^2)')
-title('Planktivores')
-
-subplot(3,1,3)
-plot(log(DE_s),log(de_mean),'r','Linewidth',2); hold on;
-xlim([-3 10])
-xlabel('log Weight of size class (g)')
-title('Detritivores')
-print('-dpng',[fpath sname 'oneloc_each_logbiomass_spec.png'])
 
 
 
