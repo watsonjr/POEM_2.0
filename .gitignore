@@ -1,9 +1,7 @@
 *.jld
 *.nc
-
 *.m~
 *.jl~
-
 *.png
 *.pdf
 *.csv
