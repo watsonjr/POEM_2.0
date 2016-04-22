@@ -19,12 +19,12 @@ function Testoneloc()
 	#ID = XY[265,156] # Iberian location off shore
 	#ID = XY[260,156] # Iberian location further off shore
 	#ID = XY[250,156] # Iberian location # way off shore
-	#ID = 40319 # Georges Bank
-  #ID = 42639 # Eastern Bering Sea
-  #ID = 41782 # Ocean Station Papa
-  #ID = 36334 # HOT
-	#ID = 38309 # BATS
-  ID = 42744 # North Sea
+	#ID = 30181 # Georges Bank
+  #ID = 15105 # Eastern Bering Sea
+  #ID = 19526 # Ocean Station Papa
+  #ID = 17377 # HOT
+	#ID = 30335 # BATS
+  ID = 40403 # North Sea
 	const global NX = length(ID)
 
 	#! Initialize
@@ -89,24 +89,24 @@ function Oneloc_pristine()
 	#ID = 40319 # Georges Bank
 	#ID = 42639 # Eastern Bering Sea
 	#ID = 41782 # Ocean Station Papa
-	#ID = 36334 # HOT
-	ID = 38309 # BATS
+	ID = 36334 # HOT
+	#ID = 38309 # BATS
 	#ID = 42744 # North Sea
 	const global NX = length(ID)
-	const global YEARS = 94; # integration period in years
+	const global YEARS = 145; # integration period in years
 	const global DAYS = 365; # number of days
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 	#! Initialize
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, BENT = sub_init_fish(ID);
 	ENVR = sub_init_env(ID);
 	#! Storage
-  Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_BATS_Sml_f.csv","w")
-  Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_BATS_Sml_p.csv","w")
-  Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_BATS_Sml_d.csv","w")
-  Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_BATS_Med_f.csv","w")
-  Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_BATS_Med_p.csv","w")
-  Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_BATS_Med_d.csv","w")
-  Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_BATS_Lrg_p.csv","w")
+  Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_HOT_Sml_f.csv","w")
+  Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_HOT_Sml_p.csv","w")
+  Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_HOT_Sml_d.csv","w")
+  Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_HOT_Med_f.csv","w")
+  Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_HOT_Med_p.csv","w")
+  Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_HOT_Med_d.csv","w")
+  Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_HOT_Lrg_p.csv","w")
 	################## RUN MODEL
 	#! Iterate Model forward in time
 	for YR = 1:YEARS # years
