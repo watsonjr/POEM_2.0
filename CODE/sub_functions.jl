@@ -1,6 +1,5 @@
 ###! Get COBALT data
-function get_COBALT!(COBALT,ID,DY,ENVR)
-#function get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
+function get_COBALT!(COBALT,ID,DY,ENVR,Dthresh)
     ## Get data
     ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY]
     ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY]
@@ -11,6 +10,9 @@ function get_COBALT!(COBALT,ID,DY,ENVR)
     ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
     ENVR.U[:,1]   = COBALT["U"][ID,DY]
     ENVR.V[:,1]   = COBALT["V"][ID,DY]
+    #ENVR.T0[:,1] = Tref[ID]
+    ENVR.T0[:,1] = minimum(COBALT["Tp"][ID,:])
+    ENVR.Dthresh[:,1] = Dthresh[ID]
 end
 
 
@@ -24,12 +26,24 @@ end
 
 
 ###! Fraction of time spent in pelagic (for piscivore)
-function sub_tdif(Z,bio1,bio2,biod)
+function sub_tdif_pel(Z,bio1,bio2,biod)
 	biop = bio1+bio2
 	if Z < PI_be_cutoff
 		tdif = biop ./ (biop+biod)
 	else
 		tdif = 1.0
+	end
+	return tdif
+end
+
+###! Fraction of time spent in pelagic (for demersal)
+function sub_tdif_dem(Z,bio1,bio2,bio3,bio4)
+	biop = bio1+bio2
+  biod = bio3+bio4
+	if Z < PI_be_cutoff
+		tdif = biop ./ (biop+biod)
+	else
+		tdif = 0.0
 	end
 	return tdif
 end
@@ -69,6 +83,29 @@ function sub_offline(enc_1,enc_2,dZ)
 end
 
 
+###! DEGREE DAYS
+function sub_degday(dd,Tp,Tb,tdif,Tref)
+  Tavg = (Tp.*tdif) + (Tb.*(1.0-tdif))
+  dd += max((Tavg-Tref),0.0)
+  return dd
+end
+
+
+###! SPAWNING FLAG
+function sub_kflag(K,dd,dthresh,dtot,yrs)
+  if (dd >= dthresh)
+    if ((dtot+30) <= DAYS*yrs)
+      K[dtot:(dtot+30)] = 0.0
+    else
+      K[dtot:(DAYS*yrs)] = 0.0
+    end
+    # reset cumulative deg days
+    dd = 0.0
+  end
+  return K, dd
+end
+
+
 ###! ENERGY AVAILABLE FOR GROWTH NU
 function sub_nu(I,B,met)
 	# convert to biomass specific ingestion
@@ -77,9 +114,15 @@ end
 
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
-function sub_gamma(K,Z,nu,d,B)
+function sub_gamma(K,Z,nu,d,B,k)
+  # Spawning flag
+  if k==0.0
+    kap=K;
+  else
+    kap=1;
+  end
 	# convert mortality to biomass specific rate
-	gg = ((K*nu) - (d/B))/(1-(Z^(1-((d/B)/(K*nu)))))
+	gg = ((kap*nu) - (d/B))/(1-(Z^(1-((d/B)/(kap*nu)))))
 	if gg < 0 || isnan(gg)==true
 		gamma = 0.0
 	else
@@ -90,9 +133,15 @@ end
 
 
 ###! BIOMASS MADE FROM REPRODUCTION
-function sub_rep(nu,K)
+function sub_rep(nu,K,k)
 	if nu > 0.
-		rep = (1-K) * nu
+    # Spawning flag
+    if k==0.0
+      kap=K;
+    else
+      kap=1;
+    end
+		rep = (1-kap) * nu
 	else
 		rep = 0.
 	end

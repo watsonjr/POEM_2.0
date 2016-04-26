@@ -1,11 +1,10 @@
 
 #### THE MODEL
 ###! DEMOGRAPHIC CALCULATIONS
-function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT)
+function sub_futbio!(ID,DY,COBALT,ENVR,Dthresh,Dtot,YEARS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT)
 
 	###! COBALT information
-	get_COBALT!(COBALT,ID,DY,ENVR)
-	#get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
+	get_COBALT!(COBALT,ID,DY,ENVR,Dthresh)
 
 	for JD = 1:NX
 
@@ -18,9 +17,10 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_d.met[JD] = sub_met(Bas_s,ENVR.Tb[JD],U_s)
 		Med_d.met[JD] = sub_met(Bas_m,ENVR.Tb[JD],U_m)
 
-
 		#! fraction of time large piscivores spends in pelagic
-	  Lrg_p.td[JD] = sub_tdif(GRD_Z[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
+	  Lrg_p.td[JD] = sub_tdif_pel(GRD_Z[ID],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
+		#! fraction of time large demersal spends in pelagic
+	  Med_d.td[JD] = sub_tdif_dem(GRD_Z[ID],Sml_f.bio[JD],Sml_p.bio[JD],Sml_d.bio[JD],BENT.bio[JD])
 
 		#! encounter rates
 		Sml_f.enc_zm[JD] = sub_enc(Sml_f.bio[JD],ENVR.Zm[JD],A_s,1.0)
@@ -31,11 +31,9 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_f.enc_zm[JD] = sub_enc(Med_f.bio[JD],ENVR.Zm[JD],A_m,1.0)
 		#Med_f.enc_f[JD]  = sub_enc(Med_f.bio[JD],Sml_f.bio[JD],A_m,1.0)
 		#Med_f.enc_p[JD]  = sub_enc(Med_f.bio[JD],Sml_p.bio[JD],A_m,1.0)
-
 		#Med_p.enc_zl[JD] = sub_enc(Med_p.bio[JD],ENVR.Zl[JD],A_m,1.0)
 		Med_p.enc_f[JD]  = sub_enc(Med_p.bio[JD],Sml_f.bio[JD],A_m,1.0)
 		Med_p.enc_p[JD]  = sub_enc(Med_p.bio[JD],Sml_p.bio[JD],A_m,1.0)
-
 		Med_d.enc_d[JD]  = sub_enc(Med_d.bio[JD],Sml_d.bio[JD],A_m,1.0)
 
 		Lrg_p.enc_f[JD]  = sub_enc(Lrg_p.bio[JD],Med_f.bio[JD],A_l,Lrg_p.td[JD])
@@ -46,6 +44,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_f.con_zm[JD] = sub_cons(Sml_f.enc_zm[JD],Sml_f.met[JD])
 		Sml_p.con_zm[JD] = sub_cons(Sml_p.enc_zm[JD],Sml_p.met[JD])
 		Sml_d.con_zm[JD] = sub_cons(Sml_d.enc_d[JD],Sml_d.met[JD])
+
 		Med_f.con_zm[JD] = sub_cons(Med_f.enc_zm[JD],Med_f.met[JD])
 		Med_f.con_zl[JD] = sub_cons(Med_f.enc_zl[JD],Med_f.met[JD])
 		#Med_p.con_zl[JD] = sub_cons([Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD]],Med_p.met[JD])
@@ -54,15 +53,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_p.con_f[JD]  = sub_cons([Med_p.enc_f[JD],Med_p.enc_p[JD]],Med_p.met[JD])
 		Med_p.con_p[JD]  = sub_cons([Med_p.enc_p[JD],Med_p.enc_f[JD]],Med_p.met[JD])
 		Med_d.con_d[JD]  = sub_cons(Med_d.enc_d[JD],Med_d.met[JD])
+
 		Lrg_p.con_f[JD]  = sub_cons([Lrg_p.enc_f[JD],Lrg_p.enc_p[JD],Lrg_p.enc_d[JD]],Lrg_p.met[JD])
 		Lrg_p.con_p[JD]  = sub_cons([Lrg_p.enc_p[JD],Lrg_p.enc_f[JD],Lrg_p.enc_d[JD]],Lrg_p.met[JD])
 		Lrg_p.con_d[JD]  = sub_cons([Lrg_p.enc_d[JD],Lrg_p.enc_p[JD],Lrg_p.enc_f[JD]],Lrg_p.met[JD])
 
-
 		#! Offline coupling
 		Sml_f.con_zm[JD], Sml_p.con_zm[JD] = sub_offline(Sml_f.con_zm[JD],Sml_p.con_zm[JD],ENVR.dZm[JD])
 		Med_f.con_zl[JD], Med_p.con_zl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],ENVR.dZl[JD])
-
 
 		#! total consumption rates (could factor in handling times here; g m-2 d-1)
 		Sml_f.I[JD] = Sml_f.con_zm[JD]
@@ -74,7 +72,6 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_d.I[JD] = Med_d.con_d[JD]
 		Lrg_p.I[JD] = Lrg_p.con_f[JD] + Lrg_p.con_p[JD] + Lrg_p.con_d[JD]
 
-
 		#! death rates (g m-2 d-1)
 		Sml_f.die[JD] = Med_p.con_f[JD]
 		Sml_p.die[JD] = Med_p.con_p[JD]
@@ -83,6 +80,15 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_p.die[JD] = Lrg_p.con_p[JD]
 		Med_d.die[JD] = Lrg_p.con_d[JD]
 
+		#! Degree days
+		Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0[JD]);
+		Med_d.DD[JD] = sub_degday(Med_d.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD],ENVR.T0[JD]);
+		Lrg_p.DD[JD] = sub_degday(Lrg_p.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],ENVR.T0[JD]);
+
+		#! Spawning flag determined from DD, dthresh
+		Med_f.K[JD,:], Med_f.DD[JD] = sub_kflag(Med_f.K[JD,:],Med_f.DD[JD],ENVR.Dthresh[JD],Dtot,YEARS);
+		Med_d.K[JD,:], Med_d.DD[JD] = sub_kflag(Med_d.K[JD,:],Med_d.DD[JD],ENVR.Dthresh[JD],Dtot,YEARS);
+		Lrg_p.K[JD,:], Lrg_p.DD[JD] = sub_kflag(Lrg_p.K[JD,:],Lrg_p.DD[JD],ENVR.Dthresh[JD],Dtot,YEARS);
 
 		#! energy available for somatic growth nu
 		Sml_f.nu[JD] = sub_nu(Sml_f.I[JD],Sml_f.bio[JD],Sml_f.met[JD])
@@ -93,26 +99,23 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_d.nu[JD] = sub_nu(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
 		Lrg_p.nu[JD] = sub_nu(Lrg_p.I[JD],Lrg_p.bio[JD],Lrg_p.met[JD])
 
-
 		#! maturation (note subscript on Kappa is larvae, juv, adult)
-		Sml_f.gamma[JD] = sub_gamma(K_l,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD])
-		Sml_p.gamma[JD] = sub_gamma(K_l,Z_s,Sml_p.nu[JD],Sml_p.die[JD],Sml_p.bio[JD])
-		Sml_d.gamma[JD] = sub_gamma(K_l,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD])
-		Med_f.gamma[JD] = sub_gamma(K_a,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD])
-		Med_p.gamma[JD] = sub_gamma(K_j,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD])
-		Med_d.gamma[JD] = sub_gamma(K_a,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD])
-		Lrg_p.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD])
-
+		Sml_f.gamma[JD] = sub_gamma(K_l,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD],Sml_f.K[JD,Dtot])
+		Sml_p.gamma[JD] = sub_gamma(K_l,Z_s,Sml_p.nu[JD],Sml_p.die[JD],Sml_p.bio[JD],Sml_p.K[JD,Dtot])
+		Sml_d.gamma[JD] = sub_gamma(K_l,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD],Sml_d.K[JD,Dtot])
+		Med_f.gamma[JD] = sub_gamma(K_a,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD],Med_f.K[JD,Dtot])
+		Med_p.gamma[JD] = sub_gamma(K_j,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD],Med_p.K[JD,Dtot])
+		Med_d.gamma[JD] = sub_gamma(K_a,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD],Med_d.K[JD,Dtot])
+		Lrg_p.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD],Lrg_p.K[JD,Dtot])
 
 		#! egg production (by med and large size classes only)
-		Sml_f.rep[JD] = sub_rep(Sml_f.nu[JD],K_l)
-		Sml_p.rep[JD] = sub_rep(Sml_p.nu[JD],K_l)
-		Sml_d.rep[JD] = sub_rep(Sml_d.nu[JD],K_l)
-		Med_f.rep[JD] = sub_rep(Med_f.nu[JD],K_a)
-		Med_p.rep[JD] = sub_rep(Med_p.nu[JD],K_j)
-		Med_d.rep[JD] = sub_rep(Med_d.nu[JD],K_a)
-		Lrg_p.rep[JD] = sub_rep(Lrg_p.nu[JD],K_a)
-
+		Sml_f.rep[JD] = sub_rep(Sml_f.nu[JD],K_l,Sml_f.K[JD,Dtot])
+		Sml_p.rep[JD] = sub_rep(Sml_p.nu[JD],K_l,Sml_p.K[JD,Dtot])
+		Sml_d.rep[JD] = sub_rep(Sml_d.nu[JD],K_l,Sml_d.K[JD,Dtot])
+		Med_f.rep[JD] = sub_rep(Med_f.nu[JD],K_a,Med_f.K[JD,Dtot])
+		Med_p.rep[JD] = sub_rep(Med_p.nu[JD],K_j,Med_p.K[JD,Dtot])
+		Med_d.rep[JD] = sub_rep(Med_d.nu[JD],K_a,Med_d.K[JD,Dtot])
+		Lrg_p.rep[JD] = sub_rep(Lrg_p.nu[JD],K_a,Lrg_p.K[JD,Dtot])
 
 		#! recruitment (to small size classes only)
 		Sml_f.rec[JD] = sub_rec(Med_f.rep[JD],Med_f.bio[JD])
@@ -122,7 +125,6 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_p.rec[JD] = sub_rec(Sml_p.gamma[JD],Sml_p.bio[JD])
 		Med_d.rec[JD] = sub_rec(Sml_d.gamma[JD],Sml_d.bio[JD])
 		Lrg_p.rec[JD] = sub_rec(Med_p.gamma[JD],Med_p.bio[JD])
-
 
 		#! Mass balance
 		Sml_f.bio[JD] = sub_update_fi(Sml_f.bio[JD],Sml_f.rec[JD],Sml_f.nu[JD],

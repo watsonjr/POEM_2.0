@@ -21,6 +21,8 @@ type fish
 	die::Array{Float64} # total death g d-1
 	rep::Array{Float64} # total biomass reproduced g d-1
 	rec::Array{Float64} # total biomass reproduced g d-1
+	DD::Array{Float64} # degree days accumulated that year, Celsius
+	K::Array{Float64} # spawning flag
 end
 
 type detritus
@@ -37,7 +39,8 @@ type environment
 	det::Array{Float64} # detrital flux
 	U::Array{Float64} # U current speed
 	V::Array{Float64} # U current speed
-	#K::Array{Float64} #spawning flag
+	T0::Array{Float64}			# spawning reference temp
+	Dthresh::Array{Float64}	# spawning degree day threshold
 end
 
 #============= PARAMETER TYPE ==========#

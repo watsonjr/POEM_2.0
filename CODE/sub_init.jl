@@ -13,10 +13,12 @@ function sub_init_env(ID)
 	ENV_det = Array(Float64,NX)
 	ENV_U   = Array(Float64,NX)
 	ENV_V   = Array(Float64,NX)
-	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V)
+	ENV_T0 = Array(Float64,NX)
+	ENV_Dthresh = Array(Float64,NX)
+	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0,ENV_Dthresh)
 end
 
-function sub_init_fish(ID)
+function sub_init_fish(ID,YEARS)
 
 	#===== VARIABLES =====#
 	###! Number of spatial cells
@@ -48,17 +50,17 @@ function sub_init_fish(ID)
 	con_zm = zeros(Float64,NX)
 	con_zl = zeros(Float64,NX)
 
-    # mass ingested (I)
-    I = zeros(Float64,NX) # fish
+  # mass ingested (I)
+  I = zeros(Float64,NX) # fish
 
-    # mass lost to predation (g d-1)
-    die = zeros(Float64,NX)
+  # mass lost to predation (g d-1)
+  die = zeros(Float64,NX)
 
-    # total energy available for growth
-    nu = zeros(Float64,NX)
+  # total energy available for growth
+  nu = zeros(Float64,NX)
 
-    # energy available for somatic growth
-    gamma = zeros(Float64,NX)
+  # energy available for somatic growth
+  gamma = zeros(Float64,NX)
 
  	#! total biomass to reproduction
  	rep = zeros(Float64,NX)
@@ -66,8 +68,15 @@ function sub_init_fish(ID)
  	#! total biomass to reproduction
  	rec = zeros(Float64,NX)
 
+	#! degree days accumulated that year
+	DD = zeros(Float64,NX)
+
+	#! spawning flag
+	# 1 = all to growth, 0 = all to repro
+	K = ones(Float64,NX,DAYS*YEARS)
+
 	# assign to small forage fish, piscivore and detrivore
-	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,con_f,con_p,con_d,con_zm,con_zl,I,nu,gamma,die,rep,rec)
+	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,con_f,con_p,con_d,con_zm,con_zl,I,nu,gamma,die,rep,rec,DD,K)
 	Sml_p = deepcopy(Sml_f)
 	Sml_d = deepcopy(Sml_f)
 	Med_f = deepcopy(Sml_f)
@@ -76,7 +85,7 @@ function sub_init_fish(ID)
 	Lrg_p = deepcopy(Sml_f)
 
 	###! Detritus
-    BENT = detritus(bio)
+  BENT = detritus(bio)
 
 	return Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, BENT
 end
