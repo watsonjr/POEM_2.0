@@ -47,7 +47,6 @@ dDet=ncread("./GCM/Hindcast/ocean_cobalt_btm.186101-200512.fndet_btm.nc","fndet_
 U = ncread("./GCM/Hindcast/ocean.186101-200512.u_100_avg.nc","U_100");
 V = ncread("./GCM/Hindcast/ocean.186101-200512.v_100_avg.nc","V_100");
 
-
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
 #! load grid data (for pressure to calc bottom temp)

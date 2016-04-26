@@ -90,23 +90,23 @@ for i in collect(1:length(id))
 	#! indexes
 	sub = ind2sub(ID, id[i])
 	up = collect(sub) ; down = collect(sub) ; left = collect(sub) ; right = collect(sub)
-	up[1] = up[1] - 1
-	down[1] = down[1] + 1
-	right[2] = right[2] + 1
-	left[2] = left[2] - 1
+	up[2] = up[2] + 1
+	down[2] = down[2] - 1
+	right[1] = right[1] + 1
+	left[1] = left[1] - 1
 
 	#! boundaries
-	if left[2]==0
-		left[2] = 360
+	if left[1]==0
+		left[1] = 360
 	end
-	if right[2]==361
-		right[2] = 1
+	if right[1]==361
+		right[1] = 1
 	end
-	if down[1]==201
-		down[1] = 200
+	if down[2]==201
+		down[2] = 200
 	end
-	if up[1]==0
-		up[1] = 1
+	if up[2]==0
+		up[2] = 1
 	end
 
 	#! get indexes of cardinal cells accounting for land
@@ -152,6 +152,6 @@ datr  = datr[ID];
 lmask = lmask[ID];
 
 #! save
-save("./Data_grid_hindcast.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,"AREA",AREA,
+save("./Data_grid_hindcast_NOTflipped.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,"AREA",AREA,
 		"Pr",Pr,"ID",ID,"N",length(ID),"dxtn",dxtn,"dyte",dyte,"datr",datr,"lmask",lmask,
 		"Neigh",SUB);

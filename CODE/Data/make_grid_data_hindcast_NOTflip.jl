@@ -31,17 +31,17 @@ using NetCDF, HDF5, JLD
 #dy = ncread(".//grid_spec.nc","dyt") # height in meters
 #AREA = dx.*dy # area in m
 
-TIME = ncread("./GCM/Forecast/ocean_cobalt_biomass_100.200601-210012.nlgz_100.nc",
+TIME = ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nlgz_100.nc",
 	"average_T1"); # timeLAT = ncread("./GCM/grid_spec.nc","geolat_t"); # lat
-LON  = ncread("./GCM/Forecast/grid_spec.nc", "geolon_t"); # lon
-LAT  = ncread("./GCM/Forecast/grid_spec.nc", "geolat_t"); # lon
-Z    = ncread("./GCM/Forecast/grid_spec.nc", "ht"); # depth
-zt   = ncread("./GCM/Forecast/grid_spec.nc", "zt"); # depth levels
-dx   = ncread("./GCM/Forecast/grid_spec.nc", "dxt");
-dy   = ncread("./GCM/Forecast/grid_spec.nc", "dyt");
-kmt  = ncread("./GCM/Forecast/grid_spec.nc", "kmt");
-dxtn = ncread("./GCM/Forecast/grid_spec.nc", "dxtn");
-dyte = ncread("./GCM/Forecast/grid_spec.nc", "dyte");
+LON  = ncread("./GCM/Hindcast/grid_spec.nc", "geolon_t"); # lon
+LAT  = ncread("./GCM/Hindcast/grid_spec.nc", "geolat_t"); # lon
+Z    = ncread("./GCM/Hindcast/grid_spec.nc", "ht"); # depth
+zt   = ncread("./GCM/Hindcast/grid_spec.nc", "zt"); # depth levels
+dx   = ncread("./GCM/Hindcast/grid_spec.nc", "dxt");
+dy   = ncread("./GCM/Hindcast/grid_spec.nc", "dyt");
+kmt  = ncread("./GCM/Hindcast/grid_spec.nc", "kmt");
+dxtn = ncread("./GCM/Hindcast/grid_spec.nc", "dxtn");
+dyte = ncread("./GCM/Hindcast/grid_spec.nc", "dyte");
 dat  = dx.*dy # area in m
 datr = 1.0./dat+eps(Float64)
 
@@ -49,16 +49,18 @@ datr = 1.0./dat+eps(Float64)
 Pr = (Z / 10) * 1013.25
 
 #######! Flip dims into map like matrix
-LON = flipdim(LON',1)
-LAT = flipdim(LAT',1)
-Z = flipdim(Z',1)
-dx = flipdim(dx',1)
-dy = flipdim(dy',1)
-dat = flipdim(dat',1)
-kmt  = flipdim(kmt',1)
-dxtn = flipdim(dxtn',1)
-dyte = flipdim(dyte',1)
-datr = flipdim(datr',1)
+#! Daily data is NOT flipped
+#! Do NOT flipped so grid locations are consistent
+#LON = flipdim(LON',1)
+#LAT = flipdim(LAT',1)
+#Z = flipdim(Z',1)
+#dx = flipdim(dx',1)
+#dy = flipdim(dy',1)
+#dat = flipdim(dat',1)
+#kmt  = flipdim(kmt',1)
+#dxtn = flipdim(dxtn',1)
+#dyte = flipdim(dyte',1)
+#datr = flipdim(datr',1)
 
 ni, nj = size(LON);
 nk     = length(zt);
@@ -83,58 +85,6 @@ ID = reshape(ID,size(Z))
 id = find(Z.>0)
 IND = zeros(size(Z))
 IND[id] = collect(1:length(id))
-SUB = Array(Any,(length(id)))
-
-
-for i in collect(1:length(id))
-	#! indexes
-	sub = ind2sub(ID, id[i])
-	up = collect(sub) ; down = collect(sub) ; left = collect(sub) ; right = collect(sub)
-	up[1] = up[1] - 1
-	down[1] = down[1] + 1
-	right[2] = right[2] + 1
-	left[2] = left[2] - 1
-
-	#! boundaries
-	if left[2]==0
-		left[2] = 360
-	end
-	if right[2]==361
-		right[2] = 1
-	end
-	if down[1]==201
-		down[1] = 200
-	end
-	if up[1]==0
-		up[1] = 1
-	end
-
-	#! get indexes of cardinal cells accounting for land
-	id_m = IND[sub[1],sub[2]]
-	if Z[up[1],up[2]] == 0.0
-		id_up = IND[sub[1],sub[2]]
-	else
-		id_up = IND[up[1],up[2]]
-	end
-	if Z[down[1],down[2]] == 0.0
-		id_dw = IND[sub[1],sub[2]]
-	else
-		id_dw = IND[down[1],down[2]]
-	end
-	if Z[left[1],left[2]] == 0.0
-		id_lf = IND[sub[1],sub[2]]
-	else
-		id_lf = IND[left[1],left[2]]
-	end
-	if Z[right[1],right[2]] == 0.0
-		id_rt = IND[sub[1],sub[2]]
-	else
-		id_rt = IND[right[1],right[2]]
-	end
-
-	#! store
-	SUB[i] = round(Int64,[id_m,id_up,id_dw,id_lf,id_rt])
-end
 
 
 #! retain only water cells
@@ -152,6 +102,5 @@ datr  = datr[ID];
 lmask = lmask[ID];
 
 #! save
-save("./Data_grid_forecast_NOTflipped.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,"AREA",AREA,
-		"Pr",Pr,"ID",ID,"N",length(ID),"dxtn",dxtn,"dyte",dyte,"datr",datr,"lmask",lmask,
-		"Neigh",SUB);
+save("./Data_grid_hindcast_NOTflipped.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,"AREA",AREA,
+		"Pr",Pr,"ID",ID,"N",length(ID),"dxtn",dxtn,"dyte",dyte,"datr",datr,"lmask",lmask);

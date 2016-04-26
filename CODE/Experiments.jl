@@ -8,21 +8,22 @@ function Testoneloc()
 	#! setup spinup (loop first year of COBALT)
   COBALT = load("./Data/JLD/Data_hindcast_000120.jld"); # 1980
 	#! Add phenology params from csv file with ID as row
-	#Tref = readdlm("./Data/grid_phenol_T0raw.csv",','); #min temp for each yr at each location
-	Dthresh = readdlm("./Data/grid_phenol_DTraw.csv",',');
+	#Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
+	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	YEARS = 1
   DAYS = 365
 
 	#! choose where to run the model
-	GRD = load("./Data/JLD/Data_grid_hindcast.jld")
-	XY = zeros(Int,200,360); # choose a particulat place or everywhere
+	GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
+	#XY = zeros(Int,200,360); # choose a particulat place or everywhere
+	XY = zeros(Int,360,200);
   XY[GRD["ID"]] = collect(1:GRD["N"])
-	ID = 30181 # Georges Bank
-  #ID = 15105 # Eastern Bering Sea
-  #ID = 19526 # Ocean Station Papa
-  #ID = 17377 # HOT
-	#ID = 30335 # BATS
-  #ID = 40403 # North Sea
+	ID = 40319 #30181 # Georges Bank
+  #ID = 42639 #15105 # Eastern Bering Sea
+  #ID = 41782 #19526 # Ocean Station Papa
+  #ID = 36334 #17377 # HOT
+	#ID = 38309 #30335 # BATS
+  #ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
 
 	#! Initialize

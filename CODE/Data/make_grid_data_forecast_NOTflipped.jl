@@ -49,16 +49,18 @@ datr = 1.0./dat+eps(Float64)
 Pr = (Z / 10) * 1013.25
 
 #######! Flip dims into map like matrix
-LON = flipdim(LON',1)
-LAT = flipdim(LAT',1)
-Z = flipdim(Z',1)
-dx = flipdim(dx',1)
-dy = flipdim(dy',1)
-dat = flipdim(dat',1)
-kmt  = flipdim(kmt',1)
-dxtn = flipdim(dxtn',1)
-dyte = flipdim(dyte',1)
-datr = flipdim(datr',1)
+#! Daily data is NOT flipped
+#! Do NOT flipped so grid locations are consistent
+#LON = flipdim(LON',1)
+#LAT = flipdim(LAT',1)
+#Z = flipdim(Z',1)
+#dx = flipdim(dx',1)
+#dy = flipdim(dy',1)
+#dat = flipdim(dat',1)
+#kmt  = flipdim(kmt',1)
+#dxtn = flipdim(dxtn',1)
+#dyte = flipdim(dyte',1)
+#datr = flipdim(datr',1)
 
 ni, nj = size(LON);
 nk     = length(zt);
@@ -86,57 +88,6 @@ IND[id] = collect(1:length(id))
 SUB = Array(Any,(length(id)))
 
 
-for i in collect(1:length(id))
-	#! indexes
-	sub = ind2sub(ID, id[i])
-	up = collect(sub) ; down = collect(sub) ; left = collect(sub) ; right = collect(sub)
-	up[1] = up[1] - 1
-	down[1] = down[1] + 1
-	right[2] = right[2] + 1
-	left[2] = left[2] - 1
-
-	#! boundaries
-	if left[2]==0
-		left[2] = 360
-	end
-	if right[2]==361
-		right[2] = 1
-	end
-	if down[1]==201
-		down[1] = 200
-	end
-	if up[1]==0
-		up[1] = 1
-	end
-
-	#! get indexes of cardinal cells accounting for land
-	id_m = IND[sub[1],sub[2]]
-	if Z[up[1],up[2]] == 0.0
-		id_up = IND[sub[1],sub[2]]
-	else
-		id_up = IND[up[1],up[2]]
-	end
-	if Z[down[1],down[2]] == 0.0
-		id_dw = IND[sub[1],sub[2]]
-	else
-		id_dw = IND[down[1],down[2]]
-	end
-	if Z[left[1],left[2]] == 0.0
-		id_lf = IND[sub[1],sub[2]]
-	else
-		id_lf = IND[left[1],left[2]]
-	end
-	if Z[right[1],right[2]] == 0.0
-		id_rt = IND[sub[1],sub[2]]
-	else
-		id_rt = IND[right[1],right[2]]
-	end
-
-	#! store
-	SUB[i] = round(Int64,[id_m,id_up,id_dw,id_lf,id_rt])
-end
-
-
 #! retain only water cells
 ID  = find(Z.>0);
 LON = LON[ID] ;
@@ -153,5 +104,4 @@ lmask = lmask[ID];
 
 #! save
 save("./Data_grid_forecast_NOTflipped.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,"AREA",AREA,
-		"Pr",Pr,"ID",ID,"N",length(ID),"dxtn",dxtn,"dyte",dyte,"datr",datr,"lmask",lmask,
-		"Neigh",SUB);
+		"Pr",Pr,"ID",ID,"N",length(ID),"dxtn",dxtn,"dyte",dyte,"datr",datr,"lmask",lmask);
