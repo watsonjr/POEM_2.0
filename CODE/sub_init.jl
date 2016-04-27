@@ -73,7 +73,7 @@ function sub_init_fish(ID,YEARS)
 
 	#! spawning flag
 	# 1 = all to growth, 0 = all to repro
-	K = ones(Float64,NX,DAYS*YEARS)
+	K = ones(Float64,NX,DAYS)
 
 	# assign to small forage fish, piscivore and detrivore
 	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,con_f,con_p,con_d,con_zm,con_zl,I,nu,gamma,die,rep,rec,DD,K)

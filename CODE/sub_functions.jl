@@ -84,22 +84,38 @@ end
 
 
 ###! DEGREE DAYS
-function sub_degday(dd,Tp,Tb,tdif,Tref)
-  Tavg = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  dd += max((Tavg-Tref),0.0)
+function sub_degday(dd,Tp,Tb,tdif,Tref,K,dtot)
+  #if (K==0.0) #Don't accumulate temp while spawning, DD represents recovery after
+  if (sum(K[1:dtot]) < dtot) #Only spawn once per year
+    dd = 0.0
+  else
+    Tavg = (Tp.*tdif) + (Tb.*(1.0-tdif))
+    dd += max((Tavg-Tref),0.0)
+  end
   return dd
 end
 
 
 ###! SPAWNING FLAG
-function sub_kflag(K,dd,dthresh,dtot,yrs)
+function sub_kflag(K,dd,dthresh,dtot,lat)
   if (dd >= dthresh)
-    if ((dtot+30) <= DAYS*yrs)
-      K[dtot:(dtot+30)] = 0.0
-    else
-      K[dtot:(DAYS*yrs)] = 0.0
+    #Spawning duration based on latitude
+    if (lat <= 30 && lat >= -30) #tropics
+      dur = 117
+    elseif (lat >= 65.0) #polar
+      dur = 141
+    elseif (lat <= -65.0) #polar
+      dur = 141
+    else #temperate
+      dur = 137
     end
-    # reset cumulative deg days
+    #Change spawning flag
+    if ((dtot+dur) <= DAYS)
+      K[dtot:(dtot+dur)] = 0.0
+    else
+      K[dtot:(DAYS)] = 0.0
+    end
+    #Reset cumulative deg days
     dd = 0.0
   end
   return K, dd

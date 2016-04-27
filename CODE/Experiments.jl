@@ -10,7 +10,7 @@ function Testoneloc()
 	#! Add phenology params from csv file with ID as row
 	#Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
-	YEARS = 1
+	YEARS = 50
   DAYS = 365
 
 	#! choose where to run the model
@@ -49,19 +49,16 @@ function Testoneloc()
   Rep_Lrg_p = open("./Data/CSV/Rep_GB_phenol_Lrg_p.csv","w")
 
 	#! Iterate forward in time with NO fishing
-	Dtot = 0 #total accumulated days
 	for YR = 1:YEARS # years
 
 		for DAY = 1:DT:DAYS # days
 
 			###! ticker
-			Dtot += 1
 			DY  = Int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
-			#sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Dtot,YEARS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
-			sub_futbio!(ID,DY,COBALT,ENVR,Dthresh,Dtot,YEARS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
 			DY+=1
 
 			#! Save
@@ -72,9 +69,9 @@ function Testoneloc()
 			writecsv(Spinup_Med_p,Med_p.bio)
 			writecsv(Spinup_Med_d,Med_d.bio)
 			writecsv(Spinup_Lrg_p,Lrg_p.bio)
-			writecsv(K_Med_f,Med_f.K[Dtot])
-			writecsv(K_Med_d,Med_d.K[Dtot])
-			writecsv(K_Lrg_p,Lrg_p.K[Dtot])
+			writecsv(K_Med_f,Med_f.K[DY-1])
+			writecsv(K_Med_d,Med_d.K[DY-1])
+			writecsv(K_Lrg_p,Lrg_p.K[DY-1])
 			writecsv(DD_Med_f,Med_f.DD)
 			writecsv(DD_Med_d,Med_d.DD)
 			writecsv(DD_Lrg_p,Lrg_p.DD)
