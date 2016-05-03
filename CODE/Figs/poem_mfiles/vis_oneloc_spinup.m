@@ -1,6 +1,6 @@
 % Visualize output of POEM
 % Spinup at one location
-% 100 years
+% 50 years
 
 clear all
 close all
@@ -8,8 +8,8 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-sname = 'Spinup_BATS_';
-loc = 'BATS';
+sname = 'Spinup_NS_phenol_';
+loc = 'NS';
 SP = csvread([dpath sname 'Sml_p.csv']);
 SF = csvread([dpath sname 'Sml_f.csv']);
 SD = csvread([dpath sname 'Sml_d.csv']);

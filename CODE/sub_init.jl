@@ -18,7 +18,7 @@ function sub_init_env(ID)
 	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0,ENV_Dthresh)
 end
 
-function sub_init_fish(ID,YEARS)
+function sub_init_fish(ID,phen)
 
 	#===== VARIABLES =====#
 	###! Number of spatial cells
@@ -73,7 +73,11 @@ function sub_init_fish(ID,YEARS)
 
 	#! spawning flag
 	# 1 = all to growth, 0 = all to repro
-	K = ones(Float64,NX,DAYS)
+	if (phen == 1)
+		K = ones(Float64,NX,DAYS)
+	else
+		K = zeros(Float64,NX,DAYS)
+	end
 
 	# assign to small forage fish, piscivore and detrivore
 	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,con_f,con_p,con_d,con_zm,con_zl,I,nu,gamma,die,rep,rec,DD,K)
