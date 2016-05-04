@@ -9,101 +9,79 @@ dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
 load('Oneloc_pris_phenol_all.mat')
-load('Oneloc_pris_all.mat')
+%load('Oneloc_pris_all.mat')
 load('cmap_ppt_angles.mat')
 
 %% Plots over time
-x=1:length(sp);
+x=1:length(psp);
 yfrac=x/365;
 y=1861:(1/365):(1861+yfrac(end));
 %y=1861:(1/365):2005;
 y=y(1:(end-1));
-lstd=length(sp);
+lstd=length(psp);
 id1 = 0:365:(lstd-1);
 id2 = 365:365:(lstd);
 ID  = [id1 id2];
 
-%last year = 2005
-lyr=x((end-364):end);
+%year = 2000
+lyr=50736:(50736+364);
 
 %% Degree days
 for s=1:length(spots)
-    %close all
+    close all
     loc = spots{s};
     figure(s)
-    %plot(1:365,pDDlp(lyr,s),'Linewidth',2); hold on;
-    plot(x,pDDlp(:,s),'Linewidth',2); hold on;
-    %xlim([0 365])
-    title(['Historic Pelagic Piscivores ' loc])
+    plot(1:365,pDDlp(lyr,s),'Linewidth',2,'color',cmap_ppt(1,:)); hold on;
+    plot(1:365,pDDmd(lyr,s),'Linewidth',2,'color',cmap_ppt(5,:)); hold on;
+    plot(1:365,pDDmf(lyr,s),'--','Linewidth',2,'color',cmap_ppt(3,:)); hold on;
+    %colormap(cmap_ppt(1:3,:))
+    xlim([0 365])
+    title(['Historic ' loc])
     xlabel('Time (y)')
     ylabel('Cumulative degree days')
-    %print('-dpng',[fpath sname 'oneloc_pisc_time.png'])
-    
-    figure
-    plot(x,pDDmd(:,s),'Linewidth',2); hold on;
-    %xlim([0 365])
-    title(['Historic Demersal ' loc])
-    xlabel('Time (y)')
-    ylabel('Cumulative degree days')
-    
-    figure
-    plot(x,pDDmf(:,s),'Linewidth',2); hold on;
-    %xlim([0 365])
-    title(['Historic Forage Fish ' loc])
-    xlabel('Time (y)')
-    ylabel('Cumulative degree days')
+    legend('Pisc','Demersal','Forage')
+    print('-dpng',[fpath loc '_oneloc_DD_2000.png'])
 end
 
 %% Spawn flag
-for s=1%:length(spots)
+for s=1:length(spots)
     close all
     loc = spots{s};
-    figure(1)
-    plot(1:365,1-pKlp(lyr,s),'Linewidth',2); hold on;
+    figure(2)
+    plot(1:365,1-pKlp(lyr,s),'Linewidth',2,'color',cmap_ppt(1,:)); hold on;
+    plot(1:365,1-pKmd(lyr,s),'Linewidth',2,'color',cmap_ppt(5,:)); hold on;
+    plot(1:365,1-pKmf(lyr,s),'--','Linewidth',2,'color',cmap_ppt(3,:)); hold on;
     xlim([0 365])
-    title(['Historic Pelagic Piscivores ' loc])
+    ylim([-0.1 1.1])
+    title(['Historic ' loc])
     xlabel('Time (y)')
     ylabel('Spawning flag')
-    %print('-dpng',[fpath sname 'oneloc_pisc_time.png'])
-    
-    figure
-    plot(1:365,1-pKmd(lyr,s),'Linewidth',2); hold on;
-    xlim([0 365])
-    title(['Historic Demersal ' loc])
-    xlabel('Time (y)')
-    ylabel('Spawning flag')
-    
-    figure
-    plot(1:365,1-pKmf(lyr,s),'Linewidth',2); hold on;
-    xlim([0 365])
-    title(['Historic Forage Fish ' loc])
-    xlabel('Time (y)')
-    ylabel('Spawning flag')
+    legend('Pisc','Demersal','Forage')
+    print('-dpng',[fpath loc '_oneloc_K_2000.png'])
 end
 
 %% Reprod
-for s=1%:length(spots)
+for s=1:length(spots)
     close all
     loc = spots{s};
-    figure(1)
-    plot(1:365,pRlp(lyr,s),'Linewidth',2); hold on;
+    figure(3)
+    subplot(2,1,1)
+    plot(1:365,pRlp(lyr,s),'Linewidth',2,'color',cmap_ppt(1,:)); hold on;
     xlim([0 365])
-    title(['Historic Pelagic Piscivores ' loc])
-    xlabel('Time (y)')
-    ylabel('Reproductive output (g km^-^2)')
-    %print('-dpng',[fpath sname 'oneloc_pisc_time.png'])
-    
-    figure
-    plot(1:365,pRmd(lyr,s),'Linewidth',2); hold on;
-    xlim([0 365])
-    title(['Historic Demersal ' loc])
-    xlabel('Time (y)')
+    title({[loc ' Historic']; ['Pelagic Piscivores']})
     ylabel('Reproductive output (g km^-^2)')
     
-    figure
-    plot(1:365,pRmf(lyr,s),'Linewidth',2); hold on;
+%     subplot(3,1,2)
+%     plot(1:365,pRmd(lyr,s),'Linewidth',2,'color',cmap_ppt(5,:)); hold on;
+%     xlim([0 365])
+%     title('Demersal Fishes')
+%     ylabel('Reproductive output (g km^-^2)')
+%     
+    subplot(2,1,2)
+    plot(1:365,pRmf(lyr,s),'Linewidth',2,'color',cmap_ppt(3,:)); hold on;
     xlim([0 365])
-    title(['Historic Forage Fish ' loc])
+    title('Forage Fishes')
     xlabel('Time (y)')
     ylabel('Reproductive output (g km^-^2)')
+    print('-dpng',[fpath loc '_oneloc_Rep_2000.png'])
 end
