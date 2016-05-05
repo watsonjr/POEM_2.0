@@ -33,15 +33,15 @@ using NetCDF, HDF5, JLD
 
 TIME = ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nlgz_100.nc",
 	"average_T1"); # timeLAT = ncread("./GCM/grid_spec.nc","geolat_t"); # lat
-LON  = ncread("./GCM/Hindcast/grid_spec.nc", "geolon_t"); # lon
-LAT  = ncread("./GCM/Hindcast/grid_spec.nc", "geolat_t"); # lon
-Z    = ncread("./GCM/Hindcast/grid_spec.nc", "ht"); # depth
+LON  = ncread("./GCM/Hindcast/grid_spec.nc", "geolon_t"); # lon of t-cell centers
+LAT  = ncread("./GCM/Hindcast/grid_spec.nc", "geolat_t"); # lat of t-cell centers
+Z    = ncread("./GCM/Hindcast/grid_spec.nc", "ht"); # depth at t-cell centers in m
 zt   = ncread("./GCM/Hindcast/grid_spec.nc", "zt"); # depth levels
-dx   = ncread("./GCM/Hindcast/grid_spec.nc", "dxt");
-dy   = ncread("./GCM/Hindcast/grid_spec.nc", "dyt");
-kmt  = ncread("./GCM/Hindcast/grid_spec.nc", "kmt");
-dxtn = ncread("./GCM/Hindcast/grid_spec.nc", "dxtn");
-dyte = ncread("./GCM/Hindcast/grid_spec.nc", "dyte");
+dx   = ncread("./GCM/Hindcast/grid_spec.nc", "dxt"); # width of t cell in m
+dy   = ncread("./GCM/Hindcast/grid_spec.nc", "dyt"); # height of t cell in m
+kmt  = ncread("./GCM/Hindcast/grid_spec.nc", "kmt"); # number of vertical t-cells
+dxtn = ncread("./GCM/Hindcast/grid_spec.nc", "dxtn"); # width of northern face of t cell in m
+dyte = ncread("./GCM/Hindcast/grid_spec.nc", "dyte"); # height of eastern face of t cell in m
 dat  = dx.*dy # area in m
 datr = 1.0./dat+eps(Float64)
 

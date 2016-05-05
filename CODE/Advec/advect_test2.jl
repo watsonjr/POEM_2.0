@@ -34,8 +34,16 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	jed = nj
 
 	# time loop
-	for time=1:nt
-	  Ttendency = horz_advect_tracer(time,U,V,Tfield,Ttendency,ni,nj)
+	for time=1:nt-1
+		t = time
+		wrk1 = zeros(Float64,ni,nj)
+	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj)
+		for j=jsd:jed
+			for i=isd:ied
+					Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
+			end
+		end
+
 		for j=jsd:jed
 	    for i=isd:ied
 	      Tfield[i,j,time+1]=(Tfield[i,j,time] + dtime.*Ttendency[i,j,time])
@@ -44,30 +52,9 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	end
 
 	# return
-	return Tfield
+	return Tfield[:,:,nt]
 end
 
-function horz_advect_tracer(time,U,V,field,tendency,ni,nj)
-	isd = 1
-	jsd = 1
-	ied = ni
-	jed = nj
-	t = time
-
-	wrk1 = zeros(Float64,ni,nj)
-
-  wrk1 = -horz_advect_tracer_upwind(U,V,field[:,:,t],ni,nj)
-
-	for j=jsd:jed
-		for i=isd:ied
-				tendency[i,j,t] = tendency[i,j,t] + wrk1[i,j]
-		end
-	end
-
-	# return
-	return tendency
-
-end #function horz_advect_tracer
 
 function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 	isd = 1

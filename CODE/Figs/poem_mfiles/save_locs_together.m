@@ -35,14 +35,6 @@ for s=1:length(spots)
     MD = csvread([dpath sname1 sname2 'Med_d.csv']);
     LP = csvread([dpath sname1 sname2 'Lrg_p.csv']);
     
-    ddMF = csvread([dpath sname1 'DD_' sname2 'Med_f.csv']);
-    ddMD = csvread([dpath sname1 'DD_' sname2 'Med_d.csv']);
-    ddLP = csvread([dpath sname1 'DD_' sname2 'Lrg_p.csv']);
-    
-    kMF = csvread([dpath sname1 'K_' sname2 'Med_f.csv']);
-    kMD = csvread([dpath sname1 'K_' sname2 'Med_d.csv']);
-    kLP = csvread([dpath sname1 'K_' sname2 'Lrg_p.csv']);
-    
     repMF = csvread([dpath sname1 'Rep_' sname2 'Med_f.csv']);
     repMD = csvread([dpath sname1 'Rep_' sname2 'Med_d.csv']);
     repLP = csvread([dpath sname1 'Rep_' sname2 'Lrg_p.csv']);

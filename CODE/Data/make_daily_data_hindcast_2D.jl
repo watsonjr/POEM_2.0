@@ -73,8 +73,7 @@ nyr = Int(lstd/365)
 #! / 0.32 grams C --> dry weight.
 #! *60 *60 *24 --> per day (if flux)
 ni, nj = size(smask);
-#for t in [1:nyr]
-for t in [1:2]
+for t in [1:nyr]
 	id = float64(ID[t,:])
 	I = find(id[1].<=TIME.<=id[2])
 
