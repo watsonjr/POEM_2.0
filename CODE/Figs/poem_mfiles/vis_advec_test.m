@@ -6,11 +6,20 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_Pac.csv']);
+bio = csvread([dpath 'bio_2Dadvect_test_Atl.csv']);
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
 
+%%
 totb = sum(bio,2);
+figure(10)
+subplot(2,2,1)
+plot(totb)
+totb(1)-totb(end)
+
+%Eq = 1.5014e+09
+%Pac = 1.9538e+08
+%Atl = 2.1201e+08
 
 %%
 B1=NaN*ones(size(geolat_t));
@@ -65,7 +74,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Pac1.png'])
+print('-dpng',[fpath 'advec_test_Atl1.png'])
 
 figure(2)
 % Create two axes
@@ -91,7 +100,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Pac2.png'])
+print('-dpng',[fpath 'advec_test_Atl2.png'])
 
 figure(3)
 % Create two axes
@@ -117,7 +126,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Pac3.png'])
+print('-dpng',[fpath 'advec_test_Atl3.png'])
 
 figure(4)
 % Create two axes
@@ -143,7 +152,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Pac4.png'])
+print('-dpng',[fpath 'advec_test_Atl4.png'])
 
 %
 figure(5)
@@ -170,4 +179,4 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Pac5.png'])
+print('-dpng',[fpath 'advec_test_Atl5.png'])

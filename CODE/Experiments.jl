@@ -22,7 +22,7 @@ function Testoneloc()
   #ID = 42639 #15105 # Eastern Bering Sea
   #ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # HOT
-	ID = 38309 #30335 # BATS
+	#ID = 38309 #30335 # BATS
   #ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
 
@@ -236,45 +236,45 @@ function Oneloc_forecast_pristine()
   #ID = 42639 #15105 # Eastern Bering Sea
   #ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # HOT
-	ID = 38309 #30335 # BATS
-  #ID = 42744 #40403 # North Sea
+	#ID = 38309 #30335 # BATS
+  ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
 	const global YEARS = 95; # integration period in years
 	const global DAYS = 365; # number of days
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 	#! Initialize
-	phen=0;
+	phen=1;
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, BENT = sub_init_fish(ID,phen);
 	ENVR = sub_init_env(ID);
 	#! Storage
 	if (phen == 1)
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_fore_pris_BATS_phen_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_fore_pris_BATS_phen_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_fore_pris_BATS_phen_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_fore_pris_BATS_phen_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_fore_pris_BATS_phen_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_fore_pris_BATS_phen_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_BATS_phen_Lrg_p.csv","w")
-		K_Med_f = open("./Data/CSV/Oneloc_fore_pris_K_BATS_phen_Med_f.csv","w")
-		K_Med_d = open("./Data/CSV/Oneloc_fore_pris_K_BATS_phen_Med_d.csv","w")
-		K_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_K_BATS_phen_Lrg_p.csv","w")
-		DD_Med_f = open("./Data/CSV/Oneloc_fore_pris_DD_BATS_phen_Med_f.csv","w")
-		DD_Med_d = open("./Data/CSV/Oneloc_fore_pris_DD_BATS_phen_Med_d.csv","w")
-		DD_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_DD_BATS_phen_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_fore_pris_Rep_BATS_phen_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_fore_pris_Rep_BATS_phen_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_Rep_BATS_phen_Lrg_p.csv","w")
+		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_fore_pris_NS_phen_Sml_f.csv","w")
+		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_fore_pris_NS_phen_Sml_p.csv","w")
+		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_fore_pris_NS_phen_Sml_d.csv","w")
+		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_fore_pris_NS_phen_Med_f.csv","w")
+		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_fore_pris_NS_phen_Med_p.csv","w")
+		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_fore_pris_NS_phen_Med_d.csv","w")
+		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_NS_phen_Lrg_p.csv","w")
+		K_Med_f = open("./Data/CSV/Oneloc_fore_pris_K_NS_phen_Med_f.csv","w")
+		K_Med_d = open("./Data/CSV/Oneloc_fore_pris_K_NS_phen_Med_d.csv","w")
+		K_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_K_NS_phen_Lrg_p.csv","w")
+		DD_Med_f = open("./Data/CSV/Oneloc_fore_pris_DD_NS_phen_Med_f.csv","w")
+		DD_Med_d = open("./Data/CSV/Oneloc_fore_pris_DD_NS_phen_Med_d.csv","w")
+		DD_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_DD_NS_phen_Lrg_p.csv","w")
+		Rep_Med_f = open("./Data/CSV/Oneloc_fore_pris_Rep_NS_phen_Med_f.csv","w")
+		Rep_Med_d = open("./Data/CSV/Oneloc_fore_pris_Rep_NS_phen_Med_d.csv","w")
+		Rep_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_Rep_NS_phen_Lrg_p.csv","w")
 	else
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_fore_pris_BATS_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_fore_pris_BATS_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_fore_pris_BATS_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_fore_pris_BATS_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_fore_pris_BATS_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_fore_pris_BATS_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_BATS_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_fore_pris_Rep_BATS_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_fore_pris_Rep_BATS_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_Rep_BATS_Lrg_p.csv","w")
+		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_fore_pris_NS_Sml_f.csv","w")
+		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_fore_pris_NS_Sml_p.csv","w")
+		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_fore_pris_NS_Sml_d.csv","w")
+		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_fore_pris_NS_Med_f.csv","w")
+		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_fore_pris_NS_Med_p.csv","w")
+		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_fore_pris_NS_Med_d.csv","w")
+		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_NS_Lrg_p.csv","w")
+		Rep_Med_f = open("./Data/CSV/Oneloc_fore_pris_Rep_NS_Med_f.csv","w")
+		Rep_Med_d = open("./Data/CSV/Oneloc_fore_pris_Rep_NS_Med_d.csv","w")
+		Rep_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_Rep_NS_Lrg_p.csv","w")
 	end
 
 	################## RUN MODEL

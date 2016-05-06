@@ -96,7 +96,8 @@ function make_parameters(harv)
 	###! Kappa rule K as a function of body size
 	# K = fraction of energy consumed diverted to somatic growth
 	const global K_l = 1
-	const global K_j = 0.5
+	#const global K_j = 0.5
+	const global K_j = 0
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
