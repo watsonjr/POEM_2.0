@@ -1,6 +1,6 @@
 % Compare continuous vs spawning season
-% Pristine historical at one location
-% 145 years
+% Pristine forecast at one location
+% 95 years
 
 clear all
 close all
@@ -8,15 +8,15 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-load('Oneloc_pris_phenol_all.mat')
-load('Oneloc_pris_all.mat')
+load('Oneloc_fore_pris_phenol_all.mat')
+load('Oneloc_fore_pris_all.mat')
 load('cmap_ppt_angles.mat')
 
 %% Plots over time
 x=1:length(sp);
 yfrac=x/365;
-y=1861:(1/365):(1861+yfrac(end));
-%y=1861:(1/365):2005;
+y=2006:(1/365):(2006+yfrac(end));
+%y=2006:(1/365):2100;
 y=y(1:(end-1));
 lstd=length(sp);
 id1 = 0:365:(lstd-1);
@@ -26,8 +26,7 @@ ID  = [id1 id2];
 
 %% Final mean biomass size spectrum
 t=1:length(sp);
-%lyr=t((end-365):end);
-lyr=t((end-(30*365)+1):end);
+lyr=t(1:end);
 sp_sum(1,:)=sum(sp(lyr,:));
 sf_sum(1,:)=sum(sf(lyr,:));
 sd_sum(1,:)=sum(sd(lyr,:));
@@ -83,7 +82,7 @@ for n=1:length(spots)
     ylabel('Mean Biomass (g km^-^2)')
     legend('Constant','Phenology')
     
-    print('-dpng',[fpath loc '_oneloc_compare_biomass_spec.png'])
+    print('-dpng',[fpath loc '_oneloc_fore_compare_biomass_spec.png'])
     
     
     f20=figure(20);
@@ -116,8 +115,8 @@ for n=1:length(spots)
     ylabel('Forage Fish')
     end
 end
-print(f20,'-dpng',[fpath 'Pisc_oneloc_compare_biomass.png'])
-print(f21,'-dpng',[fpath 'Forage_oneloc_compare_biomass.png'])
+print(f20,'-dpng',[fpath 'Pisc_oneloc_fore_compare_biomass.png'])
+print(f21,'-dpng',[fpath 'Forage_oneloc_fore_compare_biomass.png'])
 
 
 %% test color order
@@ -132,7 +131,7 @@ print(f21,'-dpng',[fpath 'Forage_oneloc_compare_biomass.png'])
 % ylim([0 8])
 
 %% Recruitment
-yr=t((end-(30*365)+1):end);
+yr=t(1:end);
 PL=sp(yr,:);
 FL=sf(yr,:);
 PJ=mp(yr,:);
@@ -156,7 +155,7 @@ pFLy = PLy;
 pPJy = PLy;
 pPAy = PLy;
 pFAy = PLy;
-for n=1:30
+for n=1:95
     PLy(n,:) = nansum(PL(st(n):en(n),:));
     FLy(n,:) = nansum(FL(st(n):en(n),:));
     PJy(n,:) = nansum(PJ(st(n):en(n),:));
@@ -178,28 +177,28 @@ for n=1:length(spots)
     
     figure(n)
     subplot(3,1,1)
-    plot(1976:2005,PLy(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pPLy(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,PLy(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pPLy(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     title({loc; 'PP Larvae'})
     ylabel('Biomass (g km^-^2)')
     %text(2006,max(PLy(:))+10,loc,'FontWeight','bold')
     
     subplot(3,1,2)
-    plot(1976:2005,PJy(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pPJy(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,PJy(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pPJy(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     legend('Constant','Phenology')
     title('PP Juveniles')
     ylabel('Biomass (g km^-^2)')
     
     subplot(3,1,3)
-    plot(1976:2005,imm,'Linewidth',2); hold on;
-    plot(1976:2005,pimm,'Linewidth',2); hold on;
+    plot(2006:2100,imm,'Linewidth',2); hold on;
+    plot(2006:2100,pimm,'Linewidth',2); hold on;
     title('PP All Immature')
-    xlim([1976 2005])
+    xlim([2006 2100])
     ylabel('Biomass (g km^-^2)')
-    print('-dpng',[fpath loc '_oneloc_compare_immatureP.png'])
+    print('-dpng',[fpath loc '_oneloc_fore_compare_immatureP.png'])
 end
 
 %%
@@ -212,40 +211,40 @@ for n=1:length(spots)
     
     figure(n)
     subplot(2,1,1)
-    plot(1976:2005,FLy(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pFLy(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,FLy(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pFLy(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Recruits (g km^-^2)')
     title({loc; 'Forage fishes'})
     
     subplot(2,1,2)
-    plot(1976:2005,imm,'Linewidth',2); hold on;
-    plot(1976:2005,pimm,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,imm,'Linewidth',2); hold on;
+    plot(2006:2100,pimm,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Recruits (g km^-^2)')
     title('Pelagic piscivores')
     
-    print('-dpng',[fpath loc '_oneloc_compare_recruitment.png'])
+    print('-dpng',[fpath loc '_oneloc_fore_compare_recruitment.png'])
     
     
     f10=figure(10);
     subplot(2,3,n)
-    plot(1976:2005,FLy(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pFLy(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,FLy(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pFLy(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Forage fish recruits (g km^-^2)')
     title(loc)
     
     f11=figure(11);
     subplot(2,3,n)
-    plot(1976:2005,imm,'Linewidth',2); hold on;
-    plot(1976:2005,pimm,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,imm,'Linewidth',2); hold on;
+    plot(2006:2100,pimm,'Linewidth',2); hold on;
+    xlim([2006 2100])
     title(loc)
     ylabel('Pelagic piscivore recruits (g km^-^2)')
 end
-print(f10,'-dpng',[fpath 'Forage_oneloc_compare_recruitment.png'])
-print(f11,'-dpng',[fpath 'Pisc_oneloc_compare_recruitment.png'])
+print(f10,'-dpng',[fpath 'Forage_oneloc_fore_compare_recruitment.png'])
+print(f11,'-dpng',[fpath 'Pisc_oneloc_fore_compare_recruitment.png'])
 
 %% EVERYTHING SCALED TO MAX BIOMASS
 Ptot = sp_mean+mp_mean+lp_mean;
@@ -279,7 +278,7 @@ for n=1:length(spots)
     ylabel('Fraction of Total Mean Biomass')
     legend('Constant','Phenology')
     
-    print('-dpng',[fpath loc '_oneloc_compare_biomass_spec_scale.png'])
+    print('-dpng',[fpath loc '_oneloc_fore_compare_biomass_spec_scale.png'])
     
     
     f20=figure(20);
@@ -320,8 +319,8 @@ for n=1:length(spots)
     legend('location','northwest')
     end
 end
-print(f20,'-dpng',[fpath 'Pisc_oneloc_compare_biomass_scale.png'])
-print(f21,'-dpng',[fpath 'Forage_oneloc_compare_biomass_scale.png'])
+print(f20,'-dpng',[fpath 'Pisc_oneloc_fore_compare_biomass_scale.png'])
+print(f21,'-dpng',[fpath 'Forage_oneloc_fore_compare_biomass_scale.png'])
 
 %% Recruitment scaled to max recruitment
 imm=PLy+PJy;
@@ -331,10 +330,10 @@ RPmax(2,:) = max(pimm);
 RFmax(1,:) = max(FLy);
 RFmax(2,:) = max(pFLy);
 
-RPsc  = imm ./ repmat(RPmax(1,:),30,1);
-pRPsc = pimm ./ repmat(RPmax(2,:),30,1);
-RFsc  = FLy ./ repmat(RFmax(1,:),30,1);
-pRFsc = pFLy ./ repmat(RFmax(2,:),30,1);
+RPsc  = imm ./ repmat(RPmax(1,:),95,1);
+pRPsc = pimm ./ repmat(RPmax(2,:),95,1);
+RFsc  = FLy ./ repmat(RFmax(1,:),95,1);
+pRFsc = pFLy ./ repmat(RFmax(2,:),95,1);
 
 close all
 for n=1:length(spots)
@@ -342,27 +341,27 @@ for n=1:length(spots)
     
     figure(n)
     subplot(2,1,1)
-    plot(1976:2005,RFsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRFsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RFsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRFsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Scaled Recruits')
     title({loc; 'Forage fishes'})
     
     subplot(2,1,2)
-    plot(1976:2005,RPsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRPsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RPsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRPsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Scaled Recruits')
     title('Pelagic piscivores')
     
-    print('-dpng',[fpath loc '_oneloc_compare_recruitment_scaled.png'])
+    print('-dpng',[fpath loc '_oneloc_fore_compare_recruitment_scaled.png'])
     
     
     f10=figure(10);
     subplot(2,3,n)
-    plot(1976:2005,RFsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRFsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RFsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRFsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Forage fish scaled recruits')
     if (n==1)
     legend('C','P')
@@ -372,9 +371,9 @@ for n=1:length(spots)
     
     f11=figure(11);
     subplot(2,3,n)
-    plot(1976:2005,RPsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRPsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RPsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRPsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     title(loc)
     if (n==3)
     legend('C','P')
@@ -382,8 +381,8 @@ for n=1:length(spots)
     end
     ylabel('Pelagic piscivore scaled recruits')
 end
-print(f10,'-dpng',[fpath 'Forage_oneloc_compare_recruitment_scaled.png'])
-print(f11,'-dpng',[fpath 'Pisc_oneloc_compare_recruitment_scaled.png'])
+print(f10,'-dpng',[fpath 'Forage_oneloc_fore_compare_recruitment_scaled.png'])
+print(f11,'-dpng',[fpath 'Pisc_oneloc_fore_compare_recruitment_scaled.png'])
     
 %% Recruitment scaled to max pop biom
 ptot=PLy+PJy+PAy;
@@ -395,10 +394,10 @@ APmax(2,:) = max(pptot);
 AFmax(1,:) = max(ftot);
 AFmax(2,:) = max(pftot);
 
-RPsc  = imm ./ repmat(APmax(1,:),30,1);
-pRPsc = pimm ./ repmat(APmax(2,:),30,1);
-RFsc  = FLy ./ repmat(AFmax(1,:),30,1);
-pRFsc = pFLy ./ repmat(AFmax(2,:),30,1);
+RPsc  = imm ./ repmat(APmax(1,:),95,1);
+pRPsc = pimm ./ repmat(APmax(2,:),95,1);
+RFsc  = FLy ./ repmat(AFmax(1,:),95,1);
+pRFsc = pFLy ./ repmat(AFmax(2,:),95,1);
 
 % RPsc  = imm ./ ptot;
 % pRPsc = pimm ./ pptot;
@@ -411,27 +410,27 @@ for n=1:length(spots)
     
     figure(n)
     subplot(2,1,1)
-    plot(1976:2005,RFsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRFsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RFsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRFsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Scaled Recruits')
     title({loc; 'Forage fishes'})
     
     subplot(2,1,2)
-    plot(1976:2005,RPsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRPsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RPsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRPsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Scaled Recruits')
     title('Pelagic piscivores')
     
-    print('-dpng',[fpath loc '_oneloc_compare_recruitment_scaledA.png'])
+    print('-dpng',[fpath loc '_oneloc_fore_compare_recruitment_scaledA.png'])
     
     
     f10=figure(10);
     subplot(2,3,n)
-    plot(1976:2005,RFsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRFsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RFsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRFsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Forage fish scaled recruits')
     if (n==1)
     legend('C','P')
@@ -441,9 +440,9 @@ for n=1:length(spots)
     
     f11=figure(11);
     subplot(2,3,n)
-    plot(1976:2005,RPsc(:,n),'Linewidth',2); hold on;
-    plot(1976:2005,pRPsc(:,n),'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,RPsc(:,n),'Linewidth',2); hold on;
+    plot(2006:2100,pRPsc(:,n),'Linewidth',2); hold on;
+    xlim([2006 2100])
     title(loc)
     if (n==3)
     legend('C','P')
@@ -451,7 +450,7 @@ for n=1:length(spots)
     end
     ylabel('Pelagic piscivore scaled recruits')
 end
-print(f10,'-dpng',[fpath 'Forage_oneloc_compare_recruitment_scaledA.png'])
-print(f11,'-dpng',[fpath 'Pisc_oneloc_compare_recruitment_scaledA.png'])
+print(f10,'-dpng',[fpath 'Forage_oneloc_fore_compare_recruitment_scaledA.png'])
+print(f11,'-dpng',[fpath 'Pisc_oneloc_fore_compare_recruitment_scaledA.png'])
     
 

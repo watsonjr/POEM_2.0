@@ -12,14 +12,17 @@ bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 V = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 #bio[ID] = 1.0e3*ones(Float64,size(ID));
-bio[:,84:109] = 1.0e6; #seed equator
-#bio[220:240,:] = 1.0e6; #seed Atl
+#bio[:,84:109] = 1.0e6; #seed equator
+bio[220:240,:] = 1.0e6; #seed Atl
 #bio[59:79,:] = 1.0e6; #seed Pac
+#bio[:,181:200] = 1.0e6; #seed Arctic
+#bio[:,12:32] = 1.0e6; #seed Antarctic
 ni, nj = size(U);
 
 const global DAYS = 365; # number of days
+global npole = readdlm("./Data/npole_lon_shift.csv");
 
-bio2D = open("./Data/CSV/bio_2Dadvect_test_eq.csv","w")
+bio2D = open("./Data/CSV/bio_2Dadvect_test_Atl2.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS

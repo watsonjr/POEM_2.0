@@ -10,11 +10,13 @@ type fish
 	enc_d::Array{Float64}  # encounter rate
 	enc_zm::Array{Float64} # encounter rate
 	enc_zl::Array{Float64} # encounter rate
+	enc_be::Array{Float64} # encounter rate
 	con_f::Array{Float64}  # consumption rate
 	con_p::Array{Float64}  # consumption rate
 	con_d::Array{Float64}  # consumption rate
 	con_zm::Array{Float64} # consumption rate
 	con_zl::Array{Float64} # consumption rate
+	con_be::Array{Float64} # consumption rate
 	I::Array{Float64} # total fish ingestion g d-1
 	nu::Array{Float64}  # total energy for growth g g-1 d-1
 	gamma::Array{Float64} # energy for somatic growth g g-1 d-1
@@ -22,7 +24,7 @@ type fish
 	rep::Array{Float64} # total biomass reproduced g d-1
 	rec::Array{Float64} # total biomass reproduced g d-1
 	DD::Array{Float64} # degree days accumulated that year, Celsius
-	K::Array{Float64} # spawning flag
+	S::Array{Float64} # spawning flag
 end
 
 type detritus
@@ -48,9 +50,9 @@ function make_parameters(harv)
 	#! Input it switch for fishing (1 is yes, 0 is no)
 
 	#! Grid parameters
-	global GRD = load("./Data/JLD/Data_grid_hindcast.jld"); # spatial information
-  const global GRD_Z = GRD["Z"]
-  const global GRD_A = GRD["AREA"]
+	#global GRD = load("./Data/JLD/Data_grid_hindcast.jld"); # spatial information
+  #const global GRD_Z = GRD["Z"]
+  #const global GRD_A = GRD["AREA"]
 
 	#! Integration parameters
 	const global DT = 1.; # time step
@@ -86,9 +88,12 @@ function make_parameters(harv)
 	const global M_zl = exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
 
 	#! Ratio of initial and final body sizes per size-class
-	const global Z_s = (0.01*(0.1*20)^3) / (0.01*(0.1*2)^3)
-	const global Z_m = (0.01*(0.1*200)^3) / (0.01*(0.1*20)^3)
-	const global Z_l = (0.01*(0.1*2000)^3) / (0.01*(0.1*200)^3)
+	#const global Z_s = (0.01*(0.1*20)^3) / (0.01*(0.1*2)^3)
+	#const global Z_m = (0.01*(0.1*200)^3) / (0.01*(0.1*20)^3)
+	#const global Z_l = (0.01*(0.1*2000)^3) / (0.01*(0.1*200)^3)
+	const global Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3)
+	const global Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3)
+	const global Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3)
 
 	###! Assimilation efficiency lambda (constant across everything)
 	const global Lambda = 0.7;
@@ -97,7 +102,7 @@ function make_parameters(harv)
 	# K = fraction of energy consumed diverted to somatic growth
 	const global K_l = 1
 	#const global K_j = 0.5
-	const global K_j = 0
+	const global K_j = 1
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)

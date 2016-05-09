@@ -8,8 +8,9 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-sname = 'Spinup_NS_phenol_';
-loc = 'NS';
+sname = 'Spinup_GB_';
+sname2 = 'Spinup_';
+loc = 'GB';
 SP = csvread([dpath sname 'Sml_p.csv']);
 SF = csvread([dpath sname 'Sml_f.csv']);
 SD = csvread([dpath sname 'Sml_d.csv']);
@@ -17,6 +18,17 @@ MP = csvread([dpath sname 'Med_p.csv']);
 MF = csvread([dpath sname 'Med_f.csv']);
 MD = csvread([dpath sname 'Med_d.csv']);
 LP = csvread([dpath sname 'Lrg_p.csv']);
+
+rMF = csvread([dpath sname2 'Rep_' loc '_Med_f.csv']);
+rLP = csvread([dpath sname2 'Rep_' loc '_Lrg_p.csv']);
+rMF = rMF .* MF;
+rLP = rLP .* LP;
+
+mSP = csvread([dpath sname2 'Rec_' loc '_Sml_p.csv']);
+mSF = csvread([dpath sname2 'Rec_' loc '_Sml_f.csv']);
+mMP = csvread([dpath sname2 'Rec_' loc '_Med_p.csv']);
+mMF = csvread([dpath sname2 'Rec_' loc '_Med_f.csv']);
+mLP = csvread([dpath sname2 'Rec_' loc '_Lrg_p.csv']);
 
 %% Plots over time
 x=1:length(SP);
@@ -169,45 +181,180 @@ xlim([0 3])
 print('-dpng',[fpath sname 'oneloc_all_biomass_spec.png'])
 
 %% log scale with weight
+F_mean(3) = 0;
+D_mean(3) = 0;
+Tot_mean = P_mean + F_mean + D_mean;
 
-figure(6)
-subplot(2,1,1)
-plot(log(Pwgt),log(P_sum),'k','Linewidth',2); hold on;
-plot(log(Fwgt),log(F_sum),'b','Linewidth',2); hold on;
-plot(log(Dwgt),log(D_sum),'r','Linewidth',2); hold on;
-xlabel('log Weight of size class (g)')
-ylabel('log Total Annual Biomass (g km^-^2)')
-
-subplot(2,1,2)
-plot(log(Pwgt),log(P_mean),'k','Linewidth',2); hold on;
-plot(log(Fwgt),log(F_mean),'b','Linewidth',2); hold on;
-plot(log(Dwgt),log(D_mean),'r','Linewidth',2); hold on;
-xlabel('log Weight of size class (g)')
-ylabel('log Mean Annual Biomass (g km^-^2)')
-%print('-dpng',[fpath sname 'oneloc_all_logbiomass_spec.png'])
-
-%%
 figure(7)
-subplot(3,1,1)
-plot(log(Pwgt),log(P_mean),'k','Linewidth',2); hold on;
+plot(log(Pwgt),log(Tot_mean),'k','Linewidth',2); hold on;
 xlim([-6 8])
-%ylim([-40 10])
-title({loc; 'Pelagic Piscivores'})
-
-subplot(3,1,2)
-plot(log(Fwgt),log(F_mean),'b','Linewidth',2); hold on;
-xlim([-6 8])
-title('Forage Fishes')
 ylabel('log Mean Annual Biomass (g km^-^2)')
-
-subplot(3,1,3)
-plot(log(Dwgt),log(D_mean),'r','Linewidth',2); hold on;
-xlim([-6 8])
-title('Demersal Fishes')
 xlabel('log Weight of size class (g)')
-print('-dpng',[fpath sname 'oneloc_each_logbiomass_spec.png'])
+print('-dpng',[fpath sname 'oneloc_logbiomass_spec.png'])
 
 
+%% REPRODUCTION
+
+% Piscivore
+figure(11)
+subplot(1,2,1)
+plot(x,rLP,'k'); hold on;
+xlim([x(1) x(end)])
+title('Spinup')
+xlabel('Time (y)')
+ylabel('Biomass reproduced (g km^-^2)')
+subplot(2,2,2)
+plot(x(1:730),rLP(1:730),'k','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title(['Pelagic Piscivore ' loc])
+xlabel('Time (y)')
+subplot(2,2,4)
+plot(x((end-731):end),rLP((end-731):end),'k','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+xlabel('Time (y)')
+print('-dpng',[fpath sname 'oneloc_pisc_repro_time.png'])
+
+% Planktivore
+figure(12)
+subplot(1,2,1)
+plot(x,rMF,'r'); hold on;
+xlim([x(1) x(end)])
+title('Spinup')
+xlabel('Time (y)')
+ylabel('Biomass reproduced (g km^-^2)')
+subplot(2,2,2)
+plot(x(1:730),rMF(1:730),'r','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title(['Forage fishes ' loc])
+subplot(2,2,4)
+plot(x((end-731):end),rMF((end-731):end),'r','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+print('-dpng',[fpath sname 'oneloc_plan_repro_time.png'])
+
+
+%% RECRUITMENT
+% Piscivore
+figure(21)
+subplot(1,2,1)
+plot(x,mSP,'b'); hold on;
+plot(x,mMP,'r'); hold on;
+plot(x,mLP,'k'); hold on;
+xlim([x(1) x(end)])
+title('Spinup')
+xlabel('Time (y)')
+ylabel('Biomass maturing (g km^-^2)')
+legend('Larvae','Juveniles','Adults')
+subplot(2,2,2)
+plot(x(1:730),mSP(1:730),'b','Linewidth',2); hold on;
+plot(x(1:730),mMP(1:730),'r','Linewidth',2); hold on;
+plot(x(1:730),mLP(1:730),'k','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title(['Pelagic Piscivore ' loc])
+xlabel('Time (y)')
+subplot(2,2,4)
+plot(x((end-731):end),mSP((end-731):end),'b','Linewidth',2); hold on;
+plot(x((end-731):end),mMP((end-731):end),'r','Linewidth',2); hold on;
+plot(x((end-731):end),mLP((end-731):end),'k','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+xlabel('Time (y)')
+print('-dpng',[fpath sname 'oneloc_pisc_matur_time.png'])
+
+% Planktivore
+figure(22)
+subplot(1,2,1)
+plot(x,mSF,'b'); hold on;
+plot(x,mMF,'r'); hold on;
+xlim([x(1) x(end)])
+title('Spinup')
+xlabel('Time (y)')
+ylabel('Biomass (g km^-^2)')
+legend('Immature','Adults')
+subplot(2,2,2)
+plot(x(1:730),mSF(1:730),'b','Linewidth',2); hold on;
+plot(x(1:730),mMF(1:730),'r','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title(['Forage fishes ' loc])
+subplot(2,2,4)
+plot(x((end-731):end),mSF((end-731):end),'b','Linewidth',2); hold on;
+plot(x((end-731):end),mMF((end-731):end),'r','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+print('-dpng',[fpath sname 'oneloc_plan_matur_time.png'])
+
+%% BIOMASS, REPRODUCTION, MATURATION
+
+% Piscivore
+figure(10)
+subplot(3,2,1)
+plot(x(1:730),SP(1:730),'b','Linewidth',2); hold on;
+plot(x(1:730),MP(1:730),'r','Linewidth',2); hold on;
+plot(x(1:730),LP(1:730),'k','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title(['Pelagic Piscivore ' loc])
+xlabel('Time (y)')
+subplot(3,2,2)
+plot(x((end-731):end),SP((end-731):end),'b','Linewidth',2); hold on;
+plot(x((end-731):end),MP((end-731):end),'r','Linewidth',2); hold on;
+plot(x((end-731):end),LP((end-731):end),'k','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+legend('Larvae','Juveniles','Adults')
+
+subplot(3,2,3)
+plot(x(1:730),rLP(1:730),'k','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title('Repro')
+xlabel('Time (y)')
+subplot(3,2,4)
+plot(x((end-731):end),rLP((end-731):end),'k','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+xlabel('Time (y)')
+
+subplot(3,2,5)
+plot(x(1:730),mSP(1:730),'b','Linewidth',2); hold on;
+plot(x(1:730),mMP(1:730),'r','Linewidth',2); hold on;
+plot(x(1:730),mLP(1:730),'k','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title('Matur')
+xlabel('Time (y)')
+subplot(3,2,6)
+plot(x((end-731):end),mSP((end-731):end),'b','Linewidth',2); hold on;
+plot(x((end-731):end),mMP((end-731):end),'r','Linewidth',2); hold on;
+plot(x((end-731):end),mLP((end-731):end),'k','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+xlabel('Time (y)')
+print('-dpng',[fpath sname 'oneloc_pisc_brm_time.png'])
+
+
+% Planktivore
+figure(20)
+subplot(3,2,1)
+plot(x(1:730),SF(1:730),'b','Linewidth',2); hold on;
+plot(x(1:730),MF(1:730),'r','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title(['Forage fishes ' loc])
+subplot(3,2,2)
+plot(x((end-731):end),SF((end-731):end),'b','Linewidth',2); hold on;
+plot(x((end-731):end),MF((end-731):end),'r','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+legend('Immature','Adults')
+
+subplot(3,2,3)
+plot(x(1:730),rMF(1:730),'r','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title('Reprod')
+subplot(3,2,4)
+plot(x((end-731):end),rMF((end-731):end),'r','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+
+subplot(3,2,5)
+plot(x(1:730),mSF(1:730),'b','Linewidth',2); hold on;
+plot(x(1:730),mMF(1:730),'r','Linewidth',2); hold on;
+xlim([x(1) x(730)])
+title('Matur')
+subplot(3,2,6)
+plot(x((end-731):end),mSF((end-731):end),'b','Linewidth',2); hold on;
+plot(x((end-731):end),mMF((end-731):end),'r','Linewidth',2); hold on;
+xlim([x(end-731) x(end)])
+print('-dpng',[fpath sname 'oneloc_plan_brm_time.png'])
 
 
 

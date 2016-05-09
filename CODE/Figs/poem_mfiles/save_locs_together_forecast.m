@@ -11,7 +11,7 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 spots = {'GB','EBS','OSP','HOT','BATS','NS'};
 
 %% Continuous
-sp=NaN*ones(145*365,length(spots));
+sp=NaN*ones(95*365,length(spots));
 sf = sp;
 sd = sp;
 mf = sp;
@@ -25,7 +25,7 @@ Rlp = sp;
 for s=1:length(spots)
     close all
     loc = spots{s};
-    sname1 = 'Oneloc_pris_' ;
+    sname1 = 'Oneloc_fore_pris_' ;
     sname2 = [loc '_'];
     SP = csvread([dpath sname1 sname2 'Sml_p.csv']);
     SF = csvread([dpath sname1 sname2 'Sml_f.csv']);
@@ -53,11 +53,11 @@ for s=1:length(spots)
     
 end
 
-save('Oneloc_pris_all.mat','sp','sf','sd','mp','mf','md','lp',...
+save('Oneloc_fore_pris_all.mat','sp','sf','sd','mp','mf','md','lp',...
     'Rmf','Rmd','Rlp','spots')
 
 %% Phenology
-psp=NaN*ones(145*365,length(spots));
+psp=NaN*ones(95*365,length(spots));
 psf = psp;
 psd = psp;
 pmf = psp;
@@ -76,8 +76,8 @@ pRlp = psp;
 for s=1:length(spots)
     close all
     loc = spots{s};
-    sname1 = 'Oneloc_pris_';
-    sname2 = [loc '_phenol_'];
+    sname1 = 'Oneloc_fore_pris_';
+    sname2 = [loc '_phen_'];
     SP = csvread([dpath sname1 sname2 'Sml_p.csv']);
     SF = csvread([dpath sname1 sname2 'Sml_f.csv']);
     SD = csvread([dpath sname1 sname2 'Sml_d.csv']);
@@ -119,6 +119,6 @@ for s=1:length(spots)
     pRlp(:,s) = repLP;
 end
 
-save('Oneloc_pris_phenol_all.mat','psp','psf','psd','pmp','pmf',...
+save('Oneloc_fore_pris_phenol_all.mat','psp','psf','psd','pmp','pmf',...
     'pmd','plp','pDDmf','pDDmd','pDDlp','pKmf','pKmd','pKlp',...
     'pRmf','pRmd','pRlp','spots')

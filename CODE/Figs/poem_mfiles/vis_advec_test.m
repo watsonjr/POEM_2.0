@@ -6,20 +6,23 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_Atl.csv']);
+bio = csvread([dpath 'bio_2Dadvect_test_Atl2.csv']);
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
 
-%%
+%% Conservation of mass
+
 totb = sum(bio,2);
 figure(10)
-subplot(2,2,1)
+%subplot(2,2,1)
 plot(totb)
-totb(1)-totb(end)
+100*(totb(1)-totb(end))/totb(1)
 
 %Eq = 1.5014e+09
-%Pac = 1.9538e+08
-%Atl = 2.1201e+08
+%Pac = 5.3753%
+%Atl = 7.8666%
+%Arctic = 0.3174%
+%Antarctic = 5.1648%
 
 %%
 B1=NaN*ones(size(geolat_t));
@@ -50,7 +53,7 @@ xl(xl<-180) = xl(xl<-180) + 350;
 
 
 %% Start
-figure(1)
+figure(11)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -74,9 +77,9 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Atl1.png'])
+%print('-dpng',[fpath 'advec_test_Ant1.png'])
 
-figure(2)
+figure(12)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -100,9 +103,9 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Atl2.png'])
+%print('-dpng',[fpath 'advec_test_Ant2.png'])
 
-figure(3)
+figure(13)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -126,9 +129,9 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Atl3.png'])
+%print('-dpng',[fpath 'advec_test_Ant3.png'])
 
-figure(4)
+figure(14)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -152,10 +155,10 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Atl4.png'])
+%print('-dpng',[fpath 'advec_test_Ant4.png'])
 
 %
-figure(5)
+figure(15)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -179,4 +182,127 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-print('-dpng',[fpath 'advec_test_Atl5.png'])
+%print('-dpng',[fpath 'advec_test_Ant5.png'])
+
+%% Arctic projection
+% figure(16)
+% m_proj('stereographic','lat',90,'long',30,'radius',30);
+% m_pcolor(geolon_t,geolat_t,B1);
+% shading flat
+% colorbar
+% colormap('jet')
+% caxis([0 1e4])
+% title('Day=1')
+% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+% m_coast('patch',[.7 .7 .7],'edgecolor','k');
+% %print('-dpng',[fpath 'advec_test_Arctic1_arcticproj.png'])
+% 
+% figure(17)
+% m_proj('stereographic','lat',90,'long',30,'radius',30);
+% m_pcolor(geolon_t,geolat_t,B2);
+% shading flat
+% colorbar
+% colormap('jet')
+% caxis([0 1e4])
+% title('Day=73')
+% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+% m_coast('patch',[.7 .7 .7],'edgecolor','k');
+% %print('-dpng',[fpath 'advec_test_Arctic2_arcticproj.png'])
+% 
+% figure(18)
+% m_proj('stereographic','lat',90,'long',30,'radius',30);
+% m_pcolor(geolon_t,geolat_t,B3);
+% shading flat
+% colorbar
+% colormap('jet')
+% caxis([0 1e4])
+% title('Day=146')
+% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+% m_coast('patch',[.7 .7 .7],'edgecolor','k');
+% %print('-dpng',[fpath 'advec_test_Arctic3_arcticproj.png'])
+% 
+% figure(19)
+% m_proj('stereographic','lat',90,'long',30,'radius',30);
+% m_pcolor(geolon_t,geolat_t,B4);
+% shading flat
+% colorbar
+% colormap('jet')
+% caxis([0 1e4])
+% title('Day=219')
+% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+% m_coast('patch',[.7 .7 .7],'edgecolor','k');
+% %print('-dpng',[fpath 'advec_test_Arctic4_arcticproj.png'])
+% 
+% figure(20)
+% m_proj('stereographic','lat',90,'long',30,'radius',30);
+% m_pcolor(geolon_t,geolat_t,B5);
+% shading flat
+% colorbar
+% colormap('jet')
+% caxis([0 1e4])
+% title('Day=365')
+% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+% m_coast('patch',[.7 .7 .7],'edgecolor','k');
+% %print('-dpng',[fpath 'advec_test_Arctic5_arcticproj.png'])
+
+%% Antarctic projection
+figure(16)
+m_proj('stereographic','lat',-90,'long',30,'radius',50);
+m_pcolor(geolon_t,geolat_t,B1);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=1')
+m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Ant1_Spoleproj.png'])
+
+figure(17)
+m_proj('stereographic','lat',-90,'long',30,'radius',50);
+m_pcolor(geolon_t,geolat_t,B2);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=73')
+m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Ant2_Spoleproj.png'])
+
+figure(18)
+m_proj('stereographic','lat',-90,'long',30,'radius',50);
+m_pcolor(geolon_t,geolat_t,B3);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=146')
+m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Ant3_Spoleproj.png'])
+
+figure(19)
+m_proj('stereographic','lat',-90,'long',30,'radius',50);
+m_pcolor(geolon_t,geolat_t,B4);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=219')
+m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Ant4_Spoleproj.png'])
+
+figure(20)
+m_proj('stereographic','lat',-90,'long',30,'radius',50);
+m_pcolor(geolon_t,geolat_t,B5);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=365')
+m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Ant5_Spoleproj.png'])
+

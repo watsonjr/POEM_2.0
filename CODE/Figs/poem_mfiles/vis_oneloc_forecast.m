@@ -1,6 +1,6 @@
 % Visualize output of POEM
-% Pristine historical at one location
-% 145 years
+% Pristine forecast at one location
+% 95 years
 
 clear all
 close all
@@ -13,8 +13,8 @@ spots = {'GB','EBS','OSP','HOT','BATS','NS'};
 for s=1:length(spots)
     close all
     loc = spots{s};
-    %sname = ['Oneloc_fore_pris_' loc '_phenol_'];
-    sname = ['Oneloc_fore_pris_' loc '_'];
+    sname = ['Oneloc_fore_pris_' loc '_phen_'];
+    %sname = ['Oneloc_fore_pris_' loc '_'];
     SP = csvread([dpath sname 'Sml_p.csv']);
     SF = csvread([dpath sname 'Sml_f.csv']);
     SD = csvread([dpath sname 'Sml_d.csv']);
@@ -26,8 +26,8 @@ for s=1:length(spots)
     %% Plots over time
     x=1:length(SP);
     yfrac=x/365;
-    y=1861:(1/365):(1861+yfrac(end));
-    %y=1861:(1/365):2005;
+    y=2006:(1/365):(2006+yfrac(end));
+    %y=2006:(1/365):2100;
     y=y(1:(end-1));
     lstd=length(SP);
     id1 = 0:365:(lstd-1);
@@ -37,10 +37,10 @@ for s=1:length(spots)
     
     %% Piscivore
     figure(1)
-    plot(y((end-(30*365)):end),SP((end-(30*365)):end),'b','Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),MP((end-(30*365)):end),'r','Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),LP((end-(30*365)):end),'k','Linewidth',2); hold on;
-    xlim([y(end-(30*365)) y(end)])
+    plot(y(1:end),SP(1:end),'b','Linewidth',2); hold on;
+    plot(y(1:end),MP(1:end),'r','Linewidth',2); hold on;
+    plot(y(1:end),LP(1:end),'k','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
     title(['Historic Pelagic Piscivores ' loc])
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
@@ -49,9 +49,9 @@ for s=1:length(spots)
     
     %% Planktivore
     figure(2)
-    plot(y((end-(30*365)):end),SF((end-(30*365)):end),'b','Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),MF((end-(30*365)):end),'r','Linewidth',2); hold on;
-    xlim([y(end-(30*365)) y(end)])
+    plot(y(1:end),SF(1:end),'b','Linewidth',2); hold on;
+    plot(y(1:end),MF(1:end),'r','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     legend('Immature','Adults')
@@ -60,9 +60,9 @@ for s=1:length(spots)
     
     %% Detritivore
     figure(3)
-    plot(y((end-(30*365)):end),SD((end-(30*365)):end),'b','Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),MD((end-(30*365)):end),'r','Linewidth',2); hold on;
-    xlim([y(end-(30*365)) y(end)])
+    plot(y(1:end),SD(1:end),'b','Linewidth',2); hold on;
+    plot(y(1:end),MD(1:end),'r','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     legend('Immature','Adults')
@@ -72,16 +72,16 @@ for s=1:length(spots)
     %% All size classes of all
     
     figure(4)
-    plot(y((end-(30*365)):end),SP((end-(30*365)):end,:),'Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),MP((end-(30*365)):end,:),'Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),LP((end-(30*365)):end,:),'Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),SF((end-(30*365)):end,:),'Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),MF((end-(30*365)):end,:),'Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),SD((end-(30*365)):end,:),'Linewidth',2); hold on;
-    plot(y((end-(30*365)):end),MD((end-(30*365)):end,:),'Linewidth',2); hold on;
+    plot(y(1:end),SP(1:end,:),'Linewidth',2); hold on;
+    plot(y(1:end),MP(1:end,:),'Linewidth',2); hold on;
+    plot(y(1:end),LP(1:end,:),'Linewidth',2); hold on;
+    plot(y(1:end),SF(1:end,:),'Linewidth',2); hold on;
+    plot(y(1:end),MF(1:end,:),'Linewidth',2); hold on;
+    plot(y(1:end),SD(1:end,:),'Linewidth',2); hold on;
+    plot(y(1:end),MD(1:end,:),'Linewidth',2); hold on;
     legend('SP','MP','LP','SF','MF','SD','MD')
     legend('location','eastoutside')
-    xlim([y(end-(30*365)) y(end)])
+    xlim([y(1) y(end)])
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     title(['Historic ' loc])
@@ -89,7 +89,7 @@ for s=1:length(spots)
     
     %% Final mean biomass size spectrum
     t=1:length(SP);
-    lyr=t((end-(30*365)+1):end);
+    lyr=t(1:end);
     SP_sum=sum(SP(lyr));
     SF_sum=sum(SF(lyr));
     SD_sum=sum(SD(lyr));
@@ -148,7 +148,7 @@ for s=1:length(spots)
     print('-dpng',[fpath sname 'oneloc_all_biomass_spec.png'])
     
     %% Recruitment
-    yr=t((end-(30*365)+1):end);
+    yr=t(1:end);
     SPL=SP(yr);
     SFL=SF(yr);
     SDL=SD(yr);
@@ -159,14 +159,14 @@ for s=1:length(spots)
     
     st=1:365:length(yr);
     en=365:365:length(yr);
-    SPy = NaN*ones(30,1);
+    SPy = NaN*ones(95,1);
     SFy = SPy;
     SDy = SPy;
     PJy = SPy;
     PAy = SPy;
     FAy = SPy;
     DAy = SPy;
-    for n=1:30
+    for n=1:95
         SPy(n) = nansum(SPL(st(n):en(n)));
         SFy(n) = nansum(SFL(st(n):en(n)));
         SDy(n) = nansum(SDL(st(n):en(n)));
@@ -183,46 +183,46 @@ for s=1:length(spots)
     
     figure(6)
     subplot(2,2,1)
-    plot(1976:2005,SPy,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,SPy,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Recruits (g km^-^2)')
     title('Pelagic piscivores')
-    text(2006,max(SPy(:))+5,loc,'FontWeight','bold')
+    text(2101,max(SPy(:))+5,loc,'FontWeight','bold')
     
     subplot(2,2,2)
-    plot(1976:2005,SFy,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,SFy,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Recruits (g km^-^2)')
     title('Forage fishes')
     
     subplot(2,2,3)
-    plot(1976:2005,rssbP,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,rssbP,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('R/SSB')
     
     subplot(2,2,4)
-    plot(1976:2005,rssbF,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,rssbF,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('R/SSB')
     %print('-dpng',[fpath sname 'oneloc_recruitment.png'])
     
     %%
     figure(7)
     subplot(2,2,1)
-    plot(1976:2005,SPy,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,SPy,'Linewidth',2); hold on;
+    xlim([2006 2100])
     title('Larvae')
     ylabel('Biomass (g km^-^2)')
-    text(2006,max(SPy(:))+5,loc,'FontWeight','bold')
+    text(2101,max(SPy(:))+5,loc,'FontWeight','bold')
     subplot(2,2,2)
-    plot(1976:2005,PJy,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,PJy,'Linewidth',2); hold on;
+    xlim([2006 2100])
     title('Juveniles')
     ylabel('Biomass (g km^-^2)')
     subplot(2,2,3)
-    plot(1976:2005,SPy+PJy,'Linewidth',2); hold on;
+    plot(2006:2100,SPy+PJy,'Linewidth',2); hold on;
     title('All immature')
-    xlim([1976 2005])
+    xlim([2006 2100])
     ylabel('Biomass (g km^-^2)')
     %title('Pelagic piscivores')
     print('-dpng',[fpath sname 'oneloc_immatureP.png'])
@@ -233,26 +233,26 @@ for s=1:length(spots)
     
     figure(8)
     subplot(2,2,1)
-    plot(1976:2005,totr,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,totr,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Recruits (g km^-^2)')
     title('Pelagic piscivores')
-    text(2006,max(totr(:))+5,loc,'FontWeight','bold')
+    text(2101,max(totr(:))+5,loc,'FontWeight','bold')
     
     subplot(2,2,2)
-    plot(1976:2005,SFy,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,SFy,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('Recruits (g km^-^2)')
     title('Forage fishes')
     
     subplot(2,2,3)
-    plot(1976:2005,rssbP2,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,rssbP2,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('R/SSB')
     
     subplot(2,2,4)
-    plot(1976:2005,rssbF,'Linewidth',2); hold on;
-    xlim([1976 2005])
+    plot(2006:2100,rssbF,'Linewidth',2); hold on;
+    xlim([2006 2100])
     ylabel('R/SSB')
     print('-dpng',[fpath sname 'oneloc_recruitment.png'])
 end

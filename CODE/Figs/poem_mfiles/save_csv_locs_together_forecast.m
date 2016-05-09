@@ -5,12 +5,12 @@ close all
 
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 
-load('Oneloc_pris_phenol_all.mat')
-load('Oneloc_pris_all.mat')
+load('Oneloc_fore_pris_phenol_all.mat')
+load('Oneloc_fore_pris_all.mat')
 
 %% Recruitment
 t=1:length(sp);
-yr=t((end-(30*365)+1):end);
+yr=t(1:end);
 PL=sp(yr,:);
 FL=sf(yr,:);
 PJ=mp(yr,:);
@@ -24,7 +24,7 @@ pFA=pmf(yr,:);
 
 st=1:365:length(yr);
 en=365:365:length(yr);
-PLy = NaN*ones(30,6);
+PLy = NaN*ones(95,6);
 FLy = PLy;
 PJy = PLy;
 PAy = PLy;
@@ -34,7 +34,7 @@ pFLy = PLy;
 pPJy = PLy;
 pPAy = PLy;
 pFAy = PLy;
-for n=1:30
+for n=1:95
     PLy(n,:) = nansum(PL(st(n):en(n),:));
     FLy(n,:) = nansum(FL(st(n):en(n),:));
     PJy(n,:) = nansum(PJ(st(n):en(n),:));
@@ -74,9 +74,9 @@ pA = table(PAy(:,1),pPAy(:,1),PAy(:,2),pPAy(:,2),PAy(:,3),pPAy(:,3),...
     'HOTp','BATSc','BATSp','NSc','NSp'});
 
 %%
-writetable(fL,[dpath 'onelocs_forage_larv.csv'])
-writetable(fA,[dpath 'onelocs_forage_adult.csv'])
-writetable(pL,[dpath 'onelocs_pisc_larv.csv'])
-writetable(pJ,[dpath 'onelocs_pisc_juve.csv'])
-writetable(pA,[dpath 'onelocs_pisc_adult.csv'])
+writetable(fL,[dpath 'onelocs_fore_forage_larv.csv'])
+writetable(fA,[dpath 'onelocs_fore_forage_adult.csv'])
+writetable(pL,[dpath 'onelocs_fore_pisc_larv.csv'])
+writetable(pJ,[dpath 'onelocs_fore_pisc_juve.csv'])
+writetable(pA,[dpath 'onelocs_fore_pisc_adult.csv'])
 

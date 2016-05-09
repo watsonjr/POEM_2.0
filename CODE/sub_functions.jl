@@ -1,5 +1,5 @@
 ###! Get COBALT data
-function get_COBALT!(COBALT,ID,DY,ENVR,Dthresh)
+function get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
     ## Get data
     ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY]
     ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY]
@@ -10,8 +10,8 @@ function get_COBALT!(COBALT,ID,DY,ENVR,Dthresh)
     ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
     ENVR.U[:,1]   = COBALT["U"][ID,DY]
     ENVR.V[:,1]   = COBALT["V"][ID,DY]
-    #ENVR.T0[:,1] = Tref[ID]
-    ENVR.T0[:,1] = minimum(COBALT["Tp"][ID,:])
+    ENVR.T0[:,1] = Tref[ID]
+    #ENVR.T0[:,1] = minimum(COBALT["Tp"][ID,:])
     ENVR.Dthresh[:,1] = Dthresh[ID]
 end
 
@@ -38,8 +38,8 @@ end
 
 ###! Fraction of time spent in pelagic (for demersal)
 function sub_tdif_dem(Z,bio1,bio2,bio3,bio4)
-	biop = bio1+bio2
-  biod = bio3+bio4
+	biop = bio1+bio2+bio3
+  biod = bio4
 	if Z < PI_be_cutoff
 		tdif = biop ./ (biop+biod)
 	else
@@ -63,30 +63,37 @@ end
 function sub_cons(enc,met)
 	#! calculates consumption rate of first element of enc
 	ENC = sum(enc) # total biomass encountered
-	tau = 1/ (4*met) # handling time
+	#tau = 1/ (4*met) # handling time
+  # CAP BIOMASS CONSUMED BY TOTAL BIOMASS
+  tau = 1/met
 	out = enc[1] / (1+(tau*ENC)) # Type II
 end
 
 
 ###! Offline coupling
-function sub_offline(enc_1,enc_2,dZ)
+function sub_offline(enc_1,enc_2,enc_3,dZ)
 	#! offline switch
-	if (enc_1 + enc_2) > dZ
-		frac = enc_1 / (enc_1 + enc_2)
-		out_1 = (frac * dZ)
-		out_2 = ((1-frac) * dZ)
+	if (enc_1 + enc_2 + enc_3) > dZ
+		frac1 = enc_1 / (enc_1 + enc_2 + enc_3)
+    frac2 = enc_2 / (enc_1 + enc_2 + enc_3)
+    frac3 = enc_3 / (enc_1 + enc_2 + enc_3)
+		out_1 = (frac1 * dZ)
+		out_2 = (frac2 * dZ)
+    out_3 = (frac3 * dZ)
 	else
 		out_1 = enc_1
 		out_2 = enc_2
+    out_3 = enc_3
 	end
-	return out_1, out_2
+	return out_1, out_2, out_3
 end
 
 
 ###! DEGREE DAYS
-function sub_degday(dd,Tp,Tb,tdif,Tref,K,dtot)
-  #if (K==0.0) #Don't accumulate temp while spawning, DD represents recovery after
-  if (sum(K[1:dtot]) < dtot) #Only spawn once per year
+function sub_degday(dd,Tp,Tb,tdif,Tref,S,dtot)
+  #if (S==0.0) #Don't accumulate temp while spawning, DD represents recovery after
+  #if (sum(S[1:dtot]) < dtot) #Only spawn once per year
+  if (sum(S[1:dtot]) > 0.0) #Only spawn once per year
     dd = 0.0
   else
     Tavg = (Tp.*tdif) + (Tb.*(1.0-tdif))
@@ -97,28 +104,20 @@ end
 
 
 ###! SPAWNING FLAG
-function sub_kflag(K,dd,dthresh,dtot,lat)
+function sub_kflag(S,dd,dthresh,dtot,lat)
   if (dd >= dthresh)
-    #Spawning duration based on latitude
-    if (lat <= 30 && lat >= -30) #tropics
-      dur = 117
-    elseif (lat >= 65.0) #polar
-      dur = 141
-    elseif (lat <= -65.0) #polar
-      dur = 141
-    else #temperate
-      dur = 137
-    end
+    dur=59
     #Change spawning flag
     if ((dtot+dur) <= DAYS)
-      K[dtot:(dtot+dur)] = 0.0
+      S[dtot:(dtot+dur)] = Sp
     else
-      K[dtot:(DAYS)] = 0.0
+      dleft = DAYS - dtot + 1
+      S[dtot:DAYS] = Sp[1:dleft]
     end
     #Reset cumulative deg days
     dd = 0.0
   end
-  return K, dd
+  return S, dd
 end
 
 
@@ -130,10 +129,10 @@ end
 
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
-function sub_gamma(K,Z,nu,d,B,k)
+function sub_gamma(K,Z,nu,d,B,S)
   # Spawning flag
-  if k==0.0
-    kap=K;
+  if S>0.0
+    kap=K + (1.0-S);
   else
     kap=1;
   end
@@ -149,11 +148,11 @@ end
 
 
 ###! BIOMASS MADE FROM REPRODUCTION
-function sub_rep(nu,K,k)
+function sub_rep(nu,K,S)
 	if nu > 0.
     # Spawning flag
-    if k==0.0
-      kap=K;
+    if S>0.0
+      kap=K + (1.0-S);
     else
       kap=1;
     end
@@ -184,7 +183,9 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die)
 	# mat = gamma = biomass maturing to larger size class
 	# Nat_mrt = natural mortality
 	# die = predator mort = biomass lost to predation
-	db = rec + ((nu - rep - gamma - Nat_mrt) * bio_in) - die
+  db = rec + ((nu - rep - gamma - Nat_mrt) * bio_in) - die
+  #TEST BOTTOM-UP ONLY
+	#db = rec + ((nu - rep - gamma) * bio_in)
 	bio_out =  bio_in + db
 end
 

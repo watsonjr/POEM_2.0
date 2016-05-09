@@ -42,6 +42,7 @@ function sub_init_fish(ID,phen)
 	enc_d = zeros(Float64,NX)
 	enc_zm = zeros(Float64,NX)
 	enc_zl = zeros(Float64,NX)
+	enc_be = zeros(Float64,NX)
 
 	#! consumption rates between fish and zoo
 	con_f = zeros(Float64,NX)
@@ -49,6 +50,7 @@ function sub_init_fish(ID,phen)
 	con_d = zeros(Float64,NX)
 	con_zm = zeros(Float64,NX)
 	con_zl = zeros(Float64,NX)
+	con_be = zeros(Float64,NX)
 
   # mass ingested (I)
   I = zeros(Float64,NX) # fish
@@ -74,13 +76,13 @@ function sub_init_fish(ID,phen)
 	#! spawning flag
 	# 1 = all to growth, 0 = all to repro
 	if (phen == 1)
-		K = ones(Float64,NX,DAYS)
+		S = zeros(Float64,NX,DAYS)
 	else
-		K = zeros(Float64,NX,DAYS)
+		S = (1.0/365.0) * ones(Float64,NX,DAYS)
 	end
 
 	# assign to small forage fish, piscivore and detrivore
-	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,con_f,con_p,con_d,con_zm,con_zl,I,nu,gamma,die,rep,rec,DD,K)
+	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,die,rep,rec,DD,S)
 	Sml_p = deepcopy(Sml_f)
 	Sml_d = deepcopy(Sml_f)
 	Med_f = deepcopy(Sml_f)
