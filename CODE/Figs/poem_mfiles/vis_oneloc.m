@@ -11,17 +11,22 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 spots = {'GB','EBS','OSP','HOT','BATS','NS'};
 
 for s=1:length(spots)
+    %%
     close all
     loc = spots{s};
-    %sname = ['Oneloc_pris_' loc '_phenol_'];
-    sname = ['Oneloc_pris_' loc '_'];
-    SP = csvread([dpath sname 'Sml_p.csv']);
-    SF = csvread([dpath sname 'Sml_f.csv']);
-    SD = csvread([dpath sname 'Sml_d.csv']);
-    MP = csvread([dpath sname 'Med_p.csv']);
-    MF = csvread([dpath sname 'Med_f.csv']);
-    MD = csvread([dpath sname 'Med_d.csv']);
-    LP = csvread([dpath sname 'Lrg_p.csv']);
+    sname = 'Oneloc_pris_';
+    %lname = [loc '_phen_'];
+    lname = [loc '_'];
+    SP = csvread([dpath sname lname 'Sml_p.csv']);
+    SF = csvread([dpath sname lname 'Sml_f.csv']);
+    SD = csvread([dpath sname lname 'Sml_d.csv']);
+    MP = csvread([dpath sname lname 'Med_p.csv']);
+    MF = csvread([dpath sname lname 'Med_f.csv']);
+    MD = csvread([dpath sname lname 'Med_d.csv']);
+    LP = csvread([dpath sname lname 'Lrg_p.csv']);
+    mMF = csvread([dpath sname 'Rec_' lname 'Med_f.csv']);
+    mMD = csvread([dpath sname 'Rec_' lname 'Med_d.csv']);
+    mLP = csvread([dpath sname 'Rec_' lname 'Lrg_p.csv']);
     
     %% Plots over time
     x=1:length(SP);
@@ -45,7 +50,7 @@ for s=1:length(spots)
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     legend('Larvae','Juveniles','Adults')
-    print('-dpng',[fpath sname 'oneloc_pisc_time.png'])
+    print('-dpng',[fpath sname lname 'oneloc_pisc_time.png'])
     
     %% Planktivore
     figure(2)
@@ -56,7 +61,7 @@ for s=1:length(spots)
     ylabel('Biomass (g km^-^2)')
     legend('Immature','Adults')
     title(['Historic Forage Fishes ' loc])
-    print('-dpng',[fpath sname 'oneloc_plan_time.png'])
+    print('-dpng',[fpath sname lname 'oneloc_plan_time.png'])
     
     %% Detritivore
     figure(3)
@@ -67,7 +72,7 @@ for s=1:length(spots)
     ylabel('Biomass (g km^-^2)')
     legend('Immature','Adults')
     title(['Historic Demersal Fishes ' loc])
-    print('-dpng',[fpath sname 'oneloc_detr_time.png'])
+    print('-dpng',[fpath sname lname 'oneloc_detr_time.png'])
     
     %% All size classes of all
     
@@ -85,7 +90,7 @@ for s=1:length(spots)
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     title(['Historic ' loc])
-    print('-dpng',[fpath sname 'oneloc_all_sizes.png'])
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes.png'])
     
     %% Final mean biomass size spectrum
     t=1:length(SP);
@@ -145,115 +150,53 @@ for s=1:length(spots)
     subplot(2,3,6)
     bar(D_mean,'r')
     xlim([0 3])
-    print('-dpng',[fpath sname 'oneloc_all_biomass_spec.png'])
+    print('-dpng',[fpath sname lname 'oneloc_all_biomass_spec.png'])
     
     %% Recruitment
-    yr=t((end-(30*365)+1):end);
-    SPL=SP(yr);
-    SFL=SF(yr);
-    SDL=SD(yr);
-    PJ=MP(yr);
-    PA=LP(yr);
-    FA=MF(yr);
-    DA=MD(yr);
-    
-    st=1:365:length(yr);
-    en=365:365:length(yr);
-    SPy = NaN*ones(30,1);
-    SFy = SPy;
-    SDy = SPy;
-    PJy = SPy;
-    PAy = SPy;
-    FAy = SPy;
-    DAy = SPy;
-    for n=1:30
-        SPy(n) = nansum(SPL(st(n):en(n)));
-        SFy(n) = nansum(SFL(st(n):en(n)));
-        SDy(n) = nansum(SDL(st(n):en(n)));
-        PJy(n) = nansum(PJ(st(n):en(n)));
-        PAy(n) = nansum(PA(st(n):en(n)));
-        FAy(n) = nansum(FA(st(n):en(n)));
-        DAy(n) = nansum(DA(st(n):en(n)));
-    end
-    
-    %%
-    rssbP = SPy./PAy;
-    rssbF = SFy./FAy;
-    rssbD = SDy./DAy;
-    
-    figure(6)
-    subplot(2,2,1)
-    plot(1976:2005,SPy,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('Recruits (g km^-^2)')
-    title('Pelagic piscivores')
-    text(2006,max(SPy(:))+5,loc,'FontWeight','bold')
-    
-    subplot(2,2,2)
-    plot(1976:2005,SFy,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('Recruits (g km^-^2)')
-    title('Forage fishes')
-    
-    subplot(2,2,3)
-    plot(1976:2005,rssbP,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('R/SSB')
-    
-    subplot(2,2,4)
-    plot(1976:2005,rssbF,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('R/SSB')
-    %print('-dpng',[fpath sname 'oneloc_recruitment.png'])
-    
-    %%
-    figure(7)
-    subplot(2,2,1)
-    plot(1976:2005,SPy,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    title('Larvae')
-    ylabel('Biomass (g km^-^2)')
-    text(2006,max(SPy(:))+5,loc,'FontWeight','bold')
-    subplot(2,2,2)
-    plot(1976:2005,PJy,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    title('Juveniles')
-    ylabel('Biomass (g km^-^2)')
-    subplot(2,2,3)
-    plot(1976:2005,SPy+PJy,'Linewidth',2); hold on;
-    title('All immature')
-    xlim([1976 2005])
-    ylabel('Biomass (g km^-^2)')
-    %title('Pelagic piscivores')
-    print('-dpng',[fpath sname 'oneloc_immatureP.png'])
-    
-    %%
-    rssbP2 = (SPy+PJy)./PAy;
-    totr=SPy+PJy;
-    
-    figure(8)
-    subplot(2,2,1)
-    plot(1976:2005,totr,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('Recruits (g km^-^2)')
-    title('Pelagic piscivores')
-    text(2006,max(totr(:))+5,loc,'FontWeight','bold')
-    
-    subplot(2,2,2)
-    plot(1976:2005,SFy,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('Recruits (g km^-^2)')
-    title('Forage fishes')
-    
-    subplot(2,2,3)
-    plot(1976:2005,rssbP2,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('R/SSB')
-    
-    subplot(2,2,4)
-    plot(1976:2005,rssbF,'Linewidth',2); hold on;
-    xlim([1976 2005])
-    ylabel('R/SSB')
-    print('-dpng',[fpath sname 'oneloc_recruitment.png'])
+%     yr=t((end-(30*365)+1):end);
+%     SPL=mLP(yr);
+%     SFL=mMF(yr);
+%     SDL=mMD(yr);
+%     PA=LP(yr);
+%     FA=MF(yr);
+%     DA=MD(yr);
+%     
+%     st=1:365:length(yr);
+%     en=365:365:length(yr);
+%     SPy = NaN*ones(30,1);
+%     SFy = SPy;
+%     SDy = SPy;
+%     PAy = SPy;
+%     FAy = SPy;
+%     DAy = SPy;
+%     for n=1:30
+%         SPy(n) = nansum(SPL(st(n):en(n)));
+%         SFy(n) = nansum(SFL(st(n):en(n)));
+%         SDy(n) = nansum(SDL(st(n):en(n)));
+%         PAy(n) = nansum(PA(st(n):en(n)));
+%         FAy(n) = nansum(FA(st(n):en(n)));
+%         DAy(n) = nansum(DA(st(n):en(n)));
+%     end
+%     
+%     %
+%     figure(7)
+%     subplot(3,1,1)
+%     plot(1976:2005,SPy,'Linewidth',2); hold on;
+%     xlim([1976 2005])
+%     ylabel({loc; 'Recruits (g km^-^2)'})
+%     title('Pelagic piscivores')
+%     
+%     subplot(3,1,2)
+%     plot(1976:2005,SFy,'Linewidth',2); hold on;
+%     xlim([1976 2005])
+%     ylabel('Recruits (g km^-^2)')
+%     title('Forage fishes')
+%     
+%     subplot(3,1,3)
+%     plot(1976:2005,SDy,'Linewidth',2); hold on;
+%     xlim([1976 2005])
+%     ylabel('Recruits (g km^-^2)')
+%     title('Demersal piscivores')
+%     print('-dpng',[fpath sname lname 'oneloc_recruitment.png'])
 end
 

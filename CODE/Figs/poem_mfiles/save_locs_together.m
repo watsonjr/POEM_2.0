@@ -21,6 +21,9 @@ lp = sp;
 Rmf = sp;
 Rmd = sp;
 Rlp = sp;
+Mmf = sp;
+Mmd = sp;
+Mlp = sp;
 
 for s=1:length(spots)
     close all
@@ -39,6 +42,10 @@ for s=1:length(spots)
     repMD = csvread([dpath sname1 'Rep_' sname2 'Med_d.csv']);
     repLP = csvread([dpath sname1 'Rep_' sname2 'Lrg_p.csv']);
     
+    recMF = csvread([dpath sname1 'Rec_' sname2 'Med_f.csv']);
+    recMD = csvread([dpath sname1 'Rec_' sname2 'Med_d.csv']);
+    recLP = csvread([dpath sname1 'Rec_' sname2 'Lrg_p.csv']);
+    
     sp(:,s) = SP;
     sf(:,s) = SF;
     sd(:,s) = SD;
@@ -51,10 +58,14 @@ for s=1:length(spots)
     Rmd(:,s) = repMD;
     Rlp(:,s) = repLP;
     
+    Mmf(:,s) = recMF;
+    Mmd(:,s) = recMD;
+    Mlp(:,s) = recLP;
+    
 end
 
 save('Oneloc_pris_all.mat','sp','sf','sd','mp','mf','md','lp',...
-    'Rmf','Rmd','Rlp','spots')
+    'Rmf','Rmd','Rlp','Mmf','Mmd','Mlp','spots')
 
 %% Phenology
 psp=NaN*ones(145*365,length(spots));
@@ -73,6 +84,9 @@ pKlp = psp;
 pRmf = psp;
 pRmd = psp;
 pRlp = psp;
+pMmf = psp;
+pMmd = psp;
+pMlp = psp;
 for s=1:length(spots)
     close all
     loc = spots{s};
@@ -98,6 +112,10 @@ for s=1:length(spots)
     repMD = csvread([dpath sname1 'Rep_' sname2 'Med_d.csv']);
     repLP = csvread([dpath sname1 'Rep_' sname2 'Lrg_p.csv']);
     
+    recMF = csvread([dpath sname1 'Rec_' sname2 'Med_f.csv']);
+    recMD = csvread([dpath sname1 'Rec_' sname2 'Med_d.csv']);
+    recLP = csvread([dpath sname1 'Rec_' sname2 'Lrg_p.csv']);
+    
     psp(:,s) = SP;
     psf(:,s) = SF;
     psd(:,s) = SD;
@@ -117,8 +135,12 @@ for s=1:length(spots)
     pRmf(:,s) = repMF;
     pRmd(:,s) = repMD;
     pRlp(:,s) = repLP;
+    
+    pMmf(:,s) = recMF;
+    pMmd(:,s) = recMD;
+    pMlp(:,s) = recLP;
 end
 
 save('Oneloc_pris_phenol_all.mat','psp','psf','psd','pmp','pmf',...
     'pmd','plp','pDDmf','pDDmd','pDDlp','pKmf','pKmd','pKlp',...
-    'pRmf','pRmd','pRlp','spots')
+    'pRmf','pRmd','pRlp','pMmf','pMmd','pMlp','spots')

@@ -130,17 +130,19 @@ end
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
 function sub_gamma(K,Z,nu,d,B,S)
+  # convert predation mortality to biomass specific rate
+	D = (d/B) + Nat_mrt
   # Spawning flag
   if S>0.0
-    kap=K + (1.0-S);
+    kap=min(1.0, K + (1.0-S));
   else
     kap=1;
   end
-	# convert mortality to biomass specific rate
-	gg = ((kap*nu) - (d/B))/(1-(Z^(1-((d/B)/(kap*nu)))))
-	if gg < 0 || isnan(gg)==true
+	gg = ((kap*nu) - D)/(1-(Z^(1-(D/(kap*nu)))))
+  if gg < 0 || isnan(gg)==true
 		gamma = 0.0
 	else
+    gg = min(gg,nu)
 		gamma = gg
 	end
 	return gamma
@@ -152,9 +154,9 @@ function sub_rep(nu,K,S)
 	if nu > 0.
     # Spawning flag
     if S>0.0
-      kap=K + (1.0-S);
+      kap=min(1.0, K + (1.0-S));
     else
-      kap=1;
+      kap=1.0;
     end
 		rep = (1-kap) * nu
 	else
@@ -184,9 +186,7 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die)
 	# Nat_mrt = natural mortality
 	# die = predator mort = biomass lost to predation
   db = rec + ((nu - rep - gamma - Nat_mrt) * bio_in) - die
-  #TEST BOTTOM-UP ONLY
-	#db = rec + ((nu - rep - gamma) * bio_in)
-	bio_out =  bio_in + db
+  bio_out =  bio_in + db
 end
 
 function sub_update_be(bio_in,det,die,bio_p)

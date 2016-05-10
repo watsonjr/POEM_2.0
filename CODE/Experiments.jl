@@ -10,6 +10,7 @@ function Testoneloc()
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
+	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	YEARS = 50
   DAYS = 365
 
@@ -25,35 +26,47 @@ function Testoneloc()
 	#ID = 38309 #30335 # BATS
   #ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
-	phen=1;
+	phen=0;
 	#! Initialize
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, BENT = sub_init_fish(ID,phen);
 	ENVR = sub_init_env(ID);
 
 	#! Storage
-  Spinup_Sml_f = open("./Data/CSV/Spinup_GB_Sml_f.csv","w")
-  Spinup_Sml_p = open("./Data/CSV/Spinup_GB_Sml_p.csv","w")
-  Spinup_Sml_d = open("./Data/CSV/Spinup_GB_Sml_d.csv","w")
-  Spinup_Med_f = open("./Data/CSV/Spinup_GB_Med_f.csv","w")
-  Spinup_Med_p = open("./Data/CSV/Spinup_GB_Med_p.csv","w")
-  Spinup_Med_d = open("./Data/CSV/Spinup_GB_Med_d.csv","w")
-  Spinup_Lrg_p = open("./Data/CSV/Spinup_GB_Lrg_p.csv","w")
-	S_Med_f = open("./Data/CSV/Spinup_S_GB_Med_f.csv","w")
-  S_Med_d = open("./Data/CSV/Spinup_S_GB_Med_d.csv","w")
-  S_Lrg_p = open("./Data/CSV/Spinup_S_GB_Lrg_p.csv","w")
-	DD_Med_f = open("./Data/CSV/Spinup_DD_GB_Med_f.csv","w")
-  DD_Med_d = open("./Data/CSV/Spinup_DD_GB_Med_d.csv","w")
-  DD_Lrg_p = open("./Data/CSV/Spinup_DD_GB_Lrg_p.csv","w")
-	Rep_Med_f = open("./Data/CSV/Spinup_Rep_GB_Med_f.csv","w")
-  Rep_Med_d = open("./Data/CSV/Spinup_Rep_GB_Med_d.csv","w")
-	#Rep_Med_p = open("./Data/CSV/Spinup_Rep_GB_Med_p.csv","w")
-  Rep_Lrg_p = open("./Data/CSV/Spinup_Rep_GB_Lrg_p.csv","w")
-	Rec_Med_f = open("./Data/CSV/Spinup_Rec_GB_Med_f.csv","w")
-  Rec_Med_d = open("./Data/CSV/Spinup_Rec_GB_Med_d.csv","w")
-	Rec_Lrg_p = open("./Data/CSV/Spinup_Rec_GB_Lrg_p.csv","w")
-	Rec_Sml_f = open("./Data/CSV/Spinup_Rec_GB_Sml_f.csv","w")
-  Rec_Sml_p = open("./Data/CSV/Spinup_Rec_GB_Sml_p.csv","w")
-	Rec_Med_p = open("./Data/CSV/Spinup_Rec_GB_Med_p.csv","w")
+	if (phen==1)
+	  Spinup_Sml_f = open("./Data/CSV/Spinup_phen_GB_Sml_f.csv","w")
+	  Spinup_Sml_p = open("./Data/CSV/Spinup_phen_GB_Sml_p.csv","w")
+	  Spinup_Sml_d = open("./Data/CSV/Spinup_phen_GB_Sml_d.csv","w")
+	  Spinup_Med_f = open("./Data/CSV/Spinup_phen_GB_Med_f.csv","w")
+	  Spinup_Med_p = open("./Data/CSV/Spinup_phen_GB_Med_p.csv","w")
+	  Spinup_Med_d = open("./Data/CSV/Spinup_phen_GB_Med_d.csv","w")
+	  Spinup_Lrg_p = open("./Data/CSV/Spinup_phen_GB_Lrg_p.csv","w")
+		S_Med_f = open("./Data/CSV/Spinup_S_phen_GB_Med_f.csv","w")
+	  S_Med_d = open("./Data/CSV/Spinup_S_phen_GB_Med_d.csv","w")
+	  S_Lrg_p = open("./Data/CSV/Spinup_S_phen_GB_Lrg_p.csv","w")
+		DD_Med_f = open("./Data/CSV/Spinup_DD_phen_GB_Med_f.csv","w")
+	  DD_Med_d = open("./Data/CSV/Spinup_DD_phen_GB_Med_d.csv","w")
+	  DD_Lrg_p = open("./Data/CSV/Spinup_DD_phen_GB_Lrg_p.csv","w")
+		Rep_Med_f = open("./Data/CSV/Spinup_Rep_phen_GB_Med_f.csv","w")
+	  Rep_Med_d = open("./Data/CSV/Spinup_Rep_phen_GB_Med_d.csv","w")
+	  Rep_Lrg_p = open("./Data/CSV/Spinup_Rep_phen_GB_Lrg_p.csv","w")
+		Rec_Med_f = open("./Data/CSV/Spinup_Rec_phen_GB_Med_f.csv","w")
+	  Rec_Med_d = open("./Data/CSV/Spinup_Rec_phen_GB_Med_d.csv","w")
+		Rec_Lrg_p = open("./Data/CSV/Spinup_Rec_phen_GB_Lrg_p.csv","w")
+	else
+		Spinup_Sml_f = open("./Data/CSV/Spinup_GB_Sml_f.csv","w")
+	  Spinup_Sml_p = open("./Data/CSV/Spinup_GB_Sml_p.csv","w")
+	  Spinup_Sml_d = open("./Data/CSV/Spinup_GB_Sml_d.csv","w")
+	  Spinup_Med_f = open("./Data/CSV/Spinup_GB_Med_f.csv","w")
+	  Spinup_Med_p = open("./Data/CSV/Spinup_GB_Med_p.csv","w")
+	  Spinup_Med_d = open("./Data/CSV/Spinup_GB_Med_d.csv","w")
+	  Spinup_Lrg_p = open("./Data/CSV/Spinup_GB_Lrg_p.csv","w")
+		Rep_Med_f = open("./Data/CSV/Spinup_Rep_GB_Med_f.csv","w")
+	  Rep_Med_d = open("./Data/CSV/Spinup_Rep_GB_Med_d.csv","w")
+	  Rep_Lrg_p = open("./Data/CSV/Spinup_Rep_GB_Lrg_p.csv","w")
+		Rec_Med_f = open("./Data/CSV/Spinup_Rec_GB_Med_f.csv","w")
+	  Rec_Med_d = open("./Data/CSV/Spinup_Rec_GB_Med_d.csv","w")
+		Rec_Lrg_p = open("./Data/CSV/Spinup_Rec_GB_Lrg_p.csv","w")
+	end
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
@@ -76,51 +89,45 @@ function Testoneloc()
 			writecsv(Spinup_Med_p,Med_p.bio)
 			writecsv(Spinup_Med_d,Med_d.bio)
 			writecsv(Spinup_Lrg_p,Lrg_p.bio)
-			writecsv(S_Med_f,Med_f.S[DY-1])
-			writecsv(S_Med_d,Med_d.S[DY-1])
-			writecsv(S_Lrg_p,Lrg_p.S[DY-1])
-			writecsv(DD_Med_f,Med_f.DD)
-			writecsv(DD_Med_d,Med_d.DD)
-			writecsv(DD_Lrg_p,Lrg_p.DD)
 			writecsv(Rep_Med_f,Med_f.rep)
 			writecsv(Rep_Med_d,Med_d.rep)
-			#writecsv(Rep_Med_p,Med_p.rep)
 			writecsv(Rep_Lrg_p,Lrg_p.rep)
 			writecsv(Rec_Med_f,Med_f.rec)
 			writecsv(Rec_Med_d,Med_d.rec)
 			writecsv(Rec_Lrg_p,Lrg_p.rec)
-			writecsv(Rec_Sml_f,Sml_f.rec)
-			writecsv(Rec_Sml_p,Sml_p.rec)
-			writecsv(Rec_Med_p,Med_p.rec)
-
+			if (phen ==1)
+				writecsv(S_Med_f,Med_f.S[DY-1])
+				writecsv(S_Med_d,Med_d.S[DY-1])
+				writecsv(S_Lrg_p,Lrg_p.S[DY-1])
+				writecsv(DD_Med_f,Med_f.DD)
+				writecsv(DD_Med_d,Med_d.DD)
+				writecsv(DD_Lrg_p,Lrg_p.DD)
+			end
 		end
 	end
 
 	### close save
-    close(Spinup_Sml_f)
-    close(Spinup_Sml_p)
-    close(Spinup_Sml_d)
-    close(Spinup_Med_f)
-    close(Spinup_Med_p)
-    close(Spinup_Med_d)
-    close(Spinup_Lrg_p)
+  close(Spinup_Sml_f)
+  close(Spinup_Sml_p)
+  close(Spinup_Sml_d)
+  close(Spinup_Med_f)
+  close(Spinup_Med_p)
+  close(Spinup_Med_d)
+  close(Spinup_Lrg_p)
+	close(Rep_Med_f)
+	close(Rep_Med_d)
+	close(Rep_Lrg_p)
+	close(Rec_Med_f)
+	close(Rec_Med_d)
+	close(Rec_Lrg_p)
+	if (phen==1)
 		close(S_Med_f)
 		close(S_Med_d)
 		close(S_Lrg_p)
 		close(DD_Med_f)
 		close(DD_Med_d)
 		close(DD_Lrg_p)
-		close(Rep_Med_f)
-		close(Rep_Med_d)
-		#close(Rep_Med_p)
-		close(Rep_Lrg_p)
-		close(Rec_Med_f)
-		close(Rec_Med_d)
-		close(Rec_Lrg_p)
-		close(Rec_Sml_f)
-		close(Rec_Sml_p)
-		close(Rec_Med_p)
-
+	end
 end
 
 
@@ -137,54 +144,54 @@ function Oneloc_hindcast_pristine()
 	XY = zeros(Int,360,200);
   XY[GRD["ID"]] = collect(1:GRD["N"])
 	#ID = 40319 #30181 # Georges Bank
-  ID = 42639 #15105 # Eastern Bering Sea
+  #ID = 42639 #15105 # Eastern Bering Sea
   #ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # HOT
-	#ID = 38309 #30335 # BATS
+	ID = 38309 #30335 # BATS
   #ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
 	const global YEARS = 145; # integration period in years
 	const global DAYS = 365; # number of days
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 	#! Initialize
-	phen=1;
+	phen=0;
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, BENT = sub_init_fish(ID,phen);
 	ENVR = sub_init_env(ID);
 	#! Storage
 	if (phen == 1)
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_EBS_phen_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_EBS_phen_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_EBS_phen_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_EBS_phen_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_EBS_phen_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_EBS_phen_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_EBS_phen_Lrg_p.csv","w")
-		S_Med_f = open("./Data/CSV/Oneloc_pris_S_EBS_phen_Med_f.csv","w")
-		S_Med_d = open("./Data/CSV/Oneloc_pris_S_EBS_phen_Med_d.csv","w")
-		S_Lrg_p = open("./Data/CSV/Oneloc_pris_S_EBS_phen_Lrg_p.csv","w")
-		DD_Med_f = open("./Data/CSV/Oneloc_pris_DD_EBS_phen_Med_f.csv","w")
-		DD_Med_d = open("./Data/CSV/Oneloc_pris_DD_EBS_phen_Med_d.csv","w")
-		DD_Lrg_p = open("./Data/CSV/Oneloc_pris_DD_EBS_phen_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_pris_Rep_EBS_phen_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_pris_Rep_EBS_phen_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_pris_Rep_EBS_phen_Lrg_p.csv","w")
-		Rec_Sml_f = open("./Data/CSV/Oneloc_pris_Rec_EBS_phen_Sml_f.csv","w")
-	  Rec_Sml_p = open("./Data/CSV/Oneloc_pris_Rec_EBS_phen_Sml_p.csv","w")
-		Rec_Sml_d = open("./Data/CSV/Oneloc_pris_Rec_EBS_phen_Sml_d.csv","w")
+		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_BATS_phen_Sml_f.csv","w")
+		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_BATS_phen_Sml_p.csv","w")
+		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_BATS_phen_Sml_d.csv","w")
+		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_BATS_phen_Med_f.csv","w")
+		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_BATS_phen_Med_p.csv","w")
+		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_BATS_phen_Med_d.csv","w")
+		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_BATS_phen_Lrg_p.csv","w")
+		S_Med_f = open("./Data/CSV/Oneloc_pris_S_BATS_phen_Med_f.csv","w")
+		S_Med_d = open("./Data/CSV/Oneloc_pris_S_BATS_phen_Med_d.csv","w")
+		S_Lrg_p = open("./Data/CSV/Oneloc_pris_S_BATS_phen_Lrg_p.csv","w")
+		DD_Med_f = open("./Data/CSV/Oneloc_pris_DD_BATS_phen_Med_f.csv","w")
+		DD_Med_d = open("./Data/CSV/Oneloc_pris_DD_BATS_phen_Med_d.csv","w")
+		DD_Lrg_p = open("./Data/CSV/Oneloc_pris_DD_BATS_phen_Lrg_p.csv","w")
+		Rep_Med_f = open("./Data/CSV/Oneloc_pris_Rep_BATS_phen_Med_f.csv","w")
+		Rep_Med_d = open("./Data/CSV/Oneloc_pris_Rep_BATS_phen_Med_d.csv","w")
+		Rep_Lrg_p = open("./Data/CSV/Oneloc_pris_Rep_BATS_phen_Lrg_p.csv","w")
+		Rec_Med_f = open("./Data/CSV/Oneloc_pris_Rec_BATS_phen_Med_f.csv","w")
+	  Rec_Med_d = open("./Data/CSV/Oneloc_pris_Rec_BATS_phen_Med_d.csv","w")
+		Rec_Lrg_p = open("./Data/CSV/Oneloc_pris_Rec_BATS_phen_Lrg_p.csv","w")
 	else
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_EBS_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_EBS_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_EBS_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_EBS_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_EBS_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_EBS_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_EBS_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_pris_Rep_EBS_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_pris_Rep_EBS_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_pris_Rep_EBS_Lrg_p.csv","w")
-		Rec_Sml_f = open("./Data/CSV/Oneloc_pris_Rec_EBS_Sml_f.csv","w")
-	  Rec_Sml_p = open("./Data/CSV/Oneloc_pris_Rec_EBS_Sml_p.csv","w")
-		Rec_Sml_d = open("./Data/CSV/Oneloc_pris_Rec_EBS_Sml_d.csv","w")
+		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_BATS_Sml_f.csv","w")
+		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_BATS_Sml_p.csv","w")
+		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_BATS_Sml_d.csv","w")
+		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_BATS_Med_f.csv","w")
+		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_BATS_Med_p.csv","w")
+		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_BATS_Med_d.csv","w")
+		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_BATS_Lrg_p.csv","w")
+		Rep_Med_f = open("./Data/CSV/Oneloc_pris_Rep_BATS_Med_f.csv","w")
+		Rep_Med_d = open("./Data/CSV/Oneloc_pris_Rep_BATS_Med_d.csv","w")
+		Rep_Lrg_p = open("./Data/CSV/Oneloc_pris_Rep_BATS_Lrg_p.csv","w")
+		Rec_Med_f = open("./Data/CSV/Oneloc_pris_Rec_BATS_Med_f.csv","w")
+	  Rec_Med_d = open("./Data/CSV/Oneloc_pris_Rec_BATS_Med_d.csv","w")
+		Rec_Lrg_p = open("./Data/CSV/Oneloc_pris_Rec_BATS_Lrg_p.csv","w")
 	end
 
 	################## RUN MODEL
@@ -206,6 +213,11 @@ function Oneloc_hindcast_pristine()
 			###! Future time step
 			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
 			DY+=1
+			#if (isnan(Sml_f.bio))
+			#	break
+			#end
+
+
 			###! Daily storage
 			#! Save
 			writecsv(Oneloc_pris_Sml_f,Sml_f.bio)
@@ -218,9 +230,9 @@ function Oneloc_hindcast_pristine()
 			writecsv(Rep_Med_f,Med_f.rep)
 			writecsv(Rep_Med_d,Med_d.rep)
 			writecsv(Rep_Lrg_p,Lrg_p.rep)
-			writecsv(Rec_Sml_f,Sml_f.rec)
-			writecsv(Rec_Sml_p,Sml_p.rec)
-			writecsv(Rec_Sml_d,Sml_d.rec)
+			writecsv(Rec_Med_f,Med_f.rec)
+			writecsv(Rec_Med_d,Med_d.rec)
+			writecsv(Rec_Lrg_p,Lrg_p.rec)
 			if (phen == 1)
 				writecsv(S_Med_f,Med_f.S[DY-1])
 				writecsv(S_Med_d,Med_d.S[DY-1])
@@ -242,9 +254,9 @@ function Oneloc_hindcast_pristine()
 	close(Rep_Med_f)
 	close(Rep_Med_d)
 	close(Rep_Lrg_p)
-	close(Rec_Sml_f)
-	close(Rec_Sml_p)
-	close(Rec_Sml_d)
+	close(Rec_Med_f)
+	close(Rec_Med_d)
+	close(Rec_Lrg_p)
 	if (phen == 1)
 		close(S_Med_f)
 		close(S_Med_d)
@@ -408,9 +420,16 @@ function Spinup_pristine()
 
 	############### Setup NetCDF save
 	#! Init netcdf file for storage
-	varatts = {"longname" => "Biomass","units" => "kg/m^2"}
-	X_atts = {"longname" => "Space", "units" => "grid cell"}
-	timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
+	#varatts = {"longname" => "Biomass","units" => "kg/m^2"}
+	#X_atts = {"longname" => "Space", "units" => "grid cell"}
+	#timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
+	#Use "Dict{Any,Any}(a=>b, ...)" instead.
+	varatts = Dict("longname" => "Biomass",
+           "units"    => "kg/m^2")
+	X_atts = Dict("longname" => "Space",
+			"units"    => "grid cell")
+	timatts = Dict("longname" => "Time",
+			"units"    => "hours since 01-01-2000 00:00:00")
 
 	#! Init dims of netcdf file
 	X   = collect(1:NX)
@@ -534,10 +553,19 @@ function Spinup_fished()
 
 	############### Setup NetCDF save
 	#! Init netcdf file for storage
-	varatts = {"longname" => "Biomass","units" => "kg/m^2"}
-	X_atts = {"longname" => "Space", "units" => "grid cell"}
-	S_atts = {"longname" => "Size classes", "units"  => "g"}
-	timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
+	#varatts = {"longname" => "Biomass","units" => "kg/m^2"}
+	#X_atts = {"longname" => "Space", "units" => "grid cell"}
+	#S_atts = {"longname" => "Size classes", "units"  => "g"}
+	#timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
+	#Use "Dict{Any,Any}(a=>b, ...)" instead.
+	varatts = Dict("longname" => "Biomass",
+           "units"    => "kg/m^2")
+	X_atts = Dict("longname" => "Space",
+			"units"    => "grid cell")
+	S_atts = Dict("longname" => "Size classes",
+			"units"    => "g")
+	timatts = Dict("longname" => "Time",
+			"units"    => "hours since 01-01-2000 00:00:00")
 
 	#! Init dims of netcdf file
 	S_pi=collect(1:PI_N)
@@ -655,13 +683,14 @@ function Forecast_pristine()
 	DAY_BENT = zeros(NX,BE_N,DAYS);
 
 	#! Init netcdf file for storage
-	varatts = Dict{Any,Any}("longname" => "Biomass",
+	#Use "Dict{Any,Any}(a=>b, ...)" instead.
+	varatts = Dict("longname" => "Biomass",
            "units"    => "kg/m^2")
-	X_atts = Dict{Any,Any}("longname" => "Space",
+	X_atts = Dict("longname" => "Space",
 			"units"    => "grid cell")
-	S_atts = Dict{Any,Any}("longname" => "Size classes",
+	S_atts = Dict("longname" => "Size classes",
 			"units"    => "g")
-	timatts = Dict{Any,Any}("longname" => "Time",
+	timatts = Dict("longname" => "Time",
 			"units"    => "hours since 01-01-2000 00:00:00")
 
 	#! Init dims of netcdf file
