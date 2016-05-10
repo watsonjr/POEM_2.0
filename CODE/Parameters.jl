@@ -25,6 +25,7 @@ type fish
 	rec::Array{Float64} # total biomass reproduced g d-1
 	DD::Array{Float64} # degree days accumulated that year, Celsius
 	S::Array{Float64} # spawning flag
+	egg::Array{Float64} # stored energy/biomass for reproduction
 end
 
 type detritus
@@ -101,17 +102,13 @@ function make_parameters(harv)
 	###! Kappa rule K as a function of body size
 	# K = fraction of energy consumed diverted to somatic growth
 	const global K_l = 1
-	#const global K_j = 0.5
 	const global K_j = 1
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	#const global Act_s = exp(0.03*(3.9*M_s.^0.13))
-	#const global Act_m = exp(0.03*(3.9*M_m.^0.13))
-	#const global Act_l = exp(0.03*(3.9*M_l.^0.13))
-	const global Bas_s = 0.0033*M_s.^-0.13
-	const global Bas_m = 0.0033*M_m.^-0.13
-	const global Bas_l = 0.0033*M_l.^-0.13
+	#const global Bas_s = 0.0033*M_s.^-0.13
+	#const global Bas_m = 0.0033*M_m.^-0.13
+	#const global Bas_l = 0.0033*M_l.^-0.13
 
 	###! Swimming speed (Megrey 2007): m d-1
 	# Q. Why is swim speed a fraction from 0.8 to 0.1 as gets bigger?
@@ -119,8 +116,7 @@ function make_parameters(harv)
 	const global U_s = ((3.9*M_s.^0.13)/100*60*60*24)
 	const global U_m = ((3.9*M_m.^0.13)/100*60*60*24)
 	const global U_l = ((3.9*M_l.^0.13)/100*60*60*24)
-
-  	# With temp-dep
+  # With temp-dep
 	#const global PI_U = ((3.9*M_s.^0.13 * exp(0.149*T)) /100*60*60*24)
 	#const global PL_U = ((3.9*M_m.^0.13 * exp(0.149*T)) /100*60*60*24)
 	#const global DE_U = ((3.9*M_l.^0.13 * exp(0.149*T)) /100*60*60*24)
@@ -151,10 +147,11 @@ function make_parameters(harv)
 	#-----
 	#small forage fish eats medium zoo
 	#small piscivores eats medium zoo
-	#small detrivore eats detritus
+	#small detritivore eats medium zoo
 	#medium forage fish eats large zoo
-	#medium piscivore eats large zoo, small forage fish, small piscvore
-	#medium detrivore eats small detrivore
-	#large piscivore eats medium forage fish, medium piscivore, medium detrivore
+	#medium piscivore eats large zoo, small forage fish, small piscvore, small detritivore
+	#medium detritivore eats detritus
+	#large piscivore eats medium forage fish, medium piscivore, medium detritivore
+	#large detritivore eats detritus, medium forage fish, medium piscivore, medium detrivore
 	#-----
 end

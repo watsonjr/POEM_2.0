@@ -190,7 +190,8 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die)
 end
 
 function sub_update_be(bio_in,det,die,bio_p)
-	db = det - (die*bio_p)
+  eat = sum(die.*bio_p)
+  db = det - eat
 	bio_out = bio_in + db
 end
 

@@ -64,6 +64,9 @@ function sub_init_fish(ID,phen)
   # energy available for somatic growth
   gamma = zeros(Float64,NX)
 
+	# energy available for later repro/stored biomass for repro
+  egg = zeros(Float64,NX)
+
  	#! total biomass to reproduction
  	rep = zeros(Float64,NX)
 
@@ -76,22 +79,23 @@ function sub_init_fish(ID,phen)
 	#! spawning flag
 	# 1 = all to growth, 0 = all to repro
 	if (phen == 1)
-		S = zeros(Float64,NX,DAYS)
+		S = ones(Float64,NX,DAYS)
 	else
 		S = (1.0/365.0) * ones(Float64,NX,DAYS)
 	end
 
 	# assign to small forage fish, piscivore and detrivore
-	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,die,rep,rec,DD,S)
+	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,egg,die,rep,rec,DD,S)
 	Sml_p = deepcopy(Sml_f)
 	Sml_d = deepcopy(Sml_f)
 	Med_f = deepcopy(Sml_f)
 	Med_p = deepcopy(Sml_f)
 	Med_d = deepcopy(Sml_f)
 	Lrg_p = deepcopy(Sml_f)
+	Lrg_d = deepcopy(Sml_f)
 
 	###! Detritus
   BENT = detritus(bio)
 
-	return Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, BENT
+	return Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT
 end

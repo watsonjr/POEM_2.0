@@ -78,7 +78,7 @@ function Testoneloc()
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
 
 			#! Save
@@ -211,7 +211,7 @@ function Oneloc_hindcast_pristine()
 			DY  = Int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
 			#if (isnan(Sml_f.bio))
 			#	break
@@ -342,7 +342,7 @@ function Oneloc_forecast_pristine()
 			DY  = Int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
 			###! Daily storage
 			#! Save
@@ -481,7 +481,7 @@ function Spinup_pristine()
 			###! Future time step
 			DY  = int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
-			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 
 		end
 
