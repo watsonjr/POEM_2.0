@@ -15,7 +15,9 @@ function sub_init_env(ID)
 	ENV_V   = Array(Float64,NX)
 	ENV_T0 = Array(Float64,NX)
 	ENV_Dthresh = Array(Float64,NX)
-	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0,ENV_Dthresh)
+	ENV_fZm = Array(Float64,NX)
+	ENV_fZl = Array(Float64,NX)
+	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0,ENV_Dthresh,ENV_fZm,ENV_fZl)
 end
 
 function sub_init_fish(ID,phen)
@@ -31,7 +33,8 @@ function sub_init_fish(ID,phen)
 	bio = ones(Float64,NX) * X
 
 	# fraction of time spent in the pelagic
-	td = ones(Float64,NX)
+	tdp = 0.5*ones(Float64,NX)
+	#tdd = zeros(Float64,NX)
 
 	# metabolism
 	met = zeros(Float64,NX)
@@ -77,21 +80,24 @@ function sub_init_fish(ID,phen)
 	DD = zeros(Float64,NX)
 
 	#! spawning flag
-	# 1 = all to growth, 0 = all to repro
+	# frac spawning at any given time
 	if (phen == 1)
-		S = ones(Float64,NX,DAYS)
+		S = zeros(Float64,NX,DAYS)
 	else
-		S = (1.0/365.0) * ones(Float64,NX,DAYS)
+		S = ones(Float64,NX,DAYS)
 	end
 
+	#! Con/Cmax
+	clev = zeros(Float64,NX)
+
 	# assign to small forage fish, piscivore and detrivore
-	Sml_f = fish(bio,td,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,egg,die,rep,rec,DD,S)
+	Sml_f = fish(bio,tdp,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,die,rep,rec,DD,S,egg,clev)
 	Sml_p = deepcopy(Sml_f)
 	Sml_d = deepcopy(Sml_f)
 	Med_f = deepcopy(Sml_f)
 	Med_p = deepcopy(Sml_f)
-	Med_d = deepcopy(Sml_f)
 	Lrg_p = deepcopy(Sml_f)
+	Med_d = deepcopy(Sml_f)
 	Lrg_d = deepcopy(Sml_f)
 
 	###! Detritus

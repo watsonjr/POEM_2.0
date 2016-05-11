@@ -26,6 +26,7 @@ type fish
 	DD::Array{Float64} # degree days accumulated that year, Celsius
 	S::Array{Float64} # spawning flag
 	egg::Array{Float64} # stored energy/biomass for reproduction
+	clev::Array{Float64} # Con/Cmax
 end
 
 type detritus
@@ -44,6 +45,8 @@ type environment
 	V::Array{Float64} # U current speed
 	T0::Array{Float64}			# spawning reference temp
 	Dthresh::Array{Float64}	# spawning degree day threshold
+	fZm::Array{Float64} # overconsump flag
+	fZl::Array{Float64} # overconsump flag
 end
 
 #============= PARAMETER TYPE ==========#
@@ -109,13 +112,22 @@ function make_parameters(harv)
 	#const global Bas_s = 0.0033*M_s.^-0.13
 	#const global Bas_m = 0.0033*M_m.^-0.13
 	#const global Bas_l = 0.0033*M_l.^-0.13
+	const global fcrit = 0.05 #feeding level needed to meet resting metabolic demands; 0.05-0.2
+	# fcrit=0.05 led to 96-98% time zoop overconsumed, clev= 0.01-0.98
+
+	###! Consumption constants
+	const global h = 60.0 / 365.0 # h=60 g^(0.25)/yr at 15C in Cmax eq
+	# tune so Cobs/Cmax ~ 0.6
+	# flev=0.5 led to 96-98% time zoop overconsumed, clev= 0.01-0.98
+	const global flev = 0.5
+	const global q = 1.0 # q=0.75-1 in beta eq in consumption
 
 	###! Swimming speed (Megrey 2007): m d-1
 	# Q. Why is swim speed a fraction from 0.8 to 0.1 as gets bigger?
 	# Ans: time spent swimming according to Van Leeuven 2008
-	const global U_s = ((3.9*M_s.^0.13)/100*60*60*24)
-	const global U_m = ((3.9*M_m.^0.13)/100*60*60*24)
-	const global U_l = ((3.9*M_l.^0.13)/100*60*60*24)
+	#const global U_s = ((3.9*M_s.^0.13)/100*60*60*24)
+	#const global U_m = ((3.9*M_m.^0.13)/100*60*60*24)
+	#const global U_l = ((3.9*M_l.^0.13)/100*60*60*24)
   # With temp-dep
 	#const global PI_U = ((3.9*M_s.^0.13 * exp(0.149*T)) /100*60*60*24)
 	#const global PL_U = ((3.9*M_m.^0.13 * exp(0.149*T)) /100*60*60*24)
@@ -131,9 +143,9 @@ function make_parameters(harv)
 	# factor in time spent swimming (low - Anieke's paper)
 	# orgs can see x3 body length (just a guess, find better number)
 	# divide by body mass to get weight specific search rate
-	const global A_s = (U_s * ((L_s/1000)*3) * Tu_s) / M_s
-	const global A_m = (U_m * ((L_m/1000)*3) * Tu_m) / M_m
-	const global A_l = (U_l * ((L_l/1000)*3) * Tu_l) / M_l
+	#const global A_s = (U_s * ((L_s/1000)*3) * Tu_s) / M_s
+	#const global A_m = (U_m * ((L_m/1000)*3) * Tu_m) / M_m
+	#const global A_l = (U_l * ((L_l/1000)*3) * Tu_l) / M_l
 
 	###! Background mortality
 	#Currently increases from 0 to 0.01
