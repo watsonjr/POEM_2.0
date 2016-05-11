@@ -79,26 +79,26 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 	for j=jsd:jed
 		for i=isd:ied #i=isd-1:ied
 			# Reflective BC
-			#west
-			if (i > 1)
-				if (uvel[i,j].<0.0 + GRD["lmask"][i-1,j,1].==0.0)
-					uvel[i,j] *= -1.0
-				end
-			else
-				if (uvel[i,j].<0.0 + GRD["lmask"][ied,j,1].==0.0)
-					uvel[i,j] *= -1.0
-				end
-			end
-			#east
-			if (i == ied)
-				if (uvel[i,j].>0.0 + GRD["lmask"][isd,j,1].==0.0)
-					uvel[i,j] *= -1.0
-				end
-			else
-				if (uvel[i,j].>0.0 + GRD["lmask"][i+1,j,1].==0.0)
-					uvel[i,j] *= -1.0
-				end
-			end
+			# #west
+			# if (i > 1)
+			# 	if (uvel[i,j].<0.0 + GRD["lmask"][i-1,j,1].==0.0)
+			# 		uvel[i,j] *= -1.0
+			# 	end
+			# else
+			# 	if (uvel[i,j].<0.0 + GRD["lmask"][ied,j,1].==0.0)
+			# 		uvel[i,j] *= -1.0
+			# 	end
+			# end
+			# #east
+			# if (i == ied)
+			# 	if (uvel[i,j].>0.0 + GRD["lmask"][isd,j,1].==0.0)
+			# 		uvel[i,j] *= -1.0
+			# 	end
+			# else
+			# 	if (uvel[i,j].>0.0 + GRD["lmask"][i+1,j,1].==0.0)
+			# 		uvel[i,j] *= -1.0
+			# 	end
+			# end
 
 			velocity = 0.5*uvel[i,j]
 			upos     = velocity + abs(velocity)
@@ -114,24 +114,24 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 	# j-flux
 	for j=jsd:jed #j=jsd-1:jed
 		for i=isd:ied
-			# Reflective BC
-			#south
-			if (j > 1)
-				if (vvel[i,j].<0.0 + GRD["lmask"][i,j-1,1].==0.0)
-					vvel[i,j] *= -1.0
-				end
-			#don't need else at j=1 (South Pole) because all land
-			end
-			#north
-			if (j < jed)
-				if (vvel[i,j].>0.0 + GRD["lmask"][i,j+1,1].==0.0)
-					vvel[i,j] *= -1.0
-				end
-			else #N Pole keeps same lat, changes lon
-				if (vvel[i,j].>0.0 + GRD["lmask"][i+Int(npole[i]),j,1].==0.0)
-					vvel[i,j] *= -1.0
-				end
-			end
+			# # Reflective BC
+			# #south
+			# if (j > 1)
+			# 	if (vvel[i,j].<0.0 + GRD["lmask"][i,j-1,1].==0.0)
+			# 		vvel[i,j] *= -1.0
+			# 	end
+			# #don't need else at j=1 (South Pole) because all land
+			# end
+			# #north
+			# if (j < jed)
+			# 	if (vvel[i,j].>0.0 + GRD["lmask"][i,j+1,1].==0.0)
+			# 		vvel[i,j] *= -1.0
+			# 	end
+			# else #N Pole keeps same lat, changes lon
+			# 	if (vvel[i,j].>0.0 + GRD["lmask"][ni-i+1,j,1].==0.0)
+			# 		vvel[i,j] *= -1.0
+			# 	end
+			# end
 
 			velocity = 0.5*vvel[i,j]
 			upos     = velocity + abs(velocity)
@@ -139,7 +139,7 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 			if (j < jed)
 				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
 			else
-				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i+Int(npole[i]),j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+Int(npole[i]),j,1]
+				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
 			end
 		end
 	end

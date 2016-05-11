@@ -79,12 +79,12 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Med_f.con_zl[JD], Med_p.con_zl[JD], Med_d.con_zl[JD], ENVR.fZl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_d.con_zl[JD],ENVR.dZl[JD])
 
 		#! total consumption rates (could factor in handling times here; g m-2 d-1)
+		Sml_f.I[JD] = Sml_f.con_zm[JD] 
+		Sml_p.I[JD] = Sml_p.con_zm[JD]
+		Sml_d.I[JD] = Sml_d.con_zm[JD]
 		Med_f.I[JD] = Med_f.con_zl[JD]
 		Med_p.I[JD] = Med_p.con_zl[JD] + Med_p.con_f[JD] + Med_p.con_p[JD] + Med_p.con_d[JD]
 		Med_d.I[JD] = Med_d.con_be[JD]
-		Sml_f.I[JD] = Sml_f.con_zm[JD] #THIS IS SOMEHOW LINKED TO MED_D.I, WHERE IT AUTOMATICALLY BECOMES THE MED_D.I VALUE IF MED_D.I IS CALCULATED AFTER THE SML_F.I
-		Sml_p.I[JD] = Sml_p.con_zm[JD]
-		Sml_d.I[JD] = Sml_d.con_zm[JD]
 		Lrg_p.I[JD] = Lrg_p.con_f[JD] + Lrg_p.con_p[JD] + Lrg_p.con_d[JD]
 		Lrg_d.I[JD] = Lrg_d.con_f[JD] + Lrg_d.con_p[JD] + Lrg_d.con_d[JD] + Lrg_d.con_be[JD]
 

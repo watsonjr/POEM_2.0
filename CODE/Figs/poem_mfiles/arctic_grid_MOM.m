@@ -58,7 +58,7 @@ dpole=atl-pac;
 npole(1:180)=dpole;
 npole(181:360)=-1*flipud(dpole);
 npole=npole';
-csvwrite('npole_lon_shift.csv',npole)
+%csvwrite('npole_lon_shift.csv',npole)
 
 
 
