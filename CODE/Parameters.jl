@@ -30,7 +30,7 @@ type fish
 end
 
 type detritus
-	bio::Array{Float64} # biomass in detrital pool g m-2
+	mass::Array{Float64} # biomass in detrital pool g m-2
 end
 
 type environment

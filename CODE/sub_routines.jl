@@ -9,21 +9,21 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 	for JD = 1:NX
 
 		#! update benthic biomass with new detritus avail at that time step
-		BENT.bio[JD] = BENT.bio[JD] + ENVR.det[JD]
+		BENT.mass[JD] = BENT.mass[JD] + ENVR.det[JD]
 
 		#! fraction of time large piscivores spends in pelagic
 	  Lrg_p.td[JD] = sub_tdif_pel(GRD["Z"][ID],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
 		#! fraction of time large demersal spends in pelagic
-	  Lrg_d.td[JD] = sub_tdif_dem(GRD["Z"][ID],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.bio[JD])
+	  Lrg_d.td[JD] = sub_tdif_dem(GRD["Z"][ID],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
 
 		#! metabolism
 		Sml_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s)
-		Med_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m)
 		Sml_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD],M_s)
-		Med_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m)
-		Lrg_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l)
 		Sml_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD],M_s)
+		Med_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m)
+		Med_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m)
 		Med_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD],M_m)
+		Lrg_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l)
 		Lrg_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l)
 
 		#! encounter rates
@@ -39,7 +39,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Med_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD])
 		Med_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_d.bio[JD],Med_p.td[JD])
 
-		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_d.bio[JD],BENT.bio[JD],1-Med_d.td[JD])
+		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_d.bio[JD],BENT.mass[JD],1-Med_d.td[JD])
 
 		Lrg_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_f.bio[JD],Lrg_p.td[JD])
 		Lrg_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_p.bio[JD],Lrg_p.td[JD])
@@ -48,7 +48,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Lrg_d.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_f.bio[JD],Lrg_d.td[JD])
 		Lrg_d.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_p.bio[JD],Lrg_d.td[JD])
 		Lrg_d.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_d.bio[JD],1-Lrg_d.td[JD])
-		Lrg_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],BENT.bio[JD],1-Lrg_d.td[JD])
+		Lrg_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],BENT.mass[JD],1-Lrg_d.td[JD])
 
 		#! Consumption rates
 		Sml_f.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s,Sml_f.enc_zm[JD])
@@ -79,7 +79,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Med_f.con_zl[JD], Med_p.con_zl[JD], Med_d.con_zl[JD], ENVR.fZl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_d.con_zl[JD],ENVR.dZl[JD])
 
 		#! total consumption rates (could factor in handling times here; g m-2 d-1)
-		Sml_f.I[JD] = Sml_f.con_zm[JD] 
+		Sml_f.I[JD] = Sml_f.con_zm[JD]
 		Sml_p.I[JD] = Sml_p.con_zm[JD]
 		Sml_d.I[JD] = Sml_d.con_zm[JD]
 		Med_f.I[JD] = Med_f.con_zl[JD]
@@ -176,7 +176,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 	 	Lrg_d.bio[JD] = sub_update_fi(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD])
 
-		BENT.bio[JD] = sub_update_be(BENT.bio[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
+		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
 	end
 
 	#! Fishing
