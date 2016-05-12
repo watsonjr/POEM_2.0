@@ -6,7 +6,7 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_Atl2.csv']);
+bio = csvread([dpath 'bio_2Dadvect_test_Atl_surf.csv']);
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
 
@@ -17,10 +17,10 @@ figure(10)
 %subplot(2,2,1)
 plot(totb)
 100*(totb(1)-totb(end))/totb(1)
-
+%       100m avg;   surf
 %Eq = 1.5014e+09
 %Pac = 5.3753%
-%Atl = 7.8666%
+%Atl = 7.8666%, 15.3237%
 %Arctic = 0.3174%
 %Antarctic = 5.1648%
 
@@ -185,68 +185,68 @@ set(ax1,'XTick',xt,'XTickLabel',xl)
 %print('-dpng',[fpath 'advec_test_Ant5.png'])
 
 %% Arctic projection
-% figure(16)
-% m_proj('stereographic','lat',90,'long',30,'radius',30);
-% m_pcolor(geolon_t,geolat_t,B1);
-% shading flat
-% colorbar
-% colormap('jet')
-% caxis([0 1e4])
-% title('Day=1')
-% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
-% m_coast('patch',[.7 .7 .7],'edgecolor','k');
-% %print('-dpng',[fpath 'advec_test_Arctic1_arcticproj.png'])
-% 
-% figure(17)
-% m_proj('stereographic','lat',90,'long',30,'radius',30);
-% m_pcolor(geolon_t,geolat_t,B2);
-% shading flat
-% colorbar
-% colormap('jet')
-% caxis([0 1e4])
-% title('Day=73')
-% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
-% m_coast('patch',[.7 .7 .7],'edgecolor','k');
-% %print('-dpng',[fpath 'advec_test_Arctic2_arcticproj.png'])
-% 
-% figure(18)
-% m_proj('stereographic','lat',90,'long',30,'radius',30);
-% m_pcolor(geolon_t,geolat_t,B3);
-% shading flat
-% colorbar
-% colormap('jet')
-% caxis([0 1e4])
-% title('Day=146')
-% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
-% m_coast('patch',[.7 .7 .7],'edgecolor','k');
-% %print('-dpng',[fpath 'advec_test_Arctic3_arcticproj.png'])
-% 
-% figure(19)
-% m_proj('stereographic','lat',90,'long',30,'radius',30);
-% m_pcolor(geolon_t,geolat_t,B4);
-% shading flat
-% colorbar
-% colormap('jet')
-% caxis([0 1e4])
-% title('Day=219')
-% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
-% m_coast('patch',[.7 .7 .7],'edgecolor','k');
-% %print('-dpng',[fpath 'advec_test_Arctic4_arcticproj.png'])
-% 
-% figure(20)
-% m_proj('stereographic','lat',90,'long',30,'radius',30);
-% m_pcolor(geolon_t,geolat_t,B5);
-% shading flat
-% colorbar
-% colormap('jet')
-% caxis([0 1e4])
-% title('Day=365')
-% m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
-% m_coast('patch',[.7 .7 .7],'edgecolor','k');
-% %print('-dpng',[fpath 'advec_test_Arctic5_arcticproj.png'])
+figure(16)
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,B1);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=1')
+m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Arctic1_arcticproj.png'])
+
+figure(17)
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,B2);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=73')
+m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Arctic2_arcticproj.png'])
+
+figure(18)
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,B3);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=146')
+m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Arctic3_arcticproj.png'])
+
+figure(19)
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,B4);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=219')
+m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Arctic4_arcticproj.png'])
+
+figure(20)
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,B5);
+shading flat
+colorbar
+colormap('jet')
+caxis([0 1e4])
+title('Day=365')
+m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+%print('-dpng',[fpath 'advec_test_Arctic5_arcticproj.png'])
 
 %% Antarctic projection
-figure(16)
+figure(26)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
 m_pcolor(geolon_t,geolat_t,B1);
 shading flat
@@ -258,7 +258,7 @@ m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
 %print('-dpng',[fpath 'advec_test_Ant1_Spoleproj.png'])
 
-figure(17)
+figure(27)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
 m_pcolor(geolon_t,geolat_t,B2);
 shading flat
@@ -270,7 +270,7 @@ m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
 %print('-dpng',[fpath 'advec_test_Ant2_Spoleproj.png'])
 
-figure(18)
+figure(28)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
 m_pcolor(geolon_t,geolat_t,B3);
 shading flat
@@ -282,7 +282,7 @@ m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
 %print('-dpng',[fpath 'advec_test_Ant3_Spoleproj.png'])
 
-figure(19)
+figure(29)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
 m_pcolor(geolon_t,geolat_t,B4);
 shading flat
@@ -294,7 +294,7 @@ m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
 %print('-dpng',[fpath 'advec_test_Ant4_Spoleproj.png'])
 
-figure(20)
+figure(30)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
 m_pcolor(geolon_t,geolat_t,B5);
 shading flat

@@ -6,7 +6,8 @@ include("Advect_upwind_2D.jl")
 
 ID = load("./Data/Data_grid_hindcast_NOTflipped.jld","ID");
 GRD = load("./Data/Data_grid_cp_2D.jld")
-COBALT = load("./Data/JLD/Data_hindcast_000120.jld"); # 1980
+#COBALT = load("./Data/JLD/Data_hindcast_000120.jld"); # 1980
+COBALT = load("./Data/JLD/Data_hindcast_surfvel_000120.jld"); # 1980
 
 bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
@@ -20,9 +21,8 @@ bio[220:240,:] = 1.0e6; #seed Atl
 ni, nj = size(U);
 
 const global DAYS = 365; # number of days
-global npole = readdlm("./Data/npole_lon_shift.csv");
 
-bio2D = open("./Data/CSV/bio_2Dadvect_test_Atl2.csv","w")
+bio2D = open("./Data/CSV/bio_2Dadvect_test_Atl_surf.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS

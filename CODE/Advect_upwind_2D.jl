@@ -81,21 +81,21 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 			# Reflective BC
 			# #west
 			# if (i > 1)
-			# 	if (uvel[i,j].<0.0 + GRD["lmask"][i-1,j,1].==0.0)
+			# 	if (uvel[i,j].<0.0 && GRD["lmask"][i-1,j,1].==0.0)
 			# 		uvel[i,j] *= -1.0
 			# 	end
 			# else
-			# 	if (uvel[i,j].<0.0 + GRD["lmask"][ied,j,1].==0.0)
+			# 	if (uvel[i,j].<0.0 && GRD["lmask"][ied,j,1].==0.0)
 			# 		uvel[i,j] *= -1.0
 			# 	end
 			# end
 			# #east
 			# if (i == ied)
-			# 	if (uvel[i,j].>0.0 + GRD["lmask"][isd,j,1].==0.0)
+			# 	if (uvel[i,j].>0.0 && GRD["lmask"][isd,j,1].==0.0)
 			# 		uvel[i,j] *= -1.0
 			# 	end
 			# else
-			# 	if (uvel[i,j].>0.0 + GRD["lmask"][i+1,j,1].==0.0)
+			# 	if (uvel[i,j].>0.0 && GRD["lmask"][i+1,j,1].==0.0)
 			# 		uvel[i,j] *= -1.0
 			# 	end
 			# end
@@ -117,18 +117,18 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 			# # Reflective BC
 			# #south
 			# if (j > 1)
-			# 	if (vvel[i,j].<0.0 + GRD["lmask"][i,j-1,1].==0.0)
+			# 	if (vvel[i,j].<0.0 && GRD["lmask"][i,j-1,1].==0.0)
 			# 		vvel[i,j] *= -1.0
 			# 	end
 			# #don't need else at j=1 (South Pole) because all land
 			# end
 			# #north
 			# if (j < jed)
-			# 	if (vvel[i,j].>0.0 + GRD["lmask"][i,j+1,1].==0.0)
+			# 	if (vvel[i,j].>0.0 && GRD["lmask"][i,j+1,1].==0.0)
 			# 		vvel[i,j] *= -1.0
 			# 	end
 			# else #N Pole keeps same lat, changes lon
-			# 	if (vvel[i,j].>0.0 + GRD["lmask"][ni-i+1,j,1].==0.0)
+			# 	if (vvel[i,j].>0.0 && GRD["lmask"][ni-i+1,j,1].==0.0)
 			# 		vvel[i,j] *= -1.0
 			# 	end
 			# end

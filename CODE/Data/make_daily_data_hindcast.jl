@@ -192,10 +192,12 @@ for i in [1:nyr]
 
 	#! save
 	println(i)
-	ti = string(1000000+i); di = "./JLD/Data_hindcast_";
+	ti = string(1000000+i); di = "./JLD/Data_hindcast_surfvel_";
 	save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,
 									  "dZm",D_dZm,"dZl",D_dZl,
 									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det,
                     "U",D_u,"V",D_v);
+
+                    save(string(di,ti[2:end],".jld"), "U",D_u,"V",D_v);
 
 end
