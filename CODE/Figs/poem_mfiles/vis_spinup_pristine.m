@@ -12,13 +12,13 @@ spots = {'GB','EBS','OSP','HOT','BATS','NS'};
 
 mclev=NaN*ones(length(spots),8);
 Zcon=NaN*ones(length(spots),2);
-for s=1:length(spots)
+for s=1%:length(spots)
     %%
     close all
     loc = spots{s};
     sname = 'Spinup_';
-    lname = [loc '_'];
-    %lname = ['phen_' loc '_'];
+    %lname = [loc '_'];
+    lname = ['phen_' loc '_'];
     P(:,1) = csvread([dpath sname lname 'Sml_p.csv']);
     P(:,2) = csvread([dpath sname lname 'Med_p.csv']);
     P(:,3) = csvread([dpath sname lname 'Lrg_p.csv']);
@@ -33,13 +33,13 @@ for s=1:length(spots)
     m(:,1) = csvread([dpath sname 'Rec_' lname 'Med_f.csv']);
     m(:,2) = csvread([dpath sname 'Rec_' lname 'Lrg_d.csv']);
     m(:,3) = csvread([dpath sname 'Rec_' lname 'Lrg_p.csv']);
-    c(:,1) = csvread([dpath sname 'Clev_' lname 'Sml_p.csv']);
-    c(:,2) = csvread([dpath sname 'Clev_' lname 'Med_p.csv']);
-    c(:,3) = csvread([dpath sname 'Clev_' lname 'Lrg_p.csv']);
-    c(:,4) = csvread([dpath sname 'Clev_' lname 'Sml_f.csv']);
-    c(:,5) = csvread([dpath sname 'Clev_' lname 'Med_f.csv']);
-    c(:,6) = csvread([dpath sname 'Clev_' lname 'Sml_d.csv']);
-    c(:,7) = csvread([dpath sname 'Clev_' lname 'Med_d.csv']);
+    c(:,1) = csvread([dpath sname 'Clev_' lname 'Sml_f.csv']);
+    c(:,2) = csvread([dpath sname 'Clev_' lname 'Sml_p.csv']);
+    c(:,3) = csvread([dpath sname 'Clev_' lname 'Sml_d.csv']);
+    c(:,4) = csvread([dpath sname 'Clev_' lname 'Med_f.csv']);
+    c(:,5) = csvread([dpath sname 'Clev_' lname 'Med_p.csv']);
+    c(:,6) = csvread([dpath sname 'Clev_' lname 'Med_d.csv']);
+    c(:,7) = csvread([dpath sname 'Clev_' lname 'Lrg_p.csv']);
     c(:,8) = csvread([dpath sname 'Clev_' lname 'Lrg_d.csv']);
     z(:,1) = csvread([dpath sname lname 'ZMcon.csv']);
     z(:,2) = csvread([dpath sname lname 'ZLcon.csv']);
@@ -55,7 +55,7 @@ for s=1:length(spots)
     %% Mean consumption level
     mclev(s,:) = nanmean(c);
     
-    %% Zoop overconsumption
+    % Zoop overconsumption
     Zcon(s,:) = nansum(z)/lstd;
     
     %% Piscivore
@@ -148,6 +148,68 @@ for s=1:length(spots)
     ylabel('Biomass (g km^-^2)')
     print('-dpng',[fpath sname lname 'oneloc_detr_time.png'])
     
+    %% All in subplots
+    %P
+    figure(6)
+    subplot(3,3,2)
+    plot(y,P(:,1),'b','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title({loc; 'SP'})
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    subplot(3,3,5)
+    plot(y,P(:,2),'r','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('MP')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    subplot(3,3,8)
+    plot(y,P(:,3),'k','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('LP')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    %FF
+    subplot(3,3,1)
+    plot(y,F(:,1),'b','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('SF')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    subplot(3,3,4)
+    plot(y,F(:,2),'r','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('MF')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    %Detritivore
+    subplot(3,3,3)
+    plot(y,D(:,1),'b','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('SD')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    subplot(3,3,6)
+    plot(y,D(:,2),'r','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('MD')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    subplot(3,3,9)
+    plot(y,D(:,3),'k','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('LD')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_sub.png'])
+    
     %% All size classes of all
     
     figure(4)
@@ -164,8 +226,8 @@ for s=1:length(spots)
     
     %% Final mean biomass size spectrum
     t=1:length(P);
-    lyr=t((end-(30*365)+1):end);
-    %lyr=1:365;
+    lyr=t((end-365+1):end);
+    
     SP_sum=sum(P(lyr,1));
     SF_sum=sum(F(lyr,1));
     SD_sum=sum(D(lyr,1));
@@ -199,7 +261,7 @@ for s=1:length(spots)
     subplot(2,3,1)
     bar(P_sum,'k')
     xlim([0 4])
-    title('Pelagic Piscivores')
+    title('Pel Pisc')
     ylabel('Total Biomass (g km^-^2)')
     subplot(2,3,4)
     bar(P_mean,'k')
@@ -219,16 +281,20 @@ for s=1:length(spots)
     subplot(2,3,3)
     bar(D_sum,'r')
     xlim([0 4])
-    title('Demersal Fishes')
+    title('Dem Pisc')
     subplot(2,3,6)
     bar(D_mean,'r')
-    xlim([0 3])
+    xlim([0 4])
     print('-dpng',[fpath sname lname 'oneloc_all_biomass_spec.png'])
     
     %% Reproduction
+    rep(:,1)=r(:,1).*F(:,2);
+    rep(:,2)=r(:,2).*D(:,3);
+    rep(:,3)=r(:,3).*P(:,3);
+    
     figure(10)
     subplot(4,1,1)
-    plot(y,r,'Linewidth',2); hold on;
+    plot(y,rep,'Linewidth',2); hold on;
     xlim([y(1) y(end)])
     title(['Spinup Reproduction ' loc])
     xlabel('Time (y)')
@@ -236,26 +302,58 @@ for s=1:length(spots)
     legend('F','D','P')
     
     subplot(4,1,2)
-    plot(y,r(:,1),'b','Linewidth',2); hold on;
+    plot(y,rep(:,1),'b','Linewidth',2); hold on;
     xlim([y(1) y(end)])
     title('Forage Fishes')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,3)
-    plot(y,r(:,2),'r','Linewidth',2); hold on;
+    plot(y,rep(:,2),'r','Linewidth',2); hold on;
     xlim([y(1) y(end)])
     title('Demersal Piscivores')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,4)
-    plot(y,r(:,3),'k','Linewidth',2); hold on;
+    plot(y,rep(:,3),'k','Linewidth',2); hold on;
     xlim([y(1) y(end)])
     title('Pelagic Piscivores')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     print('-dpng',[fpath sname lname 'oneloc_rep_time.png'])
+    
+    %% Maturation
+    figure(11)
+    subplot(4,1,1)
+    plot(y,m,'Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title(['Spinup Maturation ' loc])
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    legend('F','D','P')
+    
+    subplot(4,1,2)
+    plot(y,m(:,1),'b','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('Forage Fishes')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    subplot(4,1,3)
+    plot(y,m(:,2),'r','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('Demersal Piscivores')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    
+    subplot(4,1,4)
+    plot(y,m(:,3),'k','Linewidth',2); hold on;
+    xlim([y(1) y(end)])
+    title('Pelagic Piscivores')
+    xlabel('Time (y)')
+    ylabel('Biomass (g km^-^2)')
+    print('-dpng',[fpath sname lname 'oneloc_matur_time.png'])
     
     
     %% Recruitment
@@ -306,3 +404,7 @@ for s=1:length(spots)
     print('-dpng',[fpath sname lname 'oneloc_recruitment.png'])
 end
 
+save([fpath sname lname 'consump.mat'],'mclev','Zcon');
+csvwrite([fpath sname lname 'clevel.mat'],mclev);
+csvwrite([fpath sname lname 'Zconsump.mat'],Zcon);
+    

@@ -28,27 +28,27 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 
 		#! encounter rates
 		#sub_enc(Tp,Tb,tdif,wgt,L,tu,pred,prey,td)
-		Sml_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_f.bio[JD],ENVR.Zm[JD],Sml_f.td[JD])
-		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD])
-		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD])
+		Sml_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_f.bio[JD],ENVR.Zm[JD],Sml_f.td[JD],1)
+		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD],1)
+		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],1)
 
-		Med_f.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD])
+		Med_f.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD],1)
 
-		Med_p.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],ENVR.Zl[JD],Med_p.td[JD])
-		Med_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_f.bio[JD],Med_p.td[JD])
-		Med_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD])
-		Med_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_d.bio[JD],Med_p.td[JD])
+		Med_p.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],ENVR.Zl[JD],Med_p.td[JD],1)
+		Med_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_f.bio[JD],Med_p.td[JD],1)
+		Med_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD],1)
+		Med_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_d.bio[JD],Med_p.td[JD],1)
 
-		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_d.bio[JD],BENT.mass[JD],1-Med_d.td[JD])
+		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_d.bio[JD],BENT.mass[JD],Med_d.td[JD],1)
 
-		Lrg_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_f.bio[JD],Lrg_p.td[JD])
-		Lrg_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_p.bio[JD],Lrg_p.td[JD])
-		Lrg_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_d.bio[JD],1-Lrg_p.td[JD])
+		Lrg_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_f.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD])
+		Lrg_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_p.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD])
+		Lrg_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_p.bio[JD],Med_d.bio[JD],Lrg_p.td[JD],1-Lrg_p.td[JD])
 
-		Lrg_d.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_f.bio[JD],Lrg_d.td[JD])
-		Lrg_d.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_p.bio[JD],Lrg_d.td[JD])
-		Lrg_d.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_d.bio[JD],1-Lrg_d.td[JD])
-		Lrg_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],BENT.mass[JD],1-Lrg_d.td[JD])
+		Lrg_d.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_f.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD])
+		Lrg_d.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_p.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD])
+		Lrg_d.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],Med_d.bio[JD],Lrg_d.td[JD],1-Lrg_d.td[JD])
+		Lrg_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,L_l,Tu_l,Lrg_d.bio[JD],BENT.mass[JD],Lrg_d.td[JD],1-Lrg_d.td[JD])
 
 		#! Consumption rates
 		Sml_f.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s,Sml_f.enc_zm[JD])
@@ -62,7 +62,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Med_p.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_p[JD],Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_d[JD]])
 		Med_p.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_d[JD],Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD]])
 
-		Med_d.con_be[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],1-Med_d.td[JD],M_m,Med_d.enc_be[JD])
+		Med_d.con_be[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD],M_m,Med_d.enc_be[JD])
 
 		Lrg_p.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l,[Lrg_p.enc_f[JD],Lrg_p.enc_p[JD],Lrg_p.enc_d[JD]],)
 		Lrg_p.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l,[Lrg_p.enc_p[JD],Lrg_p.enc_f[JD],Lrg_p.enc_d[JD]])
@@ -70,8 +70,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 
 		Lrg_d.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l,[Lrg_d.enc_f[JD],Lrg_d.enc_p[JD],Lrg_d.enc_d[JD],Lrg_d.enc_be[JD]])
 		Lrg_d.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l,[Lrg_d.enc_p[JD],Lrg_d.enc_f[JD],Lrg_d.enc_d[JD],Lrg_d.enc_be[JD]])
-		Lrg_d.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],1-Lrg_d.td[JD],M_l,[Lrg_d.enc_d[JD],Lrg_d.enc_p[JD],Lrg_d.enc_f[JD],Lrg_d.enc_be[JD]])
-		Lrg_d.con_be[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],1-Lrg_d.td[JD],M_l,[Lrg_d.enc_be[JD],Lrg_d.enc_f[JD],Lrg_d.enc_p[JD],Lrg_d.enc_d[JD]])
+		Lrg_d.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l,[Lrg_d.enc_d[JD],Lrg_d.enc_p[JD],Lrg_d.enc_f[JD],Lrg_d.enc_be[JD]])
+		Lrg_d.con_be[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l,[Lrg_d.enc_be[JD],Lrg_d.enc_f[JD],Lrg_d.enc_p[JD],Lrg_d.enc_d[JD]])
 
 
 		#! Offline coupling
@@ -132,7 +132,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Sml_d.gamma[JD] = sub_gamma(K_l,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD],Sml_d.S[JD,DY])
 		Med_f.gamma[JD] = sub_gamma(K_a,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD],Med_f.S[JD,DY])
 		Med_p.gamma[JD] = sub_gamma(K_j,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD],Med_p.S[JD,DY])
-		Med_d.gamma[JD] = sub_gamma(K_a,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD],Med_d.S[JD,DY])
+		Med_d.gamma[JD] = sub_gamma(K_j,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD],Med_d.S[JD,DY])
 		Lrg_p.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD],Lrg_p.S[JD,DY])
 		Lrg_d.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_d.nu[JD],Lrg_d.die[JD],Lrg_d.bio[JD],Lrg_d.S[JD,DY])
 
@@ -142,14 +142,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Sml_d.rep[JD],Sml_d.egg[JD] = sub_rep(Sml_d.nu[JD],K_l,Sml_d.S[JD,DY],Sml_d.egg[JD])
 		Med_f.rep[JD],Med_f.egg[JD] = sub_rep(Med_f.nu[JD],K_a,Med_f.S[JD,DY],Med_f.egg[JD])
 		Med_p.rep[JD],Med_p.egg[JD] = sub_rep(Med_p.nu[JD],K_j,Med_p.S[JD,DY],Med_p.egg[JD])
-		Med_d.rep[JD],Med_d.egg[JD] = sub_rep(Med_d.nu[JD],K_a,Med_d.S[JD,DY],Med_d.egg[JD])
+		Med_d.rep[JD],Med_d.egg[JD] = sub_rep(Med_d.nu[JD],K_j,Med_d.S[JD,DY],Med_d.egg[JD])
 		Lrg_p.rep[JD],Lrg_p.egg[JD] = sub_rep(Lrg_p.nu[JD],K_a,Lrg_p.S[JD,DY],Lrg_p.egg[JD])
 		Lrg_d.rep[JD],Lrg_d.egg[JD] = sub_rep(Lrg_d.nu[JD],K_a,Lrg_d.S[JD,DY],Lrg_d.egg[JD])
 
 		#! recruitment (to small size classes only)
 		Sml_f.rec[JD] = sub_rec(Med_f.rep[JD],Med_f.bio[JD])
 		Sml_p.rec[JD] = sub_rec(Lrg_p.rep[JD],Lrg_p.bio[JD])
-		Sml_d.rec[JD] = sub_rec(Med_d.rep[JD],Med_d.bio[JD])
+		Sml_d.rec[JD] = sub_rec(Lrg_d.rep[JD],Lrg_d.bio[JD])
 		Med_f.rec[JD] = sub_rec(Sml_f.gamma[JD],Sml_f.bio[JD])
 		Med_p.rec[JD] = sub_rec(Sml_p.gamma[JD],Sml_p.bio[JD])
 		Med_d.rec[JD] = sub_rec(Sml_d.gamma[JD],Sml_d.bio[JD])

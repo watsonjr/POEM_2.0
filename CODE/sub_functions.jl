@@ -94,27 +94,38 @@ end
 
 
 ###!  Encounter rates
-function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tdif)
-	# pred biomass density,
-	# prey biomass density,
-	# predator search rate,
-	# time spent in area with that prey item.
+function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
+  # Tp: pelagic temp
+  # Tb: bottom temp
+  # wgt: ind weight of size class
+  # L: length of size class
+  # tu: frac time spent searching for food
+  # pred: pred biomass density,
+	# prey: prey biomass density,
+	# A: predator search rate,
+  # tpel: time spent in pelagic,
+	# tprey: time spent in area with that prey item.
   #Swimming
-  temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
+  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   U = ((3.9*wgt.^0.13 * exp(0.149*temp)) /100*60*60*24)
   #Search rate
   A = (U * ((L/1000)*3) * tu) / wgt
   #Encounter
-	enc = pred*prey*A*tdif
+	enc = pred*prey*A*tprey
   return enc
 end
 
 
 ###! Type I consumption
-function sub_cons(Tp,Tb,tdif,wgt,enc)
+function sub_cons(Tp,Tb,tpel,wgt,enc)
+  #Tp: pelagic temp
+  #Tb: bottom temp
+  #tpel: frac pelagic time
+  #wgt: ind weight of size class
+  #enc: array of all encountered food
 	#! calculates consumption rate of first element of enc
   #Cmax
-  temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
+  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
   #Con
 	beta = flev * exp(0.063*temp) * wgt^(q)
@@ -225,22 +236,23 @@ function sub_rep(nu,K,S,egg)
   #K: proportion allocated to growth
   #S: fraction of pop spawning at that time
   #egg: energy stored for later repro
-  # NOTE: need to find a way to ensure all stored biomass is spawned by end of spawning period
-  # Spawning flag
-  #if S>0.0
-  #  kap=min(1.0, K + (1.0-S));
-  #else
-  #  kap=1.0;
-  #end
-	#rep = (1-kap) * nu
+  # NOTE: Still never going to accumulate biomass as muscle tissue
+  # If it is spawning season, it gets spawned
+  # If it is not spawning season, it gets stored as repro energy
+  # Need to determine a set fraction of energy that gets converted to larvae?
   if K<1.0
       if nu > 0.0
-        rho = ((1.0-K) * nu) + egg  #energy available for reproducing
+        rho = (1.0-K) * nu  #energy available for from eating
       else
-        rho = egg
+        rho = 0.0
       end
-      rep = S * rho             #fraction of pop reproducing now
-      egg = (1.0-S) * rho         #rest gets stored for later
+      if S>0.0
+        rep = rho + S * egg         #fraction of pop reproducing now
+        egg = (1.0-S) * egg         #rest gets stored for later
+      else
+        rep = 0.0
+        egg = egg + rho
+      end
   else
     rep = 0.0
     egg = 0.0
@@ -270,7 +282,7 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg)
 	# mat = gamma = energy lost to maturation to larger size class
 	# Nat_mrt = natural mortality
 	# die = predator mort = biomass lost to predation
-  db = rec + ((nu + egg - rep - gamma - Nat_mrt) * bio_in) - die
+  db = rec + ((nu - egg - rep - gamma - Nat_mrt) * bio_in) + (egg * bio_in) - die
   bio_out =  bio_in + db
 end
 
