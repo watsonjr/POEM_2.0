@@ -17,14 +17,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 	  Lrg_d.td[JD] = sub_tdif_dem(GRD["Z"][ID],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
 
 		#! metabolism
-		Sml_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s)
-		Sml_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD],M_s)
-		Sml_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD],M_s)
-		Med_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m)
-		Med_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m)
-		Med_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD],M_m)
-		Lrg_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l)
-		Lrg_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l)
+		Sml_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s,L_s)
+		Sml_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD],M_s,L_s)
+		Sml_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD],M_s,L_s)
+		Med_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,L_m)
+		Med_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,L_m)
+		Med_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD],M_m,L_m)
+		Lrg_p.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l,L_l)
+		Lrg_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l,L_l)
 
 		#! encounter rates
 		#sub_enc(Tp,Tb,tdif,wgt,L,tu,pred,prey,td)
@@ -75,8 +75,11 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 
 
 		#! Offline coupling
+		#Zooplankton consumption cannot exceed amount lost to higher predation in COBALT runs
 		Sml_f.con_zm[JD], Sml_p.con_zm[JD], Sml_d.con_zm[JD], ENVR.fZm[JD] = sub_offline(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],ENVR.dZm[JD])
 		Med_f.con_zl[JD], Med_p.con_zl[JD], Med_d.con_zl[JD], ENVR.fZl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_d.con_zl[JD],ENVR.dZl[JD])
+		#Benthic material consumption cannot exceed amount present
+		Med_d.con_be[JD], Lrg_d.con_be[JD] = sub_offline_bent(Med_d.con_be[JD],Lrg_d.con_be[JD],BENT.mass[JD])
 
 		#! total consumption rates (could factor in handling times here; g m-2 d-1)
 		Sml_f.I[JD] = Sml_f.con_zm[JD]
@@ -176,7 +179,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 	 	Lrg_d.bio[JD] = sub_update_fi(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD])
 
-		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
+		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]])
 	end
 
 	#! Fishing

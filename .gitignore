@@ -11,3 +11,4 @@
 *.so
 *.out
 *.dylib
+*pathdef.m

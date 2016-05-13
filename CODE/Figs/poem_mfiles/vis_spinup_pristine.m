@@ -10,49 +10,42 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS'};
 
+cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
+    'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
+    'rec','egg','clev','DD','S'};
+cols=cols';
+
 mclev=NaN*ones(length(spots),8);
 Zcon=NaN*ones(length(spots),2);
-for s=1%:length(spots)
+for s=1:length(spots)
     %%
     close all
     loc = spots{s};
     sname = 'Spinup_';
     %lname = [loc '_'];
     lname = ['phen_' loc '_'];
-    P(:,1) = csvread([dpath sname lname 'Sml_p.csv']);
-    P(:,2) = csvread([dpath sname lname 'Med_p.csv']);
-    P(:,3) = csvread([dpath sname lname 'Lrg_p.csv']);
-    F(:,1) = csvread([dpath sname lname 'Sml_f.csv']);
-    F(:,2) = csvread([dpath sname lname 'Med_f.csv']);
-    D(:,1) = csvread([dpath sname lname 'Sml_d.csv']);
-    D(:,2) = csvread([dpath sname lname 'Med_d.csv']);
-    D(:,3) = csvread([dpath sname lname 'Lrg_d.csv']);
-    r(:,1) = csvread([dpath sname 'Rep_' lname 'Med_f.csv']);
-    r(:,2) = csvread([dpath sname 'Rep_' lname 'Lrg_d.csv']);
-    r(:,3) = csvread([dpath sname 'Rep_' lname 'Lrg_p.csv']);
-    m(:,1) = csvread([dpath sname 'Rec_' lname 'Med_f.csv']);
-    m(:,2) = csvread([dpath sname 'Rec_' lname 'Lrg_d.csv']);
-    m(:,3) = csvread([dpath sname 'Rec_' lname 'Lrg_p.csv']);
-    c(:,1) = csvread([dpath sname 'Clev_' lname 'Sml_f.csv']);
-    c(:,2) = csvread([dpath sname 'Clev_' lname 'Sml_p.csv']);
-    c(:,3) = csvread([dpath sname 'Clev_' lname 'Sml_d.csv']);
-    c(:,4) = csvread([dpath sname 'Clev_' lname 'Med_f.csv']);
-    c(:,5) = csvread([dpath sname 'Clev_' lname 'Med_p.csv']);
-    c(:,6) = csvread([dpath sname 'Clev_' lname 'Med_d.csv']);
-    c(:,7) = csvread([dpath sname 'Clev_' lname 'Lrg_p.csv']);
-    c(:,8) = csvread([dpath sname 'Clev_' lname 'Lrg_d.csv']);
-    z(:,1) = csvread([dpath sname lname 'ZMcon.csv']);
-    z(:,2) = csvread([dpath sname lname 'ZLcon.csv']);
+    SP = csvread([dpath sname lname 'Sml_p.csv']);
+    SF = csvread([dpath sname lname 'Sml_f.csv']);
+    SD = csvread([dpath sname lname 'Sml_d.csv']);
+    MP = csvread([dpath sname lname 'Med_p.csv']);
+    MF = csvread([dpath sname lname 'Med_f.csv']);
+    MD = csvread([dpath sname lname 'Med_d.csv']);
+    LP = csvread([dpath sname lname 'Lrg_p.csv']);
+    LD = csvread([dpath sname lname 'Lrg_d.csv']);
+    C = csvread([dpath sname lname 'Cobalt.csv']);
+    z(:,1) = C(:,2);
+    z(:,2) = C(:,3);
     
     %% Plots over time
-    x=1:length(P);
+    x=1:length(SP);
     y=x/365;
-    lstd=length(P);
+    lstd=length(SP);
     id1 = 0:365:(lstd-1);
     id2 = 365:365:(lstd);
     ID  = [id1 id2];
     
     %% Mean consumption level
+    c=[SF(:,21) SP(:,21) SD(:,21) MF(:,21) MP(:,21) MD(:,21) LP(:,21) LD(:,21)];
     mclev(s,:) = nanmean(c);
     
     % Zoop overconsumption
@@ -61,7 +54,9 @@ for s=1%:length(spots)
     %% Piscivore
     figure(1)
     subplot(4,1,1)
-    plot(y,P,'Linewidth',2); hold on;
+    plot(y,SP(:,1),'b','Linewidth',1); hold on;
+    plot(y,MP(:,1),'r','Linewidth',1); hold on;
+    plot(y,LP(:,1),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title(['Spinup Pelagic Piscivores ' loc])
     xlabel('Time (y)')
@@ -69,21 +64,21 @@ for s=1%:length(spots)
     legend('Larvae','Juveniles','Adults')
     
     subplot(4,1,2)
-    plot(y,P(:,1),'b','Linewidth',2); hold on;
+    plot(y,SP(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Larvae')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,3)
-    plot(y,P(:,2),'r','Linewidth',2); hold on;
+    plot(y,MP(:,1),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Juveniles')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,4)
-    plot(y,P(:,3),'k','Linewidth',2); hold on;
+    plot(y,LP(:,1),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Adults')
     xlabel('Time (y)')
@@ -93,7 +88,8 @@ for s=1%:length(spots)
     %% Planktivore
     figure(2)
     subplot(3,1,1)
-    plot(y,F,'Linewidth',2); hold on;
+    plot(y,SF(:,1),'b','Linewidth',1); hold on;
+    plot(y,MF(:,1),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title(['Spinup Forage Fishes ' loc])
     xlabel('Time (y)')
@@ -101,14 +97,14 @@ for s=1%:length(spots)
     legend('Immature','Adults')
     
     subplot(3,1,2)
-    plot(y,F(:,1),'b','Linewidth',2); hold on;
+    plot(y,SF(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Immature')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(3,1,3)
-    plot(y,F(:,2),'r','Linewidth',2); hold on;
+    plot(y,MF(:,1),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Adults')
     xlabel('Time (y)')
@@ -119,7 +115,9 @@ for s=1%:length(spots)
     %% Detritivore
     figure(3)
     subplot(4,1,1)
-    plot(y,D,'Linewidth',2); hold on;
+    plot(y,SD(:,1),'b','Linewidth',1); hold on;
+    plot(y,MD(:,1),'r','Linewidth',1); hold on;
+    plot(y,LD(:,1),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title(['Spinup Demersal Piscivores ' loc])
     xlabel('Time (y)')
@@ -127,46 +125,46 @@ for s=1%:length(spots)
     legend('Larvae','Juveniles','Adults')
     
     subplot(4,1,2)
-    plot(y,D(:,1),'b','Linewidth',2); hold on;
+    plot(y,SD(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Larvae')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,3)
-    plot(y,D(:,2),'r','Linewidth',2); hold on;
+    plot(y,MD(:,1),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Juveniles')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,4)
-    plot(y,D(:,3),'k','Linewidth',2); hold on;
+    plot(y,LD(:,1),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Adults')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     print('-dpng',[fpath sname lname 'oneloc_detr_time.png'])
     
-    %% All in subplots
-    %P
-    figure(6)
+    %% All biomass in subplots
+    %SP
+    figure(4)
     subplot(3,3,2)
-    plot(y,P(:,1),'b','Linewidth',2); hold on;
+    plot(y,SP(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title({loc; 'SP'})
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(3,3,5)
-    plot(y,P(:,2),'r','Linewidth',2); hold on;
+    plot(y,MP(:,1),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MP')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(3,3,8)
-    plot(y,P(:,3),'k','Linewidth',2); hold on;
+    plot(y,LP(:,1),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('LP')
     xlabel('Time (y)')
@@ -174,14 +172,14 @@ for s=1%:length(spots)
     
     %FF
     subplot(3,3,1)
-    plot(y,F(:,1),'b','Linewidth',2); hold on;
+    plot(y,SF(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('SF')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(3,3,4)
-    plot(y,F(:,2),'r','Linewidth',2); hold on;
+    plot(y,MF(:,1),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MF')
     xlabel('Time (y)')
@@ -189,21 +187,21 @@ for s=1%:length(spots)
     
     %Detritivore
     subplot(3,3,3)
-    plot(y,D(:,1),'b','Linewidth',2); hold on;
+    plot(y,SD(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('SD')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(3,3,6)
-    plot(y,D(:,2),'r','Linewidth',2); hold on;
+    plot(y,MD(:,1),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MD')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(3,3,9)
-    plot(y,D(:,3),'k','Linewidth',2); hold on;
+    plot(y,LD(:,1),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('LD')
     xlabel('Time (y)')
@@ -212,10 +210,15 @@ for s=1%:length(spots)
     
     %% All size classes of all
     
-    figure(4)
-    plot(y,P,'Linewidth',2); hold on;
-    plot(y,F,'Linewidth',2); hold on;
-    plot(y,D,'Linewidth',2); hold on;
+    figure(5)
+    plot(y,SP(:,1),'Linewidth',1); hold on;
+    plot(y,MP(:,1),'Linewidth',1); hold on;
+    plot(y,LP(:,1),'Linewidth',1); hold on;
+    plot(y,SF(:,1),'Linewidth',1); hold on;
+    plot(y,MF(:,1),'Linewidth',1); hold on;
+    plot(y,SD(:,1),'Linewidth',1); hold on;
+    plot(y,MD(:,1),'Linewidth',1); hold on;
+    plot(y,LD(:,1),'Linewidth',1); hold on;
     legend('SP','MP','LP','SF','MF','SD','MD','LD')
     legend('location','eastoutside')
     xlim([y(1) y(end)])
@@ -225,26 +228,26 @@ for s=1%:length(spots)
     print('-dpng',[fpath sname lname 'oneloc_all_sizes.png'])
     
     %% Final mean biomass size spectrum
-    t=1:length(P);
+    t=1:length(SP);
     lyr=t((end-365+1):end);
     
-    SP_sum=sum(P(lyr,1));
-    SF_sum=sum(F(lyr,1));
-    SD_sum=sum(D(lyr,1));
-    MP_sum=sum(P(lyr,2));
-    MF_sum=sum(F(lyr,2));
-    MD_sum=sum(D(lyr,2));
-    LP_sum=sum(P(lyr,3));
-    LD_sum=sum(D(lyr,3));
+    SP_sum=sum(SP(lyr,1));
+    SF_sum=sum(SF(lyr,1));
+    SD_sum=sum(SD(lyr,1));
+    MP_sum=sum(MP(lyr,1));
+    MF_sum=sum(MF(lyr,1));
+    MD_sum=sum(MD(lyr,1));
+    LP_sum=sum(LP(lyr,1));
+    LD_sum=sum(LD(lyr,1));
     
-    SP_mean=mean(P(lyr,1));
-    SF_mean=mean(F(lyr,1));
-    SD_mean=mean(D(lyr,1));
-    MP_mean=mean(P(lyr,2));
-    MF_mean=mean(F(lyr,2));
-    MD_mean=mean(D(lyr,2));
-    LP_mean=mean(P(lyr,3));
-    LD_mean=mean(D(lyr,3));
+    SP_mean=mean(SP(lyr,1));
+    SF_mean=mean(SF(lyr,1));
+    SD_mean=mean(SD(lyr,1));
+    MP_mean=mean(MP(lyr,1));
+    MF_mean=mean(MF(lyr,1));
+    MD_mean=mean(MD(lyr,1));
+    LP_mean=mean(LP(lyr,1));
+    LD_mean=mean(LD(lyr,1));
     
     P_sum=[SP_sum;MP_sum;LP_sum];
     F_sum=[SF_sum;MF_sum];
@@ -257,7 +260,7 @@ for s=1%:length(spots)
     Fwgt = [0.0025; 2.5298];
     Dwgt = [0.0025; 2.5298; 2.5298e3];
     
-    figure(5)
+    figure(6)
     subplot(2,3,1)
     bar(P_sum,'k')
     xlim([0 4])
@@ -288,35 +291,35 @@ for s=1%:length(spots)
     print('-dpng',[fpath sname lname 'oneloc_all_biomass_spec.png'])
     
     %% Reproduction
-    rep(:,1)=r(:,1).*F(:,2);
-    rep(:,2)=r(:,2).*D(:,3);
-    rep(:,3)=r(:,3).*P(:,3);
+    rep(:,1)=MF(:,1).*MF(:,18);
+    rep(:,2)=LD(:,1).*LD(:,18);
+    rep(:,3)=LP(:,1).*LP(:,18);
     
-    figure(10)
+    figure(7)
     subplot(4,1,1)
-    plot(y,rep,'Linewidth',2); hold on;
+    plot(y,rep,'Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title(['Spinup Reproduction ' loc])
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
-    legend('F','D','P')
+    legend('F','D','SP')
     
     subplot(4,1,2)
-    plot(y,rep(:,1),'b','Linewidth',2); hold on;
+    plot(y,rep(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Forage Fishes')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,3)
-    plot(y,rep(:,2),'r','Linewidth',2); hold on;
+    plot(y,rep(:,2),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Demersal Piscivores')
     xlabel('Time (y)')
     ylabel('Biomass (g km^-^2)')
     
     subplot(4,1,4)
-    plot(y,rep(:,3),'k','Linewidth',2); hold on;
+    plot(y,rep(:,3),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Pelagic Piscivores')
     xlabel('Time (y)')
@@ -324,46 +327,147 @@ for s=1%:length(spots)
     print('-dpng',[fpath sname lname 'oneloc_rep_time.png'])
     
     %% Maturation
-    figure(11)
-    subplot(4,1,1)
-    plot(y,m,'Linewidth',2); hold on;
-    xlim([y(1) y(end)])
-    title(['Spinup Maturation ' loc])
-    xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
-    legend('F','D','P')
+    m(:,1)=MF(:,19);
+    m(:,2)=MD(:,19);
+    m(:,3)=MP(:,19);
+    m(:,4)=LD(:,19);
+    m(:,5)=LP(:,19);
     
-    subplot(4,1,2)
-    plot(y,m(:,1),'b','Linewidth',2); hold on;
+    figure(8)
+    subplot(3,2,1)
+    plot(y,m(:,1),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title('Forage Fishes')
-    xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
+    title([loc ' Maturation Biomass (g km^-^2)'],'HorizontalAlignment','left')
+    ylabel('Forage Fishes')
     
-    subplot(4,1,3)
-    plot(y,m(:,2),'r','Linewidth',2); hold on;
+    subplot(3,2,3)
+    plot(y,m(:,2),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title('Demersal Piscivores')
-    xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
+    title('M')
+    ylabel('Demersal Piscivores')
     
-    subplot(4,1,4)
-    plot(y,m(:,3),'k','Linewidth',2); hold on;
+    subplot(3,2,5)
+    plot(y,m(:,3),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title('Pelagic Piscivores')
+    title('M')
+    ylabel('Pelagic Piscivores')
     xlabel('Time (y)')
-    ylabel('Biomass (g km^-^2)')
+    
+    subplot(3,2,4)
+    plot(y,m(:,4),'r','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('L')
+    ylabel('Demersal Piscivores')
+    
+    subplot(3,2,6)
+    plot(y,m(:,5),'k','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('L')
+    xlabel('Time (y)')
+    ylabel('Pelagic Piscivores')
     print('-dpng',[fpath sname lname 'oneloc_matur_time.png'])
+    
+    %% Predation mortality
+    %SP
+    figure(9)
+    subplot(2,3,2)
+    plot(y,SP(:,17),'b','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title({loc; 'SP'})
+    
+    subplot(2,3,5)
+    plot(y,MP(:,17),'r','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('MP')
+    xlabel('Time (y)')
+    
+    %FF
+    subplot(2,3,1)
+    plot(y,SF(:,17),'b','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('SF')
+    ylabel('Biomass eaten by predators (g km^-^2)','HorizontalAlignment','right')
+    
+    subplot(2,3,4)
+    plot(y,MF(:,17),'r','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('MF')
+    xlabel('Time (y)')
+    %ylabel('Biomass eaten by predators (g km^-^2)')
+    
+    %Detritivore
+    subplot(2,3,3)
+    plot(y,SD(:,17),'b','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('SD')
+    
+    subplot(2,3,6)
+    plot(y,MD(:,17),'r','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('MD')
+    xlabel('Time (y)')
+    
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_pred_sub.png'])
+     
+    %% All consumption in subplots
+    %SP
+    figure(10)
+    subplot(3,3,2)
+    plot(y,SP(:,14),'b','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title({loc; 'SP'})
+    
+    subplot(3,3,5)
+    plot(y,MP(:,14),'r','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('MP')
+    
+    subplot(3,3,8)
+    plot(y,LP(:,14),'k','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('LP')
+    xlabel('Time (y)')
+    
+    %FF
+    subplot(3,3,1)
+    plot(y,SF(:,14),'b','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('SF')
+    
+    subplot(3,3,4)
+    plot(y,MF(:,14),'r','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('MF')
+    xlabel('Time (y)')
+    ylabel('Biomass Consumed (g km^-^2)')
+    
+    %Detritivore
+    subplot(3,3,3)
+    plot(y,SD(:,14),'b','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('SD')
+    
+    subplot(3,3,6)
+    plot(y,MD(:,14),'r','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('MD')
+    
+    subplot(3,3,9)
+    plot(y,LD(:,14),'k','Linewidth',1); hold on;
+    xlim([y(1) y(end)])
+    title('LD')
+    xlabel('Time (y)')
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_consump_sub.png'])
     
     
     %% Recruitment
     yr=x;
-    SFL=m(yr,1);
-    SDL=m(yr,2);
-    SPL=m(yr,3);
-    FA=F(yr,2);
-    DA=D(yr,3);
-    PA=P(yr,3);
+    SFL=m(yr,3);
+    SDL=m(yr,4);
+    SPL=m(yr,5);
+    FA=MF(yr,1);
+    DA=LD(yr,1);
+    PA=LP(yr,1);
     
     st=1:365:length(yr);
     en=365:365:length(yr);
@@ -383,21 +487,21 @@ for s=1%:length(spots)
     end
     
     %
-    figure(7)
-    subplot(3,1,1)
-    plot(1:50,SPy,'Linewidth',2); hold on;
-    xlim([1 50])
-    ylabel( 'Recruits (g km^-^2)')
-    title({loc;'Pelagic piscivores'})
-    
-    subplot(3,1,2)
-    plot(1:50,SFy,'Linewidth',2); hold on;
+    figure(11)
+    subplot(3,1,3)
+    plot(1:50,SPy,'k','Linewidth',2); hold on;
     xlim([1 50])
     ylabel('Recruits (g km^-^2)')
-    title('Forage fishes')
+    title('Pelagic piscivores')
     
-    subplot(3,1,3)
-    plot(1:50,SDy,'Linewidth',2); hold on;
+    subplot(3,1,1)
+    plot(1:50,SFy,'b','Linewidth',2); hold on;
+    xlim([1 50])
+    ylabel('Recruits (g km^-^2)')
+    title({loc; 'Forage fishes'})
+    
+    subplot(3,1,2)
+    plot(1:50,SDy,'r','Linewidth',2); hold on;
     xlim([1 50])
     ylabel('Recruits (g km^-^2)')
     title('Demersal piscivores')

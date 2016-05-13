@@ -71,7 +71,7 @@ end
 
 
 ###! Metabolism
-function sub_met(Tp,Tb,tdif,wgt)
+function sub_met(Tp,Tb,tdif,wgt,L)
   #Tp: pelagic temp
   #Tb: bottom temp
   #tdif: frac pelagic time
@@ -84,11 +84,14 @@ function sub_met(Tp,Tb,tdif,wgt)
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
   cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
   #Swimming
-  U = ((3.9*wgt.^0.13 * exp(0.149*temp)) /100*60*60*24)
   # NOTE: may want a new temp-dep U equation; I think too fast for larvae 8615m/d
+  #U = ((3.9*wgt.^0.13 * exp(0.149*temp)) /100*60*60*24) #Megrey (m/d)
+  #U = (3.9*wgt.^0.13 * exp(0.149*temp))  #Megrey (cm/s)
+  U = ((L * exp(0.063*(temp-18.5))) /10) #My Q10 using Tref=median hist temp (cm/s)
   #Metabolism
 	bas = fcrit * cmax
-  met = bas * exp(0.03*(U*100/60/60/24)) * 5.258
+  #Megrey respiration rate (gprey/gfish/d) uses swim in (cm/s)
+  met = bas * exp(0.03*U) * 5.258
   return met
 end
 
@@ -107,7 +110,8 @@ function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
 	# tprey: time spent in area with that prey item.
   #Swimming
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  U = ((3.9*wgt.^0.13 * exp(0.149*temp)) /100*60*60*24)
+  #U = ((3.9*wgt.^0.13 * exp(0.149*temp)) /100*60*60*24) #Megrey
+  U = ((L * exp(0.063*(temp-18.5))) /1000*60*60*24) #My Q10 using Tref=median hist temp
   #Search rate
   A = (U * ((L/1000)*3) * tu) / wgt
   #Encounter
@@ -128,7 +132,8 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
   #Con
-	beta = flev * exp(0.063*temp) * wgt^(q)
+	#beta = flev * exp(0.063*temp-15.0) * wgt^(q)
+  beta = 1.0;
   ENC = sum(enc) # total biomass encountered
 	con = cmax .* (beta .* enc[1]) ./ (cmax + beta.*ENC) # Type II
   return con
@@ -154,6 +159,19 @@ function sub_offline(enc_1,enc_2,enc_3,dZ)
     zf = 0
 	end
 	return out_1, out_2, out_3, zf
+end
+
+function sub_offline_bent(enc_1,enc_2,B)
+  if (enc_1 + enc_2) > B
+		frac1 = enc_1 / (enc_1 + enc_2)
+    frac2 = enc_2 / (enc_1 + enc_2)
+    out_1 = (frac1 * B)
+		out_2 = (frac2 * B)
+	else
+		out_1 = enc_1
+		out_2 = enc_2
+	end
+	return out_1, out_2
 end
 
 
@@ -286,12 +304,8 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg)
   bio_out =  bio_in + db
 end
 
-function sub_update_be(bio_in,die,bio_p)
-  #set negative biomasses to zero, or else generates new material
-  for n=1:length(bio_p)
-    bio_p[n] = max(bio_p[n],0.0)
-  end
-  bio_out = bio_in - sum(die.*bio_p)
+function sub_update_be(bio_in,die)
+  bio_out = bio_in - sum(die)
 end
 
 

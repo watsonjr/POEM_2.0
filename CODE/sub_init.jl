@@ -33,7 +33,7 @@ function sub_init_fish(ID,phen)
 	bio = ones(Float64,NX) * X
 
 	# fraction of time spent in the pelagic
-	tdp = 0.5*ones(Float64,NX)
+	tdp = ones(Float64,NX)
 	#tdd = zeros(Float64,NX)
 
 	# metabolism
