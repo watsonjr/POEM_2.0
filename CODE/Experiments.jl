@@ -11,7 +11,7 @@ function Testoneloc()
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-	YEARS = 1#50
+	YEARS = 50
   DAYS = 365
 
 	#! choose where to run the model
@@ -26,7 +26,7 @@ function Testoneloc()
 	#ID = 38309 #30335 # Bermuda ATS
   #ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
-	phen=0;
+	phen=1;
 	#! Initialize
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
 	Med_d.td[1] = 0.0;

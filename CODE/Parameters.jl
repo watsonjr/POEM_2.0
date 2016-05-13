@@ -83,13 +83,15 @@ function make_parameters(harv)
 	const global M_m = 0.01 * (0.1*L_m)^3;
 	const global M_l = 0.01 * (0.1*L_l)^3;
 
-	#! Median Zooplankton body mass
-	# James Watkins, Lars Rudstam and Kristen Holeck
-	# (from Charlie/COBALT)
+	#! Mediant Zooplankton size in mm
+	# from Charlie/COBALT
+	#! Median Zooplankton body mass in g wet weight
+	# eq from James Watkins, Lars Rudstam and Kristen Holeck in dry weight
+	# convert to wet weight with 0.2g dry = 1 g wet --> 1g dry = 5g wet
 	const global L_zm = 10^((log10(0.2)+log10(2))/2); # lengths (ESD)
 	const global L_zl = 10^((log10(2)+log10(20))/2);
-	const global M_zm = exp(1.953 + (2.399*log(L_zm)))*1.0e-6; # body mass
-	const global M_zl = exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
+	const global M_zm = 5.0 * exp(1.953 + (2.399*log(L_zm)))*1.0e-6; # body mass
+	const global M_zl = 5.0 * exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
 
 	#! Ratio of initial and final body sizes per size-class
 	#const global Z_s = (0.01*(0.1*20)^3) / (0.01*(0.1*2)^3)
