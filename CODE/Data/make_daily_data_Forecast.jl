@@ -75,13 +75,11 @@ nyr = Int(lstd/365)
 
 #! pull out annual information
 #! transform to size-based model units (g[wet weight], day, m2)
-#! x (106./16) mol N --> mol C
 #! x 12.01  mol C --> grams C
 #! / 0.32 grams C --> dry weight.
 #! *60 *60 *24 --> per day (if flux)
 for i in [1:nyr]
-	id = float64(ID[i,:])
-	#I = find(id[1].<=TIME.<=id[2])
+	id = map(Float64,ID[i,:])
 	I = find(id[1] .<= TIME .<= id[2])
 
 	#! pull raw data out
@@ -116,27 +114,27 @@ for i in [1:nyr]
 		#! indexes
 		m,n = ind2sub((360,200),WID[j]); # spatial index of water cell
 
-		#! v currents
+    #! v currents from m/s to m/s
 		Y = zeros(size(time))
 		Y[:] = v[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
+		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_v[j,1:length(Yi)] = (Yi / 100 * 60 *60 * 24); # m d-1
+		D_v[j,1:length(Yi)] = Yi * 60 *60 * 24; # m d-1
 
-		#! u currents
+		#! u currents from m/s to m/s
 		Y = zeros(size(time))
 		Y[:] = u[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
+		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_u[j,1:length(Yi)] = Yi / 100 * 60 *60 * 24; # m d-1
+		D_u[j,1:length(Yi)] = Yi * 60 *60 * 24; # m d-1
 
 		#! pelagic temperature
 		Y = zeros(size(time))
 		Y[:] = tp[m,n,:] - 273;
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
+		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
 		D_Tp[j,1:length(Yi)] = Yi;
 
@@ -144,67 +142,77 @@ for i in [1:nyr]
 		Y = zeros(size(time))
 		Y[:] = tb[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
+		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_Tb[j,1:length(Yi)] = Yi ## FIX THIS LATER FOR POT TEMP
+		D_Tb[j,1:length(Yi)] = Yi; ## FIX THIS LATER FOR POT TEMP
 		#D_Tb[j,:] = ((Yi+273) / ((Po/Pr[j])^R_Cp) ) - 273
 
-		#! medium zoo: g(DW) m-2
+    #! medium zoo: from mol C m-2 to g(WW) m-2
+    # 12.01 g C in 1 mol C
+    # 0.2 g dry W in 1 g wet W (Megrey et al.)
 		Y = zeros(size(time))
 		Y[:] = zm[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
-        Yi = yi[Xi[1:end-1]];
-		D_Zm[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32;
+		Xi = collect(time[1]:1:time[end]);
+    Yi = yi[Xi[1:end-1]];
+		D_Zm[j,1:length(Yi)] = Yi * 12.01 / 0.2;
 
-		#! large zoo: g(DW) m-2
+		#! large zoo: from mol C m-2 to g(WW) m-2
+    # 12.01 g C in 1 mol C
+    # 0.2 g dry W in 1 g wet W (Megrey et al.)
 		Y = zeros(size(time))
 		Y[:] = zl[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
-        Yi = yi[Xi[1:end-1]];
-		D_Zl[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32;
+		Xi = collect(time[1]:1:time[end]);
+    Yi = yi[Xi[1:end-1]];
+		D_Zl[j,1:length(Yi)] = Yi * 12.01 / 0.2;
 
-		#! medium zoo mortality: g(DW) m-2 day-1
+		#! medium zoo mortality: from mol C m-2 s-1 to g(WW) m-2 d-1
+    # 12.01 g C in 1 mol C
+    # 0.2 g dry W in 1 g wet W (Megrey et al.)
 		Y = zeros(size(time))
 		Y[:] = dzm[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
+		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_dZm[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 * 60 * 60 *24 ;
+		D_dZm[j,1:length(Yi)] = Yi * 12.01 / 0.2 * 60 * 60 *24 ;
 
-		#! large zoo mortality: g(DW) m-2 day-1
+		#! large zoo mortality: from mol C m-2 s-1 to g(WW) m-2 d-1
+    # 12.01 g C in 1 mol C
+    # 0.2 g dry W in 1 g wet W (Megrey et al.)
 		Y = zeros(size(time))
 		Y[:] = dzl[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
-        Yi = yi[Xi[1:end-1]];
-		D_dZl[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
+		Xi = collect(time[1]:1:time[end]);
+    Yi = yi[Xi[1:end-1]];
+		D_dZl[j,1:length(Yi)] = Yi * 12.01 / 0.2 *60 *60 *24;
 
-		#! detrital flux to benthos: g(DW) m-2 day-1
+		#! detrital flux to benthos: from mol C m-2 s-1 to g(WW) m-2 d-1
+    # 12.01 g C in 1 mol C
+    # 0.2 g dry W in 1 g wet W (Megrey et al.)
 		Y = zeros(size(time))
 		Y[:] = det[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi= [time[1]:1:time[end]];
-        Yi = yi[Xi[1:end-1]];
-		D_det[j,1:length(Yi)] = Yi * (106/16) * 12.01 / 0.32 *60 *60 *24;
+		Xi = collect(time[1]:1:time[end]);
+    Yi = yi[Xi[1:end-1]];
+		D_det[j,1:length(Yi)] = Yi * 12.01 / 0.2 *60 *60 *24;
 
 	end
 
 	#! convert to single precision to save space
-	D_Tp  = float64(D_Tp);
-	D_Tb  = float64(D_Tb);
-	D_Zm  = float64(D_Zm);
-	D_Zl  = float64(D_Zl);
-	D_dZm = float64(D_dZm);
-	D_dZl = float64(D_dZl);
-	D_det = float64(D_det);
-	D_u = float64(D_u);
-	D_v = float64(D_v);
+	D_Tp  = map(Float64,D_Tp);
+	D_Tb  = map(Float64,D_Tb);
+	D_Zm  = map(Float64,D_Zm);
+	D_Zl  = map(Float64,D_Zl);
+	D_dZm = map(Float64,D_dZm);
+	D_dZl = map(Float64,D_dZl);
+	D_det = map(Float64,D_det);
+	D_u = map(Float64,D_u);
+	D_v = map(Float64,D_v);
 
 	#! save
 	println(i)
-	ti = string(1000000+i); di = "./JLD/Data_forecast_";
+	ti = string(1000000+i); di = "./JLD/Data_forecast_molCm2_";
 	save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,
 									  "dZm",D_dZm,"dZl",D_dZl,
 									  "Tp",D_Tp,"Tb",D_Tb,
