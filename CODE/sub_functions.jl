@@ -132,8 +132,8 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
   #Con
-	#beta = flev * exp(0.063*temp-15.0) * wgt^(q)
-  beta = 1.0;
+	beta = flev * exp(0.063*temp-15.0) * wgt^(q)
+  #beta = 1.0;
   ENC = sum(enc) # total biomass encountered
 	con = cmax .* (beta .* enc[1]) ./ (cmax + beta.*ENC) # Type II
   return con

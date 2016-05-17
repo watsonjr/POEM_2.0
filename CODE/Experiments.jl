@@ -11,7 +11,7 @@ function Testoneloc()
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-	YEARS = 50
+	YEARS = 100
   DAYS = 365
 
 	#! choose where to run the model
@@ -112,51 +112,39 @@ function Oneloc_hindcast_pristine()
   #ID = 42639 #15105 # Eastern Bering Sea
   #ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # Hawaii
-	ID = 38309 #30335 # Bermuda
-  #ID = 42744 #40403 # North Sea
+	#ID = 38309 #30335 # Bermuda
+  ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
 	const global YEARS = 145; # integration period in years
 	const global DAYS = 365; # number of days
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 	#! Initialize
-	phen=0;
+	phen=1;
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
+	Med_d.td[1] = 0.0;
+	Lrg_d.td[1] = 0.0;
 	ENVR = sub_init_env(ID);
 	#! Storage
-	if (phen == 1)
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_GB_phen_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_GB_phen_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_GB_phen_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_GB_phen_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_GB_phen_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_GB_phen_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_GB_phen_Lrg_p.csv","w")
-		S_Med_f = open("./Data/CSV/Oneloc_pris_S_GB_phen_Med_f.csv","w")
-		S_Med_d = open("./Data/CSV/Oneloc_pris_S_GB_phen_Med_d.csv","w")
-		S_Lrg_p = open("./Data/CSV/Oneloc_pris_S_GB_phen_Lrg_p.csv","w")
-		DD_Med_f = open("./Data/CSV/Oneloc_pris_DD_GB_phen_Med_f.csv","w")
-		DD_Med_d = open("./Data/CSV/Oneloc_pris_DD_GB_phen_Med_d.csv","w")
-		DD_Lrg_p = open("./Data/CSV/Oneloc_pris_DD_GB_phen_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_pris_Rep_GB_phen_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_pris_Rep_GB_phen_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_pris_Rep_GB_phen_Lrg_p.csv","w")
-		Rec_Med_f = open("./Data/CSV/Oneloc_pris_Rec_GB_phen_Med_f.csv","w")
-	  Rec_Med_d = open("./Data/CSV/Oneloc_pris_Rec_GB_phen_Med_d.csv","w")
-		Rec_Lrg_p = open("./Data/CSV/Oneloc_pris_Rec_GB_phen_Lrg_p.csv","w")
+	if (phen==1)
+		Oneloc_hist_Sml_f  = open("./Data/CSV/Oneloc_hist_phen_GB_Sml_f.csv","w")
+		Oneloc_hist_Sml_p  = open("./Data/CSV/Oneloc_hist_phen_GB_Sml_p.csv","w")
+		Oneloc_hist_Sml_d  = open("./Data/CSV/Oneloc_hist_phen_GB_Sml_d.csv","w")
+		Oneloc_hist_Med_f  = open("./Data/CSV/Oneloc_hist_phen_GB_Med_f.csv","w")
+		Oneloc_hist_Med_p  = open("./Data/CSV/Oneloc_hist_phen_GB_Med_p.csv","w")
+		Oneloc_hist_Med_d  = open("./Data/CSV/Oneloc_hist_phen_GB_Med_d.csv","w")
+		Oneloc_hist_Lrg_p  = open("./Data/CSV/Oneloc_hist_phen_GB_Lrg_p.csv","w")
+		Oneloc_hist_Lrg_d  = open("./Data/CSV/Oneloc_hist_phen_GB_Lrg_d.csv","w")
+		Oneloc_hist_Cobalt = open("./Data/CSV/Oneloc_hist_phen_GB_Cobalt.csv","w")
 	else
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_pris_GB_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_pris_GB_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_pris_GB_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_pris_GB_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_pris_GB_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_pris_GB_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_pris_GB_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_pris_Rep_GB_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_pris_Rep_GB_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_pris_Rep_GB_Lrg_p.csv","w")
-		Rec_Med_f = open("./Data/CSV/Oneloc_pris_Rec_GB_Med_f.csv","w")
-	  Rec_Med_d = open("./Data/CSV/Oneloc_pris_Rec_GB_Med_d.csv","w")
-		Rec_Lrg_p = open("./Data/CSV/Oneloc_pris_Rec_GB_Lrg_p.csv","w")
+		Oneloc_hist_Sml_f  = open("./Data/CSV/Oneloc_hist_GB_Sml_f.csv","w")
+		Oneloc_hist_Sml_p  = open("./Data/CSV/Oneloc_hist_GB_Sml_p.csv","w")
+		Oneloc_hist_Sml_d  = open("./Data/CSV/Oneloc_hist_GB_Sml_d.csv","w")
+		Oneloc_hist_Med_f  = open("./Data/CSV/Oneloc_hist_GB_Med_f.csv","w")
+		Oneloc_hist_Med_p  = open("./Data/CSV/Oneloc_hist_GB_Med_p.csv","w")
+		Oneloc_hist_Med_d  = open("./Data/CSV/Oneloc_hist_GB_Med_d.csv","w")
+		Oneloc_hist_Lrg_p  = open("./Data/CSV/Oneloc_hist_GB_Lrg_p.csv","w")
+		Oneloc_hist_Lrg_d  = open("./Data/CSV/Oneloc_hist_GB_Lrg_d.csv","w")
+		Oneloc_hist_Cobalt = open("./Data/CSV/Oneloc_hist_GB_Cobalt.csv","w")
 	end
 
 	################## RUN MODEL
@@ -178,58 +166,31 @@ function Oneloc_hindcast_pristine()
 			###! Future time step
 			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
-			#if (isnan(Sml_f.bio))
-			#	break
-			#end
-
 
 			###! Daily storage
 			#! Save
-			writecsv(Oneloc_pris_Sml_f,Sml_f.bio)
-			writecsv(Oneloc_pris_Sml_p,Sml_p.bio)
-			writecsv(Oneloc_pris_Sml_d,Sml_d.bio)
-			writecsv(Oneloc_pris_Med_f,Med_f.bio)
-			writecsv(Oneloc_pris_Med_p,Med_p.bio)
-			writecsv(Oneloc_pris_Med_d,Med_d.bio)
-			writecsv(Oneloc_pris_Lrg_p,Lrg_p.bio)
-			writecsv(Rep_Med_f,Med_f.rep)
-			writecsv(Rep_Med_d,Med_d.rep)
-			writecsv(Rep_Lrg_p,Lrg_p.rep)
-			writecsv(Rec_Med_f,Med_f.rec)
-			writecsv(Rec_Med_d,Med_d.rec)
-			writecsv(Rec_Lrg_p,Lrg_p.rec)
-			if (phen == 1)
-				writecsv(S_Med_f,Med_f.S[DY-1])
-				writecsv(S_Med_d,Med_d.S[DY-1])
-				writecsv(S_Lrg_p,Lrg_p.S[DY-1])
-				writecsv(DD_Med_f,Med_f.DD)
-				writecsv(DD_Med_d,Med_d.DD)
-				writecsv(DD_Lrg_p,Lrg_p.DD)
-			end
+			writecsv(Oneloc_hist_Sml_f,[Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep Sml_f.rec Sml_f.egg Sml_f.clev Sml_f.DD Sml_f.S[DY-1]])
+			writecsv(Oneloc_hist_Sml_p,[Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.egg Sml_p.clev Sml_p.DD Sml_p.S[DY-1]])
+			writecsv(Oneloc_hist_Sml_d,[Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.egg Sml_d.clev Sml_d.DD Sml_d.S[DY-1]])
+			writecsv(Oneloc_hist_Med_f,[Med_f.bio Med_f.enc_f Med_f.enc_p Med_f.enc_d Med_f.enc_zm Med_f.enc_zl Med_f.enc_be Med_f.con_f Med_f.con_p Med_f.con_d Med_f.con_zm Med_f.con_zl Med_f.con_be Med_f.I Med_f.nu Med_f.gamma Med_f.die Med_f.rep Med_f.rec Med_f.egg Med_f.clev Med_f.DD Med_f.S[DY-1]])
+			writecsv(Oneloc_hist_Med_p,[Med_p.bio Med_p.enc_f Med_p.enc_p Med_p.enc_d Med_p.enc_zm Med_p.enc_zl Med_p.enc_be Med_p.con_f Med_p.con_p Med_p.con_d Med_p.con_zm Med_p.con_zl Med_p.con_be Med_p.I Med_p.nu Med_p.gamma Med_p.die Med_p.rep Med_p.rec Med_p.egg Med_p.clev Med_p.DD Med_p.S[DY-1]])
+			writecsv(Oneloc_hist_Med_d,[Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.egg Med_d.clev Med_d.DD Med_d.S[DY-1]])
+			writecsv(Oneloc_hist_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1]])
+			writecsv(Oneloc_hist_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1]])
+			writecsv(Oneloc_hist_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl])
+
 		end
 	end
 	### close save
-  close(Oneloc_pris_Sml_f)
-  close(Oneloc_pris_Sml_p)
-  close(Oneloc_pris_Sml_d)
-  close(Oneloc_pris_Med_f)
-  close(Oneloc_pris_Med_p)
-  close(Oneloc_pris_Med_d)
-  close(Oneloc_pris_Lrg_p)
-	close(Rep_Med_f)
-	close(Rep_Med_d)
-	close(Rep_Lrg_p)
-	close(Rec_Med_f)
-	close(Rec_Med_d)
-	close(Rec_Lrg_p)
-	if (phen == 1)
-		close(S_Med_f)
-		close(S_Med_d)
-		close(S_Lrg_p)
-		close(DD_Med_f)
-		close(DD_Med_d)
-		close(DD_Lrg_p)
-	end
+  close(Oneloc_hist_Sml_f)
+  close(Oneloc_hist_Sml_p)
+  close(Oneloc_hist_Sml_d)
+  close(Oneloc_hist_Med_f)
+  close(Oneloc_hist_Med_p)
+  close(Oneloc_hist_Med_d)
+  close(Oneloc_hist_Lrg_p)
+	close(Oneloc_hist_Lrg_d)
+	close(Oneloc_hist_Cobalt)
 end
 
 
@@ -250,44 +211,38 @@ function Oneloc_forecast_pristine()
   #ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # Hawaii OS
 	#ID = 38309 #30335 # Bermuda ATS
-  ID = 42744 #40403 # North Sea
+  #ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
 	const global YEARS = 95; # integration period in years
 	const global DAYS = 365; # number of days
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 	#! Initialize
-	phen=1;
+	phen=0;
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
+	Med_d.td[1] = 0.0;
+	Lrg_d.td[1] = 0.0;
 	ENVR = sub_init_env(ID);
 	#! Storage
-	if (phen == 1)
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_fore_pris_GB_phen_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_fore_pris_GB_phen_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_fore_pris_GB_phen_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_fore_pris_GB_phen_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_fore_pris_GB_phen_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_fore_pris_GB_phen_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_GB_phen_Lrg_p.csv","w")
-		S_Med_f = open("./Data/CSV/Oneloc_fore_pris_S_GB_phen_Med_f.csv","w")
-		S_Med_d = open("./Data/CSV/Oneloc_fore_pris_S_GB_phen_Med_d.csv","w")
-		S_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_S_GB_phen_Lrg_p.csv","w")
-		DD_Med_f = open("./Data/CSV/Oneloc_fore_pris_DD_GB_phen_Med_f.csv","w")
-		DD_Med_d = open("./Data/CSV/Oneloc_fore_pris_DD_GB_phen_Med_d.csv","w")
-		DD_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_DD_GB_phen_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_fore_pris_Rep_GB_phen_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_fore_pris_Rep_GB_phen_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_Rep_GB_phen_Lrg_p.csv","w")
+	if (phen==1)
+		Oneloc_fore_Sml_f  = open("./Data/CSV/Oneloc_fore_phen_GB_Sml_f.csv","w")
+		Oneloc_fore_Sml_p  = open("./Data/CSV/Oneloc_fore_phen_GB_Sml_p.csv","w")
+		Oneloc_fore_Sml_d  = open("./Data/CSV/Oneloc_fore_phen_GB_Sml_d.csv","w")
+		Oneloc_fore_Med_f  = open("./Data/CSV/Oneloc_fore_phen_GB_Med_f.csv","w")
+		Oneloc_fore_Med_p  = open("./Data/CSV/Oneloc_fore_phen_GB_Med_p.csv","w")
+		Oneloc_fore_Med_d  = open("./Data/CSV/Oneloc_fore_phen_GB_Med_d.csv","w")
+		Oneloc_fore_Lrg_p  = open("./Data/CSV/Oneloc_fore_phen_GB_Lrg_p.csv","w")
+		Oneloc_fore_Lrg_d  = open("./Data/CSV/Oneloc_fore_phen_GB_Lrg_d.csv","w")
+		Oneloc_fore_Cobalt = open("./Data/CSV/Oneloc_fore_phen_GB_Cobalt.csv","w")
 	else
-		Oneloc_pris_Sml_f = open("./Data/CSV/Oneloc_fore_pris_GB_Sml_f.csv","w")
-		Oneloc_pris_Sml_p = open("./Data/CSV/Oneloc_fore_pris_GB_Sml_p.csv","w")
-		Oneloc_pris_Sml_d = open("./Data/CSV/Oneloc_fore_pris_GB_Sml_d.csv","w")
-		Oneloc_pris_Med_f = open("./Data/CSV/Oneloc_fore_pris_GB_Med_f.csv","w")
-		Oneloc_pris_Med_p = open("./Data/CSV/Oneloc_fore_pris_GB_Med_p.csv","w")
-		Oneloc_pris_Med_d = open("./Data/CSV/Oneloc_fore_pris_GB_Med_d.csv","w")
-		Oneloc_pris_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_GB_Lrg_p.csv","w")
-		Rep_Med_f = open("./Data/CSV/Oneloc_fore_pris_Rep_GB_Med_f.csv","w")
-		Rep_Med_d = open("./Data/CSV/Oneloc_fore_pris_Rep_GB_Med_d.csv","w")
-		Rep_Lrg_p = open("./Data/CSV/Oneloc_fore_pris_Rep_GB_Lrg_p.csv","w")
+		Oneloc_fore_Sml_f  = open("./Data/CSV/Oneloc_fore_GB_Sml_f.csv","w")
+		Oneloc_fore_Sml_p  = open("./Data/CSV/Oneloc_fore_GB_Sml_p.csv","w")
+		Oneloc_fore_Sml_d  = open("./Data/CSV/Oneloc_fore_GB_Sml_d.csv","w")
+		Oneloc_fore_Med_f  = open("./Data/CSV/Oneloc_fore_GB_Med_f.csv","w")
+		Oneloc_fore_Med_p  = open("./Data/CSV/Oneloc_fore_GB_Med_p.csv","w")
+		Oneloc_fore_Med_d  = open("./Data/CSV/Oneloc_fore_GB_Med_d.csv","w")
+		Oneloc_fore_Lrg_p  = open("./Data/CSV/Oneloc_fore_GB_Lrg_p.csv","w")
+		Oneloc_fore_Lrg_d  = open("./Data/CSV/Oneloc_fore_GB_Lrg_d.csv","w")
+		Oneloc_fore_Cobalt = open("./Data/CSV/Oneloc_fore_GB_Cobalt.csv","w")
 	end
 
 	################## RUN MODEL
@@ -311,45 +266,28 @@ function Oneloc_forecast_pristine()
 			DY+=1
 			###! Daily storage
 			#! Save
-			writecsv(Oneloc_pris_Sml_f,Sml_f.bio)
-			writecsv(Oneloc_pris_Sml_p,Sml_p.bio)
-			writecsv(Oneloc_pris_Sml_d,Sml_d.bio)
-			writecsv(Oneloc_pris_Med_f,Med_f.bio)
-			writecsv(Oneloc_pris_Med_p,Med_p.bio)
-			writecsv(Oneloc_pris_Med_d,Med_d.bio)
-			writecsv(Oneloc_pris_Lrg_p,Lrg_p.bio)
-			writecsv(Rep_Med_f,Med_f.rep)
-			writecsv(Rep_Med_d,Med_d.rep)
-			writecsv(Rep_Lrg_p,Lrg_p.rep)
-			if (phen == 1)
-				writecsv(S_Med_f,Med_f.S[DY-1])
-				writecsv(S_Med_d,Med_d.S[DY-1])
-				writecsv(S_Lrg_p,Lrg_p.S[DY-1])
-				writecsv(DD_Med_f,Med_f.DD)
-				writecsv(DD_Med_d,Med_d.DD)
-				writecsv(DD_Lrg_p,Lrg_p.DD)
-			end
+			writecsv(Oneloc_fore_Sml_f,[Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep Sml_f.rec Sml_f.egg Sml_f.clev Sml_f.DD Sml_f.S[DY-1]])
+			writecsv(Oneloc_fore_Sml_p,[Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.egg Sml_p.clev Sml_p.DD Sml_p.S[DY-1]])
+			writecsv(Oneloc_fore_Sml_d,[Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.egg Sml_d.clev Sml_d.DD Sml_d.S[DY-1]])
+			writecsv(Oneloc_fore_Med_f,[Med_f.bio Med_f.enc_f Med_f.enc_p Med_f.enc_d Med_f.enc_zm Med_f.enc_zl Med_f.enc_be Med_f.con_f Med_f.con_p Med_f.con_d Med_f.con_zm Med_f.con_zl Med_f.con_be Med_f.I Med_f.nu Med_f.gamma Med_f.die Med_f.rep Med_f.rec Med_f.egg Med_f.clev Med_f.DD Med_f.S[DY-1]])
+			writecsv(Oneloc_fore_Med_p,[Med_p.bio Med_p.enc_f Med_p.enc_p Med_p.enc_d Med_p.enc_zm Med_p.enc_zl Med_p.enc_be Med_p.con_f Med_p.con_p Med_p.con_d Med_p.con_zm Med_p.con_zl Med_p.con_be Med_p.I Med_p.nu Med_p.gamma Med_p.die Med_p.rep Med_p.rec Med_p.egg Med_p.clev Med_p.DD Med_p.S[DY-1]])
+			writecsv(Oneloc_fore_Med_d,[Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.egg Med_d.clev Med_d.DD Med_d.S[DY-1]])
+			writecsv(Oneloc_fore_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1]])
+			writecsv(Oneloc_fore_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1]])
+			writecsv(Oneloc_fore_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl])
+
 		end
 	end
 	### close save
-  close(Oneloc_pris_Sml_f)
-  close(Oneloc_pris_Sml_p)
-  close(Oneloc_pris_Sml_d)
-  close(Oneloc_pris_Med_f)
-  close(Oneloc_pris_Med_p)
-  close(Oneloc_pris_Med_d)
-  close(Oneloc_pris_Lrg_p)
-	close(Rep_Med_f)
-	close(Rep_Med_d)
-	close(Rep_Lrg_p)
-	if (phen == 1)
-		close(S_Med_f)
-		close(S_Med_d)
-		close(S_Lrg_p)
-		close(DD_Med_f)
-		close(DD_Med_d)
-		close(DD_Lrg_p)
-	end
+  close(Oneloc_fore_Sml_f)
+  close(Oneloc_fore_Sml_p)
+  close(Oneloc_fore_Sml_d)
+  close(Oneloc_fore_Med_f)
+  close(Oneloc_fore_Med_p)
+  close(Oneloc_fore_Med_d)
+  close(Oneloc_fore_Lrg_p)
+	close(Oneloc_fore_Lrg_d)
+	close(Oneloc_fore_Cobalt)
 end
 
 

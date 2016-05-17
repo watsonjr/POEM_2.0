@@ -45,6 +45,7 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	# time loop
 	for time=1:nt-1
 		t = time
+		#println(t)
 		wrk1 = zeros(Float64,ni,nj);
 	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj)
 		for j=jsd:jed
@@ -52,10 +53,9 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 					Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
 			end
 		end
-
 		for j=jsd:jed
 	    for i=1:ied
-	      Tfield[i,j,time+1]=(Tfield[i,j,time] + dtime.*Ttendency[i,j,time])
+				Tfield[i,j,time+1]=(Tfield[i,j,time] + dtime.*Ttendency[i,j,time])
 	    end
 	  end
 	end

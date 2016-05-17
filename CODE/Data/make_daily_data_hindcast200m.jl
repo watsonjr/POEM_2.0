@@ -29,10 +29,10 @@ Tb = ncread("./GCM/Hindcast/ocean.186101-200512.bottom_temp.nc","bottom_temp");
 Tp = ncread("./GCM/Hindcast/ocean.186101-200512.temp_100_avg.nc","TEMP_100");
 
 #! Zooplankton abundances: medium and large (mol(N) m-2)
-Zm=ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc",
-	"nmdz_100");
-Zl=ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nlgz_100.nc",
-	"nlgz_100");
+Zm=ncread("./GCM/Hindcast/feb152013_run25_ocean_cobalt.1988-2007_Z200.nc",
+	"MEDZOO_BIOMASS");
+Zl=ncread("./GCM/Hindcast/feb152013_run25_ocean_cobalt.1988-2007_Z200.nc",
+	"LARGEZOO_BIOMASS");
 
 #! Zooplankton mortality rates: medium and large size: (mol(N) m-2 s-1)
 dZm=ncread("./GCM/Hindcast/ocean_cobalt_miscflux_100.186101-200512.jhploss_nmdz_100.nc",
@@ -44,8 +44,15 @@ dZl=ncread("./GCM/Hindcast/ocean_cobalt_miscflux_100.186101-200512.jhploss_nlgz_
 dDet=ncread("./GCM/Hindcast/ocean_cobalt_btm.186101-200512.fndet_btm.nc","fndet_btm");
 
 #! Ocean currents
-U = ncread("./GCM/Hindcast/ocean.186101-200512.u_100_avg.nc","U_100");
-V = ncread("./GCM/Hindcast/ocean.186101-200512.v_100_avg.nc","V_100");
+# New 200m depth-weighted averages calc at centers of cell from corners
+#matlab (works)
+#file = matopen("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_u200_v200.mat")
+#U = read(file, "u200")
+#V = read(file, "v200")
+#close(file)
+#netcdf (works)
+U = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_u200_v200.nc","Ut_200");
+V = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_u200_v200.nc","Vt_200");
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
@@ -197,7 +204,5 @@ for i in [1:nyr]
 									  "dZm",D_dZm,"dZl",D_dZl,
 									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det,
                     "U",D_u,"V",D_v);
-
-                    save(string(di,ti[2:end],".jld"), "U",D_u,"V",D_v);
 
 end

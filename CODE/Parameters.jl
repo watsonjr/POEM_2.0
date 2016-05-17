@@ -94,9 +94,6 @@ function make_parameters(harv)
 	const global M_zl = 5.0 * exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
 
 	#! Ratio of initial and final body sizes per size-class
-	#const global Z_s = (0.01*(0.1*20)^3) / (0.01*(0.1*2)^3)
-	#const global Z_m = (0.01*(0.1*200)^3) / (0.01*(0.1*20)^3)
-	#const global Z_l = (0.01*(0.1*2000)^3) / (0.01*(0.1*200)^3)
 	const global Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3)
 	const global Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3)
 	const global Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3)
@@ -121,7 +118,7 @@ function make_parameters(harv)
 	const global h = 60.0 / 365.0 # h=60 g^(0.25)/yr at 15C in Cmax eq
 	# tune so Cobs/Cmax ~ 0.6
 	# flev=0.5 led to 96-98% time zoop overconsumed, clev= 0.01-0.98
-	const global flev = 0.5
+	const global flev = 5000
 	const global q = 1.0 # q=0.75-1 in beta eq in consumption
 
 	###! Swimming speed (Megrey 2007): m d-1
@@ -130,10 +127,6 @@ function make_parameters(harv)
 	#const global U_s = ((3.9*M_s.^0.13)/100*60*60*24)
 	#const global U_m = ((3.9*M_m.^0.13)/100*60*60*24)
 	#const global U_l = ((3.9*M_l.^0.13)/100*60*60*24)
-  # With temp-dep
-	#const global PI_U = ((3.9*M_s.^0.13 * exp(0.149*T)) /100*60*60*24)
-	#const global PL_U = ((3.9*M_m.^0.13 * exp(0.149*T)) /100*60*60*24)
-	#const global DE_U = ((3.9*M_l.^0.13 * exp(0.149*T)) /100*60*60*24)
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
