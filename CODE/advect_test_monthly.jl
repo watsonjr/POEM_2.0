@@ -15,8 +15,8 @@ v200 = v200[:,:,1:12];
 
 bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 #bio[:,84:109] = 1.0e6; #seed equator
-bio[220:240,:] = 1.0e6; #seed Atl
-#bio[59:79,:] = 1.0e6; #seed Pac
+#bio[220:240,:] = 1.0e6; #seed Atl
+bio[59:79,:] = 1.0e6; #seed Pac
 #bio[5:25,:] = 1.0e6; #seed Indian W
 #bio[340:360,:] = 1.0e6; #seed Indian E
 #bio[:,181:200] = 1.0e6; #seed Arctic
@@ -26,7 +26,7 @@ ni, nj, nt = size(u200);
 const global MOS = 12; # number of mos
 const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31])
 
-bio2D = open("./Data/CSV/bio_2Dadvect_test_Atl_vel200_mo.csv","w")
+bio2D = open("./Data/CSV/bio_2Dadvect_test_Pac_vel200_mo.csv","w")
 
 tstart = now()
 for MO = 1:MOS
@@ -34,7 +34,7 @@ for MO = 1:MOS
 	U = u200[:,:,MO] * 60 *60 *24;
 	V = v200[:,:,MO] * 60 *60 *24;
 	for DY = 1:MNTH[MO]
-		println(DY)
+		println(MO," , ", DY)
 		bio = sub_advection(GRD,bio,U,V,ni,nj)
 		biov=collect(bio[ID])
 		if (isnan(sum(biov)))

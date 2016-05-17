@@ -29,7 +29,7 @@
 ### ADVECTION ###-------------------------------
 function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	# time steps within one day
-	ntime = 24.0
+	ntime = 48.0
 	nt = Int(ntime)
 	dtime = 1.0/ntime
 	# biol concentration
