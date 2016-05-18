@@ -5,8 +5,12 @@
 clear all
 close all
 
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/Megrey_swim_encounter_beta1/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Megrey_swim_encounter_beta1/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/beta_flev5000/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/beta_flev5000/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS'};
 
@@ -471,13 +475,13 @@ for s=1:length(spots)
     
     st=1:365:length(yr);
     en=365:365:length(yr);
-    SPy = NaN*ones(50,1);
+    SPy = NaN*ones(100,1);
     SFy = SPy;
     SDy = SPy;
     PAy = SPy;
     FAy = SPy;
     DAy = SPy;
-    for n=1:50
+    for n=1:100
         SPy(n) = nansum(SPL(st(n):en(n)));
         SFy(n) = nansum(SFL(st(n):en(n)));
         SDy(n) = nansum(SDL(st(n):en(n)));
@@ -489,20 +493,20 @@ for s=1:length(spots)
     %
     figure(11)
     subplot(3,1,3)
-    plot(1:50,SPy,'k','Linewidth',2); hold on;
-    xlim([1 50])
+    plot(1:100,SPy,'k','Linewidth',2); hold on;
+    xlim([1 100])
     ylabel('Recruits (g m^-^2)')
     title('Pelagic piscivores')
     
     subplot(3,1,1)
-    plot(1:50,SFy,'b','Linewidth',2); hold on;
-    xlim([1 50])
+    plot(1:100,SFy,'b','Linewidth',2); hold on;
+    xlim([1 100])
     ylabel('Recruits (g m^-^2)')
     title({loc; 'Forage fishes'})
     
     subplot(3,1,2)
-    plot(1:50,SDy,'r','Linewidth',2); hold on;
-    xlim([1 50])
+    plot(1:100,SDy,'r','Linewidth',2); hold on;
+    xlim([1 100])
     ylabel('Recruits (g m^-^2)')
     title('Demersal piscivores')
     print('-dpng',[fpath sname lname 'oneloc_recruitment.png'])

@@ -70,7 +70,7 @@ function make_parameters(harv)
 	end
 
 	#! Benthic-pelagic coupling cutoff (depth, m)
-	const global PI_be_cutoff = 500
+	const global PI_be_cutoff = 200
 
 	#! body lengths (mm)
 	const global L_s = 10^((log10(2)+log10(20))/2); # small

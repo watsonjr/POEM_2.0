@@ -91,7 +91,7 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   #Metabolism
 	bas = fcrit * cmax
   #Megrey respiration rate (gprey/gfish/d) uses swim in (cm/s)
-  met = bas * exp(0.03*U) * 5.258
+  met = bas #* exp(0.03*U) * 5.258
   return met
 end
 

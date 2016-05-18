@@ -6,12 +6,16 @@
 clear all
 close all
 
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/Megrey_swim_encounter_beta1/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Megrey_swim_encounter_beta1/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/Megrey_swim_encounter_beta1/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Megrey_swim_encounter_beta1/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/beta_flev5000/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/beta_flev5000/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
 
 sname = 'Spinup_';
-%sname2 = '';
-sname2 = 'phen_';
+sname2 = '';
+%sname2 = 'phen_';
 
 load([fpath sname sname2 'consump.mat'],'mclev','Zcon');
 
@@ -172,6 +176,7 @@ for s=1:length(spots)
     subplot(2,3,s)
     bar(log(all_sum))
     xlim([0 4])
+    ylim([-20 10])
     if (s==4)
         legend('F','P','D')
         legend('location','southeast')
@@ -206,32 +211,32 @@ print(f11,'-dpng',[fpath sname sname2 'All_oneloc_tot_biomass_spec_FPD.png'])
 %% All on one
 figure(7)
 subplot(2,3,1)
-bar(Fsum)
+bar(log(Fsum))
 xlim([0 4])
-ylabel('Total Biomass (g m^-^2) in final year')
+ylabel('log Total Biomass (g m^-^2) in final year')
+legend(spots)
 title('Forage')
 
 subplot(2,3,2)
-bar(Psum)
+bar(log(Psum))
 title('Pel Pisc')
 
 subplot(2,3,3)
-bar(Dsum)
+bar(log(Dsum))
 title('Dem Pisc')
 
 subplot(2,3,4)
-bar(Fmean)
+bar(log(Fmean))
 xlim([0 4])
-legend(spots)
 xlabel('Stage')
-ylabel('Mean Biomass (g m^-^2) in final year')
+ylabel('log Mean Biomass (g m^-^2) in final year')
 
 subplot(2,3,5)
-bar(Pmean)
+bar(log(Pmean))
 xlabel('Stage')
 
 subplot(2,3,6)
-bar(Dmean)
+bar(log(Dmean))
 xlabel('Stage')
 print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 
