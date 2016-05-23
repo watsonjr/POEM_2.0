@@ -8,8 +8,10 @@ function Testoneloc()
 	#! setup spinup (loop first year of COBALT)
   COBALT = load("./Data/JLD/Data_hindcast_molCm2_000120.jld"); # 1980
 	#! Add phenology params from csv file with ID as row
-	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
-	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
+	#Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
+	global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
+	global TrefB = readdlm("./Data/grid_phenol_T0b_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for bottom
+	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	YEARS = 100
   DAYS = 365
@@ -19,9 +21,9 @@ function Testoneloc()
 	#XY = zeros(Int,200,360); # choose a particulat place or everywhere
 	XY = zeros(Int,360,200);
   XY[GRD["ID"]] = collect(1:GRD["N"])
-	ID = 40319 #30181 # Georges Bank
+	#ID = 40319 #30181 # Georges Bank
   #ID = 42639 #15105 # Eastern Bering Sea
-  #ID = 41782 #19526 # Ocean Station Papa
+  ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # Hawaii OT
 	#ID = 38309 #30335 # Bermuda ATS
   #ID = 42744 #40403 # North Sea
@@ -35,30 +37,37 @@ function Testoneloc()
 
 	#! Storage
 	if (phen==1)
-		Spinup_Sml_f  = open("./Data/CSV/Spinup_phen_BATS_Sml_f.csv","w")
-		Spinup_Sml_p  = open("./Data/CSV/Spinup_phen_BATS_Sml_p.csv","w")
-		Spinup_Sml_d  = open("./Data/CSV/Spinup_phen_BATS_Sml_d.csv","w")
-		Spinup_Med_f  = open("./Data/CSV/Spinup_phen_BATS_Med_f.csv","w")
-		Spinup_Med_p  = open("./Data/CSV/Spinup_phen_BATS_Med_p.csv","w")
-		Spinup_Med_d  = open("./Data/CSV/Spinup_phen_BATS_Med_d.csv","w")
-		Spinup_Lrg_p  = open("./Data/CSV/Spinup_phen_BATS_Lrg_p.csv","w")
-		Spinup_Lrg_d  = open("./Data/CSV/Spinup_phen_BATS_Lrg_d.csv","w")
-		Spinup_Cobalt = open("./Data/CSV/Spinup_phen_BATS_Cobalt.csv","w")
+		Spinup_Sml_f  = open("./Data/CSV/Spinup_phen_OSP_Sml_f.csv","w")
+		Spinup_Sml_p  = open("./Data/CSV/Spinup_phen_OSP_Sml_p.csv","w")
+		Spinup_Sml_d  = open("./Data/CSV/Spinup_phen_OSP_Sml_d.csv","w")
+		Spinup_Med_f  = open("./Data/CSV/Spinup_phen_OSP_Med_f.csv","w")
+		Spinup_Med_p  = open("./Data/CSV/Spinup_phen_OSP_Med_p.csv","w")
+		Spinup_Med_d  = open("./Data/CSV/Spinup_phen_OSP_Med_d.csv","w")
+		Spinup_Lrg_p  = open("./Data/CSV/Spinup_phen_OSP_Lrg_p.csv","w")
+		Spinup_Lrg_d  = open("./Data/CSV/Spinup_phen_OSP_Lrg_d.csv","w")
+		Spinup_Cobalt = open("./Data/CSV/Spinup_phen_OSP_Cobalt.csv","w")
 	else
-		Spinup_Sml_f  = open("./Data/CSV/Spinup_BATS_Sml_f.csv","w")
-		Spinup_Sml_p  = open("./Data/CSV/Spinup_BATS_Sml_p.csv","w")
-		Spinup_Sml_d  = open("./Data/CSV/Spinup_BATS_Sml_d.csv","w")
-		Spinup_Med_f  = open("./Data/CSV/Spinup_BATS_Med_f.csv","w")
-		Spinup_Med_p  = open("./Data/CSV/Spinup_BATS_Med_p.csv","w")
-		Spinup_Med_d  = open("./Data/CSV/Spinup_BATS_Med_d.csv","w")
-		Spinup_Lrg_p  = open("./Data/CSV/Spinup_BATS_Lrg_p.csv","w")
-		Spinup_Lrg_d  = open("./Data/CSV/Spinup_BATS_Lrg_d.csv","w")
-		Spinup_Cobalt = open("./Data/CSV/Spinup_BATS_Cobalt.csv","w")
+		Spinup_Sml_f  = open("./Data/CSV/Spinup_OSP_Sml_f.csv","w")
+		Spinup_Sml_p  = open("./Data/CSV/Spinup_OSP_Sml_p.csv","w")
+		Spinup_Sml_d  = open("./Data/CSV/Spinup_OSP_Sml_d.csv","w")
+		Spinup_Med_f  = open("./Data/CSV/Spinup_OSP_Med_f.csv","w")
+		Spinup_Med_p  = open("./Data/CSV/Spinup_OSP_Med_p.csv","w")
+		Spinup_Med_d  = open("./Data/CSV/Spinup_OSP_Med_d.csv","w")
+		Spinup_Lrg_p  = open("./Data/CSV/Spinup_OSP_Lrg_p.csv","w")
+		Spinup_Lrg_d  = open("./Data/CSV/Spinup_OSP_Lrg_d.csv","w")
+		Spinup_Cobalt = open("./Data/CSV/Spinup_OSP_Cobalt.csv","w")
 	end
 
 	#! Iterate forward in time with NO fishing
 	for YR = 1:YEARS # years
 
+		#reset spawning flag
+		if (phen == 1)
+			Med_f.S = zeros(Float64,NX,DAYS)
+			Lrg_d.S = zeros(Float64,NX,DAYS)
+			Lrg_p.S = zeros(Float64,NX,DAYS)
+		end
+		
 		for DAY = 1:DT:DAYS # days
 
 			###! ticker
@@ -66,7 +75,7 @@ function Testoneloc()
 			println(YR," , ", mod(DY,365))
 
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
 
 			#! Save
@@ -102,17 +111,19 @@ function Oneloc_hindcast_pristine()
 	make_parameters(0) # make core parameters/constants
 	#! Setup
 	#! Load COBALT and grid data
-	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
-	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
+	#Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
+	global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
+	global TrefB = readdlm("./Data/grid_phenol_T0b_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for bottom
+	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 	XY = zeros(Int,360,200);
   XY[GRD["ID"]] = collect(1:GRD["N"])
 	#ID = 40319 #30181 # Georges Bank
   #ID = 42639 #15105 # Eastern Bering Sea
-  #ID = 41782 #19526 # Ocean Station Papa
+  ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # Hawaii
-	ID = 38309 #30335 # Bermuda
+	#ID = 38309 #30335 # Bermuda
   #ID = 42744 #40403 # North Sea
 	const global NX = length(ID)
 	const global YEARS = 145; # integration period in years
@@ -126,25 +137,25 @@ function Oneloc_hindcast_pristine()
 	ENVR = sub_init_env(ID);
 	#! Storage
 	if (phen==1)
-		Oneloc_hist_Sml_f  = open("./Data/CSV/Oneloc_hist_phen_BATS_Sml_f.csv","w")
-		Oneloc_hist_Sml_p  = open("./Data/CSV/Oneloc_hist_phen_BATS_Sml_p.csv","w")
-		Oneloc_hist_Sml_d  = open("./Data/CSV/Oneloc_hist_phen_BATS_Sml_d.csv","w")
-		Oneloc_hist_Med_f  = open("./Data/CSV/Oneloc_hist_phen_BATS_Med_f.csv","w")
-		Oneloc_hist_Med_p  = open("./Data/CSV/Oneloc_hist_phen_BATS_Med_p.csv","w")
-		Oneloc_hist_Med_d  = open("./Data/CSV/Oneloc_hist_phen_BATS_Med_d.csv","w")
-		Oneloc_hist_Lrg_p  = open("./Data/CSV/Oneloc_hist_phen_BATS_Lrg_p.csv","w")
-		Oneloc_hist_Lrg_d  = open("./Data/CSV/Oneloc_hist_phen_BATS_Lrg_d.csv","w")
-		Oneloc_hist_Cobalt = open("./Data/CSV/Oneloc_hist_phen_BATS_Cobalt.csv","w")
+		Oneloc_hist_Sml_f  = open("./Data/CSV/Oneloc_hist_phen_OSP_Sml_f.csv","w")
+		Oneloc_hist_Sml_p  = open("./Data/CSV/Oneloc_hist_phen_OSP_Sml_p.csv","w")
+		Oneloc_hist_Sml_d  = open("./Data/CSV/Oneloc_hist_phen_OSP_Sml_d.csv","w")
+		Oneloc_hist_Med_f  = open("./Data/CSV/Oneloc_hist_phen_OSP_Med_f.csv","w")
+		Oneloc_hist_Med_p  = open("./Data/CSV/Oneloc_hist_phen_OSP_Med_p.csv","w")
+		Oneloc_hist_Med_d  = open("./Data/CSV/Oneloc_hist_phen_OSP_Med_d.csv","w")
+		Oneloc_hist_Lrg_p  = open("./Data/CSV/Oneloc_hist_phen_OSP_Lrg_p.csv","w")
+		Oneloc_hist_Lrg_d  = open("./Data/CSV/Oneloc_hist_phen_OSP_Lrg_d.csv","w")
+		Oneloc_hist_Cobalt = open("./Data/CSV/Oneloc_hist_phen_OSP_Cobalt.csv","w")
 	else
-		Oneloc_hist_Sml_f  = open("./Data/CSV/Oneloc_hist_BATS_Sml_f.csv","w")
-		Oneloc_hist_Sml_p  = open("./Data/CSV/Oneloc_hist_BATS_Sml_p.csv","w")
-		Oneloc_hist_Sml_d  = open("./Data/CSV/Oneloc_hist_BATS_Sml_d.csv","w")
-		Oneloc_hist_Med_f  = open("./Data/CSV/Oneloc_hist_BATS_Med_f.csv","w")
-		Oneloc_hist_Med_p  = open("./Data/CSV/Oneloc_hist_BATS_Med_p.csv","w")
-		Oneloc_hist_Med_d  = open("./Data/CSV/Oneloc_hist_BATS_Med_d.csv","w")
-		Oneloc_hist_Lrg_p  = open("./Data/CSV/Oneloc_hist_BATS_Lrg_p.csv","w")
-		Oneloc_hist_Lrg_d  = open("./Data/CSV/Oneloc_hist_BATS_Lrg_d.csv","w")
-		Oneloc_hist_Cobalt = open("./Data/CSV/Oneloc_hist_BATS_Cobalt.csv","w")
+		Oneloc_hist_Sml_f  = open("./Data/CSV/Oneloc_hist_OSP_Sml_f.csv","w")
+		Oneloc_hist_Sml_p  = open("./Data/CSV/Oneloc_hist_OSP_Sml_p.csv","w")
+		Oneloc_hist_Sml_d  = open("./Data/CSV/Oneloc_hist_OSP_Sml_d.csv","w")
+		Oneloc_hist_Med_f  = open("./Data/CSV/Oneloc_hist_OSP_Med_f.csv","w")
+		Oneloc_hist_Med_p  = open("./Data/CSV/Oneloc_hist_OSP_Med_p.csv","w")
+		Oneloc_hist_Med_d  = open("./Data/CSV/Oneloc_hist_OSP_Med_d.csv","w")
+		Oneloc_hist_Lrg_p  = open("./Data/CSV/Oneloc_hist_OSP_Lrg_p.csv","w")
+		Oneloc_hist_Lrg_d  = open("./Data/CSV/Oneloc_hist_OSP_Lrg_d.csv","w")
+		Oneloc_hist_Cobalt = open("./Data/CSV/Oneloc_hist_OSP_Cobalt.csv","w")
 	end
 
 	################## RUN MODEL
@@ -156,7 +167,7 @@ function Oneloc_hindcast_pristine()
 		#reset spawning flag
 		if (phen == 1)
 			Med_f.S = zeros(Float64,NX,DAYS)
-			Med_d.S = zeros(Float64,NX,DAYS)
+			Lrg_d.S = zeros(Float64,NX,DAYS)
 			Lrg_p.S = zeros(Float64,NX,DAYS)
 		end
 		for DAY = 1:DT:DAYS # days
@@ -164,7 +175,7 @@ function Oneloc_hindcast_pristine()
 			DY  = Int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
 
 			###! Daily storage
@@ -201,14 +212,17 @@ function Oneloc_forecast_pristine()
 	make_parameters(0) # make core parameters/constants
 	#! Setup
 	#! Load COBALT and grid data
-	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
-	Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
+	#Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
+	global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
+	global TrefB = readdlm("./Data/grid_phenol_T0b_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for bottom
+	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
+	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_forecast_NOTflipped.jld")
 	XY = zeros(Int,360,200);
   XY[GRD["ID"]] = collect(1:GRD["N"])
 	#ID = 40319 #30181 # Georges Bank
   #ID = 42639 #15105 # Eastern Bering Sea
-  #ID = 41782 #19526 # Ocean Station Papa
+  ID = 41782 #19526 # Ocean Station Papa
   #ID = 36334 #17377 # Hawaii OS
 	#ID = 38309 #30335 # Bermuda ATS
   #ID = 42744 #40403 # North Sea
@@ -217,32 +231,32 @@ function Oneloc_forecast_pristine()
 	const global DAYS = 365; # number of days
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 	#! Initialize
-	phen=0;
+	phen=1;
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
 	Med_d.td[1] = 0.0;
 	Lrg_d.td[1] = 0.0;
 	ENVR = sub_init_env(ID);
 	#! Storage
 	if (phen==1)
-		Oneloc_fore_Sml_f  = open("./Data/CSV/Oneloc_fore_phen_BATS_Sml_f.csv","w")
-		Oneloc_fore_Sml_p  = open("./Data/CSV/Oneloc_fore_phen_BATS_Sml_p.csv","w")
-		Oneloc_fore_Sml_d  = open("./Data/CSV/Oneloc_fore_phen_BATS_Sml_d.csv","w")
-		Oneloc_fore_Med_f  = open("./Data/CSV/Oneloc_fore_phen_BATS_Med_f.csv","w")
-		Oneloc_fore_Med_p  = open("./Data/CSV/Oneloc_fore_phen_BATS_Med_p.csv","w")
-		Oneloc_fore_Med_d  = open("./Data/CSV/Oneloc_fore_phen_BATS_Med_d.csv","w")
-		Oneloc_fore_Lrg_p  = open("./Data/CSV/Oneloc_fore_phen_BATS_Lrg_p.csv","w")
-		Oneloc_fore_Lrg_d  = open("./Data/CSV/Oneloc_fore_phen_BATS_Lrg_d.csv","w")
-		Oneloc_fore_Cobalt = open("./Data/CSV/Oneloc_fore_phen_BATS_Cobalt.csv","w")
+		Oneloc_fore_Sml_f  = open("./Data/CSV/Oneloc_fore_phen_OSP_Sml_f.csv","w")
+		Oneloc_fore_Sml_p  = open("./Data/CSV/Oneloc_fore_phen_OSP_Sml_p.csv","w")
+		Oneloc_fore_Sml_d  = open("./Data/CSV/Oneloc_fore_phen_OSP_Sml_d.csv","w")
+		Oneloc_fore_Med_f  = open("./Data/CSV/Oneloc_fore_phen_OSP_Med_f.csv","w")
+		Oneloc_fore_Med_p  = open("./Data/CSV/Oneloc_fore_phen_OSP_Med_p.csv","w")
+		Oneloc_fore_Med_d  = open("./Data/CSV/Oneloc_fore_phen_OSP_Med_d.csv","w")
+		Oneloc_fore_Lrg_p  = open("./Data/CSV/Oneloc_fore_phen_OSP_Lrg_p.csv","w")
+		Oneloc_fore_Lrg_d  = open("./Data/CSV/Oneloc_fore_phen_OSP_Lrg_d.csv","w")
+		Oneloc_fore_Cobalt = open("./Data/CSV/Oneloc_fore_phen_OSP_Cobalt.csv","w")
 	else
-		Oneloc_fore_Sml_f  = open("./Data/CSV/Oneloc_fore_BATS_Sml_f.csv","w")
-		Oneloc_fore_Sml_p  = open("./Data/CSV/Oneloc_fore_BATS_Sml_p.csv","w")
-		Oneloc_fore_Sml_d  = open("./Data/CSV/Oneloc_fore_BATS_Sml_d.csv","w")
-		Oneloc_fore_Med_f  = open("./Data/CSV/Oneloc_fore_BATS_Med_f.csv","w")
-		Oneloc_fore_Med_p  = open("./Data/CSV/Oneloc_fore_BATS_Med_p.csv","w")
-		Oneloc_fore_Med_d  = open("./Data/CSV/Oneloc_fore_BATS_Med_d.csv","w")
-		Oneloc_fore_Lrg_p  = open("./Data/CSV/Oneloc_fore_BATS_Lrg_p.csv","w")
-		Oneloc_fore_Lrg_d  = open("./Data/CSV/Oneloc_fore_BATS_Lrg_d.csv","w")
-		Oneloc_fore_Cobalt = open("./Data/CSV/Oneloc_fore_BATS_Cobalt.csv","w")
+		Oneloc_fore_Sml_f  = open("./Data/CSV/Oneloc_fore_OSP_Sml_f.csv","w")
+		Oneloc_fore_Sml_p  = open("./Data/CSV/Oneloc_fore_OSP_Sml_p.csv","w")
+		Oneloc_fore_Sml_d  = open("./Data/CSV/Oneloc_fore_OSP_Sml_d.csv","w")
+		Oneloc_fore_Med_f  = open("./Data/CSV/Oneloc_fore_OSP_Med_f.csv","w")
+		Oneloc_fore_Med_p  = open("./Data/CSV/Oneloc_fore_OSP_Med_p.csv","w")
+		Oneloc_fore_Med_d  = open("./Data/CSV/Oneloc_fore_OSP_Med_d.csv","w")
+		Oneloc_fore_Lrg_p  = open("./Data/CSV/Oneloc_fore_OSP_Lrg_p.csv","w")
+		Oneloc_fore_Lrg_d  = open("./Data/CSV/Oneloc_fore_OSP_Lrg_d.csv","w")
+		Oneloc_fore_Cobalt = open("./Data/CSV/Oneloc_fore_OSP_Cobalt.csv","w")
 	end
 
 	################## RUN MODEL
@@ -253,16 +267,16 @@ function Oneloc_forecast_pristine()
 		COBALT = load(string("./Data/JLD/Data_forecast_molCm2_",ti[2:end],".jld"));
 		#reset spawning flag
 		if (phen == 1)
-			Med_f.S = ones(Float64,NX,DAYS)
-			Med_d.S = ones(Float64,NX,DAYS)
-			Lrg_p.S = ones(Float64,NX,DAYS)
+			Med_f.S = zeros(Float64,NX,DAYS)
+			Lrg_d.S = zeros(Float64,NX,DAYS)
+			Lrg_p.S = zeros(Float64,NX,DAYS)
 		end
 		for DAY = 1:DT:DAYS # days
 			###! ticker
 			DY  = Int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			###! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
+			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
 			###! Daily storage
 			#! Save

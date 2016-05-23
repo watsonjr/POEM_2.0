@@ -14,8 +14,8 @@ dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
 
 sname = 'Spinup_';
-sname2 = '';
-%sname2 = 'phen_';
+%sname2 = '';
+sname2 = 'phen_';
 
 load([fpath sname sname2 'consump.mat'],'mclev','Zcon');
 
@@ -28,6 +28,8 @@ Dsum = Psum;
 Pmean = Psum;
 Fmean = Fsum;
 Dmean = Psum;
+all_sum=NaN*ones(3,3,length(spots));
+    
 for s=1:length(spots)
     %%
     loc = spots{s};
@@ -167,14 +169,13 @@ for s=1:length(spots)
     xlabel('Stage')
     
     %% Each on same axes
-    all_sum=NaN*ones(3,3);
-    all_sum(1:2,1) = F_sum;
-    all_sum(:,2) = P_sum;
-    all_sum(:,3) = D_sum;
+    all_sum(1:2,1,s) = F_sum;
+    all_sum(:,2,s) = P_sum;
+    all_sum(:,3,s) = D_sum;
     
     f10 = figure(10);
     subplot(2,3,s)
-    bar(log(all_sum))
+    bar(log(squeeze(all_sum(:,:,s))))
     xlim([0 4])
     ylim([-20 10])
     if (s==4)
@@ -187,7 +188,7 @@ for s=1:length(spots)
     
     f11 = figure(11);
     subplot(2,3,s)
-    bar(all_sum)
+    bar(squeeze(all_sum(:,:,s)))
     xlim([0 4])
     if (s==4)
         legend('F','P','D')
@@ -207,6 +208,9 @@ print(f5,'-dpng',[fpath sname sname2 'All_oneloc_mean_biomass_spec_Forage.png'])
 print(f6,'-dpng',[fpath sname sname2 'All_oneloc_mean_biomass_spec_Dem.png'])
 print(f10,'-dpng',[fpath sname sname2 'All_oneloc_Logtot_biomass_spec_FPD.png'])
 print(f11,'-dpng',[fpath sname sname2 'All_oneloc_tot_biomass_spec_FPD.png'])
+
+save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
+    'Dsum','Pmean','Fmean','Dmean','all_sum');
 
 %% All on one
 figure(7)

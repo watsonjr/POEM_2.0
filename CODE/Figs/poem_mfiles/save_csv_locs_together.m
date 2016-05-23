@@ -3,28 +3,30 @@
 clear all
 close all
 
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
+%dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
 
-load('Oneloc_pris_phenol_all.mat')
-load('Oneloc_pris_all.mat')
+load([dpath 'Oneloc_hist_phenol_all.mat'])
+load([dpath 'Oneloc_hist_all.mat'])
 
 %% Recruitment
 t=1:length(sp);
 yr=t((end-(30*365)+1):end);
-SPL=Mlp(yr,:);
-SFL=Mmf(yr,:);
-SDL=Mmd(yr,:);
+PL=Mlp(yr,:);
+FL=Mmf(yr,:);
+DL=Mld(yr,:);
 PA=lp(yr,:);
 FA=mf(yr,:);
-DA=md(yr,:);
+DA=ld(yr,:);
 
-pSPL=pMlp(yr,:);
-pSFL=pMmf(yr,:);
-pSDL=pMmd(yr,:);
+pPL=pMlp(yr,:);
+pFL=pMmf(yr,:);
+pDL=pMld(yr,:);
 pPA=plp(yr,:);
 pFA=pmf(yr,:);
-pDA=pmd(yr,:);
+pDA=pld(yr,:);
 
+%%
 st=1:365:length(yr);
 en=365:365:length(yr);
 PLy = NaN*ones(30,6);
@@ -86,10 +88,10 @@ dA = table(DAy(:,1),pDAy(:,1),DAy(:,2),pDAy(:,2),DAy(:,3),pDAy(:,3),...
     'HOTp','BATSc','BATSp','NSc','NSp'});
 
 %%
-writetable(fL,[dpath 'onelocs_forage_larv.csv'])
-writetable(fA,[dpath 'onelocs_forage_adult.csv'])
-writetable(pL,[dpath 'onelocs_pisc_larv.csv'])
-writetable(pA,[dpath 'onelocs_pisc_adult.csv'])
-writetable(dL,[dpath 'onelocs_pisc_dem.csv'])
-writetable(dA,[dpath 'onelocs_pisc_dem.csv'])
+writetable(fL,[dpath 'onelocs_hist_forage_larv.csv'])
+writetable(fA,[dpath 'onelocs_hist_forage_adult.csv'])
+writetable(pL,[dpath 'onelocs_hist_pisc_larv.csv'])
+writetable(pA,[dpath 'onelocs_hist_pisc_adult.csv'])
+writetable(dL,[dpath 'onelocs_hist_pisc_dem.csv'])
+writetable(dA,[dpath 'onelocs_hist_pisc_dem.csv'])
 

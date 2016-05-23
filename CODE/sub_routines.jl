@@ -1,10 +1,10 @@
 
 #### THE MODEL
 ###! DEMOGRAPHIC CALCULATIONS
-function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT)
+function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT)
 
 	###! COBALT information
-	get_COBALT!(COBALT,ID,DY,ENVR,Tref,Dthresh)
+	get_COBALT!(COBALT,ID,DY,ENVR)
 
 	for JD = 1:NX
 
@@ -112,9 +112,9 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Tref,Dthresh,Sml_f,Sml_p,Sml_d,Med_f,Med_
 		Med_d.die[JD] = Lrg_p.con_d[JD] + Lrg_d.con_d[JD]
 
 		#! Degree days
-		Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0[JD],Med_f.S[JD,:],DY)
-		Lrg_d.DD[JD] = sub_degday(Lrg_d.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],ENVR.T0[JD],Lrg_d.S[JD,:],DY)
-		Lrg_p.DD[JD] = sub_degday(Lrg_p.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],ENVR.T0[JD],Lrg_p.S[JD,:],DY)
+		Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0p[JD],Med_f.S[JD,:],DY)
+		Lrg_d.DD[JD] = sub_degday(Lrg_d.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],ENVR.T0b[JD],Lrg_d.S[JD,:],DY)
+		Lrg_p.DD[JD] = sub_degday(Lrg_p.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],ENVR.T0p[JD],Lrg_p.S[JD,:],DY)
 
 		#! Spawning flag determined from DD, dthresh
 		Med_f.S[JD,:], Med_f.DD[JD] = sub_kflag(Med_f.S[JD,:],Med_f.DD[JD],ENVR.Dthresh[JD],DY);

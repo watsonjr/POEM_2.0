@@ -19,7 +19,7 @@ cols=cols';
 sname = 'Spinup_';
 
 %% Continuous
-sp=NaN*ones(145*365,length(spots));
+sp=NaN*ones(100*365,length(spots));
 sf = sp;
 sd = sp;
 mf = sp;
@@ -68,7 +68,7 @@ save([dpath 'Spinup_oneloc_all.mat'],'sp','sf','sd','mp',...
     'spots')
 
 %% Phenology
-psp=NaN*ones(145*365,length(spots));
+psp=NaN*ones(100*365,length(spots));
 psf = psp;
 psd = psp;
 pmf = psp;

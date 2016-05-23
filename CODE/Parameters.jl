@@ -43,7 +43,8 @@ type environment
 	det::Array{Float64} # detrital flux
 	U::Array{Float64} # U current speed
 	V::Array{Float64} # U current speed
-	T0::Array{Float64}			# spawning reference temp
+	T0p::Array{Float64}			# spawning reference temp pelagic
+	T0b::Array{Float64}			# spawning reference temp benthic
 	Dthresh::Array{Float64}	# spawning degree day threshold
 	fZm::Array{Float64} # overconsump flag
 	fZl::Array{Float64} # overconsump flag
