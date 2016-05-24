@@ -92,6 +92,6 @@ writetable(fL,[dpath 'onelocs_hist_forage_larv.csv'])
 writetable(fA,[dpath 'onelocs_hist_forage_adult.csv'])
 writetable(pL,[dpath 'onelocs_hist_pisc_larv.csv'])
 writetable(pA,[dpath 'onelocs_hist_pisc_adult.csv'])
-writetable(dL,[dpath 'onelocs_hist_pisc_dem.csv'])
-writetable(dA,[dpath 'onelocs_hist_pisc_dem.csv'])
+writetable(dL,[dpath 'onelocs_hist_dem_larv.csv'])
+writetable(dA,[dpath 'onelocs_hist_dem_adult.csv'])
 

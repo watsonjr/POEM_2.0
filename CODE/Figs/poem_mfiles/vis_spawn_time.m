@@ -55,26 +55,34 @@ for s=1:length(spots)
     figure(3)
     clf
     subplot(3,1,1)
-    plot(1:365,100*pKmf(lyr,s),'--k'); hold on;
+    plot(1:365,1000*pKmf(lyr,s),'--k'); hold on;
     plot(1:365,pRmf(lyr,s),'Linewidth',2,'color',cmap_ppt(3,:)); hold on;
     xlim([0 365])
     ylim([0 max(pRmf(lyr,s))])
     title({[loc ' Spinup 1980']; ['Forage Fishes']})
     
-    subplot(3,1,2)
-    plot(1:365,100*pKld(lyr,s),'--k'); hold on;
+    subplot(3,1,3)
+    plot(1:365,1000*pKld(lyr,s),'--k'); hold on;
     plot(1:365,pRld(lyr,s),'Linewidth',2,'color',cmap_ppt(2,:)); hold on;
     xlim([0 365])
-    ylim([0 max(pRld(lyr,s))])
+    if (max(pRld(lyr,s)) > 0)
+        ylim([0 max(pRld(lyr,s))])
+    else
+        ylim([-0.1 0.1])
+    end
     title('Demersal Fishes')
-    ylabel('Reproductive output (g km^-^2)')
     
-    subplot(3,1,3)
-    plot(1:365,100*pKlp(lyr,s),'--k'); hold on;
+    subplot(3,1,2)
+    plot(1:365,1000*pKlp(lyr,s),'--k'); hold on;
     plot(1:365,pRlp(lyr,s),'Linewidth',2,'color',cmap_ppt(1,:)); hold on;
     xlim([0 365])
-    ylim([0 max(pRlp(lyr,s))])
+    if (max(pRlp(lyr,s)) > 0)
+        ylim([0 max(pRlp(lyr,s))])
+    else
+        ylim([-0.1 0.1])
+    end
     title('Pelagic Piscivores')
+    ylabel('Reproductive output (g km^-^2)')
     xlabel('Time (y)')
     print('-dpng',[fpath loc '_oneloc_Rep_2000.png'])
 end
@@ -84,28 +92,28 @@ for s=1:length(spots)
     loc = spots{s};
     figure(4)
     clf
-    subplot(3,1,3)
+    subplot(3,1,2)
     plot(1:365,pRlp(lyr,s),'Linewidth',2,'color',cmap_ppt(1,:)); hold on;
     plot(1:365,Rlp(lyr,s),'--','Linewidth',2,'color',cmap_ppt(1,:)); hold on;
+    ylabel('Reproductive output (g km^-^2)')
     xlim([0 365])
-    title({[loc ' Spinup 1980']; ['Pelagic Piscivores']})
+    title('Pelagic Piscivores')
     legend('phenology','constant')
     legend('location','eastoutside')
     
-    subplot(3,1,2)
+    subplot(3,1,3)
     plot(1:365,pRld(lyr,s),'Linewidth',2,'color',cmap_ppt(2,:)); hold on;
     plot(1:365,Rld(lyr,s),'--','Linewidth',2,'color',cmap_ppt(2,:)); hold on;
     xlim([0 365])
     legend('phenology','constant')
     legend('location','eastoutside')
     title('Demersal Fishes')
-    ylabel('Reproductive output (g km^-^2)')
     
     subplot(3,1,1)
     plot(1:365,pRmf(lyr,s),'Linewidth',2,'color',cmap_ppt(3,:)); hold on;
     plot(1:365,Rmf(lyr,s),'--','Linewidth',2,'color',cmap_ppt(3,:)); hold on;
     xlim([0 365])
-    title('Forage Fishes')
+    title({[loc ' Spinup 1980']; ['Forage Fishes']})
     xlabel('Time (y)')
     legend('phenology','constant')
     legend('location','eastoutside')
@@ -121,7 +129,7 @@ for s=1:length(spots)
     figure(5)
     plot(1:365,pDDlp(lyr,s),'Linewidth',2,'color',cmap_ppt(s,:)); hold on;
     xlim([0 365])
-    title(['Spinup 1980 ' loc])
+    title('Spinup 1980')
     xlabel('Time (y)')
     ylabel('Cumulative degree days')
     legend(spots)
@@ -135,7 +143,7 @@ for s=1:length(spots)
     plot(1:365,pKlp(lyr,s),'Linewidth',2,'color',cmap_ppt(s,:)); hold on;
     xlim([0 365])
     ylim([0 0.05])
-    title(['Spinup 1980 ' loc])
+    title('Spinup 1980')
     xlabel('Time (y)')
     ylabel('Spawning flag')
     legend(spots)
@@ -146,21 +154,21 @@ end
 for s=1:length(spots)
     loc = spots{s};
     figure(6)
-    subplot(3,1,1)
+    subplot(3,1,2)
     plot(1:365,pRlp(lyr,s),'Linewidth',2,'color',cmap_ppt(s,:)); hold on;
+    ylabel('Reproductive output (g km^-^2)')
     xlim([0 365])
     legend(spots)
     legend('location','eastoutside')
-    title({[loc ' Spinup 1980']; ['Pelagic Piscivores']})
+    title('Pelagic Piscivores')
     
-    subplot(3,1,2)
+    subplot(3,1,1)
     plot(1:365,pRmf(lyr,s),'Linewidth',2,'color',cmap_ppt(s,:)); hold on;
     xlim([0 365])
     legend(spots)
     legend('location','eastoutside')
-    title('Forage Fishes')
+    title({['Spinup 1980']; ['Forage Fishes']})
     xlabel('Time (y)')
-    ylabel('Reproductive output (g km^-^2)')
     
     subplot(3,1,3)
     plot(1:365,pRld(lyr,s),'Linewidth',2,'color',cmap_ppt(s,:)); hold on;

@@ -16,16 +16,17 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'rec','egg','clev','DD','S'};
 cols=cols';
 
-sname = 'Spinup_';
+sname = 'Oneloc_hist_';
 
 %% Continuous
 sp=NaN*ones(145*365,length(spots));
 sf = sp;
 sd = sp;
-mf = sp;
-ld = sp;
 mp = sp;
+mf = sp;
+md = sp;
 lp = sp;
+ld = sp;
 Rmf = sp;
 Rld = sp;
 Rlp = sp;
@@ -50,7 +51,8 @@ for s=1:length(spots)
     sd(:,s) = SD(:,1);
     mp(:,s) = MP(:,1);
     mf(:,s) = MF(:,1);
-    ld(:,s) = MD(:,1);
+    md(:,s) = MD(:,1);
+    ld(:,s) = LD(:,1);
     lp(:,s) = LP(:,1);
     
     Rmf(:,s) = MF(:,1).*MF(:,18);
@@ -63,8 +65,8 @@ for s=1:length(spots)
     
 end
 
-save([dpath 'Spinup_oneloc_all.mat'],'sp','sf','sd','mp',...
-    'mf','ld','lp','Rmf','Rld','Rlp','Mmf','Mld','Mlp',...
+save([dpath 'Oneloc_hist_all.mat'],'sp','sf','sd','mp',...
+    'mf','md','ld','lp','Rmf','Rld','Rlp','Mmf','Mld','Mlp',...
     'spots')
 
 %% Phenology
@@ -72,8 +74,9 @@ psp=NaN*ones(145*365,length(spots));
 psf = psp;
 psd = psp;
 pmf = psp;
-pld = psp;
+pmd = psp;
 pmp = psp;
+pld = psp;
 plp = psp;
 pDDmf = psp;
 pDDld = psp;
@@ -106,7 +109,8 @@ for s=1:length(spots)
     psd(:,s) = SD(:,1);
     pmp(:,s) = MP(:,1);
     pmf(:,s) = MF(:,1);
-    pld(:,s) = MD(:,1);
+    pmd(:,s) = MD(:,1);
+    pld(:,s) = LD(:,1);
     plp(:,s) = LP(:,1);
     
     pRmf(:,s) = MF(:,1).*MF(:,18);
@@ -127,7 +131,7 @@ for s=1:length(spots)
     
 end
 
-save([dpath 'Spinup_oneloc_phenol_all.mat'],'psp','psf','psd',...
-    'pmp','pmf','pld','plp','pDDmf','pDDld','pDDlp','pKmf',...
-    'pKld','pKlp','pRmf','pRld','pRlp','pMmf','pMld','pMlp'...
-    ,'spots')
+save([dpath 'Oneloc_hist_phenol_all.mat'],'psp','psf','psd',...
+    'pmp','pmf','pmd','pld','plp','pDDmf','pDDld','pDDlp',...
+    'pKmf','pKld','pKlp','pRmf','pRld','pRlp','pMmf','pMld',...
+    'pMlp','spots')

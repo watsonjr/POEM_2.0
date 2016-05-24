@@ -5,11 +5,13 @@
 clear all
 close all
 
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
 
-load('Oneloc_pris_phenol_all.mat')
-load('Oneloc_pris_all.mat')
+load([dpath 'Oneloc_hist_phenol_all.mat'])
+load([dpath 'Oneloc_hist_all.mat'])
 load('cmap_ppt_angles.mat')
 
 %% Plots over time
@@ -35,6 +37,7 @@ mp_sum(1,:)=sum(mp(lyr,:));
 mf_sum(1,:)=sum(mf(lyr,:));
 md_sum(1,:)=sum(md(lyr,:));
 lp_sum(1,:)=sum(lp(lyr,:));
+ld_sum(1,:)=sum(ld(lyr,:));
 
 sp_mean(1,:)=mean(sp(lyr,:));
 sf_mean(1,:)=mean(sf(lyr,:));
@@ -43,6 +46,7 @@ mp_mean(1,:)=mean(mp(lyr,:));
 mf_mean(1,:)=mean(mf(lyr,:));
 md_mean(1,:)=mean(md(lyr,:));
 lp_mean(1,:)=mean(lp(lyr,:));
+ld_mean(1,:)=mean(ld(lyr,:));
 
 sp_sum(2,:)=sum(psp(lyr,:));
 sf_sum(2,:)=sum(psf(lyr,:));
@@ -51,6 +55,7 @@ mp_sum(2,:)=sum(pmp(lyr,:));
 mf_sum(2,:)=sum(pmf(lyr,:));
 md_sum(2,:)=sum(pmd(lyr,:));
 lp_sum(2,:)=sum(plp(lyr,:));
+ld_sum(2,:)=sum(pld(lyr,:));
 
 sp_mean(2,:)=mean(psp(lyr,:));
 sf_mean(2,:)=mean(psf(lyr,:));
@@ -59,13 +64,14 @@ mp_mean(2,:)=mean(pmp(lyr,:));
 mf_mean(2,:)=mean(pmf(lyr,:));
 md_mean(2,:)=mean(pmd(lyr,:));
 lp_mean(2,:)=mean(plp(lyr,:));
+ld_mean(2,:)=mean(pld(lyr,:));
 
 %%
 for n=1:length(spots)
     loc=spots{n};
     P_mean=[sp_mean(:,n),mp_mean(:,n),lp_mean(:,n)];
     F_mean=[sf_mean(:,n),mf_mean(:,n)];
-    D_mean=[sd_mean(:,n),md_mean(:,n)];
+    D_mean=[sd_mean(:,n),md_mean(:,n),ld_mean(:,n)];
     
     figure(n)
     subplot(3,1,3)
@@ -87,7 +93,7 @@ for n=1:length(spots)
     subplot(3,1,2)
     bar(D_mean')
     colormap(cmap_ppt(1:3,:))
-    xlim([0 3])
+    xlim([0 4])
     title('Demersal Piscivores')
     ylabel('Mean Biomass (g km^-^2)')
     
@@ -128,7 +134,7 @@ for n=1:length(spots)
     subplot(2,3,n)
     bar(D_mean')
     colormap(cmap_ppt(1:3,:))
-    xlim([0 3])
+    xlim([0 4])
     set(gca,'XTickLabel',{'I','A'})
     xlabel('Stage')
     title(loc)
@@ -158,17 +164,17 @@ print(f22,'-dpng',[fpath 'Dem_oneloc_compare_biomass.png'])
 yr=t((end-(30*365)+1):end);
 SPL=Mlp(yr,:);
 SFL=Mmf(yr,:);
-SDL=Mmd(yr,:);
+SDL=Mld(yr,:);
 PA=lp(yr,:);
 FA=mf(yr,:);
-DA=md(yr,:);
+DA=ld(yr,:);
 
 pSPL=pMlp(yr,:);
 pSFL=pMmf(yr,:);
-pSDL=pMmd(yr,:);
+pSDL=pMld(yr,:);
 pPA=plp(yr,:);
 pFA=pmf(yr,:);
-pDA=pmd(yr,:);
+pDA=pld(yr,:);
 
 st=1:365:length(yr);
 en=365:365:length(yr);
@@ -185,15 +191,15 @@ pPAy = PLy;
 pFAy = PLy;
 pDAy = PLy;
 for n=1:30
-    PLy(n,:) = nansum(PL(st(n):en(n),:));
-    FLy(n,:) = nansum(FL(st(n):en(n),:));
-    DLy(n,:) = nansum(DL(st(n):en(n),:));
+    PLy(n,:) = nansum(SPL(st(n):en(n),:));
+    FLy(n,:) = nansum(SFL(st(n):en(n),:));
+    DLy(n,:) = nansum(SDL(st(n):en(n),:));
     PAy(n,:) = nansum(PA(st(n):en(n),:));
     FAy(n,:) = nansum(FA(st(n):en(n),:));
     DAy(n,:) = nansum(DA(st(n):en(n),:));
-    pPLy(n,:) = nansum(pPL(st(n):en(n),:));
-    pFLy(n,:) = nansum(pFL(st(n):en(n),:));
-    pDLy(n,:) = nansum(pDL(st(n):en(n),:));
+    pPLy(n,:) = nansum(pSPL(st(n):en(n),:));
+    pFLy(n,:) = nansum(pSFL(st(n):en(n),:));
+    pDLy(n,:) = nansum(pSDL(st(n):en(n),:));
     pPAy(n,:) = nansum(pPA(st(n):en(n),:));
     pFAy(n,:) = nansum(pFA(st(n):en(n),:));
     pDAy(n,:) = nansum(pDA(st(n):en(n),:));
@@ -260,7 +266,7 @@ print(f12,'-dpng',[fpath 'Dem_oneloc_compare_recruitment.png'])
 %% EVERYTHING SCALED TO MAX BIOMASS
 Ptot = sp_mean+mp_mean+lp_mean;
 Ftot = sf_mean+mf_mean;
-Dtot = sd_mean+md_mean;
+Dtot = sd_mean+md_mean+ld_mean;
 Tot  = Ptot+Ftot+Dtot;
 
 % Final mean biomass size spectrum
