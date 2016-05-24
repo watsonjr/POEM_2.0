@@ -24,9 +24,9 @@ include("Experiments.jl")
 
 
 ####!! EXPERIMENTS
-testoneloc = true
+testoneloc = false
 oneloc_hind_pristine = false
-oneloc_fore_pristine = false
+oneloc_fore_pristine = true
 spinup_pristine = false
 forecast_pristine = false
 spinup_fished = false

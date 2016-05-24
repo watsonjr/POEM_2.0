@@ -1,14 +1,14 @@
 % Visualize output of POEM
-% Pristine historical at one location
-% 145 years
+% Pristine forecast at one location
+% 95 years
 
 clear all
 close all
 
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefPD/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefPD/';
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefOrig/';
 
@@ -18,10 +18,10 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'rec','egg','clev','DD','S'};
 cols=cols';
 
-sname = 'Spinup_';
+sname = 'Oneloc_fore_';
 
 %% Continuous
-sp=NaN*ones(100*365,length(spots));
+sp=NaN*ones(95*365,length(spots));
 sf = sp;
 sd = sp;
 mp = sp;
@@ -67,22 +67,19 @@ for s=1:length(spots)
     
 end
 
-save([dpath 'Spinup_oneloc_all.mat'],'spots',...
-    'sp','sf','sd',...
-    'mp','mf','md',...
-    'ld','lp',...
-    'Rmf','Rld','Rlp',...
-    'Mmf','Mld','Mlp')
+save([dpath sname 'all.mat'],'sp','sf','sd','mp',...
+    'mf','md','ld','lp','Rmf','Rld','Rlp','Mmf','Mld','Mlp',...
+    'spots')
 
 %% Phenology
-psp=NaN*ones(100*365,length(spots));
+psp=NaN*ones(95*365,length(spots));
 psf = psp;
 psd = psp;
-pmp = psp;
 pmf = psp;
 pmd = psp;
-plp = psp;
+pmp = psp;
 pld = psp;
+plp = psp;
 pDDmf = psp;
 pDDld = psp;
 pDDlp = psp;
@@ -136,11 +133,7 @@ for s=1:length(spots)
     
 end
 
-save([dpath 'Spinup_oneloc_phenol_all.mat'],'spots',...
-    'psp','psf','psd',...
-    'pmp','pmf','pmd',...
-    'pld','plp',...
-    'pDDmf','pDDld','pDDlp',...
-    'pKmf','pKld','pKlp',...
-    'pRmf','pRld','pRlp',...
-    'pMmf','pMld','pMlp')
+save([dpath sname 'phenol_all.mat'],'psp','psf','psd',...
+    'pmp','pmf','pmd','pld','plp','pDDmf','pDDld','pDDlp',...
+    'pKmf','pKld','pKlp','pRmf','pRld','pRlp','pMmf','pMld',...
+    'pMlp','spots')

@@ -1,6 +1,6 @@
 % Compare continuous vs spawning season
-% Pristine historical at one location
-% 145 years
+% Pristine forecast at one location
+% 95 years
 
 clear all
 close all
@@ -12,8 +12,8 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefOrig/';
 
-load([dpath 'Oneloc_hist_phenol_all.mat'])
-load([dpath 'Oneloc_hist_all.mat'])
+load([dpath 'Oneloc_fore_phenol_all.mat'])
+load([dpath 'Oneloc_fore_all.mat'])
 load('cmap_ppt_angles.mat')
 
 %% Plots over time

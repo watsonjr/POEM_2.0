@@ -8,7 +8,8 @@ library(pastecs)
 library(fBasics)
 require(combinat)
 
-setwd("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefPD/")
+#setwd("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefPD/")
+setwd("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/")
 
 # load data
 f <- read.csv("onelocs_hist_forage_larv.csv",sep=",", header = T,

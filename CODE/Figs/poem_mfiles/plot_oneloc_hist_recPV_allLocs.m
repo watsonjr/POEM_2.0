@@ -9,8 +9,10 @@
 clear all
 close all
 
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefPD/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefPD/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefOrig/';
 
 sname = 'Oneloc_hist_';
 
@@ -48,11 +50,9 @@ for s=1:length(spots)
     ylim([0 1])
     set(gca,'XTick',1:3,'XTickLabel',{'F','P','D'})
     title(loc)
-    ylabel('log Tot Biom (g m^-^2) in final year')
-    xlabel('Stage')
+    ylabel('Recruitment variability (PV)')
     
     
 end
-%%
-print(f9,'-dpng',[fpath sname 'All_oneloc_Logtot_biomass_con_phen_line1.png'])
-print(f10,'-dpng',[fpath sname 'All_oneloc_Logtot_biomass_con_phen_line2.png'])
+
+print(f9,'-dpng',[fpath sname 'All_oneloc_rec_PV.png'])
