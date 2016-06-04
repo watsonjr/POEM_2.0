@@ -387,39 +387,89 @@ function Spinup_pristine()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/Data_000001.jld"); # if on laptop
-	#COBALT = load("./Data/JLD/Data_000001.jld"); # if at school
+	COBALT = load("./Data/JLD/Data_hindcast_molCm2_000120.jld"); # 1980
+	#! Add phenology params from csv file with ID as row
+	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
+	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
+	#global TrefB = readdlm("./Data/grid_phenol_T0b_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for bottom
+	global TrefP = Tref
+	global TrefB = Tref
+	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
+	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
+	YEARS = 100
+  DAYS = 365
 
 	#! choose where and when to run the model
-	const global YEARS = 20; # integration period in years
 	const global NX = 48111
-	const global ID = collect(1:NX)
+	const global ID = collect(1:NX);
 
 	#! Storage variables
-	S_Sml_f = zeros(NX,1)
-	S_Sml_p = zeros(NX,1)
-	S_Sml_d = zeros(NX,1)
-	S_Med_f = zeros(NX,1)
-	S_Med_p = zeros(NX,1)
-	S_Med_d = zeros(NX,1)
-	S_Lrg_p = zeros(NX,1)
+	S_Sml_f = zeros(NX,1);
+	S_Sml_p = zeros(NX,1);
+	S_Sml_d = zeros(NX,1);
+	S_Med_f = zeros(NX,1);
+	S_Med_p = zeros(NX,1);
+	S_Med_d = zeros(NX,1);
+	S_Lrg_p = zeros(NX,1);
+	S_Lrg_d = zeros(NX,1);
 
 	#! Initialize
-	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID);
+	phen=0;
+	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
+	Med_d.td[1] = 0.0;
+	Lrg_d.td[1] = 0.0;
 	ENVR = sub_init_env(ID);
 
 	############### Setup NetCDF save
+
+	### NETCDF EXAMPLE
+	include("toa.jl")
+	# Define longitudes and latitudes, day and timesteps
+	lat=[-89:89]
+	lon=[0:359]
+	day=1
+	tim=[0:23]
+	# Create radiation array
+	rad = float64([g_pot(x2,x1,day,x3) for x1=lon, x2=lat, x3=tim])
+	# Define some attributes of the variable (optionlal)
+	varatts = @Compat.Dict("longname" => "Radiation at the top of the atmosphere",
+	           "units"    => "W/m^2")
+	lonatts = @Compat.Dict("longname" => "Longitude",
+	           "units"    => "degrees east")
+	latatts = @Compat.Dict("longname" => "Latitude",
+	           "units"    => "degrees north")
+	timatts = @Compat.Dict("longname" => "Time",
+	           "units"    => "hours since 01-01-2000 00:00:00")
+	#Here we start by defining the dimensions. This is done by creating NcDim objects:
+	latdim = NcDim("lat",lat,latatts)
+	londim = NcDim("lon",lon,lonatts)
+	timdim = NcDim("time",tim,timatts)
+	# Then we create an NcVar object, the data type is defined by the corresponding julia type:
+	radvar = NcVar("rad",[londim,latdim,timdim],varatts,Float32)
+	# Now we can finally create the netcdf-file and get a file handler in return:
+	isfile("radiation2.nc") ? rm("radiation2.nc") : nothing
+	nc = NetCDF.create("radiation2.nc",radvar)
+	# Writing data to the file is done using putvar
+	NetCDF.putvar(nc, "rad", rad )
+	# And we close the file
+	NetCDF.close( nc )
+	###
+
 	#! Init netcdf file for storage
-	#varatts = {"longname" => "Biomass","units" => "kg/m^2"}
+	#biomatts = {"longname" => "Biomass","units" => "kg/m^2"}
 	#X_atts = {"longname" => "Space", "units" => "grid cell"}
 	#timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
 	#Use "Dict{Any,Any}(a=>b, ...)" instead.
-	varatts = Dict("longname" => "Biomass",
-           "units"    => "kg/m^2")
+	biomatts = @Compat.Dict("longname" => "Biomass",
+           "units"    => "g/m^2")
 	X_atts = Dict("longname" => "Space",
 			"units"    => "grid cell")
 	timatts = Dict("longname" => "Time",
-			"units"    => "hours since 01-01-2000 00:00:00")
+			"units"    => "days since 01-01-1980 00:00:00")
+	fracatts = Dict("longname" => "Fraction",
+			"units"    => "unitless")
+	DDatts = Dict("longname" => "Cumulative degree days",
+			"units"    => "degrees Celsius")
 
 	#! Init dims of netcdf file
 	X   = collect(1:NX)
@@ -433,6 +483,7 @@ function Spinup_pristine()
 	file_med_p = "./Data/NC/Data_spinup_pristine_med_p.nc"
 	file_med_d = "./Data/NC/Data_spinup_pristine_med_d.nc"
 	file_lrg_p = "./Data/NC/Data_spinup_pristine_lrg_p.nc"
+	file_lrg_d = "./Data/NC/Data_spinup_pristine_lrg_d.nc"
 
 	#! remove if already in existence
 	isfile(file_sml_f) ? rm(file_sml_f) : nothing
@@ -442,15 +493,32 @@ function Spinup_pristine()
 	isfile(file_med_p) ? rm(file_med_p) : nothing
 	isfile(file_med_d) ? rm(file_med_d) : nothing
 	isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
+	isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
+
+	#NcDim(dimname, dimlength, atts=Dict{Any,Any}(), values=[])
+	Xdim = NcDim("NX", NX, atts=X_atts, values=X)
+	tdim = NcDim("time", YEARS*DAYS, atts=timatts, values=collect(1:YEARS*DAYS))
+
+	#radvar = NcVar("rad",[londim,latdim,timdim],varatts,Float32)
+	biomvar = NcVar("biomass", [Xdim,tdim], biomatts, Float64)
+	encPvar = NcVar("encP", [Xdim,tdim], atts=biomatts, Float64)
+
+	NetCDF.create( filename, varlist, gatts=Dict{Any,Any}(),mode=NC_NETCDF4)
 
 	#! create netcdf files
-	nccreate(file_sml_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_sml_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_med_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_med_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_med_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_lrg_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=varatts)
+	#nc = NetCDF.create("radiation2.nc",radvar)
+	# Writing data to the file is done using putvar
+	#NetCDF.putvar(nc, "rad", rad )
+	#[bio enc_f enc_p enc_d enc_zm enc_zl enc_be con_f con_p con_d con_zm con_zl con_be I nu gamma die rep rec egg clev DD S
+	nccreate(file_sml_f,biomvar)
+	nccreate(file_sml_f,biomvar,encPvar)
+	nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_sml_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_lrg_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_lrg_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
 
 	#! Initializing netcdf files
 	println("Initializing file system (takes about 2 minutes)")
@@ -461,12 +529,20 @@ function Spinup_pristine()
 	ncwrite(zeros(NX,1),file_med_p,"biomass",[1,1])
 	ncwrite(zeros(NX,1),file_med_d,"biomass",[1,1])
 	ncwrite(zeros(NX,1),file_lrg_p,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_lrg_d,"biomass",[1,1])
 
 	###################### Run the Model
 	#! Run model with no fishing
 	for YR = 1:YEARS # years
 
-		for DAY = 1:DT:365 # days
+		#reset spawning flag
+		if (phen == 1)
+			Med_f.S = zeros(Float64,NX,DAYS)
+			Lrg_d.S = zeros(Float64,NX,DAYS)
+			Lrg_p.S = zeros(Float64,NX,DAYS)
+		end
+
+		for DAY = 1:DT:DAYS # days
 
 			###! Future time step
 			DY  = int(ceil(DAY))
@@ -487,6 +563,7 @@ function Spinup_pristine()
 		S_Med_p[i,1] = Med_p.bio[i]
 		S_Med_d[i,1] = Med_d.bio[i]
 		S_Lrg_p[i,1] = Lrg_p.bio[i]
+		S_Lrg_d[i,1] = Lrg_d.bio[i]
 	end
 
 	#! Save
@@ -497,6 +574,7 @@ function Spinup_pristine()
 	ncwrite(S_Med_p,file_med_p,"biomass",[1,1])
 	ncwrite(S_Med_d,file_med_d,"biomass",[1,1])
 	ncwrite(S_Lrg_p,file_lrg_p,"biomass",[1,1])
+	ncwrite(S_Lrg_d,file_lrg_d,"biomass",[1,1])
 
 	#! Close save
   ncclose(file_sml_f)
@@ -506,6 +584,7 @@ function Spinup_pristine()
   ncclose(file_med_p)
   ncclose(file_med_d)
   ncclose(file_lrg_p)
+	ncclose(file_lrg_d)
 end
 
 
@@ -543,12 +622,12 @@ function Spinup_fished()
 
 	############### Setup NetCDF save
 	#! Init netcdf file for storage
-	#varatts = {"longname" => "Biomass","units" => "kg/m^2"}
+	#biomatts = {"longname" => "Biomass","units" => "kg/m^2"}
 	#X_atts = {"longname" => "Space", "units" => "grid cell"}
 	#S_atts = {"longname" => "Size classes", "units"  => "g"}
 	#timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
 	#Use "Dict{Any,Any}(a=>b, ...)" instead.
-	varatts = Dict("longname" => "Biomass",
+	biomatts = Dict("longname" => "Biomass",
            "units"    => "kg/m^2")
 	X_atts = Dict("longname" => "Space",
 			"units"    => "grid cell")
@@ -578,10 +657,10 @@ function Spinup_fished()
 	isfile(file_bent) ? rm(file_bent) : nothing
 
 	#! create netcdf files
-	nccreate(file_pisc,"biomass","X",X,X_atts,"S",S_pi,S_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_plan,"biomass","X",X,X_atts,"S",S_pl,S_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_detr,"biomass","X",X,X_atts,"S",S_de,S_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_bent,"biomass","X",X,X_atts,"S",S_be,S_atts,"time",tim,timatts,atts=varatts)
+	nccreate(file_pisc,"biomass","X",X,X_atts,"S",S_pi,S_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_plan,"biomass","X",X,X_atts,"S",S_pl,S_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_detr,"biomass","X",X,X_atts,"S",S_de,S_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_bent,"biomass","X",X,X_atts,"S",S_be,S_atts,"time",tim,timatts,atts=biomatts)
 
 	#! Initializing netcdf files
 	println("Initializing file system (takes about 2 minutes)")
@@ -674,7 +753,7 @@ function Forecast_pristine()
 
 	#! Init netcdf file for storage
 	#Use "Dict{Any,Any}(a=>b, ...)" instead.
-	varatts = Dict("longname" => "Biomass",
+	biomatts = Dict("longname" => "Biomass",
            "units"    => "kg/m^2")
 	X_atts = Dict("longname" => "Space",
 			"units"    => "grid cell")
@@ -700,10 +779,10 @@ function Forecast_pristine()
 	isfile(file_bent) ? rm(file_bent) : nothing
 
 	#! create netcdf files
-	nccreate(file_pisc,"biomass","X",X,X_atts,"S",S_pi,S_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_plan,"biomass","X",X,X_atts,"S",S_pl,S_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_detr,"biomass","X",X,X_atts,"S",S_de,S_atts,"time",tim,timatts,atts=varatts)
-	nccreate(file_bent,"biomass","X",X,X_atts,"S",S_be,S_atts,"time",tim,timatts,atts=varatts)
+	nccreate(file_pisc,"biomass","X",X,X_atts,"S",S_pi,S_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_plan,"biomass","X",X,X_atts,"S",S_pl,S_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_detr,"biomass","X",X,X_atts,"S",S_de,S_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_bent,"biomass","X",X,X_atts,"S",S_be,S_atts,"time",tim,timatts,atts=biomatts)
 
 	#! Initializing netcdf files
 	println("Initializing file system (takes about 2 minutes)")

@@ -9,7 +9,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 	for JD = 1:NX
 
 		#! update benthic biomass with new detritus avail at that time step
-		BENT.mass[JD] = BENT.mass[JD] + ENVR.det[JD]
+		BENT.mass[JD] = BENT.mass[JD] + bent_eff*ENVR.det[JD]
 
 		#! fraction of time large piscivores spends in pelagic
 	  #Lrg_p.td[JD] = sub_tdif_pel(GRD["Z"][ID],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])

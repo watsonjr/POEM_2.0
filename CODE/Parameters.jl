@@ -109,39 +109,22 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	#const global Bas_s = 0.0033*M_s.^-0.13
-	#const global Bas_m = 0.0033*M_m.^-0.13
-	#const global Bas_l = 0.0033*M_l.^-0.13
 	const global fcrit = 0.05 #feeding level needed to meet resting metabolic demands; 0.05-0.2
-	# fcrit=0.05 led to 96-98% time zoop overconsumed, clev= 0.01-0.98
+	const global k = 10.0 / 365 #10 g^(1-p)/yr at 10C
 
 	###! Consumption constants
-	const global h = 60.0 / 365.0 # h=60 g^(0.25)/yr at 15C in Cmax eq
+	const global h = 85.0 / 365.0 # h=85 g^(0.25)/yr at 10C in Cmax eq
 	# tune so Cobs/Cmax ~ 0.6
-	# flev=0.5 led to 96-98% time zoop overconsumed, clev= 0.01-0.98
-	const global flev = 5000
-	const global q = 1.0 # q=0.75-1 in beta eq in consumption
+	const global flev = 1.0e4 / 365.0 #m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma
+	const global q = 0.8 # q=0.75-1 in beta eq in consumption
 
-	###! Swimming speed (Megrey 2007): m d-1
-	# Q. Why is swim speed a fraction from 0.8 to 0.1 as gets bigger?
-	# Ans: time spent swimming according to Van Leeuven 2008
-	#const global U_s = ((3.9*M_s.^0.13)/100*60*60*24)
-	#const global U_m = ((3.9*M_m.^0.13)/100*60*60*24)
-	#const global U_l = ((3.9*M_l.^0.13)/100*60*60*24)
+	###! Transfer efficiency of detritus to benthic prey
+	const global bent_eff = 0.30
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
-	const global Tu_m = 0.5
-	const global Tu_l = 0.1
-
-	#! Maximum search rate a as a function of body length (m2 d-1 g-1)
-	# calculate swimming speed (m d-1)
-	# factor in time spent swimming (low - Anieke's paper)
-	# orgs can see x3 body length (just a guess, find better number)
-	# divide by body mass to get weight specific search rate
-	#const global A_s = (U_s * ((L_s/1000)*3) * Tu_s) / M_s
-	#const global A_m = (U_m * ((L_m/1000)*3) * Tu_m) / M_m
-	#const global A_l = (U_l * ((L_l/1000)*3) * Tu_l) / M_l
+	const global Tu_m = 1.0 #0.5
+	const global Tu_l = 1.0 #0.1
 
 	###! Background mortality
 	#Currently increases from 0 to 0.01

@@ -56,7 +56,7 @@ end
 #  #tdif: frac pelagic time
 #  #wgt: ind weight of size class
 #  temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-#	 cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
+#	 cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=15C
 #  return cmax
 #end
 
@@ -84,16 +84,11 @@ function sub_met(Tp,Tb,tdif,wgt,L)
 
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
-  #Swimming
-  # NOTE: may want a new temp-dep U equation; I think too fast for larvae 8615m/d
-  #U = ((3.9*wgt.^0.13 * exp(0.149*temp)) /100*60*60*24) #Megrey (m/d)
-  #U = (3.9*wgt.^0.13 * exp(0.149*temp))  #Megrey (cm/s)
-  U = ((L * exp(0.063*(temp-18.5))) /10) #My Q10 using Tref=median hist temp (cm/s)
+  cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=10C
   #Metabolism
 	bas = fcrit * cmax
-  #Megrey respiration rate (gprey/gfish/d) uses swim in (cm/s)
-  met = bas #* exp(0.03*U) * 5.258
+  act = exp(0.063*(temp-10.0)) * k * wgt^(3/4)
+  met = bas + act
   return met
 end
 
@@ -110,12 +105,9 @@ function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
 	# A: predator search rate,
   # tpel: time spent in pelagic,
 	# tprey: time spent in area with that prey item.
-  #Swimming
+  #Hartvig et al. search volume
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #U = ((3.9*wgt.^0.13 * exp(0.149*temp)) /100*60*60*24) #Megrey
-  U = ((L * exp(0.063*(temp-18.5))) /1000*60*60*24) #My Q10 using Tref=median hist temp
-  #Search rate
-  A = (U * ((L/1000)*3) * tu) / wgt
+  A = exp(0.063*temp-10.0) * flev * wgt^(q)
   #Encounter
 	enc = pred*prey*A*tprey
   return enc
@@ -132,12 +124,9 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
-  #Con
-	beta = flev * exp(0.063*temp-15.0) * wgt^(q)
-  #beta = 1.0;
+  cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=10C
   ENC = sum(enc) # total biomass encountered
-	con = cmax .* (beta .* enc[1]) ./ (cmax + beta.*ENC) # Type II
+	con = cmax .* enc[1] ./ (cmax + ENC) # Type II
   return con
 end
 
@@ -182,7 +171,7 @@ function sub_clev(con,Tp,Tb,tdif,wgt)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  cmax = exp(0.063*(temp-15.0)) * h * wgt^(3/4) #h value for temp=15C
+  cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=15C
   #clev
 	clev = con/cmax
   return clev
