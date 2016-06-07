@@ -84,10 +84,10 @@ function sub_met(Tp,Tb,tdif,wgt,L)
 
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=10C
+  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365 #h value for temp=10C
   #Metabolism
 	bas = fcrit * cmax
-  act = exp(0.063*(temp-10.0)) * k * wgt^(3/4)
+  act = (exp(0.063*(temp-10.0)) * k * wgt^(3/4)) /365 #Charlie thinks another way is relate it to amount consumed
   met = bas + act
   return met
 end
@@ -107,7 +107,7 @@ function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
 	# tprey: time spent in area with that prey item.
   #Hartvig et al. search volume
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  A = exp(0.063*temp-10.0) * flev * wgt^(q)
+  A = (exp(0.063*(temp-10.0)) * flev * wgt^(q)) /365   #coeffs for per yr -> per day
   #Encounter
 	enc = pred*prey*A*tprey
   return enc
@@ -124,7 +124,7 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=10C
+  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365  #h value for temp=10C
   ENC = sum(enc) # total biomass encountered
 	con = cmax .* enc[1] ./ (cmax + ENC) # Type II
   return con
@@ -171,7 +171,7 @@ function sub_clev(con,Tp,Tb,tdif,wgt)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=15C
+  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365 #h value for temp=15C
   #clev
 	clev = con/cmax
   return clev

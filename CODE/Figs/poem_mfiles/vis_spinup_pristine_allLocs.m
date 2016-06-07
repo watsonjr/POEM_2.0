@@ -12,14 +12,20 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/beta_flev5000/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefOrig/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefOrig/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev1e4/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev1e4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev4e4/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev4e4/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
 
 sname = 'Spinup_';
-%sname2 = '';
-sname2 = 'phen_';
+sname2 = '';
+%sname2 = 'phen_';
 
-load([fpath sname sname2 'consump.mat'],'mclev','Zcon');
+load([dpath sname sname2 'consump.mat'],'mclev','Zcon');
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS'};
 
@@ -90,85 +96,7 @@ for s=1:length(spots)
     Fmean(:,s) = F_mean;
     Dmean(:,s) = D_mean;
     
-    %% Total
-    %Pisc
-    f1=figure(1);
-    subplot(2,3,s)
-    bar(P_sum,'k')
-    xlim([0 4])
-    if (s==2)
-        title({'Pel Pisc'; loc})
-    else
-        title(loc)
-    end
-    ylabel('Total Biomass (g m^-^2) in final year')
-    xlabel('Stage')
-    
-    %Forage
-    f2=figure(2);
-    subplot(2,3,s)
-    bar(F_sum,'b')
-    xlim([0 3])
-    if (s==2)
-        title({'Forage'; loc})
-    else
-        title(loc)
-    end
-    ylabel('Total Biomass (g m^-^2) in final year')
-    xlabel('Stage')
-    
-    %Dem
-    f3=figure(3);
-    subplot(2,3,s)
-    bar(D_sum,'r')
-    xlim([0 4])
-    if (s==2)
-        title({'Dem Pisc'; loc})
-    else
-        title(loc)
-    end
-    ylabel('Total Biomass (g m^-^2) in final year')
-    xlabel('Stage')
-    
-    %% Mean
-    %Pisc
-    f4=figure(4);
-    subplot(2,3,s)
-    bar(P_mean,'k')
-    xlim([0 4])
-    if (s==2)
-        title({'Pel Pisc'; loc})
-    else
-        title(loc)
-    end
-    ylabel('Mean Biomass (g m^-^2) in final year')
-    xlabel('Stage')
-    
-    %Forage
-    f5=figure(5);
-    subplot(2,3,s)
-    bar(F_mean,'b')
-    xlim([0 3])
-    if (s==2)
-        title({'Forage'; loc})
-    else
-        title(loc)
-    end
-    ylabel('Mean Biomass (g m^-^2) in final year')
-    xlabel('Stage')
-    
-    %Dem
-    f6=figure(6);
-    subplot(2,3,s)
-    bar(D_mean,'r')
-    xlim([0 4])
-    if (s==2)
-        title({'Dem Pisc'; loc})
-    else
-        title(loc)
-    end
-    ylabel('Mean Biomass (g m^-^2) in final year')
-    xlabel('Stage')
+    %% 
     
     %% Each on same axes
     all_sum(1:2,1,s) = F_sum;
@@ -202,12 +130,6 @@ for s=1:length(spots)
     
 end
 
-print(f1,'-dpng',[fpath sname sname2 'All_oneloc_tot_biomass_spec_Pisc.png'])
-print(f2,'-dpng',[fpath sname sname2 'All_oneloc_tot_biomass_spec_Forage.png'])
-print(f3,'-dpng',[fpath sname sname2 'All_oneloc_tot_biomass_spec_Dem.png'])
-print(f4,'-dpng',[fpath sname sname2 'All_oneloc_mean_biomass_spec_Pisc.png'])
-print(f5,'-dpng',[fpath sname sname2 'All_oneloc_mean_biomass_spec_Forage.png'])
-print(f6,'-dpng',[fpath sname sname2 'All_oneloc_mean_biomass_spec_Dem.png'])
 print(f10,'-dpng',[fpath sname sname2 'All_oneloc_Logtot_biomass_spec_FPD.png'])
 print(f11,'-dpng',[fpath sname sname2 'All_oneloc_tot_biomass_spec_FPD.png'])
 
@@ -253,6 +175,7 @@ for s = 1:length(spots)
     figure(8)
     subplot(2,3,s)
     bar(mclev(s,:),'k')
+    ylim([0 1])
     set(gca,'XTickLabel',[]);
     for n=1:8
         text(n-0.5,-0.1,stage{n},'Rotation',45)

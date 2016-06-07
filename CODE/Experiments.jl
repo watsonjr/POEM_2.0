@@ -37,7 +37,7 @@ function Testoneloc()
 		loc = names[L]
 
 		const global NX = length(ID)
-		phen=1;
+		phen=0;
 		#! Initialize
 		Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
 		Med_d.td[1] = 0.0;
