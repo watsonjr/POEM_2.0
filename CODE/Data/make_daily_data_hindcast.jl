@@ -141,52 +141,53 @@ for i = 1:nyr
 		#! medium zoo: from mol C m-2 to g(WW) m-2
     # 12.01 g C in 1 mol C
     # 0.2 g dry W in 1 g wet W (Megrey et al.)
+    # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
 		Y[:] = zm[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_Zm[j,1:length(Yi)] = Yi * 12.01 / 0.2;
+		D_Zm[j,1:length(Yi)] = Yi * 12.01 * 9.0;
 
 		#! large zoo: from mol C m-2 to g(WW) m-2
     # 12.01 g C in 1 mol C
-    # 0.2 g dry W in 1 g wet W (Megrey et al.)
+    # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
 		Y[:] = zl[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_Zl[j,1:length(Yi)] = Yi * 12.01 / 0.2;
+		D_Zl[j,1:length(Yi)] = Yi * 12.01 * 9.0;
 
 		#! medium zoo mortality: from mol C m-2 s-1 to g(WW) m-2 d-1
     # 12.01 g C in 1 mol C
-    # 0.2 g dry W in 1 g wet W (Megrey et al.)
+    # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
 		Y[:] = dzm[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_dZm[j,1:length(Yi)] = Yi * 12.01 / 0.2 * 60 * 60 *24 ;
+		D_dZm[j,1:length(Yi)] = Yi * 12.01 * 9.0 * 60 * 60 *24 ;
 
 		#! large zoo mortality: from mol C m-2 s-1 to g(WW) m-2 d-1
     # 12.01 g C in 1 mol C
-    # 0.2 g dry W in 1 g wet W (Megrey et al.)
+    # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
 		Y[:] = dzl[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_dZl[j,1:length(Yi)] = Yi * 12.01 / 0.2 *60 *60 *24;
+		D_dZl[j,1:length(Yi)] = Yi * 12.01 * 9.0 *60 *60 *24;
 
 		#! detrital flux to benthos: from mol C m-2 s-1 to g(WW) m-2 d-1
     # 12.01 g C in 1 mol C
-    # 0.2 g dry W in 1 g wet W (Megrey et al.)
+    # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
 		Y[:] = det[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_det[j,1:length(Yi)] = Yi * 12.01 / 0.2 *60 *60 *24;
+		D_det[j,1:length(Yi)] = Yi * 12.01 * 9.0 *60 *60 *24;
 
 	end
 
@@ -201,7 +202,7 @@ for i = 1:nyr
 
 	#! save
 	println(i)
-	ti = string(1000000+i); di = "./JLD/Data_hindcast_molCm2_";
+	ti = string(1000000+i); di = "./JLD/Data_hindcast_PC_";
 	save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,
 									  "dZm",D_dZm,"dZl",D_dZl,
 									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det,
