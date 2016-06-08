@@ -17,6 +17,7 @@ function get_COBALT!(COBALT,ID,DY,ENVR)
     ENVR.Dthresh[:,1] = Dthresh[ID]
     ENVR.fZm[:,1] = zeros(Int64,NX)
     ENVR.fZl[:,1] = zeros(Int64,NX)
+    ENVR.fB[:,1] = zeros(Int64,NX)
 end
 
 
@@ -87,8 +88,9 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365 #h value for temp=10C
   #Metabolism
 	bas = fcrit * cmax
-  act = (exp(0.063*(temp-10.0)) * k * wgt^(3/4)) /365 #Charlie thinks another way is relate it to amount consumed
-  met = bas + act
+  #act = (exp(0.063*(temp-10.0)) * k * wgt^(3/4)) /365 #Charlie thinks another way is relate it to amount consumed
+  #met = bas + act
+  met = bas / wgt
   return met
 end
 
@@ -142,17 +144,16 @@ function sub_offline(enc_1,enc_2,enc_3,dZ)
 		out_1 = (frac1 * dZ)
 		out_2 = (frac2 * dZ)
     out_3 = (frac3 * dZ)
-    zf = 1
 	else
 		out_1 = enc_1
 		out_2 = enc_2
     out_3 = enc_3
-    zf = 0
 	end
+  zf = (out_1 + out_2 + out_3) / dZ
 	return out_1, out_2, out_3, zf
 end
 
-function sub_offline_bent(enc_1,enc_2,B)
+function sub_offline_bent(enc_1,enc_2,B,det)
   if (enc_1 + enc_2) > B
 		frac1 = enc_1 / (enc_1 + enc_2)
     frac2 = enc_2 / (enc_1 + enc_2)
@@ -162,7 +163,8 @@ function sub_offline_bent(enc_1,enc_2,B)
 		out_1 = enc_1
 		out_2 = enc_2
 	end
-	return out_1, out_2
+  bf = (out_1 + out_2) / det
+	return out_1, out_2, bf
 end
 
 

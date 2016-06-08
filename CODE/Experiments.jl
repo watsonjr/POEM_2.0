@@ -6,7 +6,7 @@ function Testoneloc()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-  COBALT = load("./Data/JLD/Data_hindcast_molCm2_000120.jld"); # 1980
+  COBALT = load("./Data/JLD/Data_hindcast_PC_000120.jld"); # 1980
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
@@ -29,10 +29,10 @@ function Testoneloc()
   #ID = 36334 #17377 # Hawaii OT
 	#ID = 38309 #30335 # Bermuda ATS
   #ID = 42744 #40403 # North Sea
-	ids = [40319,42639,41782,36334,38309,42744]
-	names = ["GB","EBS","OSP","HOT","BATS","NS"]
+	ids = [40319,42639,41782,36334,38309,42744,30051]
+	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP"]
 
-	for L = 1:6
+	for L = 1:7
 		ID = ids[L]
 		loc = names[L]
 
@@ -117,7 +117,7 @@ function Testoneloc()
 				writecsv(Spinup_Med_d,[Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.egg Med_d.clev Med_d.DD Med_d.S[DY-1]])
 				writecsv(Spinup_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1]])
 				writecsv(Spinup_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1]])
-				writecsv(Spinup_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl])
+				writecsv(Spinup_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl ENVR.fB])
 			end #Days
 		end #Years
 
@@ -159,10 +159,10 @@ function Oneloc_hindcast_pristine()
   #ID = 36334 #17377 # Hawaii
 	#ID = 38309 #30335 # Bermuda
   #ID = 42744 #40403 # North Sea
-	ids = [40319,42639,41782,36334,38309,42744]
-	names = ["GB","EBS","OSP","HOT","BATS","NS"]
+	ids = [40319,42639,41782,36334,38309,42744,30051]
+	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP"]
 
-	for L = 1:6
+	for L = 1:7
 		ID = ids[L]
 		loc = names[L]
 
@@ -225,7 +225,7 @@ function Oneloc_hindcast_pristine()
 		for YR = 1:YEARS # years
 			#! Load a year's COBALT data
 			ti = string(YR+1000000)
-			COBALT = load(string("./Data/JLD/Data_hindcast_molCm2_",ti[2:end],".jld"));
+			COBALT = load(string("./Data/JLD/Data_hindcast_PC_",ti[2:end],".jld"));
 			#reset spawning flag
 			if (phen == 1)
 				Med_f.S = zeros(Float64,NX,DAYS)
@@ -250,7 +250,7 @@ function Oneloc_hindcast_pristine()
 				writecsv(Oneloc_hist_Med_d,[Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.egg Med_d.clev Med_d.DD Med_d.S[DY-1]])
 				writecsv(Oneloc_hist_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1]])
 				writecsv(Oneloc_hist_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1]])
-				writecsv(Oneloc_hist_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl])
+				writecsv(Oneloc_hist_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl ENVR.fB])
 
 			end #Days
 		end #Years
@@ -291,10 +291,10 @@ function Oneloc_forecast_pristine()
   #ID = 36334 #17377 # Hawaii OS
 	#ID = 38309 #30335 # Bermuda ATS
   #ID = 42744 #40403 # North Sea
-	ids = [40319,42639,41782,36334,38309,42744]
-	names = ["GB","EBS","OSP","HOT","BATS","NS"]
+	ids = [40319,42639,41782,36334,38309,42744,30051]
+	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP"]
 
-	for L = 1:6
+	for L = 1:7
 		ID = ids[L]
 		loc = names[L]
 
@@ -336,7 +336,7 @@ function Oneloc_forecast_pristine()
 		for YR = 1:YEARS # years
 			#! Load a year's COBALT data
 			ti = string(YR+1000000)
-			COBALT = load(string("./Data/JLD/Data_forecast_molCm2_",ti[2:end],".jld"));
+			COBALT = load(string("./Data/JLD/Data_forecast_PC_",ti[2:end],".jld"));
 			#reset spawning flag
 			if (phen == 1)
 				Med_f.S = zeros(Float64,NX,DAYS)
@@ -360,7 +360,7 @@ function Oneloc_forecast_pristine()
 				writecsv(Oneloc_fore_Med_d,[Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.egg Med_d.clev Med_d.DD Med_d.S[DY-1]])
 				writecsv(Oneloc_fore_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1]])
 				writecsv(Oneloc_fore_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1]])
-				writecsv(Oneloc_fore_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl])
+				writecsv(Oneloc_fore_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl ENVR.fB])
 
 			end #Days
 		end #Years
@@ -387,7 +387,7 @@ function Spinup_pristine()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/JLD/Data_hindcast_molCm2_000120.jld"); # 1980
+	COBALT = load("./Data/JLD/Data_hindcast_PC_000120.jld"); # 1980
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
@@ -416,120 +416,97 @@ function Spinup_pristine()
 	#! Initialize
 	phen=0;
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
-	Med_d.td[1] = 0.0;
-	Lrg_d.td[1] = 0.0;
+	Med_d.td[1:NX] = 0.0;
+	Lrg_d.td[1:NX] = 0.0;
 	ENVR = sub_init_env(ID);
 
 	############### Setup NetCDF save
+	# #! Init netcdf file for storage
+	# #biomatts = {"longname" => "Biomass","units" => "kg/m^2"}
+	# #X_atts = {"longname" => "Space", "units" => "grid cell"}
+	# #timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
+	# #Use "Dict{Any,Any}(a=>b, ...)" instead.
+	# biomatts = Dict("longname" => "Biomass",
+	#          "units"    => "g/m^2")
+	# X_atts = Dict("longname" => "Space",
+	# 		"units"    => "grid cell")
+	# timatts = Dict("longname" => "Time",
+	# 		"units"    => "days since 01-01-1980 00:00:00")
+	# fracatts = Dict("longname" => "Fraction",
+	# 		"units"    => "unitless")
+	# DDatts = Dict("longname" => "Cumulative degree days",
+	# 		"units"    => "degrees Celsius")
+	#
+	# #! Init dims of netcdf file
+	# X   = collect(1:NX)
+	# tim = collect(1)
+	#
+	# #! setup netcdf path to store to
+	# file_sml_f = "./Data/NC/Data_spinup_pristine_sml_f.nc"
+	# file_sml_p = "./Data/NC/Data_spinup_pristine_sml_p.nc"
+	# file_sml_d = "./Data/NC/Data_spinup_pristine_sml_d.nc"
+	# file_med_f = "./Data/NC/Data_spinup_pristine_med_f.nc"
+	# file_med_p = "./Data/NC/Data_spinup_pristine_med_p.nc"
+	# file_med_d = "./Data/NC/Data_spinup_pristine_med_d.nc"
+	# file_lrg_p = "./Data/NC/Data_spinup_pristine_lrg_p.nc"
+	# file_lrg_d = "./Data/NC/Data_spinup_pristine_lrg_d.nc"
+	#
+	# #! remove if already in existence
+	# isfile(file_sml_f) ? rm(file_sml_f) : nothing
+	# isfile(file_sml_p) ? rm(file_sml_p) : nothing
+	# isfile(file_sml_d) ? rm(file_sml_d) : nothing
+	# isfile(file_med_f) ? rm(file_med_f) : nothing
+	# isfile(file_med_p) ? rm(file_med_p) : nothing
+	# isfile(file_med_d) ? rm(file_med_d) : nothing
+	# isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
+	# isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
+	#
+	# #NcDim(dimname, dimlength, atts=Dict{Any,Any}(), values=[])
+	# Xdim = NcDim("NX", NX, atts=X_atts, values=X)
+	# tdim = NcDim("time", YEARS*DAYS, atts=timatts, values=collect(1:YEARS*DAYS))
+	#
+	# #radvar = NcVar("rad",[londim,latdim,timdim],varatts,Float32)
+	# biomvar = NcVar("biomass", [Xdim,tdim], biomatts, Float64)
+	# encPvar = NcVar("encP", [Xdim,tdim], atts=biomatts, Float64)
+	#
+	# #! create netcdf files
+	# #nc = NetCDF.create("radiation2.nc",radvar)
+	# # Writing data to the file is done using putvar
+	# #NetCDF.putvar(nc, "rad", rad )
+	# #[bio enc_f enc_p enc_d enc_zm enc_zl enc_be con_f con_p con_d con_zm con_zl con_be I nu gamma die rep rec egg clev DD S
+	# nccreate(file_sml_f,biomvar)
+	# nccreate(file_sml_f,biomvar,encPvar)
+	# nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	# nccreate(file_sml_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	# nccreate(file_med_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	# nccreate(file_med_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	# nccreate(file_med_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	# nccreate(file_lrg_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	# nccreate(file_lrg_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	#
+	# #! Initializing netcdf files
+	# println("Initializing file system (takes about 2 minutes)")
+	# ncwrite(zeros(NX,1),file_sml_f,"biomass",[1,1])
+	# ncwrite(zeros(NX,1),file_sml_p,"biomass",[1,1])
+	# ncwrite(zeros(NX,1),file_sml_d,"biomass",[1,1])
+	# ncwrite(zeros(NX,1),file_med_f,"biomass",[1,1])
+	# ncwrite(zeros(NX,1),file_med_p,"biomass",[1,1])
+	# ncwrite(zeros(NX,1),file_med_d,"biomass",[1,1])
+	# ncwrite(zeros(NX,1),file_lrg_p,"biomass",[1,1])
+	# ncwrite(zeros(NX,1),file_lrg_d,"biomass",[1,1])
 
-	### NETCDF EXAMPLE
-	include("toa.jl")
-	# Define longitudes and latitudes, day and timesteps
-	lat=[-89:89]
-	lon=[0:359]
-	day=1
-	tim=[0:23]
-	# Create radiation array
-	rad = float64([g_pot(x2,x1,day,x3) for x1=lon, x2=lat, x3=tim])
-	# Define some attributes of the variable (optionlal)
-	varatts = @Compat.Dict("longname" => "Radiation at the top of the atmosphere",
-	           "units"    => "W/m^2")
-	lonatts = @Compat.Dict("longname" => "Longitude",
-	           "units"    => "degrees east")
-	latatts = @Compat.Dict("longname" => "Latitude",
-	           "units"    => "degrees north")
-	timatts = @Compat.Dict("longname" => "Time",
-	           "units"    => "hours since 01-01-2000 00:00:00")
-	#Here we start by defining the dimensions. This is done by creating NcDim objects:
-	latdim = NcDim("lat",lat,latatts)
-	londim = NcDim("lon",lon,lonatts)
-	timdim = NcDim("time",tim,timatts)
-	# Then we create an NcVar object, the data type is defined by the corresponding julia type:
-	radvar = NcVar("rad",[londim,latdim,timdim],varatts,Float32)
-	# Now we can finally create the netcdf-file and get a file handler in return:
-	isfile("radiation2.nc") ? rm("radiation2.nc") : nothing
-	nc = NetCDF.create("radiation2.nc",radvar)
-	# Writing data to the file is done using putvar
-	NetCDF.putvar(nc, "rad", rad )
-	# And we close the file
-	NetCDF.close( nc )
-	###
 
-	#! Init netcdf file for storage
-	#biomatts = {"longname" => "Biomass","units" => "kg/m^2"}
-	#X_atts = {"longname" => "Space", "units" => "grid cell"}
-	#timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
-	#Use "Dict{Any,Any}(a=>b, ...)" instead.
-	biomatts = @Compat.Dict("longname" => "Biomass",
-           "units"    => "g/m^2")
-	X_atts = Dict("longname" => "Space",
-			"units"    => "grid cell")
-	timatts = Dict("longname" => "Time",
-			"units"    => "days since 01-01-1980 00:00:00")
-	fracatts = Dict("longname" => "Fraction",
-			"units"    => "unitless")
-	DDatts = Dict("longname" => "Cumulative degree days",
-			"units"    => "degrees Celsius")
+	############### Setup Mat file save
+	file_sml_f = matopen("./Data/MAT/Data_spinup_pristine_sml_f.mat","w")
+	file_sml_p = matopen("./Data/MAT/Data_spinup_pristine_sml_p.mat","w")
+	file_sml_d = matopen("./Data/MAT/Data_spinup_pristine_sml_d.mat","w")
+	file_med_f = matopen("./Data/MAT/Data_spinup_pristine_med_f.mat","w")
+	file_med_p = matopen("./Data/MAT/Data_spinup_pristine_med_p.mat","w")
+	file_med_d = matopen("./Data/MAT/Data_spinup_pristine_med_d.mat","w")
+	file_lrg_p = matopen("./Data/MAT/Data_spinup_pristine_lrg_p.mat","w")
+	file_lrg_d = matopen("./Data/MAT/Data_spinup_pristine_lrg_d.mat","w")
+	file_cobalt = matopen("./Data/MAT/Data_spinup_pristine_cobalt.mat","w")
 
-	#! Init dims of netcdf file
-	X   = collect(1:NX)
-	tim = collect(1)
-
-	#! setup netcdf path to store to
-	file_sml_f = "./Data/NC/Data_spinup_pristine_sml_f.nc"
-	file_sml_p = "./Data/NC/Data_spinup_pristine_sml_p.nc"
-	file_sml_d = "./Data/NC/Data_spinup_pristine_sml_d.nc"
-	file_med_f = "./Data/NC/Data_spinup_pristine_med_f.nc"
-	file_med_p = "./Data/NC/Data_spinup_pristine_med_p.nc"
-	file_med_d = "./Data/NC/Data_spinup_pristine_med_d.nc"
-	file_lrg_p = "./Data/NC/Data_spinup_pristine_lrg_p.nc"
-	file_lrg_d = "./Data/NC/Data_spinup_pristine_lrg_d.nc"
-
-	#! remove if already in existence
-	isfile(file_sml_f) ? rm(file_sml_f) : nothing
-	isfile(file_sml_p) ? rm(file_sml_p) : nothing
-	isfile(file_sml_d) ? rm(file_sml_d) : nothing
-	isfile(file_med_f) ? rm(file_med_f) : nothing
-	isfile(file_med_p) ? rm(file_med_p) : nothing
-	isfile(file_med_d) ? rm(file_med_d) : nothing
-	isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
-	isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
-
-	#NcDim(dimname, dimlength, atts=Dict{Any,Any}(), values=[])
-	Xdim = NcDim("NX", NX, atts=X_atts, values=X)
-	tdim = NcDim("time", YEARS*DAYS, atts=timatts, values=collect(1:YEARS*DAYS))
-
-	#radvar = NcVar("rad",[londim,latdim,timdim],varatts,Float32)
-	biomvar = NcVar("biomass", [Xdim,tdim], biomatts, Float64)
-	encPvar = NcVar("encP", [Xdim,tdim], atts=biomatts, Float64)
-
-	NetCDF.create( filename, varlist, gatts=Dict{Any,Any}(),mode=NC_NETCDF4)
-
-	#! create netcdf files
-	#nc = NetCDF.create("radiation2.nc",radvar)
-	# Writing data to the file is done using putvar
-	#NetCDF.putvar(nc, "rad", rad )
-	#[bio enc_f enc_p enc_d enc_zm enc_zl enc_be con_f con_p con_d con_zm con_zl con_be I nu gamma die rep rec egg clev DD S
-	nccreate(file_sml_f,biomvar)
-	nccreate(file_sml_f,biomvar,encPvar)
-	nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	nccreate(file_sml_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	nccreate(file_med_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	nccreate(file_med_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	nccreate(file_med_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	nccreate(file_lrg_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	nccreate(file_lrg_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-
-	#! Initializing netcdf files
-	println("Initializing file system (takes about 2 minutes)")
-	ncwrite(zeros(NX,1),file_sml_f,"biomass",[1,1])
-	ncwrite(zeros(NX,1),file_sml_p,"biomass",[1,1])
-	ncwrite(zeros(NX,1),file_sml_d,"biomass",[1,1])
-	ncwrite(zeros(NX,1),file_med_f,"biomass",[1,1])
-	ncwrite(zeros(NX,1),file_med_p,"biomass",[1,1])
-	ncwrite(zeros(NX,1),file_med_d,"biomass",[1,1])
-	ncwrite(zeros(NX,1),file_lrg_p,"biomass",[1,1])
-	ncwrite(zeros(NX,1),file_lrg_d,"biomass",[1,1])
 
 	###################### Run the Model
 	#! Run model with no fishing
@@ -545,7 +522,7 @@ function Spinup_pristine()
 		for DAY = 1:DT:DAYS # days
 
 			###! Future time step
-			DY  = int(ceil(DAY))
+			DY  = Int(ceil(DAY))
 			println(YR," , ", mod(DY,365))
 			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 
@@ -567,24 +544,51 @@ function Spinup_pristine()
 	end
 
 	#! Save
-	ncwrite(S_Sml_f,file_sml_f,"biomass",[1,1])
-	ncwrite(S_Sml_p,file_sml_p,"biomass",[1,1])
-	ncwrite(S_Sml_d,file_sml_d,"biomass",[1,1])
-	ncwrite(S_Med_f,file_med_f,"biomass",[1,1])
-	ncwrite(S_Med_p,file_med_p,"biomass",[1,1])
-	ncwrite(S_Med_d,file_med_d,"biomass",[1,1])
-	ncwrite(S_Lrg_p,file_lrg_p,"biomass",[1,1])
-	ncwrite(S_Lrg_d,file_lrg_d,"biomass",[1,1])
+	# ncwrite(S_Sml_f,file_sml_f,"biomass",[1,1])
+	# ncwrite(S_Sml_p,file_sml_p,"biomass",[1,1])
+	# ncwrite(S_Sml_d,file_sml_d,"biomass",[1,1])
+	# ncwrite(S_Med_f,file_med_f,"biomass",[1,1])
+	# ncwrite(S_Med_p,file_med_p,"biomass",[1,1])
+	# ncwrite(S_Med_d,file_med_d,"biomass",[1,1])
+	# ncwrite(S_Lrg_p,file_lrg_p,"biomass",[1,1])
+	# ncwrite(S_Lrg_d,file_lrg_d,"biomass",[1,1])
+	#
+	# #! Close save
+  # ncclose(file_sml_f)
+  # ncclose(file_sml_p)
+  # ncclose(file_sml_d)
+  # ncclose(file_med_f)
+  # ncclose(file_med_p)
+  # ncclose(file_med_d)
+  # ncclose(file_lrg_p)
+	# ncclose(file_lrg_d)
 
-	#! Close save
-  ncclose(file_sml_f)
-  ncclose(file_sml_p)
-  ncclose(file_sml_d)
-  ncclose(file_med_f)
-  ncclose(file_med_p)
-  ncclose(file_med_d)
-  ncclose(file_lrg_p)
-	ncclose(file_lrg_d)
+
+	#! Mat Save
+
+	# x = mxarray(Lrg_p)
+	# ,[Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.egg Sml_p.clev Sml_p.DD Sml_p.S[DY-1]])
+
+
+	write(file_sml_f;Sml_f)
+	write(file_sml_p;Sml_p)
+	write(file_sml_d;Sml_d)
+	write(file_med_f;Med_f)
+	write(file_med_p;Med_p)
+	write(file_med_d;Med_d)
+	write(file_lrg_p;Lrg_p)
+	write(file_lrg_d;Lrg_d)
+	write(file_cobalt; bent=BENT.mass, fZm = ENVR.fZm, fZl = ENVR.fZl, fDet = ENVR.fB)
+
+	#! Mat Close
+  close(file_sml_f)
+  close(file_sml_p)
+  close(file_sml_d)
+  close(file_med_f)
+  close(file_med_p)
+  close(file_med_d)
+  close(file_lrg_p)
+	close(file_lrg_d)
 end
 
 

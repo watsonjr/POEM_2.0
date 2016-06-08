@@ -81,7 +81,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_f.con_zm[JD], Sml_p.con_zm[JD], Sml_d.con_zm[JD], ENVR.fZm[JD] = sub_offline(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],ENVR.dZm[JD])
 		Med_f.con_zl[JD], Med_p.con_zl[JD], Med_d.con_zl[JD], ENVR.fZl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_d.con_zl[JD],ENVR.dZl[JD])
 		#Benthic material consumption cannot exceed amount present
-		Med_d.con_be[JD], Lrg_d.con_be[JD] = sub_offline_bent(Med_d.con_be[JD],Lrg_d.con_be[JD],BENT.mass[JD])
+		Med_d.con_be[JD], Lrg_d.con_be[JD], ENVR.fB[JD] = sub_offline_bent(Med_d.con_be[JD],Lrg_d.con_be[JD],BENT.mass[JD],ENVR.det[JD])
 
 		#! total consumption rates (could factor in handling times here; g m-2 d-1)
 		Sml_f.I[JD] = Sml_f.con_zm[JD]

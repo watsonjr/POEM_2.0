@@ -27,7 +27,14 @@ sname2 = '';
 
 load([dpath sname sname2 'consump.mat'],'mclev','Zcon');
 
-spots = {'GB','EBS','OSP','HOT','BATS','NS'};
+spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
+stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
+cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
+    'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
+    'rec','egg','clev','DD','S'};
+cols=cols';
+
+load('cmap_ppt_angles.mat')
 
 %%
 Psum = NaN*ones(3,length(spots));
@@ -36,8 +43,16 @@ Dsum = Psum;
 Pmean = Psum;
 Fmean = Fsum;
 Dmean = Psum;
+Pmgr = Psum;
+Fmgr = Fsum;
+Dmgr = Psum;
+Pcon = Psum;
+Fcon = Fsum;
+Dcon = Psum;
 all_sum=NaN*ones(3,3,length(spots));
-    
+z = NaN*ones(length(spots),3);
+
+%%
 for s=1:length(spots)
     %%
     loc = spots{s};
@@ -50,6 +65,7 @@ for s=1:length(spots)
     MD = csvread([dpath sname lname 'Med_d.csv']);
     LP = csvread([dpath sname lname 'Lrg_p.csv']);
     LD = csvread([dpath sname lname 'Lrg_d.csv']);
+    C = csvread([dpath sname lname 'Cobalt.csv']);
     
     %% Plots over time
     x=1:length(SP);
@@ -96,99 +112,221 @@ for s=1:length(spots)
     Fmean(:,s) = F_mean;
     Dmean(:,s) = D_mean;
     
-    %% 
     
-    %% Each on same axes
     all_sum(1:2,1,s) = F_sum;
     all_sum(:,2,s) = P_sum;
     all_sum(:,3,s) = D_sum;
     
-    f10 = figure(10);
-    subplot(2,3,s)
-    bar(log(squeeze(all_sum(:,:,s))))
-    xlim([0 4])
+    f1 = figure(1);
+    subplot(3,3,s)
+    plot(0.5:2:5.5,log10(squeeze(all_sum(:,1,s))),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(1:2:6,log10(squeeze(all_sum(:,2,s))),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(1.5:2:6.5,log10(squeeze(all_sum(:,3,s))),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 6])
     ylim([-20 10])
+    set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     if (s==4)
-        legend('F','P','D')
-        legend('location','southeast')
+        %legend('F','P','D')
+        %legend('location','southeast')
+        ylabel('log10 Tot Biom (g m^-^2) in final year')
     end
     title(loc)
-    ylabel('log Tot Biom (g m^-^2) in final year')
     xlabel('Stage')
     
-    f11 = figure(11);
-    subplot(2,3,s)
-    bar(squeeze(all_sum(:,:,s)))
-    xlim([0 4])
+    %% Feeding level
+    f2=figure(2);
+    subplot(3,3,s)
+    bar(mclev(s,:),'k')
+    ylim([0 1])
+    set(gca,'XTickLabel',[]);
+    for n=1:8
+        text(n-0.5,-0.2,stage{n},'Rotation',45)
+    end
+    title(spots{s})
     if (s==4)
-        legend('F','P','D')
+        ylabel('Feeding level')
+    end
+    
+    %% Growth rate (gamma)
+    SP_mgr=nanmean(SP(lyr,15));
+    SF_mgr=nanmean(SF(lyr,15));
+    SD_mgr=nanmean(SD(lyr,15));
+    MP_mgr=nanmean(MP(lyr,15));
+    MF_mgr=nanmean(MF(lyr,15));
+    MD_mgr=nanmean(MD(lyr,15));
+    LP_mgr=nanmean(LP(lyr,15));
+    LD_mgr=nanmean(LD(lyr,15));
+    
+    P_mgr=[SP_mgr;MP_mgr;LP_mgr];
+    F_mgr=[SF_mgr;MF_mgr];
+    D_mgr=[SD_mgr;MD_mgr;LD_mgr];
+    
+    Pmgr(:,s) = P_mgr;
+    Fmgr(:,s) = F_mgr;
+    Dmgr(:,s) = D_mgr;
+    
+    f3 = figure(3);
+    subplot(3,3,s)
+    plot(0.5:2:3.5,log10(F_mgr),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(1:2:6,log10(P_mgr),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(1.5:2:6.5,log10(D_mgr),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 6])
+    ylim([-6 6])
+    set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
+    if (s==4)
+        %legend('F','P','D')
+        %legend('location','southeast')
+        ylabel('log10 Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    end
+    title(loc)
+    xlabel('Stage')
+    
+    %% Consump per biomass (I/biom)
+    SP_con=nanmean(SP(lyr,14)./SP(lyr,1));
+    SF_con=nanmean(SF(lyr,14)./SF(lyr,1));
+    SD_con=nanmean(SD(lyr,14)./SD(lyr,1));
+    MP_con=nanmean(MP(lyr,14)./MP(lyr,1));
+    MF_con=nanmean(MF(lyr,14)./MF(lyr,1));
+    MD_con=nanmean(MD(lyr,14)./MD(lyr,1));
+    LP_con=nanmean(LP(lyr,14)./LP(lyr,1));
+    LD_con=nanmean(LD(lyr,14)./LD(lyr,1));
+    
+    P_con=[SP_con;MP_con;LP_con];
+    F_con=[SF_con;MF_con];
+    D_con=[SD_con;MD_con;LD_con];
+    
+    Pcon(:,s) = P_con;
+    Fcon(:,s) = F_con;
+    Dcon(:,s) = D_con;
+    
+    f4 = figure(4);
+    subplot(3,3,s)
+    plot(0.5:2:3.5,log10(F_con),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(1:2:6,log10(P_con),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(1.5:2:6.5,log10(D_con),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 6])
+    %ylim([-25 15])
+    set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
+    if (s==4)
+        %legend('F','P','D')
+        %legend('location','southeast')
+        ylabel('log10 Mean consumption (g g^-^1 d^-^1) in final year')
+    end
+    title(loc)
+    xlabel('Stage')
+    
+    %% Fraction zoop losses consumed
+    z(s,1) = nanmean(C(lyr,2));
+    z(s,2) = nanmean(C(lyr,3));
+    z(s,3) = nanmean(C(lyr,4));
+    
+    f5 = figure(5);
+    subplot(3,3,s)
+    bar(z(s,:)); hold on;
+    xlim([0 4])
+    ylim([0 1])
+    set(gca,'XTick',1:3,'XTickLabel',{'MZ','LZ','Det'})
+    if (s==4)
+        ylabel('Fraction flux consumed')
+    end
+    title(loc)
+    
+    %% Size spectrum (sum stages)
+    spec = nansum(all_sum(:,:,s),2);
+    
+    f6 = figure(6);
+    subplot(3,3,s)
+    plot(1:2:6,log10(spec),'sk',...
+        'MarkerFaceColor','k',...
+        'MarkerSize',15); hold on;
+    xlim([0 6])
+    %ylim([-25 15])
+    set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
+    title(loc)
+    if (s==4)
+        ylabel('log Tot Biom (g m^-^2) in final year')
+    end
+    xlabel('Size')
+    
+    f7 = figure(7);
+    plot(1:2:6,log10(spec),'color',cmap_ppt(s,:),...
+        'LineWidth',2); hold on;
+    xlim([0 6])
+    %ylim([-25 15])
+    set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
+    if (s==7)
+        legend(spots)
         legend('location','northeast')
     end
-    title(loc)
-    ylabel('Tot Biom (g m^-^2) in final year')
-    xlabel('Stage')
+    ylabel('log Tot Biom (g m^-^2) in final year')
+    xlabel('Size class')
     
 end
-
-print(f10,'-dpng',[fpath sname sname2 'All_oneloc_Logtot_biomass_spec_FPD.png'])
-print(f11,'-dpng',[fpath sname sname2 'All_oneloc_tot_biomass_spec_FPD.png'])
+print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logtot_biomass.png'])
+print(f2,'-dpng',[fpath sname sname2 'All_oneloc_con_level.png'])
+print(f3,'-dpng',[fpath sname sname2 'All_oneloc_nu.png'])
+print(f4,'-dpng',[fpath sname sname2 'All_oneloc_consump.png'])
+print(f5,'-dpng',[fpath sname sname2 'All_oneloc_frac_zoop_loss.png'])
+print(f6,'-dpng',[fpath sname sname2 'All_oneloc_size_spec_sub.png'])
+print(f7,'-dpng',[fpath sname sname2 'All_oneloc_size_spec.png'])
 
 save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
-    'Dsum','Pmean','Fmean','Dmean','all_sum');
+    'Dsum','Pmean','Fmean','Dmean','all_sum',...
+    'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z');
 
 %% All on one
-figure(7)
+figure(8)
 subplot(2,3,1)
 bar(log(Fsum))
 xlim([0 4])
-ylabel('log Total Biomass (g m^-^2) in final year')
 legend(spots)
 title('Forage')
 
 subplot(2,3,2)
 bar(log(Psum))
+xlim([0 4])
 title('Pel Pisc')
 
 subplot(2,3,3)
 bar(log(Dsum))
+xlim([0 4])
 title('Dem Pisc')
 
 subplot(2,3,4)
 bar(log(Fmean))
 xlim([0 4])
 xlabel('Stage')
-ylabel('log Mean Biomass (g m^-^2) in final year')
+ylabel('log Mean Biomass (g m^-^2) in final year',...
+    'HorizontalAlignment','left')
 
 subplot(2,3,5)
 bar(log(Pmean))
+xlim([0 4])
 xlabel('Stage')
 
 subplot(2,3,6)
 bar(log(Dmean))
+xlim([0 4])
 xlabel('Stage')
 print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
-
-%% Feeding level
-
-stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
-for s = 1:length(spots)
-    figure(8)
-    subplot(2,3,s)
-    bar(mclev(s,:),'k')
-    ylim([0 1])
-    set(gca,'XTickLabel',[]);
-    for n=1:8
-        text(n-0.5,-0.1,stage{n},'Rotation',45)
-    end
-    title(spots{s})
-    if (s==1)
-        ylabel('Feeding level')
-    end
-    if (s==4)
-        ylabel('Feeding level')
-    end
-end
-print('-dpng',[fpath sname sname2 'All_oneloc_con_level.png'])
 
 %% Zoop con
 

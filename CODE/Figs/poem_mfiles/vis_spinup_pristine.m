@@ -20,7 +20,7 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
 
-spots = {'GB','EBS','OSP','HOT','BATS','NS'};
+spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
@@ -30,7 +30,7 @@ cols=cols';
 fplot=0;
 
 mclev=NaN*ones(length(spots),8);
-Zcon=NaN*ones(length(spots),2);
+Zcon=NaN*ones(length(spots),3);
 for s=1:length(spots)
     %%
     close all
@@ -49,6 +49,8 @@ for s=1:length(spots)
     C = csvread([dpath sname lname 'Cobalt.csv']);
     z(:,1) = C(:,2);
     z(:,2) = C(:,3);
+    z(:,3) = C(:,4);
+    z=floor(z);
     
     %% Plots over time
     x=1:length(SP);
