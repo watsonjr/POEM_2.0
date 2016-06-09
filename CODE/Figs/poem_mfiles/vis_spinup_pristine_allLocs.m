@@ -10,12 +10,14 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev1e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev4e4/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev4e4/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_NoWgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4_HalfC/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4_HalfC/';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -45,7 +47,7 @@ Dmgr = Psum;
 Pcon = Psum;
 Fcon = Fsum;
 Dcon = Psum;
-all_sum=NaN*ones(3,3,length(spots));
+all_mean=NaN*ones(3,3,length(spots));
 z = NaN*ones(length(spots),3);
 
 %%
@@ -109,19 +111,19 @@ for s=1:length(spots)
     Dmean(:,s) = D_mean;
     
     
-    all_sum(1:2,1,s) = F_sum;
-    all_sum(:,2,s) = P_sum;
-    all_sum(:,3,s) = D_sum;
+    all_mean(1:2,1,s) = F_mean;
+    all_mean(:,2,s) = P_mean;
+    all_mean(:,3,s) = D_mean;
     
     f1 = figure(1);
     subplot(3,3,s)
-    plot(0.5:2:5.5,log10(squeeze(all_sum(:,1,s))),'sk',...
+    plot(0.5:2:5.5,log10(squeeze(all_mean(:,1,s))),'sk',...
         'MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
-    plot(1:2:6,log10(squeeze(all_sum(:,2,s))),'sk',...
+    plot(1:2:6,log10(squeeze(all_mean(:,2,s))),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(1.5:2:6.5,log10(squeeze(all_sum(:,3,s))),'sk',...
+    plot(1.5:2:6.5,log10(squeeze(all_mean(:,3,s))),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 6])
@@ -130,7 +132,7 @@ for s=1:length(spots)
     if (s==4)
         %legend('F','P','D')
         %legend('location','southeast')
-        ylabel('log10 Tot Biom (g m^-^2) in final year')
+        ylabel('log10 Mean Biom (g m^-^2) in final year')
     end
     title(loc)
     xlabel('Stage')
@@ -139,7 +141,7 @@ for s=1:length(spots)
     f2=figure(2);
     subplot(3,3,s)
     bar(mclev(s,:),'k')
-    %ylim([0 1])
+    ylim([0 1])
     set(gca,'XTickLabel',[]);
     for n=1:8
         text(n-0.5,-0.2,stage{n},'Rotation',45)
@@ -279,7 +281,7 @@ for s=1:length(spots)
     title(loc)
     
     %% Size spectrum (sum stages)
-    spec = nansum(all_sum(:,:,s),2);
+    spec = nansum(all_mean(:,:,s),2);
     
     f6 = figure(6);
     subplot(3,3,s)
@@ -287,17 +289,17 @@ for s=1:length(spots)
         'MarkerFaceColor','k',...
         'MarkerSize',15); hold on;
     xlim([0 6])
-    %ylim([-4 4])
+    %ylim([-4 4])clo
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     title(loc)
     if (s==4)
-        ylabel('log Tot Biom (g m^-^2) in final year')
+        ylabel('log Mean Biom (g m^-^2) in final year')
     end
     xlabel('Size')
     
     f7 = figure(7);
-%     plot(1:2:6,log10(spec),'color',cmap_ppt(s,:),...
-%         'LineWidth',2); hold on;
+    %     plot(1:2:6,log10(spec),'color',cmap_ppt(s,:),...
+    %         'LineWidth',2); hold on;
     plot(1:2:6,log10(spec),'LineWidth',2); hold on;
     xlim([0 6])
     %ylim([-25 15])
@@ -306,11 +308,11 @@ for s=1:length(spots)
         legend(spots)
         legend('location','northeast')
     end
-    ylabel('log Tot Biom (g m^-^2) in final year')
+    ylabel('log Mean Biom (g m^-^2) in final year')
     xlabel('Size class')
     
 end
-print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logtot_biomass.png'])
+print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass.png'])
 print(f2,'-dpng',[fpath sname sname2 'All_oneloc_con_level.png'])
 print(f3,'-dpng',[fpath sname sname2 'All_oneloc_nu.png'])
 print(f4,'-dpng',[fpath sname sname2 'All_oneloc_consump.png'])
@@ -319,11 +321,35 @@ print(f6,'-dpng',[fpath sname sname2 'All_oneloc_size_spec_sub.png'])
 print(f7,'-dpng',[fpath sname sname2 'All_oneloc_size_spec.png'])
 
 save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
-    'Dsum','Pmean','Fmean','Dmean','all_sum',...
+    'Dsum','Pmean','Fmean','Dmean','all_mean',...
     'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z');
 
+%% Sum mean biom over stages
+sumspec = squeeze(nansum(nansum(all_mean)));
+
+figure(8);
+subplot(2,1,1)
+plot(1:7,log10(sumspec),'k.','MarkerSize',25); hold on;
+xlim([0 8])
+%ylim([-2 1])
+set(gca,'XTick',1:7,'XTickLabel',[])
+% for n=1:7
+%     text(n,-2.1,spots{n},'HorizontalAlignment','center')
+% end
+ylabel('log10 Mean Biom (g m^-^2) in final year')
+title('All fishes and stages')
+
+subplot(2,1,2)
+plot(1:7,(sumspec),'k.','MarkerSize',25); hold on;
+xlim([0 8])
+set(gca,'XTick',1:7,'XTickLabel',[])
+for n=1:7
+    text(n,-0.05,spots{n},'HorizontalAlignment','center')
+end
+ylabel('Mean Biom (g m^-^2) in final year')
+
 %% All on one
-figure(8)
+figure(9)
 subplot(2,3,1)
 bar(log(Fsum))
 xlim([0 4])
@@ -360,7 +386,7 @@ print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 
 %% Zoop con
 
-figure(9)
+figure(10)
 subplot(2,1,1)
 bar(Zcon(:,1),'k')
 ylim([0 1])

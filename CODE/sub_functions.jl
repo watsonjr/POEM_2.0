@@ -85,12 +85,13 @@ function sub_met(Tp,Tb,tdif,wgt,L)
 
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365 #h value for temp=10C
+  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365 #h value for temp=10C
   #Metabolism
 	bas = fcrit * cmax
   #act = (exp(0.063*(temp-10.0)) * k * wgt^(3/4)) /365 #Charlie thinks another way is relate it to amount consumed
   #met = bas + act
-  met = bas #/ wgt
+  met = bas
+  #met=0.0
   return met
 end
 
@@ -107,11 +108,13 @@ function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
 	# A: predator search rate,
   # tpel: time spent in pelagic,
 	# tprey: time spent in area with that prey item.
-  #Hartvig et al. search volume
+  #Hartvig et al. search rate (volume/yr)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   A = (exp(0.063*(temp-10.0)) * flev * wgt^(q)) /365   #coeffs for per yr -> per day
   #Encounter
-	enc = pred*prey*A*tprey
+	#enc = pred*prey*A*tprey
+  # Per predator, mult by biomass later
+  enc = prey*A*tprey
   return enc
 end
 
@@ -126,7 +129,7 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365  #h value for temp=10C
+  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365  #h value for temp=10C
   ENC = sum(enc) # total biomass encountered
 	con = cmax .* enc[1] ./ (cmax + ENC) # Type II
   return con
@@ -134,36 +137,41 @@ end
 
 
 ###! Offline coupling
-function sub_offline(enc_1,enc_2,enc_3,dZ)
+function sub_offline(enc_1,enc_2,enc_3,bio_1,bio_2,bio_3,dZ)
   # ADD FLAG FOR COUNTING HOW MANY TIMES THIS HAPPENS
 	#! offline switch
-	if (enc_1 + enc_2 + enc_3) > dZ
-		frac1 = enc_1 / (enc_1 + enc_2 + enc_3)
-    frac2 = enc_2 / (enc_1 + enc_2 + enc_3)
-    frac3 = enc_3 / (enc_1 + enc_2 + enc_3)
-		out_1 = (frac1 * dZ)
-		out_2 = (frac2 * dZ)
-    out_3 = (frac3 * dZ)
+  con_1 = enc_1 * bio_1
+  con_2 = enc_2 * bio_2
+  con_3 = enc_3 * bio_3
+	if (con_1 + con_2 + con_3) > dZ
+		frac1 = con_1 / (con_1 + con_2 + con_3)
+    frac2 = con_2 / (con_1 + con_2 + con_3)
+    frac3 = con_3 / (con_1 + con_2 + con_3)
+		out_1 = (frac1 * dZ) / bio_1
+		out_2 = (frac2 * dZ) / bio_2
+    out_3 = (frac3 * dZ) / bio_3
 	else
 		out_1 = enc_1
 		out_2 = enc_2
     out_3 = enc_3
 	end
-  zf = (out_1 + out_2 + out_3) / dZ
+  zf = (out_1*bio_1 + out_2*bio_2 + out_3*bio_3) / dZ
 	return out_1, out_2, out_3, zf
 end
 
-function sub_offline_bent(enc_1,enc_2,B,det)
-  if (enc_1 + enc_2) > B
-		frac1 = enc_1 / (enc_1 + enc_2)
-    frac2 = enc_2 / (enc_1 + enc_2)
-    out_1 = (frac1 * B)
-		out_2 = (frac2 * B)
+function sub_offline_bent(enc_1,enc_2,bio_1,bio_2,B,det)
+  con_1 = enc_1 * bio_1
+  con_2 = enc_2 * bio_2
+  if (con_1 + con_2) > B
+		frac1 = con_1 / (con_1 + con_2)
+    frac2 = con_2 / (con_1 + con_2)
+    out_1 = (frac1 * B) / bio_1
+		out_2 = (frac2 * B) / bio_2
 	else
 		out_1 = enc_1
 		out_2 = enc_2
 	end
-  bf = (out_1 + out_2) / det
+  bf = (out_1*bio_1 + out_2*bio_2) / det
 	return out_1, out_2, bf
 end
 
@@ -173,7 +181,7 @@ function sub_clev(con,Tp,Tb,tdif,wgt)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365 #h value for temp=10C
+  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365 #h value for temp=10C
   #clev
 	clev = con/cmax
   return clev
@@ -216,7 +224,9 @@ end
 function sub_nu(I,B,met)
 	# convert to biomass specific ingestion
 	#nu = ((I/B)*Lambda) - met
-  nu = 0.5*I
+  #nu = 0.5*I
+  # Already in biomass specific ingestion
+	nu = (I*Lambda) - met
 end
 
 
@@ -298,7 +308,8 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg)
   bio_out =  bio_in + db
 end
 
-function sub_update_be(bio_in,die)
+function sub_update_be(bio_in,con,bio)
+  die = con.*bio
   bio_out = bio_in - sum(die)
 end
 

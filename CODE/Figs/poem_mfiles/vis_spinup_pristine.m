@@ -15,6 +15,8 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4_HalfC/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4_HalfC/';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 
@@ -276,31 +278,31 @@ for s=1:length(spots)
         
         figure(6)
         subplot(2,3,1)
-        bar(P_sum,'k')
+        bar(log10(P_sum),'k')
         xlim([0 4])
         title('Pel Pisc')
-        ylabel('Total Biomass (g m^-^2)')
+        ylabel('log10 Total Biomass (g m^-^2)')
         subplot(2,3,4)
-        bar(P_mean,'k')
+        bar(log10(P_mean),'k')
         xlim([0 4])
-        ylabel('Mean Biomass (g m^-^2)')
+        ylabel('log10 Mean Biomass (g m^-^2)')
         
         subplot(2,3,2)
-        bar(F_sum,'b')
+        bar(log10(F_sum),'b')
         xlim([0 3])
         title({loc; 'Forage Fishes'})
         xlabel('Stage')
         subplot(2,3,5)
-        bar(F_mean,'b')
+        bar(log10(F_mean),'b')
         xlim([0 3])
         xlabel('Stage')
         
         subplot(2,3,3)
-        bar(D_sum,'r')
+        bar(log10(D_sum),'r')
         xlim([0 4])
         title('Dem Pisc')
         subplot(2,3,6)
-        bar(D_mean,'r')
+        bar(log10(D_mean),'r')
         xlim([0 4])
         print('-dpng',[fpath sname lname 'oneloc_all_biomass_spec.png'])
         

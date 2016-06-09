@@ -78,10 +78,10 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 		#! Offline coupling
 		#Zooplankton consumption cannot exceed amount lost to higher predation in COBALT runs
-		Sml_f.con_zm[JD], Sml_p.con_zm[JD], Sml_d.con_zm[JD], ENVR.fZm[JD] = sub_offline(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],ENVR.dZm[JD])
-		Med_f.con_zl[JD], Med_p.con_zl[JD], Med_d.con_zl[JD], ENVR.fZl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_d.con_zl[JD],ENVR.dZl[JD])
+		Sml_f.con_zm[JD], Sml_p.con_zm[JD], Sml_d.con_zm[JD], ENVR.fZm[JD] = sub_offline(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Sml_f.bio[JD],Sml_p.bio[JD],Sml_d.bio[JD],ENVR.dZm[JD])
+		Med_f.con_zl[JD], Med_p.con_zl[JD], Med_d.con_zl[JD], ENVR.fZl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_d.con_zl[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],ENVR.dZl[JD])
 		#Benthic material consumption cannot exceed amount present
-		Med_d.con_be[JD], Lrg_d.con_be[JD], ENVR.fB[JD] = sub_offline_bent(Med_d.con_be[JD],Lrg_d.con_be[JD],BENT.mass[JD],ENVR.det[JD])
+		Med_d.con_be[JD], Lrg_d.con_be[JD], ENVR.fB[JD] = sub_offline_bent(Med_d.con_be[JD],Lrg_d.con_be[JD],Med_d.bio[JD],Lrg_d.bio[JD],BENT.mass[JD],ENVR.det[JD])
 
 		#! total consumption rates (could factor in handling times here; g m-2 d-1)
 		Sml_f.I[JD] = Sml_f.con_zm[JD]
@@ -104,12 +104,12 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.clev[JD] = sub_clev(Lrg_d.I[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l)
 
 		#! death rates (g m-2 d-1)
-		Sml_f.die[JD] = Med_p.con_f[JD]
-		Sml_p.die[JD] = Med_p.con_p[JD]
-		Sml_d.die[JD] = Med_p.con_d[JD]
-		Med_f.die[JD] = Lrg_p.con_f[JD] + Lrg_d.con_f[JD]
-		Med_p.die[JD] = Lrg_p.con_p[JD] + Lrg_d.con_p[JD]
-		Med_d.die[JD] = Lrg_p.con_d[JD] + Lrg_d.con_d[JD]
+		Sml_f.die[JD] = Med_p.con_f[JD]*Med_p.bio[JD]
+		Sml_p.die[JD] = Med_p.con_p[JD]*Med_p.bio[JD]
+		Sml_d.die[JD] = Med_p.con_d[JD]*Med_p.bio[JD]
+		Med_f.die[JD] = Lrg_p.con_f[JD]*Lrg_p.bio[JD] + Lrg_d.con_f[JD]*Lrg_d.bio[JD]
+		Med_p.die[JD] = Lrg_p.con_p[JD]*Lrg_p.bio[JD] + Lrg_d.con_p[JD]*Lrg_d.bio[JD]
+		Med_d.die[JD] = Lrg_p.con_d[JD]*Lrg_p.bio[JD] + Lrg_d.con_d[JD]*Lrg_d.bio[JD]
 
 		#! Degree days
 		Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0p[JD],Med_f.S[JD,:],DY)
@@ -153,7 +153,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_p.rep[JD],Lrg_p.egg[JD] = sub_rep(Lrg_p.nu[JD],K_a,Lrg_p.S[JD,DY],Lrg_p.egg[JD])
 		Lrg_d.rep[JD],Lrg_d.egg[JD] = sub_rep(Lrg_d.nu[JD],K_a,Lrg_d.S[JD,DY],Lrg_d.egg[JD])
 
-		#! recruitment (to small size classes only)
+		#! recruitment (from smaller size class)
 		Sml_f.rec[JD] = sub_rec(Med_f.rep[JD],Med_f.bio[JD])
 		Sml_p.rec[JD] = sub_rec(Lrg_p.rep[JD],Lrg_p.bio[JD])
 		Sml_d.rec[JD] = sub_rec(Lrg_d.rep[JD],Lrg_d.bio[JD])
@@ -183,7 +183,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 	 	Lrg_d.bio[JD] = sub_update_fi(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD])
 
-		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]])
+		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
 	end
 
 	#! Fishing

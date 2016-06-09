@@ -45,27 +45,6 @@ function Testoneloc()
 		ENVR = sub_init_env(ID);
 
 		#! Storage
-		# if (phen==1)
-		# 	Spinup_Sml_f  = open("./Data/CSV/Spinup_phen_OSP_Sml_f.csv","w")
-		# 	Spinup_Sml_p  = open("./Data/CSV/Spinup_phen_OSP_Sml_p.csv","w")
-		# 	Spinup_Sml_d  = open("./Data/CSV/Spinup_phen_OSP_Sml_d.csv","w")
-		# 	Spinup_Med_f  = open("./Data/CSV/Spinup_phen_OSP_Med_f.csv","w")
-		# 	Spinup_Med_p  = open("./Data/CSV/Spinup_phen_OSP_Med_p.csv","w")
-		# 	Spinup_Med_d  = open("./Data/CSV/Spinup_phen_OSP_Med_d.csv","w")
-		# 	Spinup_Lrg_p  = open("./Data/CSV/Spinup_phen_OSP_Lrg_p.csv","w")
-		# 	Spinup_Lrg_d  = open("./Data/CSV/Spinup_phen_OSP_Lrg_d.csv","w")
-		# 	Spinup_Cobalt = open("./Data/CSV/Spinup_phen_OSP_Cobalt.csv","w")
-		# else
-		# 	Spinup_Sml_f  = open("./Data/CSV/Spinup_OSP_Sml_f.csv","w")
-		# 	Spinup_Sml_p  = open("./Data/CSV/Spinup_OSP_Sml_p.csv","w")
-		# 	Spinup_Sml_d  = open("./Data/CSV/Spinup_OSP_Sml_d.csv","w")
-		# 	Spinup_Med_f  = open("./Data/CSV/Spinup_OSP_Med_f.csv","w")
-		# 	Spinup_Med_p  = open("./Data/CSV/Spinup_OSP_Med_p.csv","w")
-		# 	Spinup_Med_d  = open("./Data/CSV/Spinup_OSP_Med_d.csv","w")
-		# 	Spinup_Lrg_p  = open("./Data/CSV/Spinup_OSP_Lrg_p.csv","w")
-		# 	Spinup_Lrg_d  = open("./Data/CSV/Spinup_OSP_Lrg_d.csv","w")
-		# 	Spinup_Cobalt = open("./Data/CSV/Spinup_OSP_Cobalt.csv","w")
-		# end
 		if (phen==1)
 			Spinup_Sml_f  = open(string("./Data/CSV/Spinup_phen_",loc,"_Sml_f.csv"),"w")
 			Spinup_Sml_p  = open(string("./Data/CSV/Spinup_phen_",loc,"_Sml_p.csv"),"w")
