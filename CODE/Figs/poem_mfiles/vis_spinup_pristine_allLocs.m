@@ -6,20 +6,14 @@
 clear all
 close all
 
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/Megrey_swim_encounter_beta1/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Megrey_swim_encounter_beta1/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/beta_flev5000/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/beta_flev5000/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefOrig/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev1e4/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev1e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev4e4/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev4e4/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_NoWgt/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -153,7 +147,7 @@ for s=1:length(spots)
         ylabel('Feeding level')
     end
     
-    %% Growth rate (gamma)
+    %% Growth rate (nu - energy for biomass production)
     SP_mgr=nanmean(SP(lyr,15));
     SF_mgr=nanmean(SF(lyr,15));
     SD_mgr=nanmean(SD(lyr,15));
@@ -172,26 +166,59 @@ for s=1:length(spots)
     Dmgr(:,s) = D_mgr;
     
     f3 = figure(3);
-    subplot(3,3,s)
-    plot(0.5:2:3.5,log10(F_mgr),'sk',...
+    subplot(1,3,1)
+    plot(s-0.25,F_mgr(1),'sk',...
         'MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
-    plot(1:2:6,log10(P_mgr),'sk',...
+    plot(s,P_mgr(1),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(1.5:2:6.5,log10(D_mgr),'sk',...
+    plot(s+0.25,D_mgr(1),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 6])
-    ylim([-6 6])
-    set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
-    if (s==4)
-        %legend('F','P','D')
-        %legend('location','southeast')
-        ylabel('log10 Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    xlim([0 8])
+    ylim([-0.1 0.1])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    for n=1:7
+        text(n-0.5,-0.11,spots{n},'Rotation',45)
     end
-    title(loc)
-    xlabel('Stage')
+    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    title('S')
+    
+    subplot(1,3,2)
+    plot(s-0.25,log10(F_mgr(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,log10(P_mgr(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,log10(D_mgr(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    ylim([-2 5])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    for n=1:7
+        text(n-0.5,-2.5,spots{n},'Rotation',45)
+    end
+    ylabel('log10 Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    title('M')
+    
+    subplot(1,3,3)
+    plot(s,log10(P_mgr(3)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,log10(D_mgr(3)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    ylim([-2 7])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    for n=1:7
+        text(n-0.5,-2.5,spots{n},'Rotation',45)
+    end
+    ylabel('log10 Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    title('L')
     
     %% Consump per biomass (I/biom)
     SP_con=nanmean(SP(lyr,14)./SP(lyr,1));
@@ -258,7 +285,7 @@ for s=1:length(spots)
         'MarkerFaceColor','k',...
         'MarkerSize',15); hold on;
     xlim([0 6])
-    %ylim([-25 15])
+    ylim([-4 4])
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     title(loc)
     if (s==4)
@@ -267,8 +294,9 @@ for s=1:length(spots)
     xlabel('Size')
     
     f7 = figure(7);
-    plot(1:2:6,log10(spec),'color',cmap_ppt(s,:),...
-        'LineWidth',2); hold on;
+%     plot(1:2:6,log10(spec),'color',cmap_ppt(s,:),...
+%         'LineWidth',2); hold on;
+    plot(1:2:6,log10(spec),'LineWidth',2); hold on;
     xlim([0 6])
     %ylim([-25 15])
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
@@ -333,12 +361,14 @@ print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 figure(9)
 subplot(2,1,1)
 bar(Zcon(:,1),'k')
+ylim([0 1])
 set(gca,'XTickLabel',spots);
 title('Med zoo')
 ylabel('Fraction of times overconsumed')
 
 subplot(2,1,2)
 bar(Zcon(:,2),'k')
+ylim([0 1])
 set(gca,'XTickLabel',spots);
 title('Large zoo')
 ylabel('Fraction of times overconsumed')

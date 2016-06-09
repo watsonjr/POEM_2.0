@@ -90,7 +90,7 @@ function sub_met(Tp,Tb,tdif,wgt,L)
 	bas = fcrit * cmax
   #act = (exp(0.063*(temp-10.0)) * k * wgt^(3/4)) /365 #Charlie thinks another way is relate it to amount consumed
   #met = bas + act
-  met = bas / wgt
+  met = bas #/ wgt
   return met
 end
 
@@ -173,7 +173,7 @@ function sub_clev(con,Tp,Tb,tdif,wgt)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365 #h value for temp=15C
+  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365 #h value for temp=10C
   #clev
 	clev = con/cmax
   return clev
