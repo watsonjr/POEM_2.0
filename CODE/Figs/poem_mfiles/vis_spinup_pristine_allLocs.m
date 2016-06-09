@@ -12,8 +12,10 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev4e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_NoWgt/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_NoWgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -123,7 +125,7 @@ for s=1:length(spots)
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 6])
-    ylim([-20 10])
+    %ylim([-20 10])
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     if (s==4)
         %legend('F','P','D')
@@ -137,7 +139,7 @@ for s=1:length(spots)
     f2=figure(2);
     subplot(3,3,s)
     bar(mclev(s,:),'k')
-    ylim([0 1])
+    %ylim([0 1])
     set(gca,'XTickLabel',[]);
     for n=1:8
         text(n-0.5,-0.2,stage{n},'Rotation',45)
@@ -177,7 +179,7 @@ for s=1:length(spots)
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 8])
-    ylim([-0.1 0.1])
+    %ylim([-0.1 0.1])
     set(gca,'XTick',1:7,'XTickLabel',[])
     for n=1:7
         text(n-0.5,-0.11,spots{n},'Rotation',45)
@@ -186,38 +188,38 @@ for s=1:length(spots)
     title('S')
     
     subplot(1,3,2)
-    plot(s-0.25,log10(F_mgr(2)),'sk',...
+    plot(s-0.25,(F_mgr(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
-    plot(s,log10(P_mgr(2)),'sk',...
+    plot(s,(P_mgr(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(s+0.25,log10(D_mgr(2)),'sk',...
+    plot(s+0.25,(D_mgr(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 8])
-    ylim([-2 5])
+    %ylim([-2 5])
     set(gca,'XTick',1:7,'XTickLabel',[])
     for n=1:7
         text(n-0.5,-2.5,spots{n},'Rotation',45)
     end
-    ylabel('log10 Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('M')
     
     subplot(1,3,3)
-    plot(s,log10(P_mgr(3)),'sk',...
+    plot(s,(P_mgr(3)),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(s+0.25,log10(D_mgr(3)),'sk',...
+    plot(s+0.25,(D_mgr(3)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 8])
-    ylim([-2 7])
+    %ylim([-2 7])
     set(gca,'XTick',1:7,'XTickLabel',[])
     for n=1:7
         text(n-0.5,-2.5,spots{n},'Rotation',45)
     end
-    ylabel('log10 Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('L')
     
     %% Consump per biomass (I/biom)
@@ -285,7 +287,7 @@ for s=1:length(spots)
         'MarkerFaceColor','k',...
         'MarkerSize',15); hold on;
     xlim([0 6])
-    ylim([-4 4])
+    %ylim([-4 4])
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     title(loc)
     if (s==4)
@@ -327,6 +329,7 @@ bar(log(Fsum))
 xlim([0 4])
 legend(spots)
 title('Forage')
+ylabel('log Total Biomass (g m^-^2) in final year')
 
 subplot(2,3,2)
 bar(log(Psum))
@@ -342,8 +345,7 @@ subplot(2,3,4)
 bar(log(Fmean))
 xlim([0 4])
 xlabel('Stage')
-ylabel('log Mean Biomass (g m^-^2) in final year',...
-    'HorizontalAlignment','left')
+ylabel('log Mean Biomass (g m^-^2) in final year')
 
 subplot(2,3,5)
 bar(log(Pmean))

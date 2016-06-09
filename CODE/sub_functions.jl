@@ -215,7 +215,8 @@ end
 ###! ENERGY AVAILABLE FOR GROWTH NU
 function sub_nu(I,B,met)
 	# convert to biomass specific ingestion
-	nu = ((I/B)*Lambda) - met
+	#nu = ((I/B)*Lambda) - met
+  nu = 0.5*I
 end
 
 
