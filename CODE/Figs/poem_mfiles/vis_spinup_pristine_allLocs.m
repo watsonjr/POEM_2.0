@@ -10,14 +10,26 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev1e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev4e4/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev4e4/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_NoWgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4_HalfC/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4_HalfC/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_4e4_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_4e4_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_8e4_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_8e4_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e5_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e5_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -183,8 +195,11 @@ for s=1:length(spots)
     xlim([0 8])
     %ylim([-0.1 0.1])
     set(gca,'XTick',1:7,'XTickLabel',[])
-    for n=1:7
-        text(n-0.5,-0.11,spots{n},'Rotation',45)
+    if(s==7)
+        ha1=gca;
+        for n=1:7
+            text(n-0.5,ha1.YLim(1)-0.01,spots{n},'Rotation',45)
+        end
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('S')
@@ -202,8 +217,11 @@ for s=1:length(spots)
     xlim([0 8])
     %ylim([-2 5])
     set(gca,'XTick',1:7,'XTickLabel',[])
-    for n=1:7
-        text(n-0.5,-2.5,spots{n},'Rotation',45)
+    if(s==7)
+        ha2=gca;
+        for n=1:7
+            text(n-0.5,ha2.YLim(1)-0.01,spots{n},'Rotation',45)
+        end
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('M')
@@ -218,21 +236,24 @@ for s=1:length(spots)
     xlim([0 8])
     %ylim([-2 7])
     set(gca,'XTick',1:7,'XTickLabel',[])
-    for n=1:7
-        text(n-0.5,-2.5,spots{n},'Rotation',45)
+    if(s==7)
+        ha3=gca;
+        for n=1:7
+            text(n-0.5,ha3.YLim(1)-0.01,spots{n},'Rotation',45)
+        end
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('L')
     
-    %% Consump per biomass (I/biom)
-    SP_con=nanmean(SP(lyr,14)./SP(lyr,1));
-    SF_con=nanmean(SF(lyr,14)./SF(lyr,1));
-    SD_con=nanmean(SD(lyr,14)./SD(lyr,1));
-    MP_con=nanmean(MP(lyr,14)./MP(lyr,1));
-    MF_con=nanmean(MF(lyr,14)./MF(lyr,1));
-    MD_con=nanmean(MD(lyr,14)./MD(lyr,1));
-    LP_con=nanmean(LP(lyr,14)./LP(lyr,1));
-    LD_con=nanmean(LD(lyr,14)./LD(lyr,1));
+    %% Consump per biomass (I)
+    SP_con=nanmean(SP(lyr,14));
+    SF_con=nanmean(SF(lyr,14));
+    SD_con=nanmean(SD(lyr,14));
+    MP_con=nanmean(MP(lyr,14));
+    MF_con=nanmean(MF(lyr,14));
+    MD_con=nanmean(MD(lyr,14));
+    LP_con=nanmean(LP(lyr,14));
+    LD_con=nanmean(LD(lyr,14));
     
     P_con=[SP_con;MP_con;LP_con];
     F_con=[SF_con;MF_con];
@@ -244,13 +265,13 @@ for s=1:length(spots)
     
     f4 = figure(4);
     subplot(3,3,s)
-    plot(0.5:2:3.5,log10(F_con),'sk',...
+    plot(0.5:2:3.5,(F_con),'sk',...
         'MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
-    plot(1:2:6,log10(P_con),'sk',...
+    plot(1:2:6,(P_con),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(1.5:2:6.5,log10(D_con),'sk',...
+    plot(1.5:2:6.5,(D_con),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 6])
@@ -259,7 +280,7 @@ for s=1:length(spots)
     if (s==4)
         %legend('F','P','D')
         %legend('location','southeast')
-        ylabel('log10 Mean consumption (g g^-^1 d^-^1) in final year')
+        ylabel('Mean consumption (g g^-^1 d^-^1) in final year')
     end
     title(loc)
     xlabel('Stage')
@@ -306,7 +327,7 @@ for s=1:length(spots)
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     if (s==7)
         legend(spots)
-        legend('location','northeast')
+        legend('location','southwest')
     end
     ylabel('log Mean Biom (g m^-^2) in final year')
     xlabel('Size class')
@@ -347,6 +368,7 @@ for n=1:7
     text(n,-0.05,spots{n},'HorizontalAlignment','center')
 end
 ylabel('Mean Biom (g m^-^2) in final year')
+print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
 
 %% All on one
 figure(9)

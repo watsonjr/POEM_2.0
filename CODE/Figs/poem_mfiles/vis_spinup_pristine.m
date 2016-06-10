@@ -13,10 +13,22 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_NoWgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4_HalfC/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4_HalfC/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_4e4_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_4e4_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_8e4_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_8e4_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e5_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e5_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 
@@ -429,47 +441,47 @@ for s=1:length(spots)
         %SP
         figure(10)
         subplot(3,3,2)
-        plot(y,log10(SP(:,14)),'b','Linewidth',1); hold on;
+        plot(y,(SP(:,14)),'b','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title({loc; 'SP'})
         
         subplot(3,3,5)
-        plot(y,log10(MP(:,14)),'r','Linewidth',1); hold on;
+        plot(y,(MP(:,14)),'r','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title('MP')
         
         subplot(3,3,8)
-        plot(y,log10(LP(:,14)),'k','Linewidth',1); hold on;
+        plot(y,(LP(:,14)),'k','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title('LP')
         xlabel('Time (y)')
         
         %FF
         subplot(3,3,1)
-        plot(y,log10(SF(:,14)),'b','Linewidth',1); hold on;
+        plot(y,(SF(:,14)),'b','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title('SF')
         
         subplot(3,3,4)
-        plot(y,log10(MF(:,14)),'r','Linewidth',1); hold on;
+        plot(y,(MF(:,14)),'r','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title('MF')
         xlabel('Time (y)')
-        ylabel('log10 Biomass Consumed (g m^-^2)')
+        ylabel('Biomass Consumed (g g^-^1 m^-^2)')
         
         %Detritivore
         subplot(3,3,3)
-        plot(y,log10(SD(:,14)),'b','Linewidth',1); hold on;
+        plot(y,(SD(:,14)),'b','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title('SD')
         
         subplot(3,3,6)
-        plot(y,log10(MD(:,14)),'r','Linewidth',1); hold on;
+        plot(y,(MD(:,14)),'r','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title('MD')
         
         subplot(3,3,9)
-        plot(y,log10(LD(:,14)),'k','Linewidth',1); hold on;
+        plot(y,(LD(:,14)),'k','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title('LD')
         xlabel('Time (y)')

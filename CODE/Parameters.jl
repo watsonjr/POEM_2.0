@@ -116,7 +116,7 @@ function make_parameters(harv)
 	###! Consumption constants
 	const global h = 85.0  		# h=85 g^(0.25)/yr at 10C in Cmax eq
 	# tune so Cobs/Cmax ~ 0.6
-	const global flev = 1.0e4	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma
+	const global flev = 1.0e6	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
 
 	###! Transfer efficiency of detritus to benthic prey

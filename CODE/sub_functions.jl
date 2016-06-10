@@ -131,7 +131,8 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365  #h value for temp=10C
   ENC = sum(enc) # total biomass encountered
-	con = cmax .* enc[1] ./ (cmax + ENC) # Type II
+	#con = cmax .* enc[1] ./ (cmax + ENC) # Type II
+  con = cmax
   return con
 end
 
