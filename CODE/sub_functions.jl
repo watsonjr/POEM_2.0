@@ -86,7 +86,9 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
   #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365 #h value for temp=10C
-  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
+  cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   #Metabolism
 	bas = fcrit * cmax
   #act = (exp(0.063*(temp-10.0)) * k * wgt^(3/4)) /365 #Charlie thinks another way is relate it to amount consumed
@@ -111,7 +113,13 @@ function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
 	# tprey: time spent in area with that prey item.
   #Hartvig et al. search rate (volume/yr)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  A = (exp(0.063*(temp-10.0)) * flev * wgt^(q)) /365   #coeffs for per yr -> per day
+  #A = (exp(0.063*(temp-10.0)) * flev * wgt^(q)) /365   #coeffs for per yr -> per day
+  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
+  if (wgt < 0.0036)
+    A = (exp(0.063*(temp-15.0)) * 10^(8.1) * wgt^(0.057)) * (24e-3/9)    #coeffs for per yr -> per day
+  else
+    A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)   #coeffs for per yr -> per day
+  end
   #Encounter
 	#enc = pred*prey*A*tprey
   # Per predator, mult by biomass later
@@ -131,7 +139,9 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
   #Cmax
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365  #h value for temp=10C
-  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
+  cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   ENC = sum(enc) # total biomass encountered
 	con = cmax .* enc[1] ./ (cmax + ENC) # Type II
   #con = cmax
@@ -185,7 +195,9 @@ function sub_clev(con,Tp,Tb,tdif,wgt)
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
   #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365 #h value for temp=10C
-  cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
+  cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   #clev
 	clev = con/cmax
   return clev
