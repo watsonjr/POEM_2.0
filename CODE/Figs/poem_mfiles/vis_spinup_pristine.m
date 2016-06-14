@@ -27,8 +27,12 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e5_C&Mwgt/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 
@@ -37,7 +41,7 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'rec','egg','clev','DD','S'};
 cols=cols';
 
-fplot=1;
+fplot=0;
 
 mclev=NaN*ones(length(spots),8);
 Zcon=NaN*ones(length(spots),3);
