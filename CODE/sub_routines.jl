@@ -88,10 +88,10 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_p.I[JD] = Sml_p.con_zm[JD]
 		Sml_d.I[JD] = Sml_d.con_zm[JD]
 		Med_f.I[JD] = Med_f.con_zl[JD]
-		Med_p.I[JD] = Med_p.con_zl[JD] #+ Med_p.con_f[JD] + Med_p.con_p[JD] + Med_p.con_d[JD]
+		Med_p.I[JD] = Med_p.con_zl[JD] + Med_p.con_f[JD] + Med_p.con_p[JD] + Med_p.con_d[JD]
 		Med_d.I[JD] = Med_d.con_be[JD]
-		Lrg_p.I[JD] = Lrg_p.con_f[JD] #+ Lrg_p.con_p[JD] + Lrg_p.con_d[JD]
-		Lrg_d.I[JD] = Lrg_d.con_f[JD] #+ Lrg_d.con_p[JD] + Lrg_d.con_d[JD] + Lrg_d.con_be[JD]
+		Lrg_p.I[JD] = Lrg_p.con_f[JD] + Lrg_p.con_p[JD] + Lrg_p.con_d[JD]
+		Lrg_d.I[JD] = Lrg_d.con_f[JD] + Lrg_d.con_p[JD] + Lrg_d.con_d[JD] + Lrg_d.con_be[JD]
 
 		#! consumption related to Cmax
 		Sml_f.clev[JD] = sub_clev(Sml_f.I[JD],ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s)
@@ -164,6 +164,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.rec[JD] = sub_rec(Med_d.gamma[JD],Med_d.bio[JD])
 
 		#! Mass balance
+		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
+
 		Sml_f.bio[JD] = sub_update_fi(Sml_f.bio[JD],Sml_f.rec[JD],Sml_f.nu[JD],
 								   Sml_f.rep[JD],Sml_f.gamma[JD],Sml_f.die[JD],Sml_f.egg[JD])
 		Sml_p.bio[JD] = sub_update_fi(Sml_p.bio[JD],Sml_p.rec[JD],Sml_p.nu[JD],
@@ -183,7 +185,6 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 	 	Lrg_d.bio[JD] = sub_update_fi(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD])
 
-		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
 	end
 
 	#! Fishing
