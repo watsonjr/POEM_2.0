@@ -60,7 +60,10 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_p.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD],M_s,Sml_p.enc_zm[JD])
 		Sml_d.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD],M_s,Sml_d.enc_zm[JD])
 
-		Med_f.con_zl[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,Med_f.enc_zl[JD])
+		Med_f.con_zl[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_p[JD],Med_f.enc_d[JD]])
+		Med_f.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_f[JD],Med_f.enc_zl[JD],Med_f.enc_p[JD],Med_f.enc_d[JD]])
+		Med_f.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_p[JD],Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_d[JD]])
+		Med_f.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_d[JD],Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_p[JD]])
 
 		Med_p.con_zl[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD],Med_p.enc_d[JD]])
 		Med_p.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_f[JD],Med_p.enc_zl[JD],Med_p.enc_p[JD],Med_p.enc_d[JD]])
@@ -90,7 +93,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_f.I[JD] = Sml_f.con_zm[JD]
 		Sml_p.I[JD] = Sml_p.con_zm[JD]
 		Sml_d.I[JD] = Sml_d.con_zm[JD]
-		Med_f.I[JD] = Med_f.con_zl[JD]
+		Med_f.I[JD] = Med_f.con_zl[JD] + Med_f.con_f[JD] + Med_f.con_p[JD] + Med_f.con_d[JD]
 		Med_p.I[JD] = Med_p.con_zl[JD] + Med_p.con_f[JD] + Med_p.con_p[JD] + Med_p.con_d[JD]
 		Med_d.I[JD] = Med_d.con_be[JD]
 		Lrg_p.I[JD] = Lrg_p.con_f[JD] + Lrg_p.con_p[JD] + Lrg_p.con_d[JD]
@@ -107,9 +110,9 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.clev[JD] = sub_clev(Lrg_d.I[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l)
 
 		#! death rates (g m-2 d-1)
-		Sml_f.die[JD] = Med_p.con_f[JD]*Med_p.bio[JD]
-		Sml_p.die[JD] = Med_p.con_p[JD]*Med_p.bio[JD]
-		Sml_d.die[JD] = Med_p.con_d[JD]*Med_p.bio[JD]
+		Sml_f.die[JD] = Med_p.con_f[JD]*Med_p.bio[JD] + Med_f.con_f[JD]*Med_f.bio[JD]
+		Sml_p.die[JD] = Med_p.con_p[JD]*Med_p.bio[JD] + Med_f.con_p[JD]*Med_f.bio[JD]
+		Sml_d.die[JD] = Med_p.con_d[JD]*Med_p.bio[JD] + Med_f.con_d[JD]*Med_f.bio[JD]
 		Med_f.die[JD] = Lrg_p.con_f[JD]*Lrg_p.bio[JD] + Lrg_d.con_f[JD]*Lrg_d.bio[JD]
 		Med_p.die[JD] = Lrg_p.con_p[JD]*Lrg_p.bio[JD] + Lrg_d.con_p[JD]*Lrg_d.bio[JD]
 		Med_d.die[JD] = Lrg_p.con_d[JD]*Lrg_p.bio[JD] + Lrg_d.con_d[JD]*Lrg_d.bio[JD]
