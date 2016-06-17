@@ -47,7 +47,7 @@ fplot=1;
 
 mclev=NaN*ones(length(spots),8);
 Zcon=NaN*ones(length(spots),3);
-for s=4%1:length(spots)
+for s=1:length(spots)
     %%
     close all
     loc = spots{s};

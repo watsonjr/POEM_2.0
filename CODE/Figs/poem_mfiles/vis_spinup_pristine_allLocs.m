@@ -227,7 +227,7 @@ for s=1:length(spots)
     if(s==7)
         ha2=gca;
         for n=1:7
-            text(n-0.5,ha2.YLim(1)-0.01,spots{n},'Rotation',45)
+            text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
@@ -246,7 +246,7 @@ for s=1:length(spots)
     if(s==7)
         ha3=gca;
         for n=1:7
-            text(n-0.5,ha3.YLim(1)-0.01,spots{n},'Rotation',45)
+            text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
         end
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')

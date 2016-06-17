@@ -35,6 +35,9 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],1)
 
 		Med_f.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD],1)
+		Med_f.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],Sml_f.bio[JD],Med_f.td[JD],1)
+		Med_f.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],Sml_p.bio[JD],Med_f.td[JD],1)
+		Med_f.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],Sml_d.bio[JD],Med_f.td[JD],1)
 
 		Med_p.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],ENVR.Zl[JD],Med_p.td[JD],1)
 		Med_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_f.bio[JD],Med_p.td[JD],1)

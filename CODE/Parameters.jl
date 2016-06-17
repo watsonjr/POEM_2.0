@@ -120,7 +120,7 @@ function make_parameters(harv)
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
 
 	###! Transfer efficiency of detritus to benthic prey
-	const global bent_eff = 0.30
+	const global bent_eff = 0.15
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
