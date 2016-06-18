@@ -140,8 +140,8 @@ function make_parameters(harv)
 	#small forage fish eats medium zoo
 	#small piscivores eats medium zoo
 	#small detritivore eats medium zoo
-	#medium forage fish eats large zoo
-	#medium piscivore eats large zoo, small forage fish, small piscvore, small detritivore
+	#medium forage fish eats medium & large zoo, all small fishes
+	#medium piscivore eats medium & large zoo, all small fishes
 	#medium detritivore eats detritus
 	#large piscivore eats medium forage fish, medium piscivore, medium detritivore
 	#large detritivore eats detritus, medium forage fish, medium piscivore, medium detrivore

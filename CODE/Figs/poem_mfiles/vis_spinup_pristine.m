@@ -33,12 +33,14 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+
+cfile = 'NoPDc_TrefO_KHparams_cmax-metab';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 
@@ -100,6 +102,7 @@ for s=1:length(spots)
         xlabel('Time (y)')
         ylabel('log10 Biomass (g m^-^2)')
         legend('Larvae','Juveniles','Adults')
+        stamp(cfile)
         
         subplot(4,1,2)
         plot(y,log10(SP(:,1)),'b','Linewidth',1); hold on;
@@ -133,6 +136,7 @@ for s=1:length(spots)
         xlabel('Time (y)')
         ylabel('log10 Biomass (g m^-^2)')
         legend('Immature','Adults')
+        stamp(cfile)
         
         subplot(3,1,2)
         plot(y,log10(SF(:,1)),'b','Linewidth',1); hold on;
@@ -161,6 +165,7 @@ for s=1:length(spots)
         xlabel('Time (y)')
         ylabel('log10 Biomass (g m^-^2)')
         legend('Larvae','Juveniles','Adults')
+        stamp(cfile)
         
         subplot(4,1,2)
         plot(y,log10(SD(:,1)),'b','Linewidth',1); hold on;
@@ -193,6 +198,7 @@ for s=1:length(spots)
         title({loc; 'SP'})
         xlabel('Time (y)')
         ylabel('log10 Biomass (g m^-^2)')
+        stamp(cfile)
         
         subplot(3,3,5)
         plot(y,log10(MP(:,1)),'r','Linewidth',1); hold on;
@@ -230,6 +236,7 @@ for s=1:length(spots)
         title('SD')
         xlabel('Time (y)')
         ylabel('log10 Biomass (g m^-^2)')
+        stamp(cfile)
         
         subplot(3,3,6)
         plot(y,log10(MD(:,1)),'r','Linewidth',1); hold on;
@@ -263,6 +270,7 @@ for s=1:length(spots)
         xlabel('Time (y)')
         ylabel('log10 Biomass (g m^-^2)')
         title(['Spinup ' loc])
+        stamp(cfile)
         print('-dpng',[fpath sname lname 'oneloc_all_sizes.png'])
         
         %% Final mean biomass size spectrum
@@ -308,6 +316,7 @@ for s=1:length(spots)
         bar(log10(P_mean),'k')
         xlim([0 4])
         ylabel('log10 Mean Biomass (g m^-^2)')
+        stamp(cfile)
         
         subplot(2,3,2)
         bar(log10(F_sum),'b')
@@ -341,6 +350,7 @@ for s=1:length(spots)
         xlabel('Time (y)')
         ylabel('log10 Biomass (g m^-^2)')
         legend('F','D','SP')
+        stamp(cfile)
         
         subplot(4,1,2)
         plot(y,log10(rep(:,1)),'b','Linewidth',1); hold on;
@@ -377,6 +387,7 @@ for s=1:length(spots)
         xlim([y(1) y(end)])
         title([loc ' log10 Maturation Biomass (g m^-^2)'],'HorizontalAlignment','left')
         ylabel('Forage Fishes')
+        stamp(cfile)
         
         subplot(3,2,3)
         plot(y,log10(m(:,2)),'r','Linewidth',1); hold on;
@@ -412,6 +423,7 @@ for s=1:length(spots)
         plot(y,log10(SP(:,17)),'b','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title({loc; 'SP'})
+        stamp(cfile)
         
         subplot(2,3,5)
         plot(y,log10(MP(:,17)),'r','Linewidth',1); hold on;
@@ -454,6 +466,7 @@ for s=1:length(spots)
         plot(y,(SP(:,14)),'b','Linewidth',1); hold on;
         xlim([y(1) y(end)])
         title({loc; 'SP'})
+        stamp(cfile)
         
         subplot(3,3,5)
         plot(y,(MP(:,14)),'r','Linewidth',1); hold on;
@@ -531,6 +544,7 @@ for s=1:length(spots)
         xlim([1 100])
         ylabel('log10 Recruits (g m^-^2)')
         title('Pelagic piscivores')
+        stamp(cfile)
         
         subplot(3,1,1)
         plot(1:100,log10(SFy),'b','Linewidth',2); hold on;

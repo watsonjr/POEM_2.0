@@ -34,14 +34,14 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
 
-cfile = 'NoPDc_TrefO_KHparams_cmax-metab';
+cfile = 'NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -57,88 +57,12 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 
 load('cmap_ppt_angles.mat')
+load([dpath sname sname2 'lastyr_sum_mean_biom']);
 
 %%
-Psum = NaN*ones(3,length(spots));
-Fsum = NaN*ones(2,length(spots));
-Dsum = Psum;
-Pmean = Psum;
-Fmean = Fsum;
-Dmean = Psum;
-Pmgr = Psum;
-Fmgr = Fsum;
-Dmgr = Psum;
-Pcon = Psum;
-Fcon = Fsum;
-Dcon = Psum;
-all_mean=NaN*ones(3,3,length(spots));
-z = NaN*ones(length(spots),3);
-
-%%
-for s=1:length(spots)
-    %%
+for s=1:length(spots) 
     loc = spots{s};
-    lname = [sname2 loc '_'];
-    SP = csvread([dpath sname lname 'Sml_p.csv']);
-    SF = csvread([dpath sname lname 'Sml_f.csv']);
-    SD = csvread([dpath sname lname 'Sml_d.csv']);
-    MP = csvread([dpath sname lname 'Med_p.csv']);
-    MF = csvread([dpath sname lname 'Med_f.csv']);
-    MD = csvread([dpath sname lname 'Med_d.csv']);
-    LP = csvread([dpath sname lname 'Lrg_p.csv']);
-    LD = csvread([dpath sname lname 'Lrg_d.csv']);
-    C = csvread([dpath sname lname 'Cobalt.csv']);
-    
-    %% Plots over time
-    x=1:length(SP);
-    y=x/365;
-    lstd=length(SP);
-    id1 = 0:365:(lstd-1);
-    id2 = 365:365:(lstd);
-    ID  = [id1 id2];
-    
-    
-    %% Final mean biomass in each size
-    t=1:length(SP);
-    lyr=t((end-365+1):end);
-    
-    SP_sum=sum(SP(lyr,1));
-    SF_sum=sum(SF(lyr,1));
-    SD_sum=sum(SD(lyr,1));
-    MP_sum=sum(MP(lyr,1));
-    MF_sum=sum(MF(lyr,1));
-    MD_sum=sum(MD(lyr,1));
-    LP_sum=sum(LP(lyr,1));
-    LD_sum=sum(LD(lyr,1));
-    
-    SP_mean=mean(SP(lyr,1));
-    SF_mean=mean(SF(lyr,1));
-    SD_mean=mean(SD(lyr,1));
-    MP_mean=mean(MP(lyr,1));
-    MF_mean=mean(MF(lyr,1));
-    MD_mean=mean(MD(lyr,1));
-    LP_mean=mean(LP(lyr,1));
-    LD_mean=mean(LD(lyr,1));
-    
-    P_sum=[SP_sum;MP_sum;LP_sum];
-    F_sum=[SF_sum;MF_sum];
-    D_sum=[SD_sum;MD_sum;LD_sum];
-    P_mean=[SP_mean;MP_mean;LP_mean];
-    F_mean=[SF_mean;MF_mean];
-    D_mean=[SD_mean;MD_mean;LD_mean];
-    
-    Psum(:,s) = P_sum;
-    Fsum(:,s) = F_sum;
-    Dsum(:,s) = D_sum;
-    Pmean(:,s) = P_mean;
-    Fmean(:,s) = F_mean;
-    Dmean(:,s) = D_mean;
-    
-    
-    all_mean(1:2,1,s) = F_mean;
-    all_mean(:,2,s) = P_mean;
-    all_mean(:,3,s) = D_mean;
-    
+    %% Final mean biomass in each size 
     f1 = figure(1);
     subplot(3,3,s)
     plot(0.5:2:5.5,log10(squeeze(all_mean(:,1,s))),'sk',...
@@ -182,32 +106,15 @@ for s=1:length(spots)
     end
     
     %% Growth rate (nu - energy for biomass production)
-    SP_mgr=nanmean(SP(lyr,15));
-    SF_mgr=nanmean(SF(lyr,15));
-    SD_mgr=nanmean(SD(lyr,15));
-    MP_mgr=nanmean(MP(lyr,15));
-    MF_mgr=nanmean(MF(lyr,15));
-    MD_mgr=nanmean(MD(lyr,15));
-    LP_mgr=nanmean(LP(lyr,15));
-    LD_mgr=nanmean(LD(lyr,15));
-    
-    P_mgr=[SP_mgr;MP_mgr;LP_mgr];
-    F_mgr=[SF_mgr;MF_mgr];
-    D_mgr=[SD_mgr;MD_mgr;LD_mgr];
-    
-    Pmgr(:,s) = P_mgr;
-    Fmgr(:,s) = F_mgr;
-    Dmgr(:,s) = D_mgr;
-    
     f3 = figure(3);
     subplot(1,3,1)
-    plot(s-0.25,F_mgr(1),'sk',...
+    plot(s-0.25,Fmgr(1,s),'sk',...
         'MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
-    plot(s,P_mgr(1),'sk',...
+    plot(s,Pmgr(1,s),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(s+0.25,D_mgr(1),'sk',...
+    plot(s+0.25,Dmgr(1,s),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 8])
@@ -223,13 +130,13 @@ for s=1:length(spots)
     title('S')
     
     subplot(1,3,2)
-    plot(s-0.25,(F_mgr(2)),'sk',...
+    plot(s-0.25,(Fmgr(2,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
-    plot(s,(P_mgr(2)),'sk',...
+    plot(s,(Pmgr(2,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(s+0.25,(D_mgr(2)),'sk',...
+    plot(s+0.25,(Dmgr(2,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 8])
@@ -245,10 +152,10 @@ for s=1:length(spots)
     title('M')
     
     subplot(1,3,3)
-    plot(s,(P_mgr(3)),'sk',...
+    plot(s,(Pmgr(3,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(s+0.25,(D_mgr(3)),'sk',...
+    plot(s+0.25,(Dmgr(3,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 8])
@@ -267,32 +174,15 @@ for s=1:length(spots)
     end
     
     %% Consump per biomass (I)
-    SP_con=nanmean(SP(lyr,14));
-    SF_con=nanmean(SF(lyr,14));
-    SD_con=nanmean(SD(lyr,14));
-    MP_con=nanmean(MP(lyr,14));
-    MF_con=nanmean(MF(lyr,14));
-    MD_con=nanmean(MD(lyr,14));
-    LP_con=nanmean(LP(lyr,14));
-    LD_con=nanmean(LD(lyr,14));
-    
-    P_con=[SP_con;MP_con;LP_con];
-    F_con=[SF_con;MF_con];
-    D_con=[SD_con;MD_con;LD_con];
-    
-    Pcon(:,s) = P_con;
-    Fcon(:,s) = F_con;
-    Dcon(:,s) = D_con;
-    
     f4 = figure(4);
     subplot(3,3,s)
-    plot(0.5:2:3.5,(F_con),'sk',...
+    plot(0.5:2:3.5,(Fcon(:,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
-    plot(1:2:6,(P_con),'sk',...
+    plot(1:2:6,(Pcon(:,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(1,:),...
         'MarkerSize',15); hold on;
-    plot(1.5:2:6.5,(D_con),'sk',...
+    plot(1.5:2:6.5,(Dcon(:,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 6])
@@ -310,10 +200,6 @@ for s=1:length(spots)
     end
     
     %% Fraction zoop losses consumed
-    z(s,1) = nanmean(C(lyr,2));
-    z(s,2) = nanmean(C(lyr,3));
-    z(s,3) = nanmean(C(lyr,4));
-    
     f5 = figure(5);
     subplot(3,3,s)
     bar(z(s,:)); hold on;
@@ -337,7 +223,7 @@ for s=1:length(spots)
         'MarkerFaceColor','k',...
         'MarkerSize',15); hold on;
     xlim([0 6])
-    %ylim([-4 4])clo
+    %ylim([-4 4])
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     title(loc)
     if (s==4)
@@ -374,9 +260,6 @@ print(f5,'-dpng',[fpath sname sname2 'All_oneloc_frac_zoop_loss.png'])
 print(f6,'-dpng',[fpath sname sname2 'All_oneloc_size_spec_sub.png'])
 print(f7,'-dpng',[fpath sname sname2 'All_oneloc_size_spec.png'])
 
-save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
-    'Dsum','Pmean','Fmean','Dmean','all_mean',...
-    'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z');
 
 %% Sum mean biom over stages
 sumspec = squeeze(nansum(nansum(all_mean)));
@@ -439,7 +322,6 @@ stamp(cfile)
 print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 
 %% Zoop con
-
 figure(10)
 subplot(2,1,1)
 bar(Zcon(:,1),'k')
