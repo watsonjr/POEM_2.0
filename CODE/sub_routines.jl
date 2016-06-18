@@ -34,11 +34,13 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD],1)
 		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,L_s,Tu_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],1)
 
+		Med_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],ENVR.Zm[JD],Med_f.td[JD],1)
 		Med_f.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD],1)
 		Med_f.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],Sml_f.bio[JD],Med_f.td[JD],1)
 		Med_f.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],Sml_p.bio[JD],Med_f.td[JD],1)
 		Med_f.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_f.bio[JD],Sml_d.bio[JD],Med_f.td[JD],1)
 
+		Med_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],ENVR.Zm[JD],Med_p.td[JD],1)
 		Med_p.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],ENVR.Zl[JD],Med_p.td[JD],1)
 		Med_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_f.bio[JD],Med_p.td[JD],1)
 		Med_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,L_m,Tu_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD],1)
@@ -60,15 +62,17 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_p.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD],M_s,Sml_p.enc_zm[JD])
 		Sml_d.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD],M_s,Sml_d.enc_zm[JD])
 
-		Med_f.con_zl[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_p[JD],Med_f.enc_d[JD]])
-		Med_f.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_f[JD],Med_f.enc_zl[JD],Med_f.enc_p[JD],Med_f.enc_d[JD]])
-		Med_f.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_p[JD],Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_d[JD]])
-		Med_f.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_d[JD],Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_p[JD]])
+		Med_f.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_zm[JD],Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_p[JD],Med_f.enc_d[JD]])
+		Med_f.con_zl[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_zl[JD],Med_f.enc_zm[JD],Med_f.enc_f[JD],Med_f.enc_p[JD],Med_f.enc_d[JD]])
+		Med_f.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_f[JD],Med_f.enc_zm[JD],Med_f.enc_zl[JD],Med_f.enc_p[JD],Med_f.enc_d[JD]])
+		Med_f.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_p[JD],Med_f.enc_zm[JD],Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_d[JD]])
+		Med_f.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m,[Med_f.enc_d[JD],Med_f.enc_zm[JD],Med_f.enc_zl[JD],Med_f.enc_f[JD],Med_f.enc_p[JD]])
 
-		Med_p.con_zl[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD],Med_p.enc_d[JD]])
-		Med_p.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_f[JD],Med_p.enc_zl[JD],Med_p.enc_p[JD],Med_p.enc_d[JD]])
-		Med_p.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_p[JD],Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_d[JD]])
-		Med_p.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_d[JD],Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD]])
+		Med_p.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_zm[JD],Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD],Med_p.enc_d[JD]])
+		Med_p.con_zl[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_zl[JD],Med_p.enc_zm[JD],Med_p.enc_f[JD],Med_p.enc_p[JD],Med_p.enc_d[JD]])
+		Med_p.con_f[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_f[JD],Med_p.enc_zm[JD],Med_p.enc_zl[JD],Med_p.enc_p[JD],Med_p.enc_d[JD]])
+		Med_p.con_p[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_p[JD],Med_p.enc_zm[JD],Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_d[JD]])
+		Med_p.con_d[JD]  = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m,[Med_p.enc_d[JD],Med_p.enc_zm[JD],Med_p.enc_zl[JD],Med_p.enc_f[JD],Med_p.enc_p[JD]])
 
 		Med_d.con_be[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD],M_m,Med_d.enc_be[JD])
 
@@ -84,8 +88,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 		#! Offline coupling
 		#Zooplankton consumption cannot exceed amount lost to higher predation in COBALT runs
-		Sml_f.con_zm[JD], Sml_p.con_zm[JD], Sml_d.con_zm[JD], ENVR.fZm[JD] = sub_offline(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Sml_f.bio[JD],Sml_p.bio[JD],Sml_d.bio[JD],ENVR.dZm[JD])
-		Med_f.con_zl[JD], Med_p.con_zl[JD], Med_d.con_zl[JD], ENVR.fZl[JD] = sub_offline(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_d.con_zl[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],ENVR.dZl[JD])
+		Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Med_f.con_zm[JD],Med_p.con_zm[JD],ENVR.fZm[JD] = sub_offline_zm(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Med_f.con_zm[JD],Med_p.con_zm[JD],Sml_f.bio[JD],Sml_p.bio[JD],Sml_d.bio[JD],Med_f.bio[JD],Med_p.bio[JD],ENVR.dZm[JD])
+		Med_f.con_zl[JD],Med_p.con_zl[JD],ENVR.fZl[JD] = sub_offline_zl(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_f.bio[JD],Med_p.bio[JD],ENVR.dZl[JD])
 		#Benthic material consumption cannot exceed amount present
 		Med_d.con_be[JD], Lrg_d.con_be[JD], ENVR.fB[JD] = sub_offline_bent(Med_d.con_be[JD],Lrg_d.con_be[JD],Med_d.bio[JD],Lrg_d.bio[JD],BENT.mass[JD],ENVR.det[JD])
 
@@ -93,8 +97,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_f.I[JD] = Sml_f.con_zm[JD]
 		Sml_p.I[JD] = Sml_p.con_zm[JD]
 		Sml_d.I[JD] = Sml_d.con_zm[JD]
-		Med_f.I[JD] = Med_f.con_zl[JD] + Med_f.con_f[JD] + Med_f.con_p[JD] + Med_f.con_d[JD]
-		Med_p.I[JD] = Med_p.con_zl[JD] + Med_p.con_f[JD] + Med_p.con_p[JD] + Med_p.con_d[JD]
+		Med_f.I[JD] = Med_f.con_zm[JD] + Med_f.con_zl[JD] + Med_f.con_f[JD] + Med_f.con_p[JD] + Med_f.con_d[JD]
+		Med_p.I[JD] = Med_p.con_zm[JD] + Med_p.con_zl[JD] + Med_p.con_f[JD] + Med_p.con_p[JD] + Med_p.con_d[JD]
 		Med_d.I[JD] = Med_d.con_be[JD]
 		Lrg_p.I[JD] = Lrg_p.con_f[JD] + Lrg_p.con_p[JD] + Lrg_p.con_d[JD]
 		Lrg_d.I[JD] = Lrg_d.con_f[JD] + Lrg_d.con_p[JD] + Lrg_d.con_d[JD] + Lrg_d.con_be[JD]

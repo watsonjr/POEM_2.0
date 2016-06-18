@@ -150,27 +150,71 @@ end
 
 
 ###! Offline coupling
-function sub_offline(enc_1,enc_2,enc_3,bio_1,bio_2,bio_3,dZ)
+function sub_offline_zm(enc_1,enc_2,enc_3,enc_4,enc_5,bio_1,bio_2,bio_3,bio_4,bio_5,dZ)
   # ADD FLAG FOR COUNTING HOW MANY TIMES THIS HAPPENS
-	#! offline switch
+  #! offline switch
   con_1 = enc_1 * bio_1
   con_2 = enc_2 * bio_2
   con_3 = enc_3 * bio_3
-	if (con_1 + con_2 + con_3) > dZ
-		frac1 = con_1 / (con_1 + con_2 + con_3)
-    frac2 = con_2 / (con_1 + con_2 + con_3)
-    frac3 = con_3 / (con_1 + con_2 + con_3)
-		out_1 = (frac1 * dZ) / bio_1
-		out_2 = (frac2 * dZ) / bio_2
+  con_4 = enc_4 * bio_4
+  con_5 = enc_5 * bio_5
+  if (con_1 + con_2 + con_3 + con_4 + con_5) > dZ
+  	frac1 = con_1 / (con_1 + con_2 + con_3 + con_4 + con_5)
+    frac2 = con_2 / (con_1 + con_2 + con_3 + con_4 + con_5)
+    frac3 = con_3 / (con_1 + con_2 + con_3 + con_4 + con_5)
+    frac4 = con_4 / (con_1 + con_2 + con_3 + con_4 + con_5)
+    frac5 = con_5 / (con_1 + con_2 + con_3 + con_4 + con_5)
+  	out_1 = (frac1 * dZ) / bio_1
+  	out_2 = (frac2 * dZ) / bio_2
     out_3 = (frac3 * dZ) / bio_3
-	else
-		out_1 = enc_1
-		out_2 = enc_2
+    out_4 = (frac4 * dZ) / bio_4
+    out_5 = (frac5 * dZ) / bio_5
+  else
+  	out_1 = enc_1
+  	out_2 = enc_2
     out_3 = enc_3
-	end
-  zf = (out_1*bio_1 + out_2*bio_2 + out_3*bio_3) / dZ
-	return out_1, out_2, out_3, zf
+    out_4 = enc_4
+    out_5 = enc_5
+  end
+  zf = (out_1*bio_1 + out_2*bio_2 + out_3*bio_3 + out_4*bio_4 + out_5*bio_5) / dZ
+  return out_1, out_2, out_3, out_4, out_5, zf
 end
+
+function sub_offline_zl(enc_1,enc_2,bio_1,bio_2,dZ)
+  # ADD FLAG FOR COUNTING HOW MANY TIMES THIS HAPPENS
+  #! offline switch
+  con_1 = enc_1 * bio_1
+  con_2 = enc_2 * bio_2
+  if (con_1 + con_2) > dZ
+  	frac1 = con_1 / (con_1 + con_2)
+    frac2 = con_2 / (con_1 + con_2)
+    out_1 = (frac1 * dZ) / bio_1
+  	out_2 = (frac2 * dZ) / bio_2
+  else
+  	out_1 = enc_1
+  	out_2 = enc_2
+  end
+  zf = (out_1*bio_1 + out_2*bio_2) / dZ
+  return out_1, out_2, zf
+end
+
+# function sub_offline(dZ,enc,bio)
+#   # ADD FLAG FOR COUNTING HOW MANY TIMES THIS HAPPENS
+# 	#! offline switch
+#   con = enc .* bio
+#   if (sum(con) > dZ)
+#     frac=0.0*con
+#     out=0.0*con
+#     for i=1:length(con)
+# 		    frac[i] = con[i] / sum(con)
+#         out[i] = (frac[i] * dZ) / bio[i]
+#     end
+# 	else
+# 		out = enc
+# 	end
+#   zf = (out.*bio) / dZ
+# 	return zf, out
+# end
 
 function sub_offline_bent(enc_1,enc_2,bio_1,bio_2,B,det)
   con_1 = enc_1 * bio_1

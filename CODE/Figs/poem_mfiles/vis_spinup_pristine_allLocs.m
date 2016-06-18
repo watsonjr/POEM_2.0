@@ -34,9 +34,12 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
-
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -379,38 +382,36 @@ print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
 
 %% All on one
 figure(9)
-subplot(2,3,1)
-bar(log(Fsum))
-xlim([0 4])
-legend(spots)
-title('Forage')
-ylabel('log Total Biomass (g m^-^2) in final year')
-
-subplot(2,3,2)
-bar(log(Psum))
-xlim([0 4])
-title('Pel Pisc')
-
-subplot(2,3,3)
-bar(log(Dsum))
-xlim([0 4])
-title('Dem Pisc')
-
-subplot(2,3,4)
+subplot(2,2,1)
 bar(log(Fmean))
 xlim([0 4])
+ylim([-10 3])
 xlabel('Stage')
-ylabel('log Mean Biomass (g m^-^2) in final year')
+title('Forage')
+ylabel('log Mean Biomass (g m^-^2) in final year',...
+    'HorizontalAlignment','right')
 
-subplot(2,3,5)
+subplot(2,2,2)
 bar(log(Pmean))
 xlim([0 4])
+ylim([-10 3])
 xlabel('Stage')
+title('Pel Pisc')
 
-subplot(2,3,6)
+subplot(2,2,3)
 bar(log(Dmean))
 xlim([0 4])
+ylim([-10 3])
 xlabel('Stage')
+title('Dem Pisc')
+
+subplot(2,2,4)
+bar(log(Fsum))
+xlim([0 0.5])
+ylim([-0.5 0.5])
+legend(spots)
+legend('location','west')
+
 print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 
 %% Zoop con
