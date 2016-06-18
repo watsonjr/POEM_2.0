@@ -19,8 +19,8 @@ TIME = ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc
 TIME = TIME[1:240]
 
 #! Ocean currents
-U = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_u200_v200.nc","Ut_200");
-V = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_u200_v200.nc","Vt_200");
+U = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Uth_200");
+V = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Vth_200");
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
@@ -41,7 +41,7 @@ ID  = [id1 id2];
 nyr = Int(lstd/365)
 #! pull out annual information
 #! *60 *60 *24 --> per day (if flux)
-for i = 1:nyr
+for i = 1:2#:nyr
 	#id = float64(ID[i,:]) #float64(x::AbstractArray) is deprecated, use map(Float64,x) instead
   id = map(Float64,ID[i,:])
 	I = find(id[1].<=TIME.<=id[2])
@@ -55,7 +55,7 @@ for i = 1:nyr
 	D_u = zeros(NID,365);
   D_v = zeros(NID,365);
 
-  #! NaN velocities = -999
+  #! NaN velocities = 0 #used to be -999
   u[find(u.==minimum(u))] = 0.0
   v[find(v.==minimum(v))] = 0.0
 
@@ -70,7 +70,7 @@ for i = 1:nyr
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_v[j,1:length(Yi)] = (Yi *60 *60 *24); #from (m/s) to (m d-1)
+		D_v[j,1:length(Yi)] = Yi;# *60 *60 *24; #from (m/s) to (m d-1)
 
 		#! u currents
 		Y = zeros(size(time))
@@ -78,14 +78,14 @@ for i = 1:nyr
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi= collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_u[j,1:length(Yi)] = Yi *60 *60 *24; #from (m/s) to (m d-1)
+		D_u[j,1:length(Yi)] = Yi;# *60 *60 *24; #from (m/s) to (m d-1)
 
 	end
 
 	#! save
 	println(i)
-	ti = string(1000000+i); di = "./JLD/Data_hindcast_vel200_";
-	save(string(di,ti[2:end],".jld"),"U",D_u,"V",D_v);
+	ti = string(1000000+i); di = "./JLD/Data_hindcast_velH200_";
+	save(string(di,ti[2:end],".jld"),"Uh",D_u,"Vh",D_v);
 
 
 end

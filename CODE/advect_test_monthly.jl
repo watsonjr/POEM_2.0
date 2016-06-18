@@ -8,8 +8,8 @@ ID = load("./Data/Data_grid_hindcast_NOTflipped.jld","ID");
 GRD = load("./Data/Data_grid_cp_2D.jld")
 
 #! Ocean currents
-u200 = ncread("./Data/GCM/Hindcast/feb152013_run25_ocean.198801-200712_u200_v200.nc","Ut_200");
-v200 = ncread("./Data/GCM/Hindcast/feb152013_run25_ocean.198801-200712_u200_v200.nc","Vt_200");
+u200 = ncread("./Data/GCM/Hindcast/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Ut_200");
+v200 = ncread("./Data/GCM/Hindcast/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Vt_200");
 u200 = u200[:,:,1:12];
 v200 = v200[:,:,1:12];
 

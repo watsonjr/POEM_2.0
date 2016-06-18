@@ -28,13 +28,14 @@
 
 ### ADVECTION ###-------------------------------
 function sub_advection(GRD,Bio_in,U,V,ni,nj)
-	# time steps within one day
-	ntime = 48.0
+	# ntime = time steps in a day
+	# dtime = # seconds in ntime
+	dtime = 5.0*60.0
+	ntime = (60.0*60.0*24.0) / dtime
 	nt = Int(ntime)
-	dtime = 1.0/ntime
 	# biol concentration
 	Tfield = zeros(Float64,360,200,nt);
-	Tfield[:,:,1] = Bio_in;
+	Tfield[:,:,1] = Bio_in/ntime;
 	Ttendency = zeros(Float64,360,200,nt);
   # grid size
 	isd = 1
@@ -61,7 +62,7 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	end
 
 	# return
-	return Tfield[:,:,nt]
+	return Tfield[:,:,nt] * ntime
 end
 
 
