@@ -89,11 +89,11 @@ function make_parameters(harv)
 	# from Charlie/COBALT
 	#! Median Zooplankton body mass in g wet weight
 	# eq from James Watkins, Lars Rudstam and Kristen Holeck in dry weight
-	# convert to wet weight with 0.2g dry = 1 g wet --> 1g dry = 5g wet
+	# convert to wet weight with 1g dry = 9 g wet
 	const global L_zm = 10^((log10(0.2)+log10(2))/2); # lengths (ESD)
 	const global L_zl = 10^((log10(2)+log10(20))/2);
-	const global M_zm = 5.0 * exp(1.953 + (2.399*log(L_zm)))*1.0e-6; # body mass
-	const global M_zl = 5.0 * exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
+	const global M_zm = 9.0 * exp(1.953 + (2.399*log(L_zm)))*1.0e-6; # body mass
+	const global M_zl = 9.0 * exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
 
 	#! Ratio of initial and final body sizes per size-class
 	const global Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3)
@@ -145,5 +145,14 @@ function make_parameters(harv)
 	#medium detritivore eats detritus
 	#large piscivore eats medium forage fish, medium piscivore, medium detritivore
 	#large detritivore eats detritus, medium forage fish, medium piscivore, medium detrivore
+
+	const global MF_phi_MZ = 1.0
+	const global MF_phi_LZ = 1.0
+	const global MF_phi_S = 1.0
+	const global MP_phi_MZ = 0.5
+	const global MP_phi_LZ = 0.5
+	const global MP_phi_S = 0.5
+
+
 	#-----
 end

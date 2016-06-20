@@ -375,6 +375,7 @@ function Spinup_pristine()
 	global TrefB = Tref
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
+	global GRD = load("./Data/Data_grid_forecast_NOTflipped.jld")
 	YEARS = 100
   DAYS = 365
 
@@ -392,6 +393,15 @@ function Spinup_pristine()
 	S_Lrg_p = zeros(NX,1);
 	S_Lrg_d = zeros(NX,1);
 
+	S_Sml_f_con = zeros(NX,1);
+	S_Sml_p_con = zeros(NX,1);
+	S_Sml_d_con = zeros(NX,1);
+	S_Med_f_con = zeros(NX,1);
+	S_Med_p_con = zeros(NX,1);
+	S_Med_d_con = zeros(NX,1);
+	S_Lrg_p_con = zeros(NX,1);
+	S_Lrg_d_con = zeros(NX,1);
+
 	#! Initialize
 	phen=0;
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
@@ -405,86 +415,174 @@ function Spinup_pristine()
 	# #X_atts = {"longname" => "Space", "units" => "grid cell"}
 	# #timatts = {"longname" => "Time", "units" => "hours since 01-01-2000 00:00:00"}
 	# #Use "Dict{Any,Any}(a=>b, ...)" instead.
-	# biomatts = Dict("longname" => "Biomass",
-	#          "units"    => "g/m^2")
-	# X_atts = Dict("longname" => "Space",
-	# 		"units"    => "grid cell")
-	# timatts = Dict("longname" => "Time",
-	# 		"units"    => "days since 01-01-1980 00:00:00")
-	# fracatts = Dict("longname" => "Fraction",
-	# 		"units"    => "unitless")
-	# DDatts = Dict("longname" => "Cumulative degree days",
-	# 		"units"    => "degrees Celsius")
-	#
+	biomatts = Dict("longname" => "Biomass",
+	         "units"    => "g/m^2")
+	X_atts = Dict("longname" => "Space",
+			"units"    => "grid cell")
+	timatts = Dict("longname" => "Time",
+			"units"    => "days since 01-01-1980 00:00:00")
+	specatts = Dict("longname" => "Biomass",
+			         "units"    => "g/g/day")
+	fracatts = Dict("longname" => "Fraction",
+			"units"    => "unitless")
+	DDatts = Dict("longname" => "Cumulative degree days",
+			"units"    => "degrees Celsius")
+
 	# #! Init dims of netcdf file
-	# X   = collect(1:NX)
-	# tim = collect(1)
-	#
+	X   = collect(1:NX);
+	tim = collect(1:DAYS);
+
 	# #! setup netcdf path to store to
-	# file_sml_f = "./Data/NC/Data_spinup_pristine_sml_f.nc"
-	# file_sml_p = "./Data/NC/Data_spinup_pristine_sml_p.nc"
-	# file_sml_d = "./Data/NC/Data_spinup_pristine_sml_d.nc"
-	# file_med_f = "./Data/NC/Data_spinup_pristine_med_f.nc"
-	# file_med_p = "./Data/NC/Data_spinup_pristine_med_p.nc"
-	# file_med_d = "./Data/NC/Data_spinup_pristine_med_d.nc"
-	# file_lrg_p = "./Data/NC/Data_spinup_pristine_lrg_p.nc"
-	# file_lrg_d = "./Data/NC/Data_spinup_pristine_lrg_d.nc"
-	#
+	file_sml_f = "./Data/NC/Data_spinup_pristine_sml_f.nc"
+	file_sml_p = "./Data/NC/Data_spinup_pristine_sml_p.nc"
+	file_sml_d = "./Data/NC/Data_spinup_pristine_sml_d.nc"
+	file_med_f = "./Data/NC/Data_spinup_pristine_med_f.nc"
+	file_med_p = "./Data/NC/Data_spinup_pristine_med_p.nc"
+	file_med_d = "./Data/NC/Data_spinup_pristine_med_d.nc"
+	file_lrg_p = "./Data/NC/Data_spinup_pristine_lrg_p.nc"
+	file_lrg_d = "./Data/NC/Data_spinup_pristine_lrg_d.nc"
+
 	# #! remove if already in existence
-	# isfile(file_sml_f) ? rm(file_sml_f) : nothing
-	# isfile(file_sml_p) ? rm(file_sml_p) : nothing
-	# isfile(file_sml_d) ? rm(file_sml_d) : nothing
-	# isfile(file_med_f) ? rm(file_med_f) : nothing
-	# isfile(file_med_p) ? rm(file_med_p) : nothing
-	# isfile(file_med_d) ? rm(file_med_d) : nothing
-	# isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
-	# isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
-	#
-	# #NcDim(dimname, dimlength, atts=Dict{Any,Any}(), values=[])
-	# Xdim = NcDim("NX", NX, atts=X_atts, values=X)
-	# tdim = NcDim("time", YEARS*DAYS, atts=timatts, values=collect(1:YEARS*DAYS))
-	#
-	# #radvar = NcVar("rad",[londim,latdim,timdim],varatts,Float32)
-	# biomvar = NcVar("biomass", [Xdim,tdim], biomatts, Float64)
-	# encPvar = NcVar("encP", [Xdim,tdim], atts=biomatts, Float64)
-	#
-	# #! create netcdf files
-	# #nc = NetCDF.create("radiation2.nc",radvar)
-	# # Writing data to the file is done using putvar
-	# #NetCDF.putvar(nc, "rad", rad )
-	# #[bio enc_f enc_p enc_d enc_zm enc_zl enc_be con_f con_p con_d con_zm con_zl con_be I nu gamma die rep rec egg clev DD S
-	# nccreate(file_sml_f,biomvar)
-	# nccreate(file_sml_f,biomvar,encPvar)
-	# nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	# nccreate(file_sml_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	# nccreate(file_med_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	# nccreate(file_med_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	# nccreate(file_med_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	# nccreate(file_lrg_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	# nccreate(file_lrg_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
-	#
+	isfile(file_sml_f) ? rm(file_sml_f) : nothing
+	isfile(file_sml_p) ? rm(file_sml_p) : nothing
+	isfile(file_sml_d) ? rm(file_sml_d) : nothing
+	isfile(file_med_f) ? rm(file_med_f) : nothing
+	isfile(file_med_p) ? rm(file_med_p) : nothing
+	isfile(file_med_d) ? rm(file_med_d) : nothing
+	isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
+	isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
+
+	nccreate(file_sml_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_sml_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_lrg_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_lrg_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+
+	nccreate(file_sml_f,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_sml_p,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_sml_d,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_f,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_p,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_med_d,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_lrg_p,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+	nccreate(file_lrg_d,"rec","X",X,X_atts,"time",tim,timatts,atts=biomatts)
+
+	nccreate(file_sml_f,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_p,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_d,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_f,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_p,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_d,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_p,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_d,"con","X",X,X_atts,"time",tim,timatts,atts=specatts)
+
+	nccreate(file_sml_f,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_p,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_d,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_f,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_p,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_d,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_p,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_d,"nu","X",X,X_atts,"time",tim,timatts,atts=specatts)
+
+	nccreate(file_sml_f,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_p,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_d,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_f,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_p,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_d,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_p,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_d,"gamma","X",X,X_atts,"time",tim,timatts,atts=specatts)
+
+	nccreate(file_sml_f,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_p,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_d,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_f,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_p,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_d,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_p,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_d,"rep","X",X,X_atts,"time",tim,timatts,atts=specatts)
+
+	nccreate(file_sml_f,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_p,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_d,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_f,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_p,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_d,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_p,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_d,"egg","X",X,X_atts,"time",tim,timatts,atts=specatts)
+
+	nccreate(file_sml_f,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_p,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_sml_d,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_f,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_p,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_med_d,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_p,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+	nccreate(file_lrg_d,"die","X",X,X_atts,"time",tim,timatts,atts=specatts)
+
+	nccreate(file_sml_f,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_sml_p,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_sml_d,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_med_f,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_med_p,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_med_d,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_lrg_p,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_lrg_d,"clev","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+
+	nccreate(file_sml_f,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_sml_p,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_sml_d,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_med_f,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_med_p,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_med_d,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_lrg_p,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+	nccreate(file_lrg_d,"S","X",X,X_atts,"time",tim,timatts,atts=fracatts)
+
+	nccreate(file_sml_f,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+	nccreate(file_sml_p,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+	nccreate(file_sml_d,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+	nccreate(file_med_f,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+	nccreate(file_med_p,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+	nccreate(file_med_d,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+	nccreate(file_lrg_p,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+	nccreate(file_lrg_d,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
+
 	# #! Initializing netcdf files
-	# println("Initializing file system (takes about 2 minutes)")
-	# ncwrite(zeros(NX,1),file_sml_f,"biomass",[1,1])
-	# ncwrite(zeros(NX,1),file_sml_p,"biomass",[1,1])
-	# ncwrite(zeros(NX,1),file_sml_d,"biomass",[1,1])
-	# ncwrite(zeros(NX,1),file_med_f,"biomass",[1,1])
-	# ncwrite(zeros(NX,1),file_med_p,"biomass",[1,1])
-	# ncwrite(zeros(NX,1),file_med_d,"biomass",[1,1])
-	# ncwrite(zeros(NX,1),file_lrg_p,"biomass",[1,1])
-	# ncwrite(zeros(NX,1),file_lrg_d,"biomass",[1,1])
+	println("Initializing file system (takes about 2 minutes)")
+	ncwrite(zeros(NX,1),file_sml_f,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_sml_p,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_sml_d,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_med_f,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_med_p,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_med_d,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_lrg_p,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_lrg_d,"biomass",[1,1])
+
+	ncwrite(zeros(NX,1),file_sml_f,"con",[1,1])
+	ncwrite(zeros(NX,1),file_sml_p,"con",[1,1])
+	ncwrite(zeros(NX,1),file_sml_d,"con",[1,1])
+	ncwrite(zeros(NX,1),file_med_f,"con",[1,1])
+	ncwrite(zeros(NX,1),file_med_p,"con",[1,1])
+	ncwrite(zeros(NX,1),file_med_d,"con",[1,1])
+	ncwrite(zeros(NX,1),file_lrg_p,"con",[1,1])
+	ncwrite(zeros(NX,1),file_lrg_d,"con",[1,1])
+
 
 
 	############### Setup Mat file save
-	file_sml_f = matopen("./Data/MAT/Data_spinup_pristine_sml_f.mat","w")
-	file_sml_p = matopen("./Data/MAT/Data_spinup_pristine_sml_p.mat","w")
-	file_sml_d = matopen("./Data/MAT/Data_spinup_pristine_sml_d.mat","w")
-	file_med_f = matopen("./Data/MAT/Data_spinup_pristine_med_f.mat","w")
-	file_med_p = matopen("./Data/MAT/Data_spinup_pristine_med_p.mat","w")
-	file_med_d = matopen("./Data/MAT/Data_spinup_pristine_med_d.mat","w")
-	file_lrg_p = matopen("./Data/MAT/Data_spinup_pristine_lrg_p.mat","w")
-	file_lrg_d = matopen("./Data/MAT/Data_spinup_pristine_lrg_d.mat","w")
-	file_cobalt = matopen("./Data/MAT/Data_spinup_pristine_cobalt.mat","w")
+	# file_sml_f = matopen("./Data/MAT/Data_spinup_pristine_sml_f.mat","w")
+	# file_sml_p = matopen("./Data/MAT/Data_spinup_pristine_sml_p.mat","w")
+	# file_sml_d = matopen("./Data/MAT/Data_spinup_pristine_sml_d.mat","w")
+	# file_med_f = matopen("./Data/MAT/Data_spinup_pristine_med_f.mat","w")
+	# file_med_p = matopen("./Data/MAT/Data_spinup_pristine_med_p.mat","w")
+	# file_med_d = matopen("./Data/MAT/Data_spinup_pristine_med_d.mat","w")
+	# file_lrg_p = matopen("./Data/MAT/Data_spinup_pristine_lrg_p.mat","w")
+	# file_lrg_d = matopen("./Data/MAT/Data_spinup_pristine_lrg_d.mat","w")
+	# file_cobalt = matopen("./Data/MAT/Data_spinup_pristine_cobalt.mat","w")
 
 
 	###################### Run the Model
@@ -505,69 +603,74 @@ function Spinup_pristine()
 			println(YR," , ", mod(DY,365))
 			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 
-		end
+			if (YR == YEARS)
+				##################### Clean up
+				#! Store
+				for i = 1:NX
+					S_Sml_f[i,DY] = Sml_f.bio[i]
+					S_Sml_p[i,DY] = Sml_p.bio[i]
+					S_Sml_d[i,DY] = Sml_d.bio[i]
+					S_Med_f[i,DY] = Med_f.bio[i]
+					S_Med_p[i,DY] = Med_p.bio[i]
+					S_Med_d[i,DY] = Med_d.bio[i]
+					S_Lrg_p[i,DY] = Lrg_p.bio[i]
+					S_Lrg_d[i,DY] = Lrg_d.bio[i]
 
-	end
+					S_Sml_p_con[i,DY] = Sml_p.I[i]
+				end
+			end
 
-	##################### Clean up
-	#! Store
-	for i = 1:NX
-		S_Sml_f[i,1] = Sml_f.bio[i]
-		S_Sml_p[i,1] = Sml_p.bio[i]
-		S_Sml_d[i,1] = Sml_d.bio[i]
-		S_Med_f[i,1] = Med_f.bio[i]
-		S_Med_p[i,1] = Med_p.bio[i]
-		S_Med_d[i,1] = Med_d.bio[i]
-		S_Lrg_p[i,1] = Lrg_p.bio[i]
-		S_Lrg_d[i,1] = Lrg_d.bio[i]
-	end
+		end #Days
+
+	end #Years
 
 	#! Save
-	# ncwrite(S_Sml_f,file_sml_f,"biomass",[1,1])
-	# ncwrite(S_Sml_p,file_sml_p,"biomass",[1,1])
-	# ncwrite(S_Sml_d,file_sml_d,"biomass",[1,1])
-	# ncwrite(S_Med_f,file_med_f,"biomass",[1,1])
-	# ncwrite(S_Med_p,file_med_p,"biomass",[1,1])
-	# ncwrite(S_Med_d,file_med_d,"biomass",[1,1])
-	# ncwrite(S_Lrg_p,file_lrg_p,"biomass",[1,1])
-	# ncwrite(S_Lrg_d,file_lrg_d,"biomass",[1,1])
-	#
-	# #! Close save
-  # ncclose(file_sml_f)
-  # ncclose(file_sml_p)
-  # ncclose(file_sml_d)
-  # ncclose(file_med_f)
-  # ncclose(file_med_p)
-  # ncclose(file_med_d)
-  # ncclose(file_lrg_p)
-	# ncclose(file_lrg_d)
+	ncwrite(S_Sml_f,file_sml_f,"biomass",[1,1])
+	ncwrite(S_Sml_p,file_sml_p,"biomass",[1,1])
+	ncwrite(S_Sml_d,file_sml_d,"biomass",[1,1])
+	ncwrite(S_Med_f,file_med_f,"biomass",[1,1])
+	ncwrite(S_Med_p,file_med_p,"biomass",[1,1])
+	ncwrite(S_Med_d,file_med_d,"biomass",[1,1])
+	ncwrite(S_Lrg_p,file_lrg_p,"biomass",[1,1])
+	ncwrite(S_Lrg_d,file_lrg_d,"biomass",[1,1])
+
+	ncwrite(S_Sml_p_enc,file_sml_p,"con",[1,1])
+
+
+	#! Close save
+  ncclose(file_sml_f)
+  ncclose(file_sml_p)
+  ncclose(file_sml_d)
+  ncclose(file_med_f)
+  ncclose(file_med_p)
+  ncclose(file_med_d)
+  ncclose(file_lrg_p)
+	ncclose(file_lrg_d)
 
 
 	#! Mat Save
 
 	# x = mxarray(Lrg_p)
 	# ,[Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.egg Sml_p.clev Sml_p.DD Sml_p.S[DY-1]])
-
-
-	write(file_sml_f;Sml_f)
-	write(file_sml_p;Sml_p)
-	write(file_sml_d;Sml_d)
-	write(file_med_f;Med_f)
-	write(file_med_p;Med_p)
-	write(file_med_d;Med_d)
-	write(file_lrg_p;Lrg_p)
-	write(file_lrg_d;Lrg_d)
-	write(file_cobalt; bent=BENT.mass, fZm = ENVR.fZm, fZl = ENVR.fZl, fDet = ENVR.fB)
-
-	#! Mat Close
-  close(file_sml_f)
-  close(file_sml_p)
-  close(file_sml_d)
-  close(file_med_f)
-  close(file_med_p)
-  close(file_med_d)
-  close(file_lrg_p)
-	close(file_lrg_d)
+	# write(file_sml_f;Sml_f)
+	# write(file_sml_p;Sml_p)
+	# write(file_sml_d;Sml_d)
+	# write(file_med_f;Med_f)
+	# write(file_med_p;Med_p)
+	# write(file_med_d;Med_d)
+	# write(file_lrg_p;Lrg_p)
+	# write(file_lrg_d;Lrg_d)
+	# write(file_cobalt; bent=BENT.mass, fZm = ENVR.fZm, fZl = ENVR.fZl, fDet = ENVR.fB)
+	#
+	# #! Mat Close
+  # close(file_sml_f)
+  # close(file_sml_p)
+  # close(file_sml_d)
+  # close(file_med_f)
+  # close(file_med_p)
+  # close(file_med_d)
+  # close(file_lrg_p)
+	# close(file_lrg_d)
 end
 
 

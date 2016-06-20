@@ -34,14 +34,24 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MprefLZoverMZ/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MprefLZoverMZ/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFprefZ/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFprefZ/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
 
-cfile = 'NoPDc_TrefO_KHparams_cmax-metab';
+cfile = 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -68,6 +78,9 @@ Dmean = Psum;
 Pmgr = Psum;
 Fmgr = Fsum;
 Dmgr = Psum;
+Pprod = Psum;
+Fprod = Fsum;
+Dprod = Psum;
 Pcon = Psum;
 Fcon = Fsum;
 Dcon = Psum;
@@ -365,6 +378,91 @@ for s=1:length(spots)
         stamp(cfile)
     end
     
+    %% Production (different from growth rate?)
+    SP_prod=nanmean(sum(SP(lyr,16:18),2)+SP(lyr,20));
+    SF_prod=nanmean(sum(SF(lyr,16:18),2)+SF(lyr,20));
+    SD_prod=nanmean(sum(SD(lyr,16:18),2)+SD(lyr,20));
+    MP_prod=nanmean(sum(MP(lyr,16:18),2)+MP(lyr,20));
+    MF_prod=nanmean(sum(MF(lyr,16:18),2)+MF(lyr,20));
+    MD_prod=nanmean(sum(MD(lyr,16:18),2)+MD(lyr,20));
+    LP_prod=nanmean(sum(LP(lyr,16:18),2)+LP(lyr,20));
+    LD_prod=nanmean(sum(LD(lyr,16:18),2)+LD(lyr,20));
+    
+    P_prod=[SP_prod;MP_prod;LP_prod];
+    F_prod=[SF_prod;MF_prod];
+    D_prod=[SD_prod;MD_prod;LD_prod];
+    
+    Pprod(:,s) = P_prod;
+    Fprod(:,s) = F_prod;
+    Dprod(:,s) = D_prod;
+    
+    f8 = figure(8);
+    subplot(1,3,1)
+    plot(s-0.25,F_prod(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,P_prod(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,D_prod(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    %ylim([-0.1 0.1])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha1=gca;
+        for n=1:7
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    title('S')
+    
+    subplot(1,3,2)
+    plot(s-0.25,(F_prod(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,(P_prod(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,(D_prod(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    %ylim([-2 5])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha2=gca;
+        for n=1:7
+            text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    title('M')
+    
+    subplot(1,3,3)
+    plot(s,(P_prod(3)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,(D_prod(3)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    %ylim([-2 7])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha3=gca;
+        for n=1:7
+            text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    title('L')
+    if (s==7)
+        stamp(cfile)
+    end
+    
 end
 print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass.png'])
 print(f2,'-dpng',[fpath sname sname2 'All_oneloc_con_level.png'])
@@ -373,15 +471,16 @@ print(f4,'-dpng',[fpath sname sname2 'All_oneloc_consump.png'])
 print(f5,'-dpng',[fpath sname sname2 'All_oneloc_frac_zoop_loss.png'])
 print(f6,'-dpng',[fpath sname sname2 'All_oneloc_size_spec_sub.png'])
 print(f7,'-dpng',[fpath sname sname2 'All_oneloc_size_spec.png'])
+print(f8,'-dpng',[fpath sname sname2 'All_oneloc_prod.png'])
 
 save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
     'Dsum','Pmean','Fmean','Dmean','all_mean',...
-    'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z');
+    'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod');
 
 %% Sum mean biom over stages
 sumspec = squeeze(nansum(nansum(all_mean)));
 
-figure(8);
+figure(9);
 subplot(2,1,1)
 plot(1:7,log10(sumspec),'k.','MarkerSize',25); hold on;
 xlim([0 8])
@@ -405,7 +504,7 @@ stamp(cfile)
 print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
 
 %% All on one
-figure(9)
+figure(10)
 subplot(2,2,1)
 bar(log(Fmean))
 xlim([0 4])
@@ -440,7 +539,7 @@ print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 
 %% Zoop con
 
-figure(10)
+figure(11)
 subplot(2,1,1)
 bar(Zcon(:,1),'k')
 ylim([0 1])

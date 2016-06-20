@@ -100,17 +100,16 @@ end
 
 
 ###!  Encounter rates
-function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
+function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # Tp: pelagic temp
   # Tb: bottom temp
   # wgt: ind weight of size class
-  # L: length of size class
-  # tu: frac time spent searching for food
   # pred: pred biomass density,
 	# prey: prey biomass density,
 	# A: predator search rate,
   # tpel: time spent in pelagic,
 	# tprey: time spent in area with that prey item.
+  # pref: preference for prey item
   #Hartvig et al. search rate (volume/yr)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #A = (exp(0.063*(temp-10.0)) * flev * wgt^(q)) /365   #coeffs for per yr -> per day
@@ -123,7 +122,7 @@ function sub_enc(Tp,Tb,wgt,L,tu,pred,prey,tpel,tprey)
   #Encounter
 	#enc = pred*prey*A*tprey
   # Per predator, mult by biomass later
-  enc = prey*A*tprey
+  enc = prey*A*tprey*pref
   return enc
 end
 
