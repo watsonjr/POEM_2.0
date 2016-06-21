@@ -1,5 +1,5 @@
 ### NETCDF EXAMPLE
-using HDF5, NetCDF
+using NetCDF
 include("toa.jl")
 # Define longitudes and latitudes, day and timesteps
 lat=[-89:89]
