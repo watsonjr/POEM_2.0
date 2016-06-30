@@ -12,10 +12,10 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		BENT.mass[JD] = BENT.mass[JD] + bent_eff*ENVR.det[JD]
 
 		#! fraction of time large piscivores spends in pelagic
-	  Lrg_p.td[JD] = sub_tdif_pel(GRD["Z"][JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
+	  Lrg_p.td[JD] = sub_tdif_pel(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
 		#Lrg_p.td[JD] = 1.0
 		#! fraction of time large demersal spends in pelagic
-	  Lrg_d.td[JD] = sub_tdif_dem(GRD["Z"][JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
+	  Lrg_d.td[JD] = sub_tdif_dem(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
 		#Lrg_d.td[JD] = 0.0
 
 		#! metabolism
@@ -198,7 +198,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 	end
 
 	#! Fishing
-	#PISC.bio,PLAN.bio,DETR.bio = sub_fishing(PISC.bio,PLAN.bio,DETR.bio,GRD_A);
+	Med_f.bio,Lrg_p.bio,Lrg_d.bio = sub_fishing(Med_f.bio,Lrg_p.bio,Lrg_d.bio,ENVR.A);
 
 	#! Forward Euler checks for demographics and movement
 	sub_check!(Sml_f.bio);

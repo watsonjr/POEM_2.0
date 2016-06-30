@@ -17,7 +17,9 @@ function get_COBALT!(COBALT,ID,DY,ENVR)
     ENVR.Dthresh[:,1] = Dthresh[ID]
     ENVR.fZm[:,1] = zeros(Int64,NX)
     ENVR.fZl[:,1] = zeros(Int64,NX)
-    ENVR.fB[:,1] = zeros(Int64,NX)
+    ENVR.fB[:,1]  = zeros(Int64,NX)
+    ENVR.H[:,1]   = GRD["Z"][ID]
+    ENVR.A[:,1]   = GRD["AREA"][ID]
 end
 
 
@@ -374,34 +376,33 @@ end
 
 
 ####! Fishing
-#function sub_fishing(bio_pi,bio_pl,bio_de,AREA)
-#	if FISHING > 0.0
-#		#bio_pi = PISC.bio; bio_pl = PLAN.bio; bio_de = DETR.bio; AREA = GRD_A;
-#		ALL_pi  = Array(Float64,NX,PI_N)
-#		ALL_pl  = Array(Float64,NX,PL_N)
-#		ALL_de  = Array(Float64,NX,DE_N)
-#
-#		for i = 1:NX
-#			ALL_pi[i,:] = bio_pi[i] * AREA[i]
-#			ALL_pl[i,:] = bio_pl[i] * AREA[i]
-#			ALL_de[i,:] = bio_de[i] * AREA[i]
-#		end
-#
-#		#! Total fish biomass
-#		TOT = sum(ALL_pi) + sum(ALL_pl) + sum(ALL_de)
-#		ALL_pi -= (ALL_pi./TOT).*FISHING
-#		ALL_pl -= (ALL_pl./TOT).*FISHING
-#		ALL_de -= (ALL_de./TOT).*FISHING
-#
-#		#! Calc total biomass of fish in the ocean
-#		for i = 1:NX
-#			bio_pi[i] = squeeze(ALL_pi[i,:],1) ./ AREA[i]
-#			bio_pl[i] = squeeze(ALL_pl[i,:],1) ./ AREA[i]
-#			bio_de[i] = squeeze(ALL_de[i,:],1) ./ AREA[i]
-#		end
-#	end
-#	return bio_pi, bio_pl, bio_de
-#end
+function sub_fishing(MFbio,LPbio,LDbio,AREA)
+	if FISHING > 0.0
+    ALL_pi  = Array(Float64,NX,1)
+		ALL_pl  = Array(Float64,NX,1)
+		ALL_de  = Array(Float64,NX,1)
+
+		for i = 1:NX
+			ALL_pi[i,1] = LPbio[i] .* AREA[i]
+			ALL_pl[i,1] = MFbio[i] .* AREA[i]
+			ALL_de[i,1] = LDbio[i] .* AREA[i]
+		end
+
+		#! Total fish biomass
+		TOT = sum(ALL_pi) + sum(ALL_pl) + sum(ALL_de)
+		ALL_pi -= (ALL_pi./TOT) .* FISHING
+		ALL_pl -= (ALL_pl./TOT) .* FISHING
+		ALL_de -= (ALL_de./TOT) .* FISHING
+
+		#! Calc total biomass of fish in the ocean
+		for i = 1:NX
+			LPbio[i] = squeeze(ALL_pi[i,:],1) ./ AREA[i]
+			MFbio[i] = squeeze(ALL_pl[i,:],1) ./ AREA[i]
+			LDbio[i] = squeeze(ALL_de[i,:],1) ./ AREA[i]
+		end
+	end
+	return MFbio, LPbio, LDbio
+end
 
 
 ###! Forward Euler checks

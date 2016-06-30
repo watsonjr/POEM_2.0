@@ -19,7 +19,9 @@ function sub_init_env(ID)
 	ENV_fZm = Array(Float64,NX)
 	ENV_fZl = Array(Float64,NX)
 	ENV_fB = Array(Float64,NX)
-	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0p,ENV_T0b,ENV_Dthresh,ENV_fZm,ENV_fZl,ENV_fB)
+	ENV_H  = Array(Float64,NX)
+	ENV_A  = Array(Float64,NX)
+	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0p,ENV_T0b,ENV_Dthresh,ENV_fZm,ENV_fZl,ENV_fB,ENV_H,ENV_A)
 end
 
 function sub_init_fish(ID,phen)

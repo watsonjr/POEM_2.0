@@ -49,6 +49,8 @@ type environment
 	fZm::Array{Float64} # frac med zoop losses consumed
 	fZl::Array{Float64} # frac lrg zoop losses consumed
 	fB::Array{Float64} # frac detr flux consumed
+	H::Array{Float64} # bottom depth
+	A::Array{Float64} # grid cell area
 end
 
 #============= PARAMETER TYPE ==========#
