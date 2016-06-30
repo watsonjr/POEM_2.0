@@ -378,28 +378,20 @@ end
 ####! Fishing
 function sub_fishing(MFbio,LPbio,LDbio,AREA)
 	if FISHING > 0.0
-    ALL_pi  = Array(Float64,NX,1)
-		ALL_pl  = Array(Float64,NX,1)
-		ALL_de  = Array(Float64,NX,1)
-
-		for i = 1:NX
-			ALL_pi[i,1] = LPbio[i] .* AREA[i]
-			ALL_pl[i,1] = MFbio[i] .* AREA[i]
-			ALL_de[i,1] = LDbio[i] .* AREA[i]
-		end
+    ALL_pl = MFbio .* AREA
+		ALL_pi = LPbio .* AREA
+		ALL_de = LDbio .* AREA
 
 		#! Total fish biomass
 		TOT = sum(ALL_pi) + sum(ALL_pl) + sum(ALL_de)
+    ALL_pl -= (ALL_pl./TOT) .* FISHING
 		ALL_pi -= (ALL_pi./TOT) .* FISHING
-		ALL_pl -= (ALL_pl./TOT) .* FISHING
 		ALL_de -= (ALL_de./TOT) .* FISHING
 
 		#! Calc total biomass of fish in the ocean
-		for i = 1:NX
-			LPbio[i] = squeeze(ALL_pi[i,:],1) ./ AREA[i]
-			MFbio[i] = squeeze(ALL_pl[i,:],1) ./ AREA[i]
-			LDbio[i] = squeeze(ALL_de[i,:],1) ./ AREA[i]
-		end
+    MFbio = ALL_pl ./ AREA
+		LPbio = ALL_pi ./ AREA
+		LDbio = ALL_de ./ AREA
 	end
 	return MFbio, LPbio, LDbio
 end
