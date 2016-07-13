@@ -633,7 +633,7 @@ function Spinup_pristine()
 	nccreate(file_lrg_d,"DD","X",X,X_atts,"time",tim,timatts,atts=DDatts)
 
 	# #! Initializing netcdf files
-	println("Initializing file system (takes about 2 minutes)")
+	println("Initializing file system (takes about 5 minutes)")
 	ncwrite(zeros(NX,1),file_sml_f,"biomass",[1,1])
 	ncwrite(zeros(NX,1),file_sml_p,"biomass",[1,1])
 	ncwrite(zeros(NX,1),file_sml_d,"biomass",[1,1])

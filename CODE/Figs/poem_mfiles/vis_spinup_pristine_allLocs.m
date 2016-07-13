@@ -48,10 +48,18 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFprefZ/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit01/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit01/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFmet/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFmet/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 
-cfile = 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4';
+cfile = 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -84,6 +92,9 @@ Dprod = Psum;
 Pcon = Psum;
 Fcon = Fsum;
 Dcon = Psum;
+Prep = Fsum;
+Frep = Fsum;
+Drep = Fsum;
 all_mean=NaN*ones(3,3,length(spots));
 z = NaN*ones(length(spots),3);
 
@@ -232,7 +243,7 @@ for s=1:length(spots)
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
-    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean growth rate (g g^-^1 d^-^1) in final year')
     title('S')
     
     subplot(1,3,2)
@@ -254,7 +265,7 @@ for s=1:length(spots)
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
-    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean growth/repro rate (g g^-^1 d^-^1) in final year')
     title('M')
     
     subplot(1,3,3)
@@ -273,7 +284,7 @@ for s=1:length(spots)
             text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
         end
     end
-    ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean repro rate (g g^-^1 d^-^1) in final year')
     title('L')
     if (s==7)
         stamp(cfile)
@@ -463,6 +474,65 @@ for s=1:length(spots)
         stamp(cfile)
     end
     
+    %% Reproduction
+    F_rep(1,1)=nanmean(MF(lyr,18));
+    D_rep(1,1)=nanmean(LD(lyr,18));
+    P_rep(1,1)=nanmean(LP(lyr,18));
+    F_rep(2,1)=nanmean(MF(lyr,1).*MF(lyr,18));
+    D_rep(2,1)=nanmean(LD(lyr,1).*LD(lyr,18));
+    P_rep(2,1)=nanmean(LP(lyr,1).*LP(lyr,18));
+    
+    Prep(:,s) = P_rep;
+    Frep(:,s) = F_rep;
+    Drep(:,s) = D_rep;
+    
+    f9 = figure(9);
+    subplot(1,2,1)
+    plot(s-0.25,F_rep(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,P_rep(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,D_rep(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    %ylim([-0.1 0.1])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha1=gca;
+        for n=1:7
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean repro rate (g g^-^1 d^-^1) in final year')
+    
+    subplot(1,2,2)
+    plot(s-0.25,(F_rep(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,(P_rep(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,(D_rep(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    %ylim([-2 5])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha2=gca;
+        for n=1:7
+            text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean biom reproduced (g d^-^1) in final year')
+    if (s==7)
+        stamp(cfile)
+    end
+    
+    
 end
 print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass.png'])
 print(f2,'-dpng',[fpath sname sname2 'All_oneloc_con_level.png'])
@@ -472,15 +542,17 @@ print(f5,'-dpng',[fpath sname sname2 'All_oneloc_frac_zoop_loss.png'])
 print(f6,'-dpng',[fpath sname sname2 'All_oneloc_size_spec_sub.png'])
 print(f7,'-dpng',[fpath sname sname2 'All_oneloc_size_spec.png'])
 print(f8,'-dpng',[fpath sname sname2 'All_oneloc_prod.png'])
+print(f9,'-dpng',[fpath sname sname2 'All_oneloc_rep.png'])
 
 save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
     'Dsum','Pmean','Fmean','Dmean','all_mean',...
-    'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod');
+    'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
+    'Prep','Frep','Drep');
 
 %% Sum mean biom over stages
 sumspec = squeeze(nansum(nansum(all_mean)));
 
-figure(9);
+figure(10);
 subplot(2,1,1)
 plot(1:7,log10(sumspec),'k.','MarkerSize',25); hold on;
 xlim([0 8])
@@ -504,7 +576,7 @@ stamp(cfile)
 print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
 
 %% All on one
-figure(10)
+figure(11)
 subplot(2,2,1)
 bar(log(Fmean))
 xlim([0 4])
@@ -539,7 +611,7 @@ print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 
 %% Zoop con
 
-figure(11)
+figure(12)
 subplot(2,1,1)
 bar(Zcon(:,1),'k')
 ylim([0 1])

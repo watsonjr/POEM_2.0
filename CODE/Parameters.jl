@@ -57,11 +57,6 @@ end
 function make_parameters(harv)
 	#! Input it switch for fishing (1 is yes, 0 is no)
 
-	#! Grid parameters
-	#global GRD = load("./Data/JLD/Data_grid_hindcast.jld"); # spatial information
-  #const global GRD_Z = GRD["Z"]
-  #const global GRD_A = GRD["AREA"]
-
 	#! Integration parameters
 	const global DT = 1.; # time step
   const global DAYS = 365; # number of days
@@ -112,7 +107,7 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.05	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.10	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 10.0 		# 10 g^(1-p)/yr at 10C
 
 	###! Consumption constants
