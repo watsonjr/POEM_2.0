@@ -60,10 +60,12 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
 
-cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort';
+cfile = 'MFeqMP4_fcrit10_Lmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -79,6 +81,25 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 
 load('cmap_ppt_angles.mat')
+
+%% Zoop con
+
+figure(12)
+subplot(2,1,1)
+bar(Zcon(:,1),'k')
+ylim([0 1])
+set(gca,'XTickLabel',spots);
+title('Med zoo')
+ylabel('Fraction of times overconsumed')
+
+subplot(2,1,2)
+bar(Zcon(:,2),'k')
+ylim([0 1])
+set(gca,'XTickLabel',spots);
+title('Large zoo')
+ylabel('Fraction of times overconsumed')
+stamp(cfile)
+print('-dpng',[fpath sname sname2 'All_oneloc_zoo_con.png'])
 
 %%
 Psum = NaN*ones(3,length(spots));
@@ -188,7 +209,7 @@ for s=1:length(spots)
     end
     title(loc)
     xlabel('Stage')
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -205,7 +226,7 @@ for s=1:length(spots)
     if (s==4)
         ylabel('Feeding level')
     end
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -290,7 +311,7 @@ for s=1:length(spots)
     end
     ylabel('Mean repro rate (g g^-^1 d^-^1) in final year')
     title('L')
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -333,7 +354,7 @@ for s=1:length(spots)
     end
     title(loc)
     xlabel('Stage')
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -352,7 +373,7 @@ for s=1:length(spots)
         ylabel('Fraction flux consumed')
     end
     title(loc)
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -372,7 +393,7 @@ for s=1:length(spots)
         ylabel('log Mean Biom (g m^-^2) in final year')
     end
     xlabel('Size')
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -389,7 +410,7 @@ for s=1:length(spots)
     end
     ylabel('log Mean Biom (g m^-^2) in final year')
     xlabel('Size class')
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -474,7 +495,7 @@ for s=1:length(spots)
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('L')
-    if (s==7)
+    if (s==3)
         stamp(cfile)
     end
     
@@ -613,24 +634,7 @@ legend('location','west')
 stamp(cfile)
 print('-dpng',[fpath sname sname2 'All_oneloc_biomass_spec.png'])
 
-%% Zoop con
 
-figure(12)
-subplot(2,1,1)
-bar(Zcon(:,1),'k')
-ylim([0 1])
-set(gca,'XTickLabel',spots);
-title('Med zoo')
-ylabel('Fraction of times overconsumed')
-
-subplot(2,1,2)
-bar(Zcon(:,2),'k')
-ylim([0 1])
-set(gca,'XTickLabel',spots);
-title('Large zoo')
-ylabel('Fraction of times overconsumed')
-stamp(cfile)
-print('-dpng',[fpath sname sname2 'All_oneloc_zoo_con.png'])
 
 
 

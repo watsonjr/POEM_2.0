@@ -401,9 +401,9 @@ function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
   # Tp: pelagic temp
   # Tb: bottom temp
   # tpel: frac pelagic time
-  #temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
-  nmort = Nat_mrt
+  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  #nmort = Nat_mrt
   db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
   bio_out =  bio_in + db
 end
