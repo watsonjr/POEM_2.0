@@ -134,14 +134,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_p.S[JD,:], Lrg_p.DD[JD] = sub_kflag(Lrg_p.S[JD,:],Lrg_p.DD[JD],ENVR.Dthresh[JD],DY);
 
 		#! energy available for somatic growth nu
-		Sml_f.nu[JD] = sub_nu(Sml_f.I[JD],Sml_f.bio[JD],Sml_f.met[JD])
-		Sml_p.nu[JD] = sub_nu(Sml_p.I[JD],Sml_p.bio[JD],Sml_p.met[JD])
-		Sml_d.nu[JD] = sub_nu(Sml_d.I[JD],Sml_d.bio[JD],Sml_d.met[JD])
-		Med_f.nu[JD] = sub_nu(Med_f.I[JD],Med_f.bio[JD],Med_f.met[JD])
-		Med_p.nu[JD] = sub_nu(Med_p.I[JD],Med_p.bio[JD],Med_p.met[JD])
-		Med_d.nu[JD] = sub_nu(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
-		Lrg_p.nu[JD] = sub_nu(Lrg_p.I[JD],Lrg_p.bio[JD],Lrg_p.met[JD])
-		Lrg_d.nu[JD] = sub_nu(Lrg_d.I[JD],Lrg_d.bio[JD],Lrg_d.met[JD])
+		Sml_f.nu[JD], Sml_f.prod[JD] = sub_nu(Sml_f.I[JD],Sml_f.bio[JD],Sml_f.met[JD])
+		Sml_p.nu[JD], Sml_p.prod[JD] = sub_nu(Sml_p.I[JD],Sml_p.bio[JD],Sml_p.met[JD])
+		Sml_d.nu[JD], Sml_d.prod[JD] = sub_nu(Sml_d.I[JD],Sml_d.bio[JD],Sml_d.met[JD])
+		Med_f.nu[JD], Med_f.prod[JD] = sub_nu(Med_f.I[JD],Med_f.bio[JD],Med_f.met[JD])
+		Med_p.nu[JD], Med_p.prod[JD] = sub_nu(Med_p.I[JD],Med_p.bio[JD],Med_p.met[JD])
+		Med_d.nu[JD], Med_d.prod[JD] = sub_nu(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
+		Lrg_p.nu[JD], Lrg_p.prod[JD] = sub_nu(Lrg_p.I[JD],Lrg_p.bio[JD],Lrg_p.met[JD])
+		Lrg_d.nu[JD], Lrg_d.prod[JD] = sub_nu(Lrg_d.I[JD],Lrg_d.bio[JD],Lrg_d.met[JD])
 
 		#! maturation (note subscript on Kappa is larvae, juv, adult)
 		Sml_f.gamma[JD] = sub_gamma(K_l,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD],Sml_f.S[JD,DY])

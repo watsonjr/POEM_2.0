@@ -288,6 +288,8 @@ function sub_nu(I,B,met)
   #nu = 0.5*I
   # Already in biomass specific ingestion
 	nu = (I*Lambda) - met
+  prod = nu * B
+  return nu, prod
 end
 
 

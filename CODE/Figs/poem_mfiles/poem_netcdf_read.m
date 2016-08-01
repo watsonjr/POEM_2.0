@@ -3,7 +3,7 @@
 clear all
 close all
 
-fpath='/Volumes/GFDL/NC/';
+fpath='/Volumes/GFDL/NC/fcrit10/';
 
 %% SP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_p.nc'],'NC_NOWRITE');
@@ -214,6 +214,6 @@ LD.time = time;
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
 %%
-save([fpath 'Data_spinup_pristine.mat'])
+save([fpath 'Data_spinup_pristine_fcrit10.mat'])
 
 

@@ -27,6 +27,7 @@ type fish
 	S::Array{Float64} # spawning flag
 	egg::Array{Float64} # stored energy/biomass for reproduction
 	clev::Array{Float64} # Con/Cmax
+	prod::Array{Float64} # production
 end
 
 type detritus
@@ -146,9 +147,9 @@ function make_parameters(harv)
 	const global MF_phi_MZ = 1.0
 	const global MF_phi_LZ = 1.0
 	const global MF_phi_S = 1.0
-	const global MP_phi_MZ = 0.5
-	const global MP_phi_LZ = 0.5
-	const global MP_phi_S = 0.5
+	const global MP_phi_MZ = 1.0
+	const global MP_phi_LZ = 1.0
+	const global MP_phi_S = 1.0
 
 
 	#-----

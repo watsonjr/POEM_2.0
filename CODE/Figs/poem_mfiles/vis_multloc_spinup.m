@@ -6,12 +6,16 @@
 clear all
 close all
 
-dpath = '/Volumes/GFDL/NC/fcrit05/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
+% dpath = '/Volumes/GFDL/NC/fcrit05/';
+% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
+dpath = '/Volumes/GFDL/NC/fcrit10/';
+ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 
-load([dpath 'Data_spinup_pristine.mat']);
+cfile = 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10';
 
+%load([dpath 'Data_spinup_pristine.mat']);
+load([dpath 'Data_spinup_pristine_fcrit10.mat']);
 
 %%
 [loc,days]=size(SP.bio);
@@ -50,7 +54,7 @@ Zld=griddata(grid(:,2),grid(:,3),ld_mean,X,Y);
 %% sp
 figure(1)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zsp)); hold on;
+m_pcolor(X,Y,real(log10(Zsp))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -58,7 +62,8 @@ title('log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-10 2])
-print('-dpng',[fpath 'Spinup_global_SP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_SP.png'])
 
 %% sf
 figure(2)
@@ -71,7 +76,8 @@ title('log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-10 2])
-print('-dpng',[fpath 'Spinup_global_SF.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_SF.png'])
 
 %% sd
 figure(3)
@@ -84,12 +90,13 @@ title('log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
-print('-dpng',[fpath 'Spinup_global_SD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_SD.png'])
 
 %% mp
 figure(4)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zmp)); hold on;
+m_pcolor(X,Y,real(log10(Zmp))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -97,7 +104,8 @@ title('log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-8 3])
-print('-dpng',[fpath 'Spinup_global_MP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_MP.png'])
 
 %% mf
 figure(5)
@@ -110,7 +118,8 @@ title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-10 3])
-print('-dpng',[fpath 'Spinup_global_MF.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_MF.png'])
 
 %% md
 figure(6)
@@ -123,7 +132,8 @@ title('log10 mean Juvenile D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-3 3])
-print('-dpng',[fpath 'Spinup_global_MD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_MD.png'])
 
 %% lp
 figure(7)
@@ -136,7 +146,8 @@ title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-8 3])
-print('-dpng',[fpath 'Spinup_global_LP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_LP.png'])
 
 %% ld
 figure(8)
@@ -149,7 +160,8 @@ title('log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-3 3])
-print('-dpng',[fpath 'Spinup_global_LD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_LD.png'])
 
 %% Production
 % Production = gamma + die + rep + egg
@@ -183,7 +195,8 @@ title('log10 mean Larval P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_SP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_SP.png'])
 
 % sf
 figure(12)
@@ -196,7 +209,8 @@ title('log10 mean Larval F production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_SF.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_SF.png'])
 
 % sd
 figure(13)
@@ -209,7 +223,8 @@ title('log10 mean Larval D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_SD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_SD.png'])
 
 % mp
 figure(14)
@@ -222,7 +237,8 @@ title('log10 mean Juvenile P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_MP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_MP.png'])
 
 % mf
 figure(15)
@@ -235,7 +251,8 @@ title('log10 mean Adult F production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_MF.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_MF.png'])
 
 % md
 figure(16)
@@ -248,12 +265,14 @@ title('log10 mean Juvenile D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_MD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_MD.png'])
 
-% lp
+%% lp
 figure(17)
+stamp(cfile)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Plp)); hold on;
+m_pcolor(X,Y,real(log10(Plp))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -261,10 +280,11 @@ title('log10 mean Adult P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_LP.png'])
+print('-dpng',[ppath 'Spinup_global_prod_LP.png'])
 
 % ld
 figure(18)
+stamp(cfile)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Pld)); hold on;
 shading flat
@@ -274,5 +294,5 @@ title('log10 mean Adult D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 -2])
-print('-dpng',[fpath 'Spinup_global_prod_LD.png'])
+print('-dpng',[ppath 'Spinup_global_prod_LD.png'])
 
