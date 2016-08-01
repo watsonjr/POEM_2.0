@@ -190,9 +190,9 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_d.bio[JD] = sub_update_fi(Med_d.bio[JD],Med_d.rec[JD],Med_d.nu[JD],
 								   Med_d.rep[JD],Med_d.gamma[JD],Med_d.die[JD],Med_d.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD])
 
-		Lrg_p.bio[JD] = sub_update_fi(Lrg_p.bio[JD],Lrg_p.rec[JD],Lrg_p.nu[JD],
+		Lrg_p.bio[JD] = sub_update_lg(Lrg_p.bio[JD],Lrg_p.rec[JD],Lrg_p.nu[JD],
 								   Lrg_p.rep[JD],Lrg_p.gamma[JD],Lrg_p.die[JD],Lrg_p.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD])
-	 	Lrg_d.bio[JD] = sub_update_fi(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
+	 	Lrg_d.bio[JD] = sub_update_lg(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD])
 
 	end

@@ -58,10 +58,12 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
 
-cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10';
+cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -73,7 +75,7 @@ spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
-    'rec','egg','clev','DD','S'};
+    'rec','egg','clev','DD','S','prod'};
 cols=cols';
 
 load('cmap_ppt_angles.mat')
@@ -391,15 +393,15 @@ for s=1:length(spots)
         stamp(cfile)
     end
     
-    %% Production (different from growth rate?)
-    SP_prod=nanmean(sum(SP(lyr,16:18),2)+SP(lyr,20));
-    SF_prod=nanmean(sum(SF(lyr,16:18),2)+SF(lyr,20));
-    SD_prod=nanmean(sum(SD(lyr,16:18),2)+SD(lyr,20));
-    MP_prod=nanmean(sum(MP(lyr,16:18),2)+MP(lyr,20));
-    MF_prod=nanmean(sum(MF(lyr,16:18),2)+MF(lyr,20));
-    MD_prod=nanmean(sum(MD(lyr,16:18),2)+MD(lyr,20));
-    LP_prod=nanmean(sum(LP(lyr,16:18),2)+LP(lyr,20));
-    LD_prod=nanmean(sum(LD(lyr,16:18),2)+LD(lyr,20));
+    %% Production (= nu * biom)
+    SP_prod=nanmean(SP(lyr,24));
+    SF_prod=nanmean(SF(lyr,24));
+    SD_prod=nanmean(SD(lyr,24));
+    MP_prod=nanmean(MP(lyr,24));
+    MF_prod=nanmean(MF(lyr,24));
+    MD_prod=nanmean(MD(lyr,24));
+    LP_prod=nanmean(LP(lyr,24));
+    LD_prod=nanmean(LD(lyr,24));
     
     P_prod=[SP_prod;MP_prod;LP_prod];
     F_prod=[SF_prod;MF_prod];
@@ -560,9 +562,9 @@ plot(1:7,log10(sumspec),'k.','MarkerSize',25); hold on;
 xlim([0 8])
 %ylim([-2 1])
 set(gca,'XTick',1:7,'XTickLabel',[])
-% for n=1:7
-%     text(n,-2.1,spots{n},'HorizontalAlignment','center')
-% end
+for n=1:7
+    text(n,-0.6,spots{n},'HorizontalAlignment','center')
+end
 ylabel('log10 Mean Biom (g m^-^2) in final year')
 title('All fishes and stages')
 
@@ -571,7 +573,7 @@ plot(1:7,(sumspec),'k.','MarkerSize',25); hold on;
 xlim([0 8])
 set(gca,'XTick',1:7,'XTickLabel',[])
 for n=1:7
-    text(n,-0.05,spots{n},'HorizontalAlignment','center')
+    text(n,-1,spots{n},'HorizontalAlignment','center')
 end
 ylabel('Mean Biom (g m^-^2) in final year')
 stamp(cfile)

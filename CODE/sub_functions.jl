@@ -381,8 +381,29 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
   # Tp: pelagic temp
   # Tb: bottom temp
   # tpel: frac pelagic time
-  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  #temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  nmort = 0.0
+  db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
+  bio_out =  bio_in + db
+end
+
+###! Update biomass
+function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
+	# all inputs except rec are in g g-1 d-1; rec is g d-1
+	# rec = rep from smaller size class = TOTAL biomass gained from recruitment
+	# grw = nu = somatic energy for growth within size class
+  # store = egg = energy stored for later egg production
+	# rep = rep =  energy lost to egg production
+	# mat = gamma = energy lost to maturation to larger size class
+	# Nat_mrt = natural mortality
+	# die = predator mort = biomass lost to predation
+  # Tp: pelagic temp
+  # Tb: bottom temp
+  # tpel: frac pelagic time
+  #temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  nmort = Nat_mrt
   db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
   bio_out =  bio_in + db
 end
