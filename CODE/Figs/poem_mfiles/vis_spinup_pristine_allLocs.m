@@ -62,10 +62,12 @@ close all
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
 
-cfile = 'MFeqMP4_fcrit10_Lmort';
+cfile = 'MFeqMP4_fcrit10_LTmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -398,6 +400,7 @@ for s=1:length(spots)
     end
     
     f7 = figure(7);
+    stamp(cfile)
     %     plot(1:2:6,log10(spec),'color',cmap_ppt(s,:),...
     %         'LineWidth',2); hold on;
     plot(1:2:6,log10(spec),'LineWidth',2); hold on;
@@ -410,7 +413,7 @@ for s=1:length(spots)
     end
     ylabel('log Mean Biom (g m^-^2) in final year')
     xlabel('Size class')
-    if (s==3)
+    if (s==1)
         stamp(cfile)
     end
     
@@ -495,7 +498,7 @@ for s=1:length(spots)
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('L')
-    if (s==3)
+    if (s==1)
         stamp(cfile)
     end
     
@@ -553,7 +556,7 @@ for s=1:length(spots)
         end
     end
     ylabel('Mean biom reproduced (g d^-^1) in final year')
-    if (s==7)
+    if (s==1)
         stamp(cfile)
     end
     
