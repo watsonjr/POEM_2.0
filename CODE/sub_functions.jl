@@ -101,7 +101,28 @@ function sub_met(Tp,Tb,tdif,wgt,L)
 end
 
 
-###!  Encounter rates
+###!  Encounter rates Forages fishes
+function sub_encF(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
+  # Tp: pelagic temp
+  # Tb: bottom temp
+  # wgt: ind weight of size class
+  # pred: pred biomass density,
+	# prey: prey biomass density,
+	# A: predator search rate,
+  # tpel: time spent in pelagic,
+	# tprey: time spent in area with that prey item.
+  # pref: preference for prey item
+  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes no interaction
+  #A = (exp(0.063*(temp-15.0)) * 10^(3.4) * wgt^(-0.29)) * (24e-3/9)
+  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes with interaction
+  A = (exp(0.063*(temp-15.0)) * 10^(3.6) * wgt^(-0.37)) * (24e-3/9)
+  #Encounter per predator, mult by biomass later
+  enc = prey*A*tprey*pref
+  return enc
+end
+
+###!  Encounter rates All other fishes
 function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # Tp: pelagic temp
   # Tb: bottom temp
@@ -112,18 +133,10 @@ function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # tpel: time spent in pelagic,
 	# tprey: time spent in area with that prey item.
   # pref: preference for prey item
-  #Hartvig et al. search rate (volume/yr)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #A = (exp(0.063*(temp-10.0)) * flev * wgt^(q)) /365   #coeffs for per yr -> per day
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  # if (wgt < 0.0036)
-  #   A = (exp(0.063*(temp-15.0)) * 10^(3.58) * wgt^(0.057)) * (24e-3/9)
-  # else
-    A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
-  # end
-  #Encounter
-	#enc = pred*prey*A*tprey
-  # Per predator, mult by biomass later
+  A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
+  #Encounter per predator, mult by biomass later
   enc = prey*A*tprey*pref
   return enc
 end
