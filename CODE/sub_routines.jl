@@ -48,13 +48,13 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_d.bio[JD],BENT.mass[JD],Med_d.td[JD],1,1)
 
-		Lrg_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_f.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],1)
-		Lrg_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_p.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],1)
-		Lrg_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_d.bio[JD],Lrg_p.td[JD],1-Lrg_p.td[JD],1)
+		Lrg_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_f.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],LP_phi_MF)
+		Lrg_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_p.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],LP_phi_MP)
+		Lrg_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_d.bio[JD],Lrg_p.td[JD],1-Lrg_p.td[JD],LP_phi_MD)
 
-		Lrg_d.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_f.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD],1)
-		Lrg_d.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_p.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD],1)
-		Lrg_d.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_d.bio[JD],Lrg_d.td[JD],1-Lrg_d.td[JD],1)
+		Lrg_d.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_f.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD],LD_phi_MF)
+		Lrg_d.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_p.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD],LD_phi_MP)
+		Lrg_d.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_d.bio[JD],Lrg_d.td[JD],1-Lrg_d.td[JD],LD_phi_MD)
 		Lrg_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],BENT.mass[JD],Lrg_d.td[JD],1-Lrg_d.td[JD],1)
 
 		#! Consumption rates
