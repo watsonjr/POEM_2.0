@@ -3,7 +3,7 @@
 clear all
 close all
 
-fpath='/Volumes/GFDL/NC/fcrit10/';
+fpath='/Volumes/GFDL/NC/Tmort/';
 
 %% SP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_p.nc'],'NC_NOWRITE');
@@ -57,7 +57,7 @@ SF.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
-%% SD
+% SD
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -83,7 +83,7 @@ SD.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
-%% MP
+% MP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_med_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -109,7 +109,7 @@ MP.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
-%% MF
+% MF
 ncid = netcdf.open([fpath 'Data_spinup_pristine_med_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -135,7 +135,7 @@ MF.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
-%% MD
+% MD
 ncid = netcdf.open([fpath 'Data_spinup_pristine_med_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -161,7 +161,7 @@ MD.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
-%% LP
+% LP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_lrg_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -187,7 +187,7 @@ LP.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
-%% LD
+% LD
 ncid = netcdf.open([fpath 'Data_spinup_pristine_lrg_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -213,7 +213,7 @@ LD.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time
 
-%%
-save([fpath 'Data_spinup_pristine_fcrit10.mat'])
+%
+save([fpath 'Data_spinup_pristine_fcrit10_Tmort_2yr.mat'])
 
 

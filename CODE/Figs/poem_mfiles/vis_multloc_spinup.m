@@ -3,19 +3,22 @@
 % 30 years
 % Saved as mat files
 
-clear all
+%clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 % dpath = '/Volumes/GFDL/NC/fcrit05/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
-dpath = '/Volumes/GFDL/NC/fcrit10/';
-ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
+% dpath = '/Volumes/GFDL/NC/fcrit10/';
+% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
+dpath = '/Volumes/GFDL/NC/Tmort/';
+ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
 
-cfile = 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10';
+cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort';
 
 %load([dpath 'Data_spinup_pristine.mat']);
-load([dpath 'Data_spinup_pristine_fcrit10.mat']);
+%load([dpath 'Data_spinup_pristine_fcrit10.mat']);
+%load([dpath 'Data_spinup_pristine_fcrit10_Tmort.mat']);
 
 %%
 [loc,days]=size(SP.bio);
@@ -61,7 +64,7 @@ m_grid;
 title('log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-10 2])
+caxis([-3 3])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SP.png'])
 
@@ -75,7 +78,7 @@ m_grid;
 title('log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-10 2])
+caxis([-3 3])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SF.png'])
 
@@ -89,7 +92,7 @@ m_grid;
 title('log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-3 3])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SD.png'])
 
@@ -103,7 +106,7 @@ m_grid;
 title('log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-8 3])
+caxis([-3 3])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MP.png'])
 
@@ -117,7 +120,7 @@ m_grid;
 title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-10 3])
+caxis([-3 3])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MF.png'])
 
@@ -145,7 +148,7 @@ m_grid;
 title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-8 3])
+caxis([-3 3])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LP.png'])
 

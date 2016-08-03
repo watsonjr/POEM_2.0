@@ -337,7 +337,7 @@ end
 
 
 
-####!! RUN SPINUP FOR ALL LOCATION
+####!! RUN SPINUP FOR ALL LOCATIONS
 function Spinup_pristine()
 
 	############### Initialize Model Variables
@@ -355,7 +355,7 @@ function Spinup_pristine()
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_forecast_NOTflipped.jld")
-	YEARS = 50
+	YEARS = 2 #50
   DAYS = 365
 
 	#! choose where and when to run the model
@@ -398,6 +398,15 @@ function Spinup_pristine()
 	S_Med_d_nu = zeros(NX,DAYS);
 	S_Lrg_p_nu = zeros(NX,DAYS);
 	S_Lrg_d_nu = zeros(NX,DAYS);
+
+	S_Sml_f_prod = zeros(NX,DAYS);
+	S_Sml_p_prod = zeros(NX,DAYS);
+	S_Sml_d_prod = zeros(NX,DAYS);
+	S_Med_f_prod = zeros(NX,DAYS);
+	S_Med_p_prod = zeros(NX,DAYS);
+	S_Med_d_prod = zeros(NX,DAYS);
+	S_Lrg_p_prod = zeros(NX,DAYS);
+	S_Lrg_d_prod = zeros(NX,DAYS);
 
 	S_Sml_f_gamma = zeros(NX,DAYS);
 	S_Sml_p_gamma = zeros(NX,DAYS);

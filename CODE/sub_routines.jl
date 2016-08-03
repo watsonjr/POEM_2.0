@@ -30,7 +30,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 		#! encounter rates
 		#sub_enc(Tp,Tb,tdif,wgt,L,tu,pred,prey,td)
-		Sml_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_f.bio[JD],ENVR.Zm[JD],Sml_f.td[JD],1,1)
+		Sml_f.enc_zm[JD] = sub_encF(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_f.bio[JD],ENVR.Zm[JD],Sml_f.td[JD],1,1)
 		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD],1,1)
 		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],1,1)
 
