@@ -7,10 +7,33 @@ close all
 
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
+%
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_compQmort/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_compQmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_bioQmort/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_bioQmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF50/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF50/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF75/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF75/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_sameA/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_sameA/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_MFdiffA1/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_MFdiffA1/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_MFdiffA2/';
+% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_MFdiffA2/';
 
-cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10';
+cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 
@@ -20,7 +43,7 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 
 %s=7;
-for s=1:length(spots)
+for s=7%1:length(spots)
     %%
     close all
     loc = spots{s};
@@ -43,7 +66,7 @@ for s=1:length(spots)
     
     %% Plots over time
     x=1:length(SP);
-    y=x(1:6570)/365;
+    y=x(1:10950)/365;
     lstd=length(SP);
     
     
@@ -90,7 +113,7 @@ for s=1:length(spots)
     title('Adults')
     xlabel('Time (y)')
     ylabel('log10 Biomass (g m^-^2)')
-    print('-dpng',[fpath sname lname 'oneloc_pisc_time_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_pisc_time_30yr.png'])
     
     %% Planktivore
     figure(2)
@@ -118,7 +141,7 @@ for s=1:length(spots)
     xlabel('Time (y)')
     ylabel('log10 Biomass (g m^-^2)')
     
-    print('-dpng',[fpath sname lname 'oneloc_plan_time_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_plan_time_30yr.png'])
     
     %% Detritivore
     figure(3)
@@ -153,7 +176,7 @@ for s=1:length(spots)
     title('Adults')
     xlabel('Time (y)')
     ylabel('log10 Biomass (g m^-^2)')
-    print('-dpng',[fpath sname lname 'oneloc_detr_time_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_detr_time_30yr.png'])
     
     %% All biomass in subplots
     %SP
@@ -217,7 +240,7 @@ for s=1:length(spots)
     title('LD')
     xlabel('Time (y)')
     ylabel('log10 Biomass (g m^-^2)')
-    print('-dpng',[fpath sname lname 'oneloc_all_sizes_sub_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_sub_30yr.png'])
     
     %% All size classes of all
     
@@ -237,14 +260,14 @@ for s=1:length(spots)
     ylabel('log10 Biomass (g m^-^2)')
     title(['Spinup ' loc])
     stamp(cfile)
-    print('-dpng',[fpath sname lname 'oneloc_all_sizes_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_30yr.png'])
     
     %F starts to decrease at y=0.1699, d=62
     
     %% Reproduction
-    rep(1:6570,1)=MF(1:6570,1).*MF(1:6570,18);
-    rep(1:6570,2)=LD(1:6570,1).*LD(1:6570,18);
-    rep(1:6570,3)=LP(1:6570,1).*LP(1:6570,18);
+    rep(1:6570,1)=MF(1:6570,1).*MF(1:6570,30);
+    rep(1:6570,2)=LD(1:6570,1).*LD(1:6570,30);
+    rep(1:6570,3)=LP(1:6570,1).*LP(1:6570,30);
     
     figure(7)
     subplot(4,1,1)
@@ -276,7 +299,7 @@ for s=1:length(spots)
     title('Pelagic Piscivores')
     xlabel('Time (y)')
     ylabel('log10 Biomass (g m^-^2)')
-    print('-dpng',[fpath sname lname 'oneloc_rep_time_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_rep_time_30yr.png'])
     
     %% Maturation
     m(:,1)=MF(:,19);
@@ -318,7 +341,7 @@ for s=1:length(spots)
     title('L')
     xlabel('Time (y)')
     ylabel('Pelagic Piscivores')
-    print('-dpng',[fpath sname lname 'oneloc_matur_time_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_matur_time_30yr.png'])
     
     %% Predation mortality
     %SP
@@ -361,7 +384,7 @@ for s=1:length(spots)
     title('MD')
     xlabel('Time (y)')
     
-    print('-dpng',[fpath sname lname 'oneloc_all_sizes_pred_sub_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_pred_sub_30yr.png'])
     
     %% All consumption in subplots
     %SP
@@ -418,7 +441,7 @@ for s=1:length(spots)
     xlim([y(1) y(end)])
     title('LD')
     xlabel('Time (y)')
-    print('-dpng',[fpath sname lname 'oneloc_all_sizes_consump_sub_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_consump_sub_30yr.png'])
     
     %% Consumption per biomass
     %SP
@@ -470,6 +493,6 @@ for s=1:length(spots)
     xlim([y(1) y(end)])
     title('LD')
     xlabel('Time (y)')
-    print('-dpng',[fpath sname lname 'oneloc_all_sizes_conFPD_sub_18yr.png'])
+    print('-dpng',[fpath sname lname 'oneloc_all_sizes_conFPD_sub_30yr.png'])
 end
 

@@ -120,7 +120,7 @@ function sub_encF(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes with interaction
   #A = (exp(0.063*(temp-15.0)) * 10^(3.6) * wgt^(-0.37)) * (24e-3/9)
   #Encounter per predator, mult by biomass later
-  enc = prey*A*tprey*pref
+  enc = 2.0*prey*A*tprey*pref
   return enc
 end
 
