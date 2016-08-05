@@ -355,7 +355,7 @@ function Spinup_pristine()
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_forecast_NOTflipped.jld")
-	YEARS = 2 #50
+	YEARS = 50
   DAYS = 365
 
 	#! choose where and when to run the model

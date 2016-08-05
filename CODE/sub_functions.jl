@@ -114,13 +114,32 @@ function sub_encF(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # pref: preference for prey item
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
+  #A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes no interaction
   #A = (exp(0.063*(temp-15.0)) * 10^(3.4) * wgt^(-0.29)) * (24e-3/9)
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes with interaction
-  #A = (exp(0.063*(temp-15.0)) * 10^(3.6) * wgt^(-0.37)) * (24e-3/9)
+  A = (exp(0.063*(temp-15.0)) * 10^(3.6) * wgt^(-0.37)) * (24e-3/9)
   #Encounter per predator, mult by biomass later
-  enc = 2.0*prey*A*tprey*pref
+  enc = prey*A*tprey*pref
+  return enc
+end
+
+###!  Encounter rates All other fishes
+function sub_encP(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
+  # Tp: pelagic temp
+  # Tb: bottom temp
+  # wgt: ind weight of size class
+  # pred: pred biomass density,
+	# prey: prey biomass density,
+	# A: predator search rate,
+  # tpel: time spent in pelagic,
+	# tprey: time spent in area with that prey item.
+  # pref: preference for prey item
+  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
+  A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
+  #Encounter per predator, mult by biomass later
+  enc = prey*A*tprey*pref
   return enc
 end
 
@@ -397,12 +416,12 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
   # Tp: pelagic temp
   # Tb: bottom temp
   # tpel: frac pelagic time
-  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  #temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
   ### None
-  # nmort = 0.0
+  #nmort = 0.0
   ### Constant
-  #nmort = Nat_mrt
+  nmort = Nat_mrt
   db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
   bio_out =  bio_in + db
 end
@@ -421,8 +440,8 @@ function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
   # Tp: pelagic temp
   # Tb: bottom temp
   # tpel: frac pelagic time
-  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  #temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
   ### Higher predation on L by 2m predator, assume biomass = 0.1 * L bio
   # L = 2000.0;
   # M = 0.01 * (0.1*L)^3;
@@ -436,7 +455,7 @@ function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
   # Khp = 6.1e-2;
   # nmort = cmax * bio_in / (Khp + bio_in)
   ### Constant
-  #nmort = Nat_mrt
+  nmort = Nat_mrt
   db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
   bio_out =  bio_in + db
 end

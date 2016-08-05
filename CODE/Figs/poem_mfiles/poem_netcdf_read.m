@@ -23,13 +23,14 @@ SP.die = die;
 SP.egg = egg;
 SP.gamma = gamma;
 SP.nu = nu;
+SP.prod = prod;
 SP.rec = rec;
 SP.rep = rep;
 SP.S = S;
 SP.X = X;
 SP.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 %% SF
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_f.nc'],'NC_NOWRITE');
@@ -49,13 +50,14 @@ SF.die = die;
 SF.egg = egg;
 SF.gamma = gamma;
 SF.nu = nu;
+SF.prod = prod;
 SF.rec = rec;
 SF.rep = rep;
 SF.S = S;
 SF.X = X;
 SF.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 % SD
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_d.nc'],'NC_NOWRITE');
@@ -75,13 +77,14 @@ SD.die = die;
 SD.egg = egg;
 SD.gamma = gamma;
 SD.nu = nu;
+SD.prod = prod;
 SD.rec = rec;
 SD.rep = rep;
 SD.S = S;
 SD.X = X;
 SD.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 % MP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_med_p.nc'],'NC_NOWRITE');
@@ -101,13 +104,14 @@ MP.die = die;
 MP.egg = egg;
 MP.gamma = gamma;
 MP.nu = nu;
+MP.prod = prod;
 MP.rec = rec;
 MP.rep = rep;
 MP.S = S;
 MP.X = X;
 MP.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 % MF
 ncid = netcdf.open([fpath 'Data_spinup_pristine_med_f.nc'],'NC_NOWRITE');
@@ -127,13 +131,14 @@ MF.die = die;
 MF.egg = egg;
 MF.gamma = gamma;
 MF.nu = nu;
+MF.prod = prod;
 MF.rec = rec;
 MF.rep = rep;
 MF.S = S;
 MF.X = X;
 MF.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 % MD
 ncid = netcdf.open([fpath 'Data_spinup_pristine_med_d.nc'],'NC_NOWRITE');
@@ -153,13 +158,14 @@ MD.die = die;
 MD.egg = egg;
 MD.gamma = gamma;
 MD.nu = nu;
+MD.prod = prod;
 MD.rec = rec;
 MD.rep = rep;
 MD.S = S;
 MD.X = X;
 MD.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 % LP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_lrg_p.nc'],'NC_NOWRITE');
@@ -179,13 +185,14 @@ LP.die = die;
 LP.egg = egg;
 LP.gamma = gamma;
 LP.nu = nu;
+LP.prod = prod;
 LP.rec = rec;
 LP.rep = rep;
 LP.S = S;
 LP.X = X;
 LP.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 % LD
 ncid = netcdf.open([fpath 'Data_spinup_pristine_lrg_d.nc'],'NC_NOWRITE');
@@ -205,15 +212,16 @@ LD.die = die;
 LD.egg = egg;
 LD.gamma = gamma;
 LD.nu = nu;
+LD.prod = prod;
 LD.rec = rec;
 LD.rep = rep;
 LD.S = S;
 LD.X = X;
 LD.time = time;
 
-clear biomass clev con DD die egg gamma nu rec rep S X time
+clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 %
-save([fpath 'Data_spinup_pristine_fcrit10_Tmort_2yr.mat'])
+save([fpath 'Data_spinup_pristine_fcrit10_Tmort.mat'])
 
 
