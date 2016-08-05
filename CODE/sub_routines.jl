@@ -121,6 +121,24 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_p.die[JD] = Lrg_p.con_p[JD]*Lrg_p.bio[JD] + Lrg_d.con_p[JD]*Lrg_d.bio[JD]
 		Med_d.die[JD] = Lrg_p.con_d[JD]*Lrg_p.bio[JD] + Lrg_d.con_d[JD]*Lrg_d.bio[JD]
 
+		#! predation rates (m-2 d-1)
+		Sml_f.pred[JD] = Sml_f.die[JD] / Sml_f.bio[JD]
+		Sml_p.pred[JD] = Sml_p.die[JD] / Sml_p.bio[JD]
+		Sml_d.pred[JD] = Sml_d.die[JD] / Sml_d.bio[JD]
+		Med_f.pred[JD] = Med_f.die[JD] / Med_f.bio[JD]
+		Med_p.pred[JD] = Med_p.die[JD] / Med_p.bio[JD]
+		Med_d.pred[JD] = Med_d.die[JD] / Med_d.bio[JD]
+
+		#! natural mortality rates
+		Sml_f.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD])
+		Sml_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD])
+		Sml_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD])
+		Med_f.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD])
+		Med_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD])
+		Med_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD])
+		Lrg_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD])
+		Lrg_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD])
+
 		#! Degree days
 		Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0p[JD],Med_f.S[JD,:],DY)
 		Lrg_p.DD[JD] = sub_degday(Lrg_p.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],ENVR.T0p[JD],Lrg_p.S[JD,:],DY)
@@ -177,23 +195,23 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
 
 		Sml_f.bio[JD] = sub_update_fi(Sml_f.bio[JD],Sml_f.rec[JD],Sml_f.nu[JD],
-								   Sml_f.rep[JD],Sml_f.gamma[JD],Sml_f.die[JD],Sml_f.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD])
+								   Sml_f.rep[JD],Sml_f.gamma[JD],Sml_f.die[JD],Sml_f.egg[JD],Sml_f.nmort[JD])
 		Sml_p.bio[JD] = sub_update_fi(Sml_p.bio[JD],Sml_p.rec[JD],Sml_p.nu[JD],
-								   Sml_p.rep[JD],Sml_p.gamma[JD],Sml_p.die[JD],Sml_p.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD])
+								   Sml_p.rep[JD],Sml_p.gamma[JD],Sml_p.die[JD],Sml_p.egg[JD],Sml_p.nmort[JD])
 		Sml_d.bio[JD] = sub_update_fi(Sml_d.bio[JD],Sml_d.rec[JD],Sml_d.nu[JD],
-								   Sml_d.rep[JD],Sml_d.gamma[JD],Sml_d.die[JD],Sml_d.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD])
+								   Sml_d.rep[JD],Sml_d.gamma[JD],Sml_d.die[JD],Sml_d.egg[JD],Sml_d.nmort[JD])
 
 		Med_f.bio[JD] = sub_update_fi(Med_f.bio[JD],Med_f.rec[JD],Med_f.nu[JD],
-								   Med_f.rep[JD],Med_f.gamma[JD],Med_f.die[JD],Med_f.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD])
+								   Med_f.rep[JD],Med_f.gamma[JD],Med_f.die[JD],Med_f.egg[JD],Med_f.nmort[JD])
 		Med_p.bio[JD] = sub_update_fi(Med_p.bio[JD],Med_p.rec[JD],Med_p.nu[JD],
-								   Med_p.rep[JD],Med_p.gamma[JD],Med_p.die[JD],Med_p.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD])
+								   Med_p.rep[JD],Med_p.gamma[JD],Med_p.die[JD],Med_p.egg[JD],Med_p.nmort[JD])
 		Med_d.bio[JD] = sub_update_fi(Med_d.bio[JD],Med_d.rec[JD],Med_d.nu[JD],
-								   Med_d.rep[JD],Med_d.gamma[JD],Med_d.die[JD],Med_d.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD])
+								   Med_d.rep[JD],Med_d.gamma[JD],Med_d.die[JD],Med_d.egg[JD],Med_d.nmort[JD])
 
 		Lrg_p.bio[JD] = sub_update_lg(Lrg_p.bio[JD],Lrg_p.rec[JD],Lrg_p.nu[JD],
-								   Lrg_p.rep[JD],Lrg_p.gamma[JD],Lrg_p.die[JD],Lrg_p.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD])
+								   Lrg_p.rep[JD],Lrg_p.gamma[JD],Lrg_p.die[JD],Lrg_p.egg[JD],Lrg_p.nmort[JD])
 	 	Lrg_d.bio[JD] = sub_update_lg(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
-								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD])
+								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD],Lrg_d.nmort[JD])
 
 	end
 

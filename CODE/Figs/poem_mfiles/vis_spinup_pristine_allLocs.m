@@ -6,128 +6,131 @@
 clear all
 close all
 
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev1e4/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev1e4/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev4e4/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev4e4/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_flev8e4/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_flev8e4/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_NoWgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_NoWgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMetab_TrefO_1e4_HalfC/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMetab_TrefO_1e4_HalfC/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e4_C&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e4_C&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_4e4_C&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_4e4_C&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_8e4_C&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_8e4_C&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e5_C&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e5_C&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_C&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_Cmax_C&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoMet_TrefO_Cmax_C&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_NoAct_TrefO_1e6_noC&Mwgt/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MprefLZoverMZ/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MprefLZoverMZ/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFprefZ/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFprefZ/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit01/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit01/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFmet/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFmet/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_compQmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_compQmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_bioQmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_bioQmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF50/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF50/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF75/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF75/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_sameA/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_sameA/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1_Tmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1_Tmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Tmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Tmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Tmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Tmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_Fenc2x_Tmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_Fenc2x_Tmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Lmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Lmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Lmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Lmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit40/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit40/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05_Tmort/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05_Tmort/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc15/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc15/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc20/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc20/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc25/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc25/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc30/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc30/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc075/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc075/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc050/';
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc050/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/';
-% fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/';
+datap = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
+figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'fcrit10_MPenc050';
+% dpath = [datap 'NoPDc_NoAct_TrefO_flev1e4/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_flev1e4/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_flev4e4/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_flev4e4/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_flev8e4/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_flev8e4/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_1e4_NoWgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_1e4_NoWgt/'];
+% dpath = [datap 'NoPDc_NoMetab_TrefO_1e4/'];
+% fpath = [figp 'NoPDc_NoMetab_TrefO_1e4/'];
+% dpath = [datap 'NoPDc_NoMetab_TrefO_1e4_HalfC/'];
+% fpath = [figp 'NoPDc_NoMetab_TrefO_1e4_HalfC/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_1e4_C&Mwgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_1e4_C&Mwgt/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_4e4_C&Mwgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_4e4_C&Mwgt/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_8e4_C&Mwgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_8e4_C&Mwgt/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_1e5_C&Mwgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_1e5_C&Mwgt/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_1e6_C&Mwgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_1e6_C&Mwgt/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_Cmax_C&Mwgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_Cmax_C&Mwgt/'];
+% dpath = [datap 'NoPDc_NoMet_TrefO_Cmax_C&Mwgt/'];
+% fpath = [figp 'NoPDc_NoMet_TrefO_Cmax_C&Mwgt/'];
+% dpath = [datap 'NoPDc_NoAct_TrefO_1e6_noC&Mwgt/'];
+% fpath = [figp 'NoPDc_NoAct_TrefO_1e6_noC&Mwgt/'];
+% dpath = [datap 'NoPDc_TrefO_KHparams_cmax-metab/'];
+% fpath = [figp 'NoPDc_TrefO_KHparams_cmax-metab/'];
+% dpath = [datap 'NoPDc_TrefO_KHparams_cmax-metab_MFeatS/'];
+% fpath = [figp 'NoPDc_TrefO_KHparams_cmax-metab_MFeatS/'];
+% dpath = [datap 'NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/'];
+% fpath = [figp 'NoPDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeatS_MeatMZ/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MprefLZoverMZ/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MprefLZoverMZ/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFprefZ/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFprefZ/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit01/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit01/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFmet/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFmet/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_compQmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_compQmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_bioQmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_bioQmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF50/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF50/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF75/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LencF75/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_sameA/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_sameA/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA1_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_Fenc2x_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_Fenc2x_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Lmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Lmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Lmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Lmort/'];
+dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
+fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit40/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit40/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc15/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc15/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc20/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc20/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc25/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc25/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc30/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc30/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc075/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc075/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc050/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc050/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/'];
+
+cfile = 'MFeqMP_fcrit05';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -182,6 +185,9 @@ Dcon = Psum;
 Prep = Fsum;
 Frep = Fsum;
 Drep = Fsum;
+Pmet = Psum;
+Fmet = Fsum;
+Dmet = Psum;
 all_mean=NaN*ones(3,3,length(spots));
 z = NaN*ones(length(spots),3);
 
@@ -199,15 +205,6 @@ for s=1:length(spots)
     LP = csvread([dpath sname lname 'Lrg_p.csv']);
     LD = csvread([dpath sname lname 'Lrg_d.csv']);
     C = csvread([dpath sname lname 'Cobalt.csv']);
-    
-    %% Plots over time
-    x=1:length(SP);
-    y=x/365;
-    lstd=length(SP);
-    id1 = 0:365:(lstd-1);
-    id2 = 365:365:(lstd);
-    ID  = [id1 id2];
-    
     
     %% Final mean biomass in each size
     t=1:length(SP);
@@ -641,6 +638,88 @@ for s=1:length(spots)
         stamp(cfile)
     end
     
+    %% Metabolism
+    SP_met=nanmean(SP(lyr,15));
+    SF_met=nanmean(SF(lyr,15));
+    SD_met=nanmean(SD(lyr,15));
+    MP_met=nanmean(MP(lyr,15));
+    MF_met=nanmean(MF(lyr,15));
+    MD_met=nanmean(MD(lyr,15));
+    LP_met=nanmean(LP(lyr,15));
+    LD_met=nanmean(LD(lyr,15));
+    
+    P_met=[SP_met;MP_met;LP_met];
+    F_met=[SF_met;MF_met];
+    D_met=[SD_met;MD_met;LD_met];
+    
+    Pmet(:,s) = P_met;
+    Fmet(:,s) = F_met;
+    Dmet(:,s) = D_met;
+    
+    f10 = figure(10);
+    subplot(1,3,1)
+    plot(s-0.25,F_met(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,P_met(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,D_met(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha1=gca;
+        for n=1:7
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean growth rate (g g^-^1 d^-^1) in final year')
+    title('S')
+    
+    subplot(1,3,2)
+    plot(s-0.25,(F_met(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,(P_met(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,(D_met(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha2=gca;
+        for n=1:7
+            text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean growth/repro rate (g g^-^1 d^-^1) in final year')
+    title('M')
+    
+    subplot(1,3,3)
+    plot(s,(P_met(3)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,(D_met(3)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha3=gca;
+        for n=1:7
+            text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean repro rate (g g^-^1 d^-^1) in final year')
+    title('L')
+    if (s==3)
+        stamp(cfile)
+    end
+    
     
 end
 print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass.png'])
@@ -653,16 +732,17 @@ print(f6,'-dpng',[fpath sname sname2 'All_oneloc_size_spec_sub.png'])
 print(f7,'-dpng',[fpath sname sname2 'All_oneloc_size_spec.png'])
 print(f8,'-dpng',[fpath sname sname2 'All_oneloc_prod.png'])
 print(f9,'-dpng',[fpath sname sname2 'All_oneloc_rep.png'])
+print(f10,'-dpng',[fpath sname sname2 'All_oneloc_met.png'])
 
 save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
     'Dsum','Pmean','Fmean','Dmean','all_mean',...
     'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
-    'Prep','Frep','Drep');
+    'Prep','Frep','Drep','Pmet','Fmet','Dmet');
 
 %% Sum mean biom over stages
 sumspec = squeeze(nansum(nansum(all_mean)));
 
-figure(10);
+figure(11);
 subplot(2,1,1)
 plot(1:7,log10(sumspec),'k.','MarkerSize',25); hold on;
 xlim([0 8])
@@ -686,7 +766,7 @@ stamp(cfile)
 print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
 
 %% All on one
-figure(11)
+figure(12)
 subplot(2,2,1)
 bar(log(Fmean))
 xlim([0 4])

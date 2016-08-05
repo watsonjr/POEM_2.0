@@ -396,52 +396,44 @@ function sub_nmort(Tp,Tb,tpel)
   #Tp: pelagic temp
   #Tb: bottom temp
   #tpel: frac pelagic time
-  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  if (MORT==0) # None
+    nmort = 0.0
+  end
+  if (MORT==1) # Constant
+    nmort = Nat_mrt
+  end
+  if (MORT==2) # Temperature-dependent mortality
+    temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+    nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  end
   return nmort
 end
 
 
 ###! Update biomass
-function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
+function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg,nmort)
 	# all inputs except rec are in g g-1 d-1; rec is g d-1
 	# rec = rep from smaller size class = TOTAL biomass gained from recruitment
 	# grw = nu = somatic energy for growth within size class
   # store = egg = energy stored for later egg production
 	# rep = rep =  energy lost to egg production
 	# mat = gamma = energy lost to maturation to larger size class
-	# Nat_mrt = natural mortality
+	# nmort = natural mortality
 	# die = predator mort = biomass lost to predation
-  ### Temperature-dependent mortality
-  # Tp: pelagic temp
-  # Tb: bottom temp
-  # tpel: frac pelagic time
-  #temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
-  ### None
-  #nmort = 0.0
-  ### Constant
-  nmort = Nat_mrt
   db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
   bio_out =  bio_in + db
 end
 
 ###! Update biomass
-function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
+function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,nmort)
 	# all inputs except rec are in g g-1 d-1; rec is g d-1
 	# rec = rep from smaller size class = TOTAL biomass gained from recruitment
 	# grw = nu = somatic energy for growth within size class
   # store = egg = energy stored for later egg production
 	# rep = rep =  energy lost to egg production
 	# mat = gamma = energy lost to maturation to larger size class
-	# Nat_mrt = natural mortality
+	# nmort = natural mortality
 	# die = predator mort = biomass lost to predation
-  ### Temperature-dependent mortality
-  # Tp: pelagic temp
-  # Tb: bottom temp
-  # tpel: frac pelagic time
-  #temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
   ### Higher predation on L by 2m predator, assume biomass = 0.1 * L bio
   # L = 2000.0;
   # M = 0.01 * (0.1*L)^3;
@@ -450,12 +442,10 @@ function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,Tp,Tb,tpel)
   # cmax = exp(0.063*(temp-15.0)) * 2.5 .* M^(-0.51) * 24e-3
   # con = cmax * enc / (cmax + enc)
   # nmort = con * 0.1 * bio_in
-  ## simplified
+  ### Simplified
   # cmax = exp(0.063*(temp-15.0)) * 2.5 .* M^(-0.51) * 24e-3
   # Khp = 6.1e-2;
   # nmort = cmax * bio_in / (Khp + bio_in)
-  ### Constant
-  nmort = Nat_mrt
   db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
   bio_out =  bio_in + db
 end

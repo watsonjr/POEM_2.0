@@ -11,8 +11,10 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
 % dpath = '/Volumes/GFDL/NC/fcrit10/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-dpath = '/Volumes/GFDL/NC/Tmort/';
-ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+% dpath = '/Volumes/GFDL/NC/Tmort/';
+% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+dpath='/Volumes/GFDL/NC/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
+ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
 
 cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort';
 
@@ -68,7 +70,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SP.png'])
 
-%% sf
+% sf
 figure(2)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Zsf)); hold on;
@@ -82,7 +84,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SF.png'])
 
-%% sd
+% sd
 figure(3)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Zsd)); hold on;
@@ -96,7 +98,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SD.png'])
 
-%% mp
+% mp
 figure(4)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(Zmp))); hold on;
@@ -110,7 +112,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MP.png'])
 
-%% mf
+% mf
 figure(5)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Zmf)); hold on;
@@ -126,7 +128,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MF.png'])
 
-%% md
+% md
 figure(6)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Zmd)); hold on;
@@ -140,7 +142,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MD.png'])
 
-%% lp
+% lp
 figure(7)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Zlp)); hold on;
@@ -155,7 +157,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LP.png'])
 
-%% ld
+% ld
 figure(8)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Zld)); hold on;
@@ -171,134 +173,144 @@ stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LD.png'])
 
 %% Production
-% SP_prod=nanmean(SP.prod(:,lyr),2);
-% SF_prod=nanmean(SF.prod(:,lyr),2);
-% SD_prod=nanmean(SD.prod(:,lyr),2);
-% MP_prod=nanmean(MP.prod(:,lyr),2);
-% MF_prod=nanmean(MF.prod(:,lyr),2);
-% MD_prod=nanmean(MD.prod(:,lyr),2);
-% LP_prod=nanmean(LP.prod(:,lyr),2);
-% LD_prod=nanmean(LD.prod(:,lyr),2);
-% 
-% %%
-% Psp=griddata(grid(:,2),grid(:,3),SP_prod,X,Y);
-% Psf=griddata(grid(:,2),grid(:,3),SF_prod,X,Y);
-% Psd=griddata(grid(:,2),grid(:,3),SD_prod,X,Y);
-% Pmp=griddata(grid(:,2),grid(:,3),MP_prod,X,Y);
-% Pmf=griddata(grid(:,2),grid(:,3),MF_prod,X,Y);
-% Pmd=griddata(grid(:,2),grid(:,3),MD_prod,X,Y);
-% Plp=griddata(grid(:,2),grid(:,3),LP_prod,X,Y);
-% Pld=griddata(grid(:,2),grid(:,3),LD_prod,X,Y);
-% 
-% %% sp
-% figure(11)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,log10(Psp)); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Larval P production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_prod_SP.png'])
-% 
-% % sf
-% figure(12)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,log10(Psf)); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Larval F production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_prod_SF.png'])
-% 
-% % sd
-% figure(13)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,log10(Psd)); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Larval D production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_prod_SD.png'])
-% 
-% % mp
-% figure(14)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,log10(Pmp)); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Juvenile P production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_prod_MP.png'])
-% 
-% % mf
-% figure(15)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,log10(Pmf)); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Adult F production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_prod_MF.png'])
-% 
-% % md
-% figure(16)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,log10(Pmd)); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Juvenile D production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_prod_MD.png'])
-% 
-% %% lp
-% figure(17)
-% stamp(cfile)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,real(log10(Plp))); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Adult P production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% print('-dpng',[ppath 'Spinup_global_prod_LP.png'])
-% 
-% % ld
-% figure(18)
-% stamp(cfile)
-% m_proj('miller','lat',82);
-% m_pcolor(X,Y,log10(Pld)); hold on;
-% shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-% title('log10 mean Adult D production (g g^-^1 m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-4 -2])
-% print('-dpng',[ppath 'Spinup_global_prod_LD.png'])
-% 
+SP_prod=nanmean(SP.prod(:,lyr),2);
+SF_prod=nanmean(SF.prod(:,lyr),2);
+SD_prod=nanmean(SD.prod(:,lyr),2);
+MP_prod=nanmean(MP.prod(:,lyr),2);
+MF_prod=nanmean(MF.prod(:,lyr),2);
+MD_prod=nanmean(MD.prod(:,lyr),2);
+LP_prod=nanmean(LP.prod(:,lyr),2);
+LD_prod=nanmean(LD.prod(:,lyr),2);
+
+%
+Psp=griddata(grid(:,2),grid(:,3),SP_prod,X,Y);
+Psf=griddata(grid(:,2),grid(:,3),SF_prod,X,Y);
+Psd=griddata(grid(:,2),grid(:,3),SD_prod,X,Y);
+Pmp=griddata(grid(:,2),grid(:,3),MP_prod,X,Y);
+Pmf=griddata(grid(:,2),grid(:,3),MF_prod,X,Y);
+Pmd=griddata(grid(:,2),grid(:,3),MD_prod,X,Y);
+Plp=griddata(grid(:,2),grid(:,3),LP_prod,X,Y);
+Pld=griddata(grid(:,2),grid(:,3),LD_prod,X,Y);
+
+%%
+Psp(Psp<=0)=NaN;
+Psf(Psf<=0)=NaN;
+Psd(Psd<=0)=NaN;
+Pmp(Pmp<=0)=NaN;
+Pmf(Pmf<=0)=NaN;
+Pmd(Pmd<=0)=NaN;
+Plp(Plp<=0)=NaN;
+Pld(Pld<=0)=NaN;
+
+%% sp
+figure(11)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,log10(Psp)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Larval P production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_SP.png'])
+
+% sf
+figure(12)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,log10(Psf)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Larval F production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_SF.png'])
+
+% sd
+figure(13)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,log10(Psd)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Larval D production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_SD.png'])
+
+% mp
+figure(14)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,log10(Pmp)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Juvenile P production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_MP.png'])
+
+% mf
+figure(15)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,log10(Pmf)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Adult F production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_MF.png'])
+
+%% md
+figure(16)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,log10(Pmd)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Juvenile D production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_prod_MD.png'])
+
+%% lp
+figure(17)
+stamp(cfile)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(Plp))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Adult P production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+print('-dpng',[ppath 'Spinup_global_prod_LP.png'])
+
+% ld
+figure(18)
+stamp(cfile)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,log10(Pld)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean Adult D production (g g^-^1 m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 -2])
+print('-dpng',[ppath 'Spinup_global_prod_LD.png'])
+
