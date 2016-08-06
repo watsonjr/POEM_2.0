@@ -142,7 +142,7 @@ spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
 stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
-    'rec','egg','clev','DD','S','prod'};
+    'rec','egg','clev','DD','S','prod','pred','nmort','met'};
 cols=cols';
 
 load('cmap_ppt_angles.mat')
