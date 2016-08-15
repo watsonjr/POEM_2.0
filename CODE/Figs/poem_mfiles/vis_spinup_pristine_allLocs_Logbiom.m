@@ -13,7 +13,7 @@ close all
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/';
@@ -46,10 +46,12 @@ dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHpar
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc075/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc050/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/';
 
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-cfile = 'MFeqMP_fcrit10_Tmort';
+cfile = 'MFeqMP_fcrit10_cann_Tmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -57,7 +59,7 @@ sname2 = '';
 
 load([dpath sname sname2 'consump.mat'],'mclev','Zcon');
 
-spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP'};
+spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
 stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
@@ -146,12 +148,12 @@ for s=1:length(spots)
     plot(s+0.25,Dmort(1,s),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
-        plot(0:8,AB(1)*ones(9,1),'--k'); hold on;
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
+        plot(0:10,AB(1)*ones(11,1),'--k'); hold on;
         ha1=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -168,12 +170,12 @@ for s=1:length(spots)
     plot(s+0.25,(Dmort(2,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
-        plot(0:8,AB(2)*ones(9,1),'--k'); hold on;
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
+        plot(0:10,AB(2)*ones(11,1),'--k'); hold on;
         ha2=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -186,7 +188,7 @@ chour=num2str(time(4));
 cmin=num2str(time(5));
 cstring=[strrep(cfile,'_','\_'),' ', date, ' ', chour,':',cmin];
 subplot(1,2,2)
-text(7,5,cstring,'Rotation',270)
+text(11,0.01,cstring,'Rotation',270,'HorizontalAlignment','center')
 print(f11,'-dpng',[fpath sname sname2 'All_oneloc_mort_comp' cfile '.png'])
 
 

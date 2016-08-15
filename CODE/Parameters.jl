@@ -133,7 +133,7 @@ function make_parameters(harv)
 	#Andersen & Beyer 2013 = 0.35 * 4.5 * s^(-0.25) (includes predation, excludes fishing)
 	const global Nat_mrt = 0.44 / 365
 	#0=none, 1=constant, 2=temp-dep
-	const global MORT = 1
+	const global MORT = 2
 
 	###! Diet Preference Phi (j = prey, i = pred)
 	# The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
@@ -156,10 +156,10 @@ function make_parameters(harv)
 	const global MP_phi_S = 1.0
   const global LP_phi_MF = 1.0
 	const global LD_phi_MF = 1.0
-	const global LP_phi_MP = 0.5
+	const global LP_phi_MP = 1.0
 	const global LD_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
-	const global LD_phi_MD = 0.5
+	const global LD_phi_MD = 1.0
 
 	#-----
 end
