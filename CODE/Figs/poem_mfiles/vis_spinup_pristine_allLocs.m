@@ -63,8 +63,8 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
-% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/'];
-% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/'];
+dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/'];
+fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/'];
@@ -103,10 +103,12 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA1_Lmort/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Lmort/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Lmort/'];
-dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
-fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit15/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit15/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30/'];
@@ -130,7 +132,7 @@ fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/'];
 
-cfile = 'MFeqMP_fcrit05';
+cfile = 'MFeqMP_fcrit10_Tmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -188,6 +190,12 @@ Drep = Fsum;
 Pmet = Psum;
 Fmet = Fsum;
 Dmet = Psum;
+Ppred = Psum;
+Fpred = Fsum;
+Dpred = Psum;
+Pnat = Psum;
+Fnat = Fsum;
+Dnat = Psum;
 all_mean=NaN*ones(3,3,length(spots));
 z = NaN*ones(length(spots),3);
 
@@ -639,14 +647,14 @@ for s=1:length(spots)
     end
     
     %% Metabolism
-    SP_met=nanmean(SP(lyr,15));
-    SF_met=nanmean(SF(lyr,15));
-    SD_met=nanmean(SD(lyr,15));
-    MP_met=nanmean(MP(lyr,15));
-    MF_met=nanmean(MF(lyr,15));
-    MD_met=nanmean(MD(lyr,15));
-    LP_met=nanmean(LP(lyr,15));
-    LD_met=nanmean(LD(lyr,15));
+    SP_met=nanmean(SP(lyr,27));
+    SF_met=nanmean(SF(lyr,27));
+    SD_met=nanmean(SD(lyr,27));
+    MP_met=nanmean(MP(lyr,27));
+    MF_met=nanmean(MF(lyr,27));
+    MD_met=nanmean(MD(lyr,27));
+    LP_met=nanmean(LP(lyr,27));
+    LD_met=nanmean(LD(lyr,27));
     
     P_met=[SP_met;MP_met;LP_met];
     F_met=[SF_met;MF_met];
@@ -675,7 +683,7 @@ for s=1:length(spots)
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
-    ylabel('Mean growth rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean metabolism (g g^-^1 d^-^1) in final year')
     title('S')
     
     subplot(1,3,2)
@@ -696,7 +704,7 @@ for s=1:length(spots)
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
-    ylabel('Mean growth/repro rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean metabolism (g g^-^1 d^-^1) in final year')
     title('M')
     
     subplot(1,3,3)
@@ -714,12 +722,85 @@ for s=1:length(spots)
             text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
         end
     end
-    ylabel('Mean repro rate (g g^-^1 d^-^1) in final year')
+    ylabel('Mean metabolism (g g^-^1 d^-^1) in final year')
     title('L')
     if (s==3)
         stamp(cfile)
     end
     
+    %% Predation
+    SP_pred=nanmean(SP(lyr,25));
+    SF_pred=nanmean(SF(lyr,25));
+    SD_pred=nanmean(SD(lyr,25));
+    MP_pred=nanmean(MP(lyr,25));
+    MF_pred=nanmean(MF(lyr,25));
+    MD_pred=nanmean(MD(lyr,25));
+    LP_pred=nanmean(LP(lyr,25));
+    LD_pred=nanmean(LD(lyr,25));
+    
+    P_pred=[SP_pred;MP_pred;LP_pred];
+    F_pred=[SF_pred;MF_pred];
+    D_pred=[SD_pred;MD_pred;LD_pred];
+    
+    Ppred(:,s) = P_pred;
+    Fpred(:,s) = F_pred;
+    Dpred(:,s) = D_pred;
+    
+    f11 = figure(11);
+    subplot(1,2,1)
+    plot(s-0.25,F_pred(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,P_pred(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,D_pred(1),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha1=gca;
+        for n=1:7
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean predation rate (d^-^1) in final year')
+    title('S')
+    
+    subplot(1,2,2)
+    plot(s-0.25,(F_pred(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,(P_pred(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,(D_pred(2)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        ha2=gca;
+        for n=1:7
+            text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean predation rate (d^-^1) in final year')
+    title('M')
+    if (s==3)
+        stamp(cfile)
+    end
+    
+    %% Natural mortality
+    Pnat(1,s)=nanmean(SP(lyr,26));
+    Fnat(1,s)=nanmean(SF(lyr,26));
+    Dnat(1,s)=nanmean(SD(lyr,26));
+    Pnat(2,s)=nanmean(MP(lyr,26));
+    Fnat(2,s)=nanmean(MF(lyr,26));
+    Dnat(2,s)=nanmean(MD(lyr,26));
+    Pnat(3,s)=nanmean(LP(lyr,26));
+    Dnat(3,s)=nanmean(LD(lyr,26));
     
 end
 print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass.png'])
@@ -733,16 +814,18 @@ print(f7,'-dpng',[fpath sname sname2 'All_oneloc_size_spec.png'])
 print(f8,'-dpng',[fpath sname sname2 'All_oneloc_prod.png'])
 print(f9,'-dpng',[fpath sname sname2 'All_oneloc_rep.png'])
 print(f10,'-dpng',[fpath sname sname2 'All_oneloc_met.png'])
+print(f11,'-dpng',[fpath sname sname2 'All_oneloc_pred.png'])
 
 save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
     'Dsum','Pmean','Fmean','Dmean','all_mean',...
     'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
-    'Prep','Frep','Drep','Pmet','Fmet','Dmet');
+    'Prep','Frep','Drep','Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
+    'Pnat','Fnat','Dnat');
 
 %% Sum mean biom over stages
 sumspec = squeeze(nansum(nansum(all_mean)));
 
-figure(11);
+figure(12);
 subplot(2,1,1)
 plot(1:7,log10(sumspec),'k.','MarkerSize',25); hold on;
 xlim([0 8])
@@ -766,7 +849,7 @@ stamp(cfile)
 print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
 
 %% All on one
-figure(12)
+figure(13)
 subplot(2,2,1)
 bar(log(Fmean))
 xlim([0 4])

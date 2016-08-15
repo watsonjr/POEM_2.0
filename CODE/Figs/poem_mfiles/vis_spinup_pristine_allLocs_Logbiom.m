@@ -13,7 +13,7 @@ close all
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/';
-% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_simpQmort/';
@@ -49,7 +49,7 @@ close all
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'fcrit10_MFenc15';
+cfile = 'MFeqMP_fcrit10_Tmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -115,9 +115,79 @@ subplot(3,3,6)
 text(7,5,cstring,'Rotation',270)
 print(f21,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass_axes' cfile '.png'])
 
+%% Predation
+%model lengths
+L(1) = 10^((log10(2)+log10(20))/2);
+L(2) = 10^((log10(20)+log10(200))/2);
+L(3) = 10^((log10(200)+log10(2000))/2);
+%model mass in grams
+M = 0.01 .* (0.1.*L).^3;
+%Andersen & Beyer mortality rate per year (natural + predation)
+%physiol mort * growth constant * M^-0.25
+AB = (0.35 .* 4.5 .* M.^(-0.25)) ./365;
 
+Fmort = Fpred + Fnat;
+Pmort = Ppred + Pnat;
+Dmort = Dpred + Dnat;
 
+f11 = figure(11);
+for s=1:length(spots)
+    
+    loc = spots{s};
+    lname = [sname2 loc '_'];
+    
+    subplot(1,2,1)
+    plot(s-0.25,Fmort(1,s),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,Pmort(1,s),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,Dmort(1,s),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        plot(0:8,AB(1)*ones(9,1),'--k'); hold on;
+        ha1=gca;
+        for n=1:7
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean mortality rate (d^-^1) in final year')
+    title('S')
+    
+    subplot(1,2,2)
+    plot(s-0.25,(Fmort(2,s)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(s,(Pmort(2,s)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(s+0.25,(Dmort(2,s)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 8])
+    set(gca,'XTick',1:7,'XTickLabel',[])
+    if(s==7)
+        plot(0:8,AB(2)*ones(9,1),'--k'); hold on;
+        ha2=gca;
+        for n=1:7
+            text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    ylabel('Mean mortality rate (d^-^1) in final year')
+    title('M')
 
+end
+time=clock;
+chour=num2str(time(4));
+cmin=num2str(time(5));
+cstring=[strrep(cfile,'_','\_'),' ', date, ' ', chour,':',cmin];
+subplot(1,2,2)
+text(7,5,cstring,'Rotation',270)
+print(f11,'-dpng',[fpath sname sname2 'All_oneloc_mort_comp' cfile '.png'])
 
 
 

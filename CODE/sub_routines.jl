@@ -36,14 +36,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 		Med_f.enc_zm[JD] = sub_encF(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zm[JD],Med_f.td[JD],1,MF_phi_MZ)
 		Med_f.enc_zl[JD] = sub_encF(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD],1,MF_phi_LZ)
-		Med_f.enc_f[JD]  = sub_encF(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_f.bio[JD],Med_f.td[JD],1,MF_phi_S)
+		Med_f.enc_f[JD]  = sub_encF(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_f.bio[JD],Med_f.td[JD],1,0.5)
 		Med_f.enc_p[JD]  = sub_encF(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_p.bio[JD],Med_f.td[JD],1,MF_phi_S)
 		Med_f.enc_d[JD]  = sub_encF(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_d.bio[JD],Med_f.td[JD],1,MF_phi_S)
 
 		Med_p.enc_zm[JD] = sub_encP(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],ENVR.Zm[JD],Med_p.td[JD],1,MP_phi_MZ)
 		Med_p.enc_zl[JD] = sub_encP(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],ENVR.Zl[JD],Med_p.td[JD],1,MP_phi_LZ)
 		Med_p.enc_f[JD]  = sub_encP(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_f.bio[JD],Med_p.td[JD],1,MP_phi_S)
-		Med_p.enc_p[JD]  = sub_encP(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD],1,MP_phi_S)
+		Med_p.enc_p[JD]  = sub_encP(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD],1,0.5)
 		Med_p.enc_d[JD]  = sub_encP(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_d.bio[JD],Med_p.td[JD],1,MP_phi_S)
 
 		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_d.bio[JD],BENT.mass[JD],Med_d.td[JD],1,1)

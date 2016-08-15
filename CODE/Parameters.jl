@@ -156,10 +156,10 @@ function make_parameters(harv)
 	const global MP_phi_S = 1.0
   const global LP_phi_MF = 1.0
 	const global LD_phi_MF = 1.0
-	const global LP_phi_MP = 1.0
+	const global LP_phi_MP = 0.5
 	const global LD_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
-	const global LD_phi_MD = 1.0
+	const global LD_phi_MD = 0.5
 
 	#-----
 end

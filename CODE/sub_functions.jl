@@ -114,11 +114,11 @@ function sub_encF(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # pref: preference for prey item
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  #A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
+  A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes no interaction
   #A = (exp(0.063*(temp-15.0)) * 10^(3.4) * wgt^(-0.29)) * (24e-3/9)
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes with interaction
-  A = (exp(0.063*(temp-15.0)) * 10^(3.6) * wgt^(-0.37)) * (24e-3/9)
+  #A = (exp(0.063*(temp-15.0)) * 10^(3.6) * wgt^(-0.37)) * (24e-3/9)
   #Encounter per predator, mult by biomass later
   enc = prey*A*tprey*pref
   return enc
