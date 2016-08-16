@@ -47,11 +47,13 @@ close all
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc050/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/';
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann/';
-dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/';
+% dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann/';
+dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann_Tmort/';
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-cfile = 'MFeqMP_fcrit10_cann_Tmort';
+cfile = 'MFeqMP_fcrit10_Scann_Tmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -99,8 +101,10 @@ for s=1:length(spots)
         ylim([-20 2])
     elseif (s==6)
         ylim([-20 2])
-    else
+    elseif (s==7)
         ylim([-150 2])
+    else
+        ylim([-20 2])
     end
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
     if (s==4)

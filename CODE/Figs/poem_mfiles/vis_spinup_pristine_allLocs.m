@@ -133,10 +133,14 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc025/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann/'];
-dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/'];
-fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann/'];
+dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann_Tmort/'];
+fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann_Tmort/'];
 
-cfile = 'MFeqMP_fcrit10_cann_Tmort';
+cfile = 'MFeqMP_fcrit10_Scann_Tmort';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -351,12 +355,11 @@ for s=1:length(spots)
     plot(s+0.25,D_mgr(1),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-0.1 0.1])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha1=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -373,12 +376,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_mgr(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-2 5])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha2=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -392,12 +394,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_mgr(3)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-2 7])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha3=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -497,7 +498,7 @@ for s=1:length(spots)
     xlim([0 6])
     %ylim([-25 15])
     set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
-    if (s==7)
+    if (s==9)
         legend(spots)
         legend('location','northwest')
     end
@@ -536,12 +537,11 @@ for s=1:length(spots)
     plot(s+0.25,D_prod(1),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-0.1 0.1])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha1=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -558,12 +558,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_prod(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-2 5])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha2=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -577,12 +576,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_prod(3)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-2 7])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha3=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -615,12 +613,11 @@ for s=1:length(spots)
     plot(s+0.25,D_rep(1),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-0.1 0.1])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha1=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -636,12 +633,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_rep(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    %ylim([-2 5])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha2=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -679,11 +675,11 @@ for s=1:length(spots)
     plot(s+0.25,D_met(1),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha1=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -700,11 +696,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_met(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha2=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -718,11 +714,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_met(3)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha3=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -761,11 +757,11 @@ for s=1:length(spots)
     plot(s+0.25,D_pred(1),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha1=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -782,11 +778,11 @@ for s=1:length(spots)
     plot(s+0.25,(D_pred(2)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    xlim([0 8])
-    set(gca,'XTick',1:7,'XTickLabel',[])
-    if(s==7)
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==9)
         ha2=gca;
-        for n=1:7
+        for n=1:9
             text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
         end
     end
@@ -831,21 +827,21 @@ sumspec = squeeze(nansum(nansum(all_mean)));
 
 figure(12);
 subplot(2,1,1)
-plot(1:7,log10(sumspec),'k.','MarkerSize',25); hold on;
-xlim([0 8])
+plot(1:9,log10(sumspec),'k.','MarkerSize',25); hold on;
+xlim([0 10])
 %ylim([-2 1])
-set(gca,'XTick',1:7,'XTickLabel',[])
-for n=1:7
+set(gca,'XTick',1:9,'XTickLabel',[])
+for n=1:9
     text(n,-0.6,spots{n},'HorizontalAlignment','center')
 end
 ylabel('log10 Mean Biom (g m^-^2) in final year')
 title('All fishes and stages')
 
 subplot(2,1,2)
-plot(1:7,(sumspec),'k.','MarkerSize',25); hold on;
-xlim([0 8])
-set(gca,'XTick',1:7,'XTickLabel',[])
-for n=1:7
+plot(1:9,(sumspec),'k.','MarkerSize',25); hold on;
+xlim([0 10])
+set(gca,'XTick',1:9,'XTickLabel',[])
+for n=1:9
     text(n,-1,spots{n},'HorizontalAlignment','center')
 end
 ylabel('Mean Biom (g m^-^2) in final year')

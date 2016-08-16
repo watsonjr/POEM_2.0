@@ -85,6 +85,59 @@ ID = reshape(ID,size(Z))
 id = find(Z.>0)
 IND = zeros(size(Z))
 IND[id] = collect(1:length(id))
+SUB = Array(Any,(length(id)))
+
+
+for i=1:length(id) #i in collect(1:length(id))
+	#! indexes
+	sub = ind2sub(ID, id[i])
+	up = collect(sub) ; down = collect(sub) ; left = collect(sub) ; right = collect(sub)
+	up[2] = up[2] + 1
+	down[2] = down[2] - 1
+	right[1] = right[1] + 1
+	left[1] = left[1] - 1
+
+	#! boundaries
+	if left[1]==0
+		left[1] = 360
+	end
+	if right[1]==361
+		right[1] = 1
+	end
+	if up[2]==201
+		up[1] = 360 - up[1] + 1 #tripolar N pole
+		up[2] = 200
+	end
+	if down[2]==0
+		down[2] = 1
+	end
+
+	#! get indexes of cardinal cells accounting for land
+	id_m = IND[sub[1],sub[2]]
+	if Z[up[1],up[2]] == 0.0
+		id_up = IND[sub[1],sub[2]]
+	else
+		id_up = IND[up[1],up[2]]
+	end
+	if Z[down[1],down[2]] == 0.0
+		id_dw = IND[sub[1],sub[2]]
+	else
+		id_dw = IND[down[1],down[2]]
+	end
+	if Z[left[1],left[2]] == 0.0
+		id_lf = IND[sub[1],sub[2]]
+	else
+		id_lf = IND[left[1],left[2]]
+	end
+	if Z[right[1],right[2]] == 0.0
+		id_rt = IND[sub[1],sub[2]]
+	else
+		id_rt = IND[right[1],right[2]]
+	end
+
+	#! store
+	SUB[i] = round(Int64,[id_m,id_up,id_dw,id_lf,id_rt])
+end
 
 
 #! retain only water cells
@@ -103,4 +156,4 @@ lmask = lmask[ID];
 
 #! save
 save("./Data_grid_hindcast_NOTflipped.jld", "TIME",TIME,"LAT",LAT,"LON",LON,"Z",Z,"AREA",AREA,
-		"Pr",Pr,"ID",ID,"N",length(ID),"dxtn",dxtn,"dyte",dyte,"datr",datr,"lmask",lmask);
+		"Pr",Pr,"ID",ID,"N",length(ID),"dxtn",dxtn,"dyte",dyte,"datr",datr,"lmask",lmask,"Neigh",SUB);

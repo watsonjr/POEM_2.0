@@ -3,24 +3,25 @@
 % 30 years
 % Saved as mat files
 
-%clear all
+clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-% dpath = '/Volumes/GFDL/NC/fcrit05/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4/';
-% dpath = '/Volumes/GFDL/NC/fcrit10/';
+dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit05/';
+ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit05/';
+% dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit10/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-% dpath = '/Volumes/GFDL/NC/Tmort/';
+% dpath = '/Volumes/GFDL/NC/MFeqMP4_fcrit10_Tmort/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
-dpath='/Volumes/GFDL/NC/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
-ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
+% dpath = '/Volumes/GFDL/NC/fcrit10_FdiffA2_Tmort/';
+% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
 
-cfile = 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort';
+cfile = 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit05';
 
-%load([dpath 'Data_spinup_pristine.mat']);
+load([dpath 'Data_spinup_pristine.mat']);
 %load([dpath 'Data_spinup_pristine_fcrit10.mat']);
-%load([dpath 'Data_spinup_pristine_fcrit10_Tmort.mat']);
+%load([dpath 'Data_spinup_pristine_fcrit10_Tmort_30yr.mat']);
+%load([dpath 'Data_spinup_pristine_fcrit10_FdiffA2_Tmort.mat']);
 
 %%
 [loc,days]=size(SP.bio);
@@ -192,7 +193,7 @@ Pmd=griddata(grid(:,2),grid(:,3),MD_prod,X,Y);
 Plp=griddata(grid(:,2),grid(:,3),LP_prod,X,Y);
 Pld=griddata(grid(:,2),grid(:,3),LD_prod,X,Y);
 
-%%
+%
 Psp(Psp<=0)=NaN;
 Psf(Psf<=0)=NaN;
 Psd(Psd<=0)=NaN;
@@ -272,7 +273,7 @@ caxis([-4 -2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_prod_MF.png'])
 
-%% md
+% md
 figure(16)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,log10(Pmd)); hold on;
@@ -286,7 +287,7 @@ caxis([-4 -2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_prod_MD.png'])
 
-%% lp
+% lp
 figure(17)
 stamp(cfile)
 m_proj('miller','lat',82);
@@ -313,4 +314,205 @@ colormap('jet')
 colorbar('h')
 caxis([-4 -2])
 print('-dpng',[ppath 'Spinup_global_prod_LD.png'])
+
+%% Diff maps of all fish
+All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
+AllF = Zsf+Zmf;
+AllP = Zsp+Zmp+Zlp;
+AllD = Zsd+Zmd+Zld;
+AllS = Zsp+Zsf+Zsd;
+AllM = Zmp+Zmf+Zmd;
+AllL = Zlp+Zld;
+FracPD = AllP ./ (AllP+AllD);
+FracPF = AllP ./ (AllP+AllF);
+FracPFvD = (AllP+AllF) ./ (AllP+AllF+AllD);
+FracPDs = Zsp ./ (Zsp+Zsd);
+FracPDm = Zmp ./ (Zmp+Zmd);
+FracPDl = Zlp ./ (Zlp+Zld);
+FracPFs = Zsp ./ (Zsp+Zsf);
+FracPFm = Zmp ./ (Zmp+Zmf);
+FracPFvDs = (Zsp+Zsf) ./ (Zsp+Zsf+Zsd);
+FracPFvDm = (Zmp+Zmf) ./ (Zmp+Zmf+Zmd);
+
+%% ALL
+figure(21)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(All))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean biomass All Fishes (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-1 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_All.png'])
+
+%% all F
+figure(22)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(AllF))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean biomass All F (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-1 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_AllF.png'])
+
+% all D
+figure(23)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(AllD))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean biomass All D (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-1 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_AllD.png'])
+
+% All P
+figure(24)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(AllP))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean biomass All P (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-1 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_AllP.png'])
+
+%% FracPD
+figure(25)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPD)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('P:D mean biomass(g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPD.png'])
+
+% FracPF
+figure(26)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPF)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('P:F mean biomass (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPF.png'])
+
+% FracPFvD
+figure(27)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPFvD)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('(P+F):D mean biomass(g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPFvD.png'])
+
+% FracPDs
+figure(28)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPDs)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('SP:SD mean biomass(g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPDs.png'])
+
+% FracPFs
+figure(29)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPFs)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('SP:SF mean biomass (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPFs.png'])
+
+% FracPFvDs
+figure(30)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPFvDs)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('(SP+SF):SD mean biomass(g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPFvDs.png'])
+
+% FracPDm
+figure(31)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPDm)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('MP:MD mean biomass(g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPDm.png'])
+
+% FracPFm
+figure(32)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPFm)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('MP:MF mean biomass (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPFm.png'])
+
+% FracPFvDm
+figure(33)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(FracPFvDm)); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('(MP+MF):MD mean biomass(g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([0 1])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_FracPFvDm.png'])
 

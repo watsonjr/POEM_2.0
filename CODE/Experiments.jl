@@ -354,7 +354,7 @@ function Spinup_pristine()
 	global TrefB = Tref
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-	global GRD = load("./Data/Data_grid_forecast_NOTflipped.jld")
+	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 	YEARS = 50
   DAYS = 365
 

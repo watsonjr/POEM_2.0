@@ -105,7 +105,7 @@ for i = 1:nyr
 		#! indexes
 		m,n = ind2sub((360,200),WID[j]); # spatial index of water cell
 
-    #! v currents from m/s to m/s
+    #! v currents from m/s to m/d
 		Y = zeros(size(time))
 		Y[:] = v[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
@@ -113,7 +113,7 @@ for i = 1:nyr
 		Yi = yi[Xi[1:end-1]];
 		D_v[j,1:length(Yi)] = Yi * 60 *60 * 24; # m d-1
 
-		#! u currents from m/s to m/s
+		#! u currents from m/s to m/d
 		Y = zeros(size(time))
 		Y[:] = u[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);

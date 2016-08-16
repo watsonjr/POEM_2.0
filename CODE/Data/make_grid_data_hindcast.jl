@@ -103,6 +103,7 @@ for i in collect(1:length(id))
 		right[1] = 1
 	end
 	if down[2]==201
+		down[1] = 360 - down[1] + 1 #tripolar N pole
 		down[2] = 200
 	end
 	if up[2]==0
