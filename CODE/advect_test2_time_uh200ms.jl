@@ -2,14 +2,13 @@
 ####!! NUTS AND BOLTS
 using HDF5, JLD, Devectorize, NPZ, NetCDF, MAT
 
-include("Advect_upwind_2D.jl")
+include("Advect_upwind_2D_uh200ms.jl")
 
 ID = load("./Data/Data_grid_hindcast_NOTflipped.jld","ID");
 GRD = load("./Data/Data_grid_cp_2D.jld")
 #COBALT = load("./Data/JLD/Data_hindcast_000130.jld"); # 1990
 #COBALT = load("./Data/JLD/Data_hindcast_surfvel_000120.jld"); # 1980
-COBALT = load("./Data/JLD/Data_hindcast_vel200_000003.jld"); # 1990 m/d
-#COBALT = load("./Data/JLD/Data_hindcast_velH200_000001.jld"); # yr3=1990 m/s
+COBALT = load("./Data/JLD/Data_hindcast_velH200_000001.jld"); # yr3=1990; m/s
 
 bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
@@ -26,13 +25,13 @@ ni, nj = size(U);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("./Data/CSV/bio_2Dadvect_test_Atl_vel200_dt1hr.csv","w")
+bio2D = open("./Data/CSV/bio_2Dadvect_test_Atl_velH200_dt1hr.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
 	println(DAY)
-	U[ID] = COBALT["U"][:,DAY]; #m/d
-	V[ID] = COBALT["V"][:,DAY];
+	U[ID] = COBALT["Uh"][:,DAY]; #m/s
+	V[ID] = COBALT["Vh"][:,DAY];
 
 	bio = sub_advection(GRD,bio,U,V,ni,nj)
 	biov=collect(bio[ID])

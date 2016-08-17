@@ -1,19 +1,21 @@
 % Visualize advection test cases
 
-%clear all
-%close all
+clear all
+close all
 
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_Atl_velH200_ts192.csv']);
+bio = csvread([dpath 'bio_2Dadvect_test_Atl_velH200_dt1hr.csv']);
+cname = 'Atl_velH200_dt1hr';
+
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
 
 % Conservation of mass
 
 totb = sum(bio,2);
-figure(11)
+figure(9)
 %subplot(2,2,1)
 plot(totb)
 100*(totb(1)-totb(end))/totb(1)
@@ -44,9 +46,9 @@ B5=B1;
 
 %for n=1:size(bio,1);
     B1(grid(:,1))=bio(1,:);
-    B2(grid(:,1))=bio(25,:); %73
-    B3(grid(:,1))=bio(50,:); %146
-    B4(grid(:,1))=bio(75,:); %219
+    B2(grid(:,1))=bio(5,:); %73
+    B3(grid(:,1))=bio(10,:); %146
+    B4(grid(:,1))=bio(15,:); %219
     B5(grid(:,1))=bio(90,:); %365
 %end
 
@@ -88,7 +90,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-%print('-dpng',[fpath 'advec_test_Atl200velH_1.png'])
+print('-dpng',[fpath 'advec_test_' cname '_1.png'])
 
 figure(12)
 % Create two axes
@@ -114,7 +116,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-%print('-dpng',[fpath 'advec_test_Atl200velH_2.png'])
+print('-dpng',[fpath 'advec_test_' cname '_2.png'])
 
 figure(13)
 % Create two axes
@@ -140,7 +142,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-%print('-dpng',[fpath 'advec_test_Atl200velH_3.png'])
+print('-dpng',[fpath 'advec_test_' cname '_3.png'])
 
 figure(14)
 % Create two axes
@@ -166,7 +168,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-%print('-dpng',[fpath 'advec_test_Atl200velH_4.png'])
+print('-dpng',[fpath 'advec_test_' cname '_4.png'])
 
 %
 figure(15)
@@ -193,7 +195,7 @@ caxis([0 1e5])
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
-%print('-dpng',[fpath 'advec_test_Atl200velH_5.png'])
+print('-dpng',[fpath 'advec_test_' cname '_5.png'])
 
 %% Arctic projection
 figure(16)
@@ -206,7 +208,7 @@ caxis([0 1e4])
 title('Day=1')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_1_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_1_arcticproj.png'])
 
 figure(17)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -218,7 +220,7 @@ caxis([0 1e4])
 title('Day=73')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_2_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_2_arcticproj.png'])
 
 figure(18)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -230,7 +232,7 @@ caxis([0 1e4])
 title('Day=146')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_3_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_3_arcticproj.png'])
 
 figure(19)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -242,7 +244,7 @@ caxis([0 1e4])
 title('Day=219')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_4_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_4_arcticproj.png'])
 
 figure(20)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -254,7 +256,7 @@ caxis([0 1e4])
 title('Day=365')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_5_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_5_arcticproj.png'])
 
 %% Antarctic projection
 figure(26)
@@ -267,7 +269,7 @@ caxis([0 1e4])
 title('Day=1')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_1_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_1_Spoleproj.png'])
 
 figure(27)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -279,7 +281,7 @@ caxis([0 1e4])
 title('Day=73')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_2_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_2_Spoleproj.png'])
 
 figure(28)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -291,7 +293,7 @@ caxis([0 1e4])
 title('Day=146')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_3_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_3_Spoleproj.png'])
 
 figure(29)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -303,7 +305,7 @@ caxis([0 1e4])
 title('Day=219')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_4_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_4_Spoleproj.png'])
 
 figure(30)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -315,5 +317,5 @@ caxis([0 1e4])
 title('Day=365')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-%print('-dpng',[fpath 'advec_test_Atl200velH_5_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_5_Spoleproj.png'])
 
