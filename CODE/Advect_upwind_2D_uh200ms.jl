@@ -39,7 +39,7 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	Ttendency = zeros(Float64,360,200,nt);
   # grid size
 	isd = 1
-	jsd = 1
+	jsd = 2
 	ied = ni
 	jed = nj
 
@@ -68,7 +68,7 @@ end
 
 function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 	isd = 1
-	jsd = 1
+	jsd = 2
 	ied = ni
 	jed = nj
 
