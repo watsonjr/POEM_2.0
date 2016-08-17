@@ -6,8 +6,8 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_JWadvect_test_AA_noswim_1hr.csv']);
-cname = 'AA_noswim_1hr';
+bio = csvread([dpath 'bio_JWadvect_test_Atl_noswim_4hr_noreflect2D.csv']);
+cname = 'Atl_noswim_4hr_noreflect2D';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -23,6 +23,9 @@ plot(totb)
 %Eq =                                           -4.6e+93
 %Pac =                                          -1.3e+24
 %Atl =      -5.7e+95%   -1.2e+106   -4.4e+93    -9.6e+83
+%no reflect                         -2.7e+09
+%2D noreflec                        -9.1e+07
+%full2D nor                         -2.5e+03
 %Arctic =                                       -7.5e+29
 %Antarc =                                       -37.9%
 %WInd =                      
@@ -44,7 +47,7 @@ B5=B1;
     B5(grid(:,1))=bio(366,:); %365
 %end
 
-% plot info
+%% plot info
 % Land
 surf_tmask = tmask(:,:,1);
 lmask = surf_tmask;

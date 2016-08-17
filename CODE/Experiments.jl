@@ -16,7 +16,7 @@ function Testoneloc()
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	YEARS = 100
-  DAYS = 365
+  global DAYS = 365
 
 	#! choose where to run the model
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")

@@ -62,8 +62,7 @@ function make_parameters(harv)
 
 	#! Integration parameters
 	const global DT = 1.; # time step
-  const global DAYS = 365; # number of days
-
+  
 	#! Amount of fishing
 	if harv == 1
 		const global FISHING = 80000000000 / (365/DT) # 80MT per year

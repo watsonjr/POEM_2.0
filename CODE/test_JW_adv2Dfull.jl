@@ -6,7 +6,7 @@ include("sub_init.jl")
 include("sub_routines.jl")
 include("sub_functions.jl")
 include("Experiments.jl")
-include("JW_adv_diff_update.jl")
+include("JW_adv_diff_update2Dfull.jl")
 
 
 make_parameters(0) # make core parameters/constants
@@ -21,7 +21,7 @@ global TrefB = Tref;
 global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld");
-YEARS = 50
+YEARS = 1
 DAYS = 365
 #! choose where and when to run the model
 const global NX = 48111
@@ -45,19 +45,15 @@ seed = readdlm("./Data/Atl_ids.csv",','); #seed Atl
 seed = round(Int64,seed);
 bio[seed] = 1.0;
 
-#grid=zeros(360,200);
-#grid[GRD["ID"]]=1.0;
-
-
 #! Internal time step for advection (in days)
 global dtime = (4.0/24.0)
-bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noswim_4hr_noreflect.csv","w")
+bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noswim_4hr_noreflect2D.csv","w")
 
 tstart = now()
 writecsv(bio2D,bio')
 ###################### Run the Model
 #! Run model with no fishing
-for YR = 1#:YEARS # years
+for YR = 1:YEARS # years
 	for DAY = 1:DT:DAYS # days
 		###! Future time step
 		DY  = Int(ceil(DAY))
@@ -65,14 +61,10 @@ for YR = 1#:YEARS # years
 		# Run biology to get nu values
 		sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 
-		#! 2D bio
-		bio2 = zeros(360,200);
-		bio2[GRD["ID"]] = bio;
-
 		#! Internal time step for advection
 		for time = dtime:dtime:1
 			# Use adult forage fish nus and swimming speed
-			bio2 = sub_advection(bio2,Med_f.nu,ENVR.U,ENVR.V,GRD["dxtn"],GRD["dyte"],ENVR.Tp,ENVR.Tb,Med_f.td,M_m)
+			bio = sub_advec2Dfull(bio,Med_f.nu,ENVR.U,ENVR.V,GRD["dxtn"],GRD["dyte"],ENVR.Tp,ENVR.Tb,Med_f.td,M_m)
 		end
 		biov=collect(bio[ID])
 		#! Save
