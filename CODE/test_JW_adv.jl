@@ -46,8 +46,8 @@ seed = round(Int64,seed);
 bio[seed] = 1.0;
 
 #! Internal time step for advection (in days)
-global dtime = 0.25
-bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noswim_6hr.csv","w")
+global dtime = (1.0/24.0)
+bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noswim_1hr.csv","w")
 
 tstart = now()
 writecsv(bio2D,bio')

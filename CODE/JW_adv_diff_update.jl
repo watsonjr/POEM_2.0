@@ -34,7 +34,7 @@ end
 ### ADVECTION ###
 function sub_advection(Bio_in,Nu,U,V,DX,DY,Tp,Tb,tdif,wgt)
 	#Bio_in = .bio; Nu = .nu; DX = GRD["dxtn"]; DY = GRD["dyte"]; U = ENVR.U; V = ENVR.V;
-	Tp = ENVR.Tp; Tb = ENVR.Tb; tdif = Med_f.td; wgt = M_m;
+	#Tp = ENVR.Tp; Tb = ENVR.Tb; tdif = Med_f.td; wgt = M_m;
 
 	#! Calc swimming speed (m/d)
 	#T = (Tp.*tdif) + (Tb.*(1.0-tdif))
@@ -76,14 +76,18 @@ function sub_advection(Bio_in,Nu,U,V,DX,DY,Tp,Tb,tdif,wgt)
 	v[I5] = V[I5]
 
 	#! Land
-	I1 = find(v.>0. + LID[:,2].==0.)
-	I2 = find(v.<0. + LID[:,3].==0.)
-	I3 = find(u.<0. + LID[:,4].==0.)
-	I4 = find(u.>0. + LID[:,5].==0.)
-	v[I1] *= -1
-	v[I2] *= -1
-	u[I3] *= -1
-	u[I4] *= -1
+	I1 = find(v.>0. + LID[:,2].==0.) 	#up
+	I2 = find(v.<0. + LID[:,3].==0.)	#down
+	I3 = find(u.<0. + LID[:,4].==0.)	#left
+	I4 = find(u.>0. + LID[:,5].==0.)	#right
+	# v[I1] *= -1
+	# v[I2] *= -1
+	# u[I3] *= -1
+	# u[I4] *= -1
+	v[I1] = 0.0
+	v[I2] = 0.0
+	u[I3] = 0.0
+	u[I4] = 0.0
 
 	#! U advection
 	Bio_minus = similar(Bio_in)
