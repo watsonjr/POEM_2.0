@@ -6,8 +6,8 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_Atl_velH200_dt1hr.csv']);
-cname = 'Atl_velH200_dt1hr';
+bio = csvread([dpath 'bio_2Dadvect_test_global_vel200_dt1hr_j2.csv']);
+cname = 'Global_vel200_dt1hr_j2';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -15,7 +15,7 @@ load('gridspec_forecast.mat');
 % Conservation of mass
 
 totb = sum(bio,2);
-figure(9)
+figure(10)
 %subplot(2,2,1)
 plot(totb)
 100*(totb(1)-totb(end))/totb(1)
@@ -28,31 +28,39 @@ plot(totb)
 %Antarctic = 5.1648%
 %WIndian =                      4.7885%,
 %EIndian = 6.4858%              0.4994%;    8.6801e-07%;
+
 %%
-figure(10)
-plot(1:365,totb)
+figure(11)
+plot(totb)
 xlim([0 12]) 
 xlabel('days')
 title('Atl velH 200')
 ylabel('total number of particles')
-%print('-dpng',[fpath 'advec_test_Atl200velH_biom.png'])
 
-%%
+%
 B1=NaN*ones(size(geolat_t));
 B2=B1;
 B3=B1;
 B4=B1;
 B5=B1;
+B6=B1;
+B7=B1;
+B8=B1;
+B9=B1;
 
 %for n=1:size(bio,1);
     B1(grid(:,1))=bio(1,:);
-    B2(grid(:,1))=bio(5,:); %73
-    B3(grid(:,1))=bio(10,:); %146
-    B4(grid(:,1))=bio(15,:); %219
-    B5(grid(:,1))=bio(90,:); %365
+    B2(grid(:,1))=bio(73,:); %73
+    B3(grid(:,1))=bio(146,:); %146
+    B4(grid(:,1))=bio(219,:); %219
+    B5(grid(:,1))=bio(365,:); %365
+%     B6(grid(:,1))=bio(456,:); %456
+%     B7(grid(:,1))=bio(547,:); %547
+%     B8(grid(:,1))=bio(638,:); %638
+%     B9(grid(:,1))=bio(730,:); %730
 %end
 
-%% plot info
+% plot info
 % Land
 surf_tmask = tmask(:,:,1);
 lmask = surf_tmask;
@@ -66,7 +74,7 @@ xl(xl<-180) = xl(xl<-180) + 350;
 
 
 %% Start
-figure(11)
+figure(1)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -85,14 +93,14 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 1e5])
+caxis([0 2e3])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
 print('-dpng',[fpath 'advec_test_' cname '_1.png'])
 
-figure(12)
+figure(2)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -111,14 +119,14 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 1e5])
+caxis([0 2e3])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
 print('-dpng',[fpath 'advec_test_' cname '_2.png'])
 
-figure(13)
+figure(3)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -137,14 +145,14 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 1e5])
+caxis([0 2e3])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
 print('-dpng',[fpath 'advec_test_' cname '_3.png'])
 
-figure(14)
+figure(4)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -163,7 +171,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 1e5])
+caxis([0 2e3])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -171,7 +179,7 @@ set(ax1,'XTick',xt,'XTickLabel',xl)
 print('-dpng',[fpath 'advec_test_' cname '_4.png'])
 
 %
-figure(15)
+figure(5)
 % Create two axes
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
@@ -190,12 +198,117 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 1e5])
+caxis([0 2e3])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
 set(ax1,'XTick',xt,'XTickLabel',xl)
 print('-dpng',[fpath 'advec_test_' cname '_5.png'])
+
+%% Year 2
+figure(6)
+% Create two axes
+ax1 = axes;
+pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
+shading flat
+title('Day=456')
+view(2)
+ax2 = axes;
+pcolor(ax2,geolon_t,geolat_t,B6); hold on;
+shading flat
+% Link them together
+linkaxes([ax1,ax2])
+% Hide the top axes
+ax2.Visible = 'off';
+ax2.XTick = [];
+ax2.YTick = [];
+% Give each one its own colormap
+colormap(ax1,'gray')
+colormap(ax2,'jet')
+caxis([0 1e5])
+% Then add colorbars and get everything lined up
+set([ax1,ax2],'Position',[.1 .11 .75 .815]);
+cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
+set(ax1,'XTick',xt,'XTickLabel',xl)
+print('-dpng',[fpath 'advec_test_' cname '_6.png'])
+
+figure(7)
+% Create two axes
+ax1 = axes;
+pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
+shading flat
+title('Day=547')
+view(2)
+ax2 = axes;
+pcolor(ax2,geolon_t,geolat_t,B7); hold on;
+shading flat
+% Link them together
+linkaxes([ax1,ax2])
+% Hide the top axes
+ax2.Visible = 'off';
+ax2.XTick = [];
+ax2.YTick = [];
+% Give each one its own colormap
+colormap(ax1,'gray')
+colormap(ax2,'jet')
+caxis([0 1e5])
+% Then add colorbars and get everything lined up
+set([ax1,ax2],'Position',[.1 .11 .75 .815]);
+cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
+set(ax1,'XTick',xt,'XTickLabel',xl)
+print('-dpng',[fpath 'advec_test_' cname '_7.png'])
+
+figure(8)
+% Create two axes
+ax1 = axes;
+pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
+shading flat
+title('Day=638')
+view(2)
+ax2 = axes;
+pcolor(ax2,geolon_t,geolat_t,B8); hold on;
+shading flat
+% Link them together
+linkaxes([ax1,ax2])
+% Hide the top axes
+ax2.Visible = 'off';
+ax2.XTick = [];
+ax2.YTick = [];
+% Give each one its own colormap
+colormap(ax1,'gray')
+colormap(ax2,'jet')
+caxis([0 1e5])
+% Then add colorbars and get everything lined up
+set([ax1,ax2],'Position',[.1 .11 .75 .815]);
+cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
+set(ax1,'XTick',xt,'XTickLabel',xl)
+print('-dpng',[fpath 'advec_test_' cname '_8.png'])
+
+figure(9)
+% Create two axes
+ax1 = axes;
+pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
+shading flat
+title('Day=730')
+view(2)
+ax2 = axes;
+pcolor(ax2,geolon_t,geolat_t,B9); hold on;
+shading flat
+% Link them together
+linkaxes([ax1,ax2])
+% Hide the top axes
+ax2.Visible = 'off';
+ax2.XTick = [];
+ax2.YTick = [];
+% Give each one its own colormap
+colormap(ax1,'gray')
+colormap(ax2,'jet')
+caxis([0 1e5])
+% Then add colorbars and get everything lined up
+set([ax1,ax2],'Position',[.1 .11 .75 .815]);
+cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
+set(ax1,'XTick',xt,'XTickLabel',xl)
+print('-dpng',[fpath 'advec_test_' cname '_9.png'])
 
 %% Arctic projection
 figure(16)

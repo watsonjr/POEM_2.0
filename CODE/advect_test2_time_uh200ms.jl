@@ -25,13 +25,13 @@ ni, nj = size(U);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("./Data/CSV/bio_2Dadvect_test_Atl_velH200_dt1hr.csv","w")
+bio2D = open("./Data/CSV/advect_tests/bio_2Dadvect_test_Atl_velH200_dt1hr_j2_nodiv_div200.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
 	println(DAY)
-	U[ID] = COBALT["Uh"][:,DAY]; #m/s
-	V[ID] = COBALT["Vh"][:,DAY];
+	U[ID] = COBALT["Uh"][:,DAY] / 200.0; #m/s
+	V[ID] = COBALT["Vh"][:,DAY] / 200.0;
 
 	bio = sub_advection(GRD,bio,U,V,ni,nj)
 	biov=collect(bio[ID])

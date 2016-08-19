@@ -35,11 +35,12 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	nt = Int(ntime)
 	# biol concentration
 	Tfield = zeros(Float64,360,200,nt);
-	Tfield[:,:,1] = Bio_in/ntime;
+	#Tfield[:,:,1] = Bio_in/ntime;
+	Tfield[:,:,1] = Bio_in;
 	Ttendency = zeros(Float64,360,200,nt);
   # grid size
 	isd = 1
-	jsd = 2
+	jsd = 2 #ignore j=1 b/c land (Antarctica)
 	ied = ni
 	jed = nj
 
@@ -62,13 +63,14 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 	end
 
 	# return
-	return Tfield[:,:,nt] * ntime
+	#return Tfield[:,:,nt] * ntime
+	return Tfield[:,:,nt]
 end
 
 
 function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 	isd = 1
-	jsd = 2
+	jsd = 2 #ignore j=1 b/c land (Antarctica)
 	ied = ni
 	jed = nj
 
