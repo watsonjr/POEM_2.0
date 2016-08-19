@@ -107,9 +107,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
 			if (i == ied)
-				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
+				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[isd,j]) #.*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
 			else
-				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
+				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i+1,j]) #.*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
 			end
 		end
 	end
@@ -140,9 +140,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
 			if (j < jed)
-				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
+				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i,j+1]) #.*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
 			else
-				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
+				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[ni-i+1,j]) #.*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
 			end
 		end
 	end
