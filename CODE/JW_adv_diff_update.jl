@@ -38,9 +38,9 @@ function sub_advection(Bio_in,Nu,U,V,DX,DY,Tp,Tb,tdif,wgt)
 	#Tp = ENVR.Tp; Tb = ENVR.Tb; tdif = Med_f.td; wgt = M_m;
 
 	#! Calc swimming speed (m/d)
-	#T = (Tp.*tdif) + (Tb.*(1.0-tdif))
-	#Q = ((3.9*wgt.^0.13 * exp(0.149*T)) /100*60*60*24)
-	Q = zeros(NX,1)
+	T = (Tp.*tdif) + (Tb.*(1.0-tdif))
+	Q = ((3.9*wgt.^0.13 * exp(0.149*T)) /100*60*60*24)
+	#Q = zeros(NX,1)
 
 	#! Find direction to swim in
 	KK = zeros(Int64,NX)

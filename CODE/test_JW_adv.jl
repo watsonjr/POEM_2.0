@@ -50,7 +50,7 @@ A = 1.0e-4 * 60 * 60 * 24;
 
 #! Internal time step for advection (in days)
 global dtime = (1/24.0)
-bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noswim_1hr_noreflect_negs.csv","w")
+bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noadvec_1hr_noreflect_negs.csv","w")
 
 tstart = now()
 writecsv(bio2D,bio')
@@ -62,15 +62,13 @@ for YR = 1#:YEARS # years
 		DY  = Int(ceil(DAY))
 		println(YR," , ", mod(DY,365))
 		# Run biology to get nu values
-		if (DAY == 1)
-			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
-		end
+		sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 
 		#! Internal time step for advection
 		for time = dtime:dtime:1
 			# Use adult forage fish nus and swimming speed
 			bio = sub_advection(bio,Med_f.nu,ENVR.U,ENVR.V,GRD["dxtn"],GRD["dyte"],ENVR.Tp,ENVR.Tb,Med_f.td,M_m)
-			bio = sub_diffuse(bio,A,GRD["dxtn"],GRD["dyte"])
+			#bio = sub_diffuse(bio,A,GRD["dxtn"],GRD["dyte"])
 		end
 		biov=collect(bio[ID])
 		#! Save

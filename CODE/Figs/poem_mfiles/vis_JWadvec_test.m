@@ -6,8 +6,8 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_JWadvect_test_Atl_noswim_1hr_noreflect_negs.csv']);
-cname = 'JW_Atl_noswim_1hr_noreflect_negs';
+bio = csvread([dpath 'bio_JWadvect_test_Atl_swim_1hr_noreflect_negs.csv']);
+cname = 'JW_Atl_swim_1hr_noreflect_negs';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -80,7 +80,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([-10 10])
+caxis([-1 2])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -107,7 +107,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([-10 10])
+caxis([-1 2])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -133,7 +133,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([-10 10])
+caxis([-1 2])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -159,7 +159,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([-10 10])
+caxis([-1 2])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -186,7 +186,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([-10 10])
+caxis([-1 2])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
