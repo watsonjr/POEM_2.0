@@ -61,20 +61,28 @@ function sub_advection(Bio_in,Nu,U,V,DX,DY,Tp,Tb,tdif,wgt)
 	I4 = find(KK .== 4)
 	I5 = find(KK .== 5)
 
-	u[I1] = U[I1]
-	v[I1] = V[I1]
+	# u[I1] = U[I1]
+	# v[I1] = V[I1]
+	#
+	# u[I2] = U[I2]
+	# v[I2] = V[I2] + Q[I2]
+	#
+	# u[I3] = U[I3]
+	# v[I3] = V[I3] - Q[I3]
+	#
+	# u[I4] = U[I4] - Q[I4]
+	# v[I4] = V[I4]
+	#
+	# u[I5] = U[I5] + Q[I5]
+	# v[I5] = V[I5]
+	#
+	# u[I1] = U[I1]
+	# v[I1] = V[I1]
 
-	u[I2] = U[I2]
 	v[I2] = V[I2] + Q[I2]
-
-	u[I3] = U[I3]
 	v[I3] = V[I3] - Q[I3]
-
 	u[I4] = U[I4] - Q[I4]
-	v[I4] = V[I4]
-
 	u[I5] = U[I5] + Q[I5]
-	v[I5] = V[I5]
 
 	#! Land
 	I1 = find(v.>0. + LID[:,2].==0.) 	#up

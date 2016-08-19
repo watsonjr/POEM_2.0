@@ -6,8 +6,8 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_JWadvect_test_Atl_swim_1hr_noreflect_negs.csv']);
-cname = 'JW_Atl_swim_1hr_noreflect_negs';
+bio = csvread([dpath 'bio_JWadvect_test_Atl_noadvec_1hr_noreflect_negs.csv']);
+cname = 'JW_Atl_noadvec_1hr_noreflect_negs';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
