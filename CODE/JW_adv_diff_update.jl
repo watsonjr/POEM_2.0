@@ -1,10 +1,11 @@
 ###! Diffusion
-function sub_diffuse(Bio_in,Ns,A,DX,DY)
+function sub_diffuse(Bio_in,A,DX,DY)
+	#Bio_in = bio; A=A; DX = GRD["dxtn"]; DY = GRD["dyte"];
 	Bio_out = similar(Bio_in)
 	for I = 1:NX
 		# Biomasses in Neighboring cells
 		bio = Bio_in[GRD["Neigh"][I]]
-		bio_out = zeros(Ns)
+		bio_out = 0.0
 		#!
 		bm = bio[1]
 		bu = bio[2]

@@ -45,6 +45,9 @@ seed = readdlm("./Data/Atl_ids.csv",','); #seed Atl
 seed = round(Int64,seed);
 bio[seed] = 1.0;
 
+#Horizontal diffusivity m/s -> m/d
+A = 1.0e-4 * 60 * 60 * 24;
+
 #! Internal time step for advection (in days)
 global dtime = (1/24.0)
 bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noswim_1hr_noreflect_negs.csv","w")
@@ -67,6 +70,7 @@ for YR = 1#:YEARS # years
 		for time = dtime:dtime:1
 			# Use adult forage fish nus and swimming speed
 			bio = sub_advection(bio,Med_f.nu,ENVR.U,ENVR.V,GRD["dxtn"],GRD["dyte"],ENVR.Tp,ENVR.Tb,Med_f.td,M_m)
+			bio = sub_diffuse(bio,A,GRD["dxtn"],GRD["dyte"])
 		end
 		biov=collect(bio[ID])
 		#! Save
