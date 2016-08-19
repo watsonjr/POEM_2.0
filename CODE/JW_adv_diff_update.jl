@@ -116,7 +116,7 @@ function sub_advection(Bio_in,Nu,U,V,DX,DY,Tp,Tb,tdif,wgt)
 		VV = v[I] * dtime / DY[I]
 		BB = bio[1] - ((VV/2)*(bio[5]-bio[4])) -
 							(((VV^2)/2)*(bio[5]-(2*bio[1])+bio[4]))
-		if BB < 0
+		if isnan(BB)
 			Bio_plus[I] = 0
 		else
 			Bio_plus[I] = BB
