@@ -441,7 +441,7 @@ function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,nmort)
   # enc = A * 0.1 * bio_in^2
   # cmax = exp(0.063*(temp-15.0)) * 2.5 .* M^(-0.51) * 24e-3
   # con = cmax * enc / (cmax + enc)
-  # nmort = con * 0.1 * bio_in
+  # nmort = con * 0.1 * bio_in  ## Do you multiply by bio again?
   ### Simplified
   # cmax = exp(0.063*(temp-15.0)) * 2.5 .* M^(-0.51) * 24e-3
   # Khp = 6.1e-2;
