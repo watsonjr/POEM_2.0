@@ -50,7 +50,7 @@ A = 1.0e-4 * 60 * 60 * 24;
 
 #! Internal time step for advection (in days)
 global dtime = (1/24.0)
-bio2D = open("./Data/CSV/advect_tests/bio_JWadvect_test_Atl_noadvec_1hr_noreflect_negs.csv","w")
+bio2D = open("/Volumes/GFDL/NC/AdvectTests/bio_JWadvect_test_Atl_noadvec_1hr_noreflect_negs.csv","w")
 
 tstart = now()
 writecsv(bio2D,bio')

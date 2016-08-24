@@ -27,7 +27,7 @@ ni, nj = size(U);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("./Data/CSV/advect_tests/bio_2Dadvect_test_global_vel200_dt1hr_j2_30yrs.csv","w")
+bio2D = open("/Volumes/GFDL/NC/AdvectTests/bio_2Dadvect_test_global_vel200_dt1hr_j2_30yrs.csv","w")
 
 tstart = now()
 for YR = 1:30
