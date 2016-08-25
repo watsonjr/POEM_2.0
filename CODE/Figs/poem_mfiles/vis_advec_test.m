@@ -7,8 +7,8 @@ close all
 dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_global_vel200_dt1hr_j2_30yrs.csv']);
-cname = 'Global_vel200_dt1hr_j2_30yrs';
+bio = csvread([dpath 'bio_2Dadvect_swim_test_Atl_vel200_dt1hr_j2_deepM.csv']);
+cname = 'swim_Atl_vel200_dt1hr_j2_shallowM';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -34,10 +34,10 @@ plot(totb)
 yrs=[1:length(totb)]/365;
 figure(11)
 plot(yrs,totb,'LineWidth',2)
-%xlim([0 12]) 
+%xlim([0 12])
 %xlabel('days')
 xlabel('Year')
-title('Global seed of 1e-3')
+%title(cname)
 ylabel('Total number of particles')
 print('-dpng',[fpath 'advec_test_' cname '_totb.png'])
 
@@ -52,17 +52,15 @@ B7=B1;
 B8=B1;
 B9=B1;
 
-%for n=1:size(bio,1);
-    B1(grid(:,1))=bio(1,:);
-    B2(grid(:,1))=bio(73,:); %73
-    B3(grid(:,1))=bio(146,:); %146
-    B4(grid(:,1))=bio(219,:); %219
-    B5(grid(:,1))=bio(365,:); %365
-    B6(grid(:,1))=bio(10731,:); %456
-    B7(grid(:,1))=bio(10804,:); %547
-    B8(grid(:,1))=bio(10877,:); %638
-    B9(grid(:,1))=bio(10950,:); %730
-%end
+B1(grid(:,1))=bio(1,:);
+B2(grid(:,1))=bio(73,:); %73
+B3(grid(:,1))=bio(146,:); %146
+B4(grid(:,1))=bio(219,:); %219
+B5(grid(:,1))=bio(365,:); %365
+% B6(grid(:,1))=bio(456,:); %456
+% B7(grid(:,1))=bio(547,:); %547
+% B8(grid(:,1))=bio(638,:); %638
+% B9(grid(:,1))=bio(730,:); %730
 
 % plot info
 % Land
@@ -97,7 +95,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -123,7 +121,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -135,7 +133,7 @@ figure(3)
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
 shading flat
-title('Day=146 Year 1') 
+title('Day=146 Year 1')
 view(2)
 ax2 = axes;
 pcolor(ax2,geolon_t,geolat_t,B3); hold on;
@@ -149,7 +147,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -175,7 +173,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -202,7 +200,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -215,7 +213,7 @@ figure(6)
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
 shading flat
-title('Day=73 Year 30') %456
+title('Day=92 Year 2') %456
 view(2)
 ax2 = axes;
 pcolor(ax2,geolon_t,geolat_t,B6); hold on;
@@ -229,7 +227,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -241,7 +239,7 @@ figure(7)
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
 shading flat
-title('Day=146 Year 30') %547
+title('Day=183 Year 2') %547
 view(2)
 ax2 = axes;
 pcolor(ax2,geolon_t,geolat_t,B7); hold on;
@@ -255,7 +253,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -267,7 +265,7 @@ figure(8)
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
 shading flat
-title('Day=219 Year 30') %638
+title('Day=274 Year 2') %638
 view(2)
 ax2 = axes;
 pcolor(ax2,geolon_t,geolat_t,B8); hold on;
@@ -281,7 +279,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -293,7 +291,7 @@ figure(9)
 ax1 = axes;
 pcolor(ax1,geolon_t,geolat_t,lmask); hold on;
 shading flat
-title('Day=365 Year 30') %730
+title('Day=365 Year 2') %730
 view(2)
 ax2 = axes;
 pcolor(ax2,geolon_t,geolat_t,B9); hold on;
@@ -307,7 +305,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e3])
+caxis([0 1e5])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -321,11 +319,11 @@ m_pcolor(geolon_t,geolat_t,B1);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=1')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_1_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_arcticproj_1.png'])
 
 figure(17)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -333,11 +331,11 @@ m_pcolor(geolon_t,geolat_t,B2);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=73')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_2_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_arcticproj_2.png'])
 
 figure(18)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -345,11 +343,11 @@ m_pcolor(geolon_t,geolat_t,B3);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=146')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_3_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_arcticproj_3.png'])
 
 figure(19)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -357,11 +355,11 @@ m_pcolor(geolon_t,geolat_t,B4);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=219')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_4_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_arcticproj_4.png'])
 
 figure(20)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -369,11 +367,11 @@ m_pcolor(geolon_t,geolat_t,B5);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=365')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_5_arcticproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_arcticproj_5.png'])
 
 %% Antarctic projection
 figure(26)
@@ -382,11 +380,11 @@ m_pcolor(geolon_t,geolat_t,B1);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=1')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_1_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_Spoleproj_1.png'])
 
 figure(27)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -394,11 +392,11 @@ m_pcolor(geolon_t,geolat_t,B2);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=73')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_2_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_Spoleproj_2.png'])
 
 figure(28)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -406,11 +404,11 @@ m_pcolor(geolon_t,geolat_t,B3);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=146')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_3_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_Spoleproj_3.png'])
 
 figure(29)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -418,11 +416,11 @@ m_pcolor(geolon_t,geolat_t,B4);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=219')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_4_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_Spoleproj_4.png'])
 
 figure(30)
 m_proj('stereographic','lat',-90,'long',30,'radius',50);
@@ -430,9 +428,9 @@ m_pcolor(geolon_t,geolat_t,B5);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e3])
+caxis([0 1e5])
 title('Day=365')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
-print('-dpng',[fpath 'advec_test_' cname '_5_Spoleproj.png'])
+print('-dpng',[fpath 'advec_test_' cname '_Spoleproj_5.png'])
 

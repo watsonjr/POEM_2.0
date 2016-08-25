@@ -20,15 +20,6 @@ figure(10)
 %subplot(2,2,1)
 plot(totb)
 100*(totb(1)-totb(end))/totb(1)
-%       100m avg;   surf;       new 200m;   new 200m no interp; new 200m transport
-%Eq =   20.8373%,
-%Pac =  5.3753%,    12.7891%,  -1.6291%     Inf;
-%Atl =  7.8666%,    15.3237%,   4.3329%     Inf;                -23.3950%
-%vel in sec = -23.3950% ts=5min; vel in day = -23.4122% ts=1/192 days
-%Arctic = 0.3174%,
-%Antarctic = 5.1648%
-%WIndian =                      4.7885%,
-%EIndian = 6.4858%              0.4994%;    8.6801e-07%;
 
 %%
 yrs=[1:length(totb)]/365;
