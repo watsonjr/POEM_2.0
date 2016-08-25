@@ -7,8 +7,8 @@ close all
 dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_swim_test_Global_vel200_dt1hr_j2_shallowM.csv']);
-cname = 'swim_Global_vel200_dt1hr_j2_shallowM';
+bio = csvread([dpath 'bio_2Dadvect_swim_test_Arc_vel200_dt1hr_j2_lmask_deepM.csv']);
+cname = 'swim_Arc_vel200_dt1hr_j2_lmask_deepM';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');

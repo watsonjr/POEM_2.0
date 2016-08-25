@@ -32,6 +32,7 @@ ni, nj = size(U);
 wgt = 2.5; 	#M=2.5; L=2500.0
 #nu = -1.0 * GRD["Z"] #swim towards shallowest area
 nu = GRD["Z"] #swim towards deepest area
+#nu=randn(ni,nj);
 
 const global DAYS = 365; # number of days
 
