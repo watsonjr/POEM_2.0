@@ -6,8 +6,8 @@ close all
 dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_global_vel200_dt1hr_j2_30yrs.csv']);
-cname = 'Global_vel200_dt1hr_j2_30yrs';
+bio = csvread([dpath 'bio_JWadvect_test_Atl_noswim_1d.csv']);
+cname = 'Atl_noswim_1d';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -15,8 +15,9 @@ load('gridspec_forecast.mat');
 % Conservation of mass
 
 totb = sum(bio,2);
+%
 figure(10)
-%subplot(2,2,1)
+subplot(2,2,1)
 plot(totb)
 100*(totb(1)-totb(end))/totb(1)
 %           dt=1d       dt=6hr      dt=3hr      dt=1hr  
