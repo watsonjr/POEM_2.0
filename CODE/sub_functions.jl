@@ -457,7 +457,7 @@ end
 
 
 ####! Fishing
-function sub_fishing(MFbio,LPbio,LDbio,AREA)
+function sub_fishing_mass(MFbio,LPbio,LDbio,AREA)
 	if FISHING > 0.0
     ALL_pl = MFbio .* AREA
 		ALL_pi = LPbio .* AREA
@@ -475,6 +475,14 @@ function sub_fishing(MFbio,LPbio,LDbio,AREA)
 		LDbio = ALL_de ./ AREA
 	end
 	return MFbio, LPbio, LDbio
+end
+
+function sub_fishing_rate(bio)
+	if FISHING > 0.0
+    caught = bio * FISHING
+    bio -= caught
+	end
+	return bio, caught
 end
 
 

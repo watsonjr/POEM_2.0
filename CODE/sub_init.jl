@@ -103,8 +103,11 @@ function sub_init_fish(ID,phen)
 	#! Con/Cmax
 	clev = zeros(Float64,NX)
 
+	#! Fishing harvest
+	caught = zeros(Float64,NX)
+
 	# assign to small forage fish, piscivore and detrivore
-	Sml_f = fish(bio,tdp,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,die,rep,rec,DD,S,egg,clev,prod,pred,nmort)
+	Sml_f = fish(bio,tdp,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,die,rep,rec,DD,S,egg,clev,prod,pred,nmort,caught)
 	Sml_p = deepcopy(Sml_f)
 	Sml_d = deepcopy(Sml_f)
 	Med_f = deepcopy(Sml_f)

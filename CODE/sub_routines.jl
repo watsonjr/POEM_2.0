@@ -213,10 +213,18 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 	 	Lrg_d.bio[JD] = sub_update_lg(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD],Lrg_d.nmort[JD])
 
+		#! Fishing by rate
+		Med_f.bio[JD], Med_f.caught[JD] = sub_fishing_rate(Med_f.bio[JD])
+		Med_p.bio[JD], Med_p.caught[JD] = sub_fishing_rate(Med_p.bio[JD])
+		Med_d.bio[JD], Med_d.caught[JD] = sub_fishing_rate(Med_d.bio[JD])
+		Lrg_p.bio[JD], Lrg_p.caught[JD] = sub_fishing_rate(Lrg_p.bio[JD])
+		Lrg_d.bio[JD], Lrg_d.caught[JD] = sub_fishing_rate(Lrg_d.bio[JD])
+
 	end
 
-	#! Fishing
-	Med_f.bio,Lrg_p.bio,Lrg_d.bio = sub_fishing(Med_f.bio,Lrg_p.bio,Lrg_d.bio,ENVR.A);
+	#! Fishing by area-weighted mass
+	#Med_f.bio,Lrg_p.bio,Lrg_d.bio = sub_fishing_mass(Med_f.bio,Lrg_p.bio,Lrg_d.bio,ENVR.A);
+
 
 	#! Forward Euler checks for demographics and movement
 	sub_check!(Sml_f.bio);
