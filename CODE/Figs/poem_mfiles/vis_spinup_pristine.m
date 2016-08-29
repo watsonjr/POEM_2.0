@@ -104,8 +104,6 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFdiffA2_Lmort/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit05/'];
-% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
-% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit15/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit15/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20/'];
@@ -151,8 +149,18 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_125/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_15/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_15/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_NOnmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_NOnmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Tmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Tmort/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Lmort/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Lmort/'];
+dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_LTmort/'];
+fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_LTmort/'];
 
-cfile = 'MFeqMP_fcrit10';
+cfile = 'MFeqMP_fcrit10_LTmort';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
 

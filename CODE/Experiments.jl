@@ -3,7 +3,7 @@
 function Testoneloc()
 
 	#! Make parameters
-	harv = 0 #0=no fishing; 1=fishing
+	harv = 1 #0=no fishing; 1=fishing
 	make_parameters(harv) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
@@ -33,6 +33,8 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
+	simname = "PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50";
+
 	for L = 1:9
 		ID = ids[L]
 		loc = names[L]
@@ -47,25 +49,25 @@ function Testoneloc()
 
 		#! Storage
 		if (phen==1)
-			Spinup_Sml_f  = open(string("./Data/CSV/Spinup_phen_",loc,"_Sml_f.csv"),"w")
-			Spinup_Sml_p  = open(string("./Data/CSV/Spinup_phen_",loc,"_Sml_p.csv"),"w")
-			Spinup_Sml_d  = open(string("./Data/CSV/Spinup_phen_",loc,"_Sml_d.csv"),"w")
-			Spinup_Med_f  = open(string("./Data/CSV/Spinup_phen_",loc,"_Med_f.csv"),"w")
-			Spinup_Med_p  = open(string("./Data/CSV/Spinup_phen_",loc,"_Med_p.csv"),"w")
-			Spinup_Med_d  = open(string("./Data/CSV/Spinup_phen_",loc,"_Med_d.csv"),"w")
-			Spinup_Lrg_p  = open(string("./Data/CSV/Spinup_phen_",loc,"_Lrg_p.csv"),"w")
-			Spinup_Lrg_d  = open(string("./Data/CSV/Spinup_phen_",loc,"_Lrg_d.csv"),"w")
-			Spinup_Cobalt = open(string("./Data/CSV/Spinup_phen_",loc,"_Cobalt.csv"),"w")
+			Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_f.csv"),"w")
+			Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_p.csv"),"w")
+			Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_d.csv"),"w")
+			Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_f.csv"),"w")
+			Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_p.csv"),"w")
+			Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_d.csv"),"w")
+			Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_p.csv"),"w")
+			Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_d.csv"),"w")
+			Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Cobalt.csv"),"w")
 		else
-			Spinup_Sml_f  = open(string("./Data/CSV/Spinup_",loc,"_Sml_f.csv"),"w")
-			Spinup_Sml_p  = open(string("./Data/CSV/Spinup_",loc,"_Sml_p.csv"),"w")
-			Spinup_Sml_d  = open(string("./Data/CSV/Spinup_",loc,"_Sml_d.csv"),"w")
-			Spinup_Med_f  = open(string("./Data/CSV/Spinup_",loc,"_Med_f.csv"),"w")
-			Spinup_Med_p  = open(string("./Data/CSV/Spinup_",loc,"_Med_p.csv"),"w")
-			Spinup_Med_d  = open(string("./Data/CSV/Spinup_",loc,"_Med_d.csv"),"w")
-			Spinup_Lrg_p  = open(string("./Data/CSV/Spinup_",loc,"_Lrg_p.csv"),"w")
-			Spinup_Lrg_d  = open(string("./Data/CSV/Spinup_",loc,"_Lrg_d.csv"),"w")
-			Spinup_Cobalt = open(string("./Data/CSV/Spinup_",loc,"_Cobalt.csv"),"w")
+			Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
+			Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p.csv"),"w")
+			Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d.csv"),"w")
+			Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f.csv"),"w")
+			Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p.csv"),"w")
+			Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d.csv"),"w")
+			Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p.csv"),"w")
+			Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d.csv"),"w")
+			Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Cobalt.csv"),"w")
 		end
 
 		#! Iterate forward in time with NO fishing
@@ -158,25 +160,25 @@ function Oneloc_hindcast_pristine()
 		ENVR = sub_init_env(ID);
 		#! Storage
 		if (phen==1)
-			Oneloc_hist_Sml_f  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Sml_f.csv"),"w")
-			Oneloc_hist_Sml_p  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Sml_p.csv"),"w")
-			Oneloc_hist_Sml_d  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Sml_d.csv"),"w")
-			Oneloc_hist_Med_f  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Med_f.csv"),"w")
-			Oneloc_hist_Med_p  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Med_p.csv"),"w")
-			Oneloc_hist_Med_d  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Med_d.csv"),"w")
-			Oneloc_hist_Lrg_p  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Lrg_p.csv"),"w")
-			Oneloc_hist_Lrg_d  = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Lrg_d.csv"),"w")
-			Oneloc_hist_Cobalt = open(string("./Data/CSV/Oneloc_hist_phen_",loc,"_Cobalt.csv"),"w")
+			Oneloc_hist_Sml_f  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Sml_f.csv"),"w")
+			Oneloc_hist_Sml_p  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Sml_p.csv"),"w")
+			Oneloc_hist_Sml_d  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Sml_d.csv"),"w")
+			Oneloc_hist_Med_f  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Med_f.csv"),"w")
+			Oneloc_hist_Med_p  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Med_p.csv"),"w")
+			Oneloc_hist_Med_d  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Med_d.csv"),"w")
+			Oneloc_hist_Lrg_p  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Lrg_p.csv"),"w")
+			Oneloc_hist_Lrg_d  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Lrg_d.csv"),"w")
+			Oneloc_hist_Cobalt = open(string("/Volumes/GFDL/CSV/Oneloc_hist_phen_",loc,"_Cobalt.csv"),"w")
 		else
-			Oneloc_hist_Sml_f  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Sml_f.csv"),"w")
-			Oneloc_hist_Sml_p  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Sml_p.csv"),"w")
-			Oneloc_hist_Sml_d  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Sml_d.csv"),"w")
-			Oneloc_hist_Med_f  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Med_f.csv"),"w")
-			Oneloc_hist_Med_p  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Med_p.csv"),"w")
-			Oneloc_hist_Med_d  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Med_d.csv"),"w")
-			Oneloc_hist_Lrg_p  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Lrg_p.csv"),"w")
-			Oneloc_hist_Lrg_d  = open(string("./Data/CSV/Oneloc_hist_",loc,"_Lrg_d.csv"),"w")
-			Oneloc_hist_Cobalt = open(string("./Data/CSV/Oneloc_hist_",loc,"_Cobalt.csv"),"w")
+			Oneloc_hist_Sml_f  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Sml_f.csv"),"w")
+			Oneloc_hist_Sml_p  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Sml_p.csv"),"w")
+			Oneloc_hist_Sml_d  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Sml_d.csv"),"w")
+			Oneloc_hist_Med_f  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Med_f.csv"),"w")
+			Oneloc_hist_Med_p  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Med_p.csv"),"w")
+			Oneloc_hist_Med_d  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Med_d.csv"),"w")
+			Oneloc_hist_Lrg_p  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Lrg_p.csv"),"w")
+			Oneloc_hist_Lrg_d  = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Lrg_d.csv"),"w")
+			Oneloc_hist_Cobalt = open(string("/Volumes/GFDL/CSV/Oneloc_hist_",loc,"_Cobalt.csv"),"w")
 		end
 
 		################## RUN MODEL
@@ -269,25 +271,25 @@ function Oneloc_forecast_pristine()
 		ENVR = sub_init_env(ID);
 		#! Storage
 		if (phen==1)
-			Oneloc_fore_Sml_f  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Sml_f.csv"),"w")
-			Oneloc_fore_Sml_p  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Sml_p.csv"),"w")
-			Oneloc_fore_Sml_d  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Sml_d.csv"),"w")
-			Oneloc_fore_Med_f  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Med_f.csv"),"w")
-			Oneloc_fore_Med_p  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Med_p.csv"),"w")
-			Oneloc_fore_Med_d  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Med_d.csv"),"w")
-			Oneloc_fore_Lrg_p  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Lrg_p.csv"),"w")
-			Oneloc_fore_Lrg_d  = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Lrg_d.csv"),"w")
-			Oneloc_fore_Cobalt = open(string("./Data/CSV/Oneloc_fore_phen_",loc,"_Cobalt.csv"),"w")
+			Oneloc_fore_Sml_f  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Sml_f.csv"),"w")
+			Oneloc_fore_Sml_p  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Sml_p.csv"),"w")
+			Oneloc_fore_Sml_d  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Sml_d.csv"),"w")
+			Oneloc_fore_Med_f  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Med_f.csv"),"w")
+			Oneloc_fore_Med_p  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Med_p.csv"),"w")
+			Oneloc_fore_Med_d  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Med_d.csv"),"w")
+			Oneloc_fore_Lrg_p  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Lrg_p.csv"),"w")
+			Oneloc_fore_Lrg_d  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Lrg_d.csv"),"w")
+			Oneloc_fore_Cobalt = open(string("/Volumes/GFDL/CSV/Oneloc_fore_phen_",loc,"_Cobalt.csv"),"w")
 		else
-			Oneloc_fore_Sml_f  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Sml_f.csv"),"w")
-			Oneloc_fore_Sml_p  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Sml_p.csv"),"w")
-			Oneloc_fore_Sml_d  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Sml_d.csv"),"w")
-			Oneloc_fore_Med_f  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Med_f.csv"),"w")
-			Oneloc_fore_Med_p  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Med_p.csv"),"w")
-			Oneloc_fore_Med_d  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Med_d.csv"),"w")
-			Oneloc_fore_Lrg_p  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Lrg_p.csv"),"w")
-			Oneloc_fore_Lrg_d  = open(string("./Data/CSV/Oneloc_fore_",loc,"_Lrg_d.csv"),"w")
-			Oneloc_fore_Cobalt = open(string("./Data/CSV/Oneloc_fore_",loc,"_Cobalt.csv"),"w")
+			Oneloc_fore_Sml_f  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Sml_f.csv"),"w")
+			Oneloc_fore_Sml_p  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Sml_p.csv"),"w")
+			Oneloc_fore_Sml_d  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Sml_d.csv"),"w")
+			Oneloc_fore_Med_f  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Med_f.csv"),"w")
+			Oneloc_fore_Med_p  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Med_p.csv"),"w")
+			Oneloc_fore_Med_d  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Med_d.csv"),"w")
+			Oneloc_fore_Lrg_p  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Lrg_p.csv"),"w")
+			Oneloc_fore_Lrg_d  = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Lrg_d.csv"),"w")
+			Oneloc_fore_Cobalt = open(string("/Volumes/GFDL/CSV/Oneloc_fore_",loc,"_Cobalt.csv"),"w")
 		end
 
 		################## RUN MODEL

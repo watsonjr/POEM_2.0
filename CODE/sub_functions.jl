@@ -374,7 +374,7 @@ end
 
 
 ###! Temp-dep natural mortality
-function sub_nmort(Tp,Tb,tpel)
+function sub_nmort(Tp,Tb,tpel,wgt)
   #Tp: pelagic temp
   #Tb: bottom temp
   #tpel: frac pelagic time
@@ -387,6 +387,21 @@ function sub_nmort(Tp,Tb,tpel)
   if (MORT==2) # Temperature-dependent mortality
     temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
     nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+  end
+  if (MORT==3) # Large fishes only
+    if (wgt == M_l)
+      nmort = Nat_mrt
+    else
+      nmort = 0.0
+    end
+  end
+  if (MORT==4) # Large fishes only w/ temp-dep
+    if (wgt == M_l)
+      temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
+      nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+    else
+      nmort = 0.0
+    end
   end
   return nmort
 end

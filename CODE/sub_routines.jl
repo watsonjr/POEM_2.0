@@ -130,14 +130,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_d.pred[JD] = Med_d.die[JD] / Med_d.bio[JD]
 
 		#! natural mortality rates
-		Sml_f.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD])
-		Sml_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD])
-		Sml_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD])
-		Med_f.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD])
-		Med_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD])
-		Med_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD])
-		Lrg_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD])
-		Lrg_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD])
+		Sml_f.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s)
+		Sml_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_p.td[JD],M_s)
+		Sml_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Sml_d.td[JD],M_s)
+		Med_f.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],M_m)
+		Med_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_p.td[JD],M_m)
+		Med_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Med_d.td[JD],M_m)
+		Lrg_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l)
+		Lrg_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l)
 
 		#! Degree days
 		Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0p[JD],Med_f.S[JD,:],DY)

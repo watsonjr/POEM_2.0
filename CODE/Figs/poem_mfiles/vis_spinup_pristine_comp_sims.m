@@ -35,7 +35,7 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFmet/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_NoMFpred/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/'];
-dpath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
+% dpath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
 % dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/'];
 % dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Lmort/'];
 % dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_LTmort/'];
@@ -93,10 +93,15 @@ dpath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
 % dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ00/'];
 % dpath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ01/'];
 % dpath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ05/'];
-dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_05/'];
-dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_075/'];
-dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_125/'];
-dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_15/'];
+% dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_05/'];
+% dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_075/'];
+% dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_125/'];
+% dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_15/'];
+dpath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_NOnmort/'];
+dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10/'];
+dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Tmort/'];
+dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Lmort/'];
+dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_LTmort/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -120,9 +125,12 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {dpath2;dpath3;dpath4;dpath1;dpath5;dpath6;dpath7};
 % sims = {'0.0','0.1','0.5','1.0','MP0.0','MP0.1','MP0.5'};
 % cfile = 'MFeqMP_MZ_comp';
-dp = {dpath2;dpath3;dpath1;dpath4;dpath5};
-sims = {'0.5','0.75','1.0','1.25','1.5'};
-cfile = 'MFeqMP_Mcann_comp';
+% dp = {dpath2;dpath3;dpath1;dpath4;dpath5};
+% sims = {'0.5','0.75','1.0','1.25','1.5'};
+% cfile = 'MFeqMP_Mcann_comp';
+dp = {dpath1;dpath2;dpath3;dpath4;dpath5};
+sims = {'none','const','T','L','T&L'};
+cfile = 'MFeqMP_mort2_comp';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -529,89 +537,89 @@ for i=1:length(spots)
         ylabel('Mean biom reproduced (g d^-^1)')
         
         %% Metabolism
-%         f10 = figure(10);
-%         subplot(3,1,1)
-%         plot(s-0.25,Fmet(1,i),'sk',...
-%             'MarkerFaceColor',cmap_ppt(3,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s,Pmet(1,i),'sk',...
-%             'MarkerFaceColor',cmap_ppt(1,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s+0.25,Dmet(1,i),'sk',...
-%             'MarkerFaceColor',cmap_ppt(2,:),...
-%             'MarkerSize',15); hold on;
-%         xlim([0 length(dp)+1])
-%         if (s==length(dp))
-%             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-%             stamp(cfile)
-%         end
-%         title([loc ' S'])
-%         
-%         subplot(3,1,2)
-%         plot(s-0.25,(Fmet(2,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(3,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s,(Pmet(2,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(1,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s+0.25,(Dmet(2,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(2,:),...
-%             'MarkerSize',15); hold on;
-%         xlim([0 length(dp)+1])
-%         if (s==length(dp))
-%             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-%         end
-%         ylabel('Mean metabolic rate (g g^-^1 d^-^1) in final year')
-%         title('M')
-%         
-%         subplot(3,1,3)
-%         plot(s,(Pmet(3,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(1,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s+0.25,(Dmet(3,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(2,:),...
-%             'MarkerSize',15); hold on;
-%         xlim([0 length(dp)+1])
-%         if (s==length(dp))
-%             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-%         end
-%         title('L')
+        f10 = figure(10);
+        subplot(3,1,1)
+        plot(s-0.25,Fmet(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,Pmet(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,Dmet(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            stamp(cfile)
+        end
+        title([loc ' S'])
+        
+        subplot(3,1,2)
+        plot(s-0.25,(Fmet(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,(Pmet(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,(Dmet(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+        end
+        ylabel('Mean metabolic rate (g g^-^1 d^-^1) in final year')
+        title('M')
+        
+        subplot(3,1,3)
+        plot(s,(Pmet(3,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,(Dmet(3,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+        end
+        title('L')
         
         %% Predation
-%         f11 = figure(11);
-%         subplot(2,1,1)
-%         plot(s-0.25,Fpred(1,i),'sk',...
-%             'MarkerFaceColor',cmap_ppt(3,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s,Ppred(1,i),'sk',...
-%             'MarkerFaceColor',cmap_ppt(1,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s+0.25,Dpred(1,i),'sk',...
-%             'MarkerFaceColor',cmap_ppt(2,:),...
-%             'MarkerSize',15); hold on;
-%         xlim([0 length(dp)+1])
-%         if (s==length(dp))
-%             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-%             stamp(cfile)
-%         end
-%         title([loc ' S'])
-%         
-%         subplot(2,1,2)
-%         plot(s-0.25,(Fpred(2,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(3,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s,(Ppred(2,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(1,:),...
-%             'MarkerSize',15); hold on;
-%         plot(s+0.25,(Dpred(2,i)),'sk',...
-%             'MarkerFaceColor',cmap_ppt(2,:),...
-%             'MarkerSize',15); hold on;
-%         xlim([0 length(dp)+1])
-%         if (s==length(dp))
-%             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-%         end
-%         ylabel('Mean predation rate (g g^-^1 d^-^1) in final year',...
-%             'HorizontalAlignment','left')
+        f11 = figure(11);
+        subplot(2,1,1)
+        plot(s-0.25,Fpred(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,Ppred(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,Dpred(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            stamp(cfile)
+        end
+        title([loc ' S'])
+        
+        subplot(2,1,2)
+        plot(s-0.25,(Fpred(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,(Ppred(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,(Dpred(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+        end
+        ylabel('Mean predation rate (g g^-^1 d^-^1) in final year',...
+            'HorizontalAlignment','left')
         title('M')
         
         %% Sum mean biom over stages
