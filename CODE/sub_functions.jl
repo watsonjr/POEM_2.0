@@ -479,8 +479,12 @@ end
 
 function sub_fishing_rate(bio)
 	if FISHING > 0.0
+    # ADD HARVEST CONTROL RULE
     caught = bio * FISHING
     bio -= caught
+  else
+    bio = bio
+    caught = 0.0
 	end
 	return bio, caught
 end

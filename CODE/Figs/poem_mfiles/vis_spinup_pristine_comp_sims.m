@@ -69,10 +69,23 @@ dpath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
 % dpath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MFenc30/'];
 % dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc075/'];
 % dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_fcrit10_MPenc050/'];
-dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann/'];
-dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/'];
-dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann/'];
-dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann_Tmort/'];
+% dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann/'];
+% dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_cann_Tmort/'];
+% dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann/'];
+% dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Scann_Tmort/'];
+% dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish010/'];
+% dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish025/'];
+% dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish05/'];
+% dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10/'];
+% dpath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20/'];
+% dpath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40/'];
+dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ00/'];
+dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01/'];
+dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ05/'];
+dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ00/'];
+dpath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ01/'];
+dpath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ05/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -85,9 +98,15 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {dpath1;dpath2;dpath3;dpath4;dpath5;dpath6;dpath7};
 % sims = {'con','T','L','T&L','simpQ','compQ1','compQ1'};
 % cfile = 'MFeqMP_mort_comp';
-dp = {dpath1;dpath2;dpath3;dpath4;dpath5};
-sims = {'full','redSM','T-redSM','redS','T-redS'};
-cfile = 'MFeqMP_cannibal_comp';
+% dp = {dpath1;dpath2;dpath3;dpath4;dpath5};
+% sims = {'full','redSM','T-redSM','redS','T-redS'};
+% cfile = 'MFeqMP_cannibal_comp';
+% dp = {dpath1;dpath2;dpath3;dpath4;dpath5;dpath6;dpath7};
+% sims = {'0.0','0.01','0.025','0.05','0.10','0.20','0.30'};
+% cfile = 'MFeqMP_fishing_comp';
+dp = {dpath2;dpath3;dpath4;dpath1;dpath5;dpath6;dpath7};
+sims = {'0.0','0.1','0.5','1.0','MP0.0','MP0.1','MP0.5'};
+cfile = 'MFeqMP_MZ_comp';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -105,7 +124,7 @@ cols=cols';
 load('cmap_ppt_angles.mat')
 
 %%
-for i=1:7%length(spots)
+for i=1:length(spots)
     close all
         
     loc = spots{i};

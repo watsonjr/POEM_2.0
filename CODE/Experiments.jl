@@ -3,7 +3,7 @@
 function Testoneloc()
 
 	#! Make parameters
-	harv = 1 #0=no fishing; 1=fishing
+	harv = 0 #0=no fishing; 1=fishing
 	make_parameters(harv) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)

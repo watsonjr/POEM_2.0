@@ -34,6 +34,7 @@ function sub_init_fish(ID,phen)
 	#! biomass
 	#X = 0.17981663628808964; # mean Zm off Spain
 	X = 0.00001; # very small amount
+	#X = 1.0;
 	bio = ones(Float64,NX) * X
 
 	# fraction of time spent in the pelagic
