@@ -79,13 +79,24 @@ dpath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10/'];
 % dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10/'];
 % dpath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20/'];
 % dpath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30/'];
-% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40/'];
-dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ00/'];
-dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01/'];
-dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ05/'];
-dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ00/'];
-dpath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ01/'];
-dpath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ05/'];
+% dpath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40/'];
+% dpath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish010_NOnmort/'];
+% dpath10 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish025_NOnmort/'];
+% dpath11 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish05_NOnmort/'];
+% dpath12 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10_NOnmort/'];
+% dpath13 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20_NOnmort/'];
+% dpath14 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30_NOnmort/'];
+% dpath15 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40_NOnmort/'];
+% dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ00/'];
+% dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01/'];
+% dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ05/'];
+% dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ00/'];
+% dpath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ01/'];
+% dpath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MPMZ05/'];
+dpath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_05/'];
+dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_075/'];
+dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_125/'];
+dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_McannInc_15/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -101,12 +112,17 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {dpath1;dpath2;dpath3;dpath4;dpath5};
 % sims = {'full','redSM','T-redSM','redS','T-redS'};
 % cfile = 'MFeqMP_cannibal_comp';
-% dp = {dpath1;dpath2;dpath3;dpath4;dpath5;dpath6;dpath7};
-% sims = {'0.0','0.01','0.025','0.05','0.10','0.20','0.30'};
+% dp = {dpath9;dpath10;dpath11;dpath12;dpath13;dpath14;dpath15;dpath1;dpath4;...
+%     dpath5;dpath6;dpath7;dpath8};
+% sims = {'0.01','0.025','0.05','0.10','0.20','0.30','0.40','0.0+N','0.01+N',...
+%     '0.025+N','0.05+N','0.10+N','0.20+N','0.30+N'};
 % cfile = 'MFeqMP_fishing_comp';
-dp = {dpath2;dpath3;dpath4;dpath1;dpath5;dpath6;dpath7};
-sims = {'0.0','0.1','0.5','1.0','MP0.0','MP0.1','MP0.5'};
-cfile = 'MFeqMP_MZ_comp';
+% dp = {dpath2;dpath3;dpath4;dpath1;dpath5;dpath6;dpath7};
+% sims = {'0.0','0.1','0.5','1.0','MP0.0','MP0.1','MP0.5'};
+% cfile = 'MFeqMP_MZ_comp';
+dp = {dpath2;dpath3;dpath1;dpath4;dpath5};
+sims = {'0.5','0.75','1.0','1.25','1.5'};
+cfile = 'MFeqMP_Mcann_comp';
 
 sname = 'Spinup_';
 sname2 = '';

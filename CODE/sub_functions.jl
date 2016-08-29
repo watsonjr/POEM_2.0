@@ -233,24 +233,6 @@ function sub_offline_zl(enc_1,enc_2,bio_1,bio_2,dZ)
   return out_1, out_2, zf
 end
 
-# function sub_offline(dZ,enc,bio)
-#   # ADD FLAG FOR COUNTING HOW MANY TIMES THIS HAPPENS
-# 	#! offline switch
-#   con = enc .* bio
-#   if (sum(con) > dZ)
-#     frac=0.0*con
-#     out=0.0*con
-#     for i=1:length(con)
-# 		    frac[i] = con[i] / sum(con)
-#         out[i] = (frac[i] * dZ) / bio[i]
-#     end
-# 	else
-# 		out = enc
-# 	end
-#   zf = (out.*bio) / dZ
-# 	return zf, out
-# end
-
 function sub_offline_bent(enc_1,enc_2,bio_1,bio_2,B,det)
   con_1 = enc_1 * bio_1
   con_2 = enc_2 * bio_2
@@ -479,7 +461,6 @@ end
 
 function sub_fishing_rate(bio)
 	if FISHING > 0.0
-    # ADD HARVEST CONTROL RULE
     caught = bio * FISHING
     bio -= caught
   else

@@ -14,8 +14,8 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish025/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish05/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish05/'];
-dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10/'];
-fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10/'];
+% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10/'];
+% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30/'];
@@ -34,10 +34,10 @@ fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20_NOnmort/'];
 % dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30_NOnmort/'];
 % fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30_NOnmort/'];
-% dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40_NOnmort/'];
-% fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40_NOnmort/'];
+dpath = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40_NOnmort/'];
+fpath = [figp 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40_NOnmort/'];
 
-cfile = 'MFeqMP_fcrit10_fish10';
+cfile = 'MFeqMP_fcrit10_fish40_NOnmort';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
 
