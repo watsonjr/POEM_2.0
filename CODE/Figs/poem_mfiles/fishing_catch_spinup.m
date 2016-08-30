@@ -26,6 +26,18 @@ dpath13 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10_NOnmort/']
 dpath14 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20_NOnmort/'];
 dpath15 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30_NOnmort/'];
 dpath16 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40_NOnmort/'];
+npath0 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
+npath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish025/'];
+npath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05/'];
+npath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10/'];
+npath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20/'];
+npath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30/'];
+npath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40/'];
+npath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/'];
+npath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60/'];
+npath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70/'];
+npath10 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish45/'];
+npath11 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish55/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -33,9 +45,15 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % sims = {'0.0','0.01','0.025','0.05','0.10','0.20','0.30','0.40'};
 % cfile = 'MFeqMP_fishing_catch';
 
-dp = {dpath2;dpath3;dpath4;dpath5;dpath6;dpath7;dpath8;dpath9};
-sims = {'0.0+N','0.01+N','0.025+N','0.05+N','0.10+N','0.20+N','0.30+N','0.40+N'};
-cfile = 'MFeqMP_fishing_nmort_catch';
+% dp = {dpath2;dpath3;dpath4;dpath5;dpath6;dpath7;dpath8;dpath9};
+% sims = {'0.0+N','0.01+N','0.025+N','0.05+N','0.10+N','0.20+N','0.30+N','0.40+N'};
+% cfile = 'MFeqMP_fishing_nmort_catch';
+
+dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath10;npath7;...
+    npath11;npath8;npath9};
+sims = {'0.0','0.025','0.05','0.10','0.20','0.30',...
+    '0.40','0.45','0.50','0.55','0.60','0.70'};
+cfile = 'MFeqMP_MZ01_fishing_catch';
 
 sname = 'Spinup_';
 sname2 = '';

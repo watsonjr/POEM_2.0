@@ -67,9 +67,11 @@ function make_parameters(harv)
 	#! Amount of fishing
 	if harv == 1
 		#const global FISHING = 80000000000 / (365/DT) # 80MT per year
-		const global FISHING = 0.50/365.0
+		const global LFISHING = 0.05/365.0
+		const global MFISHING = 0.5 * LFISHING
 	else
-		const global FISHING = 0
+		const global MFISHING = 0
+		const global LFISHING = 0
 	end
 
 	#! Benthic-pelagic coupling cutoff (depth, m)
