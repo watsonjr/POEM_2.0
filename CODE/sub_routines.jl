@@ -12,8 +12,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		BENT.mass[JD] = BENT.mass[JD] + bent_eff*ENVR.det[JD]
 
 		#! fraction of time large piscivores spends in pelagic
-	  Lrg_p.td[JD] = sub_tdif_pel(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
-		#Lrg_p.td[JD] = 1.0
+	  #Lrg_p.td[JD] = sub_tdif_pel(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
+		Lrg_p.td[JD] = 1.0
 		#! fraction of time large demersal spends in pelagic
 	  Lrg_d.td[JD] = sub_tdif_dem(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
 		#Lrg_d.td[JD] = 0.0
@@ -29,24 +29,24 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l,L_l)
 
 		#! encounter rates
-		#sub_enc(Tp,Tb,tdif,wgt,L,tu,pred,prey,td)
-		Sml_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_f.bio[JD],ENVR.Zm[JD],Sml_f.td[JD],1,1)
-		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD],1,1)
-		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],1,1)
+		#sub_enc(Tp,Tb,wgt,pred,prey,td,tprey,pref)
+		Sml_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_f.bio[JD],ENVR.Zm[JD],Sml_f.td[JD],Sml_f.td[JD],1)
+		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD],Sml_f.td[JD],1)
+		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],Sml_f.td[JD],1)
 
-		Med_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zm[JD],Med_f.td[JD],1,MF_phi_MZ)
-		Med_f.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD],1,MF_phi_LZ)
-		Med_f.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_f.bio[JD],Med_f.td[JD],1,MF_phi_S)
-		Med_f.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_p.bio[JD],Med_f.td[JD],1,MF_phi_S)
-		Med_f.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_d.bio[JD],Med_f.td[JD],1,MF_phi_S)
+		Med_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zm[JD],Med_f.td[JD],Med_f.td[JD],MF_phi_MZ)
+		Med_f.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD],Med_f.td[JD],MF_phi_LZ)
+		Med_f.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_f.bio[JD],Med_f.td[JD],Med_f.td[JD],MF_phi_S)
+		Med_f.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_p.bio[JD],Med_f.td[JD],Med_f.td[JD],MF_phi_S)
+		Med_f.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],Sml_d.bio[JD],Med_f.td[JD],Med_f.td[JD],MF_phi_S)
 
-		Med_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],ENVR.Zm[JD],Med_p.td[JD],1,MP_phi_MZ)
-		Med_p.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],ENVR.Zl[JD],Med_p.td[JD],1,MP_phi_LZ)
-		Med_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_f.bio[JD],Med_p.td[JD],1,MP_phi_S)
-		Med_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD],1,MP_phi_S)
-		Med_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_d.bio[JD],Med_p.td[JD],1,MP_phi_S)
+		Med_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],ENVR.Zm[JD],Med_p.td[JD],Med_p.td[JD],MP_phi_MZ)
+		Med_p.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],ENVR.Zl[JD],Med_p.td[JD],Med_p.td[JD],MP_phi_LZ)
+		Med_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_f.bio[JD],Med_p.td[JD],Med_p.td[JD],MP_phi_S)
+		Med_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD],Med_p.td[JD],MP_phi_S)
+		Med_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_d.bio[JD],Med_p.td[JD],Med_p.td[JD],MP_phi_S)
 
-		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_d.bio[JD],BENT.mass[JD],Med_d.td[JD],1,1)
+		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_d.bio[JD],BENT.mass[JD],Med_d.td[JD],1-Med_d.td[JD],1)
 
 		Lrg_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_f.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],LP_phi_MF)
 		Lrg_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_p.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],LP_phi_MP)

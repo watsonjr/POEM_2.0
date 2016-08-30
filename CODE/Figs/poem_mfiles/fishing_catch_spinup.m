@@ -26,18 +26,26 @@ dpath13 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish10_NOnmort/']
 dpath14 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish20_NOnmort/'];
 dpath15 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish30_NOnmort/'];
 dpath16 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_fish40_NOnmort/'];
-npath0 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
-npath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish025/'];
-npath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05/'];
-npath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10/'];
-npath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20/'];
-npath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30/'];
-npath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40/'];
-npath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/'];
-npath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60/'];
-npath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70/'];
-npath10 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish45/'];
-npath11 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish55/'];
+% npath0 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
+% npath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish025/'];
+% npath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05/'];
+% npath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10/'];
+% npath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20/'];
+% npath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30/'];
+% npath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40/'];
+% npath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/'];
+% npath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60/'];
+% npath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70/'];
+% npath10 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish45/'];
+% npath11 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish55/'];
+npath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05_halfM/'];
+npath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10_halfM/'];
+npath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20_halfM/'];
+npath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30_halfM/'];
+npath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40_halfM/'];
+npath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50_halfM/'];
+npath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60_halfM/'];
+npath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70_halfM/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -49,11 +57,21 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % sims = {'0.0+N','0.01+N','0.025+N','0.05+N','0.10+N','0.20+N','0.30+N','0.40+N'};
 % cfile = 'MFeqMP_fishing_nmort_catch';
 
-dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath10;npath7;...
-    npath11;npath8;npath9};
-sims = {'0.0','0.025','0.05','0.10','0.20','0.30',...
-    '0.40','0.45','0.50','0.55','0.60','0.70'};
-cfile = 'MFeqMP_MZ01_fishing_catch';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath10;npath7;...
+%     npath11;npath8;npath9};
+% sims = {'0.0','0.025','0.05','0.10','0.20','0.30',...
+%     '0.40','0.45','0.50','0.55','0.60','0.70'};
+% cfile = 'MFeqMP_MZ01_fishing_catch';
+
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath10;npath7;...
+%     npath11;npath8;npath9};
+% sims = {'0.0','0.025','0.05','0.10','0.20','0.30',...
+%     '0.40','0.45','0.50','0.55','0.60','0.70'};
+% cfile = 'MFeqMP_MZ01_fishing_catch';
+
+dp = {npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
+sims = {'0.05','0.10','0.20','0.30','0.40','0.50','0.60','0.70'};
+cfile = 'MFeqMP_MZ01_halfM_fishing_catch';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -141,51 +159,79 @@ for s=1:length(spots)
         %% Fishing
         %         MP_fish=nanmean(MP(lyr,28));
         %         MP_totcatch=nansum(MP(lyr,28));
+        Ftot = sum(Ftotcatch(:,s));
+        Ptot = sum(Ptotcatch(:,s));
+        Dtot = sum(Dtotcatch(:,s));
+        Tot = Ftot+Ptot+Dtot;
         
         f5 = figure(5);
         plot(d,Ftotcatch(2,s),'.k','MarkerSize',15); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-            title(loc)
-            ylabel('Total MF catch (g) in final year')
+            title([loc ' Total catch (g) in final year'])
+            ylabel('MF')
             stamp(cfile)
         end
         
         f6 = figure(6);
-        subplot(2,1,1)
+        subplot(3,1,1)
         plot(d,Ptotcatch(2,s),'.k','MarkerSize',15); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-            title(loc)
-            ylabel('Total MP catch (g) in final year')
+            title([loc ' Total catch (g) in final year'])
+            ylabel('MP')
             stamp(cfile)
         end
-        subplot(2,1,2)
+        subplot(3,1,2)
         plot(d,Ptotcatch(3,s),'.k','MarkerSize',15); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-            ylabel('Total LP catch (g) in final year')
+            ylabel('LP')
+        end
+        subplot(3,1,3)
+        plot(d,Ptot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            ylabel('All P')
         end
         
         f7 = figure(7);
-        subplot(2,1,1)
+        subplot(3,1,1)
         plot(d,Dtotcatch(2,s),'.k','MarkerSize',15); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-            title(loc)
-            ylabel('Total MD catch (g) in final year')
+            title([loc ' Total catch (g) in final year'])
+            ylabel('MD')
             stamp(cfile)
         end
-        subplot(2,1,2)
+        subplot(3,1,2)
         plot(d,Dtotcatch(3,s),'.k','MarkerSize',15); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-            ylabel('Total LD catch (g) in final year')
+            ylabel('LD')
+        end
+        subplot(3,1,3)
+        plot(d,Dtot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            ylabel('All D')
+        end
+        
+        f8 = figure(8);
+        plot(d,Tot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total catch (g) in final year')
+            stamp(cfile)
         end
         
     end
@@ -193,6 +239,7 @@ for s=1:length(spots)
     print(f5,'-dpng',[fpath sname sname2 cfile '_' lname 'F.png'])
     print(f6,'-dpng',[fpath sname sname2 cfile '_' lname 'P.png'])
     print(f7,'-dpng',[fpath sname sname2 cfile '_' lname 'D.png'])
+    print(f8,'-dpng',[fpath sname sname2 cfile '_' lname 'All.png'])
     
 end
 
