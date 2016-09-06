@@ -182,14 +182,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.rep[JD],Lrg_d.egg[JD] = sub_rep(Lrg_d.nu[JD],K_a,Lrg_d.S[JD,DY],Lrg_d.egg[JD])
 
 		#! recruitment (from smaller size class)
-		Sml_f.rec[JD] = sub_rec(Med_f.rep[JD],Med_f.bio[JD])
-		Sml_p.rec[JD] = sub_rec(Lrg_p.rep[JD],Lrg_p.bio[JD])
-		Sml_d.rec[JD] = sub_rec(Lrg_d.rep[JD],Lrg_d.bio[JD])
-		Med_f.rec[JD] = sub_rec(Sml_f.gamma[JD],Sml_f.bio[JD])
-		Med_p.rec[JD] = sub_rec(Sml_p.gamma[JD],Sml_p.bio[JD])
-		Med_d.rec[JD] = sub_rec(Sml_d.gamma[JD],Sml_d.bio[JD])
-		Lrg_p.rec[JD] = sub_rec(Med_p.gamma[JD],Med_p.bio[JD])
-		Lrg_d.rec[JD] = sub_rec(Med_d.gamma[JD],Med_d.bio[JD])
+		Sml_f.rec[JD] = sub_rec(Med_f.rep[JD],Med_f.bio[JD],M_s)
+		Sml_p.rec[JD] = sub_rec(Lrg_p.rep[JD],Lrg_p.bio[JD],M_s)
+		Sml_d.rec[JD] = sub_rec(Lrg_d.rep[JD],Lrg_d.bio[JD],M_s)
+		Med_f.rec[JD] = sub_rec(Sml_f.gamma[JD],Sml_f.bio[JD],M_m)
+		Med_p.rec[JD] = sub_rec(Sml_p.gamma[JD],Sml_p.bio[JD],M_m)
+		Med_d.rec[JD] = sub_rec(Sml_d.gamma[JD],Sml_d.bio[JD],M_m)
+		Lrg_p.rec[JD] = sub_rec(Med_p.gamma[JD],Med_p.bio[JD],M_l)
+		Lrg_d.rec[JD] = sub_rec(Med_d.gamma[JD],Med_d.bio[JD],M_l)
 
 		#! Mass balance
 		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])

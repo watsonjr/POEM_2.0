@@ -363,12 +363,13 @@ end
 
 
 ###! Biomass recruiting to size-class (g m-2 d-1)
-function sub_rec(X,bio)
+function sub_rec(X,bio,wgt)
 	# X could be biomass of eggs (for larval class) or maturing from smaller sizes
-	rec = 0.0
-	for i = 1:length(X)
-		rec += X[i] * bio[i]
-	end
+  if (wgt==M_s)
+    rec = rfrac * X * bio
+  else
+    rec = X * bio
+  end
 	return rec
 end
 

@@ -67,7 +67,8 @@ function make_parameters(harv)
 	#! Amount of fishing
 	if harv == 1
 		#const global FISHING = 80000000000 / (365/DT) # 80MT per year
-		const global LFISHING = 0.70/365.0
+		const global LFISHING = 0.5/365.0
+		#const global MFISHING = LFISHING
 		const global MFISHING = 0.5 * LFISHING
 	else
 		const global MFISHING = 0
@@ -124,6 +125,9 @@ function make_parameters(harv)
 
 	###! Transfer efficiency of detritus to benthic prey
 	const global bent_eff = 0.15
+
+	###! Reproductive efficiency
+	const global rfrac = 0.1
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0

@@ -1,27 +1,32 @@
 % Visualize output of POEM
 % Spinup at 100 locations
-% 30 years
+% 50 years
 % Saved as mat files
 
 clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit05/';
-ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit05/';
+% dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit05/';
+% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit05/';
 % dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit10/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
 % dpath = '/Volumes/GFDL/NC/MFeqMP4_fcrit10_Tmort/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
 % dpath = '/Volumes/GFDL/NC/fcrit10_FdiffA2_Tmort/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
+% dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
+% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
+dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
+ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
 
-cfile = 'PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit05';
+cfile = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50';
 
-load([dpath 'Data_spinup_pristine.mat']);
+%load([dpath 'Data_spinup_pristine.mat']);
 %load([dpath 'Data_spinup_pristine_fcrit10.mat']);
 %load([dpath 'Data_spinup_pristine_fcrit10_Tmort_30yr.mat']);
 %load([dpath 'Data_spinup_pristine_fcrit10_FdiffA2_Tmort.mat']);
+load([dpath 'Data_spinup_pristine_Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50.mat']);
 
 %%
 [loc,days]=size(SP.bio);
@@ -74,7 +79,7 @@ print('-dpng',[ppath 'Spinup_global_SP.png'])
 % sf
 figure(2)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zsf)); hold on;
+m_pcolor(X,Y,real(log10(Zsf))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -88,7 +93,7 @@ print('-dpng',[ppath 'Spinup_global_SF.png'])
 % sd
 figure(3)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zsd)); hold on;
+m_pcolor(X,Y,real(log10(Zsd))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -116,7 +121,7 @@ print('-dpng',[ppath 'Spinup_global_MP.png'])
 % mf
 figure(5)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zmf)); hold on;
+m_pcolor(X,Y,real(log10(Zmf))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -132,7 +137,7 @@ print('-dpng',[ppath 'Spinup_global_MF.png'])
 % md
 figure(6)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zmd)); hold on;
+m_pcolor(X,Y,real(log10(Zmd))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -146,7 +151,7 @@ print('-dpng',[ppath 'Spinup_global_MD.png'])
 % lp
 figure(7)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zlp)); hold on;
+m_pcolor(X,Y,real(log10(Zlp))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -161,7 +166,7 @@ print('-dpng',[ppath 'Spinup_global_LP.png'])
 % ld
 figure(8)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,log10(Zld)); hold on;
+m_pcolor(X,Y,real(log10(Zld))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
@@ -348,7 +353,7 @@ caxis([-1 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_All.png'])
 
-%% all F
+% all F
 figure(22)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(AllF))); hold on;
@@ -390,7 +395,7 @@ caxis([-1 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllP.png'])
 
-%% FracPD
+% FracPD
 figure(25)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(FracPD)); hold on;

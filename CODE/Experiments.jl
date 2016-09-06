@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70_halfM";
+	simname = "Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish90_halfM";
 
 	for L = 1:9
 		ID = ids[L]
@@ -359,7 +359,7 @@ function Spinup_pristine()
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 	YEARS = 50
-  DAYS = 365
+  global DAYS = 365
 
 	#! choose where and when to run the model
 	const global NX = 48111

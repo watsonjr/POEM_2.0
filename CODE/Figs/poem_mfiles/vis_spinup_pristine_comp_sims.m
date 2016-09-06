@@ -103,52 +103,113 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % dpath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Tmort/'];
 % dpath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_Lmort/'];
 % dpath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_LTmort/'];
-npath0 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
-npath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish025/'];
-npath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05/'];
-npath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10/'];
-npath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20/'];
-npath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30/'];
-npath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40/'];
-npath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish45/'];
-npath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/'];
-npath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish55/'];
-npath10 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60/'];
-npath11 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70/'];
+% npath0 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
+% npath1 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish025/'];
+% npath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05/'];
+% npath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10/'];
+% npath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20/'];
+% npath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30/'];
+% npath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40/'];
+% npath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish45/'];
+% npath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/'];
+% npath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish55/'];
+% npath10 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60/'];
+% npath11 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70/'];
+% npath2 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05_halfM/'];
+% npath3 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10_halfM/'];
+% npath4 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20_halfM/'];
+% npath5 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30_halfM/'];
+% npath6 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40_halfM/'];
+% npath7 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50_halfM/'];
+% npath8 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60_halfM/'];
+% npath9 = [datap 'PDc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70_halfM/'];
+% npath0 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ0_NOnmort/'];
+npath1 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
+% npath2 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ025_NOnmort/'];
+% npath3 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ05_NOnmort/'];
+% npath4 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ075_NOnmort/'];
+% npath5 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ1_NOnmort/'];
+% npath0 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish025/'];
+% npath1 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish05/'];
+% npath2 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish075/'];
+% npath3 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10/'];
+% npath4 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20/'];
+% npath5 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30/'];
+% npath6 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40/'];
+% npath7 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/'];
+% npath8 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60/'];
+% npath9 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70/'];
+% npath2 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_nmort/'];
+% npath3 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_Tmort/'];
+% npath4 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_Lmort/'];
+% npath5 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_LTmort/'];
+% npath2 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/'];
+% npath3 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
+% npath4 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
+% npath5 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/'];
+npath3 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10_halfM/'];
+npath4 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20_halfM/'];
+npath5 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30_halfM/'];
+npath6 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish40_halfM/'];
+npath7 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50_halfM/'];
+npath8 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60_halfM/'];
+npath9 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70_halfM/'];
+npath10 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80_halfM/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
 % dp = {dpath1; dpath2; dpath3; dpath4; dpath5; dpath6};
 % sims = {'f05','f10','f15','f20','f30','f40'};
-% cfile = 'MFeqMP_fcrit_comp';
+% cfile = 'PDc_MFeqMP_fcrit_comp';
 % dp = {dpath3;dpath4;dpath2;dpath5;dpath6;dpath7;dpath8};
 % sims = {'MP0.50','MP0.75','Meq','MF1.5','MF2.0','MF2.5','MF3.0'};
-% cfile = 'MFbetter_enc_comp';
+% cfile = 'PDc_MFbetter_enc_comp';
 % dp = {dpath1;dpath2;dpath3;dpath4;dpath5;dpath6;dpath7};
 % sims = {'con','T','L','T&L','simpQ','compQ1','compQ1'};
-% cfile = 'MFeqMP_mort_comp';
+% cfile = 'PDc_MFeqMP_mort_comp';
 % dp = {dpath1;dpath2;dpath3;dpath4;dpath5};
 % sims = {'full','redSM','T-redSM','redS','T-redS'};
-% cfile = 'MFeqMP_cannibal_comp';
-% dp = {dpath9;dpath10;dpath11;dpath12;dpath13;dpath14;dpath15;dpath1;dpath4;...
-%     dpath5;dpath6;dpath7;dpath8};
-% sims = {'0.01','0.025','0.05','0.10','0.20','0.30','0.40','0.0+N','0.01+N',...
-%     '0.025+N','0.05+N','0.10+N','0.20+N','0.30+N'};
-% cfile = 'MFeqMP_fishing_comp';
+% cfile = 'PDc_MFeqMP_cannibal_comp';
+% dp = {dpath1;dpath2;dpath3;dpath4;dpath5;dpath6;dpath7;dpath8};
+% sims = {'0.0+N','0.01+N','0.025+N','0.05+N','0.10+N','0.20+N','0.30+N','0.40+N'};
+% cfile = 'PDc_MFeqMP_fishing_nmort_comp';
+% dp = {dpath1;dpath9;dpath10;dpath11;dpath12;dpath13;dpath14;dpath15};
+% sims = {'0.0','0.01','0.025','0.05','0.10','0.20','0.30','0.40'};
+% cfile = 'PDc_MFeqMP_fishing_comp';
 % dp = {dpath2;dpath3;dpath4;dpath1;dpath5;dpath6;dpath7};
 % sims = {'0.0','0.1','0.5','1.0','MP0.0','MP0.1','MP0.5'};
-% cfile = 'MFeqMP_MZ_comp';
+% cfile = 'PDc_MFeqMP_MZ_comp';
 % dp = {dpath2;dpath3;dpath1;dpath4;dpath5};
 % sims = {'0.5','0.75','1.0','1.25','1.5'};
-% cfile = 'MFeqMP_Mcann_comp';
+% cfile = 'PDc_MFeqMP_Mcann_comp';
 % dp = {dpath1;dpath2;dpath3;dpath4;dpath5};
 % sims = {'none','const','T','L','T&L'};
-% cfile = 'MFeqMP_mort2_comp';
-dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;...
-    npath10;npath11};
-sims = {'0.0MZ01','0.025MZ01','0.05MZ01','0.10MZ01','0.20MZ01','0.30MZ01',...
-    '0.40MZ01','0.45MZ01','0.50MZ01','0.55MZ01','0.60MZ01','0.70MZ01'};
-cfile = 'MFeqMP_MZ01_fishing_comp';
+% cfile = 'PDc_MFeqMP_mort2_comp';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;...
+%     npath10;npath11};
+% sims = {'0.0MZ01','0.025MZ01','0.05MZ01','0.10MZ01','0.20MZ01','0.30MZ01',...
+%     '0.40MZ01','0.45MZ01','0.50MZ01','0.55MZ01','0.60MZ01','0.70MZ01'};
+% cfile = 'PDc_MFeqMP_MZ01_fishing_comp';
+% dp = {npath0;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
+% sims = {'0.0','0.05','0.10','0.20','0.30','0.40','0.50','0.60','0.70'};
+% cfile = 'PDc_MFeqMP_MZ01_halfM_fishing_comp';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5};
+% sims = {'0.0','0.1','0.25','0.5','0.75','1.0'};
+% cfile = 'Dc_MFeqMP_NOnmort_MZpref_comp';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;...
+%     npath9};
+% sims = {'0.025','0.05','0.075','0.10','0.20','0.30','0.40','0.50',...
+%     '0.60','0.70'};
+% cfile = 'Dc_MFeqMP_MZ01_fishing_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5};
+% sims = {'none','const','T','L','T&L'};
+% cfile = 'Dc_MFeqMP_MZ01_mort_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5};
+% sims = {'0.1','0.2','0.3','0.4','0.5'};
+% cfile = 'Dc_MFeqMP_MZ01_fcrit_comp';
+dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
+sims = {'0.10','0.20','0.30','0.40','0.50','0.60','0.70','0.80'};
+cfile = 'Dc_MFeqMP_MZ01_fishing_half_comp';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -179,7 +240,7 @@ for i=1:length(spots)
         load([dpath sname sname2 'consump.mat'],'mclev','Zcon');
         load([dpath sname sname2 'lastyr_sum_mean_biom']);
         
-        %%
+        %% Logmean biomass
         f1 = figure(1);
         subplot(3,1,1)
         plot(s-0.25,log10(squeeze(all_mean(1,1,i))),'sk',...
@@ -215,6 +276,51 @@ for i=1:length(spots)
         plot(s+0.25,log10(squeeze(all_mean(3,3,i))),'sk',...
             'MarkerFaceColor',cmap_ppt(2,:),'MarkerSize',15); hold on;
         xlim([0 length(dp)+1])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+        end
+        title('L')
+        xlabel('Sim')
+        
+        %% Logmean biomass
+        f21 = figure(21);
+        subplot(3,1,1)
+        plot(s-0.25,log10(squeeze(all_mean(1,1,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),'MarkerSize',15); hold on;
+        plot(s,log10(squeeze(all_mean(1,2,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),'MarkerSize',15); hold on;
+        plot(s+0.25,log10(squeeze(all_mean(1,3,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        ylim([-5 2])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            stamp(cfile)
+        end
+        title([loc ' S'])
+        
+        subplot(3,1,2)
+        plot(s-0.25,log10(squeeze(all_mean(2,1,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),'MarkerSize',15); hold on;
+        plot(s,log10(squeeze(all_mean(2,2,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),'MarkerSize',15); hold on;
+        plot(s+0.25,log10(squeeze(all_mean(2,3,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        ylim([-5 2])
+        if (s==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            ylabel('log10 Mean Biom (g m^-^2) in final year')
+        end
+        title('M')
+        
+        subplot(3,1,3)
+        plot(s,log10(squeeze(all_mean(3,2,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),'MarkerSize',15); hold on;
+        plot(s+0.25,log10(squeeze(all_mean(3,3,i))),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),'MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        ylim([-5 2])
         if (s==length(dp))
             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
         end
@@ -654,18 +760,19 @@ for i=1:length(spots)
         
     end
     
-    print(f1,'-dpng',[fpath sname sname2 cfile '_' lname 'Logmean_biomass.png'])
-    print(f2,'-dpng',[fpath sname sname2 cfile '_' lname 'con_level.png'])
-    print(f3,'-dpng',[fpath sname sname2 cfile '_' lname 'nu.png'])
-    print(f4,'-dpng',[fpath sname sname2 cfile '_' lname 'consump.png'])
-    print(f5,'-dpng',[fpath sname sname2 cfile '_' lname 'frac_zoop_loss.png'])
-    print(f7,'-dpng',[fpath sname sname2 cfile '_' lname 'size_spec.png'])
-    print(f8,'-dpng',[fpath sname sname2 cfile '_' lname 'prod.png'])
-    print(f9,'-dpng',[fpath sname sname2 cfile '_' lname 'rep.png'])
-    %print(f10,'-dpng',[fpath sname sname2 cfile '_' lname 'met.png'])
-    %print(f11,'-dpng',[fpath sname sname2 cfile '_' lname 'pred.png'])
-    print(f12,'-dpng',[fpath sname sname2 cfile '_' lname 'zoo_con.png'])
-    print(f15,'-dpng',[fpath sname sname2 cfile '_' lname 'tot_mean_biomass_spec.png'])
+    print(f1,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'Logmean_biomass.png'])
+    print(f21,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'Logmean_biomass_axes.png'])
+    print(f2,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'con_level.png'])
+    print(f3,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'nu.png'])
+    print(f4,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'consump.png'])
+    print(f5,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'frac_zoop_loss.png'])
+    print(f7,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'size_spec.png'])
+    print(f8,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'prod.png'])
+    print(f9,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'rep.png'])
+    print(f10,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'met.png'])
+    print(f11,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'pred.png'])
+    print(f12,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'zoo_con.png'])
+    print(f15,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'tot_mean_biomass_spec.png'])
         
 end
 
