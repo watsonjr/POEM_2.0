@@ -12,8 +12,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		BENT.mass[JD] = BENT.mass[JD] + bent_eff*ENVR.det[JD]
 
 		#! fraction of time large piscivores spends in pelagic
-	  #Lrg_p.td[JD] = sub_tdif_pel(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
-		Lrg_p.td[JD] = 1.0
+	  Lrg_p.td[JD] = sub_tdif_pel(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
+		#Lrg_p.td[JD] = 1.0
 		#! fraction of time large demersal spends in pelagic
 	  Lrg_d.td[JD] = sub_tdif_dem(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
 		#Lrg_d.td[JD] = 0.0
