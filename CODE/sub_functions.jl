@@ -93,8 +93,14 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   #Metabolism
 	#bas = fcrit * cmax
   #met = bas
-  #! Specific "standard activity" respiration rate from Kiorboe & Hirst (g/g/day)
-  met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 2.8027
+  #! Specific "standard activity" respiration rate from Kiorboe & Hirst (mL O2/mg C/hr)
+  # *0.0046 -> (g/mg C/hr) using mol CO2                = *12.2667 -> (g/g/day)
+  # *0.0071 -> (g/mg C/hr) using mol O2 & zoop g in 1 J = *18.9333 -> (g/g/day)
+  # *0.0052 -> (g/mg C/hr) using mol O2 & ug in 1 cal   = *13.8667 -> (g/g/day)
+  # *0.00105 -> (g/mg C/hr) using uL O2 & cal           = *2.8027 -> (g/g/day)
+  #! ASSUME TABLE UNITS (mL O2/mg C/hr) ARE WRONG AND FIGURE UNITS (uL O2/mg C/hr) ARE CORRECT
+  # *0.0252 -> (g/g/day)
+  met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 0.0252
   return met
 end
 
