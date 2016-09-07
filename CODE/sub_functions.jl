@@ -84,19 +84,17 @@ function sub_met(Tp,Tb,tdif,wgt,L)
 	#fcrit: feeding level to meet resting respiration rate
   #cmax: max consumption rate
   #U: swimming speed
-
-  #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
+  #Cmax
+  #! Specific ingestion rate from Hartvig et al (g/g/day)
   #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365 #h value for temp=10C
-  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
   #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
-  cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
+  #cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   #Metabolism
-	bas = fcrit * cmax
-  #act = (exp(0.063*(temp-10.0)) * k * wgt^(3/4)) /365 #Charlie thinks another way is relate it to amount consumed
-  #met = bas + act
-  met = bas
-  #met=0.0
+	#bas = fcrit * cmax
+  #met = bas
+  #! Specific "standard activity" respiration rate from Kiorboe & Hirst (g/g/day)
+  met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 2.8027
   return met
 end
 
@@ -114,7 +112,7 @@ function sub_encF(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # pref: preference for prey item
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
+  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes no interaction
   #A = (exp(0.063*(temp-15.0)) * 10^(3.4) * wgt^(-0.29)) * (24e-3/9)
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes with interaction
@@ -137,7 +135,7 @@ function sub_encP(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # pref: preference for prey item
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
+  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
   #Encounter per predator, mult by biomass later
   enc = prey*A*tprey*pref
   return enc
@@ -156,7 +154,7 @@ function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # pref: preference for prey item
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  A = (exp(0.063*(temp-15.0)) * 10^(3.2) * wgt^(-0.24)) * (24e-3/9)
+  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
   #Encounter per predator, mult by biomass later
   enc = prey*A*tprey*pref
   return enc
