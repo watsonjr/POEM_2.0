@@ -64,6 +64,7 @@ npath7 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50
 npath8 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60_halfM/'];
 npath9 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70_halfM/'];
 npath10 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80_halfM/'];
+npath11 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish90_halfM/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -97,8 +98,8 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 %     '0.60','0.70'};
 % cfile = 'Dc_MFeqMP_MZ01_fishing_catch';
 
-dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
-sims = {'0.10','0.20','0.30','0.40','0.50','0.60','0.70','0.80'};
+dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11};
+sims = {'0.10','0.20','0.30','0.40','0.50','0.60','0.70','0.80','0.90'};
 cfile = 'Dc_MFeqMP_MZ01_fishing_half_catch';
 
 sname = 'Spinup_';

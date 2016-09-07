@@ -186,13 +186,22 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath2 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_Tmort/';
 % npath3 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_Lmort/';
 % npath4 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_LTmort/';
-npath1 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/';
-npath2 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
-npath3 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
-npath4 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/';
+% npath1 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/';
+% npath2 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
+% npath3 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+% npath4 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/';
+npath1 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro10/';
+npath2 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro20/';
+npath3 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro30/';
+npath4 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro40/';
+npath5 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro50/';
+npath6 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro60/';
+npath7 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro70/';
+npath8 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro80/';
+npath9 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro90/';
 
 %cfile = 'Dc_MFeqMP_fcrit10_MZ01_NOnmort';
-dp = {npath1;npath2;npath3;npath4};
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
 
 sname = 'Spinup_';
 sname2 = '';
