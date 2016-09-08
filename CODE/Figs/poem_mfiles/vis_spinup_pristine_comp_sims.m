@@ -165,9 +165,18 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath7 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro70/'];
 % npath8 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro80/'];
 % npath9 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro90/'];
-npath1 = [datap 'NoPDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/'];
-npath2 = [datap 'PDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/'];
-npath3 = [datap 'Dc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/'];
+npath1 = [datap 'NoPDc_TrefO_KHparams_all_resp025_MFeqMP_MZ01_NOnmort/'];
+npath2 = [datap 'Dc_TrefO_KHparams_all_resp025_MFeqMP_MZ01_NOnmort/'];
+npath3 = [datap 'PDc_TrefO_KHparams_all_resp025_MFeqMP_MZ01_NOnmort/'];
+npath4 = [datap 'NoPDc_TrefO_KHparams_all_resp05_MFeqMP_MZ01_NOnmort/'];
+npath5 = [datap 'Dc_TrefO_KHparams_all_resp05_MFeqMP_MZ01_NOnmort/'];
+npath6 = [datap 'PDc_TrefO_KHparams_all_resp05_MFeqMP_MZ01_NOnmort/'];
+npath7 = [datap 'NoPDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/'];
+npath8 = [datap 'Dc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/'];
+npath9 = [datap 'PDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/'];
+npath10 = [datap 'NoPDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/'];
+npath11 = [datap 'Dc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/'];
+npath12 = [datap 'PDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -226,8 +235,11 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
 % sims = {'0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0'};
 % cfile = 'Dc_MFeqMP_MZ01_reproeff_comp';
-dp = {npath1;npath2;npath3};
-sims = {'noPDc','PDc','Dc'};
+% dp = {npath1;npath2;npath3};
+% sims = {'noPDc','PDc','Dc'};
+% cfile = 'K&Hparams_all_MFeqMP_MZ01_PDc_comp';
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12};
+sims = {'no25','D25','PD25','no50','D50','PD50','no75','D75','PD75','no100','D100','PD100'};
 cfile = 'K&Hparams_all_MFeqMP_MZ01_PDc_comp';
 
 sname = 'Spinup_';

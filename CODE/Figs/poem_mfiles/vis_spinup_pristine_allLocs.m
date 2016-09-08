@@ -199,12 +199,21 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath7 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro70/';
 % npath8 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro80/';
 % npath9 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_repro90/';
-npath1 = 'NoPDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/';
-npath2 = 'PDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/';
-npath3 = 'Dc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/';
+% npath1 = 'NoPDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/';
+% npath2 = 'PDc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/';
+% npath3 = 'Dc_TrefO_KHparams_all_MFeqMP_MZ01_NOnmort/';
+npath1 = 'NoPDc_TrefO_KHparams_all_resp025_MFeqMP_MZ01_NOnmort/';
+npath2 = 'PDc_TrefO_KHparams_all_resp025_MFeqMP_MZ01_NOnmort/';
+npath3 = 'Dc_TrefO_KHparams_all_resp025_MFeqMP_MZ01_NOnmort/';
+npath4 = 'NoPDc_TrefO_KHparams_all_resp05_MFeqMP_MZ01_NOnmort/';
+npath5 = 'PDc_TrefO_KHparams_all_resp05_MFeqMP_MZ01_NOnmort/';
+npath6 = 'Dc_TrefO_KHparams_all_resp05_MFeqMP_MZ01_NOnmort/';
+npath7 = 'NoPDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/';
+npath8 = 'PDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/';
+npath9 = 'Dc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/';
 
 %cfile = 'Dc_MFeqMP_fcrit10_MZ01_NOnmort';
-dp = {npath1;npath2;npath3};%;npath4;npath5;npath6;npath7;npath8;npath9};
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
 
 sname = 'Spinup_';
 sname2 = '';
