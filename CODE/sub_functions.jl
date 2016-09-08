@@ -100,7 +100,7 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   # *0.00105 -> (g/mg C/hr) using uL O2 & cal           = *2.8027 -> (g/g/day)
   #! ASSUME TABLE UNITS (mL O2/mg C/hr) ARE WRONG AND FIGURE UNITS (uL O2/mg C/hr) ARE CORRECT
   # *0.0252 -> (g/g/day)
-  met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 0.0252
+  met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 0.0252 .* 0.5
   return met
 end
 
