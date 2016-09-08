@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "PDc_TrefO_KHparams_all_resp05_MFeqMP_MZ01_NOnmort";
+	simname = "PDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort";
 
 	for L = 1:9
 		ID = ids[L]

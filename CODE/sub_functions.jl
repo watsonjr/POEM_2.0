@@ -86,13 +86,13 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   #U: swimming speed
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
   #Cmax
-  #! Specific ingestion rate from Hartvig et al (g/g/day)
-  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365 #h value for temp=10C
   #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
   #cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
+  #! Specific ingestion rate from Hartvig et al (g/g/day)
+  cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
   #Metabolism
-	#bas = fcrit * cmax
-  #met = bas
+	bas = fcrit * cmax
+  met = bas
   #! Specific "standard activity" respiration rate from Kiorboe & Hirst (mL O2/mg C/hr)
   # *0.0046 -> (g/mg C/hr) using mol CO2                = *12.2667 -> (g/g/day)
   # *0.0071 -> (g/mg C/hr) using mol O2 & zoop g in 1 J = *18.9333 -> (g/g/day)
@@ -100,7 +100,7 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   # *0.00105 -> (g/mg C/hr) using uL O2 & cal           = *2.8027 -> (g/g/day)
   #! ASSUME TABLE UNITS (mL O2/mg C/hr) ARE WRONG AND FIGURE UNITS (uL O2/mg C/hr) ARE CORRECT
   # *0.0252 -> (g/g/day)
-  met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 0.0252 .* 0.5
+  #met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 0.0252 .* 0.75
   return met
 end
 
@@ -177,10 +177,10 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365  #h value for temp=10C
-  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #! Specific ingestion rate from Hartvig et al (g/g/day)
+  cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
   #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
-  cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
+  #cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   ENC = sum(enc) # total biomass encountered
 	con = cmax .* enc[1] ./ (cmax + ENC) # Type II
   #con = cmax
@@ -259,10 +259,10 @@ function sub_clev(con,Tp,Tb,tdif,wgt)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /wgt /365 #h value for temp=10C
-  #cmax = (exp(0.063*(temp-10.0)) * h * wgt^(3/4)) /365
+  #! Specific ingestion rate from Hartvig et al (g/g/day)
+  cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
   #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
-  cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
+  #cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   #clev
 	clev = con/cmax
   return clev
