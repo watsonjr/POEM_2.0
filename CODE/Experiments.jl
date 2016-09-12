@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "PDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort";
+	simname = "PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort";
 
 	for L = 1:9
 		ID = ids[L]
@@ -366,6 +366,8 @@ function Spinup_pristine()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort";
+
 	S_Sml_f = zeros(NX,DAYS);
 	S_Sml_p = zeros(NX,DAYS);
 	S_Sml_d = zeros(NX,DAYS);
@@ -505,14 +507,14 @@ function Spinup_pristine()
 	tim = collect(1:DAYS);
 
 	# #! setup netcdf path to store to
-	file_sml_f = "/Volumes/GFDL/NC/Data_spinup_pristine_sml_f.nc"
-	file_sml_p = "/Volumes/GFDL/NC/Data_spinup_pristine_sml_p.nc"
-	file_sml_d = "/Volumes/GFDL/NC/Data_spinup_pristine_sml_d.nc"
-	file_med_f = "/Volumes/GFDL/NC/Data_spinup_pristine_med_f.nc"
-	file_med_p = "/Volumes/GFDL/NC/Data_spinup_pristine_med_p.nc"
-	file_med_d = "/Volumes/GFDL/NC/Data_spinup_pristine_med_d.nc"
-	file_lrg_p = "/Volumes/GFDL/NC/Data_spinup_pristine_lrg_p.nc"
-	file_lrg_d = "/Volumes/GFDL/NC/Data_spinup_pristine_lrg_d.nc"
+	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_sml_f.nc")
+	file_sml_p = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_sml_p.nc")
+	file_sml_d = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_sml_d.nc")
+	file_med_f = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_med_f.nc")
+	file_med_p = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_med_p.nc")
+	file_med_d = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_med_d.nc")
+	file_lrg_p = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_lrg_p.nc")
+	file_lrg_d = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_lrg_d.nc")
 
 	# #! remove if already in existence
 	isfile(file_sml_f) ? rm(file_sml_f) : nothing

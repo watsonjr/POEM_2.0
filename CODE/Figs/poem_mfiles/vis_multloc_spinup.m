@@ -17,16 +17,23 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
 % dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
 % ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
-dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
-ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
+% dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
+% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
+dp = '/Volumes/GFDL/NC/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50';
+cfile = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort';
+
+dpath = [dp cfile '/'];
+ppath = [pp cfile '/'];
 
 %load([dpath 'Data_spinup_pristine.mat']);
 %load([dpath 'Data_spinup_pristine_fcrit10.mat']);
 %load([dpath 'Data_spinup_pristine_fcrit10_Tmort_30yr.mat']);
 %load([dpath 'Data_spinup_pristine_fcrit10_FdiffA2_Tmort.mat']);
-load([dpath 'Data_spinup_pristine_Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50.mat']);
+% load([dpath 'Data_spinup_pristine_Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50.mat']);
+load([dpath 'Data_spinup_pristine_' cfile '.mat']);
+
 
 %%
 [loc,days]=size(SP.bio);
@@ -43,7 +50,7 @@ md_mean=mean(MD.bio(:,lyr),2);
 lp_mean=mean(LP.bio(:,lyr),2);
 ld_mean=mean(LD.bio(:,lyr),2);
 
-%% Plots in space
+% Plots in space
 grid = csvread([cpath 'grid_csv.csv']);
 %fix lon shift
 id=find(grid(:,2)<-180);
@@ -349,7 +356,7 @@ m_grid;
 title('log10 mean biomass All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-1 2])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_All.png'])
 
@@ -363,7 +370,7 @@ m_grid;
 title('log10 mean biomass All F (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-1 1])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllF.png'])
 
@@ -377,7 +384,7 @@ m_grid;
 title('log10 mean biomass All D (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-1 1])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllD.png'])
 
@@ -391,7 +398,7 @@ m_grid;
 title('log10 mean biomass All P (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-1 1])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllP.png'])
 

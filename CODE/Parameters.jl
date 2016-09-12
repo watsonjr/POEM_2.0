@@ -84,7 +84,7 @@ function make_parameters(harv)
 	const global L_l = 10^((log10(200)+log10(2000))/2); # large
 
 	##! Mass from length using Andersen & Beyer 2013
-	# ConverE from mm to cm and use their const coeff = 0.01g/cm3
+	# Convert from mm to cm and use their const coeff = 0.01g/cm3
 	const global M_s = 0.01 * (0.1*L_s)^3;
 	const global M_m = 0.01 * (0.1*L_m)^3;
 	const global M_l = 0.01 * (0.1*L_l)^3;
@@ -114,7 +114,7 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.10	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 10.0 		# 10 g^(1-p)/yr at 10C
 
 	###! Consumption constants
