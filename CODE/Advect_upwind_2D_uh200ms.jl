@@ -27,7 +27,7 @@
 
 
 ### ADVECTION ###-------------------------------
-function sub_advection(GRD,Bio_in,U,V,ni,nj)
+function sub_advection(GRD,Bio_in,U,V,ni,nj,dep)
 	# ntime = time steps in a day
 	# dtime = # seconds in ntime
 	dtime = 60.0*60.0
@@ -49,7 +49,7 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 		t = time
 		#println(t)
 		wrk1 = zeros(Float64,ni,nj);
-	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj)
+	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj,dep)
 		for j=jsd:jed
 			for i=1:ied
 					Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
@@ -68,7 +68,7 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj)
 end
 
 
-function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
+function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 	isd = 1
 	jsd = 2 #ignore j=1 b/c land (Antarctica)
 	ied = ni
@@ -152,9 +152,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 		for i=isd:ied
 			if (j > 1)
 				if (i > 1)
-					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[i-1,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j]
+					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[i-1,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j] ./dep[i,j]
 				else
-					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[ied,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j]
+					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[ied,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j] ./dep[i,j]
 				end
 			# no need for else at South Pole
 			end
