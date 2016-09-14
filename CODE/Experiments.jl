@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30";
 
 	for L = 1:9
 		ID = ids[L]
@@ -366,7 +366,9 @@ function Spinup_pristine()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort";
+
+	S_Bent_bio = zeros(NX,DAYS);
 
 	S_Sml_f = zeros(NX,DAYS);
 	S_Sml_p = zeros(NX,DAYS);
@@ -515,6 +517,7 @@ function Spinup_pristine()
 	file_med_d = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_med_d.nc")
 	file_lrg_p = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_lrg_p.nc")
 	file_lrg_d = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_lrg_d.nc")
+	file_bent = string("/Volumes/GFDL/NC/",simname, "/Data_spinup_pristine_bent.nc")
 
 	# #! remove if already in existence
 	isfile(file_sml_f) ? rm(file_sml_f) : nothing
@@ -525,6 +528,7 @@ function Spinup_pristine()
 	isfile(file_med_d) ? rm(file_med_d) : nothing
 	isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
 	isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
+	isfile(file_bent) ? rm(file_lrg_d) : nothing
 
 	nccreate(file_sml_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
 	nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
@@ -534,6 +538,7 @@ function Spinup_pristine()
 	nccreate(file_med_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
 	nccreate(file_lrg_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
 	nccreate(file_lrg_d,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
+	nccreate(file_bent,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
 
 	nccreate(file_sml_f,"prod","X",X,X_atts,"time",tim,timatts,atts=biomatts);
 	nccreate(file_sml_p,"prod","X",X,X_atts,"time",tim,timatts,atts=biomatts);
@@ -644,6 +649,7 @@ function Spinup_pristine()
 	ncwrite(zeros(NX,1),file_med_d,"biomass",[1,1])
 	ncwrite(zeros(NX,1),file_lrg_p,"biomass",[1,1])
 	ncwrite(zeros(NX,1),file_lrg_d,"biomass",[1,1])
+	ncwrite(zeros(NX,1),file_bent,"biomass",[1,1])
 
 	ncwrite(zeros(NX,1),file_sml_f,"prod",[1,1])
 	ncwrite(zeros(NX,1),file_sml_p,"prod",[1,1])
@@ -766,6 +772,8 @@ function Spinup_pristine()
 				##################### Clean up
 				#! Store last year of spinup
 				for i = 1:NX
+					S_Bent_bio[i,DY] = BENT.mass[i]
+
 					S_Sml_f[i,DY] = Sml_f.bio[i]
 					S_Sml_p[i,DY] = Sml_p.bio[i]
 					S_Sml_d[i,DY] = Sml_d.bio[i]
@@ -882,6 +890,8 @@ function Spinup_pristine()
 	end #Years
 
 	#! Save
+	ncwrite(S_Bent_bio,file_bent,"biomass",[1,1])
+
 	ncwrite(S_Sml_f,file_sml_f,"biomass",[1,1])
 	ncwrite(S_Sml_p,file_sml_p,"biomass",[1,1])
 	ncwrite(S_Sml_d,file_sml_d,"biomass",[1,1])
@@ -999,6 +1009,7 @@ function Spinup_pristine()
   ncclose(file_med_d)
   ncclose(file_lrg_p)
 	ncclose(file_lrg_d)
+	ncclose(file_bent)
 
 end
 

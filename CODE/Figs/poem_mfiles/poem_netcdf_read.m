@@ -3,7 +3,7 @@
 clear all
 close all
 
-fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/';
 
 %% SP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_p.nc'],'NC_NOWRITE');
@@ -222,6 +222,6 @@ LD.time = time;
 clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
 %
-save([fpath 'Data_spinup_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort.mat'])
+save([fpath 'Data_spinup_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort.mat'])
 
 
