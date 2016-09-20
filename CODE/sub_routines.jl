@@ -1,4 +1,3 @@
-
 #### THE MODEL
 ###! DEMOGRAPHIC CALCULATIONS
 function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT)
@@ -11,12 +10,19 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		#! update benthic biomass with new detritus avail at that time step
 		BENT.mass[JD] = BENT.mass[JD] + bent_eff*ENVR.det[JD]
 
-		#! fraction of time large piscivores spends in pelagic
-	  #Lrg_p.td[JD] = sub_tdif_pel(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
-		Lrg_p.td[JD] = 1.0
-		#! fraction of time large demersal spends in pelagic
-	  Lrg_d.td[JD] = sub_tdif_dem(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
-		#Lrg_d.td[JD] = 0.0
+		#! pelagic-demersal coupling
+		#Lrg_p: fraction of time large piscivores spends in pelagic
+		#Lrg_d: fraction of time large demersals spends in pelagic
+		if (pdc == 0)
+			Lrg_p.td[JD] = 1.0
+			Lrg_d.td[JD] = 0.0
+		elseif (pdc == 1)
+			Lrg_p.td[JD] = 1.0
+			Lrg_d.td[JD] = sub_tdif_dem(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
+		elseif (pdc == 2)
+	  	Lrg_p.td[JD] = sub_tdif_pel(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD])
+			Lrg_d.td[JD] = sub_tdif_dem(ENVR.H[JD],Med_f.bio[JD],Med_p.bio[JD],Med_d.bio[JD],BENT.mass[JD])
+		end
 
 		#! metabolism
 		Sml_f.met[JD] = sub_met(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s,L_s)
