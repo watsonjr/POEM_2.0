@@ -7,7 +7,7 @@ function Testoneloc()
 	make_parameters(harv) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-  COBALT = load("./Data/JLD/Data_hindcast_PC_000120.jld"); # 1980
+  COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld"); # 1980
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30";
+	simname = "PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30";
 
 	for L = 1:9
 		ID = ids[L]
@@ -186,7 +186,7 @@ function Oneloc_hindcast_pristine()
 		for YR = 1:YEARS # years
 			#! Load a year's COBALT data
 			ti = string(YR+1000000)
-			COBALT = load(string("./Data/JLD/Data_hindcast_PC_",ti[2:end],".jld"));
+			COBALT = load(string("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_",ti[2:end],".jld"));
 			#reset spawning flag
 			if (phen == 1)
 				Med_f.S = zeros(Float64,NX,DAYS)
@@ -297,7 +297,7 @@ function Oneloc_forecast_pristine()
 		for YR = 1:YEARS # years
 			#! Load a year's COBALT data
 			ti = string(YR+1000000)
-			COBALT = load(string("./Data/JLD/Data_forecast_PC_",ti[2:end],".jld"));
+			COBALT = load(string("/Volumes/GFDL/POEM_JLD/Data_forecast_PC_",ti[2:end],".jld"));
 			#reset spawning flag
 			if (phen == 1)
 				Med_f.S = zeros(Float64,NX,DAYS)
@@ -348,7 +348,7 @@ function Spinup_pristine()
 	make_parameters(0) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/JLD/Data_hindcast_PC_000120.jld"); # 1980
+	COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld"); # 1980
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
@@ -366,7 +366,7 @@ function Spinup_pristine()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25";
 
 	S_Bent_bio = zeros(NX,DAYS);
 
@@ -528,7 +528,7 @@ function Spinup_pristine()
 	isfile(file_med_d) ? rm(file_med_d) : nothing
 	isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
 	isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
-	isfile(file_bent) ? rm(file_lrg_d) : nothing
+	isfile(file_bent) ? rm(file_bent) : nothing
 
 	nccreate(file_sml_f,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
 	nccreate(file_sml_p,"biomass","X",X,X_atts,"time",tim,timatts,atts=biomatts);
@@ -1027,8 +1027,8 @@ function Spinup_fished()
 	make_parameters(1) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("./Data/Data_000001.jld"); # if on laptop
-	#COBALT = load("./Data/JLD/Data_000001.jld"); # if at school
+	COBALT = load("/Volumes/GFDL/Data_000001.jld"); # if on laptop
+	#COBALT = load("/Volumes/GFDL/POEM_JLD/Data_000001.jld"); # if at school
 
 	#! choose where and when to run the model
 	const global YEARS = 1; # integration period in years
@@ -1071,10 +1071,10 @@ function Spinup_fished()
 	tim=collect(1)
 
 	#! setup netcdf path to store to
-	file_pisc = "./Data/NC/Data_spinup_fished_pisc.nc"
-	file_plan = "./Data/NC/Data_spinup_fished_plan.nc"
-	file_detr = "./Data/NC/Data_spinup_fished_detr.nc"
-	file_bent = "./Data/NC/Data_spinup_fished_bent.nc"
+	file_pisc = "/Volumes/GFDL/NC/Data_spinup_fished_pisc.nc"
+	file_plan = "/Volumes/GFDL/NC/Data_spinup_fished_plan.nc"
+	file_detr = "/Volumes/GFDL/NC/Data_spinup_fished_detr.nc"
+	file_bent = "/Volumes/GFDL/NC/Data_spinup_fished_bent.nc"
 
 	#! remove if already in existence
 	isfile(file_pisc) ? rm(file_pisc) : nothing
@@ -1158,10 +1158,10 @@ function Forecast_pristine()
 	#! Initialize
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
 	ENVR = sub_init_env(ID);
-	pisc = ncread("./Data/NC/Data_spinup_pristine_pisc.nc","biomass")
-	plan = ncread("./Data/NC/Data_spinup_pristine_plan.nc","biomass")
-	detr = ncread("./Data/NC/Data_spinup_pristine_detr.nc","biomass")
-	bent = ncread("./Data/NC/Data_spinup_pristine_bent.nc","biomass")
+	pisc = ncread("/Volumes/GFDL/NC/Data_spinup_pristine_pisc.nc","biomass")
+	plan = ncread("/Volumes/GFDL/NC/Data_spinup_pristine_plan.nc","biomass")
+	detr = ncread("/Volumes/GFDL/NC/Data_spinup_pristine_detr.nc","biomass")
+	bent = ncread("/Volumes/GFDL/NC/Data_spinup_pristine_bent.nc","biomass")
 	for i = 1:NX
 		PISC.bio[i] = squeeze(pisc[i,:],1)
 		PLAN.bio[i] = squeeze(plan[i,:],1)
@@ -1193,10 +1193,10 @@ function Forecast_pristine()
 	S_be=collect([1:BE_N]); X=collect([1:NX]); tim=collect([1:12*YEARS])
 
 	#! setup netcdf path to store to
-	file_pisc = "./Data/NC/Data_forecast_pristine_pisc_adv.nc"
-	file_plan = "./Data/NC/Data_forecast_pristine_plan_adv.nc"
-	file_detr = "./Data/NC/Data_forecast_pristine_detr_adv.nc"
-	file_bent = "./Data/NC/Data_forecast_pristine_bent_adv.nc"
+	file_pisc = "/Volumes/GFDL/NC/Data_forecast_pristine_pisc_adv.nc"
+	file_plan = "/Volumes/GFDL/NC/Data_forecast_pristine_plan_adv.nc"
+	file_detr = "/Volumes/GFDL/NC/Data_forecast_pristine_detr_adv.nc"
+	file_bent = "/Volumes/GFDL/NC/Data_forecast_pristine_bent_adv.nc"
 
 	#! remove if already in existence
 	isfile(file_pisc) ? rm(file_pisc) : nothing
@@ -1225,9 +1225,9 @@ function Forecast_pristine()
 
 		#! Load a year's COBALT data
 		ti = string(YR+1000000)
-		COBALT = load("./Data/Data_000001.jld"); # testing one year
-		#COBALT = load(string("./Data/Data_",ti[2:end],".jld")); #  laptop
-		#COBALT = load(string("./Data/JLD/Data_",ti[2:end],".jld")); # src comp
+		COBALT = load("/Volumes/GFDL/Data_000001.jld"); # testing one year
+		#COBALT = load(string("/Volumes/GFDL/Data_",ti[2:end],".jld")); #  laptop
+		#COBALT = load(string("/Volumes/GFDL/POEM_JLD/Data_",ti[2:end],".jld")); # src comp
 
 		for DAY = 1:DT:DAYS # days
 
