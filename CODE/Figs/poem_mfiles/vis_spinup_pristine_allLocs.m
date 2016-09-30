@@ -211,11 +211,13 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath7 = 'NoPDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/';
 % npath8 = 'PDc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/';
 % npath9 = 'Dc_TrefO_KHparams_all_resp075_MFeqMP_MZ01_NOnmort/';
-% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
-% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/';
-% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
-% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
-% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/';
+npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit05_MZ01_NOnmort/';
+npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit075_MZ01_NOnmort/';
+npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
+npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/';
+npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
+npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/';
 % npath6 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
 % npath7 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/';
 % npath8 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
@@ -230,21 +232,33 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath17 = 'NoPDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit075_MZ01_NOnmort/';
 % npath18 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit05_MZ01_NOnmort/';
 % npath19 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit075_MZ01_NOnmort/';
-% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit05_MZ01_NOnmort/';
-% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit075_MZ01_NOnmort/';
-npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE025/';
-npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/';
-npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/';
-npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/';
-npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE025/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/';
+% npath12 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
+% npath13 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/';
+% npath14 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+% npath15 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/';
+% npath16 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
+% npath18 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30/';
 
 %cfile = 'Dc_MFeqMP_fcrit10_MZ01_NOnmort';
-dp = {npath1;npath2;npath3;npath4;npath5};%;npath6;npath7;npath8;npath9};
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};%;npath8;npath9};
 % dp = {npath6;npath7;npath8;npath9;npath10};
 % dp = {npath11;npath12;npath13;npath14;npath15};
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
-%     npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;...
-%     npath20;npath21};
+%     npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18};
+% dp = {npath1};
 
 sname = 'Spinup_';
 sname2 = '';
@@ -271,7 +285,7 @@ for i=1:length(dp)
     %% Zoop con
     load([dpath sname sname2 'consump.mat'],'mclev','Zcon');
     
-    figure(17)
+    figure(20)
     subplot(2,1,1)
     bar(Zcon(:,1),'k')
     ylim([0 1])
@@ -298,6 +312,9 @@ for i=1:length(dp)
     Pmgr = Psum;
     Fmgr = Fsum;
     Dmgr = Psum;
+    Pgge = Psum;
+    Fgge = Fsum;
+    Dgge = Psum;
     Pprod = Psum;
     Fprod = Fsum;
     Dprod = Psum;
@@ -340,10 +357,10 @@ for i=1:length(dp)
         LD = csvread([dpath sname lname 'Lrg_d.csv']);
         C = csvread([dpath sname lname 'Cobalt.csv']);
         
-        %% Final mean biomass in each size
         t=1:length(SP);
         lyr=t((end-365+1):end);
         
+        %% Final mean biomass in each size
         SP_sum=sum(SP(lyr,1));
         SF_sum=sum(SF(lyr,1));
         SD_sum=sum(SD(lyr,1));
@@ -1134,6 +1151,89 @@ for i=1:length(dp)
         end
         title('L')
         
+        %% Gross growth efficiency (= nu/consump) 
+        SP_gge=nanmean(SP(lyr,15)./SP(lyr,14));
+        SF_gge=nanmean(SF(lyr,15)./SF(lyr,14));
+        SD_gge=nanmean(SD(lyr,15)./SD(lyr,14));
+        MP_gge=nanmean(MP(lyr,15)./MP(lyr,14));
+        MF_gge=nanmean(MF(lyr,15)./MF(lyr,14));
+        MD_gge=nanmean(MD(lyr,15)./MD(lyr,14));
+        LP_gge=nanmean(LP(lyr,15)./LP(lyr,14));
+        LD_gge=nanmean(LD(lyr,15)./LD(lyr,14));
+        
+        P_gge=[SP_gge;MP_gge;LP_gge];
+        F_gge=[SF_gge;MF_gge];
+        D_gge=[SD_gge;MD_gge;LD_gge];
+        
+        Pgge(:,s) = P_gge;
+        Fgge(:,s) = F_gge;
+        Dgge(:,s) = D_gge;
+        
+        f15 = figure(15);
+        subplot(1,3,1)
+        plot(s-0.25,F_gge(1),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,P_gge(1),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,D_gge(1),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 10])
+        set(gca,'XTick',1:9,'XTickLabel',[])
+        if(s==9)
+            ha1=gca;
+            for n=1:9
+                text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+            end
+        end
+        ylabel('Mean gross growth efficiency in final year')
+        title('S')
+        
+        subplot(1,3,2)
+        plot(s-0.25,(F_gge(2)),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,(P_gge(2)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,(D_gge(2)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 10])
+        set(gca,'XTick',1:9,'XTickLabel',[])
+        if(s==9)
+            ha2=gca;
+            for n=1:9
+                text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+            end
+        end
+        ylabel('Mean gross growth efficiency in final year')
+        title('M')
+        
+        subplot(1,3,3)
+        plot(s,(P_gge(3)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,(D_gge(3)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 10])
+        set(gca,'XTick',1:9,'XTickLabel',[])
+        if(s==9)
+            ha3=gca;
+            for n=1:9
+                text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
+            end
+        end
+        ylabel('Mean gross growth efficiency in final year')
+        title('L')
+        if (s==3)
+            stamp(cfile)
+        end
+        
+        
     end
     print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass.png'])
     print(f21,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass_axes.png'])
@@ -1150,18 +1250,20 @@ for i=1:length(dp)
     print(f12,'-dpng',[fpath sname sname2 'All_oneloc_catch.png'])
     print(f13,'-dpng',[fpath sname sname2 'All_oneloc_mort_nof.png'])
     print(f14,'-dpng',[fpath sname sname2 'All_oneloc_mort_f.png'])
+    print(f15,'-dpng',[fpath sname sname2 'All_oneloc_gge.png'])
     
     save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
         'Dsum','Pmean','Fmean','Dmean','all_mean',...
         'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
         'Prep','Frep','Drep','Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
-        'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch','Dtotcatch');
+        'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch',...
+        'Dtotcatch','Pgge','Fgge','Dgge');
     
     %% Sum mean biom over stages
     
     fishsp = squeeze(nansum(all_mean));
     
-    figure(15);
+    figure(16);
     plot((1-0.1):9,log10(fishsp(1,:)),'sk','MarkerFaceColor',cmap_ppt(3,:),...
         'MarkerSize',15); hold on;
     plot(1:9,log10(fishsp(2,:)),'sk','MarkerFaceColor',cmap_ppt(1,:),...
@@ -1181,7 +1283,7 @@ for i=1:length(dp)
     
     sumspec = squeeze(nansum(nansum(all_mean)));
     
-    figure(16);
+    figure(17);
     subplot(2,1,1)
     plot(1:9,log10(sumspec),'k.','MarkerSize',25); hold on;
     xlim([0 10])
@@ -1205,7 +1307,7 @@ for i=1:length(dp)
     print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
     
     %% All on one
-    figure(17)
+    figure(18)
     subplot(2,2,1)
     bar(log(Fmean))
     xlim([0 4])

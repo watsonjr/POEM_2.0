@@ -22,7 +22,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -49,6 +49,7 @@ mf_mean=mean(MF.bio(:,lyr),2);
 md_mean=mean(MD.bio(:,lyr),2);
 lp_mean=mean(LP.bio(:,lyr),2);
 ld_mean=mean(LD.bio(:,lyr),2);
+b_mean=mean(BENT.bio(:,lyr),2);
 
 % Plots in space
 grid = csvread([cpath 'grid_csv.csv']);
@@ -68,6 +69,36 @@ Zmf=griddata(grid(:,2),grid(:,3),mf_mean,X,Y);
 Zmd=griddata(grid(:,2),grid(:,3),md_mean,X,Y);
 Zlp=griddata(grid(:,2),grid(:,3),lp_mean,X,Y);
 Zld=griddata(grid(:,2),grid(:,3),ld_mean,X,Y);
+Zb=griddata(grid(:,2),grid(:,3),b_mean,X,Y);
+
+%% bent
+figure(50)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(Zb))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean benthic biomass (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_BENT.png'])
+
+%%
+mgZb = (Zb/9)*1e3;
+figure(51)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(mgZb))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean benthic biomass (mg C m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-0.8 2.3])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_BENT_mgC.png'])
 
 %% sp
 figure(1)

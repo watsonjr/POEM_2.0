@@ -37,8 +37,21 @@ npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/';
 npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/';
 npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
 npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/';
+npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
+% npath1 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
+% npath2 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/';
+% npath3 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+% npath4 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/';
+% npath5 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/';
+% npath6 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
 
-dp = {npath1;npath2;npath3;npath4;npath5;npath6};%;npath7;npath8;npath9};
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};%;npath8;npath9};
 % dp = {npath6;npath7;npath8;npath9;npath10};
 % dp = {npath11;npath12;npath13;npath14;npath15};
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
@@ -46,7 +59,7 @@ dp = {npath1;npath2;npath3;npath4;npath5;npath6};%;npath7;npath8;npath9};
 %     npath20;npath21};
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
-sims = {'0.025','0.05','0.075','0.1','0.15','0.2'};
+sims = {'0.025','0.05','0.075','0.10','0.15','0.20','0.30'};
 cfile2 = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_comp';
 
 sname = 'Spinup_';
@@ -146,13 +159,13 @@ for i=1:length(dp)
         
         %all locations on one from all sims
         f1 = figure(1);
-        subplot(3,2,i)
+        subplot(3,3,i)
         plot(1:4,log10(zfspec(:,s)),'LineWidth',2); hold on;
         xlim([0 5])
         ylim([-3 1])
         set(gca,'XTick',1:4,'XTickLabel',{'ZM','ZL+S','M','L'})
         title(sims{i})
-        if (i==3)
+        if (i==4)
             ylabel('log Mean Biom (g m^-^2) in final year')
         end
         if (s==9)
@@ -208,7 +221,7 @@ for i=1:length(dp)
     
     %all locations on one from all sims
     f2 = figure(2);
-    subplot(3,2,i)
+    subplot(3,3,i)
     plot(1:9,log10(allb),'.r','MarkerSize',25); hold on;
     plot(1:9,log10(Bmean),'.k','MarkerSize',25); hold on;
     plot(1:9,log10(BF),'.b','MarkerSize',25); hold on;
@@ -219,7 +232,7 @@ for i=1:length(dp)
         text(n,-2.2,spots{n},'HorizontalAlignment','center')
     end
     title(sims{i})
-    if (i==3)
+    if (i==4)
         ylabel('log10 Mean Benthic Biom (g m^-^2) in final year')
     end
     if (i==length(dp))

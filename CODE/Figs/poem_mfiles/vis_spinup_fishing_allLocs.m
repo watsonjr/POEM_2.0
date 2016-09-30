@@ -68,7 +68,7 @@ datap = '/Volumes/GFDL/CSV/';
 % npath7 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
 % npath8 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish60/';
 % npath9 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70/';
-npath10 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80/';
+% npath10 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80/';
 % npath3 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish10_halfM/';
 % npath4 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish20_halfM/';
 % npath5 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish30_halfM/';
@@ -78,6 +78,26 @@ npath10 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80/';
 % npath9 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70_halfM/';
 % npath10 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80_halfM/';
 % npath11 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish90_halfM/';
+npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_fish05/';
+npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_fish10/';
+npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_fish20/';
+npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_fish30/';
+npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_fish40/';
+npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30_fish05/';
+npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30_fish10/';
+npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30_fish20/';
+npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30_fish30/';
+npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30_fish40/';
+npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_fish05/';
+npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_fish10/';
+npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_fish20/';
+npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_fish30/';
+npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_fish40/';
+npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30_fish05/';
+npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30_fish10/';
+npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30_fish20/';
+npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30_fish30/';
+npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30_fish40/';
 
 %cfile = 'MFeqMP_fcrit10_fish40_NOnmort';
 
@@ -91,8 +111,10 @@ npath10 = 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80/';
 %     npath9};
 % sims = {'0.025','0.05','0.075','0.10','0.20','0.30','0.40','0.50',...
 %     '0.60','0.70'};
-%dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
-dp = {npath10};
+% dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
+% dp = {npath10};
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;...
+npath10;npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20};
 
 sname = 'Spinup_';
 sname2 = '';
@@ -119,7 +141,7 @@ for i=1:length(dp)
 
     %% Zoop con
     
-    figure(17)
+    figure(20)
     subplot(2,1,1)
     bar(Zcon(:,1),'k')
     ylim([0 1])
@@ -146,6 +168,9 @@ for i=1:length(dp)
     Pmgr = Psum;
     Fmgr = Fsum;
     Dmgr = Psum;
+    Pgge = Psum;
+    Fgge = Fsum;
+    Dgge = Psum;
     Pprod = Psum;
     Fprod = Fsum;
     Dprod = Psum;
@@ -188,9 +213,10 @@ for i=1:length(dp)
         LD = csvread([dpath sname lname 'Lrg_d.csv']);
         C = csvread([dpath sname lname 'Cobalt.csv']);
         
-        %% Final mean biomass in each size
         t=1:length(SP);
         lyr=t((end-365+1):end);
+        
+        %% Final mean biomass in each size
         
         SP_sum=sum(SP(lyr,1));
         SF_sum=sum(SF(lyr,1));
@@ -266,7 +292,7 @@ for i=1:length(dp)
             'MarkerFaceColor',cmap_ppt(2,:),...
             'MarkerSize',15); hold on;
         xlim([0 6])
-        ylim([-150 2])
+        ylim([-5 2])
         set(gca,'XTick',1:2:5,'XTickLabel',{'S','M','L'})
         if (s==4)
             ylabel('log10 Mean Biom (g m^-^2) in final year')
@@ -982,6 +1008,88 @@ for i=1:length(dp)
         end
         title('L')
         
+        %% Gross growth efficiency (= nu/consump) 
+        SP_gge=nanmean(SP(lyr,15)./SP(lyr,14));
+        SF_gge=nanmean(SF(lyr,15)./SF(lyr,14));
+        SD_gge=nanmean(SD(lyr,15)./SD(lyr,14));
+        MP_gge=nanmean(MP(lyr,15)./MP(lyr,14));
+        MF_gge=nanmean(MF(lyr,15)./MF(lyr,14));
+        MD_gge=nanmean(MD(lyr,15)./MD(lyr,14));
+        LP_gge=nanmean(LP(lyr,15)./LP(lyr,14));
+        LD_gge=nanmean(LD(lyr,15)./LD(lyr,14));
+        
+        P_gge=[SP_gge;MP_gge;LP_gge];
+        F_gge=[SF_gge;MF_gge];
+        D_gge=[SD_gge;MD_gge;LD_gge];
+        
+        Pgge(:,s) = P_gge;
+        Fgge(:,s) = F_gge;
+        Dgge(:,s) = D_gge;
+        
+        f15 = figure(15);
+        subplot(1,3,1)
+        plot(s-0.25,F_gge(1),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,P_gge(1),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,D_gge(1),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 10])
+        set(gca,'XTick',1:9,'XTickLabel',[])
+        if(s==9)
+            ha1=gca;
+            for n=1:9
+                text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+            end
+        end
+        ylabel('Mean gross growth efficiency in final year')
+        title('S')
+        
+        subplot(1,3,2)
+        plot(s-0.25,(F_gge(2)),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',15); hold on;
+        plot(s,(P_gge(2)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,(D_gge(2)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 10])
+        set(gca,'XTick',1:9,'XTickLabel',[])
+        if(s==9)
+            ha2=gca;
+            for n=1:9
+                text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+            end
+        end
+        ylabel('Mean gross growth efficiency in final year')
+        title('M')
+        
+        subplot(1,3,3)
+        plot(s,(P_gge(3)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',15); hold on;
+        plot(s+0.25,(D_gge(3)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',15); hold on;
+        xlim([0 10])
+        set(gca,'XTick',1:9,'XTickLabel',[])
+        if(s==9)
+            ha3=gca;
+            for n=1:9
+                text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
+            end
+        end
+        ylabel('Mean gross growth efficiency in final year')
+        title('L')
+        if (s==3)
+            stamp(cfile)
+        end
+        
     end
     print(f1,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass.png'])
     print(f21,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass_axes.png'])
@@ -998,17 +1106,39 @@ for i=1:length(dp)
     print(f12,'-dpng',[fpath sname sname2 'All_oneloc_catch.png'])
     print(f13,'-dpng',[fpath sname sname2 'All_oneloc_mort_nof.png'])
     print(f14,'-dpng',[fpath sname sname2 'All_oneloc_mort_f.png'])
+    print(f15,'-dpng',[fpath sname sname2 'All_oneloc_gge.png'])
     
     save([dpath sname sname2 'lastyr_sum_mean_biom'],'Psum','Fsum',...
         'Dsum','Pmean','Fmean','Dmean','all_mean',...
         'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
         'Prep','Frep','Drep','Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
-        'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch','Dtotcatch');
+        'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch',...
+        'Dtotcatch','Pgge','Fgge','Dgge');
     
     %% Sum mean biom over stages
+    fishsp = squeeze(nansum(all_mean));
+    
+    figure(16);
+    plot((1-0.1):9,log10(fishsp(1,:)),'sk','MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(1:9,log10(fishsp(2,:)),'sk','MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot((1+0.1):10,log10(fishsp(3,:)),'sk','MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 10])
+    ylim([-2 2])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    for n=1:9
+        text(n,-2.2,spots{n},'HorizontalAlignment','center')
+    end
+    ylabel('log10 Mean Biom (g m^-^2) in final year')
+    title('All stages')
+    stamp(cfile)
+    print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_type.png'])
+    
     sumspec = squeeze(nansum(nansum(all_mean)));
     
-    figure(15);
+    figure(17);
     subplot(2,1,1)
     plot(1:9,log10(sumspec),'k.','MarkerSize',25); hold on;
     xlim([0 10])
@@ -1032,7 +1162,7 @@ for i=1:length(dp)
     print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
     
     %% All on one
-    figure(16)
+    figure(18)
     subplot(2,2,1)
     bar(log(Fmean))
     xlim([0 4])

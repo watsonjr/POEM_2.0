@@ -35,15 +35,30 @@ npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE025/';
 npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/';
 npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/';
 npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/';
-npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/';
+npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/';
+npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/';
+npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
+npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/';
+npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/';
+npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/';
+npath12 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
+npath13 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/';
+npath14 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/';
+npath15 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/';
+npath16 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/';
+npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
+npath18 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
 
 %cfile = 'Dc_MFeqMP_fcrit10_MZ01_NOnmort';
-dp = {npath1;npath2;npath3;npath4;npath5};%;npath6;npath7;npath8;npath9};
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6};%;npath7;npath8;npath9};
 % dp = {npath6;npath7;npath8;npath9;npath10};
 % dp = {npath11;npath12;npath13;npath14;npath15};
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
 %     npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;...
 %     npath20;npath21};
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
+    npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18};
 
 sname = 'Spinup_';
 sname2 = '';
@@ -57,8 +72,10 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 
 load('cmap_ppt_angles.mat')
+load('/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/cobalt_zoop_prod_1980.mat')
 
 %%
+
 for i=1:length(dp)
     
     dpath = [datap char(dp(i))];
@@ -85,6 +102,10 @@ for i=1:length(dp)
     TEeat = TEcon;
     TEmortPN = TEcon;
     TEmortPNF = TEcon;
+    TEeff = TEcon;
+    TLprey = NaN*ones(8,length(spots));
+    prey_sims = NaN*ones(8,6,length(spots));
+    tl_mat = prey_sims;
     
     %%
     for s=1:length(spots)
@@ -103,6 +124,18 @@ for i=1:length(dp)
         
         t=1:length(SP);
         lyr=t((end-365+1):end);
+        
+        TL1 = NaN*ones(8,6);
+        %fixed TL of prey items
+        tl(1,:) = [2,2.5,3,3,3,2];
+        tl(2,:) = [2,2.5,3,3,3,2];
+        tl(3,:) = [2,2.5,3,3,3,2];
+        tl(4,:) = [2,2.5,3,3,3,2];
+        tl(5,:) = [2,2.5,3,3,3,2];
+        tl(6,:) = [2,2.5,3,3,3,2];
+        %initial guess for medium TL
+        tl(7,:) = [2,2.5,3.5,3.5,3,2];
+        tl(8,:) = [2,2.5,3.5,3.5,3,2];
         
         %% Consumption efficiency
         % Biomass consumed (g/day) (I * biom)
@@ -142,6 +175,84 @@ for i=1:length(dp)
         
         TEprod(1,s) = M_prod./S_prod;
         TEprod(2,s) = L_prod./M_prod;
+        
+        %% Effective TE
+        MZ_prod = ZPsum(1,s);
+        LZ_prod = ZPsum(2,s);
+        B_prod = nansum(C(lyr,1));
+        
+        TEeff(1,s) = M_prod/(B_prod + MZ_prod + LZ_prod);
+        TEeff(2,s) = L_prod/(B_prod + MZ_prod + LZ_prod);
+        
+        %% TL calc from prey items
+        prey(1,1)=nanmean(SF(lyr,11));
+        prey(1,2)=nanmean(SF(lyr,12));
+        prey(1,3)=nanmean(SF(lyr,8));
+        prey(1,4)=nanmean(SF(lyr,9));
+        prey(1,5)=nanmean(SF(lyr,10));
+        prey(1,6)=nanmean(SF(lyr,13));
+        
+        prey(2,1)=nanmean(SP(lyr,11));
+        prey(2,2)=nanmean(SP(lyr,12));
+        prey(2,3)=nanmean(SP(lyr,8));
+        prey(2,4)=nanmean(SP(lyr,9));
+        prey(2,5)=nanmean(SP(lyr,10));
+        prey(2,6)=nanmean(SP(lyr,13));
+        
+        prey(3,1)=nanmean(SD(lyr,11));
+        prey(3,2)=nanmean(SD(lyr,12));
+        prey(3,3)=nanmean(SD(lyr,8));
+        prey(3,4)=nanmean(SD(lyr,9));
+        prey(3,5)=nanmean(SD(lyr,10));
+        prey(3,6)=nanmean(SD(lyr,13));
+        
+        prey(4,1)=nanmean(MF(lyr,11));
+        prey(4,2)=nanmean(MF(lyr,12));
+        prey(4,3)=nanmean(MF(lyr,8));
+        prey(4,4)=nanmean(MF(lyr,9));
+        prey(4,5)=nanmean(MF(lyr,10));
+        prey(4,6)=nanmean(MF(lyr,13));
+        
+        prey(5,1)=nanmean(MP(lyr,11));
+        prey(5,2)=nanmean(MP(lyr,12));
+        prey(5,3)=nanmean(MP(lyr,8));
+        prey(5,4)=nanmean(MP(lyr,9));
+        prey(5,5)=nanmean(MP(lyr,10));
+        prey(5,6)=nanmean(MP(lyr,13));
+        
+        prey(6,1)=nanmean(MD(lyr,11));
+        prey(6,2)=nanmean(MD(lyr,12));
+        prey(6,3)=nanmean(MD(lyr,8));
+        prey(6,4)=nanmean(MD(lyr,9));
+        prey(6,5)=nanmean(MD(lyr,10));
+        prey(6,6)=nanmean(MD(lyr,13));
+        
+        prey(7,1)=nanmean(LP(lyr,11));
+        prey(7,2)=nanmean(LP(lyr,12));
+        prey(7,3)=nanmean(LP(lyr,8));
+        prey(7,4)=nanmean(LP(lyr,9));
+        prey(7,5)=nanmean(LP(lyr,10));
+        prey(7,6)=nanmean(LP(lyr,13));
+        
+        prey(8,1)=nanmean(LD(lyr,11));
+        prey(8,2)=nanmean(LD(lyr,12));
+        prey(8,3)=nanmean(LD(lyr,8));
+        prey(8,4)=nanmean(LD(lyr,9));
+        prey(8,5)=nanmean(LD(lyr,10));
+        prey(8,6)=nanmean(LD(lyr,13));
+        
+        %Trophic level calc
+        wgt_prey = prey ./ repmat(sum(prey,2),1,6);
+        TL1(1:6,:) = tl(1:6,:) .* wgt_prey(1:6,:);
+        TLmed = sum(TL1(4:6,:),2) + 1;
+        tl(7,3:5) = TLmed';
+        tl(8,3:5) = TLmed';
+        TL1(7:8,:) = tl(7:8,:) .* wgt_prey(7:8,:);
+        TL2 = sum(TL1,2) + 1;
+        
+        prey_sims(:,:,s) = prey;
+        tl_mat(:,:,s) = tl;
+        TLprey(:,s) = TL2;
         
         %% Predation efficiency in biomass eaten (g/m2/d)
         SP_die=(SP(lyr,17));
@@ -209,45 +320,130 @@ for i=1:length(dp)
         
     end
     
-    save([dpath sname sname2 'lastyr_TEs.mat'],'TEcon','TEprod','TEeat','TEmortPN','TEmortPNF');
+    save([dpath sname sname2 'lastyr_TEs.mat'],'TEcon','TEprod','TEeat',...
+        'TEmortPN','TEmortPNF','TEeff','TLprey','prey_sims','tl_mat');
     
-    %% Figure
-    figure(1);
-    subplot(2,1,1)
-    plot(1:length(spots),TEcon(1,:),'.k','MarkerSize',25); hold on;
-    xlim([0 length(spots)+1])
-    set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-    ylabel('mean TE in final year')
-    xlabel('Site')
-    title('Medium/Small')
+    %% Figures
+    %     figure(1);
+    %     subplot(2,1,1)
+    %     plot(1:length(spots),TEcon(1,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('mean TE in final year')
+    %     xlabel('Site')
+    %     title('Medium/Small')
+    %     stamp(cfile)
+    %
+    %     subplot(2,1,2)
+    %     plot(1:length(spots),TEcon(1,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('mean TE in final year')
+    %     xlabel('Site')
+    %     print('-dpng',[fpath sname sname2 'TEs_M.png'])
+    %
+    %     figure(2);
+    %     subplot(2,1,1)
+    %     plot(1:length(spots),TEcon(2,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('mean L TE in final year')
+    %     xlabel('Site')
+    %     title('Large/Medium')
+    %     stamp(cfile)
+    %
+    %     subplot(2,1,2)
+    %     plot(1:length(spots),TEcon(2,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     ylim([0 1])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('mean L TE in final year')
+    %     xlabel('Site')
+    %     print('-dpng',[fpath sname sname2 'TEs_L.png'])
+    
+    %% TE eff
+    %     figure(3);
+    %     subplot(2,1,1)
+    %     plot(1:length(spots),TEeff(1,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('Medium')
+    %     xlabel('Site')
+    %     title('mean TE eff in final year')
+    %     stamp(cfile)
+    %
+    %     subplot(2,1,2)
+    %     plot(1:length(spots),TEeff(2,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('Large')
+    %     xlabel('Site')
+    %     print('-dpng',[fpath sname sname2 'TE_eff.png'])
+    
+    %%
+    %     figure(4);
+    %     subplot(2,1,1)
+    %     plot(1:length(spots),TEeff(1,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     ylim([0 0.1])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('Medium')
+    %     xlabel('Site')
+    %     title('mean TE eff in final year')
+    %     stamp(cfile)
+    %
+    %     subplot(2,1,2)
+    %     plot(1:length(spots),TEeff(2,:),'.k','MarkerSize',25); hold on;
+    %     xlim([0 length(spots)+1])
+    %     ylim([0 0.01])
+    %     set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+    %     ylabel('Large')
+    %     xlabel('Site')
+    %     print('-dpng',[fpath sname sname2 'TE_eff_axes.png'])
+    
+    %% TL prey
+    figure(5);
+    subplot(3,1,1)
+    plot(1-0.25:9,TLprey(1,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(1:9,TLprey(2,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(1+0.25:10,TLprey(3,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',spots);
+    title('S')
+    
+    subplot(3,1,2)
+    plot(1-0.25:9,TLprey(4,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(1:9,TLprey(5,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(1+0.25:10,TLprey(6,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',spots);
+    ylabel('Mean TL in final year')
+    title('M')
+    
+    subplot(3,1,3)
+    plot(1:9,TLprey(7,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(1+0.25:10,TLprey(8,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 10])
+    set(gca,'XTick',1:9,'XTickLabel',spots);
+    title('L')
     stamp(cfile)
-    
-    subplot(2,1,2)
-    plot(1:length(spots),TEcon(1,:),'.k','MarkerSize',25); hold on;
-    xlim([0 length(spots)+1])
-    set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-    ylabel('mean TE in final year')
-    xlabel('Site')
-    print('-dpng',[fpath sname sname2 'TEs_M.png'])
-    
-    figure(2);
-    subplot(2,1,1)
-    plot(1:length(spots),TEcon(2,:),'.k','MarkerSize',25); hold on;
-    xlim([0 length(spots)+1])
-    set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-    ylabel('mean L TE in final year')
-    xlabel('Site')
-    title('Large/Medium')
-    stamp(cfile)
-    
-    subplot(2,1,2)
-    plot(1:length(spots),TEcon(2,:),'.k','MarkerSize',25); hold on;
-    xlim([0 length(spots)+1])
-    ylim([0 1])
-    set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-    ylabel('mean L TE in final year')
-    xlabel('Site')
-    print('-dpng',[fpath sname sname2 'TEs_L.png'])
+    print('-dpng',[fpath sname sname2 'TL.png'])
     
 end
 

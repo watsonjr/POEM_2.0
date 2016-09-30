@@ -1,28 +1,28 @@
 %%%% SELECT SIMULATION AND SET INPUTS
-harv = 0 %0=no fishing; 1=fishing
-make_parameters(harv) % make core parameters/constants
+harv = 0; %0=no fishing; 1=fishing
+make_parameters(harv); % make core parameters/constants
 
 %! setup spinup (loop first year of COBALT)
-COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld"); % 1980
+COBALT = load('/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld'); % 1980
 %! Add phenology params from csv file with ID as row
-Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); %min temp for each yr at each location
-global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
-global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-YEARS = 100
-global DAYS = 365
+Tref = readdlm('./Data/grid_phenol_T0raw_NOflip.csv',','); %min temp for each yr at each location
+global Dthresh = readdlm('./Data/grid_phenol_DTraw_NOflip.csv',',');
+global Sp = readdlm('./Data/Gaussian_spawn_2mo.csv',',');
+YEARS = 100;
+global DAYS = 365;
 
 %! choose where to run the model
-global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
+global GRD = load('./Data/Data_grid_hindcast_NOTflipped.jld');
 XY = zeros(Int,360,200);
-XY[GRD["ID"]] = collect(1:GRD["N"])
-ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
-names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
+XY[GRD["ID"]] = collect(1:GRD["N"]);
+ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003];
+names = ['GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'];
 
 for L =1:9
-	ID = ids[L]
-	loc = names[L]
+	ID = ids[L];
+	loc = names[L];
 
-	const global NX = length(ID)
+	const global NX = length(ID);
 	phen=0;
 	%! Initialize
 	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
@@ -34,7 +34,7 @@ for L =1:9
 	for YR = 1:YEARS % years
 		for DAY = 1:DT:DAYS % days
 			%%%! Future time step
-			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
+			sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 			DY+=1
 		end %Days
 	end %Years
@@ -47,16 +47,16 @@ function make_parameters(harv)
 
 	%! Amount of fishing
 	if harv == 1
-		const global LFISHING = 0.8/365.0
-		const global MFISHING = LFISHING
+		const global LFISHING = 0.8/365.0;
+		const global MFISHING = LFISHING;
 		%const global MFISHING = 0.5 * LFISHING
 	else
-		const global MFISHING = 0
-		const global LFISHING = 0
+		const global MFISHING = 0;
+		const global LFISHING = 0;
 	end
 
 	%! Benthic-pelagic coupling cutoff (depth, m)
-	const global PI_be_cutoff = 200
+	const global PI_be_cutoff = 200;
 	% 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
 	const global pdc = 2;
 
@@ -72,43 +72,43 @@ function make_parameters(harv)
 	const global M_l = 0.01 * (0.1*L_l)^3;
 
 	%! Ratio of initial and final body sizes per size-class
-	const global Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3)
-	const global Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3)
-	const global Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3)
+	const global Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3);
+	const global Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3);
+	const global Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3);
 
 	%%%! Assimilation efficiency lambda (constant across everything)
 	const global Lambda = 0.7;
 
 	%%%! Kappa rule K as a function of body size
 	% K = fraction of energy consumed diverted to somatic growth
-	const global K_l = 1
-	const global K_j = 1
-	const global K_a = 0
+	const global K_l = 1;
+	const global K_j = 1;
+	const global K_a = 0;
 
 	%%%! Metabolism constants (activity and basal)
-	const global fcrit = 0.40	% feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.40;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
 
 	%%%! Consumption constants
-	const global h = 60.0  		% h=40 g^(0.25)/yr at 10C in Cmax eq
+	const global h = 60.0;  	% h=40 g^(0.25)/yr at 10C in Cmax eq
 
 	%%%! Transfer efficiency of detritus to benthic prey
-	const global bent_eff = 0.30
+	const global bent_eff = 0.30;
 
 	%%%! Reproductive efficiency
-	const global rfrac = 1.0
+	const global rfrac = 1.0;
 
 	%! Fraction of time spent swimming (from Van Leeuwen)
-	const global Tu_s = 1.0
-	const global Tu_m = 1.0 %0.5
-	const global Tu_l = 1.0 %0.1
+	const global Tu_s = 1.0;
+	const global Tu_m = 1.0; %0.5
+	const global Tu_l = 1.0; %0.1
 
 	%%%! Background mortality
 	%Currently increases from 0 to 0.01
 	%Megrey et al =0.44/yr
 	%Andersen & Beyer 2013 = 0.35 * 4.5 * s^(-0.25) (includes predation, excludes fishing)
-	const global Nat_mrt = 0.44 / 365
+	const global Nat_mrt = 0.44 / 365;
 	%0=none, 1=constant, 2=temp-dep, 3=large only, 4=large temp-dep
-	const global MORT = 0
+	const global MORT = 0;
 
 	%%%! Diet Preference Phi (j = prey, i = pred)
 	%small forage fish eats medium zoo
@@ -120,18 +120,18 @@ function make_parameters(harv)
 	%large piscivore eats medium forage fish, medium piscivore, medium detritivore
 	%large detritivore eats detritus, medium forage fish, medium piscivore, medium detrivore
 
-	const global MF_phi_MZ = 0.1
-	const global MF_phi_LZ = 1.0
-	const global MF_phi_S = 1.0
-	const global MP_phi_MZ = 0.1
-	const global MP_phi_LZ = 1.0
-	const global MP_phi_S = 1.0
-	const global LP_phi_MF = 1.0
-	const global LD_phi_MF = 1.0
-	const global LP_phi_MP = 1.0
-	const global LD_phi_MP = 1.0
-	const global LP_phi_MD = 1.0
-	const global LD_phi_MD = 1.0
+	const global MF_phi_MZ = 0.1;
+	const global MF_phi_LZ = 1.0;
+	const global MF_phi_S = 1.0;
+	const global MP_phi_MZ = 0.1;
+	const global MP_phi_LZ = 1.0;
+	const global MP_phi_S = 1.0;
+	const global LP_phi_MF = 1.0;
+	const global LD_phi_MF = 1.0;
+	const global LP_phi_MP = 1.0;
+	const global LD_phi_MP = 1.0;
+	const global LP_phi_MD = 1.0;
+	const global LD_phi_MD = 1.0;
 end
 
 
@@ -139,121 +139,121 @@ end
 %%%! INIT FUNCTIONS
 function sub_init_env(ID)
 	%%%! Number of spatial cells
-	NX = length(ID)
+	NX = length(ID);
 	%%%! environment
-	ENV_Tp  = Array(Float64,NX)
-	ENV_Tb  = Array(Float64,NX)
-	ENV_Zm  = Array(Float64,NX)
-	ENV_Zl  = Array(Float64,NX)
-	ENV_dZm = Array(Float64,NX)
-	ENV_dZl = Array(Float64,NX)
-	ENV_det = Array(Float64,NX)
-	ENV_U   = Array(Float64,NX)
-	ENV_V   = Array(Float64,NX)
-	ENV_T0p = Array(Float64,NX)
-	ENV_T0b = Array(Float64,NX)
-	ENV_Dthresh = Array(Float64,NX)
-	ENV_fZm = Array(Float64,NX)
-	ENV_fZl = Array(Float64,NX)
-	ENV_fB = Array(Float64,NX)
-	ENV_H  = Array(Float64,NX)
-	ENV_A  = Array(Float64,NX)
-	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0p,ENV_T0b,ENV_Dthresh,ENV_fZm,ENV_fZl,ENV_fB,ENV_H,ENV_A)
+	ENV_Tp  = Array(Float64,NX);
+	ENV_Tb  = Array(Float64,NX);
+	ENV_Zm  = Array(Float64,NX);
+	ENV_Zl  = Array(Float64,NX);
+	ENV_dZm = Array(Float64,NX);
+	ENV_dZl = Array(Float64,NX);
+	ENV_det = Array(Float64,NX);
+	ENV_U   = Array(Float64,NX);
+	ENV_V   = Array(Float64,NX);
+	ENV_T0p = Array(Float64,NX);
+	ENV_T0b = Array(Float64,NX);
+	ENV_Dthresh = Array(Float64,NX);
+	ENV_fZm = Array(Float64,NX);
+	ENV_fZl = Array(Float64,NX);
+	ENV_fB = Array(Float64,NX);
+	ENV_H  = Array(Float64,NX);
+	ENV_A  = Array(Float64,NX);
+	ENVR = environment(ENV_Tp,ENV_Tb,ENV_Zm,ENV_Zl,ENV_dZm,ENV_dZl,ENV_det,ENV_U,ENV_V,ENV_T0p,ENV_T0b,ENV_Dthresh,ENV_fZm,ENV_fZl,ENV_fB,ENV_H,ENV_A);
 end
 
 function sub_init_fish(ID,phen)
 
 	%===== VARIABLES =====%
 	%%%! Number of spatial cells
-	NX = length(ID)
+	NX = length(ID);
 
 	%%%! fish
 	%! biomass
 	X = 0.00001; % very small amount
-	bio = ones(Float64,NX) * X
+	bio = ones(Float64,NX) * X;
 
 	% fraction of time spent in the pelagic
-	tdp = ones(Float64,NX)
+	tdp = ones(Float64,NX);
 
 	% metabolism
-	met = zeros(Float64,NX)
+	met = zeros(Float64,NX);
 
 	%! encounter rates between fish and zoo
-	enc_f = zeros(Float64,NX)
-	enc_p = zeros(Float64,NX)
-	enc_d = zeros(Float64,NX)
-	enc_zm = zeros(Float64,NX)
-	enc_zl = zeros(Float64,NX)
-	enc_be = zeros(Float64,NX)
+	enc_f = zeros(Float64,NX);
+	enc_p = zeros(Float64,NX);
+	enc_d = zeros(Float64,NX);
+	enc_zm = zeros(Float64,NX);
+	enc_zl = zeros(Float64,NX);
+	enc_be = zeros(Float64,NX);
 
 	%! consumption rates between fish and zoo
-	con_f = zeros(Float64,NX)
-	con_p = zeros(Float64,NX)
-	con_d = zeros(Float64,NX)
-	con_zm = zeros(Float64,NX)
-	con_zl = zeros(Float64,NX)
-	con_be = zeros(Float64,NX)
+	con_f = zeros(Float64,NX);
+	con_p = zeros(Float64,NX);
+	con_d = zeros(Float64,NX);
+	con_zm = zeros(Float64,NX);
+	con_zl = zeros(Float64,NX);
+	con_be = zeros(Float64,NX);
 
   % mass ingested (I)
-  I = zeros(Float64,NX) % fish
+  I = zeros(Float64,NX); % fish
 
   % mass lost to predation (g d-1)
-  die = zeros(Float64,NX)
+  die = zeros(Float64,NX);
 
 	% predation rate (d-1)
-  pred = zeros(Float64,NX)
+  pred = zeros(Float64,NX);
 
 	% natural mortality rate (d-1)
-  nmort = zeros(Float64,NX)
+  nmort = zeros(Float64,NX);
 
 	% production
-  prod = zeros(Float64,NX)
+  prod = zeros(Float64,NX);
 
   % total energy available for growth
-  nu = zeros(Float64,NX)
+  nu = zeros(Float64,NX);
 
   % energy available for somatic growth
-  gamma = zeros(Float64,NX)
+  gamma = zeros(Float64,NX);
 
 	% energy available for later repro/stored biomass for repro
-  egg = zeros(Float64,NX)
+  egg = zeros(Float64,NX);
 
  	%! total biomass to reproduction
- 	rep = zeros(Float64,NX)
+ 	rep = zeros(Float64,NX);
 
  	%! total biomass to reproduction
- 	rec = zeros(Float64,NX)
+ 	rec = zeros(Float64,NX);
 
 	%! degree days accumulated that year
-	DD = zeros(Float64,NX)
+	DD = zeros(Float64,NX);
 
 	%! spawning flag
 	% frac spawning at any given time
 	if (phen == 1)
-		S = zeros(Float64,NX,DAYS)
+		S = zeros(Float64,NX,DAYS);
 	else
-		S = ones(Float64,NX,DAYS)
+		S = ones(Float64,NX,DAYS);
 	end
 
 	%! Con/Cmax
-	clev = zeros(Float64,NX)
+	clev = zeros(Float64,NX);
 
 	%! Fishing harvest
-	caught = zeros(Float64,NX)
+	caught = zeros(Float64,NX);
 
 	% assign to small forage fish, piscivore and detrivore
-	Sml_f = fish(bio,tdp,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,die,rep,rec,DD,S,egg,clev,prod,pred,nmort,caught)
-	Sml_p = deepcopy(Sml_f)
-	Sml_d = deepcopy(Sml_f)
-	Med_f = deepcopy(Sml_f)
-	Med_p = deepcopy(Sml_f)
-	Lrg_p = deepcopy(Sml_f)
-	Med_d = deepcopy(Sml_f)
-	Lrg_d = deepcopy(Sml_f)
+	Sml_f = fish(bio,tdp,met,enc_f,enc_p,enc_d,enc_zm,enc_zl,enc_be,con_f,con_p,con_d,con_zm,con_zl,con_be,I,nu,gamma,die,rep,rec,DD,S,egg,clev,prod,pred,nmort,caught);
+	Sml_p = (Sml_f);
+	Sml_d = (Sml_f);
+	Med_f = (Sml_f);
+	Med_p = (Sml_f);
+	Lrg_p = (Sml_f);
+	Med_d = (Sml_f);
+	Lrg_d = (Sml_f);
 
 	%%%! Detritus
-	mass = zeros(Float64,NX)
-  BENT = detritus(mass)
+	mass = zeros(Float64,NX);
+  BENT = detritus(mass);
 
 	return Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT
 end
@@ -261,36 +261,36 @@ end
 
 %%%% THE FUNCTIONS
 %%%! Get COBALT data
-function get_COBALT!(COBALT,ID,DY,ENVR)
+function get_COBALT(COBALT,ID,DY,ENVR)
     %% Get data
-    ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY]
-    ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY]
-    ENVR.Zm[:,1]  = COBALT["Zm"][ID,DY]
-    ENVR.Zl[:,1]  = COBALT["Zl"][ID,DY]
-    ENVR.det[:,1] = COBALT["det"][ID,DY]
-    ENVR.dZm[:,1] = COBALT["dZm"][ID,DY]
-    ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
-    ENVR.U[:,1]   = COBALT["U"][ID,DY]
-    ENVR.V[:,1]   = COBALT["V"][ID,DY]
-    ENVR.T0p[:,1] = TrefP[ID]
-    ENVR.T0b[:,1] = TrefB[ID]
-    ENVR.Dthresh[:,1] = Dthresh[ID]
-    ENVR.fZm[:,1] = zeros(Int64,NX)
-    ENVR.fZl[:,1] = zeros(Int64,NX)
-    ENVR.fB[:,1]  = zeros(Int64,NX)
-    ENVR.H[:,1]   = GRD["Z"][ID]
-    ENVR.A[:,1]   = GRD["AREA"][ID]
+    ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY];
+    ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY];
+    ENVR.Zm[:,1]  = COBALT["Zm"][ID,DY];
+    ENVR.Zl[:,1]  = COBALT["Zl"][ID,DY];
+    ENVR.det[:,1] = COBALT["det"][ID,DY];
+    ENVR.dZm[:,1] = COBALT["dZm"][ID,DY];
+    ENVR.dZl[:,1] = COBALT["dZl"][ID,DY];
+    ENVR.U[:,1]   = COBALT["U"][ID,DY];
+    ENVR.V[:,1]   = COBALT["V"][ID,DY];
+    ENVR.T0p[:,1] = TrefP[ID];
+    ENVR.T0b[:,1] = TrefB[ID];
+    ENVR.Dthresh[:,1] = Dthresh[ID];
+    ENVR.fZm[:,1] = zeros(Int64,NX);
+    ENVR.fZl[:,1] = zeros(Int64,NX);
+    ENVR.fB[:,1]  = zeros(Int64,NX);
+    ENVR.H[:,1]   = GRD["Z"][ID];
+    ENVR.A[:,1]   = GRD["AREA"][ID];
 end
 
 %%%! Fraction of time spent in pelagic (for piscivore)
 function sub_tdif_pel(Z,bio1,bio2,biod)
   % bio1, bio2: pelagic prey
   % biod: demersal prey
-	biop = bio1+bio2
+	biop = bio1+bio2;
 	if Z < PI_be_cutoff
-		tdif = biop ./ (biop+biod)
+		tdif = biop ./ (biop+biod);
 	else
-		tdif = 1.0
+		tdif = 1.0;
 	end
 	return tdif
 end
@@ -299,12 +299,12 @@ end
 function sub_tdif_dem(Z,bio1,bio2,bio3,bio4)
   % bio1, bio2: pelagic prey
   % bio3, bio4: demersal prey
-	biop = bio1+bio2
-  biod = bio3+bio4
+	biop = bio1+bio2;
+  biod = bio3+bio4;
 	if Z < PI_be_cutoff
-		tdif = biop ./ (biop+biod)
+		tdif = biop ./ (biop+biod);
 	else
-		tdif = 0.0
+		tdif = 0.0;
 	end
 	return tdif
 end
@@ -581,7 +581,7 @@ end
 
 %%%! Forward Euler checks
 %Prevent biomass<0
-function sub_check!(bio)
+function sub_check(bio)
 	ID = find(bio .< 0)
 	bio[ID] = eps()
 end
@@ -589,10 +589,10 @@ end
 
 %%%% THE MODEL
 %%%! DEMOGRAPHIC CALCULATIONS
-function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT)
+function sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT)
 
 	%%%! COBALT information
-	get_COBALT!(COBALT,ID,DY,ENVR)
+	get_COBALT(COBALT,ID,DY,ENVR)
 
 	for JD = 1:NX
 
@@ -818,13 +818,13 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 	end
 
 	%! Forward Euler checks for demographics and movement
-	sub_check!(Sml_f.bio);
-	sub_check!(Sml_p.bio);
-	sub_check!(Sml_d.bio);
-	sub_check!(Med_f.bio);
-	sub_check!(Med_p.bio);
-	sub_check!(Med_d.bio);
-	sub_check!(Lrg_p.bio);
-	sub_check!(Lrg_d.bio);
+	sub_check(Sml_f.bio);
+	sub_check(Sml_p.bio);
+	sub_check(Sml_d.bio);
+	sub_check(Med_f.bio);
+	sub_check(Med_p.bio);
+	sub_check(Med_d.bio);
+	sub_check(Lrg_p.bio);
+	sub_check(Lrg_d.bio);
 
 end

@@ -10,13 +10,13 @@ close all
 datap = '/Volumes/GFDL/CSV/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit05_MZ01_NOnmort/'];
-% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit075_MZ01_NOnmort/'];
-% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
-% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/'];
-% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
-% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
-% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/'];
+npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit05_MZ01_NOnmort/'];
+npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit075_MZ01_NOnmort/'];
+npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
+npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit20_MZ01_NOnmort/'];
+npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
+npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
+npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/'];
 % npath8 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit05_MZ01_NOnmort/'];
 % npath9 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit075_MZ01_NOnmort/'];
 % npath10 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/'];
@@ -31,13 +31,13 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath19 = [datap 'NoPDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
 % npath20 = [datap 'NoPDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
 % npath21 = [datap 'NoPDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/'];
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE025/'];
-npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/'];
-npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE025/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30/'];
 % npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
 % npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/'];
 % npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
@@ -115,9 +115,9 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12};
 % sims = {'no25','D25','PD25','no50','D50','PD50','no75','D75','PD75','no100','D100','PD100'};
 % cfile = 'K&Hparams_all_MFeqMP_MZ01_PDc_comp';
-% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};
-% sims = {'0.05','0.075','0.1','0.2','0.3','0.4','0.5'};
-% cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit_comp';
+dp = {npath1;npath3;npath4;npath5;npath6;npath7};
+sims = {'0.05','0.1','0.2','0.3','0.4','0.5'};
+cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit_comp';
 % dp = {npath8;npath9;npath10;npath11;npath12;npath13;npath14};
 % sims = {'0.05','0.075','0.1','0.2','0.3','0.4','0.5'};
 % cfile = 'PDc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit_comp';
@@ -130,9 +130,9 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath21;npath7;npath14};
 % sims = {'noPDc','Dc','PDc'};
 % cfile = 'Hartvig_cmax-metab_MFeqMP_MZ01_fcrit50_PDc_comp';
-dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};
-sims = {'.025','.05','.075','.1','.15','.2','.3'};
-cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};
+% sims = {'.025','.05','.075','.1','.15','.2','.3'};
+% cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_comp';
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6};
 % sims = {'.05','.10','.15','.20','.25','.30'};
 % cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit40_BentEff_comp';
@@ -154,74 +154,223 @@ ndp = length(dp);
 
 load('cmap_ppt_angles.mat')
 
-%% Predicted biomass
-load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/grid_360x200_id_locs_area_dep.mat','depth')
-% Using linear equations based on depth from Wei et al. 2010
-% log10 biomass in mg C /m2
-%non-log10
-meio = 10.^(2.18-(2.39e-4)*depth);
-macro = 10.^(3.05-(5.15e-4)*depth);
-mega = 10.^(1.81-(3.07e-4)*depth);
-%convert from mg C to g wet weight
-meio = meio * 9e-3;
-macro = macro * 9e-3;
-mega = mega * 9e-3;
-
-allb = meio+macro+mega;
+%%
+for s=1:3
+    dpath = char(dp(s));
+    load([dpath sname sname2 'lastyr_sum_mean_biom.mat']);
+       
+    %% GGE by location
+    f1 = figure(1);
+    subplot(3,3,3*s-2)
+    plot(1-0.25:9,Fgge(1,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',10); hold on;
+    plot(1:9,Pgge(1,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',10); hold on;
+    plot(1+0.25:10,Dgge(1,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',10); hold on;
+    xlim([0 10])
+    ylim([0 0.7])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==3)
+        ha1=gca;
+        for n=1:9
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    if (s==2)
+        ylabel('Mean gross growth efficiency in final year')
+    end
+    title('S')
+    
+    subplot(3,3,3*s-1)
+    plot(1-0.25:9,(Fgge(2,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',10); hold on;
+    plot(1:9,(Pgge(2,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',10); hold on;
+    plot(1+0.25:10,(Dgge(2,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',10); hold on;
+    xlim([0 10])
+    ylim([0 0.7])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==3)
+        ha1=gca;
+        for n=1:9
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    title('M')
+    
+    subplot(3,3,3*s)
+    plot(1:9,(Pgge(3,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',10); hold on;
+    plot(1+0.25:10,(Dgge(3,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',10); hold on;
+    xlim([0 10])
+    ylim([0 0.7])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==3)
+        ha1=gca;
+        for n=1:9
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    title('L')
+    if (s==3)
+        stamp(cfile)
+    end
+    
+    
+end
+%print(f1,'-dpng',[fpath sname sname2 cfile '_mean_gge1.png'])
 
 %%
-for i=1:length(spots)
-    loc = spots{i};
-    lname = [sname2 loc '_'];
-    %%
-    for s=1:ndp
-        dpath = char(dp(s));
-        load([dpath sname sname2 'lastyr_bent_biom.mat']);
-        load([dpath sname sname2 'lastyr_sum_mean_biom.mat']);
-        
-        %Demersal fishes (M&L)
-        dem = nansum(squeeze(all_mean(2:3,3,:)));
-        BF = Bmean + dem';
-        
-        %% Bent biom by location
-        f1=figure(1);
-        plot(s,log10(allb(i)),'.r','MarkerSize',25); hold on;
-        plot(s,log10(Bmean(i)),'.k','MarkerSize',25); hold on;
-        plot(s,log10(BF(i)),'.b','MarkerSize',25); hold on;
-        ylim([-2 2])
-        xlim([0 1+ndp])
-        set(gca,'XTick',1:ndp,'XTickLabel',sims)
-        if (s==ndp)
-            ylabel('log10 Mean Benthic Biom (g m^-^2) in final year')
-            title([loc ' Benthic biomass'])
-            legend('predict','modelB','modelBF')
-            stamp(cfile)
+for s=4:6
+    dpath = char(dp(s));
+    load([dpath sname sname2 'lastyr_sum_mean_biom.mat']);
+    
+    
+    %% GGE by location
+    f2 = figure(2);
+    subplot(3,3,3*s-11)
+    plot(1-0.25:9,Fgge(1,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',10); hold on;
+    plot(1:9,Pgge(1,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',10); hold on;
+    plot(1+0.25:10,Dgge(1,:),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',10); hold on;
+    xlim([0 10])
+    ylim([0 0.7])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==6)
+        ha1=gca;
+        for n=1:9
+            text(n-0.5,ha1.YLim(1),spots{n},'Rotation',45)
         end
-       
-        f2=figure(2);
-        subplot(3,3,i)
-        plot(s,log10(allb(i)),'.r','MarkerSize',25); hold on;
-        plot(s,log10(Bmean(i)),'.k','MarkerSize',25); hold on;
-        plot(s,log10(BF(i)),'.b','MarkerSize',25); hold on;
-        ylim([-2 2])
-        xlim([0 1+ndp])
+    end
+    if (s==5)
+        ylabel('Mean gross growth efficiency in final year')
+    end
+    title('S')
+    
+    subplot(3,3,3*s-10)
+    plot(1-0.25:9,(Fgge(2,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',10); hold on;
+    plot(1:9,(Pgge(2,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',10); hold on;
+    plot(1+0.25:10,(Dgge(2,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',10); hold on;
+    xlim([0 10])
+    ylim([0 0.7])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==6)
+        ha2=gca;
+        for n=1:9
+            text(n-0.5,ha2.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    title('M')
+    
+    subplot(3,3,3*s-9)
+    plot(1:9,(Pgge(3,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',10); hold on;
+    plot(1+0.25:10,(Dgge(3,:)),'sk',...
+        'MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',10); hold on;
+    xlim([0 10])
+    ylim([0 0.7])
+    set(gca,'XTick',1:9,'XTickLabel',[])
+    if(s==6)
+        ha3=gca;
+        for n=1:9
+            text(n-0.5,ha3.YLim(1),spots{n},'Rotation',45)
+        end
+    end
+    title('L')
+    if (s==3)
+        stamp(cfile)
+    end
+end
+%print(f2,'-dpng',[fpath sname sname2 cfile '_mean_gge2.png'])
+
+%% By sim
+for i=1:length(spots)
+    close all    
+    loc = spots{i};
+    lname = [sname2 loc '_'];    
+    %%
+    for s=1:ndp  
+        dpath = char(dp(s));
+        load([dpath sname sname2 'lastyr_TEs.mat']);
+        
+        %% GGE
+        f3 = figure(3);
+        subplot(3,1,1)
+        plot(s-0.25,Fgge(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',10); hold on;
+        plot(s,Pgge(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',10); hold on;
+        plot(s+0.25,Dgge(1,i),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',10); hold on;
+        xlim([0 ndp+1])
+        ylim([0 1])
         set(gca,'XTick',1:ndp,'XTickLabel',sims)
         title(loc)
         if (s==ndp)
+            ylabel('S gge')
+        end
+        
+        subplot(3,1,2)
+        plot(s-0.25,(Fgge(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(3,:),...
+            'MarkerSize',10); hold on;
+        plot(s,(Pgge(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',10); hold on;
+        plot(s+0.25,(Dgge(2,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',10); hold on;
+        xlim([0 ndp+1])
+        ylim([0 1])
+        set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        if (s==ndp)
+            ylabel('M gge')
+        end
+        
+        subplot(3,1,3)
+        plot(s,(Pgge(3,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(1,:),...
+            'MarkerSize',10); hold on;
+        plot(s+0.25,(Dgge(3,i)),'sk',...
+            'MarkerFaceColor',cmap_ppt(2,:),...
+            'MarkerSize',10); hold on;
+        xlim([0 ndp+1])
+        ylim([0 1])
+        set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        if (s==ndp)
             stamp(cfile)
+            ylabel('L gge')
         end
-        if (i==4)
-            ylabel('log10 Mean Benthic Biom (g m^-^2) in final year')
-        end
-        if (i==length(spots))
-            legend('p','B','BF')
-        end
-        
-        
-        
+       
     end
-    print(f1,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'mean_bent_biom.png'])
-    close(f1)
+    print(f3,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'gge.png'])
     
 end
-print(f2,'-dpng',[fpath sname sname2 cfile '_mean_bent_biom.png'])
+
