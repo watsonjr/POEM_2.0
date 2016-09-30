@@ -67,7 +67,7 @@ function make_parameters(harv)
 	#! Amount of fishing
 	if harv == 1
 		#const global FISHING = 80000000000 / (365/DT) # 80MT per year
-		const global LFISHING = 0.8/365.0
+		const global LFISHING = 0.4/365.0
 		const global MFISHING = LFISHING
 		#const global MFISHING = 0.5 * LFISHING
 	else
@@ -78,7 +78,7 @@ function make_parameters(harv)
 	#! Benthic-pelagic coupling cutoff (depth, m)
 	const global PI_be_cutoff = 200
 	# 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
-	const global pdc = 2;
+	const global pdc = 1;
 
 	#! body lengths (mm)
 	const global L_s = 10^((log10(2)+log10(20))/2); # small
@@ -116,7 +116,7 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.30	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 10.0 		# 10 g^(1-p)/yr at 10C
 
 	###! Consumption constants
@@ -169,6 +169,7 @@ function make_parameters(harv)
 	const global LD_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
 	const global LD_phi_MD = 1.0
+	const global LD_phi_BE = 1.0
 
 	#-----
 end

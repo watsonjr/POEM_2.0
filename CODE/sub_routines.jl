@@ -61,7 +61,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_f.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD],LD_phi_MF)
 		Lrg_d.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_p.bio[JD],Lrg_d.td[JD],Lrg_d.td[JD],LD_phi_MP)
 		Lrg_d.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],Med_d.bio[JD],Lrg_d.td[JD],1-Lrg_d.td[JD],LD_phi_MD)
-		Lrg_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],BENT.mass[JD],Lrg_d.td[JD],1-Lrg_d.td[JD],1)
+		Lrg_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_d.bio[JD],BENT.mass[JD],Lrg_d.td[JD],1-Lrg_d.td[JD],LD_phi_BE)
 
 		#! Consumption rates
 		Sml_f.con_zm[JD] = sub_cons(ENVR.Tp[JD],ENVR.Tb[JD],Sml_f.td[JD],M_s,Sml_f.enc_zm[JD])
