@@ -22,7 +22,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -81,7 +81,7 @@ m_grid;
 title('log10 mean biomass of Benthic Invertebrates (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-3 0])
+caxis([-3 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_BENT_NF.png'])
 
@@ -130,9 +130,22 @@ m_grid;
 title('log10 mean biomass of All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-1 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_All_NF.png'])
+print('-dpng',[ppath 'Spinup_global_All_NF1.png'])
+%%
+figure(2)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,real(log10(All))); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('log10 mean biomass of All Fishes (g m^-^2)')
+colormap('jet')
+colorbar('h')
+caxis([-2 0.5])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_All_NF2.png'])
 
 %% all F
 figure(22)
@@ -144,7 +157,7 @@ m_grid;
 title('log10 mean biomass of Forage Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-3 0])
+caxis([-3 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllF_NF.png'])
 
@@ -158,7 +171,7 @@ m_grid;
 title('log10 mean biomass of Demersal Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-3 0])
+caxis([-3 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllD_NF.png'])
 
@@ -172,7 +185,7 @@ m_grid;
 title('log10 mean biomass of Large Pelagics (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-3 0])
+caxis([-3 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllP_NF.png'])
 

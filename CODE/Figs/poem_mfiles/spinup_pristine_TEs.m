@@ -90,19 +90,19 @@ for i=1:length(dp)
     %%
     Con=NaN*ones(3,length(spots));
     Scon = Con;
-    Prod = Con;
     Pred = Con;
     Eat = Con;
     PNmort = Con;
     PNFmort = Con;
+    Prod = NaN*ones(6,length(spots));
     TEcon = NaN*ones(2,length(spots));
     TEscon = TEcon;
-    TEprod = TEcon;
     TEpred = TEcon;
     TEeat = TEcon;
     TEmortPN = TEcon;
     TEmortPNF = TEcon;
     TEeff = TEcon;
+    TEprod = NaN*ones(5,length(spots));
     TLprey = NaN*ones(8,length(spots));
     prey_sims = NaN*ones(8,6,length(spots));
     tl_mat = prey_sims;
@@ -166,20 +166,31 @@ for i=1:length(dp)
         MD_prod=(MD(lyr,24));
         LP_prod=(LP(lyr,24));
         LD_prod=(LD(lyr,24));
+        MZ_prod = ZPsum(1,s);
+        LZ_prod = ZPsum(2,s);
+        B_prod = nansum(C(lyr,1));
         
         S_prod=nansum(SP_prod+SF_prod+SD_prod);
         M_prod=nansum(MP_prod+MF_prod+MD_prod);
         L_prod=nansum(LP_prod+LD_prod);
         
-        Prod(:,s) = [S_prod;M_prod;L_prod];
+        Prod(:,s) = [MZ_prod;LZ_prod;B_prod;S_prod;M_prod;L_prod];
         
         TEprod(1,s) = M_prod./S_prod;
         TEprod(2,s) = L_prod./M_prod;
         
+        M_prod1=nansum(MP_prod+MF_prod);
+        M_prod2=nansum(MD_prod);
+        L_prod1=nansum(LP_prod);
+        L_prod2=nansum(LD_prod);
+        
+        TEprod(1,s) = S_prod./MZ_prod;
+        TEprod(2,s) = M_prod1./(S_prod+LZ_prod);
+        TEprod(3,s) = M_prod2./(B_prod);
+        TEprod(4,s) = L_prod1./M_prod1;
+        TEprod(5,s) = L_prod2./(M_prod2+B_prod);
+        
         %% Effective TE
-        MZ_prod = ZPsum(1,s);
-        LZ_prod = ZPsum(2,s);
-        B_prod = nansum(C(lyr,1));
         
         TEeff(1,s) = M_prod/(B_prod + MZ_prod + LZ_prod);
         TEeff(2,s) = L_prod/(B_prod + MZ_prod + LZ_prod);
@@ -321,7 +332,7 @@ for i=1:length(dp)
     end
     
     save([dpath sname sname2 'lastyr_TEs.mat'],'TEcon','TEprod','TEeat',...
-        'TEmortPN','TEmortPNF','TEeff','TLprey','prey_sims','tl_mat');
+        'TEmortPN','TEmortPNF','TEeff','TLprey','prey_sims','tl_mat','Prod');
     
     %% Figures
     %     figure(1);
