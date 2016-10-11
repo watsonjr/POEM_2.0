@@ -16,4 +16,4 @@
 *ppt
 *.Rdata
 *.Rhistory
-
+*.DS_Store
