@@ -240,12 +240,72 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
 % npath2 = 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/';
 % npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP25/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP50/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP75/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP25/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP50/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP75/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP25/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP50/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP75/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_BP25/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_BP50/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_BP75/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10_BP25/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10_BP50/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10_BP75/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE15_BP25/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE15_BP50/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE15_BP75/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_BP25/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_BP50/';
+% npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_BP75/';
+% npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25_BP25/';
+% npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25_BP50/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25_BP75/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10_BP25/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10_BP50/';
+% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10_BP75/';
+% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_BP25/';
+% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_BP50/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_BP75/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP25/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP50/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP75/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP25/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP50/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP75/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP25/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP50/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP75/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP25/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP50/';
+% npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP75/';
+% npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP100/';
+% npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP100/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP100/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP100/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE075/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE075_BP100/';
+npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_cobalt125/';
+npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_cobalt130/';
+npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_cobalt135/';
+npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_cobalt140/';
+npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_init1e-7/';
+npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_init1e-3/';
+npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_init1e-1/';
+npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_init1e1/';
+npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_init1e3/';
+
 
 %cfile = 'Dc_MFeqMP_fcrit10_MZ01_NOnmort';
-% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
 % dp = {npath6;npath7;npath8;npath9;npath10};
-% dp = {npath11;npath12;npath13;npath14;npath15};
+% dp = {npath14;npath15;npath16};
 % dp = {npath1};
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12;...
+%     npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;npath21};
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
 
@@ -257,54 +317,55 @@ cols=cols';
 fplot=0;
 
 %%
-for i=1:length(dp)
-    
-    dpath = [datap char(dp(i))];
-    fpath = [figp char(dp(i))];
-    
-    mclev=NaN*ones(length(spots),8);
-    Zcon=NaN*ones(length(spots),3);
-    
-    %%
-    for s=1:length(spots)
+if (fplot==1)
+    for i=1:length(dp)
+        
+        dpath = [datap char(dp(i))];
+        fpath = [figp char(dp(i))];
+        
+        mclev=NaN*ones(length(spots),8);
+        Zcon=NaN*ones(length(spots),3);
+        
         %%
-        close all
-        loc = spots{s};
-        sname = 'Spinup_';
-        lname = [loc '_'];
-        %lname = ['phen_' loc '_'];
-        SP = csvread([dpath sname lname 'Sml_p.csv']);
-        SF = csvread([dpath sname lname 'Sml_f.csv']);
-        SD = csvread([dpath sname lname 'Sml_d.csv']);
-        MP = csvread([dpath sname lname 'Med_p.csv']);
-        MF = csvread([dpath sname lname 'Med_f.csv']);
-        MD = csvread([dpath sname lname 'Med_d.csv']);
-        LP = csvread([dpath sname lname 'Lrg_p.csv']);
-        LD = csvread([dpath sname lname 'Lrg_d.csv']);
-        C = csvread([dpath sname lname 'Cobalt.csv']);
-        z(:,1) = C(:,2);
-        z(:,2) = C(:,3);
-        z(:,3) = C(:,4);
-        z=floor(z);
-        
-        %% Plots over time
-        x=1:length(SP);
-        y=x/365;
-        lstd=length(SP);
-        id1 = 0:365:(lstd-1);
-        id2 = 365:365:(lstd);
-        ID  = [id1 id2];
-        
-        %% Mean consumption level
-        c=[SF(:,21) SP(:,21) SD(:,21) MF(:,21) MP(:,21) MD(:,21) LP(:,21) LD(:,21)];
-        mclev(s,:) = nanmean(c);
-        
-        % Zoop overconsumption
-        
-        Zcon(s,:) = nansum(z)/lstd;
-        
-        %% PLOTS
-        if (fplot==1)
+        for s=1:length(spots)
+            %%
+            close all
+            loc = spots{s};
+            sname = 'Spinup_';
+            lname = [loc '_'];
+            %lname = ['phen_' loc '_'];
+            SP = csvread([dpath sname lname 'Sml_p.csv']);
+            SF = csvread([dpath sname lname 'Sml_f.csv']);
+            SD = csvread([dpath sname lname 'Sml_d.csv']);
+            MP = csvread([dpath sname lname 'Med_p.csv']);
+            MF = csvread([dpath sname lname 'Med_f.csv']);
+            MD = csvread([dpath sname lname 'Med_d.csv']);
+            LP = csvread([dpath sname lname 'Lrg_p.csv']);
+            LD = csvread([dpath sname lname 'Lrg_d.csv']);
+            C = csvread([dpath sname lname 'Cobalt.csv']);
+            z(:,1) = C(:,2);
+            z(:,2) = C(:,3);
+            z(:,3) = C(:,4);
+            z=floor(z);
+            
+            %% Plots over time
+            x=1:length(SP);
+            y=x/365;
+            lstd=length(SP);
+            id1 = 0:365:(lstd-1);
+            id2 = 365:365:(lstd);
+            ID  = [id1 id2];
+            
+            %% Mean consumption level
+            c=[SF(:,21) SP(:,21) SD(:,21) MF(:,21) MP(:,21) MD(:,21) LP(:,21) LD(:,21)];
+            mclev(s,:) = nanmean(c);
+            
+            % Zoop overconsumption
+            
+            Zcon(s,:) = nansum(z)/lstd;
+            
+            %% PLOTS
+            
             %% Piscivore
             figure(1)
             subplot(4,1,1)
@@ -772,18 +833,71 @@ for i=1:length(dp)
             ylabel('log10 Recruits (g m^-^2)')
             title('Demersal piscivores')
             print('-dpng',[fpath sname lname 'oneloc_recruitment.png'])
+            
         end
+        
+        if (length(lname) > 5)
+            save([dpath sname lname(1:5) 'consump.mat'],'mclev','Zcon');
+            csvwrite([dpath sname lname(1:5) 'clevel.csv'],mclev);
+            csvwrite([dpath sname lname(1:5) 'Zconsump.csv'],Zcon);
+        else
+            save([dpath sname 'consump.mat'],'mclev','Zcon');
+            csvwrite([dpath sname 'clevel.csv'],mclev);
+            csvwrite([dpath sname 'Zconsump.csv'],Zcon);
+        end
+        
     end
-    
-    if (length(lname) > 5)
-        save([dpath sname lname(1:5) 'consump.mat'],'mclev','Zcon');
-        csvwrite([dpath sname lname(1:5) 'clevel.csv'],mclev);
-        csvwrite([dpath sname lname(1:5) 'Zconsump.csv'],Zcon);
-    else
-        save([dpath sname 'consump.mat'],'mclev','Zcon');
-        csvwrite([dpath sname 'clevel.csv'],mclev);
-        csvwrite([dpath sname 'Zconsump.csv'],Zcon);
+else
+    for i=1:length(dp)
+        
+        dpath = [datap char(dp(i))];
+        fpath = [figp char(dp(i))];
+        
+        mclev=NaN*ones(length(spots),8);
+        Zcon=NaN*ones(length(spots),3);
+        
+        %%
+        for s=1:length(spots)
+            %%
+            close all
+            loc = spots{s};
+            sname = 'Spinup_';
+            lname = [loc '_'];
+            %lname = ['phen_' loc '_'];
+            SP = csvread([dpath sname lname 'Sml_p.csv']);
+            SF = csvread([dpath sname lname 'Sml_f.csv']);
+            SD = csvread([dpath sname lname 'Sml_d.csv']);
+            MP = csvread([dpath sname lname 'Med_p.csv']);
+            MF = csvread([dpath sname lname 'Med_f.csv']);
+            MD = csvread([dpath sname lname 'Med_d.csv']);
+            LP = csvread([dpath sname lname 'Lrg_p.csv']);
+            LD = csvread([dpath sname lname 'Lrg_d.csv']);
+            C = csvread([dpath sname lname 'Cobalt.csv']);
+            z(:,1) = C(:,2);
+            z(:,2) = C(:,3);
+            z(:,3) = C(:,4);
+            z=floor(z);
+            
+            %% Mean consumption level
+            c=[SF(:,21) SP(:,21) SD(:,21) MF(:,21) MP(:,21) MD(:,21) LP(:,21) LD(:,21)];
+            mclev(s,:) = nanmean(c);
+            
+            % Zoop overconsumption
+            lstd=length(C);
+            Zcon(s,:) = nansum(z)/lstd;
+            
+        end
+        
+        if (length(lname) > 5)
+            save([dpath sname lname(1:5) 'consump.mat'],'mclev','Zcon');
+            csvwrite([dpath sname lname(1:5) 'clevel.csv'],mclev);
+            csvwrite([dpath sname lname(1:5) 'Zconsump.csv'],Zcon);
+        else
+            save([dpath sname 'consump.mat'],'mclev','Zcon');
+            csvwrite([dpath sname 'clevel.csv'],mclev);
+            csvwrite([dpath sname 'Zconsump.csv'],Zcon);
+        end
+        
     end
-    
 end
 

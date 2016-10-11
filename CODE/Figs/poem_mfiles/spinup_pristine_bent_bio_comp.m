@@ -33,11 +33,19 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath21 = [datap 'NoPDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/'];
 npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE025/'];
 npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/'];
-npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE30/'];
+npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP25/'];
+npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP50/'];
+npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP75/'];
+npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/'];
+npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/'];
+npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP25/'];
+npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP50/'];
+npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP75/'];
+npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
+npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/'];
+npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP25/'];
+npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP50/'];
+npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP75/'];
 % npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
 % npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/'];
 % npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
@@ -130,12 +138,17 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath21;npath7;npath14};
 % sims = {'noPDc','Dc','PDc'};
 % cfile = 'Hartvig_cmax-metab_MFeqMP_MZ01_fcrit50_PDc_comp';
-dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};
-sims = {'.025','.05','.075','.1','.15','.2','.3'};
-cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};
+% sims = {'.025','.05','.075','.1','.15','.2','.3'};
+% cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_comp';
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6};
 % sims = {'.05','.10','.15','.20','.25','.30'};
 % cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit40_BentEff_comp';
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12;...
+    npath13;npath14;npath15};
+sims = {'.025-1','.05-1/4','.05-1/2','.05-3/4','.05-1','.075','.1-1','.15-1/4','.15-1/2',...
+    '.15-3/4','.15-1','.2-1','.25-1/4','.25-1/2','.25-3/4'};
+cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_BentPref_comp';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -190,7 +203,10 @@ for i=1:length(spots)
         plot(s,log10(BF(i)),'.b','MarkerSize',25); hold on;
         ylim([-2 2])
         xlim([0 1+ndp])
-        set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        set(gca,'XTick',1:ndp,'XTickLabel',[]);
+        for t=1:ndp
+            text(t,-2.1,sims{t},'HorizontalAlignment','right','Rotation',45)
+        end
         if (s==ndp)
             ylabel('log10 Mean Benthic Biom (g m^-^2) in final year')
             title([loc ' Benthic biomass'])
@@ -205,7 +221,10 @@ for i=1:length(spots)
         plot(s,log10(BF(i)),'.b','MarkerSize',25); hold on;
         ylim([-2 2])
         xlim([0 1+ndp])
-        set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        set(gca,'XTick',1:ndp,'XTickLabel',[]);
+        for t=1:ndp
+            text(t,-2.1,sims{t},'HorizontalAlignment','right','Rotation',45)
+        end
         title(loc)
         if (s==ndp)
             stamp(cfile)

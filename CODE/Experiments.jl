@@ -7,7 +7,7 @@ function Testoneloc()
 	make_parameters(harv) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-  COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld"); # 1980
+  COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld"); # 120=1980
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
 	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP75";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_init1e3";
 
 	for L = 1:9
 		ID = ids[L]
@@ -366,7 +366,7 @@ function Spinup_pristine()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MFMZ1_NOnmort_BE05";
 
 	S_Bent_bio = zeros(NX,DAYS);
 

@@ -32,23 +32,63 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath20 = [datap 'NoPDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
 % npath21 = [datap 'NoPDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit50_MZ01_NOnmort/'];
 % npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE025/'];
-% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
-% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/'];
-% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/'];
-% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
-% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/'];
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/'];
-% npath1 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-% npath2 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/'];
-% npath3 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
-% npath4 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/'];
-% npath5 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/'];
-% npath6 = [datap 'PDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP25/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP50/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_BP75/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE075/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10_BP25/'];
+% npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10_BP50/'];
+% npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10_BP75/'];
+% npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10/'];
+% npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP25/'];
+% npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP50/'];
+% npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE15_BP75/'];
+% npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort/'];
+% npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_BP25/'];
+% npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_BP50/'];
+% npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20_BP75/'];
+% npath18 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE20/'];
+% npath19 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP25/'];
+% npath20 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP50/'];
+% npath21 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE25_BP75/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_BP25/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_BP50/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_BP75/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10_BP25/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10_BP50/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10_BP75/'];
+% npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE10/'];
+% npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE15_BP25/'];
+% npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE15_BP50/'];
+% npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE15_BP75/'];
+% npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort/'];
+% npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_BP25/'];
+% npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_BP50/'];
+% npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20_BP75/'];
+% npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE20/'];
+% npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25_BP25/'];
+% npath18 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25_BP50/'];
+% npath19 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25_BP75/'];
+% npath20 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE25/'];
+% npath21 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE30/'];
+npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP25/'];
+npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP50/'];
+npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP75/'];
+npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05_BP100/'];
+npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP25/'];
+npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP50/'];
+npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP75/'];
+npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE10_BP100/'];
+npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP25/'];
+npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP50/'];
+npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP75/'];
+npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE15_BP100/'];
+npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP25/'];
+npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP50/'];
+npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP75/'];
+npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE20_BP100/'];
 
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
@@ -132,9 +172,25 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6};
 % sims = {'.025','.05','.075','.1','.15','.2'};
 % cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_comp';
-dp = {npath1;npath2;npath3;npath4;npath5;npath6};
-sims = {'.05','.1','.15','.2','.25','.3'};
-cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit40_BentEff_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6};
+% sims = {'.05','.1','.15','.2','.25','.3'};
+% cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit40_BentEff_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12;...
+%     npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;npath21};
+% sims = {'.025-100','.05-25','.05-50','.05-75','.05-100','.075-100','.1-25','.1-50','.1-75',...
+%     '.1-100','.15-25','.15-50','.15-75','.15-100','.2-25','.2-50','.2-75','.2-100','.25-25',...
+%     '.25-50','.25-75'};
+% cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit30_BentEff_BentPref_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12;...
+%     npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20};
+% sims = {'.05-25','.05-50','.05-75','.05-100','.1-25','.1-50','.1-75','.1-100','.15-25','.15-50',...
+%     '.15-75','.15-100','.2-25','.2-50','.2-75','.2-100','.25-25','.25-50','.25-75','.25-100',};
+% cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit40_BentEff_BentPref_comp';
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12;...
+    npath13;npath14;npath15;npath16};
+sims = {'.05-25','.05-50','.05-75','.05-100','.1-25','.1-50','.1-75',...
+    '.1-100','.15-25','.15-50','.15-75','.15-100','.2-25','.2-50','.2-75','.2-100'};
+cfile = 'Dc_Hartvig_cmax-metab_MFeqMP_MZ01_fcrit35_BentEff_BentPref_comp';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -164,101 +220,101 @@ for i=1:length(spots)
         load([dpath sname sname2 'lastyr_TEs.mat']);
         
         %% TEs by location
-%         f1=figure(1);
-%         subplot(2,1,1)
-%         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Medium/Small')
-%         title([loc ' mean con TE in final year'])
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         
-%         subplot(2,1,2)
-%         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Large/Medium')
-%         xlabel('sim')
-%         
-%         f11=figure(11);
-%         subplot(2,1,1)
-%         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Medium/Small')
-%         title([loc ' mean con TE in final year'])
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         
-%         subplot(2,1,2)
-%         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Large/Medium')
-%         xlabel('sim')
-%         
-%         %% Production
-%         f2=figure(2);
-%         subplot(2,1,1)
-%         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Medium/Small')
-%         title([loc ' mean prod TE in final year'])
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         
-%         subplot(2,1,2)
-%         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Large/Medium')
-%         xlabel('sim')
-%         
-%         f12=figure(12);
-%         subplot(2,1,1)
-%         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Medium/Small')
-%         title([loc ' mean prod TE in final year'])
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         
-%         subplot(2,1,2)
-%         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Large/Medium')
-%         xlabel('sim')
-%         
-%         %% effective TE
-%         f3=figure(3);
-%         subplot(2,1,1)
-%         plot(s,TEeff(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Medium')
-%         title([loc ' mean eff TE in final year'])
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         
-%         subplot(2,1,2)
-%         plot(s,TEeff(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         ylabel('Large')
-%         xlabel('sim')
+        %         f1=figure(1);
+        %         subplot(2,1,1)
+        %         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Medium/Small')
+        %         title([loc ' mean con TE in final year'])
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %
+        %         subplot(2,1,2)
+        %         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Large/Medium')
+        %         xlabel('sim')
+        %
+        %         f11=figure(11);
+        %         subplot(2,1,1)
+        %         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Medium/Small')
+        %         title([loc ' mean con TE in final year'])
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %
+        %         subplot(2,1,2)
+        %         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Large/Medium')
+        %         xlabel('sim')
+        %
+        %         %% Production
+        %         f2=figure(2);
+        %         subplot(2,1,1)
+        %         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Medium/Small')
+        %         title([loc ' mean prod TE in final year'])
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %
+        %         subplot(2,1,2)
+        %         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Large/Medium')
+        %         xlabel('sim')
+        %
+        %         f12=figure(12);
+        %         subplot(2,1,1)
+        %         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Medium/Small')
+        %         title([loc ' mean prod TE in final year'])
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %
+        %         subplot(2,1,2)
+        %         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Large/Medium')
+        %         xlabel('sim')
+        %
+        %         %% effective TE
+        %         f3=figure(3);
+        %         subplot(2,1,1)
+        %         plot(s,TEeff(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Medium')
+        %         title([loc ' mean eff TE in final year'])
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %
+        %         subplot(2,1,2)
+        %         plot(s,TEeff(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         ylabel('Large')
+        %         xlabel('sim')
         
         %% TL prey
         f20=figure(20);
@@ -273,7 +329,10 @@ for i=1:length(spots)
             'MarkerFaceColor',cmap_ppt(2,:),...
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',sims);
+        set(gca,'XTick',1:ndp,'XTickLabel',[]);
+        for t=1:ndp
+            text(t,2.95,sims{t},'HorizontalAlignment','right','Rotation',90)
+        end
         title('Mean TL in final year')
         ylabel('M')
         if (s==ndp)
@@ -288,16 +347,19 @@ for i=1:length(spots)
             'MarkerFaceColor',cmap_ppt(2,:),...
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',sims);
+        set(gca,'XTick',1:ndp,'XTickLabel',[]);
+        for t=1:ndp
+            text(t,2.95,sims{t},'HorizontalAlignment','right','Rotation',90)
+        end
         ylabel('L')
         
         
     end
-%     print(f1,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_con.png'])
-%     print(f2,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_prod.png'])
-%     print(f3,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_eff.png'])
-%     print(f11,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_con_axes.png'])
-%     print(f12,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_prod_axes.png'])
+    %     print(f1,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_con.png'])
+    %     print(f2,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_prod.png'])
+    %     print(f3,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_eff.png'])
+    %     print(f11,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_con_axes.png'])
+    %     print(f12,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TEs_prod_axes.png'])
     print(f20,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'TLs.png'])
     
 end
@@ -312,170 +374,170 @@ for i=1:length(spots)
         load([dpath sname sname2 'lastyr_TEs.mat']);
         
         %% TEs subplot
-%         f4=figure(4);
-%         subplot(3,3,i)
-%         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Medium/Small consumption')
-%         end
-%         
-%         f5=figure(5);
-%         subplot(3,3,i)
-%         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Large/Medium consumption')
-%         end
-%         
-%         f13=figure(13);
-%         subplot(3,3,i)
-%         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Medium/Small consumption')
-%         end
-%         
-%         f14=figure(14);
-%         subplot(3,3,i)
-%         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Large/Medium consumption')
-%         end
-%         
-%         %% production
-%         f6=figure(6);
-%         subplot(3,3,i)
-%         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Medium/Small production')
-%         end
-%         
-%         f7=figure(7);
-%         subplot(3,3,i)
-%         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Large/Medium production')
-%         end
-%         
-%         f15=figure(15);
-%         subplot(3,3,i)
-%         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Medium/Small production')
-%         end
-%         
-%         f16=figure(16);
-%         subplot(3,3,i)
-%         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([0 1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Large/Medium production')
-%         end
-%         
-%         %% effective
-%         f8=figure(8);
-%         subplot(3,3,i)
-%         plot(s,TEeff(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Medium eff TE')
-%         end
-%         
-%         f9=figure(9);
-%         subplot(3,3,i)
-%         plot(s,TEeff(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Large eff TE')
-%         end
-%         
-%         f18=figure(18);
-%         subplot(3,3,i)
-%         plot(s,TEeff(1,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([-25e-3 10e-2])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Medium eff TE')
-%         end
-%         
-%         f19=figure(19);
-%         subplot(3,3,i)
-%         plot(s,TEeff(2,i),'.k','MarkerSize',25); hold on;
-%         xlim([0 ndp+1])
-%         ylim([-1e-3 15e-3])
-%         set(gca,'XTick',1:ndp,'XTickLabel',sims)
-%         title(loc)
-%         if (s==ndp)
-%             stamp(cfile)
-%         end
-%         if (i==4)
-%             ylabel('Large eff TE')
-%         end
-%         
+        %         f4=figure(4);
+        %         subplot(3,3,i)
+        %         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Medium/Small consumption')
+        %         end
+        %
+        %         f5=figure(5);
+        %         subplot(3,3,i)
+        %         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Large/Medium consumption')
+        %         end
+        %
+        %         f13=figure(13);
+        %         subplot(3,3,i)
+        %         plot(s,TEcon(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Medium/Small consumption')
+        %         end
+        %
+        %         f14=figure(14);
+        %         subplot(3,3,i)
+        %         plot(s,TEcon(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Large/Medium consumption')
+        %         end
+        %
+        %         %% production
+        %         f6=figure(6);
+        %         subplot(3,3,i)
+        %         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Medium/Small production')
+        %         end
+        %
+        %         f7=figure(7);
+        %         subplot(3,3,i)
+        %         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Large/Medium production')
+        %         end
+        %
+        %         f15=figure(15);
+        %         subplot(3,3,i)
+        %         plot(s,TEprod(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Medium/Small production')
+        %         end
+        %
+        %         f16=figure(16);
+        %         subplot(3,3,i)
+        %         plot(s,TEprod(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([0 1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Large/Medium production')
+        %         end
+        %
+        %         %% effective
+        %         f8=figure(8);
+        %         subplot(3,3,i)
+        %         plot(s,TEeff(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Medium eff TE')
+        %         end
+        %
+        %         f9=figure(9);
+        %         subplot(3,3,i)
+        %         plot(s,TEeff(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Large eff TE')
+        %         end
+        %
+        %         f18=figure(18);
+        %         subplot(3,3,i)
+        %         plot(s,TEeff(1,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([-25e-3 10e-2])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Medium eff TE')
+        %         end
+        %
+        %         f19=figure(19);
+        %         subplot(3,3,i)
+        %         plot(s,TEeff(2,i),'.k','MarkerSize',25); hold on;
+        %         xlim([0 ndp+1])
+        %         ylim([-1e-3 15e-3])
+        %         set(gca,'XTick',1:ndp,'XTickLabel',sims)
+        %         title(loc)
+        %         if (s==ndp)
+        %             stamp(cfile)
+        %         end
+        %         if (i==4)
+        %             ylabel('Large eff TE')
+        %         end
+        %
         %% TL prey
         f21=figure(21);
         subplot(3,3,i)
@@ -490,7 +552,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         ylim([3 4])
-        set(gca,'XTick',1:ndp,'XTickLabel',sims);
+        set(gca,'XTick',1:ndp,'XTickLabel',[]);
+        for t=1:ndp
+            text(t,2.95,sims{t},'HorizontalAlignment','right','Rotation',45)
+        end
         title(loc)
         if (i==4)
             ylabel('Mean M TL in final year')
@@ -509,7 +574,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         ylim([3 5])
-        set(gca,'XTick',1:ndp,'XTickLabel',sims);
+        set(gca,'XTick',1:ndp,'XTickLabel',[]);
+        for t=1:ndp
+            text(t,2.95,sims{t},'HorizontalAlignment','right','Rotation',45)
+        end
         title(loc)
         if (i==4)
             ylabel('Mean L TL in final year')

@@ -7,7 +7,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MFMZ1_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -117,10 +117,12 @@ metrics={'r','RMSE','RI','AE','AAE','MEF','R','norm std','unb RMSD',...
     'tot RMSD','bias','S1','S2','S3'};
 metrics=metrics';
 
-obs(:,1) = Zi(:);
-obs(:,2) = Zf(:);
-model(:,1) = Zb(:);
-model(:,2) = Zd(:);
+% REDO Use log biomass
+
+obs(:,1) = real(log(Zi(:)));
+obs(:,2) = real(log(Zf(:)));
+model(:,1) = real(log(Zb(:)));
+model(:,2) = real(log(Zd(:)));
 
 n = length(Zi(:));
 
@@ -254,11 +256,7 @@ simtex{3}='obs';
 tr=0;
 rr=1;
 figure(6)
-%h0=polar(0,2,'.'); hold on;        %0.05
-%h0=polar(0,15,'.'); hold on;       %0.25
-%h0=polar(0,6,'.'); hold on;        %0.15
-%h0=polar(0,4,'.'); hold on;        %0.10
-h0=polar(0,5,'.'); hold on;        %0.10 fcrit 30
+h0=polar(0,2,'.'); hold on;        %0.05
 set(h0,'color','w');
 for s=1:2
     h=polar(theta(s),rho(s),'.'); hold on;
@@ -267,11 +265,7 @@ end
 %set(h,'clim',[0 1.5]);
 h2=polar(tr,rr,'k*');
 set(h2,'MarkerSize',10);
-%axis([0 2 0 2.1])
-%axis([0 15 0 15])
-%axis([0 6 0 6])
-%axis([0 4 0 4])
-axis([0 5 0 5])
+axis([0 2 0 2.1])
 title('Joliff Taylor diagram')
 legend([' ' simtex])
 legend('location','northeast')
@@ -281,11 +275,7 @@ print('-dpng',[ppath 'Taylor_Joliff_Wei'])
 theta2=acos(skill(1,:));
 
 figure(7)
-%h0=polar(0,2,'.'); hold on;        %0.05
-%h0=polar(0,15,'.'); hold on;       %0.25
-%h0=polar(0,6,'.'); hold on;        %0.15
-%h0=polar(0,4,'.'); hold on;        %0.10
-h0=polar(0,5,'.'); hold on;        %0.10 fcrit 30
+h0=polar(0,2,'.'); hold on;        %0.05
 set(h0,'color','w');
 for s=1:2
     h=polar(theta2(s),rho(s),'.'); hold on;
@@ -294,11 +284,7 @@ end
 %set(h,'clim',[0 1.5]);
 h2=polar(tr,rr,'k*');
 set(h2,'MarkerSize',10);
-%axis([0 2 0 2.1])
-%axis([0 15 0 15])
-%axis([0 6 0 6])
-%axis([0 4 0 4])
-axis([0 5 0 5])
+axis([0 2 0 2.1])
 title('Taylor diagram')
 legend([' ' simtex])
 legend('location','northeast')
