@@ -21,31 +21,31 @@
 using NetCDF, HDF5, JLD, Grid, MAT
 
 #! Time
-TIME = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_biomass_100.090101-100012.nmdz_100.nc",
+TIME = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
     "average_T1"); # time
 
 #! Physical Scalers: (Pelagic Temp, Bottom Temp (potential temp)), deg C
-Tb = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_btm.090101-100012.btm_temp.nc","btm_temp");
-Tp = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean.090101-100012.temp100.nc","TEMP100");
+Tb = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_btm.200601-210012.btm_temp.nc","btm_temp");
+Tp = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean.200601-210012.temp100.nc","TEMP100");
 
 #! Zooplankton abundances: medium and large (mol C m-2)
-Zm=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_biomass_100.090101-100012.nmdz_100.nc",
+Zm=ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
 	"nmdz_100");
-Zl=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_biomass_100.090101-100012.nlgz_100.nc",
+Zl=ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_biomass_100.200601-210012.nlgz_100.nc",
 	"nlgz_100");
 
 #! Zooplankton mortality rates: medium and large size: (mol C m-2 s-1)
-dZm=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_miscflux_100.090101-100012.jhploss_nmdz_100.nc",
+dZm=ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_miscflux_100.200601-210012.jhploss_nmdz_100.nc",
 	"jhploss_nmdz_100");
-dZl=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_miscflux_100.090101-100012.jhploss_nlgz_100.nc",
+dZl=ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_miscflux_100.200601-210012.jhploss_nlgz_100.nc",
 	"jhploss_nlgz_100");
 
 #! Detrital flux at the sea floor (mol C m-2 s-1)
-dDet=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_btm.090101-100012.fndet_btm.nc","fndet_btm");
+dDet=ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_btm.200601-210012.fndet_btm.nc","fndet_btm");
 
 #! Ocean currents
-#U = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean.090101-100012.u_100_avg.nc","U_100");
-#V = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean.090101-100012.v_100_avg.nc","V_100");
+#U = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean.200601-210012.u_100_avg.nc","U_100");
+#V = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean.200601-210012.v_100_avg.nc","V_100");
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
@@ -206,10 +206,11 @@ for i = 1:nyr
 
 	#! save
 	println(i)
-	ti = string(1000000+i);
-  di = "/Volumes/GFDL/POEM_JLD/pre_indust/Data_preindust_";
+	#ti = string(1000000+i);
+  ti = string(2005+i);
+  di = "/Volumes/GFDL/POEM_JLD/rcp85/Data_rcp85_";
 	# save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,"dZm",D_dZm,"dZl",D_dZl,
 	# 								  "Tp",D_Tp,"Tb",D_Tb,"det",D_det,"U",D_u,"V",D_v);
-  save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,"dZm",D_dZm,"dZl",D_dZl,
+  save(string(di,ti[1:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,"dZm",D_dZm,"dZl",D_dZl,
                   									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det);
 end
