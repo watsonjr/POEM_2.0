@@ -21,36 +21,36 @@
 using NetCDF, HDF5, JLD, Grid, MAT
 
 #! Time
-TIME = ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc",
+TIME = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_biomass_100.090101-100012.nmdz_100.nc",
     "average_T1"); # time
 
 #! Physical Scalers: (Pelagic Temp, Bottom Temp (potential temp)), deg C
-Tb = ncread("./GCM/Hindcast/ocean.186101-200512.bottom_temp.nc","bottom_temp");
-Tp = ncread("./GCM/Hindcast/ocean.186101-200512.temp_100_avg.nc","TEMP_100");
+Tb = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_btm.090101-100012.btm_temp.nc","btm_temp");
+Tp = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean.090101-100012.temp100.nc","TEMP100");
 
 #! Zooplankton abundances: medium and large (mol C m-2)
-Zm=ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc",
+Zm=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_biomass_100.090101-100012.nmdz_100.nc",
 	"nmdz_100");
-Zl=ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nlgz_100.nc",
+Zl=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_biomass_100.090101-100012.nlgz_100.nc",
 	"nlgz_100");
 
 #! Zooplankton mortality rates: medium and large size: (mol C m-2 s-1)
-dZm=ncread("./GCM/Hindcast/ocean_cobalt_miscflux_100.186101-200512.jhploss_nmdz_100.nc",
+dZm=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_miscflux_100.090101-100012.jhploss_nmdz_100.nc",
 	"jhploss_nmdz_100");
-dZl=ncread("./GCM/Hindcast/ocean_cobalt_miscflux_100.186101-200512.jhploss_nlgz_100.nc",
+dZl=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_miscflux_100.090101-100012.jhploss_nlgz_100.nc",
 	"jhploss_nlgz_100");
 
 #! Detrital flux at the sea floor (mol C m-2 s-1)
-dDet=ncread("./GCM/Hindcast/ocean_cobalt_btm.186101-200512.fndet_btm.nc","fndet_btm");
+dDet=ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean_cobalt_btm.090101-100012.fndet_btm.nc","fndet_btm");
 
 #! Ocean currents
-U = ncread("./GCM/Hindcast/ocean.186101-200512.u_100_avg.nc","U_100");
-V = ncread("./GCM/Hindcast/ocean.186101-200512.v_100_avg.nc","V_100");
+#U = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean.090101-100012.u_100_avg.nc","U_100");
+#V = ncread("/Volumes/GFDL/GCM_DATA/PreIndust/ocean.090101-100012.v_100_avg.nc","V_100");
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
 #! load grid data (for pressure to calc bottom temp)
-Pr = load("./JLD/Data_grid_hindcast.jld","Pr")
+Pr = load("/Volumes/GFDL/POEM_JLD/Data_grid_hindcast.jld","Pr")
 R_Cp = 0.11 # R/Cp: gas constant over specific heat capacity
 Po = 1000 # millibars (air pressure at sea surface)
 
@@ -60,8 +60,8 @@ NID = length(WID); # number of water cells
 
 #! months in a year
 lstd = Int(TIME[length(TIME)])+31
-id1 = collect(0:365:(lstd-1))
-id2 = collect(365:365:(lstd))
+id1 = collect(TIME[1]:365:(lstd-1))
+id2 = collect(TIME[1]+365:365:(lstd))
 ID  = [id1 id2];
 nyr = Int(lstd/365)
 #! pull out annual information
@@ -82,8 +82,8 @@ for i = 1:nyr
 	dzm = dZm[:,:,I];
 	dzl = dZl[:,:,I];
 	det = dDet[:,:,I];
-  u = U[:,:,I];
-  v = V[:,:,I];
+  # u = U[:,:,I];
+  # v = V[:,:,I];
 
 	#! setup POEM data files
 	D_Tp  = zeros(NID,365);
@@ -93,12 +93,12 @@ for i = 1:nyr
 	D_dZm = zeros(NID,365);
  	D_dZl = zeros(NID,365);
  	D_det = zeros(NID,365);
-  D_u = zeros(NID,365);
-  D_v = zeros(NID,365);
+  # D_u = zeros(NID,365);
+  # D_v = zeros(NID,365);
 
   #! NaN velocities
-  u[find(u.==minimum(u))] = 0.0
-  v[find(v.==minimum(v))] = 0.0
+  # u[find(u.==minimum(u))] = 0.0
+  # v[find(v.==minimum(v))] = 0.0
 
 	#! interpolate to daily resolution
 	for j = 1:NID
@@ -106,22 +106,22 @@ for i = 1:nyr
 		m,n = ind2sub((360,200),WID[j]); # spatial index of water cell
 
     #! v currents from m/s to m/d
-		Y = zeros(size(time))
-		Y[:] = v[m,n,:];
-		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi = collect(time[1]:1:time[end]);
-		Yi = yi[Xi[1:end-1]];
-		D_v[j,1:length(Yi)] = Yi * 60 *60 * 24; # m d-1
+		# Y = zeros(size(time))
+		# Y[:] = v[m,n,:];
+		# yi = InterpIrregular(time, Y, BCnil, InterpLinear);
+		# Xi = collect(time[1]:1:time[end]);
+		# Yi = yi[Xi[1:end-1]];
+		# D_v[j,1:length(Yi)] = Yi * 60 *60 * 24; # m d-1
+    #
+		# #! u currents from m/s to m/d
+		# Y = zeros(size(time))
+		# Y[:] = u[m,n,:];
+		# yi = InterpIrregular(time, Y, BCnil, InterpLinear);
+		# Xi = collect(time[1]:1:time[end]);
+		# Yi = yi[Xi[1:end-1]];
+		# D_u[j,1:length(Yi)] = Yi * 60 *60 * 24; # m d-1
 
-		#! u currents from m/s to m/d
-		Y = zeros(size(time))
-		Y[:] = u[m,n,:];
-		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
-		Xi = collect(time[1]:1:time[end]);
-		Yi = yi[Xi[1:end-1]];
-		D_u[j,1:length(Yi)] = Yi * 60 *60 * 24; # m d-1
-
-		#! pelagic temperature
+		#! pelagic temperature (from Kelvin to Celcius)
 		Y = zeros(size(time))
 		Y[:] = tp[m,n,:] - 273;
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
@@ -129,27 +129,28 @@ for i = 1:nyr
 		Yi = yi[Xi[1:end-1]];
 		D_Tp[j,1:length(Yi)] = Yi;
 
-		#! bottom temperature (correcting for pressure)
+		#! bottom temperature (in Celcius)
 		Y = zeros(size(time))
 		Y[:] = tb[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_Tb[j,1:length(Yi)] = Yi ## FIX THIS LATER FOR POT TEMP
+		D_Tb[j,1:length(Yi)] = Yi; ## FIX THIS LATER FOR POT TEMP
 		#D_Tb[j,:] = ((Yi+273) / ((Po/Pr[j])^R_Cp) ) - 273
 
-		#! medium zoo: from mol C m-2 to g(WW) m-2
+		#! medium zoo: from mol N m-2 to g(WW) m-2
+    # 106/16 mol C in 1 mol N
     # 12.01 g C in 1 mol C
-    # 0.2 g dry W in 1 g wet W (Megrey et al.)
     # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
 		Y[:] = zm[m,n,:];
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_Zm[j,1:length(Yi)] = Yi * 12.01 * 9.0;
+		D_Zm[j,1:length(Yi)] = Yi * (106.0/16.0) * 12.01 * 9.0;
 
-		#! large zoo: from mol C m-2 to g(WW) m-2
+		#! large zoo: from mol N m-2 to g(WW) m-2
+    # 106/16 mol C in 1 mol N
     # 12.01 g C in 1 mol C
     # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
@@ -157,9 +158,10 @@ for i = 1:nyr
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_Zl[j,1:length(Yi)] = Yi * 12.01 * 9.0;
+		D_Zl[j,1:length(Yi)] = Yi * (106.0/16.0) * 12.01 * 9.0;
 
-		#! medium zoo mortality: from mol C m-2 s-1 to g(WW) m-2 d-1
+		#! medium zoo mortality: from mol N m-2 s-1 to g(WW) m-2 d-1
+    # 106/16 mol C in 1 mol N
     # 12.01 g C in 1 mol C
     # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
@@ -167,9 +169,10 @@ for i = 1:nyr
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
 		Yi = yi[Xi[1:end-1]];
-		D_dZm[j,1:length(Yi)] = Yi * 12.01 * 9.0 * 60 * 60 *24 ;
+		D_dZm[j,1:length(Yi)] = Yi * (106.0/16.0) * 12.01 * 9.0 * 60 * 60 *24 ;
 
-		#! large zoo mortality: from mol C m-2 s-1 to g(WW) m-2 d-1
+		#! large zoo mortality: from mol N m-2 s-1 to g(WW) m-2 d-1
+    # 106/16 mol C in 1 mol N
     # 12.01 g C in 1 mol C
     # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
@@ -177,9 +180,10 @@ for i = 1:nyr
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_dZl[j,1:length(Yi)] = Yi * 12.01 * 9.0 *60 *60 *24;
+		D_dZl[j,1:length(Yi)] = Yi * (106.0/16.0) * 12.01 * 9.0 *60 *60 *24;
 
 		#! detrital flux to benthos: from mol C m-2 s-1 to g(WW) m-2 d-1
+    # 106/16 mol C in 1 mol N
     # 12.01 g C in 1 mol C
     # 1 g dry W in 9 g wet W (Pauly & Christiansen)
 		Y = zeros(size(time))
@@ -187,7 +191,7 @@ for i = 1:nyr
 		yi = InterpIrregular(time, Y, BCnil, InterpLinear);
 		Xi = collect(time[1]:1:time[end]);
     Yi = yi[Xi[1:end-1]];
-		D_det[j,1:length(Yi)] = Yi * 12.01 * 9.0 *60 *60 *24;
+		D_det[j,1:length(Yi)] = Yi * (106.0/16.0) * 12.01 * 9.0 *60 *60 *24;
 
 	end
 
@@ -202,9 +206,10 @@ for i = 1:nyr
 
 	#! save
 	println(i)
-	ti = string(1000000+i); di = "./JLD/Data_hindcast_PC_";
-	save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,
-									  "dZm",D_dZm,"dZl",D_dZl,
-									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det,
-                    "U",D_u,"V",D_v);
+	ti = string(1000000+i);
+  di = "/Volumes/GFDL/POEM_JLD/pre_indust/Data_preindust_";
+	# save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,"dZm",D_dZm,"dZl",D_dZl,
+	# 								  "Tp",D_Tp,"Tb",D_Tb,"det",D_det,"U",D_u,"V",D_v);
+  save(string(di,ti[2:end],".jld"), "Zm",D_Zm,"Zl",D_Zl,"dZm",D_dZm,"dZl",D_dZl,
+                  									  "Tp",D_Tp,"Tb",D_Tb,"det",D_det);
 end
