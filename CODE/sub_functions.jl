@@ -8,10 +8,8 @@ function get_COBALT!(COBALT,ID,DY,ENVR)
     ENVR.det[:,1] = COBALT["det"][ID,DY]
     ENVR.dZm[:,1] = COBALT["dZm"][ID,DY]
     ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
-    ENVR.U[:,1]   = COBALT["U"][ID,DY]
-    ENVR.V[:,1]   = COBALT["V"][ID,DY]
-    #ENVR.T0[:,1] = minimum(COBALT["Tp"][ID,:])
-    #ENVR.T0[:,1] = Tref[ID]
+    #ENVR.U[:,1]   = COBALT["U"][ID,DY]
+    #ENVR.V[:,1]   = COBALT["V"][ID,DY]
     ENVR.T0p[:,1] = TrefP[ID]
     ENVR.T0b[:,1] = TrefB[ID]
     ENVR.Dthresh[:,1] = Dthresh[ID]

@@ -33,7 +33,7 @@ function sub_init_fish(ID,phen)
 	###! fish
 	#! biomass
 	#X = 0.17981663628808964; # mean Zm off Spain
-	X = 1.0e3; # very small amount
+	X = 1.0e-5; # very small amount
 	#X = 1.0;
 	bio = ones(Float64,NX) * X
 
