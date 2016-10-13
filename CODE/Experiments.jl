@@ -1021,6 +1021,7 @@ end
 
 
 
+
 ####!! RUN PRE-INDUSTRIAL FOR ALL LOCATIONS
 function Pre_industrial()
 
@@ -1045,7 +1046,7 @@ function Pre_industrial()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MFMZ1_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	S_Bent_bio = zeros(NX,DAYS);
 
@@ -1715,7 +1716,7 @@ function Historic_pristine()
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
-	YEARS = 145
+	YEARS = 1 #145
   global DAYS = 365
 
 	#! choose where and when to run the model
@@ -1723,7 +1724,7 @@ function Historic_pristine()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MFMZ1_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	S_Bent_bio = zeros(NX,DAYS);
 
@@ -1841,6 +1842,25 @@ function Historic_pristine()
 	Med_d.td[1:NX] = 0.0;
 	Lrg_d.td[1:NX] = 0.0;
 	ENVR = sub_init_env(ID);
+	#! read in final biomass from pre-industrial run
+	sf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_sml_f.nc"),"biomass");
+	sp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_sml_p.nc"),"biomass");
+	sd=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_sml_d.nc"),"biomass");
+	mf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_med_f.nc"),"biomass");
+	mp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_med_p.nc"),"biomass");
+	md=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_med_d.nc"),"biomass");
+	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_lrg_p.nc"),"biomass");
+	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_lrg_d.nc"),"biomass");
+	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_bent.nc"),"biomass");
+	Sml_f.bio = sf[:,365];
+	Sml_p.bio = sp[:,365];
+	Sml_d.bio = sd[:,365];
+	Med_f.bio = mf[:,365];
+	Med_p.bio = mp[:,365];
+	Med_d.bio = md[:,365];
+	Lrg_p.bio = lp[:,365];
+	Lrg_d.bio = ld[:,365];
+	BENT.mass = bent[:,365];
 
 	############### Setup NetCDF save
 	# #! Init netcdf file for storage
@@ -2125,10 +2145,11 @@ function Historic_pristine()
 
 			###! Future time step
 			DY  = Int(ceil(DAY))
-			println(YR," , ", mod(DY,365))
+			println(ti," , ", mod(DY,365))
 			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 
 			#! Store
+			#### TAKE MONTHLY MEANS BEFORE STORING???
 			for i = 1:NX
 				S_Bent_bio[i,DY] = BENT.mass[i]
 
@@ -2395,7 +2416,7 @@ function Historic_fished()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MFMZ1_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	S_Bent_bio = zeros(NX,DAYS);
 
@@ -3068,7 +3089,7 @@ function Forecast_pristine()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MFMZ1_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	S_Bent_bio = zeros(NX,DAYS);
 
@@ -3741,7 +3762,7 @@ function Forecast_fished()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MFMZ1_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	S_Bent_bio = zeros(NX,DAYS);
 

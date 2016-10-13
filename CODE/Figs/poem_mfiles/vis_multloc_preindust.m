@@ -164,7 +164,7 @@ shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
 %m_plot(-111,5,'o','w','MarkerSize',10);
-m_text(-111,5,'EEP','Color','red','HorizontalAlignment','center');
+%m_text(-111,5,'EEP','Color','red','HorizontalAlignment','center');
 title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -186,14 +186,14 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MD.png'])
 
-% lp
+%% lp
 figure(7)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(Zlp))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
+%m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
 title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -208,7 +208,7 @@ m_pcolor(X,Y,real(log10(Zld))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
+%m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
 title('log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
