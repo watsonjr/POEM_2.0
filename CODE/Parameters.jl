@@ -116,7 +116,7 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.30	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 10.0 		# 10 g^(1-p)/yr at 10C
 
 	###! Consumption constants

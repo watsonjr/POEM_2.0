@@ -1,37 +1,20 @@
 % Visualize output of POEM
-% Spinup at 100 locations
-% 50 years
+% Pre-industrial spinup at all locations
+% 100 years
 % Saved as mat files
 
 clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-% dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit05/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit05/';
-% dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit10/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-% dpath = '/Volumes/GFDL/NC/MFeqMP4_fcrit10_Tmort/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
-% dpath = '/Volumes/GFDL/NC/fcrit10_FdiffA2_Tmort/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
-% dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
-% dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-%load([dpath 'Data_spinup_pristine.mat']);
-%load([dpath 'Data_spinup_pristine_fcrit10.mat']);
-%load([dpath 'Data_spinup_pristine_fcrit10_Tmort_30yr.mat']);
-%load([dpath 'Data_spinup_pristine_fcrit10_FdiffA2_Tmort.mat']);
-% load([dpath 'Data_spinup_pristine_Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50.mat']);
 load([dpath 'Data_spinup_pristine_' cfile '.mat']);
 
 
@@ -39,19 +22,249 @@ load([dpath 'Data_spinup_pristine_' cfile '.mat']);
 [loc,days]=size(SP.bio);
 x=1:days;
 
-lyr=x((end-365+1):end);
+lyr=x((end-12+1):end);
 
-sp_mean=mean(SP.bio(:,lyr),2);
-sf_mean=mean(SF.bio(:,lyr),2);
-sd_mean=mean(SD.bio(:,lyr),2);
-mp_mean=mean(MP.bio(:,lyr),2);
-mf_mean=mean(MF.bio(:,lyr),2);
-md_mean=mean(MD.bio(:,lyr),2);
-lp_mean=mean(LP.bio(:,lyr),2);
-ld_mean=mean(LD.bio(:,lyr),2);
-b_mean=mean(BENT.bio(:,lyr),2);
+%temporal means of last year
+sp_smean=nanmean(SP.bio(:,lyr),2);
+sf_smean=nanmean(SF.bio(:,lyr),2);
+sd_smean=nanmean(SD.bio(:,lyr),2);
+mp_smean=nanmean(MP.bio(:,lyr),2);
+mf_smean=nanmean(MF.bio(:,lyr),2);
+md_smean=nanmean(MD.bio(:,lyr),2);
+lp_smean=nanmean(LP.bio(:,lyr),2);
+ld_smean=nanmean(LD.bio(:,lyr),2);
+b_smean=nanmean(BENT.bio(:,lyr),2);
 
-% Plots in space
+%spatial means over time
+sp_tmean=nanmean(SP.bio,1);
+sf_tmean=nanmean(SF.bio,1);
+sd_tmean=nanmean(SD.bio,1);
+mp_tmean=nanmean(MP.bio,1);
+mf_tmean=nanmean(MF.bio,1);
+md_tmean=nanmean(MD.bio,1);
+lp_tmean=nanmean(LP.bio,1);
+ld_tmean=nanmean(LD.bio,1);
+b_tmean=nanmean(BENT.bio,1);
+
+%% Plots in time
+y = time;
+
+% Piscivore
+figure(1)
+subplot(4,1,1)
+plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
+plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
+plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Pre-Industrial Pelagic Piscivores')
+ylabel('log10 Biomass (g m^-^2)')
+legend('Larvae','Juveniles','Adults')
+legend('location','southeast')
+stamp(cfile)
+
+subplot(4,1,2)
+plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Larvae')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,3)
+plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Juveniles')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,4)
+plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Adults')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+print('-dpng',[ppath 'Preindust_pisc_time.png'])
+
+% Planktivore
+figure(2)
+subplot(3,1,1)
+plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
+plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Pre-Industrial Forage Fishes')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+legend('Immature','Adults')
+legend('location','southeast')
+stamp(cfile)
+
+subplot(3,1,2)
+plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Immature')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(3,1,3)
+plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Adults')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+print('-dpng',[ppath 'Preindust_plan_time.png'])
+
+% Detritivore
+figure(3)
+subplot(4,1,1)
+plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
+plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
+plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Pre-Industrial Demersal Piscivores')
+ylabel('log10 Biomass (g m^-^2)')
+legend('Larvae','Juveniles','Adults')
+legend('location','southeast')
+stamp(cfile)
+
+subplot(4,1,2)
+plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Larvae')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,3)
+plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Juveniles')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,4)
+plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Adults')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+print('-dpng',[ppath 'Preindust_detr_time.png'])
+
+% All biomass in subplots
+%SP
+figure(4)
+subplot(3,3,2)
+plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('SP')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+stamp(cfile)
+
+subplot(3,3,5)
+plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('MP')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(3,3,8)
+plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('LP')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+%FF
+subplot(3,3,1)
+plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('SF')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(3,3,4)
+plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('MF')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+%Detritivore
+subplot(3,3,3)
+plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('SD')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+stamp(cfile)
+
+subplot(3,3,6)
+plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('MD')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(3,3,9)
+plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('LD')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+print('-dpng',[ppath 'Preindust_all_sizes_sub.png'])
+
+% All size classes of all
+
+figure(5)
+plot(y,log10(sp_tmean),'Linewidth',1); hold on;
+plot(y,log10(mp_tmean),'Linewidth',1); hold on;
+plot(y,log10(lp_tmean),'Linewidth',1); hold on;
+plot(y,log10(sf_tmean),'Linewidth',1); hold on;
+plot(y,log10(mf_tmean),'Linewidth',1); hold on;
+plot(y,log10(sd_tmean),'Linewidth',1); hold on;
+plot(y,log10(md_tmean),'Linewidth',1); hold on;
+plot(y,log10(ld_tmean),'Linewidth',1); hold on;
+legend('SP','MP','LP','SF','MF','SD','MD','LD')
+legend('location','eastoutside')
+xlim([y(1) y(end)])
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+title('Pre-Industrial')
+stamp(cfile)
+print('-dpng',[ppath 'Preindust_all_sizes.png'])
+
+%% Recruitment
+sfrec_tmean=nanmean(SF.rec,1);
+mprec_tmean=nanmean(MP.rec,1);
+mdrec_tmean=nanmean(MD.rec,1);
+
+st=1:12:length(y);
+en=12:12:length(y);
+MPy = NaN*ones(100,1);
+SFy = MPy;
+MDy = MPy;
+
+for n=1:100
+    MPy(n) = nansum(mprec_tmean(st(n):en(n)));
+    SFy(n) = nansum(sfrec_tmean(st(n):en(n)));
+    MDy(n) = nansum(mdrec_tmean(st(n):en(n)));
+end
+
+%%
+figure(11)
+subplot(3,1,2)
+plot(1:100,log10(MPy),'b','Linewidth',2); hold on;
+xlim([1 100])
+ylabel('log10 annual Recruitment (g m^-^2)')
+title('Pelagic piscivores')
+stamp(cfile)
+
+subplot(3,1,1)
+plot(1:100,log10(SFy),'r','Linewidth',2); hold on;
+xlim([1 100])
+title('Forage fishes')
+
+subplot(3,1,3)
+plot(1:100,log10(MDy),'k','Linewidth',2); hold on;
+xlim([1 100])
+title('Demersal piscivores')
+print('-dpng',[ppath 'Preindust_recruitment.png'])
+
+%% Plots in space
 grid = csvread([cpath 'grid_csv.csv']);
 %fix lon shift
 id=find(grid(:,2)<-180);
@@ -61,15 +274,15 @@ x=-180:180;
 y=-90:90;
 [X,Y]=meshgrid(x,y);
 
-Zsp=griddata(grid(:,2),grid(:,3),sp_mean,X,Y);
-Zsf=griddata(grid(:,2),grid(:,3),sf_mean,X,Y);
-Zsd=griddata(grid(:,2),grid(:,3),sd_mean,X,Y);
-Zmp=griddata(grid(:,2),grid(:,3),mp_mean,X,Y);
-Zmf=griddata(grid(:,2),grid(:,3),mf_mean,X,Y);
-Zmd=griddata(grid(:,2),grid(:,3),md_mean,X,Y);
-Zlp=griddata(grid(:,2),grid(:,3),lp_mean,X,Y);
-Zld=griddata(grid(:,2),grid(:,3),ld_mean,X,Y);
-Zb=griddata(grid(:,2),grid(:,3),b_mean,X,Y);
+Zsp=griddata(grid(:,2),grid(:,3),sp_smean,X,Y);
+Zsf=griddata(grid(:,2),grid(:,3),sf_smean,X,Y);
+Zsd=griddata(grid(:,2),grid(:,3),sd_smean,X,Y);
+Zmp=griddata(grid(:,2),grid(:,3),mp_smean,X,Y);
+Zmf=griddata(grid(:,2),grid(:,3),mf_smean,X,Y);
+Zmd=griddata(grid(:,2),grid(:,3),md_smean,X,Y);
+Zlp=griddata(grid(:,2),grid(:,3),lp_smean,X,Y);
+Zld=griddata(grid(:,2),grid(:,3),ld_smean,X,Y);
+Zb=griddata(grid(:,2),grid(:,3),b_smean,X,Y);
 
 %% bent
 figure(50)
@@ -83,22 +296,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT.png'])
-
-%
-mgZb = (Zb/9)*1e3;
-figure(51)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(mgZb))); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('log10 mean benthic biomass (mg C m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([-0.8 2.3])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT_mgC.png'])
+print('-dpng',[ppath 'Preindust_global_BENT.png'])
 
 % sp
 figure(1)
@@ -112,7 +310,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SP.png'])
+print('-dpng',[ppath 'Preindust_global_SP.png'])
 
 % sf
 figure(2)
@@ -126,7 +324,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SF.png'])
+print('-dpng',[ppath 'Preindust_global_SF.png'])
 
 % sd
 figure(3)
@@ -140,7 +338,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SD.png'])
+print('-dpng',[ppath 'Preindust_global_SD.png'])
 
 % mp
 figure(4)
@@ -154,7 +352,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MP.png'])
+print('-dpng',[ppath 'Preindust_global_MP.png'])
 
 % mf
 figure(5)
@@ -170,7 +368,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MF.png'])
+print('-dpng',[ppath 'Preindust_global_MF.png'])
 
 % md
 figure(6)
@@ -184,9 +382,9 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MD.png'])
+print('-dpng',[ppath 'Preindust_global_MD.png'])
 
-%% lp
+% lp
 figure(7)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(Zlp))); hold on;
@@ -199,7 +397,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_LP.png'])
+print('-dpng',[ppath 'Preindust_global_LP.png'])
 
 % ld
 figure(8)
@@ -214,7 +412,7 @@ colormap('jet')
 colorbar('h')
 caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_LD.png'])
+print('-dpng',[ppath 'Preindust_global_LD.png'])
 
 %% Production
 SP_prod=nanmean(SP.prod(:,lyr),2);
@@ -256,9 +454,9 @@ m_grid;
 title('log10 mean Larval P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
+caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_prod_SP.png'])
+print('-dpng',[ppath 'Preindust_global_prod_SP.png'])
 
 % sf
 figure(12)
@@ -270,9 +468,9 @@ m_grid;
 title('log10 mean Larval F production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
+caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_prod_SF.png'])
+print('-dpng',[ppath 'Preindust_global_prod_SF.png'])
 
 % sd
 figure(13)
@@ -284,9 +482,9 @@ m_grid;
 title('log10 mean Larval D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
+caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_prod_SD.png'])
+print('-dpng',[ppath 'Preindust_global_prod_SD.png'])
 
 % mp
 figure(14)
@@ -298,9 +496,9 @@ m_grid;
 title('log10 mean Juvenile P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
+caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_prod_MP.png'])
+print('-dpng',[ppath 'Preindust_global_prod_MP.png'])
 
 % mf
 figure(15)
@@ -312,9 +510,9 @@ m_grid;
 title('log10 mean Adult F production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
+caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_prod_MF.png'])
+print('-dpng',[ppath 'Preindust_global_prod_MF.png'])
 
 % md
 figure(16)
@@ -326,9 +524,9 @@ m_grid;
 title('log10 mean Juvenile D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
+caxis([-4 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_prod_MD.png'])
+print('-dpng',[ppath 'Preindust_global_prod_MD.png'])
 
 % lp
 figure(17)
@@ -341,8 +539,8 @@ m_grid;
 title('log10 mean Adult P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
-print('-dpng',[ppath 'Spinup_global_prod_LP.png'])
+caxis([-4 2])
+print('-dpng',[ppath 'Preindust_global_prod_LP.png'])
 
 % ld
 figure(18)
@@ -355,8 +553,8 @@ m_grid;
 title('log10 mean Adult D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 -2])
-print('-dpng',[ppath 'Spinup_global_prod_LD.png'])
+caxis([-4 2])
+print('-dpng',[ppath 'Preindust_global_prod_LD.png'])
 
 %% Diff maps of all fish
 All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
@@ -369,13 +567,6 @@ AllL = Zlp+Zld;
 FracPD = AllP ./ (AllP+AllD);
 FracPF = AllP ./ (AllP+AllF);
 FracPFvD = (AllP+AllF) ./ (AllP+AllF+AllD);
-FracPDs = Zsp ./ (Zsp+Zsd);
-FracPDm = Zmp ./ (Zmp+Zmd);
-FracPDl = Zlp ./ (Zlp+Zld);
-FracPFs = Zsp ./ (Zsp+Zsf);
-FracPFm = Zmp ./ (Zmp+Zmf);
-FracPFvDs = (Zsp+Zsf) ./ (Zsp+Zsf+Zsd);
-FracPFvDm = (Zmp+Zmf) ./ (Zmp+Zmf+Zmd);
 
 %% ALL
 figure(21)
@@ -389,7 +580,7 @@ colormap('jet')
 colorbar('h')
 caxis([-2 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_All.png'])
+print('-dpng',[ppath 'Preindust_global_All.png'])
 
 % all F
 figure(22)
@@ -403,7 +594,7 @@ colormap('jet')
 colorbar('h')
 caxis([-2 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllF.png'])
+print('-dpng',[ppath 'Preindust_global_AllF.png'])
 
 % all D
 figure(23)
@@ -417,7 +608,7 @@ colormap('jet')
 colorbar('h')
 caxis([-2 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllD.png'])
+print('-dpng',[ppath 'Preindust_global_AllD.png'])
 
 % All P
 figure(24)
@@ -431,7 +622,7 @@ colormap('jet')
 colorbar('h')
 caxis([-2 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllP.png'])
+print('-dpng',[ppath 'Preindust_global_AllP.png'])
 
 % FracPD
 figure(25)
@@ -445,7 +636,7 @@ colormap('jet')
 colorbar('h')
 caxis([0 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPD.png'])
+print('-dpng',[ppath 'Preindust_global_FracPD.png'])
 
 % FracPF
 figure(26)
@@ -459,7 +650,7 @@ colormap('jet')
 colorbar('h')
 caxis([0 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPF.png'])
+print('-dpng',[ppath 'Preindust_global_FracPF.png'])
 
 % FracPFvD
 figure(27)
@@ -473,89 +664,5 @@ colormap('jet')
 colorbar('h')
 caxis([0 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFvD.png'])
-
-% FracPDs
-figure(28)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPDs)); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('SP:SD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPDs.png'])
-
-% FracPFs
-figure(29)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFs)); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('SP:SF mean biomass (g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFs.png'])
-
-% FracPFvDs
-figure(30)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFvDs)); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('(SP+SF):SD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFvDs.png'])
-
-% FracPDm
-figure(31)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPDm)); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('MP:MD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPDm.png'])
-
-% FracPFm
-figure(32)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFm)); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('MP:MF mean biomass (g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFm.png'])
-
-% FracPFvDm
-figure(33)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFvDm)); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('(MP+MF):MD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFvDm.png'])
+print('-dpng',[ppath 'Preindust_global_FracPFvD.png'])
 
