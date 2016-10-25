@@ -235,6 +235,6 @@ BENT.bio = biomass;
 clear biomass 
 
 %%
-%save([fpath 'Data_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05.mat'])
+%save([fpath 'Data_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'])
 
 
