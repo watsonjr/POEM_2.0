@@ -2140,7 +2140,7 @@ function Historic_fished()
 	const global NX = 48111
 	const global ID = collect(1:NX);
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
 
 	#! Initialize
 	phen=0;
@@ -2158,15 +2158,15 @@ function Historic_fished()
 	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_lrg_p.nc"),"biomass");
 	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_lrg_d.nc"),"biomass");
 	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_preindust_bent.nc"),"biomass");
-	Sml_f.bio = sf[:,365];
-	Sml_p.bio = sp[:,365];
-	Sml_d.bio = sd[:,365];
-	Med_f.bio = mf[:,365];
-	Med_p.bio = mp[:,365];
-	Med_d.bio = md[:,365];
-	Lrg_p.bio = lp[:,365];
-	Lrg_d.bio = ld[:,365];
-	BENT.mass = bent[:,365];
+	Sml_f.bio = sf[:,1200];
+	Sml_p.bio = sp[:,1200];
+	Sml_d.bio = sd[:,1200];
+	Med_f.bio = mf[:,1200];
+	Med_p.bio = mp[:,1200];
+	Med_d.bio = md[:,1200];
+	Lrg_p.bio = lp[:,1200];
+	Lrg_d.bio = ld[:,1200];
+	BENT.mass = bent[:,1200];
 
 	############### Setup NetCDF save
 	# #! Init netcdf file for storage
@@ -2189,7 +2189,7 @@ function Historic_fished()
 
 	# #! Init dims of netcdf file
 	X   = collect(1:NX);
-	tim = collect(1:DAYS);
+	tim = collect(1:12*YEARS);
 
 	# #! setup netcdf path to store to
 	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_hist_fished_sml_f.nc")
@@ -2716,244 +2716,77 @@ function Historic_fished()
 			end #Grid cells
 
 		end #Days
-		#### TAKE MONTHLY MEANS BEFORE STORING???
-		mBent_bio = mean(S_Bent_bio,2)
-		mSml_f = mean(S_Sml_f,2)
-		mSml_p = mean(S_Sml_p,2)
-		mSml_d = mean(S_Sml_d,2)
-		mMed_f = mean(S_Med_f,2)
-		mMed_p = mean(S_Med_p,2)
-		mMed_d = mean(S_Med_d,2)
-		mLrg_p = mean(S_Lrg_p,2)
-		mLrg_d = mean(S_Lrg_d,2)
-		#Take sum of recruitment?
-		mSml_f_rec = mean(S_Sml_f_rec,2)
-		mSml_p_rec = mean(S_Sml_p_rec,2)
-		mSml_d_rec = mean(S_Sml_d_rec,2)
-		mMed_f_rec = mean(S_Med_f_rec,2)
-		mMed_p_rec = mean(S_Med_p_rec,2)
-		mMed_d_rec = mean(S_Med_d_rec,2)
-		mLrg_p_rec = mean(S_Lrg_p_rec,2)
-		mLrg_d_rec = mean(S_Lrg_d_rec,2)
 
-		mSml_f_con = mean(S_Sml_f_con,2)
-		mSml_p_con = mean(S_Sml_p_con,2)
-		mSml_d_con = mean(S_Sml_d_con,2)
-		mMed_f_con = mean(S_Med_f_con,2)
-		mMed_p_con = mean(S_Med_p_con,2)
-		mMed_d_con = mean(S_Med_d_con,2)
-		mLrg_p_con = mean(S_Lrg_p_con,2)
-		mLrg_d_con = mean(S_Lrg_d_con,2)
+		#! Calculate monthly means and save
+		a = [1;(cumsum(MNTH)+1)[1:end-1]] # start of the month
+		b = cumsum(MNTH) # end of the month
+		for i = 1:12
+			MNT += 1 # Update monthly ticker
+			ncwrite(mean(S_Bent_bio[:,a[i]:b[i]],2),file_bent,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_f[:,a[i]:b[i]],2),file_sml_f,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_p[:,a[i]:b[i]],2),file_sml_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_d[:,a[i]:b[i]],2),file_sml_d,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_f[:,a[i]:b[i]],2),file_med_f,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_p[:,a[i]:b[i]],2),file_med_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_d[:,a[i]:b[i]],2),file_med_d,"biomass",[1,MNT])
+			ncwrite(mean(S_Lrg_p[:,a[i]:b[i]],2),file_lrg_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Lrg_d[:,a[i]:b[i]],2),file_lrg_d,"biomass",[1,MNT])
 
-		mSml_f_nu = mean(S_Sml_f_nu,2)
-		mSml_p_nu = mean(S_Sml_p_nu,2)
-		mSml_d_nu = mean(S_Sml_d_nu,2)
-		mMed_f_nu = mean(S_Med_f_nu,2)
-		mMed_p_nu = mean(S_Med_p_nu,2)
-		mMed_d_nu = mean(S_Med_d_nu,2)
-		mLrg_p_nu = mean(S_Lrg_p_nu,2)
-		mLrg_d_nu = mean(S_Lrg_d_nu,2)
-		#Sum or mean of production?
-		mSml_f_prod = mean(S_Sml_f_prod,2)
-		mSml_p_prod = mean(S_Sml_p_prod,2)
-		mSml_d_prod = mean(S_Sml_d_prod,2)
-		mMed_f_prod = mean(S_Med_f_prod,2)
-		mMed_p_prod = mean(S_Med_p_prod,2)
-		mMed_d_prod = mean(S_Med_d_prod,2)
-		mLrg_p_prod = mean(S_Lrg_p_prod,2)
-		mLrg_d_prod = mean(S_Lrg_d_prod,2)
+			ncwrite(mean(S_Sml_f_rec[:,a[i]:b[i]],2),file_sml_f,"rec",[1,MNT])
+			ncwrite(mean(S_Sml_p_rec[:,a[i]:b[i]],2),file_sml_p,"rec",[1,MNT])
+			ncwrite(mean(S_Sml_d_rec[:,a[i]:b[i]],2),file_sml_d,"rec",[1,MNT])
+			ncwrite(mean(S_Med_f_rec[:,a[i]:b[i]],2),file_med_f,"rec",[1,MNT])
+			ncwrite(mean(S_Med_p_rec[:,a[i]:b[i]],2),file_med_p,"rec",[1,MNT])
+			ncwrite(mean(S_Med_d_rec[:,a[i]:b[i]],2),file_med_d,"rec",[1,MNT])
+			ncwrite(mean(S_Lrg_p_rec[:,a[i]:b[i]],2),file_lrg_p,"rec",[1,MNT])
+			ncwrite(mean(S_Lrg_d_rec[:,a[i]:b[i]],2),file_lrg_d,"rec",[1,MNT])
 
-		mSml_f_gamma = mean(S_Sml_f_gamma,2)
-		mSml_p_gamma = mean(S_Sml_p_gamma,2)
-		mSml_d_gamma = mean(S_Sml_d_gamma,2)
-		mMed_f_gamma = mean(S_Med_f_gamma,2)
-		mMed_p_gamma = mean(S_Med_p_gamma,2)
-		mMed_d_gamma = mean(S_Med_d_gamma,2)
-		mLrg_p_gamma = mean(S_Lrg_p_gamma,2)
-		mLrg_d_gamma = mean(S_Lrg_d_gamma,2)
+			ncwrite(mean(S_Sml_f_prod[:,a[i]:b[i]],2),file_sml_f,"prod",[1,MNT])
+			ncwrite(mean(S_Sml_p_prod[:,a[i]:b[i]],2),file_sml_p,"prod",[1,MNT])
+			ncwrite(mean(S_Sml_d_prod[:,a[i]:b[i]],2),file_sml_d,"prod",[1,MNT])
+			ncwrite(mean(S_Med_f_prod[:,a[i]:b[i]],2),file_med_f,"prod",[1,MNT])
+			ncwrite(mean(S_Med_p_prod[:,a[i]:b[i]],2),file_med_p,"prod",[1,MNT])
+			ncwrite(mean(S_Med_d_prod[:,a[i]:b[i]],2),file_med_d,"prod",[1,MNT])
+			ncwrite(mean(S_Lrg_p_prod[:,a[i]:b[i]],2),file_lrg_p,"prod",[1,MNT])
+			ncwrite(mean(S_Lrg_d_prod[:,a[i]:b[i]],2),file_lrg_d,"prod",[1,MNT])
 
-		mSml_f_rep = mean(S_Sml_f_rep,2)
-		mSml_p_rep = mean(S_Sml_p_rep,2)
-		mSml_d_rep = mean(S_Sml_d_rep,2)
-		mMed_f_rep = mean(S_Med_f_rep,2)
-		mMed_p_rep = mean(S_Med_p_rep,2)
-		mMed_d_rep = mean(S_Med_d_rep,2)
-		mLrg_p_rep = mean(S_Lrg_p_rep,2)
-		mLrg_d_rep = mean(S_Lrg_d_rep,2)
+			ncwrite(mean(S_Sml_f_con[:,a[i]:b[i]],2),file_sml_f,"con",[1,MNT])
+			ncwrite(mean(S_Sml_p_con[:,a[i]:b[i]],2),file_sml_p,"con",[1,MNT])
+			ncwrite(mean(S_Sml_d_con[:,a[i]:b[i]],2),file_sml_d,"con",[1,MNT])
+			ncwrite(mean(S_Med_f_con[:,a[i]:b[i]],2),file_med_f,"con",[1,MNT])
+			ncwrite(mean(S_Med_p_con[:,a[i]:b[i]],2),file_med_p,"con",[1,MNT])
+			ncwrite(mean(S_Med_d_con[:,a[i]:b[i]],2),file_med_d,"con",[1,MNT])
+			ncwrite(mean(S_Lrg_p_con[:,a[i]:b[i]],2),file_lrg_p,"con",[1,MNT])
+			ncwrite(mean(S_Lrg_d_con[:,a[i]:b[i]],2),file_lrg_d,"con",[1,MNT])
 
-		mSml_f_egg = mean(S_Sml_f_egg,2)
-		mSml_p_egg = mean(S_Sml_p_egg,2)
-		mSml_d_egg = mean(S_Sml_d_egg,2)
-		mMed_f_egg = mean(S_Med_f_egg,2)
-		mMed_p_egg = mean(S_Med_p_egg,2)
-		mMed_d_egg = mean(S_Med_d_egg,2)
-		mLrg_p_egg = mean(S_Lrg_p_egg,2)
-		mLrg_d_egg = mean(S_Lrg_d_egg,2)
+			ncwrite(mean(S_Sml_f_nu[:,a[i]:b[i]],2),file_sml_f,"nu",[1,MNT])
+			ncwrite(mean(S_Sml_p_nu[:,a[i]:b[i]],2),file_sml_p,"nu",[1,MNT])
+			ncwrite(mean(S_Sml_d_nu[:,a[i]:b[i]],2),file_sml_d,"nu",[1,MNT])
+			ncwrite(mean(S_Med_f_nu[:,a[i]:b[i]],2),file_med_f,"nu",[1,MNT])
+			ncwrite(mean(S_Med_p_nu[:,a[i]:b[i]],2),file_med_p,"nu",[1,MNT])
+			ncwrite(mean(S_Med_d_nu[:,a[i]:b[i]],2),file_med_d,"nu",[1,MNT])
+			ncwrite(mean(S_Lrg_p_nu[:,a[i]:b[i]],2),file_lrg_p,"nu",[1,MNT])
+			ncwrite(mean(S_Lrg_d_nu[:,a[i]:b[i]],2),file_lrg_d,"nu",[1,MNT])
 
-		mSml_f_die = mean(S_Sml_f_die,2)
-		mSml_p_die = mean(S_Sml_p_die,2)
-		mSml_d_die = mean(S_Sml_d_die,2)
-		mMed_f_die = mean(S_Med_f_die,2)
-		mMed_p_die = mean(S_Med_p_die,2)
-		mMed_d_die = mean(S_Med_d_die,2)
-		mLrg_p_die = mean(S_Lrg_p_die,2)
-		mLrg_d_die = mean(S_Lrg_d_die,2)
+			ncwrite(mean(S_Sml_f_rep[:,a[i]:b[i]],2),file_sml_f,"rep",[1,MNT])
+			ncwrite(mean(S_Sml_p_rep[:,a[i]:b[i]],2),file_sml_p,"rep",[1,MNT])
+			ncwrite(mean(S_Sml_d_rep[:,a[i]:b[i]],2),file_sml_d,"rep",[1,MNT])
+			ncwrite(mean(S_Med_f_rep[:,a[i]:b[i]],2),file_med_f,"rep",[1,MNT])
+			ncwrite(mean(S_Med_p_rep[:,a[i]:b[i]],2),file_med_p,"rep",[1,MNT])
+			ncwrite(mean(S_Med_d_rep[:,a[i]:b[i]],2),file_med_d,"rep",[1,MNT])
+			ncwrite(mean(S_Lrg_p_rep[:,a[i]:b[i]],2),file_lrg_p,"rep",[1,MNT])
+			ncwrite(mean(S_Lrg_d_rep[:,a[i]:b[i]],2),file_lrg_d,"rep",[1,MNT])
 
-		mSml_f_clev = mean(S_Sml_f_clev,2)
-		mSml_p_clev = mean(S_Sml_p_clev,2)
-		mSml_d_clev = mean(S_Sml_d_clev,2)
-		mMed_f_clev = mean(S_Med_f_clev,2)
-		mMed_p_clev = mean(S_Med_p_clev,2)
-		mMed_d_clev = mean(S_Med_d_clev,2)
-		mLrg_p_clev = mean(S_Lrg_p_clev,2)
-		mLrg_d_clev = mean(S_Lrg_d_clev,2)
+			ncwrite(mean(S_Sml_f_die[:,a[i]:b[i]],2),file_sml_f,"die",[1,MNT])
+			ncwrite(mean(S_Sml_p_die[:,a[i]:b[i]],2),file_sml_p,"die",[1,MNT])
+			ncwrite(mean(S_Sml_d_die[:,a[i]:b[i]],2),file_sml_d,"die",[1,MNT])
+			ncwrite(mean(S_Med_f_die[:,a[i]:b[i]],2),file_med_f,"die",[1,MNT])
+			ncwrite(mean(S_Med_p_die[:,a[i]:b[i]],2),file_med_p,"die",[1,MNT])
+			ncwrite(mean(S_Med_d_die[:,a[i]:b[i]],2),file_med_d,"die",[1,MNT])
+			ncwrite(mean(S_Lrg_p_die[:,a[i]:b[i]],2),file_lrg_p,"die",[1,MNT])
+			ncwrite(mean(S_Lrg_d_die[:,a[i]:b[i]],2),file_lrg_d,"die",[1,MNT])
 
-		mSml_f_S = mean(S_Sml_f_S,2)
-		mSml_p_S = mean(S_Sml_p_S,2)
-		mSml_d_S = mean(S_Sml_d_S,2)
-		mMed_f_S = mean(S_Med_f_S,2)
-		mMed_p_S = mean(S_Med_p_S,2)
-		mMed_d_S = mean(S_Med_d_S,2)
-		mLrg_p_S = mean(S_Lrg_p_S,2)
-		mLrg_d_S = mean(S_Lrg_d_S,2)
-
-		mSml_f_DD = mean(S_Sml_f_DD,2)
-		mSml_p_DD = mean(S_Sml_p_DD,2)
-		mSml_d_DD = mean(S_Sml_d_DD,2)
-		mMed_f_DD = mean(S_Med_f_DD,2)
-		mMed_p_DD = mean(S_Med_p_DD,2)
-		mMed_d_DD = mean(S_Med_d_DD,2)
-		mLrg_p_DD = mean(S_Lrg_p_DD,2)
-		mLrg_d_DD = mean(S_Lrg_d_DD,2)
-		#Sum of catch?
-		mSml_f_catch = mean(S_Sml_f_catch,2)
-		mSml_p_catch = mean(S_Sml_p_catch,2)
-		mSml_d_catch = mean(S_Sml_d_catch,2)
-		mMed_f_catch = mean(S_Med_f_catch,2)
-		mMed_p_catch = mean(S_Med_p_catch,2)
-		mMed_d_catch = mean(S_Med_d_catch,2)
-		mLrg_p_catch = mean(S_Lrg_p_catch,2)
-		mLrg_d_catch = mean(S_Lrg_d_catch,2)
-
-		#! Save
-		ncwrite(mBent_bio,file_bent,"biomass",[1,1])
-
-		ncwrite(mSml_f,file_sml_f,"biomass",[1,1])
-		ncwrite(mSml_p,file_sml_p,"biomass",[1,1])
-		ncwrite(mSml_d,file_sml_d,"biomass",[1,1])
-		ncwrite(mMed_f,file_med_f,"biomass",[1,1])
-		ncwrite(mMed_p,file_med_p,"biomass",[1,1])
-		ncwrite(mMed_d,file_med_d,"biomass",[1,1])
-		ncwrite(mLrg_p,file_lrg_p,"biomass",[1,1])
-		ncwrite(mLrg_d,file_lrg_d,"biomass",[1,1])
-
-		ncwrite(mSml_f_rec,file_sml_f,"rec",[1,1])
-		ncwrite(mSml_p_rec,file_sml_p,"rec",[1,1])
-		ncwrite(mSml_d_rec,file_sml_d,"rec",[1,1])
-		ncwrite(mMed_f_rec,file_med_f,"rec",[1,1])
-		ncwrite(mMed_p_rec,file_med_p,"rec",[1,1])
-		ncwrite(mMed_d_rec,file_med_d,"rec",[1,1])
-		ncwrite(mLrg_p_rec,file_lrg_p,"rec",[1,1])
-		ncwrite(mLrg_d_rec,file_lrg_d,"rec",[1,1])
-
-		ncwrite(mSml_f_con,file_sml_f,"con",[1,1])
-		ncwrite(mSml_p_con,file_sml_p,"con",[1,1])
-		ncwrite(mSml_d_con,file_sml_d,"con",[1,1])
-		ncwrite(mMed_f_con,file_med_f,"con",[1,1])
-		ncwrite(mMed_p_con,file_med_p,"con",[1,1])
-		ncwrite(mMed_d_con,file_med_d,"con",[1,1])
-		ncwrite(mLrg_p_con,file_lrg_p,"con",[1,1])
-		ncwrite(mLrg_d_con,file_lrg_d,"con",[1,1])
-
-		ncwrite(mSml_f_nu,file_sml_f,"nu",[1,1])
-		ncwrite(mSml_p_nu,file_sml_p,"nu",[1,1])
-		ncwrite(mSml_d_nu,file_sml_d,"nu",[1,1])
-		ncwrite(mMed_f_nu,file_med_f,"nu",[1,1])
-		ncwrite(mMed_p_nu,file_med_p,"nu",[1,1])
-		ncwrite(mMed_d_nu,file_med_d,"nu",[1,1])
-		ncwrite(mLrg_p_nu,file_lrg_p,"nu",[1,1])
-		ncwrite(mLrg_d_nu,file_lrg_d,"nu",[1,1])
-
-		ncwrite(mSml_f_prod,file_sml_f,"prod",[1,1])
-		ncwrite(mSml_p_prod,file_sml_p,"prod",[1,1])
-		ncwrite(mSml_d_prod,file_sml_d,"prod",[1,1])
-		ncwrite(mMed_f_prod,file_med_f,"prod",[1,1])
-		ncwrite(mMed_p_prod,file_med_p,"prod",[1,1])
-		ncwrite(mMed_d_prod,file_med_d,"prod",[1,1])
-		ncwrite(mLrg_p_prod,file_lrg_p,"prod",[1,1])
-		ncwrite(mLrg_d_prod,file_lrg_d,"prod",[1,1])
-
-		ncwrite(mSml_f_gamma,file_sml_f,"gamma",[1,1])
-		ncwrite(mSml_p_gamma,file_sml_p,"gamma",[1,1])
-		ncwrite(mSml_d_gamma,file_sml_d,"gamma",[1,1])
-		ncwrite(mMed_f_gamma,file_med_f,"gamma",[1,1])
-		ncwrite(mMed_p_gamma,file_med_p,"gamma",[1,1])
-		ncwrite(mMed_d_gamma,file_med_d,"gamma",[1,1])
-		ncwrite(mLrg_p_gamma,file_lrg_p,"gamma",[1,1])
-		ncwrite(mLrg_d_gamma,file_lrg_d,"gamma",[1,1])
-
-		ncwrite(mSml_f_rep,file_sml_f,"rep",[1,1])
-		ncwrite(mSml_p_rep,file_sml_p,"rep",[1,1])
-		ncwrite(mSml_d_rep,file_sml_d,"rep",[1,1])
-		ncwrite(mMed_f_rep,file_med_f,"rep",[1,1])
-		ncwrite(mMed_p_rep,file_med_p,"rep",[1,1])
-		ncwrite(mMed_d_rep,file_med_d,"rep",[1,1])
-		ncwrite(mLrg_p_rep,file_lrg_p,"rep",[1,1])
-		ncwrite(mLrg_d_rep,file_lrg_d,"rep",[1,1])
-
-		ncwrite(mSml_f_egg,file_sml_f,"egg",[1,1])
-		ncwrite(mSml_p_egg,file_sml_p,"egg",[1,1])
-		ncwrite(mSml_d_egg,file_sml_d,"egg",[1,1])
-		ncwrite(mMed_f_egg,file_med_f,"egg",[1,1])
-		ncwrite(mMed_p_egg,file_med_p,"egg",[1,1])
-		ncwrite(mMed_d_egg,file_med_d,"egg",[1,1])
-		ncwrite(mLrg_p_egg,file_lrg_p,"egg",[1,1])
-		ncwrite(mLrg_d_egg,file_lrg_d,"egg",[1,1])
-
-		ncwrite(mSml_f_die,file_sml_f,"die",[1,1])
-		ncwrite(mSml_p_die,file_sml_p,"die",[1,1])
-		ncwrite(mSml_d_die,file_sml_d,"die",[1,1])
-		ncwrite(mMed_f_die,file_med_f,"die",[1,1])
-		ncwrite(mMed_p_die,file_med_p,"die",[1,1])
-		ncwrite(mMed_d_die,file_med_d,"die",[1,1])
-		ncwrite(mLrg_p_die,file_lrg_p,"die",[1,1])
-		ncwrite(mLrg_d_die,file_lrg_d,"die",[1,1])
-
-		ncwrite(mSml_f_clev,file_sml_f,"clev",[1,1])
-		ncwrite(mSml_p_clev,file_sml_p,"clev",[1,1])
-		ncwrite(mSml_d_clev,file_sml_d,"clev",[1,1])
-		ncwrite(mMed_f_clev,file_med_f,"clev",[1,1])
-		ncwrite(mMed_p_clev,file_med_p,"clev",[1,1])
-		ncwrite(mMed_d_clev,file_med_d,"clev",[1,1])
-		ncwrite(mLrg_p_clev,file_lrg_p,"clev",[1,1])
-		ncwrite(mLrg_d_clev,file_lrg_d,"clev",[1,1])
-
-		ncwrite(mSml_f_S,file_sml_f,"S",[1,1])
-		ncwrite(mSml_p_S,file_sml_p,"S",[1,1])
-		ncwrite(mSml_d_S,file_sml_d,"S",[1,1])
-		ncwrite(mMed_f_S,file_med_f,"S",[1,1])
-		ncwrite(mMed_p_S,file_med_p,"S",[1,1])
-		ncwrite(mMed_d_S,file_med_d,"S",[1,1])
-		ncwrite(mLrg_p_S,file_lrg_p,"S",[1,1])
-		ncwrite(mLrg_d_S,file_lrg_d,"S",[1,1])
-
-		ncwrite(mSml_f_DD,file_sml_f,"DD",[1,1])
-		ncwrite(mSml_p_DD,file_sml_p,"DD",[1,1])
-		ncwrite(mSml_d_DD,file_sml_d,"DD",[1,1])
-		ncwrite(mMed_f_DD,file_med_f,"DD",[1,1])
-		ncwrite(mMed_p_DD,file_med_p,"DD",[1,1])
-		ncwrite(mMed_d_DD,file_med_d,"DD",[1,1])
-		ncwrite(mLrg_p_DD,file_lrg_p,"DD",[1,1])
-		ncwrite(mLrg_d_DD,file_lrg_d,"DD",[1,1])
-
-		ncwrite(mSml_f_catch,file_sml_f,"catch",[1,1])
-		ncwrite(mSml_p_catch,file_sml_p,"catch",[1,1])
-		ncwrite(mSml_d_catch,file_sml_d,"catch",[1,1])
-		ncwrite(mMed_f_catch,file_med_f,"catch",[1,1])
-		ncwrite(mMed_p_catch,file_med_p,"catch",[1,1])
-		ncwrite(mMed_d_catch,file_med_d,"catch",[1,1])
-		ncwrite(mLrg_p_catch,file_lrg_p,"catch",[1,1])
-		ncwrite(mLrg_d_catch,file_lrg_d,"catch",[1,1])
+		end #Monthly mean
 
 	end #Years
 
@@ -2995,7 +2828,7 @@ function Forecast_pristine()
 	const global NX = 48111
 	const global ID = collect(1:NX);
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
 
 	#! Initialize
 	phen=0;
@@ -3013,15 +2846,15 @@ function Forecast_pristine()
 	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_p.nc"),"biomass");
 	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_d.nc"),"biomass");
 	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_bent.nc"),"biomass");
-	Sml_f.bio = sf[:,365];
-	Sml_p.bio = sp[:,365];
-	Sml_d.bio = sd[:,365];
-	Med_f.bio = mf[:,365];
-	Med_p.bio = mp[:,365];
-	Med_d.bio = md[:,365];
-	Lrg_p.bio = lp[:,365];
-	Lrg_d.bio = ld[:,365];
-	BENT.mass = bent[:,365];
+	Sml_f.bio = sf[:,17400];
+	Sml_p.bio = sp[:,17400];
+	Sml_d.bio = sd[:,17400];
+	Med_f.bio = mf[:,17400];
+	Med_p.bio = mp[:,17400];
+	Med_d.bio = md[:,17400];
+	Lrg_p.bio = lp[:,17400];
+	Lrg_d.bio = ld[:,17400];
+	BENT.mass = bent[:,17400];
 
 	############### Setup NetCDF save
 	# #! Init netcdf file for storage
@@ -3044,7 +2877,7 @@ function Forecast_pristine()
 
 	# #! Init dims of netcdf file
 	X   = collect(1:NX);
-	tim = collect(1:DAYS);
+	tim = collect(1:12*YEARS);
 
 	# #! setup netcdf path to store to
 	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_sml_f.nc")
@@ -3290,6 +3123,7 @@ function Forecast_pristine()
 
 	###################### Run the Model
 	#! Run model with no fishing
+	MNT = 0
 	for YR = 1:YEARS # years
 		#! Load a year's COBALT data
 		ti = string(2005+YR)
@@ -3535,226 +3369,77 @@ function Forecast_pristine()
 			end #Grid cells
 
 		end #Days
-		#### TAKE MONTHLY MEANS BEFORE STORING???
-		mBent_bio = mean(S_Bent_bio,2)
-		mSml_f = mean(S_Sml_f,2)
-		mSml_p = mean(S_Sml_p,2)
-		mSml_d = mean(S_Sml_d,2)
-		mMed_f = mean(S_Med_f,2)
-		mMed_p = mean(S_Med_p,2)
-		mMed_d = mean(S_Med_d,2)
-		mLrg_p = mean(S_Lrg_p,2)
-		mLrg_d = mean(S_Lrg_d,2)
-		#Take sum of recruitment?
-		mSml_f_rec = mean(S_Sml_f_rec,2)
-		mSml_p_rec = mean(S_Sml_p_rec,2)
-		mSml_d_rec = mean(S_Sml_d_rec,2)
-		mMed_f_rec = mean(S_Med_f_rec,2)
-		mMed_p_rec = mean(S_Med_p_rec,2)
-		mMed_d_rec = mean(S_Med_d_rec,2)
-		mLrg_p_rec = mean(S_Lrg_p_rec,2)
-		mLrg_d_rec = mean(S_Lrg_d_rec,2)
 
-		mSml_f_con = mean(S_Sml_f_con,2)
-		mSml_p_con = mean(S_Sml_p_con,2)
-		mSml_d_con = mean(S_Sml_d_con,2)
-		mMed_f_con = mean(S_Med_f_con,2)
-		mMed_p_con = mean(S_Med_p_con,2)
-		mMed_d_con = mean(S_Med_d_con,2)
-		mLrg_p_con = mean(S_Lrg_p_con,2)
-		mLrg_d_con = mean(S_Lrg_d_con,2)
+		#! Calculate monthly means and save
+		a = [1;(cumsum(MNTH)+1)[1:end-1]] # start of the month
+		b = cumsum(MNTH) # end of the month
+		for i = 1:12
+			MNT += 1 # Update monthly ticker
+			ncwrite(mean(S_Bent_bio[:,a[i]:b[i]],2),file_bent,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_f[:,a[i]:b[i]],2),file_sml_f,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_p[:,a[i]:b[i]],2),file_sml_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_d[:,a[i]:b[i]],2),file_sml_d,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_f[:,a[i]:b[i]],2),file_med_f,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_p[:,a[i]:b[i]],2),file_med_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_d[:,a[i]:b[i]],2),file_med_d,"biomass",[1,MNT])
+			ncwrite(mean(S_Lrg_p[:,a[i]:b[i]],2),file_lrg_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Lrg_d[:,a[i]:b[i]],2),file_lrg_d,"biomass",[1,MNT])
 
-		mSml_f_nu = mean(S_Sml_f_nu,2)
-		mSml_p_nu = mean(S_Sml_p_nu,2)
-		mSml_d_nu = mean(S_Sml_d_nu,2)
-		mMed_f_nu = mean(S_Med_f_nu,2)
-		mMed_p_nu = mean(S_Med_p_nu,2)
-		mMed_d_nu = mean(S_Med_d_nu,2)
-		mLrg_p_nu = mean(S_Lrg_p_nu,2)
-		mLrg_d_nu = mean(S_Lrg_d_nu,2)
-		#Sum or mean of production?
-		mSml_f_prod = mean(S_Sml_f_prod,2)
-		mSml_p_prod = mean(S_Sml_p_prod,2)
-		mSml_d_prod = mean(S_Sml_d_prod,2)
-		mMed_f_prod = mean(S_Med_f_prod,2)
-		mMed_p_prod = mean(S_Med_p_prod,2)
-		mMed_d_prod = mean(S_Med_d_prod,2)
-		mLrg_p_prod = mean(S_Lrg_p_prod,2)
-		mLrg_d_prod = mean(S_Lrg_d_prod,2)
+			ncwrite(mean(S_Sml_f_rec[:,a[i]:b[i]],2),file_sml_f,"rec",[1,MNT])
+			ncwrite(mean(S_Sml_p_rec[:,a[i]:b[i]],2),file_sml_p,"rec",[1,MNT])
+			ncwrite(mean(S_Sml_d_rec[:,a[i]:b[i]],2),file_sml_d,"rec",[1,MNT])
+			ncwrite(mean(S_Med_f_rec[:,a[i]:b[i]],2),file_med_f,"rec",[1,MNT])
+			ncwrite(mean(S_Med_p_rec[:,a[i]:b[i]],2),file_med_p,"rec",[1,MNT])
+			ncwrite(mean(S_Med_d_rec[:,a[i]:b[i]],2),file_med_d,"rec",[1,MNT])
+			ncwrite(mean(S_Lrg_p_rec[:,a[i]:b[i]],2),file_lrg_p,"rec",[1,MNT])
+			ncwrite(mean(S_Lrg_d_rec[:,a[i]:b[i]],2),file_lrg_d,"rec",[1,MNT])
 
-		mSml_f_gamma = mean(S_Sml_f_gamma,2)
-		mSml_p_gamma = mean(S_Sml_p_gamma,2)
-		mSml_d_gamma = mean(S_Sml_d_gamma,2)
-		mMed_f_gamma = mean(S_Med_f_gamma,2)
-		mMed_p_gamma = mean(S_Med_p_gamma,2)
-		mMed_d_gamma = mean(S_Med_d_gamma,2)
-		mLrg_p_gamma = mean(S_Lrg_p_gamma,2)
-		mLrg_d_gamma = mean(S_Lrg_d_gamma,2)
+			ncwrite(mean(S_Sml_f_prod[:,a[i]:b[i]],2),file_sml_f,"prod",[1,MNT])
+			ncwrite(mean(S_Sml_p_prod[:,a[i]:b[i]],2),file_sml_p,"prod",[1,MNT])
+			ncwrite(mean(S_Sml_d_prod[:,a[i]:b[i]],2),file_sml_d,"prod",[1,MNT])
+			ncwrite(mean(S_Med_f_prod[:,a[i]:b[i]],2),file_med_f,"prod",[1,MNT])
+			ncwrite(mean(S_Med_p_prod[:,a[i]:b[i]],2),file_med_p,"prod",[1,MNT])
+			ncwrite(mean(S_Med_d_prod[:,a[i]:b[i]],2),file_med_d,"prod",[1,MNT])
+			ncwrite(mean(S_Lrg_p_prod[:,a[i]:b[i]],2),file_lrg_p,"prod",[1,MNT])
+			ncwrite(mean(S_Lrg_d_prod[:,a[i]:b[i]],2),file_lrg_d,"prod",[1,MNT])
 
-		mSml_f_rep = mean(S_Sml_f_rep,2)
-		mSml_p_rep = mean(S_Sml_p_rep,2)
-		mSml_d_rep = mean(S_Sml_d_rep,2)
-		mMed_f_rep = mean(S_Med_f_rep,2)
-		mMed_p_rep = mean(S_Med_p_rep,2)
-		mMed_d_rep = mean(S_Med_d_rep,2)
-		mLrg_p_rep = mean(S_Lrg_p_rep,2)
-		mLrg_d_rep = mean(S_Lrg_d_rep,2)
+			ncwrite(mean(S_Sml_f_con[:,a[i]:b[i]],2),file_sml_f,"con",[1,MNT])
+			ncwrite(mean(S_Sml_p_con[:,a[i]:b[i]],2),file_sml_p,"con",[1,MNT])
+			ncwrite(mean(S_Sml_d_con[:,a[i]:b[i]],2),file_sml_d,"con",[1,MNT])
+			ncwrite(mean(S_Med_f_con[:,a[i]:b[i]],2),file_med_f,"con",[1,MNT])
+			ncwrite(mean(S_Med_p_con[:,a[i]:b[i]],2),file_med_p,"con",[1,MNT])
+			ncwrite(mean(S_Med_d_con[:,a[i]:b[i]],2),file_med_d,"con",[1,MNT])
+			ncwrite(mean(S_Lrg_p_con[:,a[i]:b[i]],2),file_lrg_p,"con",[1,MNT])
+			ncwrite(mean(S_Lrg_d_con[:,a[i]:b[i]],2),file_lrg_d,"con",[1,MNT])
 
-		mSml_f_egg = mean(S_Sml_f_egg,2)
-		mSml_p_egg = mean(S_Sml_p_egg,2)
-		mSml_d_egg = mean(S_Sml_d_egg,2)
-		mMed_f_egg = mean(S_Med_f_egg,2)
-		mMed_p_egg = mean(S_Med_p_egg,2)
-		mMed_d_egg = mean(S_Med_d_egg,2)
-		mLrg_p_egg = mean(S_Lrg_p_egg,2)
-		mLrg_d_egg = mean(S_Lrg_d_egg,2)
+			ncwrite(mean(S_Sml_f_nu[:,a[i]:b[i]],2),file_sml_f,"nu",[1,MNT])
+			ncwrite(mean(S_Sml_p_nu[:,a[i]:b[i]],2),file_sml_p,"nu",[1,MNT])
+			ncwrite(mean(S_Sml_d_nu[:,a[i]:b[i]],2),file_sml_d,"nu",[1,MNT])
+			ncwrite(mean(S_Med_f_nu[:,a[i]:b[i]],2),file_med_f,"nu",[1,MNT])
+			ncwrite(mean(S_Med_p_nu[:,a[i]:b[i]],2),file_med_p,"nu",[1,MNT])
+			ncwrite(mean(S_Med_d_nu[:,a[i]:b[i]],2),file_med_d,"nu",[1,MNT])
+			ncwrite(mean(S_Lrg_p_nu[:,a[i]:b[i]],2),file_lrg_p,"nu",[1,MNT])
+			ncwrite(mean(S_Lrg_d_nu[:,a[i]:b[i]],2),file_lrg_d,"nu",[1,MNT])
 
-		mSml_f_die = mean(S_Sml_f_die,2)
-		mSml_p_die = mean(S_Sml_p_die,2)
-		mSml_d_die = mean(S_Sml_d_die,2)
-		mMed_f_die = mean(S_Med_f_die,2)
-		mMed_p_die = mean(S_Med_p_die,2)
-		mMed_d_die = mean(S_Med_d_die,2)
-		mLrg_p_die = mean(S_Lrg_p_die,2)
-		mLrg_d_die = mean(S_Lrg_d_die,2)
+			ncwrite(mean(S_Sml_f_rep[:,a[i]:b[i]],2),file_sml_f,"rep",[1,MNT])
+			ncwrite(mean(S_Sml_p_rep[:,a[i]:b[i]],2),file_sml_p,"rep",[1,MNT])
+			ncwrite(mean(S_Sml_d_rep[:,a[i]:b[i]],2),file_sml_d,"rep",[1,MNT])
+			ncwrite(mean(S_Med_f_rep[:,a[i]:b[i]],2),file_med_f,"rep",[1,MNT])
+			ncwrite(mean(S_Med_p_rep[:,a[i]:b[i]],2),file_med_p,"rep",[1,MNT])
+			ncwrite(mean(S_Med_d_rep[:,a[i]:b[i]],2),file_med_d,"rep",[1,MNT])
+			ncwrite(mean(S_Lrg_p_rep[:,a[i]:b[i]],2),file_lrg_p,"rep",[1,MNT])
+			ncwrite(mean(S_Lrg_d_rep[:,a[i]:b[i]],2),file_lrg_d,"rep",[1,MNT])
 
-		mSml_f_clev = mean(S_Sml_f_clev,2)
-		mSml_p_clev = mean(S_Sml_p_clev,2)
-		mSml_d_clev = mean(S_Sml_d_clev,2)
-		mMed_f_clev = mean(S_Med_f_clev,2)
-		mMed_p_clev = mean(S_Med_p_clev,2)
-		mMed_d_clev = mean(S_Med_d_clev,2)
-		mLrg_p_clev = mean(S_Lrg_p_clev,2)
-		mLrg_d_clev = mean(S_Lrg_d_clev,2)
+			ncwrite(mean(S_Sml_f_die[:,a[i]:b[i]],2),file_sml_f,"die",[1,MNT])
+			ncwrite(mean(S_Sml_p_die[:,a[i]:b[i]],2),file_sml_p,"die",[1,MNT])
+			ncwrite(mean(S_Sml_d_die[:,a[i]:b[i]],2),file_sml_d,"die",[1,MNT])
+			ncwrite(mean(S_Med_f_die[:,a[i]:b[i]],2),file_med_f,"die",[1,MNT])
+			ncwrite(mean(S_Med_p_die[:,a[i]:b[i]],2),file_med_p,"die",[1,MNT])
+			ncwrite(mean(S_Med_d_die[:,a[i]:b[i]],2),file_med_d,"die",[1,MNT])
+			ncwrite(mean(S_Lrg_p_die[:,a[i]:b[i]],2),file_lrg_p,"die",[1,MNT])
+			ncwrite(mean(S_Lrg_d_die[:,a[i]:b[i]],2),file_lrg_d,"die",[1,MNT])
 
-		mSml_f_S = mean(S_Sml_f_S,2)
-		mSml_p_S = mean(S_Sml_p_S,2)
-		mSml_d_S = mean(S_Sml_d_S,2)
-		mMed_f_S = mean(S_Med_f_S,2)
-		mMed_p_S = mean(S_Med_p_S,2)
-		mMed_d_S = mean(S_Med_d_S,2)
-		mLrg_p_S = mean(S_Lrg_p_S,2)
-		mLrg_d_S = mean(S_Lrg_d_S,2)
-
-		mSml_f_DD = mean(S_Sml_f_DD,2)
-		mSml_p_DD = mean(S_Sml_p_DD,2)
-		mSml_d_DD = mean(S_Sml_d_DD,2)
-		mMed_f_DD = mean(S_Med_f_DD,2)
-		mMed_p_DD = mean(S_Med_p_DD,2)
-		mMed_d_DD = mean(S_Med_d_DD,2)
-		mLrg_p_DD = mean(S_Lrg_p_DD,2)
-		mLrg_d_DD = mean(S_Lrg_d_DD,2)
-
-		#! Save
-		ncwrite(mBent_bio,file_bent,"biomass",[1,1])
-
-		ncwrite(mSml_f,file_sml_f,"biomass",[1,1])
-		ncwrite(mSml_p,file_sml_p,"biomass",[1,1])
-		ncwrite(mSml_d,file_sml_d,"biomass",[1,1])
-		ncwrite(mMed_f,file_med_f,"biomass",[1,1])
-		ncwrite(mMed_p,file_med_p,"biomass",[1,1])
-		ncwrite(mMed_d,file_med_d,"biomass",[1,1])
-		ncwrite(mLrg_p,file_lrg_p,"biomass",[1,1])
-		ncwrite(mLrg_d,file_lrg_d,"biomass",[1,1])
-
-		ncwrite(mSml_f_rec,file_sml_f,"rec",[1,1])
-		ncwrite(mSml_p_rec,file_sml_p,"rec",[1,1])
-		ncwrite(mSml_d_rec,file_sml_d,"rec",[1,1])
-		ncwrite(mMed_f_rec,file_med_f,"rec",[1,1])
-		ncwrite(mMed_p_rec,file_med_p,"rec",[1,1])
-		ncwrite(mMed_d_rec,file_med_d,"rec",[1,1])
-		ncwrite(mLrg_p_rec,file_lrg_p,"rec",[1,1])
-		ncwrite(mLrg_d_rec,file_lrg_d,"rec",[1,1])
-
-		ncwrite(mSml_f_con,file_sml_f,"con",[1,1])
-		ncwrite(mSml_p_con,file_sml_p,"con",[1,1])
-		ncwrite(mSml_d_con,file_sml_d,"con",[1,1])
-		ncwrite(mMed_f_con,file_med_f,"con",[1,1])
-		ncwrite(mMed_p_con,file_med_p,"con",[1,1])
-		ncwrite(mMed_d_con,file_med_d,"con",[1,1])
-		ncwrite(mLrg_p_con,file_lrg_p,"con",[1,1])
-		ncwrite(mLrg_d_con,file_lrg_d,"con",[1,1])
-
-		ncwrite(mSml_f_nu,file_sml_f,"nu",[1,1])
-		ncwrite(mSml_p_nu,file_sml_p,"nu",[1,1])
-		ncwrite(mSml_d_nu,file_sml_d,"nu",[1,1])
-		ncwrite(mMed_f_nu,file_med_f,"nu",[1,1])
-		ncwrite(mMed_p_nu,file_med_p,"nu",[1,1])
-		ncwrite(mMed_d_nu,file_med_d,"nu",[1,1])
-		ncwrite(mLrg_p_nu,file_lrg_p,"nu",[1,1])
-		ncwrite(mLrg_d_nu,file_lrg_d,"nu",[1,1])
-
-		ncwrite(mSml_f_prod,file_sml_f,"prod",[1,1])
-		ncwrite(mSml_p_prod,file_sml_p,"prod",[1,1])
-		ncwrite(mSml_d_prod,file_sml_d,"prod",[1,1])
-		ncwrite(mMed_f_prod,file_med_f,"prod",[1,1])
-		ncwrite(mMed_p_prod,file_med_p,"prod",[1,1])
-		ncwrite(mMed_d_prod,file_med_d,"prod",[1,1])
-		ncwrite(mLrg_p_prod,file_lrg_p,"prod",[1,1])
-		ncwrite(mLrg_d_prod,file_lrg_d,"prod",[1,1])
-
-		ncwrite(mSml_f_gamma,file_sml_f,"gamma",[1,1])
-		ncwrite(mSml_p_gamma,file_sml_p,"gamma",[1,1])
-		ncwrite(mSml_d_gamma,file_sml_d,"gamma",[1,1])
-		ncwrite(mMed_f_gamma,file_med_f,"gamma",[1,1])
-		ncwrite(mMed_p_gamma,file_med_p,"gamma",[1,1])
-		ncwrite(mMed_d_gamma,file_med_d,"gamma",[1,1])
-		ncwrite(mLrg_p_gamma,file_lrg_p,"gamma",[1,1])
-		ncwrite(mLrg_d_gamma,file_lrg_d,"gamma",[1,1])
-
-		ncwrite(mSml_f_rep,file_sml_f,"rep",[1,1])
-		ncwrite(mSml_p_rep,file_sml_p,"rep",[1,1])
-		ncwrite(mSml_d_rep,file_sml_d,"rep",[1,1])
-		ncwrite(mMed_f_rep,file_med_f,"rep",[1,1])
-		ncwrite(mMed_p_rep,file_med_p,"rep",[1,1])
-		ncwrite(mMed_d_rep,file_med_d,"rep",[1,1])
-		ncwrite(mLrg_p_rep,file_lrg_p,"rep",[1,1])
-		ncwrite(mLrg_d_rep,file_lrg_d,"rep",[1,1])
-
-		ncwrite(mSml_f_egg,file_sml_f,"egg",[1,1])
-		ncwrite(mSml_p_egg,file_sml_p,"egg",[1,1])
-		ncwrite(mSml_d_egg,file_sml_d,"egg",[1,1])
-		ncwrite(mMed_f_egg,file_med_f,"egg",[1,1])
-		ncwrite(mMed_p_egg,file_med_p,"egg",[1,1])
-		ncwrite(mMed_d_egg,file_med_d,"egg",[1,1])
-		ncwrite(mLrg_p_egg,file_lrg_p,"egg",[1,1])
-		ncwrite(mLrg_d_egg,file_lrg_d,"egg",[1,1])
-
-		ncwrite(mSml_f_die,file_sml_f,"die",[1,1])
-		ncwrite(mSml_p_die,file_sml_p,"die",[1,1])
-		ncwrite(mSml_d_die,file_sml_d,"die",[1,1])
-		ncwrite(mMed_f_die,file_med_f,"die",[1,1])
-		ncwrite(mMed_p_die,file_med_p,"die",[1,1])
-		ncwrite(mMed_d_die,file_med_d,"die",[1,1])
-		ncwrite(mLrg_p_die,file_lrg_p,"die",[1,1])
-		ncwrite(mLrg_d_die,file_lrg_d,"die",[1,1])
-
-		ncwrite(mSml_f_clev,file_sml_f,"clev",[1,1])
-		ncwrite(mSml_p_clev,file_sml_p,"clev",[1,1])
-		ncwrite(mSml_d_clev,file_sml_d,"clev",[1,1])
-		ncwrite(mMed_f_clev,file_med_f,"clev",[1,1])
-		ncwrite(mMed_p_clev,file_med_p,"clev",[1,1])
-		ncwrite(mMed_d_clev,file_med_d,"clev",[1,1])
-		ncwrite(mLrg_p_clev,file_lrg_p,"clev",[1,1])
-		ncwrite(mLrg_d_clev,file_lrg_d,"clev",[1,1])
-
-		ncwrite(mSml_f_S,file_sml_f,"S",[1,1])
-		ncwrite(mSml_p_S,file_sml_p,"S",[1,1])
-		ncwrite(mSml_d_S,file_sml_d,"S",[1,1])
-		ncwrite(mMed_f_S,file_med_f,"S",[1,1])
-		ncwrite(mMed_p_S,file_med_p,"S",[1,1])
-		ncwrite(mMed_d_S,file_med_d,"S",[1,1])
-		ncwrite(mLrg_p_S,file_lrg_p,"S",[1,1])
-		ncwrite(mLrg_d_S,file_lrg_d,"S",[1,1])
-
-		ncwrite(mSml_f_DD,file_sml_f,"DD",[1,1])
-		ncwrite(mSml_p_DD,file_sml_p,"DD",[1,1])
-		ncwrite(mSml_d_DD,file_sml_d,"DD",[1,1])
-		ncwrite(mMed_f_DD,file_med_f,"DD",[1,1])
-		ncwrite(mMed_p_DD,file_med_p,"DD",[1,1])
-		ncwrite(mMed_d_DD,file_med_d,"DD",[1,1])
-		ncwrite(mLrg_p_DD,file_lrg_p,"DD",[1,1])
-		ncwrite(mLrg_d_DD,file_lrg_d,"DD",[1,1])
+		end #Monthly mean
 
 	end #Years
 
@@ -3814,15 +3499,15 @@ function Forecast_fished()
 	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_fished_lrg_p.nc"),"biomass");
 	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_fished_lrg_d.nc"),"biomass");
 	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_fished_bent.nc"),"biomass");
-	Sml_f.bio = sf[:,365];
-	Sml_p.bio = sp[:,365];
-	Sml_d.bio = sd[:,365];
-	Med_f.bio = mf[:,365];
-	Med_p.bio = mp[:,365];
-	Med_d.bio = md[:,365];
-	Lrg_p.bio = lp[:,365];
-	Lrg_d.bio = ld[:,365];
-	BENT.mass = bent[:,365];
+	Sml_f.bio = sf[:,17400];
+	Sml_p.bio = sp[:,17400];
+	Sml_d.bio = sd[:,17400];
+	Med_f.bio = mf[:,17400];
+	Med_p.bio = mp[:,17400];
+	Med_d.bio = md[:,17400];
+	Lrg_p.bio = lp[:,17400];
+	Lrg_d.bio = ld[:,17400];
+	BENT.mass = bent[:,17400];
 
 	############### Setup NetCDF save
 	# #! Init netcdf file for storage
@@ -3845,7 +3530,7 @@ function Forecast_fished()
 
 	# #! Init dims of netcdf file
 	X   = collect(1:NX);
-	tim = collect(1:DAYS);
+	tim = collect(1:12*YEARS);
 
 	# #! setup netcdf path to store to
 	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_fished_sml_f.nc")
@@ -4109,6 +3794,7 @@ function Forecast_fished()
 
 	###################### Run the Model
 	#! Run model with no fishing
+	MNT = 0
 	for YR = 1:YEARS # years
 		#! Load a year's COBALT data
 		ti = string(2005+YR)
@@ -4372,244 +4058,77 @@ function Forecast_fished()
 			end #Grid cells
 
 		end #Days
-		#### TAKE MONTHLY MEANS BEFORE STORING???
-		mBent_bio = mean(S_Bent_bio,2)
-		mSml_f = mean(S_Sml_f,2)
-		mSml_p = mean(S_Sml_p,2)
-		mSml_d = mean(S_Sml_d,2)
-		mMed_f = mean(S_Med_f,2)
-		mMed_p = mean(S_Med_p,2)
-		mMed_d = mean(S_Med_d,2)
-		mLrg_p = mean(S_Lrg_p,2)
-		mLrg_d = mean(S_Lrg_d,2)
-		#Take sum of recruitment?
-		mSml_f_rec = mean(S_Sml_f_rec,2)
-		mSml_p_rec = mean(S_Sml_p_rec,2)
-		mSml_d_rec = mean(S_Sml_d_rec,2)
-		mMed_f_rec = mean(S_Med_f_rec,2)
-		mMed_p_rec = mean(S_Med_p_rec,2)
-		mMed_d_rec = mean(S_Med_d_rec,2)
-		mLrg_p_rec = mean(S_Lrg_p_rec,2)
-		mLrg_d_rec = mean(S_Lrg_d_rec,2)
 
-		mSml_f_con = mean(S_Sml_f_con,2)
-		mSml_p_con = mean(S_Sml_p_con,2)
-		mSml_d_con = mean(S_Sml_d_con,2)
-		mMed_f_con = mean(S_Med_f_con,2)
-		mMed_p_con = mean(S_Med_p_con,2)
-		mMed_d_con = mean(S_Med_d_con,2)
-		mLrg_p_con = mean(S_Lrg_p_con,2)
-		mLrg_d_con = mean(S_Lrg_d_con,2)
+		#! Calculate monthly means and save
+		a = [1;(cumsum(MNTH)+1)[1:end-1]] # start of the month
+		b = cumsum(MNTH) # end of the month
+		for i = 1:12
+			MNT += 1 # Update monthly ticker
+			ncwrite(mean(S_Bent_bio[:,a[i]:b[i]],2),file_bent,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_f[:,a[i]:b[i]],2),file_sml_f,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_p[:,a[i]:b[i]],2),file_sml_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Sml_d[:,a[i]:b[i]],2),file_sml_d,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_f[:,a[i]:b[i]],2),file_med_f,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_p[:,a[i]:b[i]],2),file_med_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Med_d[:,a[i]:b[i]],2),file_med_d,"biomass",[1,MNT])
+			ncwrite(mean(S_Lrg_p[:,a[i]:b[i]],2),file_lrg_p,"biomass",[1,MNT])
+			ncwrite(mean(S_Lrg_d[:,a[i]:b[i]],2),file_lrg_d,"biomass",[1,MNT])
 
-		mSml_f_nu = mean(S_Sml_f_nu,2)
-		mSml_p_nu = mean(S_Sml_p_nu,2)
-		mSml_d_nu = mean(S_Sml_d_nu,2)
-		mMed_f_nu = mean(S_Med_f_nu,2)
-		mMed_p_nu = mean(S_Med_p_nu,2)
-		mMed_d_nu = mean(S_Med_d_nu,2)
-		mLrg_p_nu = mean(S_Lrg_p_nu,2)
-		mLrg_d_nu = mean(S_Lrg_d_nu,2)
-		#Sum or mean of production?
-		mSml_f_prod = mean(S_Sml_f_prod,2)
-		mSml_p_prod = mean(S_Sml_p_prod,2)
-		mSml_d_prod = mean(S_Sml_d_prod,2)
-		mMed_f_prod = mean(S_Med_f_prod,2)
-		mMed_p_prod = mean(S_Med_p_prod,2)
-		mMed_d_prod = mean(S_Med_d_prod,2)
-		mLrg_p_prod = mean(S_Lrg_p_prod,2)
-		mLrg_d_prod = mean(S_Lrg_d_prod,2)
+			ncwrite(mean(S_Sml_f_rec[:,a[i]:b[i]],2),file_sml_f,"rec",[1,MNT])
+			ncwrite(mean(S_Sml_p_rec[:,a[i]:b[i]],2),file_sml_p,"rec",[1,MNT])
+			ncwrite(mean(S_Sml_d_rec[:,a[i]:b[i]],2),file_sml_d,"rec",[1,MNT])
+			ncwrite(mean(S_Med_f_rec[:,a[i]:b[i]],2),file_med_f,"rec",[1,MNT])
+			ncwrite(mean(S_Med_p_rec[:,a[i]:b[i]],2),file_med_p,"rec",[1,MNT])
+			ncwrite(mean(S_Med_d_rec[:,a[i]:b[i]],2),file_med_d,"rec",[1,MNT])
+			ncwrite(mean(S_Lrg_p_rec[:,a[i]:b[i]],2),file_lrg_p,"rec",[1,MNT])
+			ncwrite(mean(S_Lrg_d_rec[:,a[i]:b[i]],2),file_lrg_d,"rec",[1,MNT])
 
-		mSml_f_gamma = mean(S_Sml_f_gamma,2)
-		mSml_p_gamma = mean(S_Sml_p_gamma,2)
-		mSml_d_gamma = mean(S_Sml_d_gamma,2)
-		mMed_f_gamma = mean(S_Med_f_gamma,2)
-		mMed_p_gamma = mean(S_Med_p_gamma,2)
-		mMed_d_gamma = mean(S_Med_d_gamma,2)
-		mLrg_p_gamma = mean(S_Lrg_p_gamma,2)
-		mLrg_d_gamma = mean(S_Lrg_d_gamma,2)
+			ncwrite(mean(S_Sml_f_prod[:,a[i]:b[i]],2),file_sml_f,"prod",[1,MNT])
+			ncwrite(mean(S_Sml_p_prod[:,a[i]:b[i]],2),file_sml_p,"prod",[1,MNT])
+			ncwrite(mean(S_Sml_d_prod[:,a[i]:b[i]],2),file_sml_d,"prod",[1,MNT])
+			ncwrite(mean(S_Med_f_prod[:,a[i]:b[i]],2),file_med_f,"prod",[1,MNT])
+			ncwrite(mean(S_Med_p_prod[:,a[i]:b[i]],2),file_med_p,"prod",[1,MNT])
+			ncwrite(mean(S_Med_d_prod[:,a[i]:b[i]],2),file_med_d,"prod",[1,MNT])
+			ncwrite(mean(S_Lrg_p_prod[:,a[i]:b[i]],2),file_lrg_p,"prod",[1,MNT])
+			ncwrite(mean(S_Lrg_d_prod[:,a[i]:b[i]],2),file_lrg_d,"prod",[1,MNT])
 
-		mSml_f_rep = mean(S_Sml_f_rep,2)
-		mSml_p_rep = mean(S_Sml_p_rep,2)
-		mSml_d_rep = mean(S_Sml_d_rep,2)
-		mMed_f_rep = mean(S_Med_f_rep,2)
-		mMed_p_rep = mean(S_Med_p_rep,2)
-		mMed_d_rep = mean(S_Med_d_rep,2)
-		mLrg_p_rep = mean(S_Lrg_p_rep,2)
-		mLrg_d_rep = mean(S_Lrg_d_rep,2)
+			ncwrite(mean(S_Sml_f_con[:,a[i]:b[i]],2),file_sml_f,"con",[1,MNT])
+			ncwrite(mean(S_Sml_p_con[:,a[i]:b[i]],2),file_sml_p,"con",[1,MNT])
+			ncwrite(mean(S_Sml_d_con[:,a[i]:b[i]],2),file_sml_d,"con",[1,MNT])
+			ncwrite(mean(S_Med_f_con[:,a[i]:b[i]],2),file_med_f,"con",[1,MNT])
+			ncwrite(mean(S_Med_p_con[:,a[i]:b[i]],2),file_med_p,"con",[1,MNT])
+			ncwrite(mean(S_Med_d_con[:,a[i]:b[i]],2),file_med_d,"con",[1,MNT])
+			ncwrite(mean(S_Lrg_p_con[:,a[i]:b[i]],2),file_lrg_p,"con",[1,MNT])
+			ncwrite(mean(S_Lrg_d_con[:,a[i]:b[i]],2),file_lrg_d,"con",[1,MNT])
 
-		mSml_f_egg = mean(S_Sml_f_egg,2)
-		mSml_p_egg = mean(S_Sml_p_egg,2)
-		mSml_d_egg = mean(S_Sml_d_egg,2)
-		mMed_f_egg = mean(S_Med_f_egg,2)
-		mMed_p_egg = mean(S_Med_p_egg,2)
-		mMed_d_egg = mean(S_Med_d_egg,2)
-		mLrg_p_egg = mean(S_Lrg_p_egg,2)
-		mLrg_d_egg = mean(S_Lrg_d_egg,2)
+			ncwrite(mean(S_Sml_f_nu[:,a[i]:b[i]],2),file_sml_f,"nu",[1,MNT])
+			ncwrite(mean(S_Sml_p_nu[:,a[i]:b[i]],2),file_sml_p,"nu",[1,MNT])
+			ncwrite(mean(S_Sml_d_nu[:,a[i]:b[i]],2),file_sml_d,"nu",[1,MNT])
+			ncwrite(mean(S_Med_f_nu[:,a[i]:b[i]],2),file_med_f,"nu",[1,MNT])
+			ncwrite(mean(S_Med_p_nu[:,a[i]:b[i]],2),file_med_p,"nu",[1,MNT])
+			ncwrite(mean(S_Med_d_nu[:,a[i]:b[i]],2),file_med_d,"nu",[1,MNT])
+			ncwrite(mean(S_Lrg_p_nu[:,a[i]:b[i]],2),file_lrg_p,"nu",[1,MNT])
+			ncwrite(mean(S_Lrg_d_nu[:,a[i]:b[i]],2),file_lrg_d,"nu",[1,MNT])
 
-		mSml_f_die = mean(S_Sml_f_die,2)
-		mSml_p_die = mean(S_Sml_p_die,2)
-		mSml_d_die = mean(S_Sml_d_die,2)
-		mMed_f_die = mean(S_Med_f_die,2)
-		mMed_p_die = mean(S_Med_p_die,2)
-		mMed_d_die = mean(S_Med_d_die,2)
-		mLrg_p_die = mean(S_Lrg_p_die,2)
-		mLrg_d_die = mean(S_Lrg_d_die,2)
+			ncwrite(mean(S_Sml_f_rep[:,a[i]:b[i]],2),file_sml_f,"rep",[1,MNT])
+			ncwrite(mean(S_Sml_p_rep[:,a[i]:b[i]],2),file_sml_p,"rep",[1,MNT])
+			ncwrite(mean(S_Sml_d_rep[:,a[i]:b[i]],2),file_sml_d,"rep",[1,MNT])
+			ncwrite(mean(S_Med_f_rep[:,a[i]:b[i]],2),file_med_f,"rep",[1,MNT])
+			ncwrite(mean(S_Med_p_rep[:,a[i]:b[i]],2),file_med_p,"rep",[1,MNT])
+			ncwrite(mean(S_Med_d_rep[:,a[i]:b[i]],2),file_med_d,"rep",[1,MNT])
+			ncwrite(mean(S_Lrg_p_rep[:,a[i]:b[i]],2),file_lrg_p,"rep",[1,MNT])
+			ncwrite(mean(S_Lrg_d_rep[:,a[i]:b[i]],2),file_lrg_d,"rep",[1,MNT])
 
-		mSml_f_clev = mean(S_Sml_f_clev,2)
-		mSml_p_clev = mean(S_Sml_p_clev,2)
-		mSml_d_clev = mean(S_Sml_d_clev,2)
-		mMed_f_clev = mean(S_Med_f_clev,2)
-		mMed_p_clev = mean(S_Med_p_clev,2)
-		mMed_d_clev = mean(S_Med_d_clev,2)
-		mLrg_p_clev = mean(S_Lrg_p_clev,2)
-		mLrg_d_clev = mean(S_Lrg_d_clev,2)
+			ncwrite(mean(S_Sml_f_die[:,a[i]:b[i]],2),file_sml_f,"die",[1,MNT])
+			ncwrite(mean(S_Sml_p_die[:,a[i]:b[i]],2),file_sml_p,"die",[1,MNT])
+			ncwrite(mean(S_Sml_d_die[:,a[i]:b[i]],2),file_sml_d,"die",[1,MNT])
+			ncwrite(mean(S_Med_f_die[:,a[i]:b[i]],2),file_med_f,"die",[1,MNT])
+			ncwrite(mean(S_Med_p_die[:,a[i]:b[i]],2),file_med_p,"die",[1,MNT])
+			ncwrite(mean(S_Med_d_die[:,a[i]:b[i]],2),file_med_d,"die",[1,MNT])
+			ncwrite(mean(S_Lrg_p_die[:,a[i]:b[i]],2),file_lrg_p,"die",[1,MNT])
+			ncwrite(mean(S_Lrg_d_die[:,a[i]:b[i]],2),file_lrg_d,"die",[1,MNT])
 
-		mSml_f_S = mean(S_Sml_f_S,2)
-		mSml_p_S = mean(S_Sml_p_S,2)
-		mSml_d_S = mean(S_Sml_d_S,2)
-		mMed_f_S = mean(S_Med_f_S,2)
-		mMed_p_S = mean(S_Med_p_S,2)
-		mMed_d_S = mean(S_Med_d_S,2)
-		mLrg_p_S = mean(S_Lrg_p_S,2)
-		mLrg_d_S = mean(S_Lrg_d_S,2)
-
-		mSml_f_DD = mean(S_Sml_f_DD,2)
-		mSml_p_DD = mean(S_Sml_p_DD,2)
-		mSml_d_DD = mean(S_Sml_d_DD,2)
-		mMed_f_DD = mean(S_Med_f_DD,2)
-		mMed_p_DD = mean(S_Med_p_DD,2)
-		mMed_d_DD = mean(S_Med_d_DD,2)
-		mLrg_p_DD = mean(S_Lrg_p_DD,2)
-		mLrg_d_DD = mean(S_Lrg_d_DD,2)
-		#Sum of catch?
-		mSml_f_catch = mean(S_Sml_f_catch,2)
-		mSml_p_catch = mean(S_Sml_p_catch,2)
-		mSml_d_catch = mean(S_Sml_d_catch,2)
-		mMed_f_catch = mean(S_Med_f_catch,2)
-		mMed_p_catch = mean(S_Med_p_catch,2)
-		mMed_d_catch = mean(S_Med_d_catch,2)
-		mLrg_p_catch = mean(S_Lrg_p_catch,2)
-		mLrg_d_catch = mean(S_Lrg_d_catch,2)
-
-		#! Save
-		ncwrite(mBent_bio,file_bent,"biomass",[1,1])
-
-		ncwrite(mSml_f,file_sml_f,"biomass",[1,1])
-		ncwrite(mSml_p,file_sml_p,"biomass",[1,1])
-		ncwrite(mSml_d,file_sml_d,"biomass",[1,1])
-		ncwrite(mMed_f,file_med_f,"biomass",[1,1])
-		ncwrite(mMed_p,file_med_p,"biomass",[1,1])
-		ncwrite(mMed_d,file_med_d,"biomass",[1,1])
-		ncwrite(mLrg_p,file_lrg_p,"biomass",[1,1])
-		ncwrite(mLrg_d,file_lrg_d,"biomass",[1,1])
-
-		ncwrite(mSml_f_rec,file_sml_f,"rec",[1,1])
-		ncwrite(mSml_p_rec,file_sml_p,"rec",[1,1])
-		ncwrite(mSml_d_rec,file_sml_d,"rec",[1,1])
-		ncwrite(mMed_f_rec,file_med_f,"rec",[1,1])
-		ncwrite(mMed_p_rec,file_med_p,"rec",[1,1])
-		ncwrite(mMed_d_rec,file_med_d,"rec",[1,1])
-		ncwrite(mLrg_p_rec,file_lrg_p,"rec",[1,1])
-		ncwrite(mLrg_d_rec,file_lrg_d,"rec",[1,1])
-
-		ncwrite(mSml_f_con,file_sml_f,"con",[1,1])
-		ncwrite(mSml_p_con,file_sml_p,"con",[1,1])
-		ncwrite(mSml_d_con,file_sml_d,"con",[1,1])
-		ncwrite(mMed_f_con,file_med_f,"con",[1,1])
-		ncwrite(mMed_p_con,file_med_p,"con",[1,1])
-		ncwrite(mMed_d_con,file_med_d,"con",[1,1])
-		ncwrite(mLrg_p_con,file_lrg_p,"con",[1,1])
-		ncwrite(mLrg_d_con,file_lrg_d,"con",[1,1])
-
-		ncwrite(mSml_f_nu,file_sml_f,"nu",[1,1])
-		ncwrite(mSml_p_nu,file_sml_p,"nu",[1,1])
-		ncwrite(mSml_d_nu,file_sml_d,"nu",[1,1])
-		ncwrite(mMed_f_nu,file_med_f,"nu",[1,1])
-		ncwrite(mMed_p_nu,file_med_p,"nu",[1,1])
-		ncwrite(mMed_d_nu,file_med_d,"nu",[1,1])
-		ncwrite(mLrg_p_nu,file_lrg_p,"nu",[1,1])
-		ncwrite(mLrg_d_nu,file_lrg_d,"nu",[1,1])
-
-		ncwrite(mSml_f_prod,file_sml_f,"prod",[1,1])
-		ncwrite(mSml_p_prod,file_sml_p,"prod",[1,1])
-		ncwrite(mSml_d_prod,file_sml_d,"prod",[1,1])
-		ncwrite(mMed_f_prod,file_med_f,"prod",[1,1])
-		ncwrite(mMed_p_prod,file_med_p,"prod",[1,1])
-		ncwrite(mMed_d_prod,file_med_d,"prod",[1,1])
-		ncwrite(mLrg_p_prod,file_lrg_p,"prod",[1,1])
-		ncwrite(mLrg_d_prod,file_lrg_d,"prod",[1,1])
-
-		ncwrite(mSml_f_gamma,file_sml_f,"gamma",[1,1])
-		ncwrite(mSml_p_gamma,file_sml_p,"gamma",[1,1])
-		ncwrite(mSml_d_gamma,file_sml_d,"gamma",[1,1])
-		ncwrite(mMed_f_gamma,file_med_f,"gamma",[1,1])
-		ncwrite(mMed_p_gamma,file_med_p,"gamma",[1,1])
-		ncwrite(mMed_d_gamma,file_med_d,"gamma",[1,1])
-		ncwrite(mLrg_p_gamma,file_lrg_p,"gamma",[1,1])
-		ncwrite(mLrg_d_gamma,file_lrg_d,"gamma",[1,1])
-
-		ncwrite(mSml_f_rep,file_sml_f,"rep",[1,1])
-		ncwrite(mSml_p_rep,file_sml_p,"rep",[1,1])
-		ncwrite(mSml_d_rep,file_sml_d,"rep",[1,1])
-		ncwrite(mMed_f_rep,file_med_f,"rep",[1,1])
-		ncwrite(mMed_p_rep,file_med_p,"rep",[1,1])
-		ncwrite(mMed_d_rep,file_med_d,"rep",[1,1])
-		ncwrite(mLrg_p_rep,file_lrg_p,"rep",[1,1])
-		ncwrite(mLrg_d_rep,file_lrg_d,"rep",[1,1])
-
-		ncwrite(mSml_f_egg,file_sml_f,"egg",[1,1])
-		ncwrite(mSml_p_egg,file_sml_p,"egg",[1,1])
-		ncwrite(mSml_d_egg,file_sml_d,"egg",[1,1])
-		ncwrite(mMed_f_egg,file_med_f,"egg",[1,1])
-		ncwrite(mMed_p_egg,file_med_p,"egg",[1,1])
-		ncwrite(mMed_d_egg,file_med_d,"egg",[1,1])
-		ncwrite(mLrg_p_egg,file_lrg_p,"egg",[1,1])
-		ncwrite(mLrg_d_egg,file_lrg_d,"egg",[1,1])
-
-		ncwrite(mSml_f_die,file_sml_f,"die",[1,1])
-		ncwrite(mSml_p_die,file_sml_p,"die",[1,1])
-		ncwrite(mSml_d_die,file_sml_d,"die",[1,1])
-		ncwrite(mMed_f_die,file_med_f,"die",[1,1])
-		ncwrite(mMed_p_die,file_med_p,"die",[1,1])
-		ncwrite(mMed_d_die,file_med_d,"die",[1,1])
-		ncwrite(mLrg_p_die,file_lrg_p,"die",[1,1])
-		ncwrite(mLrg_d_die,file_lrg_d,"die",[1,1])
-
-		ncwrite(mSml_f_clev,file_sml_f,"clev",[1,1])
-		ncwrite(mSml_p_clev,file_sml_p,"clev",[1,1])
-		ncwrite(mSml_d_clev,file_sml_d,"clev",[1,1])
-		ncwrite(mMed_f_clev,file_med_f,"clev",[1,1])
-		ncwrite(mMed_p_clev,file_med_p,"clev",[1,1])
-		ncwrite(mMed_d_clev,file_med_d,"clev",[1,1])
-		ncwrite(mLrg_p_clev,file_lrg_p,"clev",[1,1])
-		ncwrite(mLrg_d_clev,file_lrg_d,"clev",[1,1])
-
-		ncwrite(mSml_f_S,file_sml_f,"S",[1,1])
-		ncwrite(mSml_p_S,file_sml_p,"S",[1,1])
-		ncwrite(mSml_d_S,file_sml_d,"S",[1,1])
-		ncwrite(mMed_f_S,file_med_f,"S",[1,1])
-		ncwrite(mMed_p_S,file_med_p,"S",[1,1])
-		ncwrite(mMed_d_S,file_med_d,"S",[1,1])
-		ncwrite(mLrg_p_S,file_lrg_p,"S",[1,1])
-		ncwrite(mLrg_d_S,file_lrg_d,"S",[1,1])
-
-		ncwrite(mSml_f_DD,file_sml_f,"DD",[1,1])
-		ncwrite(mSml_p_DD,file_sml_p,"DD",[1,1])
-		ncwrite(mSml_d_DD,file_sml_d,"DD",[1,1])
-		ncwrite(mMed_f_DD,file_med_f,"DD",[1,1])
-		ncwrite(mMed_p_DD,file_med_p,"DD",[1,1])
-		ncwrite(mMed_d_DD,file_med_d,"DD",[1,1])
-		ncwrite(mLrg_p_DD,file_lrg_p,"DD",[1,1])
-		ncwrite(mLrg_d_DD,file_lrg_d,"DD",[1,1])
-
-		ncwrite(mSml_f_catch,file_sml_f,"catch",[1,1])
-		ncwrite(mSml_p_catch,file_sml_p,"catch",[1,1])
-		ncwrite(mSml_d_catch,file_sml_d,"catch",[1,1])
-		ncwrite(mMed_f_catch,file_med_f,"catch",[1,1])
-		ncwrite(mMed_p_catch,file_med_p,"catch",[1,1])
-		ncwrite(mMed_d_catch,file_med_d,"catch",[1,1])
-		ncwrite(mLrg_p_catch,file_lrg_p,"catch",[1,1])
-		ncwrite(mLrg_d_catch,file_lrg_d,"catch",[1,1])
+		end #Monthly mean
 
 	end #Years
 
