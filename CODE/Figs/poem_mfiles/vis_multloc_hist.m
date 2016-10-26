@@ -16,9 +16,9 @@ dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
 load([dpath 'Means_hist_pristine_' cfile '.mat']);
+grid = csvread([cpath 'grid_csv.csv']);
 
 %% Plots in space
-grid = csvread([cpath 'grid_csv.csv']);
 %fix lon shift
 id=find(grid(:,2)<-180);
 grid(id,2)=grid(id,2)+360;

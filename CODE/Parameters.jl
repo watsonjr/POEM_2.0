@@ -67,9 +67,10 @@ function make_parameters(harv)
 	#! Amount of fishing
 	if harv == 1
 		#const global FISHING = 80000000000 / (365/DT) # 80MT per year
-		const global LFISHING = 0.0/365.0
-		const global MFISHING = LFISHING
-		#const global MFISHING = 0.5 * LFISHING
+		const global LFISHING = 0.05/365.0
+		#const global MFISHING = LFISHING
+		const global MFISHING = 0.5 * LFISHING
+		#const global MFISHING = 0.42/365.0
 	else
 		const global MFISHING = 0
 		const global LFISHING = 0

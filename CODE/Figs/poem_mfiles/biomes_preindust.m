@@ -17,14 +17,14 @@ cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-load([dpath 'Means_hist_pristine_' cfile '.mat']);
-load([cpath 'COBALT_biomes.mat'],'biome_hist');
+load([dpath 'Means_preindust_' cfile '.mat']);
+load([cpath 'COBALT_biomes.mat'],'biome_pre');
 load([gpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
 
 %% Calc biome biomass avgs
 gid = grid(:,1);
 
-sf_biome_bio = NaN*ones(3,16);
+sf_biome_bio = NaN*ones(3,1);
 sf_biome_mbio = sf_biome_bio;
 sp_biome_mbio = sf_biome_bio;
 sd_biome_mbio = sf_biome_bio;
@@ -35,43 +35,43 @@ lp_biome_mbio = sf_biome_bio;
 ld_biome_mbio = sf_biome_bio;
 b_biome_mbio = sf_biome_bio;
 
-for n = 1:16
-    sf = NaN*ones(size(lon));
-    sp = sf;
-    sd = sf;
-    mf = sf;
-    mp = sf;
-    md = sf;
-    lp = sf;
-    ld = sf;
-    b = sf;
-    
-    sf(gid) = sf_mean(:,n);
-    sp(gid) = sp_mean(:,n);
-    sd(gid) = sd_mean(:,n);
-    mf(gid) = mf_mean(:,n);
-    mp(gid) = mp_mean(:,n);
-    md(gid) = md_mean(:,n);
-    lp(gid) = lp_mean(:,n);
-    ld(gid) = ld_mean(:,n);
-    b(gid) = b_mean(:,n);
-    
-    for L=1:3
-        lid = find(biome_hist==L);
-        sf_biome_mbio(L,n) = nanmean(sf(lid));
-        sp_biome_mbio(L,n) = nanmean(sp(lid));
-        sd_biome_mbio(L,n) = nanmean(sd(lid));
-        mf_biome_mbio(L,n) = nanmean(mf(lid));
-        mp_biome_mbio(L,n) = nanmean(mp(lid));
-        md_biome_mbio(L,n) = nanmean(md(lid));
-        lp_biome_mbio(L,n) = nanmean(lp(lid));
-        ld_biome_mbio(L,n) = nanmean(ld(lid));
-        b_biome_mbio(L,n) = nanmean(b(lid));
-    end
-    
+
+sf = NaN*ones(size(lon));
+sp = sf;
+sd = sf;
+mf = sf;
+mp = sf;
+md = sf;
+lp = sf;
+ld = sf;
+b = sf;
+
+sf(gid) = sf_mean(:,1);
+sp(gid) = sp_mean(:,1);
+sd(gid) = sd_mean(:,1);
+mf(gid) = mf_mean(:,1);
+mp(gid) = mp_mean(:,1);
+md(gid) = md_mean(:,1);
+lp(gid) = lp_mean(:,1);
+ld(gid) = ld_mean(:,1);
+b(gid) = b_mean(:,1);
+
+for L=1:3
+    lid = find(biome_pre==L);
+    sf_biome_mbio(L,1) = nanmean(sf(lid));
+    sp_biome_mbio(L,1) = nanmean(sp(lid));
+    sd_biome_mbio(L,1) = nanmean(sd(lid));
+    mf_biome_mbio(L,1) = nanmean(mf(lid));
+    mp_biome_mbio(L,1) = nanmean(mp(lid));
+    md_biome_mbio(L,1) = nanmean(md(lid));
+    lp_biome_mbio(L,1) = nanmean(lp(lid));
+    ld_biome_mbio(L,1) = nanmean(ld(lid));
+    b_biome_mbio(L,1) = nanmean(b(lid));
 end
 
-save([dpath 'Biomes_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
+
+
+save([dpath 'Biomes_preindust_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
     'sf_biome_mbio','sp_biome_mbio','sd_biome_mbio','mf_biome_mbio','mp_biome_mbio',...
     'md_biome_mbio','b_biome_mbio','lp_biome_mbio','ld_biome_mbio');
 
@@ -88,7 +88,7 @@ biome_ld = biome_sf;
 biome_b = biome_sf;
 
 for L=1:3
-    lid = find(biome_hist==L);
+    lid = find(biome_pre==L);
     
     biome_sf(lid) = sf_biome_mbio(L,1);
     biome_sp(lid) = sp_biome_mbio(L,1);
@@ -123,7 +123,7 @@ figure(1)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_All)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -133,14 +133,14 @@ set(gcf,'renderer','painters')
 title('log10 mean biomass All Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_biomes_All.png'])
+print('-dpng',[ppath 'Preindust_biomes_All.png'])
 
 % all F
 figure(2)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_AllF)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -150,14 +150,14 @@ set(gcf,'renderer','painters')
 title('log10 mean biomass Forage Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_biomes_AllF.png'])
+print('-dpng',[ppath 'Preindust_biomes_AllF.png'])
 
 % all P
 figure(3)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_AllP)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -167,14 +167,14 @@ set(gcf,'renderer','painters')
 title('log10 mean biomass Pelagic Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_biomes_AllP.png'])
+print('-dpng',[ppath 'Preindust_biomes_AllP.png'])
 
 % All D
 figure(4)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_AllD)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -184,7 +184,7 @@ set(gcf,'renderer','painters')
 title('log10 mean biomass Demersal Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_biomes_AllD.png'])
+print('-dpng',[ppath 'Preindust_biomes_AllD.png'])
 
 %% Pac only
 lonlim=[-255 -60];
@@ -194,7 +194,7 @@ figure(41)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_All)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -203,14 +203,14 @@ ylim(hcb,[-1.5 1.5])                    %Set color axis if needed
 set(gcf,'renderer','painters')
 title('log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_Pac_biomes_All.png'])
+print('-dpng',[ppath 'Preindust_Pac_biomes_All.png'])
 
 % all F
 figure(42)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_AllF)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -219,14 +219,14 @@ ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_Pac_biomes_AllF.png'])
+print('-dpng',[ppath 'Preindust_Pac_biomes_AllF.png'])
 
 % all P
 figure(43)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_AllP)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -235,14 +235,14 @@ ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_Pac_biomes_AllP.png'])
+print('-dpng',[ppath 'Preindust_Pac_biomes_AllP.png'])
 
 % All D
 figure(44)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(biome_AllD)))
-colormap('jet')              
+colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1.5 1.5]);
@@ -251,4 +251,4 @@ ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_pristine_Pac_biomes_AllD.png'])
+print('-dpng',[ppath 'Preindust_Pac_biomes_AllD.png'])
