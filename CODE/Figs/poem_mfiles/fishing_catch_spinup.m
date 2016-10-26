@@ -65,21 +65,62 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath9 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish70_halfM/'];
 % npath10 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish80_halfM/'];
 % npath11 = [datap 'Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish90_halfM/'];
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish05/'];
-npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish10/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish15/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish20/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish30/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish40/'];
-npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish50/'];
-npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fishM43L12/'];
-npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish60/'];
-npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish70/'];
-npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish80/'];
-npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish90/'];
-npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish100/'];
-npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish110/'];
-npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish120/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish05/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish10/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish15/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish20/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish30/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish40/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish50/'];
+% npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fishM43L12/'];
+% npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish60/'];
+% npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish70/'];
+% npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish80/'];
+% npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish90/'];
+% npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish100/'];
+% npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish110/'];
+% npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish120/'];
+% npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish130/'];
+% npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish140/'];
+% npath18 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish150/'];
+% npath19 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish160/'];
+% npath20 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish170/'];
+% npath21 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish180/'];
+% npath22 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish190/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish05_halfM/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish10_halfM/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish15_halfM/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish20_halfM/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish30_halfM/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish40_halfM/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish50_halfM/'];
+% npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish60_halfM/'];
+% npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish70_halfM/'];
+% npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish80_halfM/'];
+% npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish90_halfM/'];
+% npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish100_halfM/'];
+% npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish110_halfM/'];
+% npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish120_halfM/'];
+% npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish130_halfM/'];
+% npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish140_halfM/'];
+% npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish150_halfM/'];
+npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish05_halfL/'];
+npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish10_halfL/'];
+npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish15_halfL/'];
+npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish20_halfL/'];
+npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish30_halfL/'];
+npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish40_halfL/'];
+npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish50_halfL/'];
+npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish60_halfL/'];
+npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish70_halfL/'];
+npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish80_halfL/'];
+npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish90_halfL/'];
+npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish100_halfL/'];
+npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish110_halfL/'];
+npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish120_halfL/'];
+npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish130_halfL/'];
+npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish140_halfL/'];
+npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish150_halfL/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -117,11 +158,21 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % sims = {'0.10','0.20','0.30','0.40','0.50','0.60','0.70','0.80','0.90'};
 % cfile = 'Dc_MFeqMP_MZ01_fishing_half_catch';
 
-dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
-    npath12;npath13;npath14;npath15};
-sims = {'0.05','0.10','0.15','0.20','0.30','0.40','0.50','0.60','0.70','0.80',...
-    '0.90','1.0','1.1','1.2'};
-cfile = 'Dc_MFeqMP_MZ01__BE05_fishing_catch';
+% dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
+%     npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;...
+%     npath21;npath22};
+% sims = [0.1:0.1:1.9];
+% cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_catch';
+
+% dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
+%     npath12;npath13;npath14;npath15;npath16;npath17};
+% sims = [0.1:0.1:1.5];
+% cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_halfM_catch';
+
+dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
+    npath12;npath13;npath14;npath15;npath16;npath17};
+sims = [0.1:0.1:1.5];
+cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_halfL_catch';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -284,6 +335,35 @@ for s=1:length(spots)
             stamp(cfile)
         end
         
+    end
+    
+    print(f5,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'F.png'])
+    print(f6,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'P.png'])
+    print(f7,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'D.png'])
+    print(f8,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'All.png'])
+    
+end
+
+
+%%
+for s=1:length(spots)
+    
+    loc = spots{s};
+    lname = [sname2 loc '_'];
+    
+    %%
+    for d=1:length(dp)
+        
+        dpath = char(dp(d));
+        load([dpath sname sname2 'lastyr_sum_mean_biom']);
+        
+        
+        %% Fishing
+        Ftot = sum(Ftotcatch(:,s));
+        Ptot = sum(Ptotcatch(:,s));
+        Dtot = sum(Dtotcatch(:,s));
+        Tot = Ftot+Ptot+Dtot;
+        
         f9 = figure(9);
         subplot(3,3,s)
         plot(d,Tot,'.k','MarkerSize',15); hold on;
@@ -295,14 +375,45 @@ for s=1:length(spots)
             stamp(cfile)
         end
         
+        f10 = figure(10);
+        subplot(3,3,s)
+        plot(d,Ftot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total F catch (g) in final year')
+            stamp(cfile)
+        end
+        
+        f11 = figure(11);
+        subplot(3,3,s)
+        plot(d,Ptot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total P catch (g) in final year')
+            stamp(cfile)
+        end
+        
+        f12 = figure(12);
+        subplot(3,3,s)
+        plot(d,Dtot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total D catch (g) in final year')
+            stamp(cfile)
+        end
+        
     end
-    
-    print(f5,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'F.png'])
-    print(f6,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'P.png'])
-    print(f7,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'D.png'])
-    print(f8,'-dpng',[fpath loc '/' sname sname2 cfile '_' lname 'All.png'])
     
 end
 print(f9,'-dpng',[fpath sname sname2 cfile '_all_locs.png'])
+print(f10,'-dpng',[fpath sname sname2 cfile '_allF_locs.png'])
+print(f11,'-dpng',[fpath sname sname2 cfile '_allP_locs.png'])
+print(f12,'-dpng',[fpath sname sname2 cfile '_allD_locs.png'])
 
 

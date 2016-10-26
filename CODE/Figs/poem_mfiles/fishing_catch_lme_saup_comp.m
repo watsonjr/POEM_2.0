@@ -22,12 +22,28 @@ npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fi
 npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish40/'];
 npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish50/'];
 npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fishM43L12/'];
+npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish60/'];
+npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish70/'];
+npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish80/'];
+npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish90/'];
+npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish100/'];
+npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish110/'];
+npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish120/'];
+npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish130/'];
+npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish140/'];
+npath18 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish150/'];
+npath19 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish160/'];
+npath20 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish170/'];
+npath21 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish180/'];
+npath22 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish190/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7};
-sims = {'0.05','0.10','0.15','0.20','0.30','0.40','0.50'};
-cfile = 'Dc_MFeqMP_MZ01__BE05_fishing_catch';
+dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
+    npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;...
+    npath21;npath22};
+sims = [0.1:0.1:1.9];
+cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_catch';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -120,11 +136,15 @@ lme_ids(7,1)=tlme(qid);
 lme_ids(8,1)=tlme(kid);
 lme_ids(9,1)=tlme(sid);
 
+lme_ids(4,1)=10; %HOT
+lme_ids(8,1)=51; %K2
+lme_ids(9,1)=49; %S1
+
 %% Areal totals
-lmes = [1;2;6];
+lmes = find(~isnan(lme_ids));
 lme_area = NaN*ones(size(lme_ids));
 loc_catch = NaN*ones(size(lme_ids));
-for n=1:3
+for n=1:length(lmes)
     L = lme_ids(lmes(n));
     r = find(lme_ids==L);
     lid = find(tlme==L);
