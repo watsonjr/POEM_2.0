@@ -255,10 +255,14 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE09/'];
 npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
 npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_metab_MFeqMP_MZ01_NOnmort_BE05/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_all_MFeqMP_MZ01_NOnmort_BE05/'];
+npath3 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+npath6 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+npath7 = [datap 'Dc_TrefO_Hartvig_metab_MFeqMP_MZ01_NOnmort_BE05/'];
+npath8 = [datap 'Dc_TrefO_mizer_metab_MFeqMP_MZ01_NOnmort_BE05/'];
+npath9 = [datap 'Dc_TrefO_Hartvig_all_MFeqMP_MZ01_NOnmort_BE05/'];
+npath10 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_NOnmort_BE05/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -365,9 +369,13 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath1;npath10};
 % sims = {'85-10C','60-15C'};
 % cfile = 'Dc_Hartvig_MFeqMP_MZ01_fcrit30_BE05_cmaxH_comp';
-dp = {npath1;npath2;npath3;npath4;npath5;npath6};
-sims = {'85-10C-30','60-15C-30','85-10C-40','60-15C-40','metab','all'};
-cfile = 'Dc_Hartvig_MFeqMP_MZ01_BE05_eqs_comp';
+% dp = {npath1;npath2;npath4;npath5;npath7;npath9};
+% sims = {'60-15C-30','85-10C-30','60-15C-40','85-10C-40','metab','all'};
+% cfile = 'Dc_Hartvig_MFeqMP_MZ01_BE05_eqs_comp';
+dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
+sims = {'60-15C-30','85-10C-30','40-10C-30','60-15C-40','85-10C-40','40-10C-40',...
+    'Hmetab','Mmetab','Hall','Mall'};
+cfile = 'Dc_Hartvig_mizer_MFeqMP_MZ01_BE05_eqs_comp';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -984,7 +992,10 @@ for i=1:length(spots)
         ylim([-2 2])
         set(gca,'XTick',1:9,'XTickLabel',[])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,-2.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         if (i==4)
