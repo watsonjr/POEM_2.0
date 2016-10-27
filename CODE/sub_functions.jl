@@ -91,11 +91,13 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   #cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
   #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 10C
   #cmax = (exp(0.063*(temp-10.0)) * 85.0 * wgt^(-0.25)) ./365.0
+  #! Specific ingestion rate from mizer (g/g/day) ref to 10C
+  cmax = (exp(0.063*(temp-10.0)) * 40.0 * wgt^(-0.25)) ./365.0
   #Metabolism
-	#bas = fcrit * cmax
-  #met = bas
+	bas = fcrit * cmax
+  met = bas
   #! Specific respiration rate from Hartvig et al (g/g/day) ref to 10C
-  met = (exp(0.063*(temp-10.0)) * k * wgt^(-0.25)) ./365.0
+  #met = (exp(0.063*(temp-10.0)) * k * wgt^(-0.25)) ./365.0
   return met
 end
 
@@ -113,9 +115,9 @@ function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # pref: preference for prey item
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  #A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
+  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
   #! Specific clearance rate from Hartvig et al (m3/g/day) ref to 10C
-  A = (exp(0.063*(temp-10.0)) * gamma * wgt^(q-1.0)) ./365.0
+  #A = (exp(0.063*(temp-10.0)) * gamma * wgt^(q-1.0)) ./365.0
   #Encounter per predator, mult by biomass later
   enc = prey*A*tprey*pref
   return enc
@@ -135,7 +137,9 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
   #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 15C
   #cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
   #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 10C
-  cmax = (exp(0.063*(temp-10.0)) * 85.0 * wgt^(-0.25)) ./365.0
+  #cmax = (exp(0.063*(temp-10.0)) * 85.0 * wgt^(-0.25)) ./365.0
+  #! Specific ingestion rate from mizer (g/g/day) ref to 10C
+  cmax = (exp(0.063*(temp-10.0)) * 40.0 * wgt^(-0.25)) ./365.0
   #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
   #cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   ENC = sum(enc) # total biomass encountered
