@@ -124,14 +124,14 @@ function make_parameters(harv)
 	###! Consumption constants
 	const global h = 60.0  		# h=85 g^(0.25)/yr at 10C in Cmax eq; h=60 at 15C?
 	# tune so Cobs/Cmax ~ 0.6
-	const global flev = 1.0e6	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma
+	const global flev = 0.8e4	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
 
 	###! Transfer efficiency of detritus to benthic prey
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 0.1
+	const global rfrac = 1.0
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0

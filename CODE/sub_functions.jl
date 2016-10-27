@@ -7,7 +7,7 @@ function get_COBALT!(COBALT,ID,DY,ENVR)
     ENVR.Zl[:,1]  = COBALT["Zl"][ID,DY]
     ENVR.det[:,1] = COBALT["det"][ID,DY]
     ENVR.dZm[:,1] = COBALT["dZm"][ID,DY]
-    ENVR.dZl[:,1] = COBALT["dZl"][ID,DY] 
+    ENVR.dZl[:,1] = COBALT["dZl"][ID,DY]
     #ENVR.U[:,1]   = COBALT["U"][ID,DY]
     #ENVR.V[:,1]   = COBALT["V"][ID,DY]
     ENVR.T0p[:,1] = TrefP[ID]
@@ -87,66 +87,18 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   #Cmax
   #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
   #cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
-  #! Specific ingestion rate from Hartvig et al (g/g/day)
-  cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
+  #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 15C
+  #cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
+  #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 10C
+  cmax = (exp(0.063*(temp-10.0)) * 85.0 * wgt^(-0.25)) ./365.0
   #Metabolism
 	bas = fcrit * cmax
   met = bas
-  #! Specific "standard activity" respiration rate from Kiorboe & Hirst (mL O2/mg C/hr)
-  # *0.0046 -> (g/mg C/hr) using mol CO2                = *12.2667 -> (g/g/day)
-  # *0.0071 -> (g/mg C/hr) using mol O2 & zoop g in 1 J = *18.9333 -> (g/g/day)
-  # *0.0052 -> (g/mg C/hr) using mol O2 & ug in 1 cal   = *13.8667 -> (g/g/day)
-  # *0.00105 -> (g/mg C/hr) using uL O2 & cal           = *2.8027 -> (g/g/day)
-  #! ASSUME TABLE UNITS (mL O2/mg C/hr) ARE WRONG AND FIGURE UNITS (uL O2/mg C/hr) ARE CORRECT
-  # *0.0252 -> (g/g/day)
-  #met = (exp(0.063*(temp-15.0)) * 10^(0.96) * wgt^(-0.22)) .* 0.0252 .* 0.75
   return met
 end
 
 
-###!  Encounter rates Forages fishes
-function sub_encF(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
-  # Tp: pelagic temp
-  # Tb: bottom temp
-  # wgt: ind weight of size class
-  # pred: pred biomass density,
-	# prey: prey biomass density,
-	# A: predator search rate,
-  # tpel: time spent in pelagic,
-	# tprey: time spent in area with that prey item.
-  # pref: preference for prey item
-  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
-  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes no interaction
-  #A = (exp(0.063*(temp-15.0)) * 10^(3.4) * wgt^(-0.29)) * (24e-3/9)
-  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day) for Clupeiformes with interaction
-  #A = (exp(0.063*(temp-15.0)) * 10^(3.6) * wgt^(-0.37)) * (24e-3/9)
-  #Encounter per predator, mult by biomass later
-  enc = prey*A*tprey*pref
-  return enc
-end
-
-###!  Encounter rates All other fishes
-function sub_encP(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
-  # Tp: pelagic temp
-  # Tb: bottom temp
-  # wgt: ind weight of size class
-  # pred: pred biomass density,
-	# prey: prey biomass density,
-	# A: predator search rate,
-  # tpel: time spent in pelagic,
-	# tprey: time spent in area with that prey item.
-  # pref: preference for prey item
-  temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
-  #Encounter per predator, mult by biomass later
-  enc = prey*A*tprey*pref
-  return enc
-end
-
-###!  Encounter rates All other fishes
+###!  Encounter rates
 function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # Tp: pelagic temp
   # Tb: bottom temp
@@ -176,8 +128,10 @@ function sub_cons(Tp,Tb,tpel,wgt,enc)
 	#! calculates consumption rate of first element of enc
   #Cmax
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #! Specific ingestion rate from Hartvig et al (g/g/day)
-  cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
+  #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 15C
+  #cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
+  #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 10C
+  cmax = (exp(0.063*(temp-10.0)) * 85.0 * wgt^(-0.25)) ./365.0
   #! Specific ingestion rate from Kiorboe & Hirst (g/g/day)
   #cmax = (exp(0.063*(temp-15.0)) * 10^(0.4) * wgt^(-0.51)) .* 24e-3
   ENC = sum(enc) # total biomass encountered
