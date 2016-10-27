@@ -90,10 +90,12 @@ function sub_met(Tp,Tb,tdif,wgt,L)
   #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 15C
   #cmax = (exp(0.063*(temp-15.0)) * h * wgt^(-0.25)) ./365.0
   #! Specific ingestion rate from Hartvig et al (g/g/day) ref to 10C
-  cmax = (exp(0.063*(temp-10.0)) * 85.0 * wgt^(-0.25)) ./365.0
+  #cmax = (exp(0.063*(temp-10.0)) * 85.0 * wgt^(-0.25)) ./365.0
   #Metabolism
-	bas = fcrit * cmax
-  met = bas
+	#bas = fcrit * cmax
+  #met = bas
+  #! Specific respiration rate from Hartvig et al (g/g/day) ref to 10C
+  met = (exp(0.063*(temp-10.0)) * k * wgt^(-0.25)) ./365.0
   return met
 end
 

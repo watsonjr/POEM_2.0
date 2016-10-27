@@ -326,9 +326,9 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE07/';
 % npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE08/';
 % npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE09/';
-npath1 = 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_MZ01_NOnmort_BE05/';
+npath1 = 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
 
-dp = {npath8};
+dp = {npath1};
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
 % dp = {npath6;npath7;npath8;npath9;npath10};
 % dp = {npath14;npath15;npath16};
