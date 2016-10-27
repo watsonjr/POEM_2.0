@@ -118,11 +118,11 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.10	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 10.0 		# 10 g^(1-p)/yr at 10C
 
 	###! Consumption constants
-	const global h = 60.0  		# h=40 g^(0.25)/yr at 10C in Cmax eq
+	const global h = 60.0  		# h=85 g^(0.25)/yr at 10C in Cmax eq; h=60 at 15C?
 	# tune so Cobs/Cmax ~ 0.6
 	const global flev = 1.0e6	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
@@ -131,7 +131,7 @@ function make_parameters(harv)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 1.0
+	const global rfrac = 0.1
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -161,10 +161,10 @@ function make_parameters(harv)
 
 	const global MF_phi_MZ = 0.1
 	const global MF_phi_LZ = 1.0
-	const global MF_phi_S = 0.5
+	const global MF_phi_S = 1.0
 	const global MP_phi_MZ = 0.1
 	const global MP_phi_LZ = 1.0
-	const global MP_phi_S = 0.5
+	const global MP_phi_S = 1.0
   const global LP_phi_MF = 1.0
 	const global LD_phi_MF = 1.0
 	const global LP_phi_MP = 1.0
