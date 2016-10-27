@@ -3,11 +3,11 @@ function get_COBALT!(COBALT,ID,DY,ENVR)
     ## Get data
     ENVR.Tp[:,1]  = COBALT["Tp"][ID,DY]
     ENVR.Tb[:,1]  = COBALT["Tb"][ID,DY]
-    ENVR.Zm[:,1]  = COBALT["Zm"][ID,DY] * (1.0/0.32)
-    ENVR.Zl[:,1]  = COBALT["Zl"][ID,DY] * (1.0/0.32)
-    ENVR.det[:,1] = COBALT["det"][ID,DY] * (1.0/0.32)
-    ENVR.dZm[:,1] = COBALT["dZm"][ID,DY] * (1.0/0.32)
-    ENVR.dZl[:,1] = COBALT["dZl"][ID,DY] * (1.0/0.32)
+    ENVR.Zm[:,1]  = COBALT["Zm"][ID,DY]
+    ENVR.Zl[:,1]  = COBALT["Zl"][ID,DY]
+    ENVR.det[:,1] = COBALT["det"][ID,DY]
+    ENVR.dZm[:,1] = COBALT["dZm"][ID,DY]
+    ENVR.dZl[:,1] = COBALT["dZl"][ID,DY] 
     #ENVR.U[:,1]   = COBALT["U"][ID,DY]
     #ENVR.V[:,1]   = COBALT["V"][ID,DY]
     ENVR.T0p[:,1] = TrefP[ID]
