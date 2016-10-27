@@ -253,8 +253,10 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE07/'];
 % npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE08/'];
 % npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE09/'];
-npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+% npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -360,7 +362,7 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % cfile = 'Dc_Hartvig_MFeqMP_MZ01_fcrit40_BE05_RepEff_comp';
 dp = {npath1;npath10};
 sims = {'85-10C','60-15C'};
-cfile = 'Dc_Hartvig_MFeqMP_MZ01_fcrit40_BE05_cmaxH_comp';
+cfile = 'Dc_Hartvig_MFeqMP_MZ01_fcrit30_BE05_cmaxH_comp';
 
 sname = 'Spinup_';
 sname2 = '';
