@@ -253,16 +253,42 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE07/'];
 % npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE08/'];
 % npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE09/'];
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
-npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
-npath3 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
-npath6 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
-npath7 = [datap 'Dc_TrefO_Hartvig_metab_MFeqMP_MZ01_NOnmort_BE05/'];
-npath8 = [datap 'Dc_TrefO_mizer_metab_MFeqMP_MZ01_NOnmort_BE05/'];
-npath9 = [datap 'Dc_TrefO_Hartvig_all_MFeqMP_MZ01_NOnmort_BE05/'];
-npath10 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_NOnmort_BE05/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+% npath3 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+% npath6 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_metab_MFeqMP_MZ01_NOnmort_BE05/'];
+% npath8 = [datap 'Dc_TrefO_mizer_metab_MFeqMP_MZ01_NOnmort_BE05/'];
+% npath9 = [datap 'Dc_TrefO_Hartvig_all_MFeqMP_MZ01_NOnmort_BE05/'];
+% npath10 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_NOnmort_BE05/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE01/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE01/'];
+% npath3 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE01/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+% npath6 = [datap 'Dc_TrefO_mizer_cmax-metab40_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_metab_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
+% npath8 = [datap 'Dc_TrefO_mizer_metab_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
+% npath9 = [datap 'Dc_TrefO_Hartvig_all_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
+% npath10 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
+% npath11 = [datap 'Dc_TrefO_JC_cmax-metab25_MFeqMP_fcrit30_MZ01_NOnmort_BE05/'];
+% npath12 = [datap 'Dc_TrefO_JC_cmax-metab25_MFeqMP_fcrit40_MZ01_NOnmort_BE05/'];
+% npath13 = [datap 'Dc_TrefO_JC_metab_MFeqMP_MZ01_NOnmort_BE05/'];
+% npath14 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_NOnmort_BE05/'];
+% npath15 = [datap 'Dc_TrefO_JC_cmax-metab25_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE01/'];
+% npath16 = [datap 'Dc_TrefO_JC_cmax-metab25_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+% npath17 = [datap 'Dc_TrefO_JC_metab_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
+% npath18 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
+npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish005/'];
+npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish01/'];
+npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish02/'];
+npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish03/'];
+npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish04/'];
+npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish05/'];
+npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish06/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -372,10 +398,25 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath1;npath2;npath4;npath5;npath7;npath9};
 % sims = {'60-15C-30','85-10C-30','60-15C-40','85-10C-40','metab','all'};
 % cfile = 'Dc_Hartvig_MFeqMP_MZ01_BE05_eqs_comp';
-dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
-sims = {'60-15C-30','85-10C-30','40-10C-30','60-15C-40','85-10C-40','40-10C-40',...
-    'Hmetab','Mmetab','Hall','Mall'};
-cfile = 'Dc_Hartvig_mizer_MFeqMP_MZ01_BE05_eqs_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
+% sims = {'60-15C-30','85-10C-30','40-10C-30','60-15C-40','85-10C-40','40-10C-40',...
+%     'Hmetab','Mmetab','Hall','Mall'};
+% cfile = 'Dc_Hartvig_mizer_MFeqMP_MZ01_BE05_eqs_comp';
+% dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
+% sims = {'60-15C-30','85-10C-30','40-10C-30','60-15C-40','85-10C-40','40-10C-40',...
+%     'Hmetab','Mmetab','Hall','Mall'};
+% cfile = 'Dc_Hartvig_mizer_MFeqMP_MZ01_BE05_RE01_eqs_comp';
+% dp = {npath1;npath2;npath3;npath11;npath4;npath5;npath6;npath12;npath7;npath8;npath13;npath9;npath10;npath14};
+% sims = {'60-15C-30','85-10C-30','40-10C-30','25-10C-30','60-15C-40','85-10C-40','40-10C-40',...
+% '25-10C-40','Hmetab','Mmetab','Jmetab','Hall','Mall','Jall'};
+% cfile = 'Dc_Hartvig_mizer_JC_MFeqMP_MZ01_BE05_eqs_comp';
+% dp = {npath1;npath2;npath3;npath15;npath4;npath5;npath6;npath16;npath7;npath8;npath17;npath9;npath10;npath18};
+% sims = {'60-15C-30','85-10C-30','40-10C-30','25-10C-30','60-15C-40','85-10C-40','40-10C-40',...
+% '25-10C-40','Hmetab','Mmetab','Jmetab','Hall','Mall','Jall'};
+% cfile = 'Dc_Hartvig_mizer_JC_MFeqMP_MZ01_BE05_RE01_eqs_comp';
+dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7};
+sims = {'0','.05','.1','.2','.3','.4','.5','.6'};
+cfile = 'Dc_MFeqMP_fcrit40_MZ01_BE05_RE01_fishing_comp';
 
 sname = 'Spinup_';
 sname2 = '';
