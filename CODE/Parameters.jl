@@ -67,7 +67,7 @@ function make_parameters(harv)
 	#! Amount of fishing
 	if harv == 1
 		#const global FISHING = 80000000000 / (365/DT) # 80MT per year
-		const global LFISHING = 0.0/365.0
+		const global LFISHING = 0.6/365.0
 		const global MFISHING = LFISHING
 		#const global MFISHING = 0.5 * LFISHING
 		#const global MFISHING = 1.5/365.0
@@ -118,11 +118,11 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.30	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 4.8 		# 10 g^(1-p)/yr at 10C; 4.8 at 10C NS mizer
 
 	###! Consumption constants
-	const global h = 40.0  		# h=85 g^(0.25)/yr at 10C in Cmax eq; h=40 at 10C NS; h=60 at 15C?
+	const global h = 60.0  		# h=85 g^(0.25)/yr at 10C in Cmax eq; h=40 at 10C NS; h=60 at 15C?
 	# tune so Cobs/Cmax ~ 0.6
 	const global gamma = 2.9e3	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma = 0.8e4; mizer = 2.9e3?
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
@@ -131,7 +131,7 @@ function make_parameters(harv)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 1.0
+	const global rfrac = 0.1
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
