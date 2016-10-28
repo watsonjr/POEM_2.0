@@ -3,7 +3,7 @@
 function Testoneloc()
 
 	#! Make parameters
-	harv = 1 #0=no fishing; 1=fishing
+	harv = 0 #0=no fishing; 1=fishing
 	make_parameters(harv) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish06";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_Hartvignmort_BE05_RE01";
 
 	for L = 1:9
 		ID = ids[L]

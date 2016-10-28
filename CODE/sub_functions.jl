@@ -364,7 +364,14 @@ function sub_nmort(Tp,Tb,tpel,wgt)
   end
   if (MORT==2) # Temperature-dependent mortality
     temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
-    nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+    #! Const with size
+    #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
+    #! Hartvig
+    nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365;
+    #! mizer
+    #nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365;
+    #! J&C
+    #nmort = exp(0.063*(temp-10.0)) * 0.5 * wgt^(-0.33) /365;
   end
   if (MORT==3) # Large fishes only
     if (wgt == M_l)
