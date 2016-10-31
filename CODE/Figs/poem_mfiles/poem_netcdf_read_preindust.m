@@ -40,7 +40,7 @@ SF.X = X;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
-%% SD
+% SD
 ncid = netcdf.open([fpath 'Data_preindust_sml_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars

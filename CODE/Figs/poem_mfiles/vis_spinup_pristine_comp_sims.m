@@ -281,14 +281,53 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath16 = [datap 'Dc_TrefO_JC_cmax-metab25_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
 % npath17 = [datap 'Dc_TrefO_JC_metab_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
 % npath18 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_NOnmort_BE05_RE01/'];
-npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish005/'];
-npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish01/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish02/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish03/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish04/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish05/'];
-npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish06/'];
+% npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish005/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish01/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish02/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish03/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish04/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish05/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish06/'];
+% npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_JCnmort_BE05_RE01/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_Hartvignmort_BE05_RE01/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_mizernmort_BE05_RE01/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE01/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_JCnmort_BE05_RE01/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_Hartvignmort_BE05_RE01/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_mizernmort_BE05_RE01/'];
+% npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_BE05/'];
+% npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_JCnmort_BE05_RE01/'];
+% npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_Hartvignmort_BE05_RE01/'];
+% npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01/'];
+% npath12 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath13 = [datap 'Dc_TrefO_Hartvig_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath14 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish05/'];
+% npath0 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
+% npath0 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
+npath0 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001/'];
+npath1 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish01/'];
+npath2 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish02/'];
+npath3 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish03/'];
+npath4 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish04/'];
+npath5 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish05/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -414,9 +453,23 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % sims = {'60-15C-30','85-10C-30','40-10C-30','25-10C-30','60-15C-40','85-10C-40','40-10C-40',...
 % '25-10C-40','Hmetab','Mmetab','Jmetab','Hall','Mall','Jall'};
 % cfile = 'Dc_Hartvig_mizer_JC_MFeqMP_MZ01_BE05_RE01_eqs_comp';
-dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7};
-sims = {'0','.05','.1','.2','.3','.4','.5','.6'};
-cfile = 'Dc_MFeqMP_fcrit40_MZ01_BE05_RE01_fishing_comp';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7};
+% sims = {'0','.05','.1','.2','.3','.4','.5','.6'};
+% cfile = 'Dc_MFeqMP_fcrit40_MZ01_BE05_RE01_fishing_comp';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;...
+%     npath10;npath11;npath12;npath13;npath14};
+% sims = {'40N','40J','40H','40M','30N','30J','30H','30M','10N','10J','10H','10M',...
+%     'Jall','Hall','Mall'};
+% cfile = 'Dc_Hartvig_mizer_JC_MFeqMP_MZ01_BE05_RE01_mort_comp';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5};
+% sims = {'0','.1','.2','.3','.4','.5'};
+% cfile = 'Dc_MFeqMP_fcrit10_MZ01_BE05_RE01_mizernmort_fishing_comp';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
+% sims = {'0','.1','.2','.3','.4','.5'};
+% cfile = 'Dc_mizer_all_MFeqMP_MZ01_BE05_RE01_fishing_comp';
+dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
+sims = {'0','.1','.2','.3','.4','.5'};
+cfile = 'Dc_JC_all_MFeqMP_MZ01_BE05_RE001_fishing_comp';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -503,7 +556,10 @@ for i=1:length(spots)
         xlim([0 ndp+1])
         ylim([-5 2])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,-5.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         title([loc ' S'])
@@ -518,7 +574,10 @@ for i=1:length(spots)
         xlim([0 ndp+1])
         ylim([-5 2])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,-5.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             ylabel('log10 Mean Biom (g m^-^2) in final year')
         end
         title('M')
@@ -531,7 +590,10 @@ for i=1:length(spots)
         xlim([0 ndp+1])
         ylim([-5 2])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,-5.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title('L')
         xlabel('Sim')
@@ -544,7 +606,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title(stage(1))
         
@@ -553,7 +618,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title([loc ' ' stage(2)])
         
@@ -562,7 +630,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         title(stage(3))
@@ -572,7 +643,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             ylabel('Feeding level')
         end
         title(stage(4))
@@ -582,7 +656,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title(stage(5))
         
@@ -591,7 +668,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title(stage(6))
         
@@ -600,7 +680,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title(stage(7))
         
@@ -609,7 +692,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title(stage(8))
         
@@ -718,7 +804,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         title([loc ' Med zoo'])
@@ -728,7 +817,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title('Large zoo')
         ylabel('Fraction of flux consumed')
@@ -738,7 +830,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title('Detritus')
         
@@ -750,7 +845,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         title([loc ' Med zoo'])
@@ -761,7 +859,10 @@ for i=1:length(spots)
         ylim([0 1])
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title([loc ' Large zoo'])
         ylabel('Fraction of times overconsumed')
@@ -798,7 +899,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         title([loc ' S'])
@@ -815,7 +919,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
         title('M')
@@ -829,7 +936,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title('L')
         
@@ -847,7 +957,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         ylabel('Mean repro rate (g g^-^1 d^-^1)')
@@ -865,7 +978,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         ylabel('Mean biom reproduced (g d^-^1)')
         
@@ -883,7 +999,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         title([loc ' S'])
@@ -900,7 +1019,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         ylabel('Mean metabolic rate (g g^-^1 d^-^1) in final year')
         title('M')
@@ -914,7 +1036,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         title('L')
         
@@ -932,7 +1057,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         title([loc ' S'])
@@ -949,7 +1077,10 @@ for i=1:length(spots)
             'MarkerSize',15); hold on;
         xlim([0 ndp+1])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,0,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
         end
         ylabel('Mean predation rate (g g^-^1 d^-^1) in final year',...
             'HorizontalAlignment','left')
@@ -969,7 +1100,10 @@ for i=1:length(spots)
         ylim([-2 2])
         set(gca,'XTick',1:9,'XTickLabel',[])
         if (s==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',sims);
+            set(gca,'XTick',1:ndp,'XTickLabel',[]);
+            for t=1:ndp
+                text(t,-2.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            end
             stamp(cfile)
         end
         ylabel('log10 Mean Biom (g m^-^2) in final year')

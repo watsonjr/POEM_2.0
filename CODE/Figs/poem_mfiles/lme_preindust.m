@@ -15,7 +15,7 @@ cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-load([dpath 'Data_spinup_pristine_' cfile '.mat']);
+load([dpath 'Preindust_1800-1850_means.mat']);
 load([cpath 'hindcast_gridspec.mat'],'dat','geolat_t','geolon_t');
 load([cpath 'lme_mask_esm2m.mat']);
 grid = csvread([cpath 'grid_csv.csv']);
@@ -27,27 +27,27 @@ x=1:days;
 %lyr=x((end-365+1):end);  %daily
 lyr=x((end-12+1):end);   %monthly means
 
-sp_mean=nanmean(SP.bio(:,lyr),2);
-sf_mean=nanmean(SF.bio(:,lyr),2);
-sd_mean=nanmean(SD.bio(:,lyr),2);
-mp_mean=nanmean(MP.bio(:,lyr),2);
-mf_mean=nanmean(MF.bio(:,lyr),2);
-md_mean=nanmean(MD.bio(:,lyr),2);
-lp_mean=nanmean(LP.bio(:,lyr),2);
-ld_mean=nanmean(LD.bio(:,lyr),2);
-b_mean=nanmean(BENT.bio(:,lyr),2);
+% sp_mean=nanmean(SP.bio(:,lyr),2);
+% sf_mean=nanmean(SF.bio(:,lyr),2);
+% sd_mean=nanmean(SD.bio(:,lyr),2);
+% mp_mean=nanmean(MP.bio(:,lyr),2);
+% mf_mean=nanmean(MF.bio(:,lyr),2);
+% md_mean=nanmean(MD.bio(:,lyr),2);
+% lp_mean=nanmean(LP.bio(:,lyr),2);
+% ld_mean=nanmean(LD.bio(:,lyr),2);
+% b_mean=nanmean(BENT.bio(:,lyr),2);
 
 %% g/m2 --> total g
 area = grid(:,5);
-Asf_mean = sf_mean .* area;
-Asp_mean = sp_mean .* area;
-Asd_mean = sd_mean .* area;
-Amf_mean = mf_mean .* area;
-Amp_mean = mp_mean .* area;
-Amd_mean = md_mean .* area;
-Alp_mean = lp_mean .* area;
-Ald_mean = ld_mean .* area;
-Ab_mean = b_mean .* area;
+Asf_mean = sf_smean .* area;
+Asp_mean = sp_smean .* area;
+Asd_mean = sd_smean .* area;
+Amf_mean = mf_smean .* area;
+Amp_mean = mp_smean .* area;
+Amd_mean = md_smean .* area;
+Alp_mean = lp_smean .* area;
+Ald_mean = ld_smean .* area;
+Ab_mean = b_smean .* area;
 
 %% Plots in space
 lat = geolat_t;
@@ -77,15 +77,15 @@ Alp = sf;
 Ald = sf;
 Ab = sf;
 
-sf(gid) = sf_mean;
-sp(gid) = sp_mean;
-sd(gid) = sd_mean;
-mf(gid) = mf_mean;
-mp(gid) = mp_mean;
-md(gid) = md_mean;
-lp(gid) = lp_mean;
-ld(gid) = ld_mean;
-b(gid) = b_mean;
+sf(gid) = sf_smean;
+sp(gid) = sp_smean;
+sd(gid) = sd_smean;
+mf(gid) = mf_smean;
+mp(gid) = mp_smean;
+md(gid) = md_smean;
+lp(gid) = lp_smean;
+ld(gid) = ld_smean;
+b(gid) = b_smean;
 
 Asf(gid) = Asf_mean;
 Asp(gid) = Asp_mean;
@@ -156,7 +156,7 @@ for L=1:66
     lme_mbio(L,9) = nanmean(b(lid));
 end
 %%
-save([fpath 'LME_preindust_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
+save([dpath 'LME_preindust_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
     'lme_bio','lme_mbio');
 
 
@@ -173,8 +173,8 @@ FracPF = AllP ./ (AllP+AllF);
 FracPFvD = (AllP+AllF) ./ (AllP+AllF+AllD);
 
 %grams to tonnes/metric tons 1g = 1e-6MT
-nansum(All) % = 1.7102e+14
-nansum(All) * 1e-6 % = 1.7102e+08 = 0.17e9 MT
+nansum(All) % = 1.7206e+14
+nansum(All) * 1e-6 % = 1.7206e+08 = 0.17e9 MT
 % My max fish size if 2.5kg technically rep fish 80g to 80kg
 % Jennings 10-10^6 g = 0.34-26.12 10^9 MT
 % Jennings 10^2-10^4 g = 0.09-8.89 10^9 MT
@@ -326,7 +326,7 @@ print('-dpng',[ppath 'Preindust_LME_AllD.png'])
 %% NPac only
 % ALL
 figure(10)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(lme_All)))
 colormap('jet')              
@@ -342,7 +342,7 @@ print('-dpng',[ppath 'Preindust_Pac_LME_All.png'])
 
 % all F
 figure(11)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(lme_AllF)))
 colormap('jet')              
@@ -358,7 +358,7 @@ print('-dpng',[ppath 'Preindust_Pac_LME_AllF.png'])
 
 % all P
 figure(12)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(lme_AllP)))
 colormap('jet')              
@@ -374,7 +374,7 @@ print('-dpng',[ppath 'Preindust_Pac_LME_AllP.png'])
 
 % All D
 figure(13)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(lme_AllD)))
 colormap('jet')              

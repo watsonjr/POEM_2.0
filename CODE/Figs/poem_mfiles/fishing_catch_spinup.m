@@ -121,70 +121,93 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 % npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish130_halfL/'];
 % npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish140_halfL/'];
 % npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish150_halfL/'];
-npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish005/'];
-npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish01/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish02/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish03/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish04/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish05/'];
-npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish06/'];
+% npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish005/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish01/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish02/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish03/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish04/'];
+% npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish05/'];
+% npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05_RE01_fish06/'];
+% npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish05/'];
+% npath0 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
+% npath0 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
+npath0 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001/'];
+npath1 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish01/'];
+npath2 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish02/'];
+npath3 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish03/'];
+npath4 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish04/'];
+npath5 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish05/'];
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
 % dp = {dpath1;dpath10;dpath11;dpath12;dpath13;dpath14;dpath15;dpath16};
 % sims = {'0.0','0.01','0.025','0.05','0.10','0.20','0.30','0.40'};
 % cfile = 'MFeqMP_fishing_catch';
-
 % dp = {dpath2;dpath3;dpath4;dpath5;dpath6;dpath7;dpath8;dpath9};
 % sims = {'0.0+N','0.01+N','0.025+N','0.05+N','0.10+N','0.20+N','0.30+N','0.40+N'};
 % cfile = 'MFeqMP_fishing_nmort_catch';
-
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath10;npath7;...
 %     npath11;npath8;npath9};
 % sims = {'0.0','0.025','0.05','0.10','0.20','0.30',...
 %     '0.40','0.45','0.50','0.55','0.60','0.70'};
 % cfile = 'MFeqMP_MZ01_fishing_catch';
-
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath10;npath7;...
 %     npath11;npath8;npath9};
 % sims = {'0.0','0.025','0.05','0.10','0.20','0.30',...
 %     '0.40','0.45','0.50','0.55','0.60','0.70'};
 % cfile = 'MFeqMP_MZ01_fishing_catch';
-
 % dp = {npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
 % sims = {'0.05','0.10','0.20','0.30','0.40','0.50','0.60','0.70'};
 % cfile = 'MFeqMP_MZ01_halfM_fishing_catch';
-
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;...
 %     npath9};
 % sims = {'0.025','0.05','0.075','0.10','0.20','0.30','0.40','0.50',...
 %     '0.60','0.70'};
 % cfile = 'Dc_MFeqMP_MZ01_fishing_catch';
-
 % dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11};
 % sims = {'0.10','0.20','0.30','0.40','0.50','0.60','0.70','0.80','0.90'};
 % cfile = 'Dc_MFeqMP_MZ01_fishing_half_catch';
-
 % dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
 %     npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;...
 %     npath21;npath22};
 % sims = [0.1:0.1:1.9];
 % cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_catch';
-
 % dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
 %     npath12;npath13;npath14;npath15;npath16;npath17};
 % sims = [0.1:0.1:1.5];
 % cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_halfM_catch';
-
 % dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
 %     npath12;npath13;npath14;npath15;npath16;npath17};
 % sims = [0.1:0.1:1.5];
 % cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_halfL_catch';
-
-dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7};
-sims = {'0','.05','.1','.2','.3','.4','.5','.6'};
-cfile = 'Dc_MFeqMP_fcrit40_MZ01_BE05_RE01_fishing_catch';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7};
+% sims = {'0','.05','.1','.2','.3','.4','.5','.6'};
+% cfile = 'Dc_MFeqMP_fcrit40_MZ01_BE05_RE01_fishing_catch';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
+% sims = {'0','.1','.2','.3','.4','.5'};
+% cfile = 'Dc_MFeqMP_fcrit10_MZ01_BE05_RE01_mizernmort_fishing_catch';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
+% sims = {'0','.1','.2','.3','.4','.5'};
+% cfile = 'Dc_mizer_all_MFeqMP_MZ01_BE05_RE01_fishing_catch';
+dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
+sims = {'0','.1','.2','.3','.4','.5'};
+cfile = 'Dc_JC_all_MFeqMP_MZ01_BE05_RE001_fishing_catch';
 
 sname = 'Spinup_';
 sname2 = '';

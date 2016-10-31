@@ -15,17 +15,16 @@ cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-load([dpath 'Data_spinup_pristine_' cfile '.mat']);
+load([dpath 'Data_preindust_' cfile '.mat']);
 load([cpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
 grid = csvread([cpath 'grid_csv.csv']);
 
 %%
 [loc,days]=size(SP.bio);
-x=1:days;
+mo = time/12;
+lyr = find(mo>40 & mo<=90);
 
-lyr=x((end-12+1):end);
-
-%temporal means of last year
+%temporal means of 1800-1850 (yrs 40-90)
 sp_smean=nanmean(SP.bio(:,lyr),2);
 sf_smean=nanmean(SF.bio(:,lyr),2);
 sd_smean=nanmean(SD.bio(:,lyr),2);
@@ -444,6 +443,10 @@ Pmd(Pmd<=0)=NaN;
 Plp(Plp<=0)=NaN;
 Pld(Pld<=0)=NaN;
 
+save([dpath 'Preindust_1800-1850_means.mat'],'sf_smean','sp_smean','sd_smean',...
+    'mf_smean','mp_smean','md_smean','b_smean',...
+    'lp_smean','ld_smean');
+
 %% sp
 figure(11)
 m_proj('miller','lat',82);
@@ -575,7 +578,7 @@ m_pcolor(X,Y,real(log10(All))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All Fishes (g m^-^2)')
+title('1800-1850 log10 mean biomass All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 2])
@@ -589,7 +592,7 @@ m_pcolor(X,Y,real(log10(AllF))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All F (g m^-^2)')
+title('1800-1850 log10 mean biomass All F (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 2])
@@ -603,7 +606,7 @@ m_pcolor(X,Y,real(log10(AllD))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All D (g m^-^2)')
+title('1800-1850 log10 mean biomass All D (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 2])
@@ -617,7 +620,7 @@ m_pcolor(X,Y,real(log10(AllP))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All P (g m^-^2)')
+title('1800-1850 log10 mean biomass All P (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 2])
@@ -631,7 +634,7 @@ m_pcolor(X,Y,real(FracPD)); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('P:D mean biomass(g m^-^2)')
+title('1800-1850 P:D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
@@ -645,7 +648,7 @@ m_pcolor(X,Y,real(FracPF)); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('P:F mean biomass (g m^-^2)')
+title('1800-1850 P:F mean biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
@@ -659,7 +662,7 @@ m_pcolor(X,Y,real(FracPFvD)); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('(P+F):D mean biomass(g m^-^2)')
+title('1800-1850 (P+F):D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
@@ -704,13 +707,13 @@ plotminlat=-90; %Set these bounds for your data
 plotmaxlat=90;
 plotminlon=-180;
 plotmaxlon=180;
-latlim=[-90 plotmaxlat];
+latlim=[0 80];
 lonlim=[plotminlon plotmaxlon];
 % ENTER -100 TO MAP ORIGIN LONG
 
 %% ALL
 figure(31)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(All2)))
 colormap('jet')              
@@ -720,13 +723,13 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass All Fishes (g m^-^2)')
+title('1800-1850 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_Pac_All.png'])
 
 % all F
 figure(32)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(AllF2)))
 colormap('jet')              
@@ -736,13 +739,13 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Forage Fishes (g m^-^2)')
+title('1800-1850 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_Pac_AllF.png'])
 
 % all P
 figure(33)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(AllP2)))
 colormap('jet')              
@@ -752,13 +755,13 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('1800-1850 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_Pac_AllP.png'])
 
 % All D
 figure(34)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,real(log10(AllD2)))
 colormap('jet')              
@@ -768,9 +771,11 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Demersal Fishes (g m^-^2)')
+title('1800-1850 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_Pac_AllD.png'])
+
+
 
 
 

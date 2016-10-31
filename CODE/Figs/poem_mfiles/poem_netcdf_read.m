@@ -3,7 +3,7 @@
 clear all
 close all
 
-fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MFMZ1_NOnmort_BE05/';
+fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01/';
 
 %% SP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_p.nc'],'NC_NOWRITE');
@@ -235,6 +235,6 @@ BENT.bio = biomass;
 clear biomass 
 
 %%
-save([fpath 'Data_spinup_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MFMZ1_NOnmort_BE05.mat'])
+save([fpath 'Data_spinup_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01.mat'])
 
 

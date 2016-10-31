@@ -18,11 +18,12 @@ cfile5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit35_MZ01_NOnmort_BE05';
 cfile6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
 cfile7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE10';
 cfile8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MFMZ1_NOnmort_BE05';
+cfile9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01';
 
 simtex={'BE05_40','BE075_40','BE10_40','BE15_40','BE25_40','BE05_35',...
-    'BE05_30','BE10_30','BE05_30_MFMZ1'};
+    'BE05_30','BE10_30','BE05_30_MFMZ1','BE05_10_RE01_mort'};
 simtex2={'BE05.40','BE075.40','BE10.40','BE15.40','BE25.40','BE05.35',...
-    'BE05.30','BE10.30','BE05.30.MFMZ1'};
+    'BE05.30','BE10.30','BE05.30.MFMZ1','BE05.10.RE01.mort'};
 
 dpath0 = [dp cfile0 '/'];
 dpath1 = [dp cfile1 '/'];
@@ -33,6 +34,7 @@ dpath5 = [dp cfile5 '/'];
 dpath6 = [dp cfile6 '/'];
 dpath7 = [dp cfile7 '/'];
 dpath8 = [dp cfile8 '/'];
+dpath9 = [dp cfile9 '/'];
 %ppath = [pp cfile '/'];
 
 load([dpath0 'skill_Wei.mat'],'skill');
@@ -62,6 +64,9 @@ clear skill
 load([dpath8 'skill_Wei.mat'],'skill');
 skill8 = skill;
 clear skill
+load([dpath9 'skill_Wei.mat'],'skill');
+skill9 = skill;
+clear skill
 
 %%
 iskill(:,1) = skill0(:,1);
@@ -73,6 +78,7 @@ iskill(:,6) = skill5(:,1);
 iskill(:,7) = skill6(:,1);
 iskill(:,8) = skill7(:,1);
 iskill(:,9) = skill8(:,1);
+iskill(:,10) = skill9(:,1);
 
 fskill(:,1) = skill0(:,2);
 fskill(:,2) = skill1(:,2);
@@ -83,6 +89,7 @@ fskill(:,6) = skill5(:,2);
 fskill(:,7) = skill6(:,2);
 fskill(:,8) = skill7(:,2);
 fskill(:,9) = skill8(:,2);
+fskill(:,10) = skill9(:,2);
 
 %% Best
 

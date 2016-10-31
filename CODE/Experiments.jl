@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_Hartvignmort_BE05_RE01";
+	simname = "Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish05";
 
 	for L = 1:9
 		ID = ids[L]
@@ -372,7 +372,7 @@ function Spinup_pristine()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MFMZ1_NOnmort_BE05";
+	simname = "Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001";
 
 	S_Bent_bio = zeros(NX,DAYS);
 
@@ -1047,7 +1047,7 @@ function Pre_industrial()
 	const global ID = collect(1:NX);
 
 	#! Storage variables
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01";
 
 	S_Bent_bio = zeros(NX,DAYS);
 
@@ -2135,6 +2135,7 @@ function Historic_fished()
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 	YEARS = 145
   global DAYS = 365
+	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 
 	#! choose where and when to run the model
 	const global NX = 48111
@@ -2787,6 +2788,15 @@ function Historic_fished()
 			ncwrite(mean(S_Lrg_p_die[:,a[i]:b[i]],2),file_lrg_p,"die",[1,MNT])
 			ncwrite(mean(S_Lrg_d_die[:,a[i]:b[i]],2),file_lrg_d,"die",[1,MNT])
 
+			ncwrite(mean(S_Sml_f_catch[:,a[i]:b[i]],2),file_sml_f,"catch",[1,MNT])
+			ncwrite(mean(S_Sml_p_catch[:,a[i]:b[i]],2),file_sml_p,"catch",[1,MNT])
+			ncwrite(mean(S_Sml_d_catch[:,a[i]:b[i]],2),file_sml_d,"catch",[1,MNT])
+			ncwrite(mean(S_Med_f_catch[:,a[i]:b[i]],2),file_med_f,"catch",[1,MNT])
+			ncwrite(mean(S_Med_p_catch[:,a[i]:b[i]],2),file_med_p,"catch",[1,MNT])
+			ncwrite(mean(S_Med_d_catch[:,a[i]:b[i]],2),file_med_d,"catch",[1,MNT])
+			ncwrite(mean(S_Lrg_p_catch[:,a[i]:b[i]],2),file_lrg_p,"catch",[1,MNT])
+			ncwrite(mean(S_Lrg_d_catch[:,a[i]:b[i]],2),file_lrg_d,"catch",[1,MNT])
+
 		end #Monthly mean
 
 	end #Years
@@ -2824,6 +2834,7 @@ function Forecast_pristine()
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 	YEARS = 95
   global DAYS = 365
+	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 
 	#! choose where and when to run the model
 	const global NX = 48111
@@ -3477,6 +3488,7 @@ function Forecast_fished()
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 	YEARS = 95
   global DAYS = 365
+	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 
 	#! choose where and when to run the model
 	const global NX = 48111

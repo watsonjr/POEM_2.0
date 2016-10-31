@@ -32,7 +32,7 @@ SP.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
-%% SF
+% SF
 ncid = netcdf.open([fpath 'Data_hist_pristine_sml_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -287,4 +287,54 @@ save([fpath 'Means_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
     'lp_mean','ld_mean');
 
+%% last 50 yrs 1955-2005
+mo=time/12;
+yr50=find(mo>95);
+
+sp_mean5505=nanmean(SP.bio(:,yr50),2);
+sf_mean5505=nanmean(SF.bio(:,yr50),2);
+sd_mean5505=nanmean(SD.bio(:,yr50),2);
+mp_mean5505=nanmean(MP.bio(:,yr50),2);
+mf_mean5505=nanmean(MF.bio(:,yr50),2);
+md_mean5505=nanmean(MD.bio(:,yr50),2);
+lp_mean5505=nanmean(LP.bio(:,yr50),2);
+ld_mean5505=nanmean(LD.bio(:,yr50),2);
+b_mean5505=nanmean(BENT.bio(:,yr50),2);
+
+SP_prod5505=nanmean(SP.prod(:,yr50),2);
+SF_prod5505=nanmean(SF.prod(:,yr50),2);
+SD_prod5505=nanmean(SD.prod(:,yr50),2);
+MP_prod5505=nanmean(MP.prod(:,yr50),2);
+MF_prod5505=nanmean(MF.prod(:,yr50),2);
+MD_prod5505=nanmean(MD.prod(:,yr50),2);
+LP_prod5505=nanmean(LP.prod(:,yr50),2);
+LD_prod5505=nanmean(LD.prod(:,yr50),2);
+
+%% 1950-2000
+yr50=find(mo>90 & mo<=140);
+
+sp_mean5000=nanmean(SP.bio(:,yr50),2);
+sf_mean5000=nanmean(SF.bio(:,yr50),2);
+sd_mean5000=nanmean(SD.bio(:,yr50),2);
+mp_mean5000=nanmean(MP.bio(:,yr50),2);
+mf_mean5000=nanmean(MF.bio(:,yr50),2);
+md_mean5000=nanmean(MD.bio(:,yr50),2);
+lp_mean5000=nanmean(LP.bio(:,yr50),2);
+ld_mean5000=nanmean(LD.bio(:,yr50),2);
+b_mean5000=nanmean(BENT.bio(:,yr50),2);
+
+SP_prod5000=nanmean(SP.prod(:,yr50),2);
+SF_prod5000=nanmean(SF.prod(:,yr50),2);
+SD_prod5000=nanmean(SD.prod(:,yr50),2);
+MP_prod5000=nanmean(MP.prod(:,yr50),2);
+MF_prod5000=nanmean(MF.prod(:,yr50),2);
+MD_prod5000=nanmean(MD.prod(:,yr50),2);
+LP_prod5000=nanmean(LP.prod(:,yr50),2);
+LD_prod5000=nanmean(LD.prod(:,yr50),2);
+
+save([fpath 'Means_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
+    'sf_mean5505','sp_mean5505','sd_mean5505','mf_mean5505','mp_mean5505',...
+    'md_mean5505','b_mean5505','lp_mean5505','ld_mean5505',...
+    'sf_mean5000','sp_mean5000','sd_mean5000','mf_mean5000','mp_mean5000',...
+    'md_mean5000','b_mean5000','lp_mean5000','ld_mean5000','-append');
 

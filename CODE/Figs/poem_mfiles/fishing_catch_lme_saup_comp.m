@@ -14,7 +14,7 @@ load([cpath 'hindcast_gridspec.mat'],'dat','geolat_t','geolon_t');
 load([cpath 'lme_mask_esm2m.mat']);
 grid = csvread([cpath 'grid_csv.csv']);
 
-npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish05/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish05/'];
 npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish10/'];
 npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish15/'];
 npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish20/'];
@@ -36,6 +36,25 @@ npath19 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_f
 npath20 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish170/'];
 npath21 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish180/'];
 npath22 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish190/'];
+% npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish05/'];
+% npath0 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
+% npath0 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
+% npath1 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
+% npath2 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
+% npath3 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
+% npath4 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
+% npath5 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
+
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
@@ -43,7 +62,17 @@ dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
     npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;...
     npath21;npath22};
 sims = [0.1:0.1:1.9];
-cfile = 'Dc_MFeqMP_MZ01_BE05_fishing_catch';
+sims = {'.1','.2','.3','.4','.5','.6','.7','.8','.9','1','1.1','1.2','1.3',...
+    '1.4','1.5','1.6','1.7','1.8','1.9'};
+cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05';
+
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
+% sims = {'0','.1','.2','.3','.4','.5'};
+% cfile = 'Dc_MFeqMP_fcrit10_MZ01_BE05_RE01_mizernmort';
+
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
+% sims = {'0','.1','.2','.3','.4','.5'};
+% cfile = 'Dc_JC_all_MFeqMP_MZ01_BE05_RE01';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -161,5 +190,14 @@ lme_aTot = lme_Tot .* repmat(lme_area,1,length(dp)) * 1e-6;
 diff_aTot = lme_aTot - repmat(loc_catch,1,length(dp));
 sum_diff = nansum(diff_aTot);
 
-
-
+%%
+figure
+plot(1:9,lme_aTot,'.','MarkerSize',25); hold on;
+plot(1:9,loc_catch,'ok','MarkerSize',10); hold on;
+%plot(1:9,loc_catch/10,'ok','MarkerSize',10); hold on;
+xlim([0 10])
+legend([sims 'SAUP'])
+legend('location','northwest')
+set(gca,'XTick',1:9,'XTickLabel',spots)
+ylabel('catch (MT)')
+print('-dpng',[fpath sname sname2 cfile '_SAUP_catch_comp.png'])

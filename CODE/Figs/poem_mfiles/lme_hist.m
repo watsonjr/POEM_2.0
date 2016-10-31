@@ -20,17 +20,28 @@ load([cpath 'hindcast_gridspec.mat'],'dat','geolat_t','geolon_t');
 load([cpath 'lme_mask_esm2m.mat']);
 grid = csvread([cpath 'grid_csv.csv']);
 
+%%
+sf_mean(:,17:18) = [sf_mean5000, sf_mean5505];
+sp_mean(:,17:18) = [sp_mean5000, sp_mean5505];
+sd_mean(:,17:18) = [sd_mean5000, sd_mean5505];
+mf_mean(:,17:18) = [mf_mean5000, mf_mean5505];
+mp_mean(:,17:18) = [mp_mean5000, mp_mean5505];
+md_mean(:,17:18) = [md_mean5000, md_mean5505];
+lp_mean(:,17:18) = [lp_mean5000, lp_mean5505];
+ld_mean(:,17:18) = [ld_mean5000, ld_mean5505];
+b_mean(:,17:18) = [b_mean5000, b_mean5505];
+
 %% g/m2 --> total g
 area = grid(:,5);
-Asf_mean = sf_mean .* repmat(area,1,16);
-Asp_mean = sp_mean .* repmat(area,1,16);
-Asd_mean = sd_mean .* repmat(area,1,16);
-Amf_mean = mf_mean .* repmat(area,1,16);
-Amp_mean = mp_mean .* repmat(area,1,16);
-Amd_mean = md_mean .* repmat(area,1,16);
-Alp_mean = lp_mean .* repmat(area,1,16);
-Ald_mean = ld_mean .* repmat(area,1,16);
-Ab_mean = b_mean .* repmat(area,1,16);
+Asf_mean = sf_mean .* repmat(area,1,18);
+Asp_mean = sp_mean .* repmat(area,1,18);
+Asd_mean = sd_mean .* repmat(area,1,18);
+Amf_mean = mf_mean .* repmat(area,1,18);
+Amp_mean = mp_mean .* repmat(area,1,18);
+Amd_mean = md_mean .* repmat(area,1,18);
+Alp_mean = lp_mean .* repmat(area,1,18);
+Ald_mean = ld_mean .* repmat(area,1,18);
+Ab_mean = b_mean .* repmat(area,1,18);
 
 %% Calc LMEs
 lat = geolat_t;
@@ -43,7 +54,7 @@ gid = grid(:,1);
 
 tlme = lme_mask_esm2m';
 
-sf_lme_bio = NaN*ones(66,16);
+sf_lme_bio = NaN*ones(66,18);
 sp_lme_bio = sf_lme_bio;
 sd_lme_bio = sf_lme_bio;
 mf_lme_bio = sf_lme_bio;
@@ -62,7 +73,7 @@ lp_lme_mbio = sf_lme_bio;
 ld_lme_mbio = sf_lme_bio;
 b_lme_mbio = sf_lme_bio;
 
-for n = 1:16
+for n = 1:18
     sf = NaN*ones(size(lon));
     sp = sf;
     sd = sf;
@@ -129,13 +140,13 @@ for n = 1:16
     
 end
 %% Comps by LME to J&C15
-All = sf_lme_bio(:,1)+sp_lme_bio(:,1)+sd_lme_bio(:,1)+mf_lme_bio(:,1)+...
-    mp_lme_bio(:,1)+md_lme_bio(:,1)+lp_lme_bio(:,1)+ld_lme_bio(:,1);
-ML = mf_lme_bio(:,1)+mp_lme_bio(:,1)+md_lme_bio(:,1)+lp_lme_bio(:,1)+ld_lme_bio(:,1);
+All = sf_lme_bio(:,18)+sp_lme_bio(:,18)+sd_lme_bio(:,18)+mf_lme_bio(:,18)+...
+    mp_lme_bio(:,18)+md_lme_bio(:,18)+lp_lme_bio(:,18)+ld_lme_bio(:,18);
+ML = mf_lme_bio(:,18)+mp_lme_bio(:,18)+md_lme_bio(:,18)+lp_lme_bio(:,18)+ld_lme_bio(:,18);
 
 %grams to tonnes/metric tons 1g = 1e-6MT
-nansum(All) % = 1.7118e+14
-nansum(All) * 1e-6 % = 1.7118e+08 = 0.17e9 MT
+nansum(All) % = 1.6878e+14
+nansum(All) * 1e-6 % = 1.6878e+08 = 0.17e9 MT
 % My max fish size if 2.5kg technically rep fish 80g to 80kg
 % Jennings 10-10^6 g = 0.34-26.12 10^9 MT
 % Jennings 10^2-10^4 g = 0.09-8.89 10^9 MT
@@ -157,7 +168,8 @@ stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_dot_areal_sum.png'])
 
 %%
-mAll = nansum(lme_mbio(:,1:8),2);
+mAll = sf_lme_mbio(:,18)+sp_lme_mbio(:,18)+sd_lme_mbio(:,18)+mf_lme_mbio(:,18)+...
+    mp_lme_mbio(:,18)+md_lme_mbio(:,18)+lp_lme_mbio(:,18)+ld_lme_mbio(:,18);
 
 [sort_mbio,ix] = sort(mAll,'descend');
 mslname = lname(ix);
@@ -173,11 +185,54 @@ ylabel('LME')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_dot_mean.png'])
 
+%% save 1950-2000 and 1955-2005 for comps
+lme_bio00(:,1) = sf_lme_bio(:,17);
+lme_bio00(:,2) = sp_lme_bio(:,17);
+lme_bio00(:,3) = sd_lme_bio(:,17);
+lme_bio00(:,4) = mf_lme_bio(:,17);
+lme_bio00(:,5) = mp_lme_bio(:,17);
+lme_bio00(:,6) = md_lme_bio(:,17);
+lme_bio00(:,7) = mp_lme_bio(:,17);
+lme_bio00(:,8) = md_lme_bio(:,17);
+lme_bio00(:,9) = b_lme_bio(:,17);
+
+lme_mbio00(:,1) = sf_lme_mbio(:,17);
+lme_mbio00(:,2) = sp_lme_mbio(:,17);
+lme_mbio00(:,3) = sd_lme_mbio(:,17);
+lme_mbio00(:,4) = mf_lme_mbio(:,17);
+lme_mbio00(:,5) = mp_lme_mbio(:,17);
+lme_mbio00(:,6) = md_lme_mbio(:,17);
+lme_mbio00(:,7) = mp_lme_mbio(:,17);
+lme_mbio00(:,8) = md_lme_mbio(:,17);
+lme_mbio00(:,9) = b_lme_mbio(:,17);
+
+lme_bio05(:,1) = sf_lme_bio(:,18);
+lme_bio05(:,2) = sp_lme_bio(:,18);
+lme_bio05(:,3) = sd_lme_bio(:,18);
+lme_bio05(:,4) = mf_lme_bio(:,18);
+lme_bio05(:,5) = mp_lme_bio(:,18);
+lme_bio05(:,6) = md_lme_bio(:,18);
+lme_bio05(:,7) = mp_lme_bio(:,18);
+lme_bio05(:,8) = md_lme_bio(:,18);
+lme_bio05(:,9) = b_lme_bio(:,18);
+
+lme_mbio05(:,1) = sf_lme_mbio(:,18);
+lme_mbio05(:,2) = sp_lme_mbio(:,18);
+lme_mbio05(:,3) = sd_lme_mbio(:,18);
+lme_mbio05(:,4) = mf_lme_mbio(:,18);
+lme_mbio05(:,5) = mp_lme_mbio(:,18);
+lme_mbio05(:,6) = md_lme_mbio(:,18);
+lme_mbio05(:,7) = mp_lme_mbio(:,18);
+lme_mbio05(:,8) = md_lme_mbio(:,18);
+lme_mbio05(:,9) = b_lme_mbio(:,18);
+
+
 %%
-save([fpath 'LME_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
+save([dpath 'LME_hist_pristine_' cfile '.mat'],...
     'sf_lme_bio','sp_lme_bio','sd_lme_bio','mf_lme_bio','mp_lme_bio','md_lme_bio',...
     'b_lme_bio','lp_lme_bio','ld_lme_bio','sf_lme_mbio','sp_lme_mbio','sd_lme_mbio',...
-    'mf_lme_mbio','mp_lme_mbio','md_lme_mbio','b_lme_mbio','lp_lme_mbio','ld_lme_mbio');
+    'mf_lme_mbio','mp_lme_mbio','md_lme_mbio','b_lme_mbio','lp_lme_mbio','ld_lme_mbio',...
+    'lme_bio00','lme_mbio00','lme_bio05','lme_mbio05');
 
 
 %% Figures
@@ -194,15 +249,15 @@ lme_b = lme_sf;
 for L=1:66
     lid = find(tlme==L);
     
-    lme_sf(lid) = sf_lme_mbio(L,1);
-    lme_sp(lid) = sp_lme_mbio(L,1);
-    lme_sd(lid) = sd_lme_mbio(L,1);
-    lme_mf(lid) = mf_lme_mbio(L,1);
-    lme_mp(lid) = mp_lme_mbio(L,1);
-    lme_md(lid) = md_lme_mbio(L,1);
-    lme_lp(lid) = lp_lme_mbio(L,1);
-    lme_ld(lid) = ld_lme_mbio(L,1);
-    lme_b(lid) = b_lme_mbio(L,1);
+    lme_sf(lid) = sf_lme_mbio(L,18);
+    lme_sp(lid) = sp_lme_mbio(L,18);
+    lme_sd(lid) = sd_lme_mbio(L,18);
+    lme_mf(lid) = mf_lme_mbio(L,18);
+    lme_mp(lid) = mp_lme_mbio(L,18);
+    lme_md(lid) = md_lme_mbio(L,18);
+    lme_lp(lid) = lp_lme_mbio(L,18);
+    lme_ld(lid) = ld_lme_mbio(L,18);
+    lme_b(lid) = b_lme_mbio(L,18);
 end
 
 lme_All = lme_sf+lme_sp+lme_sd+lme_mf+lme_mp+lme_md+lme_lp+lme_ld;
@@ -211,8 +266,8 @@ lme_AllP = lme_sp+lme_mp+lme_lp;
 lme_AllD = lme_sd+lme_md+lme_ld;
 
 % plot info
-GEOLON_T = double(GEOLON_T);
-GEOLAT_T = double(GEOLAT_T);
+geolon_t = double(geolon_t);
+geolat_t = double(geolat_t);
 plotminlat=-90; %Set these bounds for your data
 plotmaxlat=90;
 plotminlon=-180;
@@ -225,7 +280,7 @@ lonlim=[plotminlon plotmaxlon]; %[-255 -60] = Pac
 figure(31)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_All)))
+surfm(geolat_t,geolon_t,real(log10(lme_All)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -233,7 +288,7 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass All Fishes (g m^-^2)')
+title('1955-2005 log10 mean biomass All Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_All.png'])
@@ -242,7 +297,7 @@ print('-dpng',[ppath 'Hist_pristine_LME_All.png'])
 figure(32)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_AllF)))
+surfm(geolat_t,geolon_t,real(log10(lme_AllF)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -250,7 +305,7 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Forage Fishes (g m^-^2)')
+title('1955-2005 log10 mean biomass Forage Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_AllF.png'])
@@ -259,7 +314,7 @@ print('-dpng',[ppath 'Hist_pristine_LME_AllF.png'])
 figure(33)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_AllP)))
+surfm(geolat_t,geolon_t,real(log10(lme_AllP)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -267,7 +322,7 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('1955-2005 log10 mean biomass Pelagic Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_AllP.png'])
@@ -276,7 +331,7 @@ print('-dpng',[ppath 'Hist_pristine_LME_AllP.png'])
 figure(34)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_AllD)))
+surfm(geolat_t,geolon_t,real(log10(lme_AllD)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -284,7 +339,7 @@ caxis([-1.5 1.5]);
 hcb = colorbar('h');
 ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Demersal Fishes (g m^-^2)')
+title('1955-2005 log10 mean biomass Demersal Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_AllD.png'])
@@ -292,9 +347,9 @@ print('-dpng',[ppath 'Hist_pristine_LME_AllD.png'])
 %% NPac only
 % ALL
 figure(10)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_All)))
+surfm(geolat_t,geolon_t,real(log10(lme_All)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -308,9 +363,9 @@ print('-dpng',[ppath 'Hist_pristine_Pac_LME_All.png'])
 
 % all F
 figure(11)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_AllF)))
+surfm(geolat_t,geolon_t,real(log10(lme_AllF)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -324,9 +379,9 @@ print('-dpng',[ppath 'Hist_pristine_Pac_LME_AllF.png'])
 
 % all P
 figure(12)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_AllP)))
+surfm(geolat_t,geolon_t,real(log10(lme_AllP)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -340,9 +395,9 @@ print('-dpng',[ppath 'Hist_pristine_Pac_LME_AllP.png'])
 
 % All D
 figure(13)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(lme_AllD)))
+surfm(geolat_t,geolon_t,real(log10(lme_AllD)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);

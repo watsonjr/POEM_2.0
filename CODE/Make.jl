@@ -24,13 +24,13 @@ include("Experiments.jl")
 
 
 ####!! EXPERIMENTS
-testoneloc = true
+testoneloc = false
 oneloc_hind_pristine = false
 oneloc_fore_pristine = false
 spinup_pristine = false
 pre_industrial = false
 historic_pristine = false
-historic_fished = false
+historic_fished = true
 forecast_pristine = false
 forecast_fished = false
 
