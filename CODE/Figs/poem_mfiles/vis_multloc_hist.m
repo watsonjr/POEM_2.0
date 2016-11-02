@@ -16,7 +16,20 @@ dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
 load([dpath 'Means_hist_pristine_' cfile '.mat']);
+load([cpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
 grid = csvread([cpath 'grid_csv.csv']);
+
+%% Pick which time period mean
+% 1950-2000
+sp_smean=sp_mean5000;
+sf_smean=sf_mean5000;
+sd_smean=sd_mean5000;
+mp_smean=mp_mean5000;
+mf_smean=mf_mean5000;
+md_smean=md_mean5000;
+lp_smean=lp_mean5000;
+ld_smean=ld_mean5000;
+b_smean=b_mean5000;
 
 %% Plots in space
 %fix lon shift
@@ -27,15 +40,15 @@ x=-180:180;
 y=-90:90;
 [X,Y]=meshgrid(x,y);
 
-Zsp=griddata(grid(:,2),grid(:,3),sp_mean(:,1),X,Y);
-Zsf=griddata(grid(:,2),grid(:,3),sf_mean(:,1),X,Y);
-Zsd=griddata(grid(:,2),grid(:,3),sd_mean(:,1),X,Y);
-Zmp=griddata(grid(:,2),grid(:,3),mp_mean(:,1),X,Y);
-Zmf=griddata(grid(:,2),grid(:,3),mf_mean(:,1),X,Y);
-Zmd=griddata(grid(:,2),grid(:,3),md_mean(:,1),X,Y);
-Zlp=griddata(grid(:,2),grid(:,3),lp_mean(:,1),X,Y);
-Zld=griddata(grid(:,2),grid(:,3),ld_mean(:,1),X,Y);
-Zb=griddata(grid(:,2),grid(:,3),b_mean(:,1),X,Y);
+Zsp=griddata(grid(:,2),grid(:,3),sp_smean(:,1),X,Y);
+Zsf=griddata(grid(:,2),grid(:,3),sf_smean(:,1),X,Y);
+Zsd=griddata(grid(:,2),grid(:,3),sd_smean(:,1),X,Y);
+Zmp=griddata(grid(:,2),grid(:,3),mp_smean(:,1),X,Y);
+Zmf=griddata(grid(:,2),grid(:,3),mf_smean(:,1),X,Y);
+Zmd=griddata(grid(:,2),grid(:,3),md_smean(:,1),X,Y);
+Zlp=griddata(grid(:,2),grid(:,3),lp_smean(:,1),X,Y);
+Zld=griddata(grid(:,2),grid(:,3),ld_smean(:,1),X,Y);
+Zb=griddata(grid(:,2),grid(:,3),b_smean(:,1),X,Y);
 
 %% bent
 figure(50)
@@ -44,7 +57,7 @@ m_pcolor(X,Y,real(log10(Zb))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean benthic biomass (g m^-^2)')
+title('1950-2000 log10 mean benthic biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -58,7 +71,7 @@ m_pcolor(X,Y,real(log10(Zsp))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean Larval P biomass (g m^-^2)')
+title('1950-2000 log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -72,7 +85,7 @@ m_pcolor(X,Y,real(log10(Zsf))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean Larval F biomass (g m^-^2)')
+title('1950-2000 log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -86,7 +99,7 @@ m_pcolor(X,Y,real(log10(Zsd))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean Larval D biomass (g m^-^2)')
+title('1950-2000 log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -100,7 +113,7 @@ m_pcolor(X,Y,real(log10(Zmp))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean Juvenile P biomass (g m^-^2)')
+title('1950-2000 log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -116,7 +129,7 @@ m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
 %m_plot(-111,5,'o','w','MarkerSize',10);
 %m_text(-111,5,'EEP','Color','red','HorizontalAlignment','center');
-title('log10 mean Adult F biomass (g m^-^2)')
+title('1950-2000 log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -130,7 +143,7 @@ m_pcolor(X,Y,real(log10(Zmd))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean Juvenile D biomass (g m^-^2)')
+title('1950-2000 log10 mean Juvenile D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -145,7 +158,7 @@ shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
 %m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
-title('log10 mean Adult P biomass (g m^-^2)')
+title('1950-2000 log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -160,7 +173,7 @@ shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
 %m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
-title('log10 mean Adult D biomass (g m^-^2)')
+title('1950-2000 log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-4 2])
@@ -186,24 +199,24 @@ m_pcolor(X,Y,real(log10(All))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-1 1])
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_global_All.png'])
 
-% all F
+%% all F
 figure(22)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(AllF))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All F (g m^-^2)')
+title('1950-2000 log10 mean biomass All F (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_global_AllF.png'])
 
@@ -214,10 +227,10 @@ m_pcolor(X,Y,real(log10(AllD))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All D (g m^-^2)')
+title('1950-2000 log10 mean biomass All D (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_global_AllD.png'])
 
@@ -228,10 +241,10 @@ m_pcolor(X,Y,real(log10(AllP))); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('log10 mean biomass All P (g m^-^2)')
+title('1950-2000 log10 mean biomass All P (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_global_AllP.png'])
 
@@ -242,7 +255,7 @@ m_pcolor(X,Y,real(FracPD)); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('P:D mean biomass(g m^-^2)')
+title('1950-2000 P:D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
@@ -256,7 +269,7 @@ m_pcolor(X,Y,real(FracPF)); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('P:F mean biomass (g m^-^2)')
+title('1950-2000 P:F mean biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
@@ -270,7 +283,7 @@ m_pcolor(X,Y,real(FracPFvD)); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('(P+F):D mean biomass(g m^-^2)')
+title('1950-2000 (P+F):D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
@@ -292,93 +305,93 @@ Zlp2 = Zsf2;
 Zld2 = Zsf2;
 Zb2 = Zsf2;
 
-Zsp2(gid)=sp_mean(:,1);
-Zsf2(gid)=sf_mean(:,1);
-Zsd2(gid)=sd_mean(:,1);
-Zmp2(gid)=mp_mean(:,1);
-Zmf2(gid)=mf_mean(:,1);
-Zmd2(gid)=md_mean(:,1);
-Zlp2(gid)=lp_mean(:,1);
-Zld2(gid)=ld_mean(:,1);
-Zb2(gid)=b_mean(:,1);
+Zsp2(gid)=sp_smean(:,1);
+Zsf2(gid)=sf_smean(:,1);
+Zsd2(gid)=sd_smean(:,1);
+Zmp2(gid)=mp_smean(:,1);
+Zmf2(gid)=mf_smean(:,1);
+Zmd2(gid)=md_smean(:,1);
+Zlp2(gid)=lp_smean(:,1);
+Zld2(gid)=ld_smean(:,1);
+Zb2(gid)=b_smean(:,1);
 
 All2 = Zsp2+Zsf2+Zsd2+Zmp2+Zmf2+Zmd2+Zlp2+Zld2;
 AllF2 = Zsf2+Zmf2;
 AllP2 = Zsp2+Zmp2+Zlp2;
 AllD2 = Zsd2+Zmd2+Zld2;
 
-% plot info
-GEOLON_T = double(GEOLON_T);
-GEOLAT_T = double(GEOLAT_T);
+%% plot info
+GEOLON_T = double(geolon_t);
+GEOLAT_T = double(geolat_t);
 plotminlat=-90; %Set these bounds for your data
 plotmaxlat=90;
 plotminlon=-180;
 plotmaxlon=180;
-latlim=[-90 plotmaxlat];
+latlim=[0 80];
 lonlim=[plotminlon plotmaxlon];
 % ENTER -100 TO MAP ORIGIN LONG
 
 %% ALL
 figure(31)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(All2)))
+surfm(geolat_t,geolon_t,real(log10(All2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-1 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass All Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_All.png'])
 
-% all F
+%% all F
 figure(32)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(AllF2)))
+surfm(geolat_t,geolon_t,real(log10(AllF2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Forage Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_AllF.png'])
 
 % all P
 figure(33)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(AllP2)))
+surfm(geolat_t,geolon_t,real(log10(AllP2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_AllP.png'])
 
 % All D
 figure(34)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
-surfm(GEOLAT_T,GEOLON_T,real(log10(AllD2)))
+surfm(geolat_t,geolon_t,real(log10(AllD2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Demersal Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_AllD.png'])
 

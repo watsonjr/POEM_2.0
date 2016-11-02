@@ -3,7 +3,9 @@
 clear all
 close all
 
-fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
+
+fpath=['/Volumes/GFDL/NC/' cfile '/'];
 
 %% SP
 ncid = netcdf.open([fpath 'Data_hist_pristine_sml_p.nc'],'NC_NOWRITE');
@@ -16,23 +18,23 @@ end
 netcdf.close(ncid);
 
 SP.bio = biomass;
-SP.clev = clev;
-SP.con = con;
-SP.DD = DD;
-SP.die = die;
-SP.egg = egg;
-SP.gamma = gamma;
-SP.nu = nu;
+% SP.clev = clev;
+% SP.con = con;
+% SP.DD = DD;
+% SP.die = die;
+% SP.egg = egg;
+% SP.gamma = gamma;
+% SP.nu = nu;
 SP.prod = prod;
 SP.rec = rec;
-SP.rep = rep;
-SP.S = S;
-SP.X = X;
-SP.time = time;
+% SP.rep = rep;
+% SP.S = S;
+% SP.X = X;
+% SP.time = time;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
-% SF
+%% SF
 ncid = netcdf.open([fpath 'Data_hist_pristine_sml_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -283,7 +285,7 @@ for n=1:length(st)
 end
 
 %%
-save([fpath 'Means_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
+save([fpath 'Means_hist_pristine_' cfile '.mat'],...
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
     'lp_mean','ld_mean');
 
@@ -332,7 +334,7 @@ MD_prod5000=nanmean(MD.prod(:,yr50),2);
 LP_prod5000=nanmean(LP.prod(:,yr50),2);
 LD_prod5000=nanmean(LD.prod(:,yr50),2);
 
-save([fpath 'Means_hist_pristine_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'],...
+save([fpath 'Means_hist_pristine_' cfile '.mat'],...
     'sf_mean5505','sp_mean5505','sd_mean5505','mf_mean5505','mp_mean5505',...
     'md_mean5505','b_mean5505','lp_mean5505','ld_mean5505',...
     'sf_mean5000','sp_mean5000','sd_mean5000','mf_mean5000','mp_mean5000',...

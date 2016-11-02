@@ -140,9 +140,14 @@ for n = 1:18
     
 end
 %% Comps by LME to J&C15
-All = sf_lme_bio(:,18)+sp_lme_bio(:,18)+sd_lme_bio(:,18)+mf_lme_bio(:,18)+...
-    mp_lme_bio(:,18)+md_lme_bio(:,18)+lp_lme_bio(:,18)+ld_lme_bio(:,18);
-ML = mf_lme_bio(:,18)+mp_lme_bio(:,18)+md_lme_bio(:,18)+lp_lme_bio(:,18)+ld_lme_bio(:,18);
+
+%Pick which time period
+yr=17; %1950-2000
+%yr=18; %1955-2005
+
+All = sf_lme_bio(:,yr)+sp_lme_bio(:,yr)+sd_lme_bio(:,yr)+mf_lme_bio(:,yr)+...
+    mp_lme_bio(:,yr)+md_lme_bio(:,yr)+lp_lme_bio(:,yr)+ld_lme_bio(:,yr);
+ML = mf_lme_bio(:,yr)+mp_lme_bio(:,yr)+md_lme_bio(:,yr)+lp_lme_bio(:,yr)+ld_lme_bio(:,yr);
 
 %grams to tonnes/metric tons 1g = 1e-6MT
 nansum(All) % = 1.6878e+14
@@ -168,8 +173,8 @@ stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_dot_areal_sum.png'])
 
 %%
-mAll = sf_lme_mbio(:,18)+sp_lme_mbio(:,18)+sd_lme_mbio(:,18)+mf_lme_mbio(:,18)+...
-    mp_lme_mbio(:,18)+md_lme_mbio(:,18)+lp_lme_mbio(:,18)+ld_lme_mbio(:,18);
+mAll = sf_lme_mbio(:,yr)+sp_lme_mbio(:,yr)+sd_lme_mbio(:,yr)+mf_lme_mbio(:,yr)+...
+    mp_lme_mbio(:,yr)+md_lme_mbio(:,yr)+lp_lme_mbio(:,yr)+ld_lme_mbio(:,yr);
 
 [sort_mbio,ix] = sort(mAll,'descend');
 mslname = lname(ix);
@@ -249,15 +254,15 @@ lme_b = lme_sf;
 for L=1:66
     lid = find(tlme==L);
     
-    lme_sf(lid) = sf_lme_mbio(L,18);
-    lme_sp(lid) = sp_lme_mbio(L,18);
-    lme_sd(lid) = sd_lme_mbio(L,18);
-    lme_mf(lid) = mf_lme_mbio(L,18);
-    lme_mp(lid) = mp_lme_mbio(L,18);
-    lme_md(lid) = md_lme_mbio(L,18);
-    lme_lp(lid) = lp_lme_mbio(L,18);
-    lme_ld(lid) = ld_lme_mbio(L,18);
-    lme_b(lid) = b_lme_mbio(L,18);
+    lme_sf(lid) = sf_lme_mbio(L,yr);
+    lme_sp(lid) = sp_lme_mbio(L,yr);
+    lme_sd(lid) = sd_lme_mbio(L,yr);
+    lme_mf(lid) = mf_lme_mbio(L,yr);
+    lme_mp(lid) = mp_lme_mbio(L,yr);
+    lme_md(lid) = md_lme_mbio(L,yr);
+    lme_lp(lid) = lp_lme_mbio(L,yr);
+    lme_ld(lid) = ld_lme_mbio(L,yr);
+    lme_b(lid) = b_lme_mbio(L,yr);
 end
 
 lme_All = lme_sf+lme_sp+lme_sd+lme_mf+lme_mp+lme_md+lme_lp+lme_ld;
@@ -284,12 +289,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_All)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-1 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1955-2005 log10 mean biomass All Fishes (g m^-^2)')
-axesmui
+title('1950-2000 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_All.png'])
 
@@ -301,12 +305,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_AllF)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1955-2005 log10 mean biomass Forage Fishes (g m^-^2)')
-axesmui
+title('1950-2000 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_AllF.png'])
 
@@ -318,12 +321,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_AllP)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1955-2005 log10 mean biomass Pelagic Fishes (g m^-^2)')
-axesmui
+title('1950-2000 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_AllP.png'])
 
@@ -335,12 +337,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_AllD)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1955-2005 log10 mean biomass Demersal Fishes (g m^-^2)')
-axesmui
+title('1950-2000 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_LME_AllD.png'])
 
@@ -353,11 +354,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_All)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-1 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass All Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_LME_All.png'])
 
@@ -369,11 +370,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_AllF)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Forage Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_LME_AllF.png'])
 
@@ -385,11 +386,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_AllP)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_LME_AllP.png'])
 
@@ -401,11 +402,11 @@ surfm(geolat_t,geolon_t,real(log10(lme_AllD)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('log10 mean biomass Demersal Fishes (g m^-^2)')
+title('1950-2000 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Hist_pristine_Pac_LME_AllD.png'])
 

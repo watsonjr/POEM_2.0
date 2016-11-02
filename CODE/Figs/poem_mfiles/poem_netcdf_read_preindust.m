@@ -3,7 +3,9 @@
 clear all
 close all
 
-fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
+
+fpath=['/Volumes/GFDL/NC/' cfile '/'];
 
 %% SP
 ncid = netcdf.open([fpath 'Data_preindust_sml_p.nc'],'NC_NOWRITE');
@@ -150,6 +152,45 @@ BENT.bio = biomass;
 clear biomass 
 
 %%
-save([fpath 'Data_preindust_Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05.mat'])
+%save([fpath 'Data_preindust_' cfile '.mat'])
 
+%% 1800-1850
+mo=(time-1)/12;
+mo=mo+1760;
+yr50=find(mo>=1800 & mo<1850);
+
+sp_smean=nanmean(SP.bio(:,yr50),2);
+sf_smean=nanmean(SF.bio(:,yr50),2);
+sd_smean=nanmean(SD.bio(:,yr50),2);
+mp_smean=nanmean(MP.bio(:,yr50),2);
+mf_smean=nanmean(MF.bio(:,yr50),2);
+md_smean=nanmean(MD.bio(:,yr50),2);
+lp_smean=nanmean(LP.bio(:,yr50),2);
+ld_smean=nanmean(LD.bio(:,yr50),2);
+b_smean=nanmean(BENT.bio(:,yr50),2);
+
+sp_prod=nanmean(SP.prod(:,yr50),2);
+sf_prod=nanmean(SF.prod(:,yr50),2);
+sd_prod=nanmean(SD.prod(:,yr50),2);
+mp_prod=nanmean(MP.prod(:,yr50),2);
+mf_prod=nanmean(MF.prod(:,yr50),2);
+md_prod=nanmean(MD.prod(:,yr50),2);
+lp_prod=nanmean(LP.prod(:,yr50),2);
+ld_prod=nanmean(LD.prod(:,yr50),2);
+
+sp_rec=nanmean(SP.rec(:,yr50),2);
+sf_rec=nanmean(SF.rec(:,yr50),2);
+sd_rec=nanmean(SD.rec(:,yr50),2);
+mp_rec=nanmean(MP.rec(:,yr50),2);
+mf_rec=nanmean(MF.rec(:,yr50),2);
+md_rec=nanmean(MD.rec(:,yr50),2);
+lp_rec=nanmean(LP.rec(:,yr50),2);
+ld_rec=nanmean(LD.rec(:,yr50),2);
+
+%%
+save([fpath 'Means_preindust_' cfile '.mat'],...
+    'sf_smean','sp_smean','sd_smean','mf_smean','mp_smean','md_smean','b_smean',...
+    'lp_smean','ld_smean','sf_prod','sp_prod','sd_prod','mf_prod','mp_prod',...
+    'md_prod','lp_prod','ld_prod','sf_rec','sp_rec','sd_rec','mf_rec',...
+    'mp_rec','md_rec','lp_rec','ld_rec');
 

@@ -10,41 +10,44 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-load([dpath 'Data_preindust_' cfile '.mat']);
+load([dpath 'Means_preindust_' cfile '.mat']); %fcrit40
+%load([dpath 'Preindust_1800-1850_means.mat']); %fcrit30
 load([cpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
 grid = csvread([cpath 'grid_csv.csv']);
 
 %%
-[loc,days]=size(SP.bio);
-mo = time/12;
-lyr = find(mo>40 & mo<=90);
+% load each netcdf
 
-%temporal means of 1800-1850 (yrs 40-90)
-sp_smean=nanmean(SP.bio(:,lyr),2);
-sf_smean=nanmean(SF.bio(:,lyr),2);
-sd_smean=nanmean(SD.bio(:,lyr),2);
-mp_smean=nanmean(MP.bio(:,lyr),2);
-mf_smean=nanmean(MF.bio(:,lyr),2);
-md_smean=nanmean(MD.bio(:,lyr),2);
-lp_smean=nanmean(LP.bio(:,lyr),2);
-ld_smean=nanmean(LD.bio(:,lyr),2);
-b_smean=nanmean(BENT.bio(:,lyr),2);
-
-%spatial means over time
-sp_tmean=nanmean(SP.bio,1);
-sf_tmean=nanmean(SF.bio,1);
-sd_tmean=nanmean(SD.bio,1);
-mp_tmean=nanmean(MP.bio,1);
-mf_tmean=nanmean(MF.bio,1);
-md_tmean=nanmean(MD.bio,1);
-lp_tmean=nanmean(LP.bio,1);
-ld_tmean=nanmean(LD.bio,1);
-b_tmean=nanmean(BENT.bio,1);
+% [loc,days]=size(SP.bio);
+% mo = time/12;
+% lyr = find(mo>40 & mo<=90);
+% 
+% %temporal means of 1800-1850 (yrs 40-90)
+% sp_smean=nanmean(SP.bio(:,lyr),2);
+% sf_smean=nanmean(SF.bio(:,lyr),2);
+% sd_smean=nanmean(SD.bio(:,lyr),2);
+% mp_smean=nanmean(MP.bio(:,lyr),2);
+% mf_smean=nanmean(MF.bio(:,lyr),2);
+% md_smean=nanmean(MD.bio(:,lyr),2);
+% lp_smean=nanmean(LP.bio(:,lyr),2);
+% ld_smean=nanmean(LD.bio(:,lyr),2);
+% b_smean=nanmean(BENT.bio(:,lyr),2);
+% 
+% %spatial means over time
+% sp_tmean=nanmean(SP.bio,1);
+% sf_tmean=nanmean(SF.bio,1);
+% sd_tmean=nanmean(SD.bio,1);
+% mp_tmean=nanmean(MP.bio,1);
+% mf_tmean=nanmean(MF.bio,1);
+% md_tmean=nanmean(MD.bio,1);
+% lp_tmean=nanmean(LP.bio,1);
+% ld_tmean=nanmean(LD.bio,1);
+% b_tmean=nanmean(BENT.bio,1);
 
 %% Plots in time
 y = time;
@@ -414,24 +417,24 @@ stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_LD.png'])
 
 %% Production
-SP_prod=nanmean(SP.prod(:,lyr),2);
-SF_prod=nanmean(SF.prod(:,lyr),2);
-SD_prod=nanmean(SD.prod(:,lyr),2);
-MP_prod=nanmean(MP.prod(:,lyr),2);
-MF_prod=nanmean(MF.prod(:,lyr),2);
-MD_prod=nanmean(MD.prod(:,lyr),2);
-LP_prod=nanmean(LP.prod(:,lyr),2);
-LD_prod=nanmean(LD.prod(:,lyr),2);
+% sp_prod=nanmean(SP.prod(:,lyr),2);
+% sf_prod=nanmean(SF.prod(:,lyr),2);
+% sd_prod=nanmean(SD.prod(:,lyr),2);
+% mp_prod=nanmean(MP.prod(:,lyr),2);
+% mf_prod=nanmean(MF.prod(:,lyr),2);
+% md_prod=nanmean(MD.prod(:,lyr),2);
+% lp_prod=nanmean(LP.prod(:,lyr),2);
+% ld_prod=nanmean(LD.prod(:,lyr),2);
 
 %
-Psp=griddata(grid(:,2),grid(:,3),SP_prod,X,Y);
-Psf=griddata(grid(:,2),grid(:,3),SF_prod,X,Y);
-Psd=griddata(grid(:,2),grid(:,3),SD_prod,X,Y);
-Pmp=griddata(grid(:,2),grid(:,3),MP_prod,X,Y);
-Pmf=griddata(grid(:,2),grid(:,3),MF_prod,X,Y);
-Pmd=griddata(grid(:,2),grid(:,3),MD_prod,X,Y);
-Plp=griddata(grid(:,2),grid(:,3),LP_prod,X,Y);
-Pld=griddata(grid(:,2),grid(:,3),LD_prod,X,Y);
+Psp=griddata(grid(:,2),grid(:,3),sp_prod,X,Y);
+Psf=griddata(grid(:,2),grid(:,3),sf_prod,X,Y);
+Psd=griddata(grid(:,2),grid(:,3),sd_prod,X,Y);
+Pmp=griddata(grid(:,2),grid(:,3),mp_prod,X,Y);
+Pmf=griddata(grid(:,2),grid(:,3),mf_prod,X,Y);
+Pmd=griddata(grid(:,2),grid(:,3),md_prod,X,Y);
+Plp=griddata(grid(:,2),grid(:,3),lp_prod,X,Y);
+Pld=griddata(grid(:,2),grid(:,3),ld_prod,X,Y);
 
 %
 Psp(Psp<=0)=NaN;
@@ -443,9 +446,9 @@ Pmd(Pmd<=0)=NaN;
 Plp(Plp<=0)=NaN;
 Pld(Pld<=0)=NaN;
 
-save([dpath 'Preindust_1800-1850_means.mat'],'sf_smean','sp_smean','sd_smean',...
-    'mf_smean','mp_smean','md_smean','b_smean',...
-    'lp_smean','ld_smean');
+% save([dpath 'Preindust_1800-1850_means.mat'],'sf_smean','sp_smean','sd_smean',...
+%     'mf_smean','mp_smean','md_smean','b_smean',...
+%     'lp_smean','ld_smean');
 
 %% sp
 figure(11)
@@ -457,7 +460,7 @@ m_grid;
 title('log10 mean Larval P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_prod_SP.png'])
 
@@ -471,7 +474,7 @@ m_grid;
 title('log10 mean Larval F production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_prod_SF.png'])
 
@@ -485,7 +488,7 @@ m_grid;
 title('log10 mean Larval D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_prod_SD.png'])
 
@@ -499,7 +502,7 @@ m_grid;
 title('log10 mean Juvenile P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_prod_MP.png'])
 
@@ -513,7 +516,7 @@ m_grid;
 title('log10 mean Adult F production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_prod_MF.png'])
 
@@ -527,7 +530,7 @@ m_grid;
 title('log10 mean Juvenile D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_prod_MD.png'])
 
@@ -542,7 +545,7 @@ m_grid;
 title('log10 mean Adult P production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 print('-dpng',[ppath 'Preindust_global_prod_LP.png'])
 
 % ld
@@ -556,7 +559,7 @@ m_grid;
 title('log10 mean Adult D production (g g^-^1 m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-4 0])
 print('-dpng',[ppath 'Preindust_global_prod_LD.png'])
 
 %% Diff maps of all fish
@@ -581,11 +584,11 @@ m_grid;
 title('1800-1850 log10 mean biomass All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-1 1])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_All.png'])
 
-% all F
+%% all F
 figure(22)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(AllF))); hold on;
@@ -595,7 +598,7 @@ m_grid;
 title('1800-1850 log10 mean biomass All F (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_AllF.png'])
 
@@ -609,7 +612,7 @@ m_grid;
 title('1800-1850 log10 mean biomass All D (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_AllD.png'])
 
@@ -623,11 +626,11 @@ m_grid;
 title('1800-1850 log10 mean biomass All P (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_AllP.png'])
 
-% FracPD
+%% FracPD
 figure(25)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(FracPD)); hold on;
@@ -719,15 +722,15 @@ surfm(geolat_t,geolon_t,real(log10(All2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-1 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('1800-1850 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_Pac_All.png'])
 
-% all F
+%% all F
 figure(32)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
@@ -735,9 +738,9 @@ surfm(geolat_t,geolon_t,real(log10(AllF2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('1800-1850 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
@@ -751,9 +754,9 @@ surfm(geolat_t,geolon_t,real(log10(AllP2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('1800-1850 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
@@ -767,9 +770,9 @@ surfm(geolat_t,geolon_t,real(log10(AllD2)))
 colormap('jet')              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 1.5]);
+caxis([-2 1]);
 hcb = colorbar('h');
-ylim(hcb,[-1.5 1.5])                   %Set color axis if needed
+ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('1800-1850 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
