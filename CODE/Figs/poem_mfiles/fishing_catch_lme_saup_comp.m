@@ -1,203 +1,282 @@
 %POEM catch vs. SAUP catch by LME
-%Assume each location represents its LME
 
 clear all
 close all
 
-datap = '/Volumes/GFDL/CSV/';
-figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
+dp = '/Volumes/GFDL/NC/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+
+dpath = [dp cfile '/'];
+ppath = [pp cfile '/'];
+
+load([dpath 'LME_hist_fished_' cfile '.mat']);
 load([spath 'LME_Catch_annual.mat']);
 load([cpath 'hindcast_gridspec.mat'],'dat','geolat_t','geolon_t');
 load([cpath 'lme_mask_esm2m.mat']);
 grid = csvread([cpath 'grid_csv.csv']);
 
-% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish05/'];
-npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish10/'];
-npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish15/'];
-npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish20/'];
-npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish30/'];
-npath6 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish40/'];
-npath7 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish50/'];
-npath8 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fishM43L12/'];
-npath9 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish60/'];
-npath10 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish70/'];
-npath11 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish80/'];
-npath12 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish90/'];
-npath13 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish100/'];
-npath14 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish110/'];
-npath15 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish120/'];
-npath16 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish130/'];
-npath17 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish140/'];
-npath18 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish150/'];
-npath19 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish160/'];
-npath20 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish170/'];
-npath21 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish180/'];
-npath22 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_fish190/'];
-% npath0 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01/'];
-% npath1 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish01/'];
-% npath2 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish02/'];
-% npath3 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish03/'];
-% npath4 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish04/'];
-% npath5 = [datap 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01_fish05/'];
-% npath0 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
-% npath1 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
-% npath2 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
-% npath3 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
-% npath4 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
-% npath5 = [datap 'Dc_TrefO_mizer_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
-% npath0 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01/'];
-% npath1 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish01/'];
-% npath2 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish02/'];
-% npath3 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish03/'];
-% npath4 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish04/'];
-% npath5 = [datap 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01_fish05/'];
+%% 
+%1950-2000 SAUP average
+id = find(yr>=1950 & yr<2000);
 
+slme_mcatch = nanmean(lme_catch(id,:));
+slme_mcatch = slme_mcatch';
 
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
+%Top 10 yrs SAUP
+tot_catch = sum(lme_catch);
+[sort_lme_catch,id10] = sort(tot_catch,'descend');
+yrs10 = yr(id10(1:10));
+slme_mcatch10 = nanmean(lme_catch(id10(1:10),:));
+slme_mcatch10 = slme_mcatch10';
 
-dp = {npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
-    npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;...
-    npath21;npath22};
-sims = [0.1:0.1:1.9];
-sims = {'.1','.2','.3','.4','.5','.6','.7','.8','.9','1','1.1','1.2','1.3',...
-    '1.4','1.5','1.6','1.7','1.8','1.9'};
-cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05';
+%Top 20 yrs SAUP
+yrs20 = yr(id10(1:20));
+slme_mcatch20 = nanmean(lme_catch(id10(1:20),:));
+slme_mcatch20 = slme_mcatch20';
 
-% dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
-% sims = {'0','.1','.2','.3','.4','.5'};
-% cfile = 'Dc_MFeqMP_fcrit10_MZ01_BE05_RE01_mizernmort';
-
-% dp = {npath0;npath1;npath2;npath3;npath4;npath5;};
-% sims = {'0','.1','.2','.3','.4','.5'};
-% cfile = 'Dc_JC_all_MFeqMP_MZ01_BE05_RE01';
-
-sname = 'Spinup_';
-sname2 = '';
-%sname2 = 'phen_';
-
-%%
-
-spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
-stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
-cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
-    'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
-    'rec','egg','clev','DD','S','prod','pred','nmort','met'};
-cols=cols';
-
-load('cmap_ppt_angles.mat')
-
-%% Total catch
-Tot = NaN*ones(length(dp),length(spots));
-for d=1:length(dp)
-    
-    dpath = char(dp(d));
-    load([dpath sname sname2 'lastyr_sum_mean_biom']);
-    
-    Ftot = sum(Ftotcatch);
-    Ptot = sum(Ptotcatch);
-    Dtot = sum(Dtotcatch);
-    Tot(d,:) = Ftot+Ptot+Dtot;
-end
-
-%% Which LME
-Lat = geolat_t;
-Lon = geolon_t;
-%fix lon shift
-id=find(Lon(:)<-180);
-Lon(id)=Lon(id)+360;
-
-% Georges Bank (NEP)
-lon=find(Lon<=-66 & Lon>=-67);
-lat=find(Lat<=42 & Lat>=41);
-gid=intersect(lon,lat);
-
-% Eastern Bering Sea (Pribs)
-lon=find(Lon<=-169 & Lon>=-170);
-lat=find(Lat<=57 & Lat>=56);
-eid=intersect(lon,lat);
-
-% Subarctic Pacific Gyre (Ocean Station Papa)
-lon=find(Lon<=-145 & Lon>=-146);
-lat=find(Lat<=51 & Lat>=50);
-pid=intersect(lon,lat);
-
-% HOT
-lon=find(Lon<=-157 & Lon>=-158);
-lat=find(Lat<=23 & Lat>=22);
-hid=intersect(lon,lat);
-
-% BATS
-lon=find(Lon<=-64 & Lon>=-65);
-lat=find(Lat<=32 & Lat>=31);
-bid=intersect(lon,lat);
-
-% North Sea
-lon=find(Lon<=4 & Lon>=3);
-lat=find(Lat<=57 & Lat>=56);
-nid=intersect(lon,lat);
-
-% Eastern Equatorial Pacific
-lon=find(Lon<=-110 & Lon>=-111);
-lat=find(Lat<=5.5 & Lat>=5);
-qid=intersect(lon,lat);
-
-%Subpolar W Pac station K2: 47oN, 160oE
-lon=find(Lon<=161 & Lon>=160);
-lat=find(Lat<=48 & Lat>=47);
-kid=intersect(lon,lat);
-
-%Subtropical W Pac station S1: 30oN, 145oE
-lon=find(Lon<=146 & Lon>=145);
-lat=find(Lat<=31 & Lat>=30);
-sid=intersect(lon,lat);
-
-tlme = lme_mask_esm2m';
-lme_ids(1,1)=tlme(gid);
-lme_ids(2,1)=tlme(eid);
-lme_ids(3,1)=tlme(pid);
-lme_ids(4,1)=tlme(hid);
-lme_ids(5,1)=tlme(bid);
-lme_ids(6,1)=tlme(nid);
-lme_ids(7,1)=tlme(qid);
-lme_ids(8,1)=tlme(kid);
-lme_ids(9,1)=tlme(sid);
-
-lme_ids(4,1)=10; %HOT
-lme_ids(8,1)=51; %K2
-lme_ids(9,1)=49; %S1
-
-%% Areal totals
-lmes = find(~isnan(lme_ids));
-lme_area = NaN*ones(size(lme_ids));
-loc_catch = NaN*ones(size(lme_ids));
-for n=1:length(lmes)
-    L = lme_ids(lmes(n));
-    r = find(lme_ids==L);
-    lid = find(tlme==L);
-    lme_area(r,1) = nansum(dat(lid));
-    
-    loc_catch(r,1) = lme_catch(31,L);
-end
-
-lme_Tot = Tot';
-%LME biomass in MT
-lme_aTot = lme_Tot .* repmat(lme_area,1,length(dp)) * 1e-6;
+%POEM LME biomass in MT
+plme_mcatch = nansum(lme_mcatch00,2) * 1e-6;
 
 %Difference
-diff_aTot = lme_aTot - repmat(loc_catch,1,length(dp));
-sum_diff = nansum(diff_aTot);
+diff_catch = plme_mcatch - slme_mcatch;
+
+code = [1:66]';
+T = table(code,slme_mcatch,plme_mcatch,'VariableNames',{'lme','saup','poem'});
+writetable(T,[dpath 'LME_saup_catch_hist_fished_' cfile '.csv']);
+
+%% Fit line
+fraw = fit(slme_mcatch,plme_mcatch,'poly1');
+mraw = fraw.p1;
+braw = fraw.p2;
+yraw = mraw * slme_mcatch + braw;
+
+l10s=log10(slme_mcatch);
+l10p=log10(plme_mcatch);
+ii = find(l10s~=-Inf);
+l10s = l10s(ii);
+l10p = l10p(ii);
+
+flog = fit(l10s,l10p,'poly1');
+mlog = flog.p1;
+blog = flog.p2;
+ylog = mlog * l10s + blog;
 
 %%
-figure
-plot(1:9,lme_aTot,'.','MarkerSize',25); hold on;
-plot(1:9,loc_catch,'ok','MarkerSize',10); hold on;
-%plot(1:9,loc_catch/10,'ok','MarkerSize',10); hold on;
-xlim([0 10])
-legend([sims 'SAUP'])
-legend('location','northwest')
-set(gca,'XTick',1:9,'XTickLabel',spots)
-ylabel('catch (MT)')
-print('-dpng',[fpath sname sname2 cfile '_SAUP_catch_comp.png'])
+x=1:0.5:8;
+
+figure(1)
+plot(10.^x,10.^x,'--k'); hold on;
+plot(slme_mcatch,plme_mcatch,'.k','MarkerSize',25); hold on;
+plot(slme_mcatch,yraw,'r'); hold on;
+%plot(fraw,slme_mcatch,plme_mcatch); hold on;
+axis([0 9e6 0 9e6])
+xlabel('SAUP catch (MT)')
+ylabel('POEM catch (MT)')
+title('1950-2000 mean catch')
+print('-dpng',[ppath 'hist_fished_SAUP_catch_comp.png'])
+
+figure(2)
+plot(x,x,'--k'); hold on;
+plot(l10s,l10p,'.k','MarkerSize',25); hold on;
+plot(l10s,ylog,'r'); hold on;
+%plot(flog,l10s,l10p); hold on;
+axis([1 7 1 7])
+xlabel('log10 SAUP catch (MT)')
+ylabel('log10 POEM catch (MT)')
+title('1950-2000 mean catch')
+print('-dpng',[ppath 'hist_fished_SAUP_log10catch_comp.png'])
+
+figure(3)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10),log10(plme_mcatch),'.k','MarkerSize',25); hold on;
+axis([1 7 1 7])
+xlabel('log10 SAUP catch (MT) top 10 yrs')
+ylabel('log10 POEM catch (MT)')
+title('1950-2000 mean catch')
+print('-dpng',[ppath 'hist_fished_SAUP10_log10catch_comp.png'])
+
+figure(4)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch20),log10(plme_mcatch),'.k','MarkerSize',25); hold on;
+axis([1 7 1 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('1950-2000 mean catch')
+print('-dpng',[ppath 'hist_fished_SAUP20_log10catch_comp.png'])
+
+
+%% Plot by region
+
+nwa = [6:9,18];
+nea = [19:26,59:60];
+nep = [1:4,10:11,54:55,64:65];
+nwp = [47:53,56];
+sam = 13:17;
+afr = [27:31,33];
+aus = 39:46;
+ind = [32,34:38];
+crb = [5,12];
+
+figure(5)
+subplot(2,2,1)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(nwa)),log10(plme_mcatch(nwa)),'.c','MarkerSize',25); hold on;
+axis([4 7 4 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('NW Atl 1950-2000 mean catch')
+for i=1:length(nwa)
+    text(log10(slme_mcatch10(nwa(i))),log10(plme_mcatch(nwa(i))),num2str(nwa(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+
+subplot(2,2,2)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(nea)),log10(plme_mcatch(nea)),'.c','MarkerSize',25); hold on;
+axis([4 7 4 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('NE Atl')
+for i=1:length(nea)
+    text(log10(slme_mcatch10(nea(i))),log10(plme_mcatch(nea(i))),num2str(nea(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+
+subplot(2,2,3)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(nwp)),log10(plme_mcatch(nwp)),'.c','MarkerSize',25); hold on;
+axis([3 7 3 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('NW Pac')
+for i=1:length(nwp)
+    text(log10(slme_mcatch10(nwp(i))),log10(plme_mcatch(nwp(i))),num2str(nwp(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+
+subplot(2,2,4)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(nep)),log10(plme_mcatch(nep)),'.c','MarkerSize',25); hold on;
+axis([2 7 2 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('NE Pac')
+for i=1:length(nep)
+    text(log10(slme_mcatch10(nep(i))),log10(plme_mcatch(nep(i))),num2str(nep(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+print('-dpng',[ppath 'hist_fished_SAUP10_log10catch_comp_AtlPac.png'])
+
+figure(6)
+subplot(2,3,1)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(afr)),log10(plme_mcatch(afr)),'.c','MarkerSize',25); hold on;
+axis([4 7 4 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('Africa 1950-2000 mean catch')
+for i=1:length(afr)
+    text(log10(slme_mcatch10(afr(i))),log10(plme_mcatch(afr(i))),num2str(afr(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+
+subplot(2,3,2)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(aus)),log10(plme_mcatch(aus)),'.c','MarkerSize',25); hold on;
+axis([4 7 4 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('Australia')
+for i=1:length(aus)
+    text(log10(slme_mcatch10(aus(i))),log10(plme_mcatch(aus(i))),num2str(aus(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+
+subplot(2,3,3)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(ind)),log10(plme_mcatch(ind)),'.c','MarkerSize',25); hold on;
+axis([4 7 4 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('India-Indonesia')
+for i=1:length(ind)
+    text(log10(slme_mcatch10(ind(i))),log10(plme_mcatch(ind(i))),num2str(ind(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+
+subplot(2,3,4)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(crb)),log10(plme_mcatch(crb)),'.c','MarkerSize',25); hold on;
+axis([5 7 5 7])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('Caribbean')
+for i=1:length(crb)
+    text(log10(slme_mcatch10(crb(i))),log10(plme_mcatch(crb(i))),num2str(crb(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+
+subplot(2,3,5)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(sam)),log10(plme_mcatch(sam)),'.c','MarkerSize',25); hold on;
+axis([5 8 5 8])
+xlabel('log10 SAUP catch (MT) top 20 yrs')
+ylabel('log10 POEM catch (MT)')
+title('S Amer')
+for i=1:length(sam)
+    text(log10(slme_mcatch10(sam(i))),log10(plme_mcatch(sam(i))),num2str(sam(i)),...
+        'Color','k','HorizontalAlignment','center')
+end
+print('-dpng',[ppath 'hist_fished_SAUP10_log10catch_comp_Other.png'])
+
+%% Drop Arctic, Antarctic, Hawaii, Australia
+
+keep = [1:9,11:38,46:54,59:60,62,65];
+
+figure(7)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch10(keep)),log10(plme_mcatch(keep)),'.k','MarkerSize',25); hold on;
+axis([4.5 7.5 4.5 7.5])
+xlabel('log10 SAUP catch (MT) top 10 yrs')
+ylabel('log10 POEM catch (MT)')
+title('1950-2000 mean catch without Polar and Australia')
+% for i=1:length(keep)
+%     text(log10(slme_mcatch10(keep(i))),log10(plme_mcatch(keep(i))),num2str(keep(i)),...
+%         'Color','k','HorizontalAlignment','center')
+% end
+print('-dpng',[ppath 'hist_fished_SAUP10_log10catch_comp_out.png'])
+
+%% exclude zero catch because log=-Inf
+nn=[1:63,65:66];
+[rraw,praw] = corrcoef(slme_mcatch,plme_mcatch)
+[rlog,plog] = corrcoef(l10s,l10p)
+[rlog10,plog10] = corrcoef(log10(slme_mcatch10(nn)),log10(plme_mcatch(nn)))
+[rlog20,plog20] = corrcoef(log10(slme_mcatch20(nn)),log10(plme_mcatch(nn)))
+[rlog10O,plog10O] = corrcoef(log10(slme_mcatch10(keep)),log10(plme_mcatch(keep)))
+[rlogO,plogO] = corrcoef(log10(slme_mcatch(keep)),log10(plme_mcatch(keep)))
+
+
+figure(8)
+plot(x,x,'--k'); hold on;
+plot(l10s,l10p,'.k','MarkerSize',25); hold on;
+axis([1 7 1 7])
+xlabel('log10 SAUP catch (MT)')
+ylabel('log10 POEM catch (MT)')
+title('1950-2000 mean catch')
+text(2,6,['r = ' num2str(rlog(2,1))])
+print('-dpng',[ppath 'hist_fished_SAUP_log10catch_comp_rp.png'])
+
+figure(9)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch(keep)),log10(plme_mcatch(keep)),'.k','MarkerSize',25); hold on;
+axis([1 7 1 7])
+xlabel('log10 SAUP catch (MT)')
+ylabel('log10 POEM catch (MT)')
+text(2,6,['r = ' num2str(rlogO(2,1))])
+title('1950-2000 mean catch without Polar and Australia')
+print('-dpng',[ppath 'hist_fished_SAUP_log10catch_comp_out_rp.png'])
+

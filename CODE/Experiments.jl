@@ -1487,7 +1487,7 @@ function Historic_pristine()
 	const global NX = 48111
 	const global ID = collect(1:NX);
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	#! Initialize
 	phen=0;
@@ -2141,7 +2141,7 @@ function Historic_fished()
 	const global NX = 48111
 	const global ID = collect(1:NX);
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	#! Initialize
 	phen=0;
@@ -3494,7 +3494,7 @@ function Forecast_fished()
 	const global NX = 48111
 	const global ID = collect(1:NX);
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
 
 	#! Initialize
 	phen=0;
@@ -3512,15 +3512,15 @@ function Forecast_fished()
 	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_fished_lrg_p.nc"),"biomass");
 	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_fished_lrg_d.nc"),"biomass");
 	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_fished_bent.nc"),"biomass");
-	Sml_f.bio = sf[:,17400];
-	Sml_p.bio = sp[:,17400];
-	Sml_d.bio = sd[:,17400];
-	Med_f.bio = mf[:,17400];
-	Med_p.bio = mp[:,17400];
-	Med_d.bio = md[:,17400];
-	Lrg_p.bio = lp[:,17400];
-	Lrg_d.bio = ld[:,17400];
-	BENT.mass = bent[:,17400];
+	Sml_f.bio = sf[:,1740];
+	Sml_p.bio = sp[:,1740];
+	Sml_d.bio = sd[:,1740];
+	Med_f.bio = mf[:,1740];
+	Med_p.bio = mp[:,1740];
+	Med_d.bio = md[:,1740];
+	Lrg_p.bio = lp[:,1740];
+	Lrg_d.bio = ld[:,1740];
+	BENT.mass = bent[:,1740];
 
 	############### Setup NetCDF save
 	# #! Init netcdf file for storage
@@ -4140,6 +4140,15 @@ function Forecast_fished()
 			ncwrite(mean(S_Med_d_die[:,a[i]:b[i]],2),file_med_d,"die",[1,MNT])
 			ncwrite(mean(S_Lrg_p_die[:,a[i]:b[i]],2),file_lrg_p,"die",[1,MNT])
 			ncwrite(mean(S_Lrg_d_die[:,a[i]:b[i]],2),file_lrg_d,"die",[1,MNT])
+
+			ncwrite(mean(S_Sml_f_catch[:,a[i]:b[i]],2),file_sml_f,"catch",[1,MNT])
+			ncwrite(mean(S_Sml_p_catch[:,a[i]:b[i]],2),file_sml_p,"catch",[1,MNT])
+			ncwrite(mean(S_Sml_d_catch[:,a[i]:b[i]],2),file_sml_d,"catch",[1,MNT])
+			ncwrite(mean(S_Med_f_catch[:,a[i]:b[i]],2),file_med_f,"catch",[1,MNT])
+			ncwrite(mean(S_Med_p_catch[:,a[i]:b[i]],2),file_med_p,"catch",[1,MNT])
+			ncwrite(mean(S_Med_d_catch[:,a[i]:b[i]],2),file_med_d,"catch",[1,MNT])
+			ncwrite(mean(S_Lrg_p_catch[:,a[i]:b[i]],2),file_lrg_p,"catch",[1,MNT])
+			ncwrite(mean(S_Lrg_d_catch[:,a[i]:b[i]],2),file_lrg_d,"catch",[1,MNT])
 
 		end #Monthly mean
 

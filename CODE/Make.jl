@@ -29,8 +29,8 @@ oneloc_hind_pristine = false
 oneloc_fore_pristine = false
 spinup_pristine = false
 pre_industrial = false
-historic_pristine = false
-historic_fished = true
+historic_pristine = true
+historic_fished = false
 forecast_pristine = false
 forecast_fished = false
 

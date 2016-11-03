@@ -12,8 +12,10 @@ cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-load([dpath 'Data_spinup_pristine_' cfile '.mat'],'MD','LD','BENT');
 seafl = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_other/Wei2010_Global_seafloor_biomass.csv',1,0);
+load([dpath 'Means_hist_fished_' cfile '.mat']);
+load([cpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
+grid = csvread([cpath 'grid_csv.csv']);
 
 %% Wei benthic biomass
 Wcol = {'latitude','longitude','depth','bact.biom.mean','meio.biom.mean',...
@@ -26,18 +28,13 @@ fish = seafl(:,9);
 invert = 10.^(invert) * 1e-3 * 9.0;
 fish = 10.^(fish) * 1e-3 * 9.0;
 
-%%
-[loc,days]=size(LD.bio);
-x=1:days;
+%% Pick which time period mean
+% 1950-2000
+md_smean=md_mean5000;
+ld_smean=ld_mean5000;
+b_smean=b_mean5000;
 
-lyr=x((end-365+1):end);
-
-md_mean=mean(MD.bio(:,lyr),2);
-ld_mean=mean(LD.bio(:,lyr),2);
-b_mean=mean(BENT.bio(:,lyr),2);
-
-% Plots in space
-grid = csvread([cpath 'grid_csv.csv']);
+%% Plots in space
 %fix lon shift
 id=find(grid(:,2)<-180);
 grid(id,2)=grid(id,2)+360;
@@ -46,9 +43,10 @@ x=-180:180;
 y=-90:90;
 [X,Y]=meshgrid(x,y);
 
-Zmd=griddata(grid(:,2),grid(:,3),md_mean,X,Y);
-Zld=griddata(grid(:,2),grid(:,3),ld_mean,X,Y);
-Zb=griddata(grid(:,2),grid(:,3),b_mean,X,Y);
+%Biomass
+Zmd=griddata(grid(:,2),grid(:,3),md_smean(:,1),X,Y);
+Zld=griddata(grid(:,2),grid(:,3),ld_smean(:,1),X,Y);
+Zb=griddata(grid(:,2),grid(:,3),b_smean(:,1),X,Y);
 Zi=griddata(seafl(:,2),seafl(:,1),invert,X,Y);
 Zf=griddata(seafl(:,2),seafl(:,1),fish,X,Y);
 
@@ -67,7 +65,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT.png'])
+print('-dpng',[ppath 'Hist_fished_global_BENT_Wei.png'])
 
 % D
 figure(2)
@@ -81,7 +79,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_Demersal.png'])
+print('-dpng',[ppath 'Hist_fished_global_Dem_Wei.png'])
 
 % Inv
 figure(3)
@@ -217,20 +215,18 @@ bar(skill(1,:),'k')
 title('Correlation coefficient')
 set(gca,'XTickLabel',simtex)
 stamp(cfile)
-%print('-depsc2',[ppath 'corr_coeff_Wei'])
 
 subplot(2,2,2)
 bar(skill(2,:),'k')
 title('Root mean square error')
 set(gca,'XTickLabel',simtex)
-%print('-depsc2',[ppath 'RMSE_Wei'])
 
 subplot(2,2,3)
 bar(skill(6,:),'k')
 title('Modeling efficiency')
 set(gca,'XTickLabel',simtex)
 %print('-depsc2',[ppath 'MEF_Wei'])
-print('-dpng',[ppath 'corr_rmse_mef_Wei'])
+print('-dpng',[ppath 'Hist_fished_corr_rmse_mef_Wei'])
 
 
 %% Taylor diagram using Joliff corr coeff
@@ -269,7 +265,7 @@ axis([0 2 0 2.1])
 title('Joliff Taylor diagram')
 legend([' ' simtex])
 legend('location','northeast')
-print('-dpng',[ppath 'Taylor_Joliff_Wei'])
+%print('-dpng',[ppath 'Hist_fished_Taylor_Joliff_Wei'])
 
 %% Taylor diagram using corr coeff calculated
 theta2=acos(skill(1,:));
@@ -288,7 +284,7 @@ axis([0 2 0 2.1])
 title('Taylor diagram')
 legend([' ' simtex])
 legend('location','northeast')
-print('-dpng',[ppath 'Taylor_Wei'])
+print('-dpng',[ppath 'Hist_fished_Taylor_Wei'])
 
 
 %% Best
@@ -310,66 +306,5 @@ end
 
 T=table(metrics,best);
 
-save([dpath 'skill_Wei.mat'],'model','obs','metrics','skill');
-
-%% Save Wei biomasses at locations
-% glon = seafl(:,2);
-% glat = seafl(:,1);
-% 
-% % Georges Bank (NEP)
-% lon=find(glon<=-66 & glon>=-67);
-% lat=find(glat<=42 & glat>=41);
-% gid=intersect(lon,lat);
-% 
-% % Eastern Bering Sea (Pribs)
-% lon=find(glon<=-169 & glon>=-170);
-% lat=find(glat<=57 & glat>=56);
-% eid=intersect(lon,lat);
-% 
-% % Subarctic Pacific Gyre (Ocean Station Papa)
-% lon=find(glon<=-145 & glon>=-146);
-% lat=find(glat<=51 & glat>=50);
-% pid=intersect(lon,lat);
-% 
-% % HOT
-% lon=find(glon<=-157 & glon>=-158);
-% lat=find(glat<=23 & glat>=22);
-% hid=intersect(lon,lat);
-% 
-% % BATS
-% lon=find(glon<=-64 & glon>=-65);
-% lat=find(glat<=32 & glat>=31);
-% bid=intersect(lon,lat);
-% 
-% % North Sea
-% lon=find(glon<=4 & glon>=3);
-% lat=find(glat<=57 & glat>=56);
-% nid=intersect(lon,lat);
-% 
-% % E Eq Pac
-% lon=find(glon<=-110 & glon>=-111);
-% lat=find(glat<=5.5 & glat>=5);
-% qid=intersect(lon,lat);
-% 
-% % Subpolar W Pac station K2: 47oN, 160oE
-% lon=find(glon<=161 & glon>=160);
-% lat=find(glat<=48 & glat>=47);
-% kid=intersect(lon,lat);
-% 
-% % Subtropical W Pac station S1: 30oN, 145oE
-% lon=find(glon<=146 & glon>=145);
-% lat=find(glat<=31 & glat>=30);
-% sid=intersect(lon,lat);
-% 
-% names={'Georges Bank','Eastern Bering Sea','Ocean Station Papa',...
-%     'HOT','BATS','North Sea','Eastern Equatorial Pacific','K2','S1'};
-% ids=[gid;eid;pid;hid;bid;nid;qid;kid;sid];
-% B = invert(ids);
-% F = fish(ids);
-% 
-% %
-% T=table(names',B,F,...
-%     'VariableNames',{'Location','Inverts','Fish'});
-% writetable(T,'Wei_inverts_fish_gWWm2_locs.csv','Delimiter',',');
-% save('Wei_inverts_fish_gWWm2_locs.mat','T');
+save([dpath 'Hist_fished_skill_Wei.mat'],'model','obs','metrics','skill');
 
