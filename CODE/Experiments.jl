@@ -2832,7 +2832,7 @@ function Forecast_pristine()
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
-	YEARS = 95
+	YEARS = 80 #95
   global DAYS = 365
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 
@@ -2858,15 +2858,15 @@ function Forecast_pristine()
 	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_p.nc"),"biomass");
 	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_d.nc"),"biomass");
 	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_bent.nc"),"biomass");
-	Sml_f.bio = sf[:,17400];
-	Sml_p.bio = sp[:,17400];
-	Sml_d.bio = sd[:,17400];
-	Med_f.bio = mf[:,17400];
-	Med_p.bio = mp[:,17400];
-	Med_d.bio = md[:,17400];
-	Lrg_p.bio = lp[:,17400];
-	Lrg_d.bio = ld[:,17400];
-	BENT.mass = bent[:,17400];
+	Sml_f.bio = sf[:,1740];
+	Sml_p.bio = sp[:,1740];
+	Sml_d.bio = sd[:,1740];
+	Med_f.bio = mf[:,1740];
+	Med_p.bio = mp[:,1740];
+	Med_d.bio = md[:,1740];
+	Lrg_p.bio = lp[:,1740];
+	Lrg_d.bio = ld[:,1740];
+	BENT.mass = bent[:,1740];
 
 	############### Setup NetCDF save
 	# #! Init netcdf file for storage
@@ -2892,15 +2892,15 @@ function Forecast_pristine()
 	tim = collect(1:12*YEARS);
 
 	# #! setup netcdf path to store to
-	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_sml_f.nc")
-	file_sml_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_sml_p.nc")
-	file_sml_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_sml_d.nc")
-	file_med_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_med_f.nc")
-	file_med_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_med_p.nc")
-	file_med_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_med_d.nc")
-	file_lrg_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_lrg_p.nc")
-	file_lrg_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_lrg_d.nc")
-	file_bent = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_bent.nc")
+	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_sml_f.nc")
+	file_sml_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_sml_p.nc")
+	file_sml_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_sml_d.nc")
+	file_med_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_med_f.nc")
+	file_med_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_med_p.nc")
+	file_med_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_med_d.nc")
+	file_lrg_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_lrg_p.nc")
+	file_lrg_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_lrg_d.nc")
+	file_bent = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2006-2085_bent.nc")
 
 	# #! remove if already in existence
 	isfile(file_sml_f) ? rm(file_sml_f) : nothing

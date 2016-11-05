@@ -21,22 +21,20 @@ grid = csvread([cpath 'grid_csv.csv']);
 
 %% 
 %1950-2000 SAUP average
-id = find(yr>=1950 & yr<2000);
+id = find(yr>1950 & yr<=2000);
 
 slme_mcatch = nanmean(lme_catch(id,:));
 slme_mcatch = slme_mcatch';
 
-%Top 10 yrs SAUP
-tot_catch = sum(lme_catch);
-[sort_lme_catch,id10] = sort(tot_catch,'descend');
-yrs10 = yr(id10(1:10));
-slme_mcatch10 = nanmean(lme_catch(id10(1:10),:));
-slme_mcatch10 = slme_mcatch10';
 
-%Top 20 yrs SAUP
-yrs20 = yr(id10(1:20));
-slme_mcatch20 = nanmean(lme_catch(id10(1:20),:));
-slme_mcatch20 = slme_mcatch20';
+slme_mcatch10 = NaN*ones(size(slme_mcatch));
+slme_mcatch20 = NaN*ones(size(slme_mcatch));
+%Top 10 & 20 yrs SAUP
+for i=1:66
+    sort_lme_catch = sort(lme_catch(:,i),'descend');
+    slme_mcatch10(i) = nanmean(sort_lme_catch(1:10));
+    slme_mcatch20(i) = nanmean(sort_lme_catch(1:20));
+end
 
 %POEM LME biomass in MT
 plme_mcatch = nansum(lme_mcatch00,2) * 1e-6;
@@ -76,7 +74,7 @@ plot(slme_mcatch,yraw,'r'); hold on;
 axis([0 9e6 0 9e6])
 xlabel('SAUP catch (MT)')
 ylabel('POEM catch (MT)')
-title('1950-2000 mean catch')
+title('1951-2000 mean catch')
 print('-dpng',[ppath 'hist_fished_SAUP_catch_comp.png'])
 
 figure(2)
@@ -87,7 +85,7 @@ plot(l10s,ylog,'r'); hold on;
 axis([1 7 1 7])
 xlabel('log10 SAUP catch (MT)')
 ylabel('log10 POEM catch (MT)')
-title('1950-2000 mean catch')
+title('1951-2000 mean catch')
 print('-dpng',[ppath 'hist_fished_SAUP_log10catch_comp.png'])
 
 figure(3)
@@ -96,7 +94,7 @@ plot(log10(slme_mcatch10),log10(plme_mcatch),'.k','MarkerSize',25); hold on;
 axis([1 7 1 7])
 xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
-title('1950-2000 mean catch')
+title('1951-2000 mean catch')
 print('-dpng',[ppath 'hist_fished_SAUP10_log10catch_comp.png'])
 
 figure(4)
@@ -105,7 +103,7 @@ plot(log10(slme_mcatch20),log10(plme_mcatch),'.k','MarkerSize',25); hold on;
 axis([1 7 1 7])
 xlabel('log10 SAUP catch (MT) top 20 yrs')
 ylabel('log10 POEM catch (MT)')
-title('1950-2000 mean catch')
+title('1951-2000 mean catch')
 print('-dpng',[ppath 'hist_fished_SAUP20_log10catch_comp.png'])
 
 
@@ -126,9 +124,9 @@ subplot(2,2,1)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(nwa)),log10(plme_mcatch(nwa)),'.c','MarkerSize',25); hold on;
 axis([4 7 4 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
-title('NW Atl 1950-2000 mean catch')
+title('NW Atl 1951-2000 mean catch')
 for i=1:length(nwa)
     text(log10(slme_mcatch10(nwa(i))),log10(plme_mcatch(nwa(i))),num2str(nwa(i)),...
         'Color','k','HorizontalAlignment','center')
@@ -138,7 +136,7 @@ subplot(2,2,2)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(nea)),log10(plme_mcatch(nea)),'.c','MarkerSize',25); hold on;
 axis([4 7 4 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('NE Atl')
 for i=1:length(nea)
@@ -150,7 +148,7 @@ subplot(2,2,3)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(nwp)),log10(plme_mcatch(nwp)),'.c','MarkerSize',25); hold on;
 axis([3 7 3 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('NW Pac')
 for i=1:length(nwp)
@@ -162,7 +160,7 @@ subplot(2,2,4)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(nep)),log10(plme_mcatch(nep)),'.c','MarkerSize',25); hold on;
 axis([2 7 2 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('NE Pac')
 for i=1:length(nep)
@@ -176,9 +174,9 @@ subplot(2,3,1)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(afr)),log10(plme_mcatch(afr)),'.c','MarkerSize',25); hold on;
 axis([4 7 4 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
-title('Africa 1950-2000 mean catch')
+title('Africa 1951-2000 mean catch')
 for i=1:length(afr)
     text(log10(slme_mcatch10(afr(i))),log10(plme_mcatch(afr(i))),num2str(afr(i)),...
         'Color','k','HorizontalAlignment','center')
@@ -188,7 +186,7 @@ subplot(2,3,2)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(aus)),log10(plme_mcatch(aus)),'.c','MarkerSize',25); hold on;
 axis([4 7 4 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('Australia')
 for i=1:length(aus)
@@ -200,7 +198,7 @@ subplot(2,3,3)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(ind)),log10(plme_mcatch(ind)),'.c','MarkerSize',25); hold on;
 axis([4 7 4 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('India-Indonesia')
 for i=1:length(ind)
@@ -212,7 +210,7 @@ subplot(2,3,4)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(crb)),log10(plme_mcatch(crb)),'.c','MarkerSize',25); hold on;
 axis([5 7 5 7])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('Caribbean')
 for i=1:length(crb)
@@ -224,7 +222,7 @@ subplot(2,3,5)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(sam)),log10(plme_mcatch(sam)),'.c','MarkerSize',25); hold on;
 axis([5 8 5 8])
-xlabel('log10 SAUP catch (MT) top 20 yrs')
+xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('S Amer')
 for i=1:length(sam)
@@ -243,7 +241,7 @@ plot(log10(slme_mcatch10(keep)),log10(plme_mcatch(keep)),'.k','MarkerSize',25); 
 axis([4.5 7.5 4.5 7.5])
 xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
-title('1950-2000 mean catch without Polar and Australia')
+title('1951-2000 mean catch without Polar and Australia')
 % for i=1:length(keep)
 %     text(log10(slme_mcatch10(keep(i))),log10(plme_mcatch(keep(i))),num2str(keep(i)),...
 %         'Color','k','HorizontalAlignment','center')
@@ -266,7 +264,7 @@ plot(l10s,l10p,'.k','MarkerSize',25); hold on;
 axis([1 7 1 7])
 xlabel('log10 SAUP catch (MT)')
 ylabel('log10 POEM catch (MT)')
-title('1950-2000 mean catch')
+title('1951-2000 mean catch')
 text(2,6,['r = ' num2str(rlog(2,1))])
 print('-dpng',[ppath 'hist_fished_SAUP_log10catch_comp_rp.png'])
 
@@ -277,6 +275,16 @@ axis([1 7 1 7])
 xlabel('log10 SAUP catch (MT)')
 ylabel('log10 POEM catch (MT)')
 text(2,6,['r = ' num2str(rlogO(2,1))])
-title('1950-2000 mean catch without Polar and Australia')
+title('1951-2000 mean catch without Polar and Australia')
 print('-dpng',[ppath 'hist_fished_SAUP_log10catch_comp_out_rp.png'])
+%%
+figure(10)
+plot(x,x,'--k'); hold on;
+plot(log10(slme_mcatch(keep)),log10(plme_mcatch(keep)),'.k','MarkerSize',25); hold on;
+axis([4 8 4 8])
+xlabel('log10 SAUP catch (MT)')
+ylabel('log10 POEM catch (MT)')
+text(5,7.5,['r = ' num2str(rlogO(2,1))])
+title('1951-2000 mean catch without Australia and polar regions')
+print('-dpng',[ppath 'hist_fished_SAUP_log10catch_comp_out_rp_crop.png'])
 

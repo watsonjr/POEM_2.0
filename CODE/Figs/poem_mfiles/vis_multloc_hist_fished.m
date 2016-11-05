@@ -19,6 +19,35 @@ load([dpath 'Means_hist_fished_' cfile '.mat']);
 load([cpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
 grid = csvread([cpath 'grid_csv.csv']);
 
+%% Time series
+yr=1865:10:2005;
+
+all_bio = sp_mean+sf_mean+sd_mean+mp_mean+mf_mean+md_mean+lp_mean+ld_mean;
+all_mcatch = mp_mcatch+mf_mcatch+md_mcatch+lp_mcatch+ld_mcatch;
+
+all_bio_ts = nansum(all_bio);
+all_bio_ts = all_bio_ts(2:16);
+
+all_mcatch_ts = nansum(all_mcatch);
+all_mcatch_ts = all_mcatch_ts(2:16);
+
+save([dpath 'All_biom_mcatch_hist_fished.mat'],'all_bio','all_mcatch');
+
+figure(70)
+plot(yr,all_bio_ts,'k','LineWidth',2)
+xlabel('Year')
+ylabel('All fish mean biomass (g/m^2)')
+title('Historic fished')
+print('-dpng',[ppath 'Hist_fished_ts_mbio.png'])
+
+figure(71)
+plot(yr,all_mcatch_ts*365,'k','LineWidth',2)
+xlabel('Year')
+ylabel('All fish mean annual catch (g/m^2)')
+title('Historic fished')
+print('-dpng',[ppath 'Hist_fished_ts_mcatch.png'])
+
+
 %% Pick which time period mean
 % 1950-2000
 sp_smean=sp_mean5000;

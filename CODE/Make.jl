@@ -29,9 +29,9 @@ oneloc_hind_pristine = false
 oneloc_fore_pristine = false
 spinup_pristine = false
 pre_industrial = false
-historic_pristine = true
+historic_pristine = false
 historic_fished = false
-forecast_pristine = false
+forecast_pristine = true
 forecast_fished = false
 
 if testoneloc

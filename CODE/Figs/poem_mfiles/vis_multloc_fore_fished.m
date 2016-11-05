@@ -31,6 +31,34 @@ lp_smean=lp_mean5000;
 ld_smean=ld_mean5000;
 b_smean=b_mean5000;
 
+%% Time series
+yr=2010:10:2100;
+
+all_bio = sp_mean+sf_mean+sd_mean+mp_mean+mf_mean+md_mean+lp_mean+ld_mean;
+all_mcatch = mp_mcatch+mf_mcatch+md_mcatch+lp_mcatch+ld_mcatch;
+
+all_bio_ts = nansum(all_bio);
+all_bio_ts = all_bio_ts(2:11);
+
+all_mcatch_ts = nansum(all_mcatch);
+all_mcatch_ts = all_mcatch_ts(2:11);
+
+save([dpath 'All_biom_mcatch_fore_fished.mat'],'all_bio','all_mcatch');
+
+figure(70)
+plot(yr,all_bio_ts,'k','LineWidth',2)
+xlabel('Year')
+ylabel('All fish mean biomass (g/m^2)')
+title('Future fished')
+print('-dpng',[ppath 'Fore_fished_ts_mbio.png'])
+
+figure(71)
+plot(yr,all_mcatch_ts*365,'k','LineWidth',2)
+xlabel('Year')
+ylabel('All fish mean annual catch (g/m^2)')
+title('Future fished')
+print('-dpng',[ppath 'Fore_fished_ts_mcatch.png'])
+
 %% Plots in space
 %fix lon shift
 id=find(grid(:,2)<-180);
@@ -543,8 +571,8 @@ CAllM2 = Cmp2+Cmf2+Cmd2;
 CAllL2 = Clp2+Cld2;
 
 %% plot info
-GEOLON_T = double(geolon_t);
-GEOLAT_T = double(geolat_t);
+geolon_t = double(geolon_t);
+geolat_t = double(geolat_t);
 plotminlat=-90; %Set these bounds for your data
 plotmaxlat=90;
 plotminlon=-180;
