@@ -134,6 +134,34 @@ tot_all_histf = all_histf .* repmat(grid(:,5),1,7);
 clear lme_bio00 lme_mbio00 biome_mbio50 sf_mean5000 sp_mean5000 sd_mean5000
 clear mf_mean5000 mp_mean5000 md_mean5000 b_mean5000 lp_mean5000 ld_mean5000
 
+%% Fore pristine
+load([dpath 'LME_fore_pristine_' cfile '.mat'],'lme_bio00','lme_mbio00');
+load([dpath 'Biomes_fore_pristine_' cfile '.mat'],'biome_mbio50');
+load([dpath 'Means_fore_pristine_' cfile '.mat'],'sf_mean5000','sp_mean5000',...
+    'sd_mean5000','mf_mean5000','mp_mean5000','md_mean5000','b_mean5000',...
+    'lp_mean5000','ld_mean5000');
+
+forep_g = lme_bio00;
+forep_gm2 = lme_mbio00;
+
+forep_biome = biome_mbio50;
+
+%Mean global biomass in g/m2
+all_forep(:,1) = sf_mean5000+sp_mean5000+sd_mean5000+mf_mean5000+...
+    mp_mean5000+md_mean5000+lp_mean5000+ld_mean5000;
+all_forep(:,2) = sf_mean5000+mf_mean5000; %all f
+all_forep(:,3) = sp_mean5000+mp_mean5000+lp_mean5000; %all p
+all_forep(:,4) = sd_mean5000+md_mean5000+ld_mean5000; %all d
+all_forep(:,5) = sf_mean5000+sp_mean5000+sd_mean5000; %all s
+all_forep(:,6) = mf_mean5000+mp_mean5000+md_mean5000; %all m
+all_forep(:,7) = lp_mean5000+ld_mean5000; %all l
+
+%Mean total global biomass in g
+tot_all_forep = all_forep .* repmat(grid(:,5),1,7);
+
+clear lme_bio00 lme_mbio00 biome_mbio50 sf_mean5000 sp_mean5000 sd_mean5000
+clear mf_mean5000 mp_mean5000 md_mean5000 b_mean5000 lp_mean5000 ld_mean5000
+
 %% Fore fished
 load([dpath 'LME_fore_fished_' cfile '.mat'],'lme_bio00','lme_mbio00');
 load([dpath 'Biomes_fore_fished_' cfile '.mat'],'biome_mbio50');
@@ -175,23 +203,32 @@ Tsum_histf = nansum(tot_all_histf);
 Tsum_foref = nansum(tot_all_foref);
 
 %Indust vs. Preindust
-Mdiff_histp_pre = (Msum_histp-Msum_pre) ./ Msum_pre;
-Tdiff_histp_pre = (Tsum_histp-Tsum_pre) ./ Tsum_pre;
+Mdiff_histp_pre = (Msum_histp - Msum_pre) ./ Msum_pre;
+Tdiff_histp_pre = (Tsum_histp - Tsum_pre) ./ Tsum_pre;
+
 %Hist fishing vs. PreIndust
-Mdiff_histf_pre = (Msum_histf-Msum_pre) ./ Msum_pre;
-Tdiff_histf_pre = (Tsum_histf-Tsum_pre) ./ Tsum_pre;
+Mdiff_histf_pre = (Msum_histf - Msum_pre) ./ Msum_pre;
+Tdiff_histf_pre = (Tsum_histf - Tsum_pre) ./ Tsum_pre;
+
 %Hist fishing vs. no fishing
-Mdiff_histf_histp = (Msum_histf-Msum_histp) ./ Msum_histp;
-Tdiff_histf_histp = (Tsum_histf-Tsum_histp) ./ Tsum_histp;
+Mdiff_histf_histp = (Msum_histf - Msum_histp) ./ Msum_histp;
+Tdiff_histf_histp = (Tsum_histf - Tsum_histp) ./ Tsum_histp;
+
 %Future fishing vs. historic no fishing
-Mdiff_foref_histp = (Msum_foref-Msum_histp) ./ Msum_histp;
-Tdiff_foref_histp = (Tsum_foref-Tsum_histp) ./ Tsum_histp;
+Mdiff_foref_histp = (Msum_foref - Msum_histp) ./ Msum_histp;
+Tdiff_foref_histp = (Tsum_foref - Tsum_histp) ./ Tsum_histp;
+
 %Future fishing vs. historic fishing
-Mdiff_foref_histf = (Msum_foref-Msum_histf) ./ Msum_histf;
-Tdiff_foref_histf = (Tsum_foref-Tsum_histf) ./ Tsum_histf;
+Mdiff_foref_histf = (Msum_foref - Msum_histf) ./ Msum_histf;
+Tdiff_foref_histf = (Tsum_foref - Tsum_histf) ./ Tsum_histf;
+
+%Future fishing vs. future no fishing
+Mdiff_foref_forep = (Msum_foref - Msum_forep) ./ Msum_forep;
+Tdiff_foref_forep = (Tsum_foref - Tsum_forep) ./ Tsum_forep;
+
 %Future no fishing vs. historic no fishing
-Mdiff_forep_histp = (Msum_forep-Msum_histp) ./ Msum_histp;
-Tdiff_forep_histp = (Tsum_forep-Tsum_histp) ./ Tsum_histp;
+Mdiff_forep_histp = (Msum_forep - Msum_histp) ./ Msum_histp;
+Tdiff_forep_histp = (Tsum_forep - Tsum_histp) ./ Tsum_histp;
 
 %% Quad figures
 %example
@@ -303,6 +340,90 @@ set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
     'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
 title('Large')
 print('-dpng',[ppath 'Global_fish_mean_biomL_size_histp_quad.png'])
+
+%% Bar plots by simulation
+
+% Historic vs. Pre-industrial
+hpc(1,:) = Mdiff_histp_pre;
+hpc(2,:) = Mdiff_histf_histp;
+hpc(3,:) = Mdiff_histf_pre;
+
+%Total
+figure(6)
+bar(hpc(:,1)*100)
+colormap(cmap3)
+%ylim([-40 40])
+set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
+ylabel('Percent change')
+%xlabel('Driver')
+title('Global change in mean fish biomass 1951-2000 vs. 1801-1850')
+print('-dpng',[ppath 'Global_mean_biom_pre_hist.png'])
+
+%Type
+figure(7)
+bar(hpc(:,2:4)*100)
+colormap(cmap4)
+%ylim([-40 40])
+set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
+ylabel('Percent change')
+legend('Forage','Pelagic','Demersal')
+legend('location','northwest')
+title('Global change in mean fish biomass 1951-2000 vs. 1801-1850')
+print('-dpng',[ppath 'Global_mean_biom_type_pre_hist.png'])
+
+%Size
+figure(8)
+bar(hpc(:,5:7)*100)
+colormap(cmap4)
+%ylim([-40 40])
+set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
+ylabel('Percent change')
+legend('S','M','L')
+legend('location','northwest')
+title('Global change in mean fish biomass 1951-2000 vs. 1801-1850')
+print('-dpng',[ppath 'Global_mean_biom_size_pre_hist.png'])
+
+
+%% Future vs. Historic 
+fhc(1,:) = Mdiff_forep_histp;
+fhc(2,:) = Mdiff_foref_forep;
+fhc(3,:) = Mdiff_foref_histf;
+fhc(4,:) = Mdiff_foref_histp;
+
+%Total
+figure(9)
+bar(fhc(:,1)*100)
+colormap(cmap3)
+%ylim([-40 40])
+set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristine'})
+ylabel('Percent change')
+%xlabel('Driver')
+title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+print('-dpng',[ppath 'Global_mean_biom_hist_fore.png'])
+
+%Type
+figure(10)
+bar(fhc(:,2:4)*100)
+colormap(cmap4)
+%ylim([-40 40])
+set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristine'})
+ylabel('Percent change')
+legend('Forage','Pelagic','Demersal')
+legend('location','northwest')
+title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+print('-dpng',[ppath 'Global_mean_biom_type_hist_fore.png'])
+
+%Size
+figure(11)
+bar(fhc(:,5:7)*100)
+colormap(cmap4)
+%ylim([-40 40])
+set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristine'})
+ylabel('Percent change')
+legend('S','M','L')
+legend('location','northwest')
+title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+print('-dpng',[ppath 'Global_mean_biom_size_hist_fore.png'])
 
 %% Bar plot by size
 ML_histf = nansum(all_histf(:,6) + all_histf(:,7));
