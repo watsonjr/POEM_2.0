@@ -27,11 +27,11 @@ include("Experiments.jl")
 testoneloc = false
 oneloc_hind_pristine = false
 oneloc_fore_pristine = false
-spinup_pristine = false
+spinup_pristine = true
 pre_industrial = false
 historic_pristine = false
 historic_fished = false
-forecast_pristine = true
+forecast_pristine = false
 forecast_fished = false
 
 if testoneloc

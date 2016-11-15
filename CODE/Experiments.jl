@@ -33,7 +33,7 @@ function Testoneloc()
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
-	simname = "Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001_fish05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	for L = 1:9
 		ID = ids[L]
@@ -2832,7 +2832,7 @@ function Forecast_pristine()
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
-	YEARS = 15 #95
+	YEARS = 95
   global DAYS = 365
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 
@@ -2840,7 +2840,7 @@ function Forecast_pristine()
 	const global NX = 48111
 	const global ID = collect(1:NX);
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	#! Initialize
 	phen=0;
@@ -2849,42 +2849,25 @@ function Forecast_pristine()
 	Lrg_d.td[1:NX] = 0.0;
 	ENVR = sub_init_env(ID);
 	#! read in final biomass from historic run
-	# sf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_sml_f.nc"),"biomass");
-	# sp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_sml_p.nc"),"biomass");
-	# sd=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_sml_d.nc"),"biomass");
-	# mf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_med_f.nc"),"biomass");
-	# mp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_med_p.nc"),"biomass");
-	# md=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_med_d.nc"),"biomass");
-	# lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_p.nc"),"biomass");
-	# ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_d.nc"),"biomass");
-	# bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_bent.nc"),"biomass");
-	# Sml_f.bio = sf[:,1740];
-	# Sml_p.bio = sp[:,1740];
-	# Sml_d.bio = sd[:,1740];
-	# Med_f.bio = mf[:,1740];
-	# Med_p.bio = mp[:,1740];
-	# Med_d.bio = md[:,1740];
-	# Lrg_p.bio = lp[:,1740];
-	# Lrg_d.bio = ld[:,1740];
-	# BENT.mass = bent[:,1740];
-	sf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_sml_f.nc"),"biomass");
-	sp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_sml_p.nc"),"biomass");
-	sd=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_sml_d.nc"),"biomass");
-	mf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_med_f.nc"),"biomass");
-	mp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_med_p.nc"),"biomass");
-	md=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_med_d.nc"),"biomass");
-	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_lrg_p.nc"),"biomass");
-	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_lrg_d.nc"),"biomass");
-	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_fore_pristine2006-2085_bent.nc"),"biomass");
-	Sml_f.bio = sf[:,960];
-	Sml_p.bio = sp[:,960];
-	Sml_d.bio = sd[:,960];
-	Med_f.bio = mf[:,960];
-	Med_p.bio = mp[:,960];
-	Med_d.bio = md[:,960];
-	Lrg_p.bio = lp[:,960];
-	Lrg_d.bio = ld[:,960];
-	BENT.mass = bent[:,960];
+	sf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_sml_f.nc"),"biomass");
+	sp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_sml_p.nc"),"biomass");
+	sd=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_sml_d.nc"),"biomass");
+	mf=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_med_f.nc"),"biomass");
+	mp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_med_p.nc"),"biomass");
+	md=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_med_d.nc"),"biomass");
+	lp=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_p.nc"),"biomass");
+	ld=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_lrg_d.nc"),"biomass");
+	bent=ncread(string("/Volumes/GFDL/NC/", simname, "/Data_hist_pristine_bent.nc"),"biomass");
+	Sml_f.bio = sf[:,1740];
+	Sml_p.bio = sp[:,1740];
+	Sml_d.bio = sd[:,1740];
+	Med_f.bio = mf[:,1740];
+	Med_p.bio = mp[:,1740];
+	Med_d.bio = md[:,1740];
+	Lrg_p.bio = lp[:,1740];
+	Lrg_d.bio = ld[:,1740];
+	BENT.mass = bent[:,1740];
+
 
 	############### Setup NetCDF save
 	# #! Init netcdf file for storage
@@ -2910,15 +2893,15 @@ function Forecast_pristine()
 	tim = collect(1:12*YEARS);
 
 	# #! setup netcdf path to store to
-	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_sml_f.nc")
-	file_sml_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_sml_p.nc")
-	file_sml_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_sml_d.nc")
-	file_med_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_med_f.nc")
-	file_med_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_med_p.nc")
-	file_med_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_med_d.nc")
-	file_lrg_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_lrg_p.nc")
-	file_lrg_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_lrg_d.nc")
-	file_bent = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine2086-2100_bent.nc")
+	file_sml_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_sml_f.nc")
+	file_sml_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_sml_p.nc")
+	file_sml_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_sml_d.nc")
+	file_med_f = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_med_f.nc")
+	file_med_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_med_p.nc")
+	file_med_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_med_d.nc")
+	file_lrg_p = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_lrg_p.nc")
+	file_lrg_d = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_lrg_d.nc")
+	file_bent = string("/Volumes/GFDL/NC/",simname, "/Data_fore_pristine_bent.nc")
 
 	# #! remove if already in existence
 	isfile(file_sml_f) ? rm(file_sml_f) : nothing
@@ -3154,7 +3137,7 @@ function Forecast_pristine()
 	###################### Run the Model
 	#! Run model with no fishing
 	MNT = 0
-	for YR = 81:(80+YEARS) #1:YEARS # years
+	for YR = 1:YEARS # years
 		#! Load a year's COBALT data
 		ti = string(2005+YR)
 		COBALT = load(string("/Volumes/GFDL/POEM_JLD/rcp85/Data_rcp85_",ti[1:end],".jld"));
@@ -3512,7 +3495,7 @@ function Forecast_fished()
 	const global NX = 48111
 	const global ID = collect(1:NX);
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05";
+	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05";
 
 	#! Initialize
 	phen=0;

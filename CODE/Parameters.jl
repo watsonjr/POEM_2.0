@@ -118,7 +118,7 @@ function make_parameters(harv)
 	const global K_a = 0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.30	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 4.8 		# 10 g^(1-p)/yr at 10C; 4.8 at 10C NS mizer
 
 	###! Consumption constants
@@ -131,7 +131,7 @@ function make_parameters(harv)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 1.0
+	const global rfrac = 0.01
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -144,7 +144,7 @@ function make_parameters(harv)
 	#Andersen & Beyer 2013 = 0.35 * 4.5 * s^(-0.25) (includes predation, excludes fishing)
 	const global Nat_mrt = 0.44 / 365
 	#0=none, 1=constant, 2=temp-dep, 3=large only, 4=large temp-dep
-	const global MORT = 0
+	const global MORT = 2
 
 	###! Diet Preference Phi (j = prey, i = pred)
 	# The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
