@@ -18,7 +18,7 @@ dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
 load([dpath 'Means_fore_fished_' cfile '.mat']);
-load([cpath 'COBALT_biomes.mat'],'biome_fore');
+load([cpath 'COBALT_biomes_last50yr.mat'],'biome_fore');
 load([gpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
 grid = csvread([gpath 'grid_csv.csv']);
 
@@ -218,7 +218,7 @@ caxis([-0.5 0.5]);
 hcb = colorbar('h');
 ylim(hcb,[-0.5 0.5])                    %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass All Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass All Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_All.png'])
@@ -235,7 +235,7 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass Forage Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Forage Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_AllF.png'])
@@ -252,7 +252,7 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Pelagic Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_AllP.png'])
@@ -269,7 +269,7 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass Demersal Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Demersal Fishes (g m^-^2)')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_AllD.png'])
@@ -287,7 +287,7 @@ caxis([2 4]);
 hcb = colorbar('h');
 ylim(hcb,[2 4])                    %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean annual catch (MT) All Fishes')
+title('2051-2100 log10 mean annual catch (MT) All Fishes')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_catch_All.png'])
@@ -304,7 +304,7 @@ caxis([2 4]);
 hcb = colorbar('h');
 ylim(hcb,[2 4])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean annual catch (MT) Forage Fishes')
+title('2051-2100 log10 mean annual catch (MT) Forage Fishes')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_catch_AllF.png'])
@@ -321,7 +321,7 @@ caxis([2 4]);
 hcb = colorbar('h');
 ylim(hcb,[2 4])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean annual catch (MT) Pelagic Fishes')
+title('2051-2100 log10 mean annual catch (MT) Pelagic Fishes')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_catch_AllP.png'])
@@ -338,7 +338,7 @@ caxis([2 4]);
 hcb = colorbar('h');
 ylim(hcb,[2 4])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean annual catch (MT) Demersal Fishes')
+title('2051-2100 log10 mean annual catch (MT) Demersal Fishes')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_catch_AllD.png'])
@@ -355,7 +355,7 @@ caxis([2 4]);
 hcb = colorbar('h');
 ylim(hcb,[2 4])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean annual catch (MT) Medium Fishes')
+title('2051-2100 log10 mean annual catch (MT) Medium Fishes')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_catch_AllM.png'])
@@ -372,7 +372,7 @@ caxis([2 4]);
 hcb = colorbar('h');
 ylim(hcb,[2 4])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean annual catch (MT) Large Fishes')
+title('2051-2100 log10 mean annual catch (MT) Large Fishes')
 axesmui
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_biomes_catch_AllL.png'])
@@ -393,7 +393,7 @@ caxis([-1 1]);
 hcb = colorbar('h');
 ylim(hcb,[-1 1])                    %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass All Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_Pac_biomes_All.png'])
 
@@ -409,7 +409,7 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass Forage Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_Pac_biomes_AllF.png'])
 
@@ -425,7 +425,7 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_Pac_biomes_AllP.png'])
 
@@ -441,6 +441,6 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2050-2100 log10 mean biomass Demersal Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Fore_fished_Pac_biomes_AllD.png'])

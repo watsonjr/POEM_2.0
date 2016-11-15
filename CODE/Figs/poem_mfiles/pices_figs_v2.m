@@ -17,7 +17,7 @@ ppath = [pp cfile '/'];
 load([gpath 'hindcast_gridspec.mat'],'dat','geolat_t','geolon_t');
 load([gpath 'lme_mask_esm2m.mat']);
 load([gpath 'NPid_esm2m.mat']);
-load([cpath 'COBALT_biomes.mat']);
+load([cpath 'COBALT_biomes_last50yr.mat']);
 grid = csvread([gpath 'grid_csv.csv']);
 
 %Colormap
@@ -232,123 +232,18 @@ Tdiff_foref_forep = (Tsum_foref - Tsum_forep) ./ Tsum_forep;
 Mdiff_forep_histp = (Msum_forep - Msum_histp) ./ Msum_histp;
 Tdiff_forep_histp = (Tsum_forep - Tsum_histp) ./ Tsum_histp;
 
-%% Quad figures
-%example
-Equad(1,1) = 0;
-Equad(1,2) = -0.2;
-Equad(2,1) = 0.1;
-Equad(2,2) = -0.5;
-Equad(3,1:3) = nan;
-Equad(1:2,3) = nan;
-
-Pquad(1,1) = 0;
-Pquad(1,2) = nan;
-Pquad(2,1) = Mdiff_histp_pre(1);
-Pquad(2,2) = Mdiff_histf_pre(1);
-Pquad(3,1:3) = nan;
-Pquad(1:2,3) = nan;
-
-Hquad(1,1) = 0;
-Hquad(1,2) = Mdiff_histf_histp(1);
-Hquad(2,1) = Mdiff_forep_histp(1);
-Hquad(2,2) = Mdiff_foref_histp(1);
-Hquad(3,1:3) = nan;
-Hquad(1:2,3) = nan;
-
-Hquad_s(1,1) = 0;
-Hquad_s(1,2) = Mdiff_histf_histp(5);
-Hquad_s(2,1) = Mdiff_forep_histp(5);
-Hquad_s(2,2) = Mdiff_foref_histp(5);
-Hquad_s(3,1:3) = nan;
-Hquad_s(1:2,3) = nan;
-
-Hquad_m(1,1) = 0;
-Hquad_m(1,2) = Mdiff_histf_histp(6);
-Hquad_m(2,1) = Mdiff_forep_histp(6);
-Hquad_m(2,2) = Mdiff_foref_histp(6);
-Hquad_m(3,1:3) = nan;
-Hquad_m(1:2,3) = nan;
-
-Hquad_l(1,1) = 0;
-Hquad_l(1,2) = Mdiff_histf_histp(7);
-Hquad_l(2,1) = Mdiff_forep_histp(7);
-Hquad_l(2,2) = Mdiff_foref_histp(7);
-Hquad_l(3,1:3) = nan;
-Hquad_l(1:2,3) = nan;
-
-%% Global total
-y=3:-1:1;
-x=1:3;
-[a,b]=meshgrid(x,y);
-
-figure(1)
-pcolor(a,b,Equad)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Time 2','Time 1'})
-title('Global')
-print('-dpng',[ppath 'Quad_eg.png'])
-
-figure(2)
-pcolor(a,b,Pquad)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Historic','Pre-Industrial'})
-title('Global')
-print('-dpng',[ppath 'Global_fish_mean_biom_preindust_quad.png'])
-
-%
-figure(3)
-pcolor(a,b,Hquad)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Global')
-print('-dpng',[ppath 'Global_fish_mean_biom_histp_quad.png'])
-
-%% Global by fish size
-figure(3)
-pcolor(a,b,Hquad_s)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Small')
-print('-dpng',[ppath 'Global_fish_mean_biomS_histp_quad.png'])
-
-figure(4)
-pcolor(a,b,Hquad_m)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Medium')
-print('-dpng',[ppath 'Global_fish_mean_biomM_histp_quad.png'])
-
-figure(5)
-pcolor(a,b,Hquad_l)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Large')
-print('-dpng',[ppath 'Global_fish_mean_biomL_size_histp_quad.png'])
-
-%% Bar plots by simulation
-
 % Historic vs. Pre-industrial
 hpc(1,:) = Mdiff_histp_pre;
 hpc(2,:) = Mdiff_histf_histp;
 hpc(3,:) = Mdiff_histf_pre;
+
+% Future vs. Historic 
+fhc(1,:) = Mdiff_forep_histp;
+fhc(2,:) = Mdiff_foref_forep;
+fhc(3,:) = Mdiff_foref_histf;
+fhc(4,:) = Mdiff_foref_histp;
+
+%% Bar plots by simulation
 
 %Total
 figure(6)
@@ -386,12 +281,6 @@ title('Global change in mean fish biomass 1951-2000 vs. 1801-1850')
 print('-dpng',[ppath 'Global_mean_biom_size_pre_hist.png'])
 
 
-%% Future vs. Historic 
-fhc(1,:) = Mdiff_forep_histp;
-fhc(2,:) = Mdiff_foref_forep;
-fhc(3,:) = Mdiff_foref_histf;
-fhc(4,:) = Mdiff_foref_histp;
-
 %Total
 figure(9)
 bar(fhc(:,1)*100)
@@ -400,7 +289,7 @@ ylim([-18 0])
 set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristine'})
 ylabel('Percent change')
 %xlabel('Driver')
-title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('Global change in mean fish biomass 2051-2100 vs. 1951-2000')
 print('-dpng',[ppath 'Global_mean_biom_hist_fore.png'])
 
 %Type
@@ -412,7 +301,7 @@ set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristi
 ylabel('Percent change')
 legend('Forage','Pelagic','Demersal')
 legend('location','northwest')
-title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('Global change in mean fish biomass 2051-2100 vs. 1951-2000')
 print('-dpng',[ppath 'Global_mean_biom_type_hist_fore.png'])
 
 %Size
@@ -424,7 +313,7 @@ set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristi
 ylabel('Percent change')
 legend('S','M','L')
 legend('location','northwest')
-title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('Global change in mean fish biomass 2051-2100 vs. 1951-2000')
 print('-dpng',[ppath 'Global_mean_biom_size_hist_fore.png'])
 
 %% Bar plot by size
@@ -470,7 +359,7 @@ ts_bio_foref = all_bio_ts(2:11);
 all_mcatch_ts = nansum(all_mcatch);
 ts_mcatch_foref = all_mcatch_ts(2:11);
 clear all_bio all_bio_ts all_mcatch all_mcatch_ts
-%%
+
 yrh=1865:10:2005;
 yrf=2005:10:2100;
 
@@ -512,7 +401,8 @@ Tsum_histp_np = nansum(tot_all_histp(grid_np,:));
 Tsum_histf_np = nansum(tot_all_histf(grid_np,:));
 Tsum_forep_np = nansum(tot_all_forep(grid_np,:));
 Tsum_foref_np = nansum(tot_all_foref(grid_np,:));
-%%
+
+%% Sims
 %Indust vs. Preindust
 Mdiff_histp_pre_np = (Msum_histp_np - Msum_pre_np) ./ Msum_pre_np;
 Tdiff_histp_pre_np = (Tsum_histp_np - Tsum_pre_np) ./ Tsum_pre_np;
@@ -535,10 +425,7 @@ Tdiff_forep_histp_np = (Tsum_forep_np-Tsum_histp_np) ./ Tsum_histp_np;
 Mdiff_foref_forep_np = (Msum_foref_np - Msum_forep_np) ./ Msum_forep_np;
 Tdiff_foref_forep_np = (Tsum_foref_np - Tsum_forep_np) ./ Tsum_forep_np;
 
-% By fish type
-
-
-%% NPac biomes
+% NPac biomes
 
 %Global biomes mean biomass in g/m2
 pre_b(:,1) = nansum(pre_biome(:,1:8),2);
@@ -573,7 +460,7 @@ foref_b(:,5) = nansum(foref_biome(:,1:3),2);
 foref_b(:,6) = nansum(foref_biome(:,4:6),2);
 foref_b(:,7) = nansum(foref_biome(:,7:8),2);
 
-%% NPac biomes grid cells
+% NPac biomes grid cells
 %Preindust
 pb1 = find(biome_pre==1);
 NPpb1 = intersect(NPid,pb1);
@@ -688,32 +575,6 @@ area_foref_np(3) = nansum(grid(grid_npfb3,5));
 %Future vs. historic
 Adiff_foref_histf_np = (area_foref_np - area_histf_np) ./ area_histf_np;
 
-
-%% Put things together
-Mdiff(1,:) = Mdiff_histp_pre;
-Mdiff(2,:) = Mdiff_histf_histp;
-Mdiff(3,:) = Mdiff_foref_histf;
-Mdiff(4,:) = Mdiff_histp_pre_np;
-Mdiff(5,:) = Mdiff_histf_histp_np;
-Mdiff(6,:) = Mdiff_foref_histf_np;
-
-Tdiff(1,:) = Tdiff_histp_pre;
-Tdiff(2,:) = Tdiff_histf_histp;
-Tdiff(3,:) = Tdiff_foref_histf;
-Tdiff(4,:) = Tdiff_histp_pre_np;
-Tdiff(5:7,:) = diff_histp_pre_np;
-Tdiff(8,:) = Tdiff_histf_histp_np;
-Tdiff(9:11,:) = diff_histf_histp_np;
-Tdiff(12,:) = Tdiff_foref_histf_np;
-Tdiff(13:15,:) = diff_foref_histf_np;
-
-MdiffA(1,1) = Mdiff(1,1);
-MdiffA(2,1) = Mdiff(2,1);
-MdiffA(3,1) = Mdiff(3,1);
-MdiffA(1,2) = Mdiff(4,1);
-MdiffA(2,2) = Mdiff(5,1);
-MdiffA(3,2) = Mdiff(6,1);
-
 %% NPac Historic vs. Pre-industrial
 hpc_np(1,:) = Mdiff_histp_pre_np;
 hpc_np(2,:) = Mdiff_histf_histp_np;
@@ -799,6 +660,16 @@ print('-dpng',[ppath 'NPac_mean_biom_size_hist_fore.png'])
 
 
 %% N Pac biomes
+Tdiff(1,:) = Tdiff_histp_pre;
+Tdiff(2,:) = Tdiff_histf_histp;
+Tdiff(3,:) = Tdiff_foref_histf;
+Tdiff(4,:) = Tdiff_histp_pre_np;
+Tdiff(5:7,:) = diff_histp_pre_np;
+Tdiff(8,:) = Tdiff_histf_histp_np;
+Tdiff(9:11,:) = diff_histf_histp_np;
+Tdiff(12,:) = Tdiff_foref_histf_np;
+Tdiff(13:15,:) = diff_foref_histf_np;
+
 TdiffA(1,1) = Tdiff(4,1);
 TdiffA(1,2) = Tdiff(5,1);
 TdiffA(1,3) = Tdiff(6,1);
@@ -826,6 +697,7 @@ colormap(cmap3)
 set(gca,'XTickLabel',{'Industrial CO_2','Fishing','Climate Change + Fishing'})
 ylabel('Percent change')
 xlim([2.5 3.5])
+ylim([-30 30])
 legend('All','LC','ECCS','ECSS')
 legend('location','southwest')
 title('N Pac change in mean fish total abundance (g)')
@@ -837,6 +709,7 @@ biome_diff(2,1:3)=Bdiff_foref_histf_np(:,1)';
 figure(37)
 bar(biome_diff*100)
 colormap(cmap2)
+ylim([-30 30])
 set(gca,'XTickLabel',{'Biome area (m)','Fish biomass (g/m^2)'})
 ylabel('Percent change')
 legend('LC','ECCS','ECSS')
@@ -868,39 +741,6 @@ legend('LC','ECCS','ECSS')
 legend('location','southeast')
 title('N Pac biome change in fish mean abundance')
 print('-dpng',[ppath 'NPacBiome_changes_biomass_foref_histf.png'])
-
-%% Timeseries
-
-% load([dpath 'All_biom_mcatch_hist_fished.mat'],'all_bio','all_mcatch');
-% histf_all_bio = all_bio;
-% histf_all_mcatch = all_mcatch;
-% clear all_bio all_mcatch
-% 
-% load([dpath 'All_biom_mcatch_fore_fished.mat'],'all_bio','all_mcatch');
-% foref_all_bio = all_bio;
-% foref_all_mcatch = all_mcatch;
-% clear all_bio all_mcatch
-% 
-% hyr=1865:10:2005;
-% fyr=2010:10:2100;
-% 
-% yr = [hyr fyr];
-% all_bio_ts = [nansum(histf_all_bio(:,2:end)) nansum(foref_all_bio(:,2:end))];
-% all_mcatch_ts = [nansum(histf_all_mcatch(:,2:end)) nansum(foref_all_mcatch(:,2:end))];
-% 
-% figure(70)
-% plot(yr,all_bio_ts,'k','LineWidth',2)
-% xlabel('Year')
-% ylabel('All fish mean biomass (g/m^2)')
-% %title('Future fished')
-% print('-dpng',[ppath 'TS_mbio.png'])
-% 
-% figure(71)
-% plot(yr,all_mcatch_ts*365,'k','LineWidth',2)
-% xlabel('Year')
-% ylabel('All fish mean annual catch (g/m^2)')
-% %title('Future fished')
-% print('-dpng',[ppath 'TS_mcatch.png'])
 
 
 %% Maps
@@ -950,7 +790,7 @@ caxis([-100 100])
 stamp(cfile)
 print('-dpng',[ppath 'Diff_global_all_foref_histf_v1.png'])
 
-% 
+%%
 figure(22)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
@@ -958,16 +798,16 @@ surfm(geolat_t,geolon_t,Diff_foref_histf_mg*100)
 colormap(cmap_color_rb)              
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-100 100]);
+caxis([-50 50]);
 hcb = colorbar('h');
-ylim(hcb,[-100 100])                   %Set color axis if needed
+ylim(hcb,[-50 50])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('2051-2100 % difference from 1951-2000 mean biomass of all fishes')
 axesmui
 stamp(cfile)
-print('-dpng',[ppath 'Diff_global_all_foref_histf_v2.png'])
+print('-dpng',[ppath 'Diff_global_all_foref_histf_caxis.png'])
 
-% all L
+%% all L
 figure(23)
 axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
     'Grid','off','FLineWidth',1)
@@ -983,6 +823,133 @@ title('2051-2100 % difference from 1951-2000 mean biomass of all fishes')
 stamp(cfile)
 print('-dpng',[ppath 'Diff_NPac_all_foref_histf.png'])
 
+%% Biomes
+figure(50)
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
+    'Grid','off','FLineWidth',1)
+surfm(geolat_t,geolon_t,NPbiome_pre)
+colormap(cmap1)              
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+set(gcf,'renderer','painters')
+title('N Pac Biomes Pre-Industrial 1801-1850')
+print('-dpng',[cpath 'NPac_biomes_preindust.png'])
 
+figure(51)
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
+    'Grid','off','FLineWidth',1)
+surfm(geolat_t,geolon_t,NPbiome_hist)
+colormap(cmap1)          
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+set(gcf,'renderer','painters')
+title('N Pac Biomes Historic 1951-2000')
+print('-dpng',[cpath 'NPac_biomes_historic.png'])
+
+figure(52)
+axesm ('Robinson','MapLatLimit',[0 80],'MapLonLimit',[-255 -60],'frame','on',...
+    'Grid','off','FLineWidth',1)
+surfm(geolat_t,geolon_t,NPbiome_fore)
+colormap(cmap1)          
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+set(gcf,'renderer','painters')
+title('N Pac Biomes Forecast 2051-2100')
+print('-dpng',[cpath 'NPac_biomes_forecast.png'])
+
+%% Size & type Global and NPac together
+% Future vs. Historic 
+fhc_both(1,:) = Mdiff_foref_histf;
+fhc_both(2,:) = Mdiff_foref_histf_np;
+
+%Type
+figure(10)
+bar(fhc_both(:,2:4)*100)
+colormap(cmap4)
+ylim([-30 10])
+set(gca,'XTickLabel',{'Global','N Pac'})
+ylabel('Percent change')
+legend('Forage','Pelagic','Demersal')
+legend('location','northwest')
+title('Change in mean fish biomass 2006-2100 vs. 1951-2000')
+print('-dpng',[ppath 'both_mean_biom_type_hist_fore.png'])
+
+%Size
+figure(11)
+bar(fhc_both(:,5:7)*100)
+colormap(cmap4)
+ylim([-30 10])
+set(gca,'XTickLabel',{'Global','N Pac'})
+ylabel('Percent change')
+legend('S','M','L')
+legend('location','northwest')
+title('Change in mean fish biomass 2006-2100 vs. 1951-2000')
+print('-dpng',[ppath 'both_mean_biom_size_hist_fore.png'])
+
+figure(12)
+subplot(1,2,1)
+bar(fhc_both(:,2:4)*100)
+colormap(cmap4)
+ylim([-30 10])
+set(gca,'XTickLabel',{'Global','N Pac'})
+ylabel('Percent change')
+legend('Forage','Pelagic','Demersal')
+legend('location','northwest')
+text(2.75,12,'Change in mean fish biomass 2006-2100 vs. 1951-2000',...
+    'HorizontalAlignment','center','FontWeight','bold')
+subplot(1,2,2)
+bar(fhc_both(:,5:7)*100)
+colormap(cmap4)
+ylim([-30 10])
+set(gca,'XTickLabel',{'Global','N Pac'})
+ylabel('Percent change')
+legend('S','M','L')
+legend('location','northwest')
+print('-dpng',[ppath 'both_mean_biom_size_type_hist_fore.png'])
+
+%% By biome type & size
+
+%Type
+figure(13)
+bar(diff_foref_histf_np(:,2:4)'*100)
+colormap(cmap2)
+ylim([-50 40])
+set(gca,'XTickLabel',{'Forage','Pelagic','Demersal'})
+ylabel('Percent change')
+legend('LC','ECCS','ECSS')
+legend('location','northwest')
+title('Change in mean fish biomass 2006-2100 vs. 1951-2000')
+print('-dpng',[ppath 'NPacBiome_biom_type_hist_fore.png'])
+
+%Size
+figure(14)
+bar(diff_foref_histf_np(:,5:7)'*100)
+colormap(cmap2)
+ylim([-50 40])
+set(gca,'XTickLabel',{'S','M','L'})
+ylabel('Percent change')
+legend('LC','ECCS','ECSS')
+legend('location','northwest')
+title('Change in mean fish biomass 2006-2100 vs. 1951-2000')
+print('-dpng',[ppath 'NPacBiome_biom_size_hist_fore.png'])
+%%
+figure(15)
+subplot(1,2,1)
+bar(diff_foref_histf_np(:,2:4)'*100)
+colormap(cmap2)
+ylim([-50 40])
+set(gca,'XTickLabel',{'Forage','Pelagic','Demersal'})
+ylabel('Percent change')
+legend('LC','ECCS','ECSS')
+legend('location','northwest')
+text(4.5,45,'Change in mean fish biomass 2006-2100 vs. 1951-2000',...
+    'HorizontalAlignment','center','FontWeight','bold')
+subplot(1,2,2)
+bar(diff_foref_histf_np(:,5:7)'*100)
+colormap(cmap2)
+ylim([-50 40])
+set(gca,'XTickLabel',{'S','M','L'})
+ylabel('Percent change')
+print('-dpng',[ppath 'NPacBiome_biom_size_type_hist_fore.png'])
 
 

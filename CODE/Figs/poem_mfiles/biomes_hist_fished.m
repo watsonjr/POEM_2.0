@@ -18,7 +18,7 @@ dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
 load([dpath 'Means_hist_fished_' cfile '.mat']);
-load([cpath 'COBALT_biomes.mat'],'biome_hist');
+load([cpath 'COBALT_biomes_last50yr.mat'],'biome_hist');
 load([gpath 'hindcast_gridspec.mat'],'geolat_t','geolon_t');
 grid = csvread([gpath 'grid_csv.csv']);
 
