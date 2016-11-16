@@ -8,7 +8,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -53,7 +53,8 @@ cmap4(3,:)=cmap_ppt(5,:);
 %% Preindust
 load([dpath 'LME_preindust_' cfile '.mat']);
 load([dpath 'Biomes_preindust_' cfile '.mat'],'biome_mbio');
-load([dpath 'Preindust_1800-1850_means.mat']); %fcrit30
+%load([dpath 'Preindust_1800-1850_means.mat']); %fcrit30
+load([dpath 'Means_preindust_' cfile '.mat']); %fcrit40
 
 pre_g = lme_bio;
 pre_gm2 = lme_mbio;

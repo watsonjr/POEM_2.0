@@ -648,18 +648,40 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % dp = {npath0;npath25;npath26;npath27;npath28;npath29;npath30;npath31;npath32};
 % sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8'};
 % cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_L_fishing_comp';
-dp = {npath0;npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
-    npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;...
-    npath21;npath22};
-sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1','1.1','1.2',...
-'1.3','1.4','1.5','1.6','1.7','1.8','1.9'};
-cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_fishing_comp';
+% dp = {npath0;npath2;npath4;npath5;npath6;npath7;npath9;npath10;npath11;...
+%     npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;...
+%     npath21;npath22};
+% sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1','1.1','1.2',...
+% '1.3','1.4','1.5','1.6','1.7','1.8','1.9'};
+% cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_fishing_comp';
 % dp = {npath0;npath2;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
 % sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8'};
 % cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_fishing_halfM_comp';
 % dp = {npath0;npath2;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
 % sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8'};
 % cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_fishing_halfL_comp';
+
+% cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE01_MF_fishing_catch';
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6};
+% sims = {'0','.1','.2','.3','.4','.5','.6'};
+% cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE01_MP_fishing_catch';
+% dp = {npath0;npath7;npath8;npath9;npath10;npath11;npath12};
+% sims = {'0','.1','.2','.3','.4','.5','.6'};
+% cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE01_MD_fishing_catch';
+% dp = {npath0;npath13;npath14;npath15;npath16;npath17;npath18};
+% sims = {'0','.1','.2','.3','.4','.5','.6'};
+% cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE01_LP_fishing_catch';
+% dp = {npath0;npath19;npath20;npath21;npath22;npath23;npath24};
+% sims = {'0','.1','.2','.3','.4','.5','.6'};
+% cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE01_LD_fishing_catch';
+% dp = {npath0;npath25;npath26;npath27;npath28;npath29;npath30};
+% sims = {'0','.1','.2','.3','.4','.5','.6'};
+% cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE01_M_fishing_catch';
+% dp = {npath0;npath31;npath32;npath33;npath34;npath35;npath36};
+% sims = {'0','.1','.2','.3','.4','.5','.6'};
+cfile = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE01_L_fishing_catch';
+dp = {npath0;npath37;npath38;npath39;npath40;npath41;npath42};
+sims = {'0','.1','.2','.3','.4','.5','.6'};
 
 sname = 'Spinup_';
 sname2 = '';

@@ -8,7 +8,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -57,6 +57,9 @@ l10p=log10(plme_mcatch);
 ii = find(l10s~=-Inf);
 l10s = l10s(ii);
 l10p = l10p(ii);
+ii2 = find(l10p~=-Inf);
+l10s = l10s(ii2);
+l10p = l10p(ii2);
 
 flog = fit(l10s,l10p,'poly1');
 mlog = flog.p1;
@@ -233,12 +236,12 @@ print('-dpng',[ppath 'hist_fished_SAUP10_log10catch_comp_Other.png'])
 
 %% Drop Arctic, Antarctic, Hawaii, Australia
 
-keep = [1:9,11:38,46:54,59:60,62,65];
+keep = [1:9,11:34,36:38,46:54,59:60,62,65];
 
 figure(7)
 plot(x,x,'--k'); hold on;
 plot(log10(slme_mcatch10(keep)),log10(plme_mcatch(keep)),'.k','MarkerSize',25); hold on;
-axis([4.5 7.5 4.5 7.5])
+axis([4 7.5 4 7.5])
 xlabel('log10 SAUP catch (MT) top 10 yrs')
 ylabel('log10 POEM catch (MT)')
 title('1951-2000 mean catch without Polar and Australia')
@@ -249,7 +252,7 @@ title('1951-2000 mean catch without Polar and Australia')
 print('-dpng',[ppath 'hist_fished_SAUP10_log10catch_comp_out.png'])
 
 %% exclude zero catch because log=-Inf
-nn=[1:63,65:66];
+nn=[1:34,36:63,65:66];
 [rraw,praw] = corrcoef(slme_mcatch,plme_mcatch)
 [rlog,plog] = corrcoef(l10s,l10p)
 [rlog10,plog10] = corrcoef(log10(slme_mcatch10(nn)),log10(plme_mcatch(nn)))

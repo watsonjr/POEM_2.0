@@ -300,7 +300,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_BENT.png'])
 
-% sp
+%% sp
 figure(1)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(Zsp))); hold on;
@@ -314,7 +314,7 @@ caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Preindust_global_SP.png'])
 
-% sf
+%% sf
 figure(2)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(Zsf))); hold on;

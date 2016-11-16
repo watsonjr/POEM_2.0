@@ -12,7 +12,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -34,20 +34,20 @@ lp_mean(:,17)=lp_mean5000;
 ld_mean(:,17)=ld_mean5000;
 b_mean(:,17)=b_mean5000;
 % 1955-2005
-sp_mean(:,18)=sp_mean5505;
-sf_mean(:,18)=sf_mean5505;
-sd_mean(:,18)=sd_mean5505;
-mp_mean(:,18)=mp_mean5505;
-mf_mean(:,18)=mf_mean5505;
-md_mean(:,18)=md_mean5505;
-lp_mean(:,18)=lp_mean5505;
-ld_mean(:,18)=ld_mean5505;
-b_mean(:,18)=b_mean5505;
+% sp_mean(:,18)=sp_mean5505;
+% sf_mean(:,18)=sf_mean5505;
+% sd_mean(:,18)=sd_mean5505;
+% mp_mean(:,18)=mp_mean5505;
+% mf_mean(:,18)=mf_mean5505;
+% md_mean(:,18)=md_mean5505;
+% lp_mean(:,18)=lp_mean5505;
+% ld_mean(:,18)=ld_mean5505;
+% b_mean(:,18)=b_mean5505;
 
 %% Calc biome biomass avgs
 gid = grid(:,1);
 
-sf_biome_bio = NaN*ones(3,18);
+sf_biome_bio = NaN*ones(3,17);
 sf_biome_mbio = sf_biome_bio;
 sp_biome_mbio = sf_biome_bio;
 sd_biome_mbio = sf_biome_bio;
@@ -58,7 +58,7 @@ lp_biome_mbio = sf_biome_bio;
 ld_biome_mbio = sf_biome_bio;
 b_biome_mbio = sf_biome_bio;
 
-for n = 1:18
+for n = 1:17
     sf = NaN*ones(size(geolon_t));
     sp = sf;
     sd = sf;
@@ -105,19 +105,19 @@ biome_mbio50(:,7) = lp_biome_mbio(:,17);
 biome_mbio50(:,8) = ld_biome_mbio(:,17);
 biome_mbio50(:,9) = b_biome_mbio(:,17);
 
-biome_mbio55(:,1) = sf_biome_mbio(:,18);
-biome_mbio55(:,2) = sp_biome_mbio(:,18);
-biome_mbio55(:,3) = sd_biome_mbio(:,18);
-biome_mbio55(:,4) = mf_biome_mbio(:,18);
-biome_mbio55(:,5) = mp_biome_mbio(:,18);
-biome_mbio55(:,6) = md_biome_mbio(:,18);
-biome_mbio55(:,7) = lp_biome_mbio(:,18);
-biome_mbio55(:,8) = ld_biome_mbio(:,18);
-biome_mbio55(:,9) = b_biome_mbio(:,18);
+% biome_mbio55(:,1) = sf_biome_mbio(:,18);
+% biome_mbio55(:,2) = sp_biome_mbio(:,18);
+% biome_mbio55(:,3) = sd_biome_mbio(:,18);
+% biome_mbio55(:,4) = mf_biome_mbio(:,18);
+% biome_mbio55(:,5) = mp_biome_mbio(:,18);
+% biome_mbio55(:,6) = md_biome_mbio(:,18);
+% biome_mbio55(:,7) = lp_biome_mbio(:,18);
+% biome_mbio55(:,8) = ld_biome_mbio(:,18);
+% biome_mbio55(:,9) = b_biome_mbio(:,18);
 
-save([dpath 'Biomes_hist_pristine_' cfile '.mat'],'biome_mbio50','biome_mbio55',...
+save([dpath 'Biomes_hist_pristine_' cfile '.mat'],'biome_mbio50',...
     'sf_biome_mbio','sp_biome_mbio','sd_biome_mbio','mf_biome_mbio','mp_biome_mbio',...
-    'md_biome_mbio','b_biome_mbio','lp_biome_mbio','ld_biome_mbio');
+    'md_biome_mbio','b_biome_mbio','lp_biome_mbio','ld_biome_mbio'); %,'biome_mbio55');
 
 
 %% Figures

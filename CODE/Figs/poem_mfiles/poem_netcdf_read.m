@@ -3,7 +3,7 @@
 clear all
 close all
 
-fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit10_MZ01_mizernmort_BE05_RE01/';
+fpath='/Volumes/GFDL/NC/Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE001/';
 
 %% SP
 ncid = netcdf.open([fpath 'Data_spinup_pristine_sml_p.nc'],'NC_NOWRITE');

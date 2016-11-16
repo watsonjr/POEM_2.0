@@ -83,7 +83,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT_NF.png'])
+%print('-dpng',[ppath 'Spinup_global_BENT_NF.png'])
 
 %% bent mg C
 mgZb = (Zb/9)*1e3;
@@ -98,7 +98,7 @@ colormap('jet')
 colorbar('h')
 caxis([-1 3])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT_mgC_NF.png'])
+%print('-dpng',[ppath 'Spinup_global_BENT_mgC_NF.png'])
 
 
 %% Diff maps of all fish
@@ -132,7 +132,7 @@ colormap('jet')
 colorbar('h')
 caxis([-1 2])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_All_NF1.png'])
+%print('-dpng',[ppath 'Spinup_global_All_NF1.png'])
 %%
 figure(2)
 m_proj('miller','lat',82);
@@ -145,7 +145,7 @@ colormap('jet')
 colorbar('h')
 caxis([-2 0.5])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_All_NF2.png'])
+%print('-dpng',[ppath 'Spinup_global_All_NF2.png'])
 
 %% all F
 figure(22)
@@ -159,7 +159,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllF_NF.png'])
+%print('-dpng',[ppath 'Spinup_global_AllF_NF.png'])
 
 % all D
 figure(23)
@@ -173,7 +173,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllD_NF.png'])
+%print('-dpng',[ppath 'Spinup_global_AllD_NF.png'])
 
 % All P
 figure(24)
@@ -187,5 +187,5 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllP_NF.png'])
+%print('-dpng',[ppath 'Spinup_global_AllP_NF.png'])
 

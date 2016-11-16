@@ -1,7 +1,7 @@
 % Calc LME biomass of POEM
-% Historic time period (1861-2005) at all locations
-% 145 years
-% Saved as mat files
+% Future time period (2006-2100) at all locations
+% 95 years
+% Means saved in mat files
 
 clear all
 close all
@@ -15,45 +15,46 @@ cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-load([dpath 'Means_hist_fished_' cfile '.mat']);
+load([dpath 'Means_fore_fished_' cfile '.mat']);
 load([cpath 'hindcast_gridspec.mat'],'dat','geolat_t','geolon_t');
 load([cpath 'lme_mask_esm2m.mat']);
 grid = csvread([cpath 'grid_csv.csv']);
 
 %%
-sf_mean(:,17:18) = [sf_mean5000, sf_mean5505];
-sp_mean(:,17:18) = [sp_mean5000, sp_mean5505];
-sd_mean(:,17:18) = [sd_mean5000, sd_mean5505];
-mf_mean(:,17:18) = [mf_mean5000, mf_mean5505];
-mp_mean(:,17:18) = [mp_mean5000, mp_mean5505];
-md_mean(:,17:18) = [md_mean5000, md_mean5505];
-lp_mean(:,17:18) = [lp_mean5000, lp_mean5505];
-ld_mean(:,17:18) = [ld_mean5000, ld_mean5505];
-b_mean(:,17:18) = [b_mean5000, b_mean5505];
+sf_mean(:,12) = sf_mean5000;
+sp_mean(:,12) = sp_mean5000;
+sd_mean(:,12) = sd_mean5000;
+mf_mean(:,12) = mf_mean5000;
+mp_mean(:,12) = mp_mean5000;
+md_mean(:,12) = md_mean5000;
+lp_mean(:,12) = lp_mean5000;
+ld_mean(:,12) = ld_mean5000;
+b_mean(:,12) = b_mean5000;
 
-mf_mcatch(:,17:18) = [mf_mcatch5000, mf_mcatch5505];
-mp_mcatch(:,17:18) = [mp_mcatch5000, mp_mcatch5505];
-md_mcatch(:,17:18) = [md_mcatch5000, md_mcatch5505];
-lp_mcatch(:,17:18) = [lp_mcatch5000, lp_mcatch5505];
-ld_mcatch(:,17:18) = [ld_mcatch5000, ld_mcatch5505];
+mf_mcatch(:,12) = mf_mcatch5000;
+mp_mcatch(:,12) = mp_mcatch5000;
+md_mcatch(:,12) = md_mcatch5000;
+lp_mcatch(:,12) = lp_mcatch5000;
+ld_mcatch(:,12) = ld_mcatch5000;
+
+area = grid(:,5);
+Amf_mcatch = mf_mcatch .* repmat(area,1,12) * 365; %mean fish catch per yr
+Amp_mcatch = mp_mcatch .* repmat(area,1,12) * 365;
+Amd_mcatch = md_mcatch .* repmat(area,1,12) * 365;
+Alp_mcatch = lp_mcatch .* repmat(area,1,12) * 365;
+Ald_mcatch = ld_mcatch .* repmat(area,1,12) * 365;
 
 %% g/m2 --> total g
 area = grid(:,5);
-Asf_mean = sf_mean .* repmat(area,1,18);
-Asp_mean = sp_mean .* repmat(area,1,18);
-Asd_mean = sd_mean .* repmat(area,1,18);
-Amf_mean = mf_mean .* repmat(area,1,18);
-Amp_mean = mp_mean .* repmat(area,1,18);
-Amd_mean = md_mean .* repmat(area,1,18);
-Alp_mean = lp_mean .* repmat(area,1,18);
-Ald_mean = ld_mean .* repmat(area,1,18);
-Ab_mean = b_mean .* repmat(area,1,18);
-
-Amf_mcatch = mf_mcatch .* repmat(area,1,18) * 365; %mean fish catch per yr
-Amp_mcatch = mp_mcatch .* repmat(area,1,18) * 365;
-Amd_mcatch = md_mcatch .* repmat(area,1,18) * 365;
-Alp_mcatch = lp_mcatch .* repmat(area,1,18) * 365;
-Ald_mcatch = ld_mcatch .* repmat(area,1,18) * 365;
+Asf_mean = sf_mean .* repmat(area,1,12);
+Asp_mean = sp_mean .* repmat(area,1,12);
+Asd_mean = sd_mean .* repmat(area,1,12);
+Amf_mean = mf_mean .* repmat(area,1,12);
+Amp_mean = mp_mean .* repmat(area,1,12);
+Amd_mean = md_mean .* repmat(area,1,12);
+Alp_mean = lp_mean .* repmat(area,1,12);
+Ald_mean = ld_mean .* repmat(area,1,12);
+Ab_mean = b_mean .* repmat(area,1,12);
 
 %% Calc LMEs
 lat = geolat_t;
@@ -66,7 +67,7 @@ gid = grid(:,1);
 
 tlme = lme_mask_esm2m';
 
-sf_lme_bio = NaN*ones(66,18);
+sf_lme_bio = NaN*ones(66,12);
 sp_lme_bio = sf_lme_bio;
 sd_lme_bio = sf_lme_bio;
 mf_lme_bio = sf_lme_bio;
@@ -90,7 +91,7 @@ md_lme_mcatch = sf_lme_bio;
 lp_lme_mcatch = sf_lme_bio;
 ld_lme_mcatch = sf_lme_bio;
 
-for n = 1:18
+for n = 1:12
     sf = NaN*ones(size(lon));
     sp = sf;
     sd = sf;
@@ -172,122 +173,40 @@ for n = 1:18
     end
     
 end
-%% Comps by LME to J&C15
 
-%Pick which time period
-yr=17; %1950-2000
-%yr=18; %1955-2005
+%% save 2050-2000 for comps
+lme_bio00(:,1) = sf_lme_bio(:,12);
+lme_bio00(:,2) = sp_lme_bio(:,12);
+lme_bio00(:,3) = sd_lme_bio(:,12);
+lme_bio00(:,4) = mf_lme_bio(:,12);
+lme_bio00(:,5) = mp_lme_bio(:,12);
+lme_bio00(:,6) = md_lme_bio(:,12);
+lme_bio00(:,7) = lp_lme_bio(:,12);
+lme_bio00(:,8) = ld_lme_bio(:,12);
+lme_bio00(:,9) = b_lme_bio(:,12);
 
-All = sf_lme_bio(:,yr)+sp_lme_bio(:,yr)+sd_lme_bio(:,yr)+mf_lme_bio(:,yr)+...
-    mp_lme_bio(:,yr)+md_lme_bio(:,yr)+lp_lme_bio(:,yr)+ld_lme_bio(:,yr);
-ML = mf_lme_bio(:,yr)+mp_lme_bio(:,yr)+md_lme_bio(:,yr)+lp_lme_bio(:,yr)+ld_lme_bio(:,yr);
+lme_mbio00(:,1) = sf_lme_mbio(:,12);
+lme_mbio00(:,2) = sp_lme_mbio(:,12);
+lme_mbio00(:,3) = sd_lme_mbio(:,12);
+lme_mbio00(:,4) = mf_lme_mbio(:,12);
+lme_mbio00(:,5) = mp_lme_mbio(:,12);
+lme_mbio00(:,6) = md_lme_mbio(:,12);
+lme_mbio00(:,7) = lp_lme_mbio(:,12);
+lme_mbio00(:,8) = ld_lme_mbio(:,12);
+lme_mbio00(:,9) = b_lme_mbio(:,12);
 
-% JUST LMEs, NOT WHOLE GLOBE!!!
-%grams to tonnes/metric tons 1g = 1e-6MT
-nansum(All) % = 1.0424e+14
-nansum(All) * 1e-6 % = 1.0424e+08 = 0.15e9 MT
-% My max fish size if 2.5kg technically rep fish 80g to 80kg
-% Jennings 10-10^6 g = 0.34-26.12 10^9 MT
-% Jennings 10^2-10^4 g = 0.09-8.89 10^9 MT
-% My med & lrg 10^2-10^4 = 0.12819 10^9 MT
-% If I use their wet weight conversion, which is 3x mine, 0.31271e9 MT
-
-lname = 1:66;
-[sort_bio,ix] = sort(All);
-slname = lname(ix);
-
-figure(4)
-plot(log10(sort_bio),1:66,'.k','MarkerSize',15); hold on;
-set(gca,'YTickLabel',[])
-for i=1:66
-    text(11,i,num2str(ix(i)))
-end
-title('log10 mean biomass All Fishes (g)')
-ylabel('LME')
-stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_dot_areal_sum.png'])
+lme_mcatch00(:,1) = mf_lme_mcatch(:,12);
+lme_mcatch00(:,2) = mp_lme_mcatch(:,12);
+lme_mcatch00(:,3) = md_lme_mcatch(:,12);
+lme_mcatch00(:,4) = lp_lme_mcatch(:,12);
+lme_mcatch00(:,5) = ld_lme_mcatch(:,12);
 
 %%
-mAll = sf_lme_mbio(:,yr)+sp_lme_mbio(:,yr)+sd_lme_mbio(:,yr)+mf_lme_mbio(:,yr)+...
-    mp_lme_mbio(:,yr)+md_lme_mbio(:,yr)+lp_lme_mbio(:,yr)+ld_lme_mbio(:,yr);
-
-[sort_mbio,ix] = sort(mAll,'descend');
-mslname = lname(ix);
-
-figure(5)
-plot(log10(sort_mbio),1:66,'.k','MarkerSize',15); hold on;
-set(gca,'YTickLabel',[])
-for i=1:66
-    text(-1.35,i,num2str(ix(i)))
-end
-title('log10 mean biomass All Fishes (g m^-^2)')
-ylabel('LME')
-stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_dot_mean.png'])
-
-T = table(ix,sort_mbio,'VariableNames',{'LME','mbiomgm2'});
-writetable(T,[dpath 'LME_mbio_hist_fished_' cfile '.csv']);
-
-%% save 1950-2000 and 1955-2005 for comps
-lme_bio00(:,1) = sf_lme_bio(:,17);
-lme_bio00(:,2) = sp_lme_bio(:,17);
-lme_bio00(:,3) = sd_lme_bio(:,17);
-lme_bio00(:,4) = mf_lme_bio(:,17);
-lme_bio00(:,5) = mp_lme_bio(:,17);
-lme_bio00(:,6) = md_lme_bio(:,17);
-lme_bio00(:,7) = lp_lme_bio(:,17);
-lme_bio00(:,8) = ld_lme_bio(:,17);
-lme_bio00(:,9) = b_lme_bio(:,17);
-
-lme_mbio00(:,1) = sf_lme_mbio(:,17);
-lme_mbio00(:,2) = sp_lme_mbio(:,17);
-lme_mbio00(:,3) = sd_lme_mbio(:,17);
-lme_mbio00(:,4) = mf_lme_mbio(:,17);
-lme_mbio00(:,5) = mp_lme_mbio(:,17);
-lme_mbio00(:,6) = md_lme_mbio(:,17);
-lme_mbio00(:,7) = lp_lme_mbio(:,17);
-lme_mbio00(:,8) = ld_lme_mbio(:,17);
-lme_mbio00(:,9) = b_lme_mbio(:,17);
-
-lme_mcatch00(:,1) = mf_lme_mcatch(:,17);
-lme_mcatch00(:,2) = mp_lme_mcatch(:,17);
-lme_mcatch00(:,3) = md_lme_mcatch(:,17);
-lme_mcatch00(:,4) = lp_lme_mcatch(:,17);
-lme_mcatch00(:,5) = ld_lme_mcatch(:,17);
-
-lme_bio05(:,1) = sf_lme_bio(:,18);
-lme_bio05(:,2) = sp_lme_bio(:,18);
-lme_bio05(:,3) = sd_lme_bio(:,18);
-lme_bio05(:,4) = mf_lme_bio(:,18);
-lme_bio05(:,5) = mp_lme_bio(:,18);
-lme_bio05(:,6) = md_lme_bio(:,18);
-lme_bio05(:,7) = lp_lme_bio(:,18);
-lme_bio05(:,8) = ld_lme_bio(:,18);
-lme_bio05(:,9) = b_lme_bio(:,18);
-
-lme_mbio05(:,1) = sf_lme_mbio(:,18);
-lme_mbio05(:,2) = sp_lme_mbio(:,18);
-lme_mbio05(:,3) = sd_lme_mbio(:,18);
-lme_mbio05(:,4) = mf_lme_mbio(:,18);
-lme_mbio05(:,5) = mp_lme_mbio(:,18);
-lme_mbio05(:,6) = md_lme_mbio(:,18);
-lme_mbio05(:,7) = lp_lme_mbio(:,18);
-lme_mbio05(:,8) = ld_lme_mbio(:,18);
-lme_mbio05(:,9) = b_lme_mbio(:,18);
-
-lme_mcatch05(:,1) = mf_lme_mcatch(:,18);
-lme_mcatch05(:,2) = mp_lme_mcatch(:,18);
-lme_mcatch05(:,3) = md_lme_mcatch(:,18);
-lme_mcatch05(:,4) = lp_lme_mcatch(:,18);
-lme_mcatch05(:,5) = ld_lme_mcatch(:,18);
-
-
-%%
-save([dpath 'LME_hist_fished_' cfile '.mat'],...
-    'sf_lme_bio','sp_lme_bio','sd_lme_bio','mf_lme_bio','mp_lme_bio','md_lme_bio',...
-    'b_lme_bio','lp_lme_bio','ld_lme_bio','sf_lme_mbio','sp_lme_mbio','sd_lme_mbio',...
-    'mf_lme_mbio','mp_lme_mbio','md_lme_mbio','b_lme_mbio','lp_lme_mbio','ld_lme_mbio',...
-    'lme_bio00','lme_mbio00','lme_bio05','lme_mbio05','lme_mcatch00','lme_mcatch05',...
+save([dpath 'LME_fore_fished_' cfile '.mat'],...
+    'sf_lme_bio','sp_lme_bio','sd_lme_bio','mf_lme_bio','mp_lme_bio',...
+    'md_lme_bio','b_lme_bio','lp_lme_bio','ld_lme_bio','sf_lme_mbio',...
+    'sp_lme_mbio','sd_lme_mbio','mf_lme_mbio','mp_lme_mbio','md_lme_mbio',...
+    'b_lme_mbio','lp_lme_mbio','ld_lme_mbio','lme_bio00','lme_mbio00','lme_mcatch00',...
     'mf_lme_mcatch','mp_lme_mcatch','md_lme_mcatch','lp_lme_mcatch','ld_lme_mcatch');
 
 
@@ -306,7 +225,7 @@ clme_mp = lme_sf;
 clme_md = lme_sf;
 clme_lp = lme_sf;
 clme_ld = lme_sf;
-
+yr=12;
 for L=1:66
     lid = find(tlme==L);
     
@@ -362,9 +281,9 @@ caxis([-1 1]);
 hcb = colorbar('h');
 ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass All Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_All.png'])
+print('-dpng',[ppath 'Fore_fished_LME_All.png'])
 
 % all F
 figure(32)
@@ -378,9 +297,9 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass Forage Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_AllF.png'])
+print('-dpng',[ppath 'Fore_fished_LME_AllF.png'])
 
 % all P
 figure(33)
@@ -394,9 +313,9 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_AllP.png'])
+print('-dpng',[ppath 'Fore_fished_LME_AllP.png'])
 
 % All D
 figure(34)
@@ -410,9 +329,9 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass Demersal Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_AllD.png'])
+print('-dpng',[ppath 'Fore_fished_LME_AllD.png'])
 
 %% Catch
 % all
@@ -427,11 +346,11 @@ caxis([4.5 6.5]);
 hcb = colorbar('h');
 ylim(hcb,[4.5 6.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 mean log10 total annual catch (MT) All Fishes')
+title('2051-2100 mean log10 total annual catch (MT) All Fishes')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_catch_All.png'])
+print('-dpng',[ppath 'Fore_fished_LME_catch_All.png'])
 
-%% all F
+% all F
 figure(52)
 axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1)
@@ -443,9 +362,9 @@ caxis([3 6.5]);
 hcb = colorbar('h');
 ylim(hcb,[3 6.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 mean log10 total annual catch (MT) Forage Fishes')
+title('2051-2100 mean log10 total annual catch (MT) Forage Fishes')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_catch_AllF.png'])
+print('-dpng',[ppath 'Fore_fished_LME_catch_AllF.png'])
 
 % all P
 figure(53)
@@ -459,9 +378,9 @@ caxis([3 6.5]);
 hcb = colorbar('h');
 ylim(hcb,[3 6.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 mean log10 total annual catch (MT) Pelagic Fishes')
+title('2051-2100 mean log10 total annual catch (MT) Pelagic Fishes')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_catch_AllP.png'])
+print('-dpng',[ppath 'Fore_fished_LME_catch_AllP.png'])
 
 % All D
 figure(54)
@@ -475,9 +394,9 @@ caxis([3 6.5]);
 hcb = colorbar('h');
 ylim(hcb,[3 6.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 mean log10 total annual catch (MT) Demersal Fishes')
+title('2051-2100 mean log10 total annual catch (MT) Demersal Fishes')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_catch_AllD.png'])
+print('-dpng',[ppath 'Fore_fished_LME_catch_AllD.png'])
 
 % all M
 figure(55)
@@ -491,9 +410,9 @@ caxis([3 6.5]);
 hcb = colorbar('h');
 ylim(hcb,[3 6.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 mean log10 total annual catch (MT) Medium Fishes')
+title('2051-2100 mean log10 total annual catch (MT) Medium Fishes')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_catch_AllM.png'])
+print('-dpng',[ppath 'Fore_fished_LME_catch_AllM.png'])
 
 % all L
 figure(56)
@@ -507,9 +426,10 @@ caxis([3 6.5]);
 hcb = colorbar('h');
 ylim(hcb,[3 6.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 mean log10 total annual catch (MT) Large Fishes')
+title('2051-2100 mean log10 total annual catch (MT) Large Fishes')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_LME_catch_AllL.png'])
+print('-dpng',[ppath 'Fore_fished_LME_catch_AllL.png'])
+
 
 %% NPac only
 % ALL
@@ -524,9 +444,9 @@ caxis([-1 1]);
 hcb = colorbar('h');
 ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass All Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_Pac_LME_All.png'])
+print('-dpng',[ppath 'Fore_fished_Pac_LME_All.png'])
 
 % all F
 figure(11)
@@ -540,9 +460,9 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass Forage Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Forage Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_Pac_LME_AllF.png'])
+print('-dpng',[ppath 'Fore_fished_Pac_LME_AllF.png'])
 
 % all P
 figure(12)
@@ -556,9 +476,9 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass Pelagic Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Pelagic Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_Pac_LME_AllP.png'])
+print('-dpng',[ppath 'Fore_fished_Pac_LME_AllP.png'])
 
 % All D
 figure(13)
@@ -572,7 +492,7 @@ caxis([-2 1]);
 hcb = colorbar('h');
 ylim(hcb,[-2 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('1951-2000 log10 mean biomass Demersal Fishes (g m^-^2)')
+title('2051-2100 log10 mean biomass Demersal Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Hist_fished_Pac_LME_AllD.png'])
+print('-dpng',[ppath 'Fore_fished_Pac_LME_AllD.png'])
 

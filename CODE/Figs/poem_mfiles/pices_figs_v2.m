@@ -9,7 +9,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -55,7 +55,8 @@ cmap4(3,:)=cmap_ppt(5,:);
 %% Preindust
 load([dpath 'LME_preindust_' cfile '.mat']);
 load([dpath 'Biomes_preindust_' cfile '.mat'],'biome_mbio');
-load([dpath 'Preindust_1800-1850_means.mat']); %fcrit30
+%load([dpath 'Preindust_1800-1850_means.mat']); %fcrit30
+load([dpath 'Means_preindust_' cfile '.mat']); %fcrit40
 
 pre_g = lme_bio;
 pre_gm2 = lme_mbio;
@@ -224,7 +225,7 @@ Tdiff_foref_histp = (Tsum_foref - Tsum_histp) ./ Tsum_histp;
 Mdiff_foref_histf = (Msum_foref - Msum_histf) ./ Msum_histf;
 Tdiff_foref_histf = (Tsum_foref - Tsum_histf) ./ Tsum_histf;
 
-%Future fishing vs. future no fishing
+%Future no fishing vs. future no fishing
 Mdiff_foref_forep = (Msum_foref - Msum_forep) ./ Msum_forep;
 Tdiff_foref_forep = (Tsum_foref - Tsum_forep) ./ Tsum_forep;
 
@@ -249,7 +250,7 @@ fhc(4,:) = Mdiff_foref_histp;
 figure(6)
 bar(hpc(:,1)*100)
 colormap(cmap3)
-ylim([-18 0])
+ylim([-20 0])
 set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
 ylabel('Percent change')
 %xlabel('Driver')
@@ -285,7 +286,7 @@ print('-dpng',[ppath 'Global_mean_biom_size_pre_hist.png'])
 figure(9)
 bar(fhc(:,1)*100)
 colormap(cmap3)
-ylim([-18 0])
+ylim([-20 0])
 set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristine'})
 ylabel('Percent change')
 %xlabel('Driver')

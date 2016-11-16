@@ -10,7 +10,7 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -21,27 +21,37 @@ load([cpath 'lme_mask_esm2m.mat']);
 grid = csvread([cpath 'grid_csv.csv']);
 
 %%
-sf_mean(:,17:18) = [sf_mean5000, sf_mean5505];
-sp_mean(:,17:18) = [sp_mean5000, sp_mean5505];
-sd_mean(:,17:18) = [sd_mean5000, sd_mean5505];
-mf_mean(:,17:18) = [mf_mean5000, mf_mean5505];
-mp_mean(:,17:18) = [mp_mean5000, mp_mean5505];
-md_mean(:,17:18) = [md_mean5000, md_mean5505];
-lp_mean(:,17:18) = [lp_mean5000, lp_mean5505];
-ld_mean(:,17:18) = [ld_mean5000, ld_mean5505];
-b_mean(:,17:18) = [b_mean5000, b_mean5505];
+sf_mean(:,17) = sf_mean5000;
+sp_mean(:,17) = sp_mean5000;
+sd_mean(:,17) = sd_mean5000;
+mf_mean(:,17) = mf_mean5000;
+mp_mean(:,17) = mp_mean5000;
+md_mean(:,17) = md_mean5000;
+lp_mean(:,17) = lp_mean5000;
+ld_mean(:,17) = ld_mean5000;
+b_mean(:,17) = b_mean5000;
+
+% sf_mean(:,17:18) = [sf_mean5000, sf_mean5505];
+% sp_mean(:,17:18) = [sp_mean5000, sp_mean5505];
+% sd_mean(:,17:18) = [sd_mean5000, sd_mean5505];
+% mf_mean(:,17:18) = [mf_mean5000, mf_mean5505];
+% mp_mean(:,17:18) = [mp_mean5000, mp_mean5505];
+% md_mean(:,17:18) = [md_mean5000, md_mean5505];
+% lp_mean(:,17:18) = [lp_mean5000, lp_mean5505];
+% ld_mean(:,17:18) = [ld_mean5000, ld_mean5505];
+% b_mean(:,17:18) = [b_mean5000, b_mean5505];
 
 %% g/m2 --> total g
 area = grid(:,5);
-Asf_mean = sf_mean .* repmat(area,1,18);
-Asp_mean = sp_mean .* repmat(area,1,18);
-Asd_mean = sd_mean .* repmat(area,1,18);
-Amf_mean = mf_mean .* repmat(area,1,18);
-Amp_mean = mp_mean .* repmat(area,1,18);
-Amd_mean = md_mean .* repmat(area,1,18);
-Alp_mean = lp_mean .* repmat(area,1,18);
-Ald_mean = ld_mean .* repmat(area,1,18);
-Ab_mean = b_mean .* repmat(area,1,18);
+Asf_mean = sf_mean .* repmat(area,1,17);
+Asp_mean = sp_mean .* repmat(area,1,17);
+Asd_mean = sd_mean .* repmat(area,1,17);
+Amf_mean = mf_mean .* repmat(area,1,17);
+Amp_mean = mp_mean .* repmat(area,1,17);
+Amd_mean = md_mean .* repmat(area,1,17);
+Alp_mean = lp_mean .* repmat(area,1,17);
+Ald_mean = ld_mean .* repmat(area,1,17);
+Ab_mean = b_mean .* repmat(area,1,17);
 
 %% Calc LMEs
 lat = geolat_t;
@@ -54,7 +64,7 @@ gid = grid(:,1);
 
 tlme = lme_mask_esm2m';
 
-sf_lme_bio = NaN*ones(66,18);
+sf_lme_bio = NaN*ones(66,17);
 sp_lme_bio = sf_lme_bio;
 sd_lme_bio = sf_lme_bio;
 mf_lme_bio = sf_lme_bio;
@@ -73,7 +83,7 @@ lp_lme_mbio = sf_lme_bio;
 ld_lme_mbio = sf_lme_bio;
 b_lme_mbio = sf_lme_bio;
 
-for n = 1:18
+for n = 1:17
     sf = NaN*ones(size(lon));
     sp = sf;
     sd = sf;
@@ -150,13 +160,11 @@ All = sf_lme_bio(:,yr)+sp_lme_bio(:,yr)+sd_lme_bio(:,yr)+mf_lme_bio(:,yr)+...
 ML = mf_lme_bio(:,yr)+mp_lme_bio(:,yr)+md_lme_bio(:,yr)+lp_lme_bio(:,yr)+ld_lme_bio(:,yr);
 
 %grams to tonnes/metric tons 1g = 1e-6MT
-nansum(All) % = 1.6878e+14
-nansum(All) * 1e-6 % = 1.6878e+08 = 0.17e9 MT
+nansum(All) % = 1.1631e+14
+nansum(All) * 1e-6 % = 1.1631e+08 = 0.17e9 MT
 % My max fish size if 2.5kg technically rep fish 80g to 80kg
 % Jennings 10-10^6 g = 0.34-26.12 10^9 MT
 % Jennings 10^2-10^4 g = 0.09-8.89 10^9 MT
-% My med & lrg 10^2-10^4 = 0.14299 10^9 MT
-% If I use their wet weight conversion, which is 3x mine, 0.429e9 MT
 
 lname = 1:66;
 [sort_bio,ix] = sort(All);
@@ -215,25 +223,25 @@ lme_mbio00(:,7) = lp_lme_mbio(:,17);
 lme_mbio00(:,8) = ld_lme_mbio(:,17);
 lme_mbio00(:,9) = b_lme_mbio(:,17);
 
-lme_bio05(:,1) = sf_lme_bio(:,18);
-lme_bio05(:,2) = sp_lme_bio(:,18);
-lme_bio05(:,3) = sd_lme_bio(:,18);
-lme_bio05(:,4) = mf_lme_bio(:,18);
-lme_bio05(:,5) = mp_lme_bio(:,18);
-lme_bio05(:,6) = md_lme_bio(:,18);
-lme_bio05(:,7) = lp_lme_bio(:,18);
-lme_bio05(:,8) = ld_lme_bio(:,18);
-lme_bio05(:,9) = b_lme_bio(:,18);
-
-lme_mbio05(:,1) = sf_lme_mbio(:,18);
-lme_mbio05(:,2) = sp_lme_mbio(:,18);
-lme_mbio05(:,3) = sd_lme_mbio(:,18);
-lme_mbio05(:,4) = mf_lme_mbio(:,18);
-lme_mbio05(:,5) = mp_lme_mbio(:,18);
-lme_mbio05(:,6) = md_lme_mbio(:,18);
-lme_mbio05(:,7) = lp_lme_mbio(:,18);
-lme_mbio05(:,8) = ld_lme_mbio(:,18);
-lme_mbio05(:,9) = b_lme_mbio(:,18);
+% lme_bio05(:,1) = sf_lme_bio(:,18);
+% lme_bio05(:,2) = sp_lme_bio(:,18);
+% lme_bio05(:,3) = sd_lme_bio(:,18);
+% lme_bio05(:,4) = mf_lme_bio(:,18);
+% lme_bio05(:,5) = mp_lme_bio(:,18);
+% lme_bio05(:,6) = md_lme_bio(:,18);
+% lme_bio05(:,7) = lp_lme_bio(:,18);
+% lme_bio05(:,8) = ld_lme_bio(:,18);
+% lme_bio05(:,9) = b_lme_bio(:,18);
+% 
+% lme_mbio05(:,1) = sf_lme_mbio(:,18);
+% lme_mbio05(:,2) = sp_lme_mbio(:,18);
+% lme_mbio05(:,3) = sd_lme_mbio(:,18);
+% lme_mbio05(:,4) = mf_lme_mbio(:,18);
+% lme_mbio05(:,5) = mp_lme_mbio(:,18);
+% lme_mbio05(:,6) = md_lme_mbio(:,18);
+% lme_mbio05(:,7) = lp_lme_mbio(:,18);
+% lme_mbio05(:,8) = ld_lme_mbio(:,18);
+% lme_mbio05(:,9) = b_lme_mbio(:,18);
 
 
 %%
@@ -241,7 +249,7 @@ save([dpath 'LME_hist_pristine_' cfile '.mat'],...
     'sf_lme_bio','sp_lme_bio','sd_lme_bio','mf_lme_bio','mp_lme_bio','md_lme_bio',...
     'b_lme_bio','lp_lme_bio','ld_lme_bio','sf_lme_mbio','sp_lme_mbio','sd_lme_mbio',...
     'mf_lme_mbio','mp_lme_mbio','md_lme_mbio','b_lme_mbio','lp_lme_mbio','ld_lme_mbio',...
-    'lme_bio00','lme_mbio00','lme_bio05','lme_mbio05');
+    'lme_bio00','lme_mbio00');%,'lme_bio05','lme_mbio05');
 
 
 %% Figures

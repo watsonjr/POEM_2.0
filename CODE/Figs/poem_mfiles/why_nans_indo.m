@@ -28,3 +28,28 @@ ll = intersect(on,at);
 test1 = all_bio(ll,15);
 test2 = log10_all_bio(ll);
 test3 = b_mean5000(ll);
+
+%% 1800-1850
+time = 1:size(SP.bio,2);
+mo=(time-1)/12;
+mo=mo+1760;
+yr50=find(mo>=1800 & mo<1850);
+
+sp_smean=mean(SP.bio(:,yr50),2);
+neg=find(sp_smean<=0);
+nn=find(isnan(sp_smean));
+test=grid(nn,:);
+id=find(test(:,2)<-180);
+test(id,2)=test(id,2)+360;
+
+ld_smean=mean(LD.bio(:,yr50),2);
+neg2=find(ld_smean<=0);
+nn2=find(isnan(ld_smean));
+test2=grid(nn2,:);
+id=find(test2(:,2)<-180);
+test2(id,2)=test2(id,2)+360;
+
+
+
+
+
