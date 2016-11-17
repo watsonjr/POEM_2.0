@@ -4,15 +4,14 @@ function Testoneloc()
 
 	#! Make parameters
 	harv = 1 #0=no fishing; 1=fishing
-	make_parameters(harv) # make core parameters/constants
+	frate = 0.7
+	make_parameters(harv,frate) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
   COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld"); # 120=1980
 
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
-	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
-	#global TrefB = readdlm("./Data/grid_phenol_T0b_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for bottom
 	global TrefP = Tref
 	global TrefB = Tref
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
@@ -22,19 +21,27 @@ function Testoneloc()
 
 	#! choose where to run the model
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
-	#XY = zeros(Int,200,360); # choose a particulat place or everywhere
 	XY = zeros(Int,360,200);
   XY[GRD["ID"]] = collect(1:GRD["N"])
-	#ID = 40319 #30181 # Georges Bank
-  #ID = 42639 #15105 # Eastern Bering Sea
-  #ID = 41782 #19526 # Ocean Station Papa
-  #ID = 36334 #17377 # Hawaii OT
-	#ID = 38309 #30335 # Bermuda ATS
-  #ID = 42744 #40403 # North Sea
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus"]
 
-	simname = "Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE005_LD_fish07";
+	tfcrit = string(Int(100*fcrit))
+	tmz = string(100+Int(10*MF_phi_MZ))
+	tbe = string(100+Int(100*bent_eff))
+	tmort = string(MORT)
+	tre = string(10000+Int(1000*rfrac))
+	if (frate >= 0.1)
+		tfish = string(100+Int(10*frate))
+	else
+		tfish = string(1000+Int(100*frate))
+	end
+	simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
+	if (isdir(string("/Volumes/GFDL/CSV/",simname)))
+		nothing
+	else
+		mkdir(string("/Volumes/GFDL/CSV/",simname))
+	end
 
 	for L = 6 #1:9
 		ID = ids[L]
@@ -127,8 +134,6 @@ function Oneloc_fishing()
   COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000120.jld"); # 120=1980
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
-	#global TrefP = readdlm("./Data/grid_phenol_T0p_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for upper 100m
-	#global TrefB = readdlm("./Data/grid_phenol_T0b_clim_min_NOflip.csv",','); #1901-1950 climatological min temp at each location for bottom
 	global TrefP = Tref
 	global TrefB = Tref
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
@@ -138,15 +143,8 @@ function Oneloc_fishing()
 
 	#! choose where to run the model
 	global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
-	#XY = zeros(Int,200,360); # choose a particulat place or everywhere
 	XY = zeros(Int,360,200);
   XY[GRD["ID"]] = collect(1:GRD["N"])
-	#ID = 40319 #30181 # Georges Bank
-  #ID = 42639 #15105 # Eastern Bering Sea
-  #ID = 41782 #19526 # Ocean Station Papa
-  #ID = 36334 #17377 # Hawaii OT
-	#ID = 38309 #30335 # Bermuda ATS
-  #ID = 42744 #40403 # North Sea
 	ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003]
 	names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1"]
 
@@ -180,7 +178,7 @@ function Oneloc_fishing()
 		ID = ids[L]
 		loc = names[L]
 		const global NX = length(ID)
-		
+
 
 		#! Storage
 		Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
