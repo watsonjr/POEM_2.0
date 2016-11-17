@@ -484,4 +484,6 @@ end
 function sub_check!(bio)
 	ID = find(bio .< 0)
 	bio[ID] = eps()
+  #ID2 = find(isnan(bio))
+  #bio[ID2] = eps()
 end

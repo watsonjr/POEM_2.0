@@ -220,10 +220,10 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD],Lrg_d.nmort[JD])
 
 		#! Fishing by rate
-		Med_f.bio[JD], Med_f.caught[JD] = sub_fishing_rate(Med_f.bio[JD],M_m)
-		Med_p.bio[JD], Med_p.caught[JD] = sub_fishing_rate(Med_p.bio[JD],M_m)
-		Med_d.bio[JD], Med_d.caught[JD] = sub_fishing_rate(Med_d.bio[JD],M_m)
-		Lrg_p.bio[JD], Lrg_p.caught[JD] = sub_fishing_rate(Lrg_p.bio[JD],M_l)
+		#Med_f.bio[JD], Med_f.caught[JD] = sub_fishing_rate(Med_f.bio[JD],M_m)
+		#Med_p.bio[JD], Med_p.caught[JD] = sub_fishing_rate(Med_p.bio[JD],M_m)
+		#Med_d.bio[JD], Med_d.caught[JD] = sub_fishing_rate(Med_d.bio[JD],M_m)
+		#Lrg_p.bio[JD], Lrg_p.caught[JD] = sub_fishing_rate(Lrg_p.bio[JD],M_l)
 		Lrg_d.bio[JD], Lrg_d.caught[JD] = sub_fishing_rate(Lrg_d.bio[JD],M_l)
 
 	end
