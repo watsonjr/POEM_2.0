@@ -174,62 +174,55 @@ function Oneloc_fishing()
 	#! Make parameters
 	harv = 1 #0=no fishing; 1=fishing
 	fishing = collect(0.1:0.1:0.7)
+	phen=0;
 
-	for r = 1:7
+	for L = 6 #1:9
+		ID = ids[L]
+		loc = names[L]
+		const global NX = length(ID)
+		
 
-		frate = fishing[r]
-		make_parameters(harv, frate) # make core parameters/constants
+		#! Storage
+		Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
+		Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p.csv"),"w")
+		Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d.csv"),"w")
+		Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f.csv"),"w")
+		Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p.csv"),"w")
+		Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d.csv"),"w")
+		Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p.csv"),"w")
+		Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d.csv"),"w")
 
-		for L = 6 #1:9
-			ID = ids[L]
-			loc = names[L]
+		Spinup_Sml_f_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f_catch.csv"),"w")
+		Spinup_Sml_p_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p_catch.csv"),"w")
+		Spinup_Sml_d_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d_catch.csv"),"w")
+		Spinup_Med_f_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f_catch.csv"),"w")
+		Spinup_Med_p_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p_catch.csv"),"w")
+		Spinup_Med_d_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d_catch.csv"),"w")
+		Spinup_Lrg_p_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p_catch.csv"),"w")
+		Spinup_Lrg_d_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d_catch.csv"),"w")
 
-			const global NX = length(ID)
-			phen=0;
+		for r = 1:7
+			frate = fishing[r]
+			make_parameters(harv, frate) # make core parameters/constants
 			#! Initialize
 			Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
 			Med_d.td[1] = 0.0;
 			Lrg_d.td[1] = 0.0;
 			ENVR = sub_init_env(ID);
-
-			#! Storage
-			Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
-			Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p.csv"),"w")
-			Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d.csv"),"w")
-			Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f.csv"),"w")
-			Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p.csv"),"w")
-			Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d.csv"),"w")
-			Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p.csv"),"w")
-			Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d.csv"),"w")
-
-			Spinup_Sml_f_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f_catch.csv"),"w")
-			Spinup_Sml_p_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p_catch.csv"),"w")
-			Spinup_Sml_d_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d_catch.csv"),"w")
-			Spinup_Med_f_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f_catch.csv"),"w")
-			Spinup_Med_p_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p_catch.csv"),"w")
-			Spinup_Med_d_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d_catch.csv"),"w")
-			Spinup_Lrg_p_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p_catch.csv"),"w")
-			Spinup_Lrg_d_catch  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d_catch.csv"),"w")
-
 			#! Iterate forward in time with NO fishing
 			for YR = 1:YEARS # years
-
 				#reset spawning flag
 				if (phen == 1)
 					Med_f.S = zeros(Float64,NX,DAYS)
 					Lrg_d.S = zeros(Float64,NX,DAYS)
 					Lrg_p.S = zeros(Float64,NX,DAYS)
 				end
-
 				for DAY = 1:DT:DAYS # days
-
 					###! ticker
 					DY  = Int(ceil(DAY))
 					println(YR," , ", mod(DY,365))
-
 					###! Future time step
 					sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
-
 					#! Store
 					S_Sml_f[DY,r] = Sml_f.bio[1]
 					S_Sml_p[DY,r] = Sml_p.bio[1]
@@ -239,7 +232,6 @@ function Oneloc_fishing()
 					S_Med_d[DY,r] = Med_d.bio[1]
 					S_Lrg_p[DY,r] = Lrg_p.bio[1]
 					S_Lrg_d[DY,r] = Lrg_d.bio[1]
-
 					S_Sml_f_catch[DY,r] = Sml_f.caught[1]
 					S_Sml_p_catch[DY,r] = Sml_p.caught[1]
 					S_Sml_d_catch[DY,r] = Sml_d.caught[1]
@@ -248,11 +240,8 @@ function Oneloc_fishing()
 					S_Med_d_catch[DY,r] = Med_d.caught[1]
 					S_Lrg_p_catch[DY,r] = Lrg_p.caught[1]
 					S_Lrg_d_catch[DY,r] = Lrg_d.caught[1]
-
 					DY+=1
-
 				end #Days
-
 				#! Save
 				if (YR == YEARS)
 					writecsv(Spinup_Sml_f,S_Sml_f)
@@ -263,7 +252,6 @@ function Oneloc_fishing()
 					writecsv(Spinup_Med_d,S_Med_d)
 					writecsv(Spinup_Lrg_p,S_Lrg_p)
 					writecsv(Spinup_Lrg_d,S_Lrg_d)
-
 					writecsv(Spinup_Sml_f_catch,S_Sml_f_catch)
 					writecsv(Spinup_Sml_p_catch,S_Sml_p_catch)
 					writecsv(Spinup_Sml_d_catch,S_Sml_d_catch)
@@ -274,21 +262,25 @@ function Oneloc_fishing()
 					writecsv(Spinup_Lrg_d_catch,S_Lrg_d_catch)
 				end
 			end #Years
-
-			### close save
-		  close(Spinup_Sml_f)
-		  close(Spinup_Sml_p)
-		  close(Spinup_Sml_d)
-		  close(Spinup_Med_f)
-		  close(Spinup_Med_p)
-		  close(Spinup_Med_d)
-		  close(Spinup_Lrg_p)
-			close(Spinup_Lrg_d)
-			
-		end #Locations
-
-	end #fishing rates
-
+		end #fishing rates
+		### close save
+		close(Spinup_Sml_f)
+		close(Spinup_Sml_p)
+		close(Spinup_Sml_d)
+		close(Spinup_Med_f)
+		close(Spinup_Med_p)
+		close(Spinup_Med_d)
+		close(Spinup_Lrg_p)
+		close(Spinup_Lrg_d)
+		close(Spinup_Sml_f_catch)
+		close(Spinup_Sml_p_catch)
+		close(Spinup_Sml_d_catch)
+		close(Spinup_Med_f_catch)
+		close(Spinup_Med_p_catch)
+		close(Spinup_Med_d_catch)
+		close(Spinup_Lrg_p_catch)
+		close(Spinup_Lrg_d_catch)
+	end #Locations
 end
 
 
