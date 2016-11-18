@@ -9,23 +9,23 @@ close all
 datap = '/Volumes/GFDL/CSV/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001/';
-npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish01/';
-npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish02/';
-npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish03/';
-npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish04/';
-npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish05/';
-npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish06/';
-npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish07/';
-npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish01/';
-npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish02/';
-npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish03/';
-npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish04/';
-npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish05/';
-npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish06/';
-npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish07/';
-npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish08/';
-npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish09/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish01/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish02/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish03/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish04/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish05/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish06/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_MF_fish07/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish01/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish02/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish03/';
+% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish04/';
+% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish05/';
+% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish06/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish07/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish08/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_LD_fish09/';
 % npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE0001/';
 % npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE0001_MF_fish01/';
 % npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE0001_MF_fish02/';
@@ -143,20 +143,50 @@ npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmort0_BE05_RE00001_L
 % npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE005_LD_fish05/';
 % npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE005_LD_fish06/';
 % npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE005_LD_fish07/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_MF_fish01/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_MF_fish02/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_MF_fish03/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_MF_fish04/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_MF_fish05/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_MF_fish06/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_MF_fish07/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_LD_fish01/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_LD_fish02/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_LD_fish03/';
+% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_LD_fish04/';
+% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_LD_fish05/';
+% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_LD_fish06/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE1000_LD_fish07/';
+npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500/';
+npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fish01/';
+npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fish02/';
+npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fish03/';
+npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fish04/';
+npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fish05/';
+npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fish06/';
+npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fish07/';
+npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fish01/';
+npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fish02/';
+npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fish03/';
+npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fish04/';
+npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fish05/';
+npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fish06/';
+npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fish07/';
 
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
 %     npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;...
 %     npath20;npath21};
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7};
 % sims = {'0','.1','.2','.3','.4','.5','.6','.7'};
-% cfile2 = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE00001_MF_fishing_catch';
+% cfile2 = 'Dc_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_MF_fishing_catch';
 % dp = {npath0;npath8;npath9;npath10;npath11;npath12;npath13;npath14};
 % sims = {'0','.1','.2','.3','.4','.5','.6','.7'};
 % cfile2 = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE0005_LP_fishing_catch';
-dp = {npath0;npath15;npath16;npath17;npath18;npath19;npath20;npath21;npath22;...
-    npath23};%;npath24;npath25;npath26;npath27;npath28};
-sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9'};%,'1','1.1','1.2','1.3','1.4'};
-cfile2 = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE00001_LD_fishing_catch';
+dp = {npath0;npath15;npath16;npath17;npath18;npath19;npath20;npath21};%;npath22;...
+%     npath23;npath24;npath25;npath26;npath27;npath28};
+sims = {'0','.1','.2','.3','.4','.5','.6','.7'};%,'.8','.9','1','1.1','1.2','1.3','1.4'};
+cfile2 = 'Dc_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_RE0500_LD_fishing_catch';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -233,7 +263,8 @@ for i=1:length(dp)
         C = csvread([dpath sname lname 'Cobalt.csv']);
         
         t=1:length(SP);
-        lyr=t((end-365+1):end);
+        %lyr=t((end-365+1):end);
+        lyr=1:365;
         
         %% Final mean biomass in each size
         
