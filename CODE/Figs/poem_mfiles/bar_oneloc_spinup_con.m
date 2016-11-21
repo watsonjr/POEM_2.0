@@ -120,37 +120,53 @@ for i=1:length(dp)
     print(f4,'-dpng',[fpath sname sname2 'All_oneloc_consump_gyr.png'])
     
     %% Consump vs. weight
+    A = 4.39;
+    fc = 0.2;
+    f0 = 0.6;
+    epsassim = 0.6;
+    n = 3/4;
+    
+    w = logspace(-3, 5);
+    
+    AvailEnergy = A*w.^n;
+    Consumption = A / (epsassim*(f0-fc)) * w.^n;
     
     for s=1:length(spots)
         figure(2)
         subplot(1,3,1)
-        plot(log10(mass(1:2,1)),log10(Fcon(:,s)),'.',...
+        loglog((mass(1:2,1)),(Fcon(:,s)),'.',...
             'Color',cm{s},'MarkerSize',25); hold on;
         title('F')
         xlabel('Mass (g)')
         ylabel('Mean consumption (g y^-^1) in final year')
         legend(spots)
         legend('location','northeast')
-        axis([-5 5 -1 5])
+        %axis([-5 5 -1 5])
         
         subplot(1,3,2)
-        plot(log10(mass(:,1)),log10(Pcon(:,s)),'.',...
+        loglog((mass(:,1)),(Pcon(:,s)),'.',...
             'Color',cm{s},'MarkerSize',25); hold on;
         title('P')
         xlabel('Mass (g)')
-        axis([-5 5 -1 5])
+        %axis([-5 5 -1 5])
         
         subplot(1,3,3)
-        plot(log10(mass(:,1)),log10(Dcon(:,s)),'.',...
+        loglog((mass(:,1)),(Dcon(:,s)),'.',...
             'Color',cm{s},'MarkerSize',25); hold on;
         title('D')
         xlabel('Mass (g)')
-        axis([-5 5 -1 5])
+        %axis([-5 5 -1 5])
         stamp(cfile)
-    
-        print('-dpng',[fpath sname sname2 'All_oneloc_consump_gyr_vs_weight.png'])
-        
+        print('-dpng',[fpath sname sname2 'All_oneloc_consump_gyr_vs_weight_v2.png'])
     end
+    subplot(1,3,1)
+    loglog(w, Consumption,'k')
     
+    subplot(1,3,2)
+    loglog(w, Consumption,'k')
+    
+    subplot(1,3,3)
+    loglog(w, Consumption,'k')
+    print('-dpng',[fpath sname sname2 'All_oneloc_consump_gyr_vs_weight_compare.png'])
     
 end

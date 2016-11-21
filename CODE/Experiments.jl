@@ -4,7 +4,7 @@ function Testoneloc()
 
 	#! Make parameters
 	harv = 1 #0=no fishing; 1=fishing
-	frate = 0.1
+	frate = 0.7
 	make_parameters(harv,frate) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
@@ -30,10 +30,10 @@ function Testoneloc()
 	tmz = string(100+Int(10*MF_phi_MZ))
 	tbe = string(100+Int(100*bent_eff))
 	tmort = string(MORT)
-	if (rfrac >= 0.001)
+	if (rfrac >= 0.01)
 		tre = string(10000+Int(1000*rfrac))
 	else
-		tre = string(100000+Int(10000*rfrac))
+		tre = string(100000+Int(round(10000*rfrac)))
 	end
 	if (frate >= 0.1)
 		tfish = string(100+Int(10*frate))
@@ -41,9 +41,9 @@ function Testoneloc()
 		tfish = string(1000+Int(100*frate))
 	end
 	if (harv==1)
-		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortH",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
+		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortJC",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
 	else
-		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortH",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
+		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortJC",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 	end
 	if (isdir(string("/Volumes/GFDL/CSV/",simname)))
 		nothing
