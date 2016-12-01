@@ -41,7 +41,8 @@ function sub_tdif_dem(Z,bio1,bio2,bio3,bio4)
   # bio3, bio4: demersal prey
 	biop = bio1+bio2
   # use preference for benthic prey in calculation
-  biod = bio3+(LD_phi_BE*bio4)
+  #biod = bio3+(LD_phi_BE*bio4)
+  biod = bio3+bio4
 	if Z < PI_be_cutoff
 		tdif = biop ./ (biop+biod)
 	else
@@ -293,9 +294,9 @@ end
 
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
-function sub_gamma(K,Z,nu,d,B,S)
+function sub_gamma(K,Z,nu,d,B,S,nmrt)
   # convert predation mortality to biomass specific rate
-	D = (d/B) + Nat_mrt
+	D = (d/B) + nmrt
   # Spawning flag
   #if S>0.0
   #  kap=min(1.0, K + (1.0-S));
@@ -373,11 +374,13 @@ function sub_nmort(Tp,Tb,tpel,wgt)
     #! Const with size
     #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
     #! Hartvig
-    #nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365;
+    nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365;
     #! mizer
-    nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365;
+    #nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365;
     #! J&C
     #nmort = exp(0.063*(temp-10.0)) * 0.5 * wgt^(-0.33) /365;
+    #! Intermediate
+    #nmort = exp(0.063*(temp-10.0)) * 1.5 * wgt^(-0.33) /365;
   end
   if (MORT==3) # Large fishes only
     if (wgt == M_l)

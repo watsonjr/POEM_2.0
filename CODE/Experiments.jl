@@ -3,8 +3,8 @@
 function Testoneloc()
 
 	#! Make parameters
-	harv = 1 #0=no fishing; 1=fishing
-	frate = 0.3
+	harv = 0 #0=no fishing; 1=fishing
+	frate = 0.0
 	make_parameters(harv,frate) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
@@ -28,6 +28,7 @@ function Testoneloc()
 
 	tfcrit = string(Int(100*fcrit))
 	tmz = string(100+Int(10*MF_phi_MZ))
+	tld = string(1000+Int(100*LD_phi_MF))
 	tbe = string(100+Int(100*bent_eff))
 	tmort = string(MORT)
 	if (rfrac >= 0.01)
@@ -41,10 +42,12 @@ function Testoneloc()
 		tfish = string(1000+Int(100*frate))
 	end
 	if (harv==1)
-		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortJC",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
-	else
-		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortJC",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
-	end
+		#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_MF_fish",tfish[2:end]);
+		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
+else
+		#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
+		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
+end
 	if (isdir(string("/Volumes/GFDL/CSV/",simname)))
 		nothing
 	else
@@ -56,7 +59,7 @@ function Testoneloc()
 		mkdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname))
 	end
 
-	for L = 6 #1:9
+	for L = 1:9
 		ID = ids[L]
 		loc = names[L]
 

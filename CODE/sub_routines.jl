@@ -52,7 +52,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_p.bio[JD],Med_p.td[JD],Med_p.td[JD],MP_phi_S)
 		Med_p.enc_d[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_p.bio[JD],Sml_d.bio[JD],Med_p.td[JD],Med_p.td[JD],MP_phi_S)
 
-		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_d.bio[JD],BENT.mass[JD],Med_d.td[JD],1-Med_d.td[JD],1)
+		Med_d.enc_be[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_d.bio[JD],BENT.mass[JD],Med_d.td[JD],1-Med_d.td[JD],MD_phi_BE)
 
 		Lrg_p.enc_f[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_f.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],LP_phi_MF)
 		Lrg_p.enc_p[JD]  = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_l,Lrg_p.bio[JD],Med_p.bio[JD],Lrg_p.td[JD],Lrg_p.td[JD],LP_phi_MP)
@@ -168,14 +168,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.nu[JD], Lrg_d.prod[JD] = sub_nu(Lrg_d.I[JD],Lrg_d.bio[JD],Lrg_d.met[JD])
 
 		#! maturation (note subscript on Kappa is larvae, juv, adult)
-		Sml_f.gamma[JD] = sub_gamma(K_l,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD],Sml_f.S[JD,DY])
-		Sml_p.gamma[JD] = sub_gamma(K_l,Z_s,Sml_p.nu[JD],Sml_p.die[JD],Sml_p.bio[JD],Sml_p.S[JD,DY])
-		Sml_d.gamma[JD] = sub_gamma(K_l,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD],Sml_d.S[JD,DY])
-		Med_f.gamma[JD] = sub_gamma(K_a,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD],Med_f.S[JD,DY])
-		Med_p.gamma[JD] = sub_gamma(K_j,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD],Med_p.S[JD,DY])
-		Med_d.gamma[JD] = sub_gamma(K_j,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD],Med_d.S[JD,DY])
-		Lrg_p.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD],Lrg_p.S[JD,DY])
-		Lrg_d.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_d.nu[JD],Lrg_d.die[JD],Lrg_d.bio[JD],Lrg_d.S[JD,DY])
+		Sml_f.gamma[JD] = sub_gamma(K_l,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD],Sml_f.S[JD,DY],Sml_f.nmort[JD])
+		Sml_p.gamma[JD] = sub_gamma(K_l,Z_s,Sml_p.nu[JD],Sml_p.die[JD],Sml_p.bio[JD],Sml_p.S[JD,DY],Sml_p.nmort[JD])
+		Sml_d.gamma[JD] = sub_gamma(K_l,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD],Sml_d.S[JD,DY],Sml_d.nmort[JD])
+		Med_f.gamma[JD] = sub_gamma(K_a,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD],Med_f.S[JD,DY],Med_f.nmort[JD])
+		Med_p.gamma[JD] = sub_gamma(K_j,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD],Med_p.S[JD,DY],Med_p.nmort[JD])
+		Med_d.gamma[JD] = sub_gamma(K_j,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD],Med_d.S[JD,DY],Med_d.nmort[JD])
+		Lrg_p.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD],Lrg_p.S[JD,DY],Lrg_p.nmort[JD])
+		Lrg_d.gamma[JD] = sub_gamma(K_a,Z_l,Lrg_d.nu[JD],Lrg_d.die[JD],Lrg_d.bio[JD],Lrg_d.S[JD,DY],Lrg_d.nmort[JD])
 
 		#! egg production (by med and large size classes only)
 		Sml_f.rep[JD],Sml_f.egg[JD] = sub_rep(Sml_f.nu[JD],K_l,Sml_f.S[JD,DY],Sml_f.egg[JD])
@@ -220,7 +220,7 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD],Lrg_d.nmort[JD])
 
 		#! Fishing by rate
-		Med_f.bio[JD], Med_f.caught[JD] = sub_fishing_rate(Med_f.bio[JD],M_m)
+		#Med_f.bio[JD], Med_f.caught[JD] = sub_fishing_rate(Med_f.bio[JD],M_m)
 		#Med_p.bio[JD], Med_p.caught[JD] = sub_fishing_rate(Med_p.bio[JD],M_m)
 		#Med_d.bio[JD], Med_d.caught[JD] = sub_fishing_rate(Med_d.bio[JD],M_m)
 		#Lrg_p.bio[JD], Lrg_p.caught[JD] = sub_fishing_rate(Lrg_p.bio[JD],M_l)

@@ -590,16 +590,26 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_MF_fish08/';
 % npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_MF_fish09/';
 % npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_MF_fish10/';
-% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish01/';
-% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish02/';
-% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish03/';
-% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish04/';
-% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish05/';
-% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish06/';
-% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish07/';
-% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish08/';
-% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish09/';
-% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish10/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish01/';
+% npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish02/';
+% npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish03/';
+% npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish04/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish05/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish06/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish07/';
+% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish08/';
+% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish09/';
+% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LP_fish10/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortM2_BE05_RE0010_LD_fish10/';
 
 % npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE0100/';
 % npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE0100_MF_fish01/';
@@ -790,52 +800,210 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00001_LD_fish08/';
 % npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00001_LD_fish09/';
 % npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00001_LD_fish10/';
-npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000/';
-npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish01/';
-npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish02/';
-npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish03/';
-npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish04/';
-npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish05/';
-npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish06/';
-npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish07/';
-npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish08/';
-npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish09/';
-npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish10/';
-npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish01/';
-npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish02/';
-npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish03/';
-npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish04/';
-npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish05/';
-npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish06/';
-npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish07/';
-npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish08/';
-npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish09/';
-npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish10/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish01/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish02/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish03/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish04/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish05/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish06/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish07/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish08/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish09/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fish10/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish01/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish02/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish03/';
+% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish04/';
+% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish05/';
+% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish06/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish07/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish08/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish09/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fish10/';
 
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish01/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish02/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish03/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish04/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish05/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish06/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish07/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish08/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish09/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fish10/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish01/';
+% npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish02/';
+% npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish03/';
+% npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish04/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish05/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish06/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish07/';
+% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish08/';
+% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish09/';
+% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fish10/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LD_fish10/';
+
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0050/';
+
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish01/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish02/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish03/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish04/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish05/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish06/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish07/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish08/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish09/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_MF_fish10/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish01/';
+% npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish02/';
+% npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish03/';
+% npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish04/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish05/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish06/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish07/';
+% npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish08/';
+% npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish09/';
+% npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LP_fish10/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0010_LD_fish10/';
+
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD025_nmort0_BE05_RE1000/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD050_nmort0_BE05_RE1000/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD075_nmort0_BE05_RE1000/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD025_nmort0_BE05_RE0100/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD050_nmort0_BE05_RE0100/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD075_nmort0_BE05_RE0100/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab85_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE01/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD025_nmort0_BE05_RE0010/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD050_nmort0_BE05_RE0010/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD075_nmort0_BE05_RE0010/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05_RE001/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD025_nmortH2_BE05_RE1000/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD050_nmortH2_BE05_RE1000/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD075_nmortH2_BE05_RE1000/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD100_nmortH2_BE05_RE1000/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD025_nmortH2_BE05_RE0100/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD050_nmortH2_BE05_RE0100/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD075_nmortH2_BE05_RE0100/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD100_nmortH2_BE05_RE0100/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD025_nmortH2_BE05_RE0010/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD050_nmortH2_BE05_RE0010/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD075_nmortH2_BE05_RE0010/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD100_nmortH2_BE05_RE0010/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmort0_BE05_RE1000/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmort0_BE05_RE1000/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmort0_BE05_RE1000/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmort0_BE05_RE0100/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmort0_BE05_RE0100/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmort0_BE05_RE0100/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmort0_BE05_RE0010/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmort0_BE05_RE0010/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmort0_BE05_RE0010/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE1000/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE1000/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE1000/';
+% npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100/';
+% npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100/';
+% npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100/';
+% npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0010/';
+% npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0010/';
+% npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0010/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD100_nmort0_BE05_RE1000/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD100_nmort0_BE05_RE0100/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_LD100_nmort0_BE05_RE0010/';
+
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish01/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish02/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish03/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish04/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish05/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish06/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish07/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish08/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish09/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D025_nmortH2_BE05_RE0100_LD_fish10/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100/';
+% npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish01/';
+% npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish02/';
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish03/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish04/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish05/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish06/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish07/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish08/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish09/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D050_nmortH2_BE05_RE0100_LD_fish10/';
+npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100/';
+npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish01/';
+npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish02/';
+npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish03/';
+npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish04/';
+npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish05/';
+npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish06/';
+npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish07/';
+npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish08/';
+npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish09/';
+npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fish10/';
+
+
+% dp = {npath0;npath1;npath2};
 
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
 %     npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;...
 %     npath20;npath21};
+% dp = {npath0};
 
 %FORAGE
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};%;...
 % %     npath11;npath12;npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20};
 % sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};%,'1.1','1.2',...
 % %      '1.3','1.4','1.5','1.6','1.7','1.8','1.9','2'};
-% cfile2 = 'Dc_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_MF_fishing_catch';
+% cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_MF_fishing_catch';
 
 %PELAGICS
-% dp = {npath0;npath8;npath9;npath10;npath11;npath12;npath13;npath14};
-% sims = {'0','.1','.2','.3','.4','.5','.6','.7'};
-% cfile2 = 'Dc_MFeqMP_fcrit30_MZ01_BE05_RE0005_LP_fishing_catch';
+% dp = {npath0;npath11;npath12;npath13;npath14;npath15;npath16;npath17;...
+%     npath18;npath19;npath20};
+% sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};
+% cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortI2_BE05_RE0100_LP_fishing_catch';
 
 %DEMERSALS
-dp = {npath0;npath15;npath16;npath17;npath18;npath19;npath20;npath21;npath22;...
-    npath23;npath24};%;npath25;npath26;npath27;npath28;npath29;npath30;npath31;...
-     %npath32;npath33;npath34};
+dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10};
+% dp = {npath0;npath21;npath22;npath23;npath24;npath25;npath26;npath27;npath28;npath29;npath30}; %;...
+%npath31;npath32;npath33;npath34};
 sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};%,'1.1','1.2',...
      %'1.3','1.4','1.5','1.6','1.7','1.8','1.9','2'};
-cfile2 = 'Dc_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortJC2_BE05_RE00000_LD_fishing_catch';
+cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D075_nmortH2_BE05_RE0100_LD_fishing_catch';
+
+%BASELINE
+% dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
+%      npath11;npath12;npath13;npath14;npath15;npath16;npath17};
+% sims = {'.25-1','.5-1','.75-1','1-1','.25-.1','.5-.1','.75-.1','1-.1',...
+%     '.25-.01','.5-.01','.75-.01','1-.01'};
+% cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_nmortH2_BE05_LDpref_REtests';
+
 
 sname = 'Spinup_';
 sname2 = '';
@@ -897,7 +1065,7 @@ for i=1:length(dp)
     z = NaN*ones(length(spots),3);
     
     %%
-    for s=6%1:length(spots)
+    for s=1:length(spots)
         %%
         loc = spots{s};
         lname = [sname2 loc '_'];
@@ -1153,7 +1321,7 @@ for i=1:length(dp)
 end
 
 %%
-for s=6 %1:length(spots)
+for s=1:length(spots)
     
     loc = spots{s};
     lname = [sname2 loc '_'];
@@ -1181,31 +1349,31 @@ for s=6 %1:length(spots)
             stamp(cfile2)
         end
         
-%         f6 = figure(6);
-% %         subplot(3,1,1)
-% %         plot(d,Ptotcatch(2,s),'.k','MarkerSize',15); hold on;
-% %         xlim([0 length(dp)+1])
-% %         if (d==length(dp))
-% %             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-% %             title([loc ' Total catch (g) in final year'])
-% %             ylabel('MP')
-% %             stamp(cfile2)
-% %         end
-% %         subplot(3,1,2)
-% %         plot(d,Ptotcatch(3,s),'.k','MarkerSize',15); hold on;
-% %         xlim([0 length(dp)+1])
-% %         if (d==length(dp))
-% %             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-% %             ylabel('LP')
-% %         end
-% %         subplot(3,1,3)
-%         plot(d,Ptot,'.k','MarkerSize',15); hold on;
+        f6 = figure(6);
+%         subplot(3,1,1)
+%         plot(d,Ptotcatch(2,s),'.k','MarkerSize',15); hold on;
 %         xlim([0 length(dp)+1])
 %         if (d==length(dp))
 %             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
-%             ylabel('All P')
+%             title([loc ' Total catch (g) in final year'])
+%             ylabel('MP')
 %             stamp(cfile2)
 %         end
+%         subplot(3,1,2)
+%         plot(d,Ptotcatch(3,s),'.k','MarkerSize',15); hold on;
+%         xlim([0 length(dp)+1])
+%         if (d==length(dp))
+%             set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+%             ylabel('LP')
+%         end
+%         subplot(3,1,3)
+        plot(d,Ptot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            ylabel('All P')
+            stamp(cfile2)
+        end
         
         f7 = figure(7);
 %         subplot(3,1,1)
@@ -1246,8 +1414,79 @@ for s=6 %1:length(spots)
     end
     
     print(f5,'-dpng',[figp loc '/' sname sname2 cfile2 '_' lname 'F.png'])
-%     print(f6,'-dpng',[figp loc '/' sname sname2 cfile2 '_' lname 'P.png'])
+    print(f6,'-dpng',[figp loc '/' sname sname2 cfile2 '_' lname 'P.png'])
     print(f7,'-dpng',[figp loc '/' sname sname2 cfile2 '_' lname 'D.png'])
     print(f8,'-dpng',[figp loc '/' sname sname2 cfile2 '_' lname 'All.png'])
     
 end
+
+%%
+for s=1:length(spots)
+    
+    loc = spots{s};
+    lname = [sname2 loc '_'];
+    
+    %%
+    for d=1:length(dp)
+        
+        dpath = char(dp(d));
+        load([datap dpath sname sname2 'lastyr_sum_mean_biom']);
+        
+        
+        %% Fishing
+        Ftot = sum(Ftotcatch(:,s));
+        Ptot = sum(Ptotcatch(:,s));
+        Dtot = sum(Dtotcatch(:,s));
+        Tot = Ftot+Ptot+Dtot;
+        
+        f9 = figure(9);
+        subplot(3,3,s)
+        plot(d,Tot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total catch (g) in final year')
+            stamp(cfile)
+        end
+        
+        f10 = figure(10);
+        subplot(3,3,s)
+        plot(d,Ftot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total F catch (g) in final year')
+            stamp(cfile)
+        end
+        
+        f11 = figure(11);
+        subplot(3,3,s)
+        plot(d,Ptot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total P catch (g) in final year')
+            stamp(cfile)
+        end
+        
+        f12 = figure(12);
+        subplot(3,3,s)
+        plot(d,Dtot,'.k','MarkerSize',15); hold on;
+        xlim([0 length(dp)+1])
+        if (d==length(dp))
+            set(gca,'XTick',1:length(dp),'XTickLabel',sims);
+            title(loc)
+            ylabel('Total D catch (g) in final year')
+            stamp(cfile)
+        end
+        
+    end
+    
+end
+print(f9,'-dpng',[figp sname sname2 cfile2 '_all_locs.png'])
+print(f10,'-dpng',[figp sname sname2 cfile2 '_allF_locs.png'])
+print(f11,'-dpng',[figp sname sname2 cfile2 '_allP_locs.png'])
+print(f12,'-dpng',[figp sname sname2 cfile2 '_allD_locs.png'])
