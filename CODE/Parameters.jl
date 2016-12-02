@@ -131,7 +131,7 @@ function make_parameters(harv,frate)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 1.0
+	const global rfrac = 0.5
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -144,7 +144,7 @@ function make_parameters(harv,frate)
 	#Andersen & Beyer 2013 = 0.35 * 4.5 * s^(-0.25) (includes predation, excludes fishing)
 	const global Nat_mrt = 0.0 #0.44 / 365
 	#0=none, 1=constant, 2=temp-dep, 3=large only, 4=large temp-dep
-	const global MORT = 0
+	const global MORT = 2
 
 	###! Diet Preference Phi (j = prey, i = pred)
 	# The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
@@ -165,14 +165,14 @@ function make_parameters(harv,frate)
 	const global MP_phi_MZ = 0.1
 	const global MP_phi_LZ = 1.0
 	const global MP_phi_S = 1.0
-	const global MD_phi_BE = 0.5
+	const global MD_phi_BE = 0.1
   const global LP_phi_MF = 1.0
 	const global LP_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
-	const global LD_phi_MF = 0.5
-	const global LD_phi_MP = 0.5
-	const global LD_phi_MD = 0.5
-	const global LD_phi_BE = 0.5
+	const global LD_phi_MF = 0.1
+	const global LD_phi_MP = 0.1
+	const global LD_phi_MD = 0.1
+	const global LD_phi_BE = 0.1
 
 	#-----
 end

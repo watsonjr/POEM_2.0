@@ -42,11 +42,11 @@ function Testoneloc()
 		tfish = string(1000+Int(100*frate))
 	end
 	if (harv==1)
-		#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_MF_fish",tfish[2:end]);
-		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
+		#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_MF_fish",tfish[2:end]);
+		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
 else
-		#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
-		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
+		#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
+		simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 end
 	if (isdir(string("/Volumes/GFDL/CSV/",simname)))
 		nothing
