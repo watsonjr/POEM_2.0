@@ -107,9 +107,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
 			if (i == ied)
-				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
+				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[isd,j]./dep[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
 			else
-				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
+				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[i+1,j]./dep[i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
 			end
 		end
 	end
@@ -140,9 +140,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
 			if (j < jed)
-				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
+				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[i,j+1]./dep[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
 			else
-				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
+				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[ni-i+1,j]./dep[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
 			end
 		end
 	end
@@ -152,9 +152,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 		for i=isd:ied
 			if (j > 1)
 				if (i > 1)
-					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[i-1,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j] ./dep[i,j]
+					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[i-1,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j]
 				else
-					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[ied,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j] ./dep[i,j]
+					upwind[i,j] = GRD["lmask"][i,j,1].*(fe[i,j]-fe[ied,j]+fn[i,j]-fn[i,j-1]).*GRD["datr"][i,j]
 				end
 			# no need for else at South Pole
 			end

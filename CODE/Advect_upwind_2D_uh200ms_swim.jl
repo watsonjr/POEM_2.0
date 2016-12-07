@@ -27,7 +27,7 @@
 
 
 ### ADVECTION ###-------------------------------
-function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,wgt,nu)
+function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 	# ntime = time steps in a day
 	# dtime = # seconds in ntime
 	dtime = 60.0*60.0
@@ -44,29 +44,23 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,wgt,nu)
 	ied = ni
 	jed = nj
 
-	#! Calc swimming speed (m/s)
-	#T = (Tp.*tdif) + (Tb.*(1.0-tdif))
-	T = 15.0;
-	w = ((3.9*wgt.^0.13 * exp(0.149*T)) /100)
-	Q = w*ones(Float64,360,200);
-
 	#! Find direction to swim in
 	KK = zeros(Int64,360,200);
 	for j=jsd:jed
 		for i=isd:ied
 			if (j==nj)
 				if (i==1)
-					KK[i,j] = findmax([nu[i,j],nu[ni-i+1,j],nu[i,j-1],nu[360,j],nu[i+1,j]])[2]
+					KK[i,j] = findmax([nu[i,j],nu[ni-i+1,j],nu[i,j-1],nu[ied,j],nu[i+1,j]])[2]
 				elseif (i==ni)
-					KK[i,j] = findmax([nu[i,j],nu[ni-i+1,j],nu[i,j-1],nu[i-1,j],nu[1,j]])[2]
+					KK[i,j] = findmax([nu[i,j],nu[ni-i+1,j],nu[i,j-1],nu[i-1,j],nu[isd,j]])[2]
 				else
 					KK[i,j] = findmax([nu[i,j],nu[ni-i+1,j],nu[i,j-1],nu[i-1,j],nu[i+1,j]])[2]
 				end
 			else
 				if (i==1)
-					KK[i,j] = findmax([nu[i,j],nu[i,j+1],nu[i,j-1],nu[360,j],nu[i+1,j]])[2]
+					KK[i,j] = findmax([nu[i,j],nu[i,j+1],nu[i,j-1],nu[ied,j],nu[i+1,j]])[2]
 				elseif (i==ni)
-					KK[i,j] = findmax([nu[i,j],nu[i,j+1],nu[i,j-1],nu[i-1,j],nu[1,j]])[2]
+					KK[i,j] = findmax([nu[i,j],nu[i,j+1],nu[i,j-1],nu[i-1,j],nu[isd,j]])[2]
 				else
 					KK[i,j] = findmax([nu[i,j],nu[i,j+1],nu[i,j-1],nu[i-1,j],nu[i+1,j]])[2]
 				end
@@ -93,7 +87,7 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,wgt,nu)
 		t = time
 		#println(t)
 		wrk1 = zeros(Float64,ni,nj);
-	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj)
+	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj,dep)
 		for j=jsd:jed
 			for i=1:ied
 					Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
@@ -112,7 +106,7 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,wgt,nu)
 end
 
 
-function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
+function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 	isd = 1
 	jsd = 2 #ignore j=1 b/c land (Antarctica)
 	ied = ni
@@ -151,9 +145,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
 			if (i == ied)
-				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
+				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[isd,j]./dep[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
 			else
-				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
+				fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[i+1,j]./dep[i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
 			end
 		end
 	end
@@ -184,9 +178,9 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj)
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
 			if (j < jed)
-				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
+				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[i,j+1]./dep[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
 			else
-				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j] + uneg.*Tracer_field[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
+				fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[ni-i+1,j]./dep[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
 			end
 		end
 	end

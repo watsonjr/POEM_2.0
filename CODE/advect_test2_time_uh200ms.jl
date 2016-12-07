@@ -8,25 +8,25 @@ ID = load("./Data/Data_grid_hindcast_NOTflipped.jld","ID");
 GRD = load("./Data/Data_grid_cp_2D.jld")
 #COBALT = load("./Data/JLD/Data_hindcast_000130.jld"); # 1990
 #COBALT = load("./Data/JLD/Data_hindcast_surfvel_000120.jld"); # 1980
-COBALT = load("./Data/JLD/Data_hindcast_velH200_000001.jld"); # yr3=1990; m2/s
+COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_velH200_000001.jld"); # yr3=1990; m2/s
 
 bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 V = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 dep = ones(Float64,GRD["Nlon"],GRD["Nlat"]);
-#bio[ID] = 1.0e6*ones(Float64,size(ID));
+bio[ID] = 1.0e6*ones(Float64,size(ID));
 #bio[:,84:109] = 1.0e6; #seed equator
 #bio[220:240,:] = 1.0e6; #seed Atl
 #bio[59:79,:] = 1.0e6; #seed Pac
 #bio[5:25,:] = 1.0e6; #seed Indian W
 #bio[340:360,:] = 1.0e6; #seed Indian E
 #bio[:,181:200] = 1.0e6; #seed Arctic
-bio[:,12:32] = 1.0e6; #seed Antarctic
+#bio[:,12:32] = 1.0e6; #seed Antarctic
 ni, nj = size(U);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_test_Antarc_velH200_dt1hr_j2_nodiv_divdepth2.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_test_global_velH200_dt1hr_j2_nodiv_divdepth3.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
