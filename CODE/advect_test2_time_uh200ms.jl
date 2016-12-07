@@ -13,7 +13,7 @@ COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_velH200_000001.jld"); # yr3=
 bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 V = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
-dep = ones(Float64,GRD["Nlon"],GRD["Nlat"]);
+dep = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 bio[ID] = 1.0e6*ones(Float64,size(ID));
 #bio[:,84:109] = 1.0e6; #seed equator
 #bio[220:240,:] = 1.0e6; #seed Atl
