@@ -22,6 +22,7 @@ dep = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 #bio[340:360,:] = 1.0e6; #seed Indian E
 bio[:,181:200] = 1.0e6; #seed Arctic
 #bio[:,12:32] = 1.0e6; #seed Antarctic
+# PROBABLY NEED TO MULT BY LMASK TO GET ONLY OCEAN
 ni, nj = size(U);
 
 
