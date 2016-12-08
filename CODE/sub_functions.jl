@@ -468,12 +468,12 @@ function sub_fishing_mass(MFbio,LPbio,LDbio,AREA)
 	return MFbio, LPbio, LDbio
 end
 
-function sub_fishing_rate(bio,wgt)
+function sub_fishing_rate(bio,wgt,FISHING)
 	if (wgt==M_m)
-    caught = bio * MFISHING
+    caught = bio * FISHING
     bio -= caught
   elseif (wgt==M_l)
-    caught = bio * LFISHING
+    caught = bio * FISHING
     bio -= caught
   else
     bio = bio

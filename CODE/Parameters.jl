@@ -65,17 +65,17 @@ function make_parameters(harv,frate)
 	const global DT = 1.; # time step
 
 	#! Amount of fishing
-	if harv == 1
-		#const global FISHING = 80000000000 / (365/DT) # 80MT per year
-		const global LFISHING = frate/365.0
-		const global MFISHING = LFISHING
-		#const global MFISHING = 0.5 * LFISHING
-		#const global MFISHING = 1.5/365.0
-		#const global LFISHING = 0.5 * MFISHING
-	else
-		const global MFISHING = 0
-		const global LFISHING = 0
-	end
+	# if harv == 1
+	# 	#const global FISHING = 80000000000 / (365/DT) # 80MT per year
+	# 	const global LFISHING = frate/365.0
+	# 	const global MFISHING = LFISHING
+	# 	#const global MFISHING = 0.5 * LFISHING
+	# 	#const global MFISHING = 1.5/365.0
+	# 	#const global LFISHING = 0.5 * MFISHING
+	# else
+	# 	const global MFISHING = 0
+	# 	const global LFISHING = 0
+	# end
 
 	#! Benthic-pelagic coupling cutoff (depth, m)
 	const global PI_be_cutoff = 200
@@ -131,7 +131,7 @@ function make_parameters(harv,frate)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 0.5
+	const global rfrac = 0.06
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
