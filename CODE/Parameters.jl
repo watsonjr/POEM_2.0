@@ -131,7 +131,7 @@ function make_parameters(harv,frate)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 0.06
+	#const global rfrac = 0.01
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -165,14 +165,14 @@ function make_parameters(harv,frate)
 	const global MP_phi_MZ = 0.1
 	const global MP_phi_LZ = 1.0
 	const global MP_phi_S = 1.0
-	const global MD_phi_BE = 0.1
+	const global MD_phi_BE = 1.0
   const global LP_phi_MF = 1.0
 	const global LP_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
-	const global LD_phi_MF = 0.1
-	const global LD_phi_MP = 0.1
-	const global LD_phi_MD = 0.1
-	const global LD_phi_BE = 0.1
+	const global LD_phi_MF = 1.0
+	const global LD_phi_MP = 1.0
+	const global LD_phi_MD = 1.0
+	const global LD_phi_BE = 1.0
 
 	#-----
 end

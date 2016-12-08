@@ -122,9 +122,10 @@ function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   # pref: preference for prey item
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
-  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9)
+  #! divide by 100m to put in m2/g/day b/c zoop is integrated over 100m depth
+  #A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9) / 100.0
   #! Specific clearance rate from Hartvig et al (m3/g/day) gamma = 0.8e4 ref to 10C
-  #A = (exp(0.063*(temp-10.0)) * 0.8e4 * wgt^(q-1.0)) ./365.0
+  A = (exp(0.063*(temp-10.0)) * 0.8e4 * wgt^(q-1.0)) ./365.0
   #! Specific clearance rate from mizer et al (m3/g/day) gamma = 2.9e3? ref to 10C
   #A = (exp(0.063*(temp-10.0)) * 2.9e3 * wgt^(q-1.0)) ./365.0
   #! Specific clearance rate from J&C15 et al (m3/g/day) gamma = 2.9e3? ref to 10C
@@ -347,7 +348,7 @@ end
 
 
 ###! Biomass recruiting to size-class (g m-2 d-1)
-function sub_rec(X,bio,wgt)
+function sub_rec(X,bio,wgt,rfrac)
 	# X could be biomass of eggs (for larval class) or maturing from smaller sizes
   if (wgt==M_s)
     rec = rfrac * X * bio
@@ -374,9 +375,9 @@ function sub_nmort(Tp,Tb,tpel,wgt)
     #! Const with size
     #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
     #! Hartvig
-    #nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365;
+    nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365;
     #! mizer
-    nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365;
+    #nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365;
     #! J&C
     #nmort = exp(0.063*(temp-10.0)) * 0.5 * wgt^(-0.33) /365;
     #! Intermediate
