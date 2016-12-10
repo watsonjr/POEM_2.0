@@ -331,6 +331,28 @@ function sub_nu(I,B,met)
   return nu, prod
 end
 
+function sub_nu_MD(I,B,met)
+	# convert to biomass specific ingestion
+	#nu = ((I/B)*Lambda) - met
+  #nu = 0.5*I
+  # Already in biomass specific ingestion
+	nu = (I*0.6) - met
+  prod = nu * B
+  return nu, prod
+end
+
+function sub_nu_LD(B,met,c1,c2,c3,c4)
+	# convert to biomass specific ingestion
+	#nu = ((I/B)*Lambda) - met
+  #nu = 0.5*I
+  # Already in biomass specific ingestion
+  Ip = c1+c2+c3
+  Ib = c4
+	nu = (Ip*Lambda + Ib*0.6) - met
+  prod = nu * B
+  return nu, prod
+end
+
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
 function sub_gamma(K,Z,nu,d,B,S,nmrt)
