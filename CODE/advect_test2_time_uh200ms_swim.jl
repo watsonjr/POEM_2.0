@@ -40,7 +40,7 @@ nu = GRD["Z"] #swim towards deepest area
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_deep_test_Arc_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_deep_test_Arc_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
