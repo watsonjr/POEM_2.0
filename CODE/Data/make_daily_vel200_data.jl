@@ -14,13 +14,13 @@
 using NetCDF, HDF5, JLD, Grid, MAT
 
 #! Time
-TIME = ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc",
+TIME = ncread("/Volumes/GFDL/GCM_DATA/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc",
     "average_T1"); # time
 TIME = TIME[1:240]
 
 #! Ocean currents
-U = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Uth_200");
-V = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Vth_200");
+U = ncread("/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Uth_200");
+V = ncread("/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Vth_200");
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
@@ -28,7 +28,7 @@ V = ncread("./GCM/Hindcast/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","
 
 #! index of water cells
 #Use Zm to be consistent with ID
-Zm=ncread("./GCM/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc",
+Zm=ncread("/Volumes/GFDL/GCM_DATA/Hindcast/ocean_cobalt_biomass_100.186101-200512.nmdz_100.nc",
 	"nmdz_100");
 WID = find(Zm[:,:,1] .!= -1.0e10); # spatial index of water cells
 NID = length(WID); # number of water cells
@@ -56,8 +56,8 @@ for i = 1:2#:nyr
   D_v = zeros(NID,365);
 
   #! NaN velocities = 0 #used to be -999
-  u[find(u.==minimum(u))] = 0.0
-  v[find(v.==minimum(v))] = 0.0
+  #u[find(u.==minimum(u))] = 0.0
+  #v[find(v.==minimum(v))] = 0.0
 
 	#! interpolate to daily resolution
 	for j = 1:NID
@@ -84,7 +84,7 @@ for i = 1:2#:nyr
 
 	#! save
 	println(i)
-	ti = string(1000000+i); di = "./JLD/Data_hindcast_velH200_";
+	ti = string(1000000+i); di = "/Volumes/GFDL/POEM_JLD/Data_hindcast_velH200_";
 	save(string(di,ti[2:end],".jld"),"Uh",D_u,"Vh",D_v);
 
 
