@@ -20,13 +20,13 @@ dep = GRD["Z"];
 #bio[59:79,:] = 1.0e6; #seed Pac
 #bio[5:25,:] = 1.0e6; #seed Indian W
 #bio[340:360,:] = 1.0e6; #seed Indian E
-#bio[:,181:200] = 1.0e6; #seed Arctic
-bio[:,12:32] = 1.0e6; #seed Antarctic
+bio[:,181:200] = 1.0e6; #seed Arctic
+#bio[:,12:32] = 1.0e6; #seed Antarctic
 ni, nj = size(U);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_test_Antarc_velH200_dt1d_j2_nodiv_divdepth_fixinterp.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_test_Arc_velH200_dt1hr_j2_nodiv_divdep_fixint_noadd.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
