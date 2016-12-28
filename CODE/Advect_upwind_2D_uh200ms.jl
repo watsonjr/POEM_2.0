@@ -30,11 +30,12 @@
 function sub_advection(GRD,Bio_in,U,V,ni,nj,dep)
 	# ntime = time steps in a day
 	# dtime = # seconds in ntime
-	dtime = 60.0*60.0
+	dtime = 60.0*60.0*24.0 #60.0*60.0 #= 24 hours
 	ntime = (60.0*60.0*24.0) / dtime
 	nt = Int(ntime)
 	# biol concentration
-	Tfield = zeros(Float64,360,200,nt);
+	#Tfield = zeros(Float64,360,200,nt);
+	Tfield = zeros(Float64,360,200,2);
 	#Tfield[:,:,1] = Bio_in/ntime;
 	Tfield[:,:,1] = Bio_in;
 	Ttendency = zeros(Float64,360,200,nt);
@@ -45,14 +46,14 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj,dep)
 	jed = nj
 
 	# time loop
-	for time=1:nt-1
+	for time=1#:nt-1
 		t = time
 		#println(t)
 		wrk1 = zeros(Float64,ni,nj);
 	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj,dep)
 		for j=jsd:jed
 			for i=1:ied
-					Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
+				Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
 			end
 		end
 		for j=jsd:jed
@@ -64,7 +65,8 @@ function sub_advection(GRD,Bio_in,U,V,ni,nj,dep)
 
 	# return
 	#return Tfield[:,:,nt] * ntime
-	return Tfield[:,:,nt]
+	#return Tfield[:,:,nt]
+	return Tfield[:,:,2]
 end
 
 
@@ -104,7 +106,7 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 	# j-flux
 	for j=jsd:jed #j=jsd-1:jed
 		for i=isd:ied
-			
+
 			velocity = 0.5*vvel[i,j]
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
