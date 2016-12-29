@@ -8,8 +8,8 @@ dpath = '/Volumes/GFDL/CSV/advect_tests/';
 %dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_swim_shallow_test_Pac_velH200_dt1hr_j2_nodiv_divdepth3.csv']);
-cname = 'swim_shallow_test_Pac_velH200_dt1hr_j2_nodiv_divdepth3';
+bio = csvread([dpath 'bio_2Dadvect_swim_shallow_test_Antarc_velH200_dt1hr_j2_nodiv_divdepth3.csv']);
+cname = 'swim_shallow_test_Antarc_velH200_dt1hr_j2_nodiv_divdepth3';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -46,15 +46,15 @@ B7=B1;
 B8=B1;
 B9=B1;
 
-B1(grid(:,1))=bio(1,:);
-B2(grid(:,1))=bio(73,:); %73
-B3(grid(:,1))=bio(146,:); %146
-B4(grid(:,1))=bio(219,:); %219
-B5(grid(:,1))=bio(365,:); %365
-B6(grid(:,1))=bio(73,:); %456
-B7(grid(:,1))=bio(146,:); %547
-B8(grid(:,1))=bio(219,:); %638
-B9(grid(:,1))=bio(365,:); %730
+B1(grid(:,1))=mass(1,:);
+B2(grid(:,1))=mass(73,:); %73
+B3(grid(:,1))=mass(146,:); %146
+B4(grid(:,1))=mass(219,:); %219
+B5(grid(:,1))=mass(365,:); %365
+B6(grid(:,1))=mass(73,:); %456
+B7(grid(:,1))=mass(146,:); %547
+B8(grid(:,1))=mass(219,:); %638
+B9(grid(:,1))=mass(365,:); %730
 
 % plot info
 % Land

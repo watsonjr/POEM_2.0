@@ -1,15 +1,15 @@
 clear all
 nc64startup
 
-Uth_200 = nc_varget('/net2/cas/POEM_advection/feb152013_run25_ocean.198801-200712_uh200_vh200.nc','Uth_200',[0 0 0],[1 200 360]);
-Vth_200 = nc_varget('/net2/cas/POEM_advection/feb152013_run25_ocean.198801-200712_uh200_vh200.nc','Vth_200',[0 0 0],[1 200 360]);
+Uth_200 = nc_varget('/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc','Uth_200',[0 0 0],[1 200 360]);
+Vth_200 = nc_varget('/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc','Vth_200',[0 0 0],[1 200 360]);
 
-geolon_t = nc_varget('/net2/cas/POEM_advection/grid_spec.nc','geolon_t',[0 0],[200 360]);
-geolat_t = nc_varget('/net2/cas/POEM_advection/grid_spec.nc','geolat_t',[0 0],[200 360]);
-dxtn = nc_varget('/net2/cas/POEM_advection/grid_spec.nc','dxtn',[0 0],[200 360]);
-dyte = nc_varget('/net2/cas/POEM_advection/grid_spec.nc','dyte',[0 0],[200 360]);
-ht = nc_varget('/net2/cas/POEM_advection/grid_spec.nc','ht',[0 0],[200 360]);
-area = nc_varget('/net2/cas/POEM_advection/grid_spec.nc','AREA_OCN',[0 0],[200 360]);
+geolon_t = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','geolon_t',[0 0],[200 360]);
+geolat_t = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','geolat_t',[0 0],[200 360]);
+dxtn = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','dxtn',[0 0],[200 360]);
+dyte = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','dyte',[0 0],[200 360]);
+ht = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','ht',[0 0],[200 360]);
+area = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','AREA_OCN',[0 0],[200 360]);
 
 % rotate everything so that the first dimension is longitudes, w/1
 % corresponding the the western-most point on the grid and moving from west

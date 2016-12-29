@@ -8,8 +8,8 @@ dpath = '/Volumes/GFDL/CSV/advect_tests/';
 %dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_Antarc_velH200_dt1d_j2_nodiv_divdepth_fixinterp.csv']);
-cname = 'Antarc_velH200_dt1d_j2_nodiv_divdepth_fixinterp';
+bio = csvread([dpath 'bio_2Dadvect_test_Arc_velH200_dt3hr_j2_nodiv_divdep_fixint_noadd.csv']);
+cname = 'Arc_velH200_dt3hr_j2_nodiv_divdep_fixint_noadd';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -22,7 +22,7 @@ totb = sum(mass,2);
 figure(10)
 subplot(2,2,1)
 plot(totb)
-100*(totb(end)-totb(1))/totb(1)
+cons = 100*(totb(end)-totb(1))/totb(1)
 
 %
 yrs=[1:length(totb)]/365;
@@ -46,15 +46,15 @@ B7=B1;
 B8=B1;
 B9=B1;
 
-B1(grid(:,1))=bio(1,:);
-B2(grid(:,1))=bio(73,:); %73
-B3(grid(:,1))=bio(146,:); %146
-B4(grid(:,1))=bio(219,:); %219
-B5(grid(:,1))=bio(365,:); %365
-% B6(grid(:,1))=bio(456,:); %456
-% B7(grid(:,1))=bio(547,:); %547
-% B8(grid(:,1))=bio(638,:); %638
-% B9(grid(:,1))=bio(730,:); %730
+B1(grid(:,1))=mass(1,:);
+B2(grid(:,1))=mass(73,:); %73
+B3(grid(:,1))=mass(146,:); %146
+B4(grid(:,1))=mass(219,:); %219
+B5(grid(:,1))=mass(365,:); %365
+% B6(grid(:,1))=mass(456,:); %456
+% B7(grid(:,1))=mass(547,:); %547
+% B8(grid(:,1))=mass(638,:); %638
+% B9(grid(:,1))=mass(730,:); %730
 
 % plot info
 % Land
@@ -89,7 +89,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e6])
+caxis([0 1e16])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -115,7 +115,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e6])
+caxis([0 1e16])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -141,7 +141,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e6])
+caxis([0 1e16])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -167,7 +167,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e6])
+caxis([0 1e16])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -194,7 +194,7 @@ ax2.YTick = [];
 % Give each one its own colormap
 colormap(ax1,'gray')
 colormap(ax2,'jet')
-caxis([0 2e6])
+caxis([0 1e16])
 % Then add colorbars and get everything lined up
 set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -221,7 +221,7 @@ print('-dpng',[fpath 'advec_test_' cname '_5.png'])
 % % Give each one its own colormap
 % colormap(ax1,'gray')
 % colormap(ax2,'jet')
-% caxis([0 2e6])
+% caxis([0 1e16])
 % % Then add colorbars and get everything lined up
 % set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 % cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -247,7 +247,7 @@ print('-dpng',[fpath 'advec_test_' cname '_5.png'])
 % % Give each one its own colormap
 % colormap(ax1,'gray')
 % colormap(ax2,'jet')
-% caxis([0 2e6])
+% caxis([0 1e16])
 % % Then add colorbars and get everything lined up
 % set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 % cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -273,7 +273,7 @@ print('-dpng',[fpath 'advec_test_' cname '_5.png'])
 % % Give each one its own colormap
 % colormap(ax1,'gray')
 % colormap(ax2,'jet')
-% caxis([0 2e6])
+% caxis([0 1e16])
 % % Then add colorbars and get everything lined up
 % set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 % cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -299,7 +299,7 @@ print('-dpng',[fpath 'advec_test_' cname '_5.png'])
 % % Give each one its own colormap
 % colormap(ax1,'gray')
 % colormap(ax2,'jet')
-% caxis([0 2e6])
+% caxis([0 1e16])
 % % Then add colorbars and get everything lined up
 % set([ax1,ax2],'Position',[.1 .11 .75 .815]);
 % cb2 = colorbar(ax2,'Position',[.88 .11 .0675 .815]);
@@ -313,7 +313,7 @@ m_pcolor(geolon_t,geolat_t,B1);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=1')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -325,7 +325,7 @@ m_pcolor(geolon_t,geolat_t,B2);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=73')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -337,7 +337,7 @@ m_pcolor(geolon_t,geolat_t,B3);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=146')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -349,7 +349,7 @@ m_pcolor(geolon_t,geolat_t,B4);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=219')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -361,7 +361,7 @@ m_pcolor(geolon_t,geolat_t,B5);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=365')
 m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -374,7 +374,7 @@ m_pcolor(geolon_t,geolat_t,B1);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=1')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -386,7 +386,7 @@ m_pcolor(geolon_t,geolat_t,B2);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=73')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -398,7 +398,7 @@ m_pcolor(geolon_t,geolat_t,B3);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=146')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -410,7 +410,7 @@ m_pcolor(geolon_t,geolat_t,B4);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=219')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
@@ -422,7 +422,7 @@ m_pcolor(geolon_t,geolat_t,B5);
 shading flat
 colorbar
 colormap('jet')
-caxis([0 2e6])
+caxis([0 1e16])
 title('Day=365')
 m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
