@@ -104,9 +104,9 @@ function make_parameters(harv,frate)
 	const global M_zl = 9.0 * exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
 
 	#! Ratio of initial and final body sizes per size-class
-	const global Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3)
-	const global Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3)
-	const global Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3)
+	const global Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3)			#M_s./M_m
+	const global Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3)		#M_m./M_l
+	const global Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3) #NA
 
 	###! Assimilation efficiency lambda (constant across everything)
 	const global Lambda = 0.7;

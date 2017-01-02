@@ -6,10 +6,7 @@ include("Advect_upwind_2D_uh200ms.jl")
 
 ID = load("./Data/Data_grid_hindcast_NOTflipped.jld","ID");
 GRD = load("./Data/Data_hindcast_grid_cp2D.jld")
-#COBALT = load("./Data/JLD/Data_hindcast_000130.jld"); # 1990
-#COBALT = load("./Data/JLD/Data_hindcast_surfvel_000120.jld"); # 1980
-COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_vel200_000001.jld"); # yr3=1990; m2/s
-#COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_velH200_000001.jld"); # yr3=1990; m2/s
+COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_velH200_000001.jld"); # yr3=1990; m2/s
 
 bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);

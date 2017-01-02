@@ -38,6 +38,9 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 	#Tfield[:,:,1] = Bio_in/ntime;
 	Tfield[:,:,1] = Bio_in;
 	Ttendency = zeros(Float64,360,200,nt);
+	# active swimming
+	Ua = zeros(Float64,360,200);
+	Va = zeros(Float64,360,200);
   # grid size
 	isd = 1
 	jsd = 2 #ignore j=1 b/c land (Antarctica)
@@ -67,35 +70,35 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 			end
 		end #i
 	end #j
+	KK = KK .* GRD["lmask"][:,:,1]
 
-	#! Calculate effective speed
-	U = u
-	V = v
+	#! Calculate active swimming speed
 	I1 = find(KK .== 1);
 	I2 = find(KK .== 2);
 	I3 = find(KK .== 3);
 	I4 = find(KK .== 4);
 	I5 = find(KK .== 5);
 
-	V[I2] = V[I2] + Q[I2];
-	V[I3] = V[I3] - Q[I3];
-	U[I4] = U[I4] - Q[I4];
-	U[I5] = U[I5] + Q[I5];
+	Va[I2] = Va[I2] + Q[I2];
+	Va[I3] = Va[I3] - Q[I3];
+	Ua[I4] = Ua[I4] - Q[I4];
+	Ua[I5] = Ua[I5] + Q[I5];
 
 	# time loop
 	for time=1:nt-1
 		t = time
 		#println(t)
 		wrk1 = zeros(Float64,ni,nj);
-	  wrk1 = -horz_advect_tracer_upwind(U,V,Tfield[:,:,t],ni,nj,dep)
-		for j=jsd:jed
-			for i=1:ied
-					Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
-			end
-		end
+	  wrk1 = -horz_advect_tracer_upwind(u,v,Tfield[:,:,t],ni,nj,dep,Ua,Va)
+		# for j=jsd:jed
+		# 	for i=1:ied
+		# 			Ttendency[i,j,t] = Ttendency[i,j,t] + wrk1[i,j]
+		# 	end
+		# end
 		for j=jsd:jed
 	    for i=1:ied
-				Tfield[i,j,time+1]=(Tfield[i,j,time] + dtime.*Ttendency[i,j,time])
+				#Tfield[i,j,time+1] = (Tfield[i,j,time] + dtime.*Ttendency[i,j,time])
+				Tfield[i,j,time+1] = (Tfield[i,j,time] + dtime.*wrk1[i,j])
 	    end
 	  end
 	end
@@ -106,7 +109,7 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 end
 
 
-function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
+function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep,Ua,Va)
 	isd = 1
 	jsd = 2 #ignore j=1 b/c land (Antarctica)
 	ied = ni
@@ -119,40 +122,24 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 	# i-flux
 	for j=jsd:jed
 		for i=isd:ied #i=isd-1:ied
-			# Reflective BC
-			# #west
-			# if (i > 1)
-			# 	if (uvel[i,j].<0.0 && GRD["lmask"][i-1,j,1].==0.0)
-			# 		uvel[i,j] *= -1.0
-			# 	end
-			# else
-			# 	if (uvel[i,j].<0.0 && GRD["lmask"][ied,j,1].==0.0)
-			# 		uvel[i,j] *= -1.0
-			# 	end
-			# end
-			# #east
-			# if (i == ied)
-			# 	if (uvel[i,j].>0.0 && GRD["lmask"][isd,j,1].==0.0)
-			# 		uvel[i,j] *= -1.0
-			# 	end
-			# else
-			# 	if (uvel[i,j].>0.0 && GRD["lmask"][i+1,j,1].==0.0)
-			# 		uvel[i,j] *= -1.0
-			# 	end
-			# end
 
 			velocity = 0.5*uvel[i,j]
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
+			swim  = 0.5*Ua[i,j]
+			uapos = swim + abs(swim)
+			uaneg = swim - abs(swim)
 			if (i == ied)
 				if (dep[i,j] > 0.0 && dep[isd,j] > 0.0)
 					fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[isd,j]./dep[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
+					fe[i,j]  = fe[i,j] + (GRD["dyte"][i,j].*(uapos.*Tracer_field[i,j] + uaneg.*Tracer_field[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1])
 				else
 					fe[i,j]  = 0.0
 				end
 			else
 				if (dep[i,j] > 0.0 && dep[i+1,j] > 0.0)
 					fe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[i+1,j]./dep[i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
+					fe[i,j]  = fe[i,j] + (GRD["dyte"][i,j].*(uapos.*Tracer_field[i,j] + uaneg.*Tracer_field[i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1])
 				else
 					fe[i,j]  = 0.0
 				end
@@ -163,37 +150,24 @@ function horz_advect_tracer_upwind(uvel,vvel,Tracer_field,ni,nj,dep)
 	# j-flux
 	for j=jsd:jed #j=jsd-1:jed
 		for i=isd:ied
-			# # Reflective BC
-			# #south
-			# if (j > 1)
-			# 	if (vvel[i,j].<0.0 && GRD["lmask"][i,j-1,1].==0.0)
-			# 		vvel[i,j] *= -1.0
-			# 	end
-			# #don't need else at j=1 (South Pole) because all land
-			# end
-			# #north
-			# if (j < jed)
-			# 	if (vvel[i,j].>0.0 && GRD["lmask"][i,j+1,1].==0.0)
-			# 		vvel[i,j] *= -1.0
-			# 	end
-			# else #N Pole keeps same lat, changes lon
-			# 	if (vvel[i,j].>0.0 && GRD["lmask"][ni-i+1,j,1].==0.0)
-			# 		vvel[i,j] *= -1.0
-			# 	end
-			# end
 
 			velocity = 0.5*vvel[i,j]
 			upos     = velocity + abs(velocity)
 			uneg     = velocity - abs(velocity)
+			swim  = 0.5*Va[i,j]
+			uapos = swim + abs(swim)
+			uaneg = swim - abs(swim)
 			if (j < jed)
 				if (dep[i,j] > 0.0 && dep[i,j+1] > 0.0)
 					fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[i,j+1]./dep[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
+					fn[i,j]  = fn[i,j] + (GRD["dxtn"][i,j].*(uapos.*Tracer_field[i,j] + uaneg.*Tracer_field[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1])
 				else
 					fn[i,j]  = 0.0
 				end
 			else
 				if (dep[i,j] > 0.0 && dep[ni-i+1,j] > 0.0)
 					fn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer_field[i,j]./dep[i,j] + uneg.*Tracer_field[ni-i+1,j]./dep[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
+					fn[i,j]  = fn[i,j] + (GRD["dxtn"][i,j].*(uapos.*Tracer_field[i,j] + uaneg.*Tracer_field[ni-i+1,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1])
 				else
 					fn[i,j]  = 0.0
 				end

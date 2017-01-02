@@ -11,6 +11,7 @@ dyte = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','dyte',[0 0],[20
 ht = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','ht',[0 0],[200 360]);
 area = nc_varget('/Volumes/GFDL/GCM_DATA/Hindcast/grid_spec.nc','AREA_OCN',[0 0],[200 360]);
 
+%%
 % rotate everything so that the first dimension is longitudes, w/1
 % corresponding the the western-most point on the grid and moving from west
 % to east; the second dimension is latitude with 1 corresponding to
@@ -43,7 +44,7 @@ aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
 TF(aa) = 1;
 total_mass(1) = sum(TF(:).*area(:));
 
-% Following Advect_upwind_2D
+%% Following Advect_upwind_2D
 dt = 3600;
 ni = 360;
 nj = 200;
@@ -63,7 +64,7 @@ mask(aa) = 1;
 fe = zeros(ni,nj);
 fn = zeros(ni,nj);
 
-% Advection loop
+%% Advection loop
 for n = 1:ntime
 n
 % Westward flux

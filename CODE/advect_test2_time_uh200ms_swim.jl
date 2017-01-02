@@ -14,17 +14,19 @@ bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 V = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 dep = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
+dep[ID] = GRD["Z"][ID];
 #bio[ID] = 1.0e6*ones(Float64,size(ID));
 #bio[:,84:109] = 1.0e6; #seed equator
-#bio[220:240,:] = 1.0e6; #seed Atl
+bio[220:240,:] = 1.0e6; #seed Atl
 #bio[59:79,:] = 1.0e6; #seed Pac
 #bio[5:25,:] = 1.0e6; #seed Indian W
 #bio[340:360,:] = 1.0e6; #seed Indian E
-bio[:,181:200] = 1.0e6; #seed Arctic
+#bio[:,181:200] = 1.0e6; #seed Arctic
 #bio[:,12:32] = 1.0e6; #seed Antarctic
 # PROBABLY NEED TO MULT BY LMASK TO GET ONLY OCEAN
-ni, nj = size(U);
+bio = bio .* GRD["lmask"][:,:,1]
 
+ni, nj = size(U);
 
 #! Calc swimming speed (m/s)
 #T = (Tp.*tdif) + (Tb.*(1.0-tdif))
@@ -34,27 +36,30 @@ w = ((3.9*wgt.^0.13 * exp(0.149*T)) /100)
 Q = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 Q[ID] = w;
 
-#nu = -1.0 * GRD["Z"] #swim towards shallowest area
-nu = GRD["Z"] #swim towards deepest area
+#nu = -1.0 * dep #swim towards shallowest area
+nu = dep #swim towards deepest area
 #nu = randn(ni,nj);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_deep_test_Arc_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_deep_test_Atl_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
 	println(DAY)
 	# U[ID] = COBALT["Uh"][:,DAY]; #m2/s
 	# V[ID] = COBALT["Vh"][:,DAY];
-	dep[ID] = GRD["Z"][ID]
 
 	#nu = randn(ni,nj);
-
 	bio = sub_advection_swim(GRD,bio,U,V,ni,nj,Q,nu,dep)
 	biov=collect(bio[ID])
 	#! Save
-	writecsv(bio2D,biov')
+	if (length(biov) == 48111)
+		writecsv(bio2D,biov')
+	else
+		println("biov != 48111")
+		break
+	end
 end
 #! Close
 close(bio2D)
