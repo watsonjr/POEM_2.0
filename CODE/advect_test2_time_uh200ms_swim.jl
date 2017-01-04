@@ -9,15 +9,17 @@ GRD = load("./Data/Data_grid_cp_2D.jld")
 #COBALT = load("./Data/JLD/Data_hindcast_000130.jld"); # 1990
 #COBALT = load("./Data/JLD/Data_hindcast_surfvel_000120.jld"); # 1980
 COBALT = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_velH200_000001.jld"); # yr3=1990; m2/s
+COB2 = load("/Volumes/GFDL/POEM_JLD/Data_hindcast_PC_000130.jld");
 
 bio = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
+prey = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 U = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 V = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 dep = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 dep[ID] = GRD["Z"][ID];
-#bio[ID] = 1.0e6*ones(Float64,size(ID));
+bio[ID] = 1.0e6*ones(Float64,size(ID));
 #bio[:,84:109] = 1.0e6; #seed equator
-bio[220:240,:] = 1.0e6; #seed Atl
+#bio[220:240,:] = 1.0e6; #seed Atl
 #bio[59:79,:] = 1.0e6; #seed Pac
 #bio[5:25,:] = 1.0e6; #seed Indian W
 #bio[340:360,:] = 1.0e6; #seed Indian E
@@ -37,25 +39,30 @@ Q = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 Q[ID] = w;
 
 #nu = -1.0 * dep #swim towards shallowest area
-nu = dep #swim towards deepest area
+#nu = dep #swim towards deepest area
 #nu = randn(ni,nj);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_deep_test_Atl_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_Zl_test_global_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv","w")
+prey2D = open("/Volumes/GFDL/CSV/advect_tests/prey_2Dadvect_swim_Zl_test_global_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
 	println(DAY)
 	# U[ID] = COBALT["Uh"][:,DAY]; #m2/s
 	# V[ID] = COBALT["Vh"][:,DAY];
+	prey[ID] = COB2["Zl"][:,DAY];
+	nu = prey;
 
 	#nu = randn(ni,nj);
 	bio = sub_advection_swim(GRD,bio,U,V,ni,nj,Q,nu,dep)
 	biov=collect(bio[ID])
+	nuv=collect(nu[ID])
 	#! Save
 	if (length(biov) == 48111)
 		writecsv(bio2D,biov')
+		writecsv(prey2D,nuv')
 	else
 		println("biov != 48111")
 		break

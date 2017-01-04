@@ -8,8 +8,9 @@ dpath = '/Volumes/GFDL/CSV/advect_tests/';
 %dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_swim_deep_test_Atl_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv']);
-cname = 'swim_deep_test_Atl_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep';
+bio = csvread([dpath 'bio_2Dadvect_swim_Zl_test_global_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv']);
+prey = csvread([dpath 'prey_2Dadvect_swim_Zl_test_global_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv']);
+cname = 'swim_Zl_test_global_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -35,7 +36,7 @@ xlabel('Year')
 ylabel('Total number of particles')
 print('-dpng',[fpath 'advec_test_' cname '_totb.png'])
 
-%%
+%% Global flat
 t = 1:72.75:365;
 %t = 1:5:30;
 t = round(t);
