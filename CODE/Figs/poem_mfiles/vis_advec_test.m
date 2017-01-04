@@ -8,16 +8,18 @@ dpath = '/Volumes/GFDL/CSV/advect_tests/';
 %dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_EInd_velH200_dt1hr_j2_nodiv_divdep_fixint_noadd.csv']);
-cname = 'EInd_velH200_dt1hr_j2_nodiv_divdep_fixint_noadd';
+bio = csvread([dpath 'bio_2Dadvect_test_global_velH200_dt1hr_2yr_j2_nodiv_divdep_fixint_noadd.csv']);
+cname = 'global_velH200_dt1hr_2yr_j2_nodiv_divdep_fixint_noadd';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
 
+[nd,nid] = size(bio);
+
 % Conservation of mass
 area = grid(:,5);
 area = area';
-mass = bio .* repmat(area,365,1);
+mass = bio .* repmat(area,nd,1);
 totb = sum(mass,2);
 figure(10)
 subplot(2,2,1)

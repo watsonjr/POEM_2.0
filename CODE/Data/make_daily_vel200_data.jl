@@ -19,8 +19,8 @@ TIME = ncread("/Volumes/GFDL/GCM_DATA/Hindcast/ocean_cobalt_biomass_100.186101-2
 TIME = TIME[1:240]
 
 #! Ocean currents
-U = ncread("/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Uth_200");
-V = ncread("/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Vth_200");
+U = ncread("/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Ut_200");
+V = ncread("/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.nc","Vt_200");
 
 ###### INTERPOLATE DATA TO SIZE-BASED MODEL TIME SCALES
 #! Save in annual chunks (365 days)
@@ -84,8 +84,8 @@ for i = 1:2#:nyr
 
 	#! save
 	println(i)
-	ti = string(1000000+i); di = "/Volumes/GFDL/POEM_JLD/Data_hindcast_velH200_";
-	save(string(di,ti[2:end],".jld"),"Uh",D_u,"Vh",D_v);
+	ti = string(1000000+i); di = "/Volumes/GFDL/POEM_JLD/Data_hindcast_vel200_";
+	save(string(di,ti[2:end],".jld"),"U",D_u,"V",D_v);
 
 
 end
