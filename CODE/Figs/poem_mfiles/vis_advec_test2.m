@@ -8,8 +8,8 @@ dpath = '/Volumes/GFDL/CSV/advect_tests/';
 %dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvect_test_global_velH200_dt6hr_2yr_j2_nodiv_divdep_fixint_noadd.csv']);
-cname = 'global_velH200_dt6hr_2yr_j2_nodiv_divdep_fixint_noadd';
+bio = csvread([dpath 'bio_2Ddiff_test_Atl_dt1hr_v22.csv']);
+cname = 'diff_test_Atl_dt1hr_v1';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -51,8 +51,8 @@ xl(xl<-180) = xl(xl<-180) + 350;
 
 
 %% Global flat
-t = 1:72.75:nd;
-%t = 1:5:30;
+%t = 1:72.75:nd;
+t = 1:3:15;
 t = round(t);
 
 %Global map
@@ -63,12 +63,13 @@ for n=1:length(t)
     figure
     surf(geolon_t,geolat_t,B1);
     view(2);
-    shading interp;
+    shading flat;
     colorbar;
-    caxis([0 2e6]);
+    caxis([0 1e5]);
     colormap('jet')
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'advec_test_' cname '_' num2str(t(n)) '.png'])
+    %print('-dpng',[fpath 'advec_test_' cname '_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath cname '_' num2str(t(n)) '.png'])
 end
 
 
@@ -82,11 +83,12 @@ for n=1:length(t)
     shading flat
     colorbar
     colormap('jet')
-    caxis([0 2e6])
+    caxis([0 1e5])
     m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'advec_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
+    %print('-dpng',[fpath 'advec_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath cname '_arcticproj_' num2str(t(n)) '.png'])
 end
 
 %% Antarctic projection
@@ -96,7 +98,7 @@ for n=1:length(t)
     figure
     m_proj('stereographic','lat',-90,'long',30,'radius',50);
     m_pcolor(geolon_t,geolat_t,B1);
-    shading flat
+    shading interp
     colorbar
     colormap('jet')
     caxis([0 2e6])
