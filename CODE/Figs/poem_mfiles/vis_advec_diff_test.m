@@ -3,13 +3,11 @@
 clear all
 close all
 
-%dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
-%dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Ddiff_test_Atl_dt1hr_v1.csv']);
-cname = 'Atl_dt1hr_v1';
+bio = csvread([dpath 'bio_2Dadvec_diff_test_uh200_global_dt12hr.csv']);
+cname = 'global_uh200_dt12hr';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -35,7 +33,7 @@ plot(yrs,totb,'LineWidth',2)
 xlabel('Year')
 %title(cname)
 ylabel('Total number of particles')
-print('-dpng',[fpath 'diff_test_' cname '_totb.png'])
+print('-dpng',[fpath 'advec_diff_test_' cname '_totb.png'])
 
 %% plot info
 % Land
@@ -63,12 +61,12 @@ for n=1:length(t)
     figure
     surf(geolon_t,geolat_t,B1);
     view(2);
-    shading flat;
+    shading interp;
     colorbar;
-    caxis([0 1e5]);
+    caxis([0 1e6]);
     colormap('jet')
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'diff_test_' cname '_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'advec_diff_test_' cname '_' num2str(t(n)) '.png'])
 end
 
 
@@ -79,14 +77,14 @@ for n=1:length(t)
     figure
     m_proj('stereographic','lat',90,'long',30,'radius',30);
     m_pcolor(geolon_t,geolat_t,B1);
-    shading flat
+    shading interp
     colorbar
     colormap('jet')
-    caxis([0 1e5])
+    caxis([0 1e6])
     m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'diff_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'advec_diff_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
 end
 
 %% Antarctic projection
@@ -96,12 +94,12 @@ for n=1:length(t)
     figure
     m_proj('stereographic','lat',-90,'long',30,'radius',50);
     m_pcolor(geolon_t,geolat_t,B1);
-    shading flat
+    shading interp
     colorbar
     colormap('jet')
-    caxis([0 1e5])
+    caxis([0 1e6])
     m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'diff_test_' cname '_Spoleproj_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'advec_diff_test_' cname '_Spoleproj_' num2str(t(n)) '.png'])
 end
