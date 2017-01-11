@@ -6,8 +6,8 @@ close all
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvec_diff_test_global_dt6hr_k600.csv']);
-cname = 'global_dt6hr_k600';
+bio = csvread([dpath 'bio_2Dadvec_diff_test_global_dt1hr_k600_nt1_b100.csv']);
+cname = 'global_dt1hr_k600_nt1_b100';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -63,7 +63,7 @@ for n=1:length(t)
     view(2);
     shading interp;
     colorbar;
-    caxis([0 1e6]);
+    caxis([0 1e2]);
     colormap('jet')
     title(['Day ' num2str(t(n)) ' Year 1'])
     print('-dpng',[fpath 'advec_diff_test_' cname '_' num2str(t(n)) '.png'])
@@ -80,7 +80,7 @@ for n=1:length(t)
     shading interp
     colorbar
     colormap('jet')
-    caxis([0 1e6])
+    caxis([0 1e2])
     m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
@@ -97,7 +97,7 @@ for n=1:length(t)
     shading interp
     colorbar
     colormap('jet')
-    caxis([0 1e6])
+    caxis([0 1e2])
     m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
