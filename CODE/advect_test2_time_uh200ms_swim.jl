@@ -43,12 +43,12 @@ Q = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 T = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 
 #nu = -1.0 * dep #swim towards shallowest area
-nu = dep #swim towards deepest area
+#nu = dep #swim towards deepest area
 #nu = randn(ni,nj);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_deep_global_vel0_dt1hr_sep_lBLtemp.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_Zl_global_vel0_dt30m_sep_lBLtemp.csv","w")
 #prey2D = open("/Volumes/GFDL/CSV/advect_tests/prey_2Dadvect_swim_Zl_global_vel0_dt1hr_sep_mBLtemp.csv","w")
 
 tstart = now()
@@ -59,7 +59,7 @@ for DAY = 1:DAYS
 	T[ID] = COB2["Tp"][:,DAY];
 	Q = exp(0.063*(T-15.0)) .* 0.5.*L.*1e-3 .* GRD["lmask"][:,:,1];
 	prey[ID] = COB2["Zl"][:,DAY];
-	#nu = prey;
+	nu = prey;
 
 	#nu = randn(ni,nj);
 	bio = sub_advection_swim(GRD,bio,U,V,ni,nj,Q,nu,dep)

@@ -30,7 +30,7 @@
 function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 	# ntime = time steps in a day
 	# dtime = # seconds in ntime
-	dtime = 60.0*60.0*1.0
+	dtime = 60.0*60.0*0.5
 	ntime = (60.0*60.0*24.0) / dtime
 	nt = Int(ntime)
 	# biol concentration
