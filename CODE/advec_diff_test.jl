@@ -2,7 +2,8 @@
 ####!! NUTS AND BOLTS
 using HDF5, JLD, Devectorize, NPZ, NetCDF, MAT
 
-include("Advect_diff_upwind_2D_u200ms_merge.jl")
+#include("Advect_diff_upwind_2D_u200ms_merge.jl")
+include("Advect_diff_upwind_2D_u200ms_loop.jl")
 
 ID = load("./Data/Data_grid_hindcast_NOTflipped.jld","ID");
 GRD = load("./Data/Data_hindcast_grid_cp2D.jld");
@@ -23,11 +24,11 @@ dep = GRD["Z"];
 ni=GRD["Nlon"];
 nj=GRD["Nlat"];
 
-K = 10.0;
+K = 600.0;
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvec_diff_test_global_dt12hr.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvec_diff_test_global_dt1hr_k600_nt1.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
