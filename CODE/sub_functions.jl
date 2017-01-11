@@ -52,17 +52,6 @@ function sub_tdif_dem(Z,bio1,bio2,bio3,bio4)
 end
 
 
-###! Max consumption
-#function sub_cmax(Tp,Tb,tdif,wgt)
-#  #Tp: pelagic temp
-#  #Tb: bottom temp
-#  #tdif: frac pelagic time
-#  #wgt: ind weight of size class
-#  temp = (Tp.*tdif) + (Tb.*(1.0-tdif))
-#	 cmax = exp(0.063*(temp-10.0)) * h * wgt^(3/4) #h value for temp=15C
-#  return cmax
-#end
-
 ###! Swimming speed
 #function sub_swim(Tp,Tb,tdif,wgt)
 #  #Tp: pelagic temp
@@ -123,11 +112,11 @@ function sub_enc(Tp,Tb,wgt,pred,prey,tpel,tprey,pref)
   temp = (Tp.*tpel) + (Tb.*(1.0-tpel))
   #! Specific clearance rates from Kiorboe & Hirst (m3/g/day)
   #! divide by 100m to put in m2/g/day b/c zoop is integrated over 100m depth
-  #A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9) #/ 100.0
+  A = (exp(0.063*(temp-15.0)) * 10^(3.24) * wgt^(-0.24)) * (24e-3/9) #/ 100.0
   #! Hartvig et al (m3/g/day) gamma = 0.8e4 ref to 10C
   #A = (exp(0.063*(temp-10.0)) * 0.8e4 * wgt^(q-1.0)) ./365.0
   #! mizer et al (m3/g/day) gamma = 2.9e3? ref to 10C
-  A = (exp(0.063*(temp-10.0)) * 2.9e3 * wgt^(q-1.0)) ./365.0
+  #A = (exp(0.063*(temp-10.0)) * 2.9e3 * wgt^(q-1.0)) ./365.0
   #! J&C15 et al (m3/g/day) gamma = 2.9e3? ref to 10C
   #A = (exp(0.063*(temp-10.0)) * 1.37e4 * wgt^(0.9-1.0)) ./365.0
   #Encounter per predator, mult by biomass later
@@ -435,9 +424,9 @@ function sub_nmort(Tp,Tb,tpel,wgt)
     #! Const with size
     #nmort = exp(0.063*(temp-15.0)) * Nat_mrt
     #! Hartvig
-    #nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365.0;
+    nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365.0;
     #! mizer
-    nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365.0;
+    #nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365.0;
     #! J&C
     #nmort = exp(0.063*(temp-10.0)) * 0.5 * wgt^(-0.33) /365.0;
     #! Intermediate
