@@ -2,16 +2,17 @@
 ####!! RUN SPINUP FOR ONE LOCATION
 function Testoneloc()
 
-	#Fmort = collect(0.1:0.1:1.0)
-	RE = [1.0,0.5,0.1,0.09,0.08,0.07,0.06,0.05,0.04,0.03,0.02,0.01]
+	Fmort = collect(0.1:0.1:1.0)
+	#RE = [1.0,0.5,0.1,0.09,0.08,0.07,0.06,0.05,0.04,0.03,0.02,0.01]
+	#RE = [0.009,0.008,0.007,0.006,0.005,0.004,0.003,0.002,0.001]
 
-	#for F = 1:length(Fmort)
-	for F = 1:length(RE)
-		rfrac = RE[F]
+	for F = 1:length(Fmort)
+	#for F = 1:length(RE)
+		#rfrac = RE[F]
 
 	#! Make parameters
-		harv = 0 #0=no fishing; 1=fishing
-		frate = 0;#Fmort[F]
+		harv = 1 #0=no fishing; 1=fishing
+		frate = Fmort[F]
 		dfrate = frate/365.0;
 		make_parameters(harv,frate) # make core parameters/constants
 
@@ -31,8 +32,8 @@ function Testoneloc()
 		global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 		XY = zeros(Int,360,200);
 	  XY[GRD["ID"]] = collect(1:GRD["N"])
-		ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248]
-		names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus"]
+		ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248,33069]
+		names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus","PUp"]
 
 		tfcrit = string(Int(100*fcrit))
 		tmz = string(100+Int(10*MF_phi_MZ))
@@ -50,11 +51,11 @@ function Testoneloc()
 			tfish = string(1000+Int(100*frate))
 		end
 		if (harv==1)
-			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortH",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_Bassim","_LD_fish",tfish[2:end]);
+			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortPW",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LD_fish",tfish[2:end]);
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_MF_fish",tfish[2:end]);
 			#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
 	else
-			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortH",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_Bassim");
+			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortPW",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim");
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 			#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 	end
@@ -69,7 +70,7 @@ function Testoneloc()
 			mkdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname))
 		end
 
-		for L = 1:9
+		for L = 1:11
 			ID = ids[L]
 			loc = names[L]
 
