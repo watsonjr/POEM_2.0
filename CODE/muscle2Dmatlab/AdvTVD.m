@@ -163,7 +163,10 @@ for j=1:size(Bin,2)                                                         % Fx
                                 dyU(i,j)*abs(Udemi(i,j))/2  *fluxcor         *(dxUcomp(i+1,j+1)-abs(Udemi(i,j)*dt));
                 end
             else
-                if (maskcomp(i+3,j+2)==0)
+                if (maskcomp(i+1,j+2)==0)
+                     % Flux nul
+                    Fxdemi(i,j)=0;                   
+                elseif (maskcomp(i+3,j+2)==0)
                     % Flux first order
                     Fxdemi(i,j)=dyU(i,j)*Udemi(i,j)         *Bcomp(i+2,j+2);
                 else                
@@ -199,7 +202,10 @@ for j=1:size(Bin,2)+1                                                       % Fy
                                 dxV(i,j)*abs(Vdemi(i,j))/2  *fluxcor         *(dyVcomp(i+1,j+1)-abs(Vdemi(i,j)*dt));
                 end
             else
-                if (maskcomp(i+2,j+3)==0)
+                if (maskcomp(i+2,j+1)==0)
+                    % Flux nul
+                    Fydemi(i,j)=0;
+                elseif (maskcomp(i+2,j+3)==0)
                     % Flux first order
                     Fydemi(i,j)=dxV(i,j)*Vdemi(i,j)         *Bcomp(i+2,j+2);
                 else
