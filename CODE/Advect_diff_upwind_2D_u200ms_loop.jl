@@ -4,11 +4,11 @@ function sub_advec_diff(GRD,Bio_in,K,U,V,ni,nj)
 	# U & V = velocities in m/s
 	# ntime = time steps in a day
 	# dtime = # seconds in ntime
-	dtime = 60.0*60.0*1.0
+	dtime = 60.0*60.0*12.0
 	ntime = (60.0*60.0*24.0) / dtime
 	nt = Int(ntime)
 	# biol concentration
-	Tfield = zeros(Float64,360,200,nt);
+	Tfield = zeros(Float64,360,200,nt+1);
 	Tfield[:,:,1] = Bio_in;
 	# grid size
 	isd = 1
@@ -17,7 +17,7 @@ function sub_advec_diff(GRD,Bio_in,K,U,V,ni,nj)
 	jed = nj
 
 	# time loop
-	for time=1:nt-1
+	for time=1:nt
 		t = time
 		wrk1 = zeros(Float64,ni,nj);
 		wrk2 = zeros(Float64,ni,nj);
@@ -26,7 +26,7 @@ function sub_advec_diff(GRD,Bio_in,K,U,V,ni,nj)
 	end
 
 	# return
-	return Tfield[:,:,nt]
+	return Tfield[:,:,nt+1]
 
 end
 
@@ -52,9 +52,9 @@ function horz_advect_diff_upwind(K,uvel,vvel,Tracer,ni,nj)
 	for j=jsd:jed
 		for i=isd:ied #i=isd-1:ied
 			if (i == ied)
-				gradTi[i,j] = (Tracer[isd,j] - Tracer[i,j]) ./ GRD["dyte"][i,j]
+				gradTi[i,j] = (Tracer[isd,j] - Tracer[i,j]) ./ GRD["dyte"][i,j] .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
 			else
-				gradTi[i,j] = (Tracer[i+1,j] - Tracer[i,j]) ./ GRD["dyte"][i,j]
+				gradTi[i,j] = (Tracer[i+1,j] - Tracer[i,j]) ./ GRD["dyte"][i,j] .*GRD["lmask"][i,j,1] .*GRD["lmask"][i+1,j,1]
 			end
 		end
 	end
@@ -63,9 +63,9 @@ function horz_advect_diff_upwind(K,uvel,vvel,Tracer,ni,nj)
 	for j=jsd:jed #j=jsd-1:jed
 		for i=isd:ied
 			if (j < jed)
-				gradTj[i,j] = (Tracer[i,j+1] - Tracer[i,j]) ./ GRD["dxtn"][i,j]
+				gradTj[i,j] = (Tracer[i,j+1] - Tracer[i,j]) ./ GRD["dxtn"][i,j] .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
 			else
-				gradTj[i,j] = (Tracer[ni-i+1,j] - Tracer[i,j]) ./ GRD["dxtn"][i,j]
+				gradTj[i,j] = (Tracer[ni-i+1,j] - Tracer[i,j]) ./ GRD["dxtn"][i,j] .*GRD["lmask"][i,j,1] .*GRD["lmask"][ni-i+1,j,1]
 			end
 		end
 	end

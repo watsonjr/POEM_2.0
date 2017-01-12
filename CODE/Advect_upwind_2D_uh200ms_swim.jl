@@ -30,11 +30,11 @@
 function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 	# ntime = time steps in a day
 	# dtime = # seconds in ntime
-	dtime = 60.0*60.0*0.5
+	dtime = 60.0*60.0*1.0
 	ntime = (60.0*60.0*24.0) / dtime
 	nt = Int(ntime)
 	# biol concentration
-	Tfield = zeros(Float64,360,200,nt);
+	Tfield = zeros(Float64,360,200,nt+1);
 	#Tfield[:,:,1] = Bio_in/ntime;
 	Tfield[:,:,1] = Bio_in;
 	Ttendency = zeros(Float64,360,200,nt);
@@ -85,7 +85,7 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 	Ua[I5] = Ua[I5] + Q[I5];
 
 	# time loop
-	for time=1:nt-1
+	for time=1:nt
 		t = time
 		#println(t)
 		wrk1 = zeros(Float64,ni,nj);
@@ -105,7 +105,7 @@ function sub_advection_swim(GRD,Bio_in,u,v,ni,nj,Q,nu,dep)
 
 	# return
 	#return Tfield[:,:,nt] * ntime
-	return Tfield[:,:,nt]
+	return Tfield[:,:,nt+1]
 end
 
 

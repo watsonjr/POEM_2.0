@@ -6,8 +6,8 @@ close all
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvec_diff_test_global_dt1hr_k600_nt1_b100.csv']);
-cname = 'global_dt1hr_k600_nt1_b100';
+bio = csvread([dpath 'bio_2Dadvec_diff_test_global_dt6hr_k600_nt1_b100_fixgrad.csv']);
+cname = 'global_dt6hr_k600_nt1_b100_fixgrad';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');

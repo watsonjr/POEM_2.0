@@ -48,14 +48,14 @@ T = zeros(Float64,GRD["Nlon"],GRD["Nlat"]);
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_Zl_global_velH200_dt1hr_sep_lBLtemp.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvect_swim_Zl_global_vel0_dt30m_sep_lBLtemp.csv","w")
 #prey2D = open("/Volumes/GFDL/CSV/advect_tests/prey_2Dadvect_swim_Zl_global_vel0_dt1hr_sep_mBLtemp.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
 	println(DAY)
-	U[ID] = COBALT["Uh"][:,DAY]; #m2/s
-	V[ID] = COBALT["Vh"][:,DAY];
+	# U[ID] = COBALT["Uh"][:,DAY]; #m2/s
+	# V[ID] = COBALT["Vh"][:,DAY];
 	T[ID] = COB2["Tp"][:,DAY];
 	Q = exp(0.063*(T-15.0)) .* 0.5.*L.*1e-3 .* GRD["lmask"][:,:,1];
 	prey[ID] = COB2["Zl"][:,DAY];
