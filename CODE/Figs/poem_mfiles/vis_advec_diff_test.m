@@ -6,8 +6,8 @@ close all
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Dadvec_diff_test_global_dt6hr_k600_nt1_b100_fixgrad.csv']);
-cname = 'global_dt6hr_k600_nt1_b100_fixgrad';
+bio = csvread([dpath 'bio_2Dadvec_diff_test_Atl_dt12hr_k600_nt1_b100_fixgrad_mask.csv']);
+cname = 'Atl_dt12hr_k600_nt1_b100_fixgrad_mask';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -47,13 +47,11 @@ xt = -250:50:50;
 xl = xt;
 xl(xl<-180) = xl(xl<-180) + 350;
 
-
-%% Global flat
 t = 1:72.75:nd;
 %t = 1:3:15;
 t = round(t);
 
-%Global map
+%% Global flat
 for n=1:length(t)
     B1 = NaN*ones(size(geolat_t));
     B1(grid(:,1))=bio(t(n),:);

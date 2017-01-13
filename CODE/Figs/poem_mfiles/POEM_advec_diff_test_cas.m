@@ -49,27 +49,27 @@ mask(aa) = 1;
 %define a patch to advect
 TF = zeros(360,200);
 TF2 = zeros(360,200);
-% lonmin = -280;
-% lonmax = 80;
-% latmin = -90;
-% latmax = 90;
-% aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
-%     (geolat_t < latmax) & (ht > 0) );
-% TF(aa) = 1;
+lonmin = -280;
+lonmax = 80;
+latmin = -90;
+latmax = 90;
+aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
+    (geolat_t < latmax) & (ht > 0) );
+TF(aa) = 1;
 
-TF(220:240,:) = 1.0;
-TF = TF .* mask;
+% TF(220:240,:) = 1.0;
+% TF = TF .* mask;
 
 total_mass(1) = sum(TF(:).*area(:));
 
 %% Following Advect_upwind_2D
 
 ntime = 365*24;
-% uvel = Uth_200;
-% vvel = Vth_200;
-uvel = zeros(ni,nj);
-vvel = zeros(ni,nj);
-K = 6; %600.0;
+uvel = Uth_200;
+vvel = Vth_200;
+% uvel = zeros(ni,nj);
+% vvel = zeros(ni,nj);
+K = 600.0;
 
 fe = zeros(ni,nj);
 fn = zeros(ni,nj);
@@ -89,9 +89,13 @@ for n = 1:ntime
     for j=jsd:jed
         for i=isd:ied
             if (i == ied)
-                gradTi(i,j) = (TF(isd,j) - TF(i,j)) ./ dyte(i,j);
+                %                 if (mask(isd,j) == 0)
+                %                     gradTi(i,j) = 0;
+                %                 else
+                gradTi(i,j) = (TF(isd,j) - TF(i,j)) ./ dyte(i,j) *mask(i,j)*mask(isd,j);
+                %                 end
             else
-                gradTi(i,j) = (TF(i+1,j) - TF(i,j)) ./ dyte(i,j);
+                gradTi(i,j) = (TF(i+1,j) - TF(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
             end
         end
     end
@@ -99,13 +103,13 @@ for n = 1:ntime
     for j=jsd:jed
         for i=isd:ied
             if (j < jed)
-                gradTj(i,j) = (TF(i,j+1) - TF(i,j)) ./ dxtn(i,j);
+                gradTj(i,j) = (TF(i,j+1) - TF(i,j)) ./ dxtn(i,j) *mask(i,j)*mask(i,j+1);
             else
-                gradTj(i,j) = (TF(ni-i+1,j) - TF(i,j)) ./ dxtn(i,j);
+                gradTj(i,j) = (TF(ni-i+1,j) - TF(i,j)) ./ dxtn(i,j) *mask(i,j)*mask(ni-i+1,j);
             end
         end
     end
-    gradT = gradTi + gradTj;
+    gradT = (gradTi + gradTj); %.* mask;
     
     diffusiv = 0.5*K;
     kpos     = diffusiv + abs(diffusiv);
@@ -169,10 +173,10 @@ for n = 1:ntime
             if (j > 1)
                 if (i > 1)
                     upwind(i,j) = mask(i,j).*(fe(i-1,j)-fe(i,j)+fn(i,j-1)-fn(i,j));
-                    dupwind(i,j) = mask(i,j).*(dfe(i-1,j)-dfe(i,j)+dfn(i,j-1)-dfn(i,j)); 
+                    dupwind(i,j) = mask(i,j).*(dfe(i-1,j)-dfe(i,j)+dfn(i,j-1)-dfn(i,j));
                 else
                     upwind(i,j) = mask(i,j).*(fe(ied,j)-fe(i,j)+fn(i,j-1)-fn(i,j));
-                    dupwind(i,j) = mask(i,j).*(dfe(ied,j)-dfe(i,j)+dfn(i,j-1)-dfn(i,j)); 
+                    dupwind(i,j) = mask(i,j).*(dfe(ied,j)-dfe(i,j)+dfn(i,j-1)-dfn(i,j));
                 end
             end
         end
@@ -200,7 +204,7 @@ for n = 1:ntime
     if n == 8760
         figure(2)
         clf
-        surf(geolon_t,geolat_t,TF2); view(2); shading interp; 
+        surf(geolon_t,geolat_t,TF2); view(2); shading interp;
         caxis([0 1]); %caxis([0 2e3]) to see how big instabilities are
         pdiff = 100*(total_mass(n+1) - total_mass(n))/total_mass(n);
         title(['%diff = ', num2str(pdiff,'%10.3e')]);

@@ -8,8 +8,8 @@ dpath = '/Volumes/GFDL/CSV/advect_tests/';
 %dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Ddiff_test_Pac_dt12hr_k600_nt1_b100_fixgrad.csv']);
-cname = 'Pac_dt12hr_k600_nt1_b100_fixgrad';
+bio = csvread([dpath 'bio_2Ddiff_test_Pac_dt12hr_k600_nt1_b100_fixgrad_mask.csv']);
+cname = 'Pac_dt12hr_k600_nt1_b100_fixgrad_mask';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -49,13 +49,11 @@ xt = -250:50:50;
 xl = xt;
 xl(xl<-180) = xl(xl<-180) + 350;
 
-
-%% Global flat
 t = 1:72.75:nd;
 %t = 1:3:15;
 t = round(t);
 
-%Global map
+%% Global flat
 for n=1:length(t)
     B1 = NaN*ones(size(geolat_t));
     B1(grid(:,1))=bio(t(n),:);
@@ -74,6 +72,7 @@ end
 
 %% Arctic projection
 for n=1:length(t)
+    B1 = NaN*ones(size(geolat_t));
     B1(grid(:,1))=bio(t(n),:);
     
     figure

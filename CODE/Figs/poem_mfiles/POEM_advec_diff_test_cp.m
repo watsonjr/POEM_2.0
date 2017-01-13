@@ -54,10 +54,10 @@ total_mass(1) = sum(TF(:).*area(:));
 %% Following Advect_upwind_2D
 
 ntime = 365*24;
-% uvel = Uth_200;
-% vvel = Vth_200;
-uvel = zeros(ni,nj);
-vvel = zeros(ni,nj);
+uvel = Uth_200;
+vvel = Vth_200;
+% uvel = zeros(ni,nj);
+% vvel = zeros(ni,nj);
 K = 600.0;
 
 fe = zeros(ni,nj);
@@ -78,11 +78,7 @@ for n = 1:ntime
     for j=jsd:jed
         for i=isd:ied
             if (i == ied)
-                %                 if (mask(isd,j) == 0)
-                %                     gradTi(i,j) = 0;
-                %                 else
                 gradTi(i,j) = (TF(isd,j) - TF(i,j)) ./ dyte(i,j) *mask(i,j)*mask(isd,j);
-                %                 end
             else
                 gradTi(i,j) = (TF(i+1,j) - TF(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
             end
