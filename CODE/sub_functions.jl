@@ -344,9 +344,17 @@ end
 
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
-function sub_gamma(K,Z,nu,d,B,S,nmrt)
+function sub_gamma(K,Z,nu,d,B,S,nmrt,dfrate,selec)
+  # d = predation loss
+  # nmort = natural mortality rate
+  # dfrate = fishing mortality rate
+  # selec = if harvested
   # convert predation mortality to biomass specific rate
-	D = (d/B) + nmrt
+  if (selec == 1)
+	   D = (d/B) + nmrt + dfrate
+  else
+     D = (d/B) + nmrt
+  end
   # Spawning flag
   #if S>0.0
   #  kap=min(1.0, K + (1.0-S));
@@ -520,17 +528,15 @@ function sub_fishing_mass(MFbio,LPbio,LDbio,AREA)
 	return MFbio, LPbio, LDbio
 end
 
-function sub_fishing_rate(bio,wgt,FISHING)
-	if (wgt==M_m)
-    caught = bio * FISHING
-    bio -= caught
-  elseif (wgt==M_l)
-    caught = bio * FISHING
+function sub_fishing_rate(bio,FISHING,selec)
+  #selec = if being harvested
+  if (selec==1)
+  	caught = bio * FISHING
     bio -= caught
   else
     bio = bio
     caught = 0.0
-	end
+  end
 	return bio, caught
 end
 

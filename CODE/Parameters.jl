@@ -113,9 +113,8 @@ function make_parameters(harv,frate)
 
 	###! Kappa rule K as a function of body size
 	# K = fraction of energy consumed diverted to somatic growth
-	const global K_l = 1
-	const global K_j = 1
-	const global K_a = 0
+	const global K_imm = 1.0
+	const global K_ad = 0.25
 
 	###! Metabolism constants (activity and basal)
 	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
@@ -131,7 +130,7 @@ function make_parameters(harv,frate)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 0.001
+	#const global rfrac = 1.0
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -144,7 +143,7 @@ function make_parameters(harv,frate)
 	#Andersen & Beyer 2013 = 0.35 * 4.5 * s^(-0.25) (includes predation, excludes fishing)
 	const global Nat_mrt = 0.0 #0.44 / 365
 	#0=none, 1=constant, 2=temp-dep, 3=large only, 4=large temp-dep
-	const global MORT = 2
+	const global MORT = 0
 
 	###! Diet Preference Phi (j = prey, i = pred)
 	# The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down

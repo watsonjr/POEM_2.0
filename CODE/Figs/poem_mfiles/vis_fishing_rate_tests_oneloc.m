@@ -1768,38 +1768,97 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE0010_BAassim_LD_fish09/';
 % npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE0010_BAassim_LD_fish10/';
 
-npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim/';
-npath1 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish01/';
-npath2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish02/';
-npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish03/';
-npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish04/';
-npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish05/';
-npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish06/';
-npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish07/';
-npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish08/';
-npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish09/';
-npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_MF_fish10/';
-npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish01/';
-npath12 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish02/';
-npath13 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish03/';
-npath14 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish04/';
-npath15 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish05/';
-npath16 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish06/';
-npath17 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish07/';
-npath18 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish08/';
-npath19 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish09/';
-npath20 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LP_fish10/';
-npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish01/';
-npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish02/';
-npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish03/';
-npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish04/';
-npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish05/';
-npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish06/';
-npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish07/';
-npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish08/';
-npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish09/';
-npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fish10/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00050_BAassim_LD_fish10/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_BAassim_LD_fish10/';
 
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00040_BAassim_LD_fish10/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_BAassim_LD_fish10/';
+
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00050_BAassim_LD_fish10/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00030_BAassim_LD_fish10/';
+
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_BAassim_LD_fish10/';
+npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim/';
+npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish01/';
+npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish02/';
+npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish03/';
+npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish04/';
+npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish05/';
+npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish06/';
+npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish07/';
+npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish08/';
+npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish09/';
+npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fish10/';
 
 % dp = {npath0;npath1;npath2};
 
@@ -1822,7 +1881,7 @@ npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_B
 %DEMERSALS
 dp = {npath0;npath21;npath22;npath23;npath24;npath25;npath26;npath27;npath28;npath29;npath30}; 
 sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};
-cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE0020_BAassim_LD_fishing_catch';
+cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_BAassim_LD_fishing_catch';
 
 %BASELINE
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
@@ -1836,7 +1895,7 @@ sname = 'Spinup_';
 sname2 = '';
 %sname2 = 'phen_';
 
-spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
+spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
@@ -2267,7 +2326,7 @@ for s=1:length(spots)
         Tot = Ftot+Ptot+Dtot;
         
         f9 = figure(9);
-        subplot(3,3,s)
+        subplot(4,3,s)
         plot(d,Tot,'.k','MarkerSize',25); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
@@ -2280,7 +2339,7 @@ for s=1:length(spots)
         end
         
         f10 = figure(10);
-        subplot(3,3,s)
+        subplot(4,3,s)
         plot(d,Ftot,'.k','MarkerSize',25); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
@@ -2293,7 +2352,7 @@ for s=1:length(spots)
         end
         
         f11 = figure(11);
-        subplot(3,3,s)
+        subplot(4,3,s)
         plot(d,Ptot,'.k','MarkerSize',25); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))
@@ -2306,7 +2365,7 @@ for s=1:length(spots)
         end
         
         f12 = figure(12);
-        subplot(3,3,s)
+        subplot(4,3,s)
         plot(d,Dtot,'.k','MarkerSize',25); hold on;
         xlim([0 length(dp)+1])
         if (d==length(dp))

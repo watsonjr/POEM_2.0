@@ -165,7 +165,7 @@ sname = 'Spinup_';
 sname2 = '';
 %sname2 = 'phen_';
 
-spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
+spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 stage={'SF','SP','SD','MF','MP','MD','LP','LD'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
@@ -344,7 +344,7 @@ for i=1:length(spots)
         fishsp = squeeze(nansum(all_mean));
         
         f17=figure(17);
-        subplot(3,3,i)
+        subplot(4,3,i)
         plot(s-0.1,log10(fishsp(1,i)),'sk','MarkerFaceColor',cmap_ppt(3,:),...
             'MarkerSize',15); hold on;
         plot(s,log10(fishsp(2,i)),'sk','MarkerFaceColor',cmap_ppt(1,:),...

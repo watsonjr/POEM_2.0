@@ -14,6 +14,10 @@ function Testoneloc()
 		harv = 1 #0=no fishing; 1=fishing
 		frate = Fmort[F]
 		dfrate = frate/365.0;
+		const global MFsel=0;
+		const global LPsel=0;
+		const global LDsel=1;
+
 		make_parameters(harv,frate) # make core parameters/constants
 
 		#! setup spinup (loop first year of COBALT)
@@ -51,11 +55,13 @@ function Testoneloc()
 			tfish = string(1000+Int(100*frate))
 		end
 		if (harv==1)
-			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortPW",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LD_fish",tfish[2:end]);
+			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K75","_LD_fish",tfish[2:end]);
+			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LD_fish",tfish[2:end]);
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_MF_fish",tfish[2:end]);
 			#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
 	else
-			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortPW",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim");
+			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K75");
+			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim");
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 			#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 	end
