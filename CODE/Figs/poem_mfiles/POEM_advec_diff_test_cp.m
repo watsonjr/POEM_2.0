@@ -22,7 +22,6 @@ dep = min(ht,200);
 dep = max(dep,eps);
 
 % grid size
-dt = 3600;
 ni = 360;
 nj = 200;
 isd = 1;
@@ -44,20 +43,20 @@ latmin = -90;
 latmax = 90;
 aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
     (geolat_t < latmax) & (ht > 0) );
-TF(aa) = 1;
+TF(aa) = 100*rand(size(aa));
 
-% TF(220:240,:) = 1.0;
+% TF(220:240,:) = 100.0;
 % TF = TF .* mask;
 
 total_mass(1) = sum(TF(:).*area(:));
 
 %% Following Advect_upwind_2D
-
+dt = 3600;
 ntime = 365*24;
-uvel = Uth_200;
-vvel = Vth_200;
-% uvel = zeros(ni,nj);
-% vvel = zeros(ni,nj);
+% uvel = Uth_200;
+% vvel = Vth_200;
+uvel = zeros(ni,nj);
+vvel = zeros(ni,nj);
 K = 600.0;
 
 fe = zeros(ni,nj);
@@ -68,6 +67,7 @@ gradTi = zeros(ni,nj);
 gradTj = zeros(ni,nj);
 upwind = zeros(ni,nj);
 dupwind = zeros(ni,nj);
+gT = NaN(ni,nj,ntime);
 
 %% Advection loop
 for n = 1:ntime
@@ -95,6 +95,7 @@ for n = 1:ntime
         end
     end
     gradT = (gradTi + gradTj); %.* mask;
+    gT(:,:,n) = gradT;
     
     diffusiv = 0.5*K;
     kpos     = diffusiv + abs(diffusiv);
@@ -180,7 +181,7 @@ for n = 1:ntime
     TF(aa) = -999;
     if n == 1
         figure(1)
-        surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 1]);
+        surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 100]);
         %pause
     end
     
@@ -190,7 +191,7 @@ for n = 1:ntime
         figure(2)
         clf
         surf(geolon_t,geolat_t,TF2); view(2); shading interp;
-        caxis([0 1]); %caxis([0 2e3]) to see how big instabilities are
+        caxis([0 100]); %caxis([0 2e3]) to see how big instabilities are
         pdiff = 100*(total_mass(n+1) - total_mass(n))/total_mass(n);
         title(['%diff = ', num2str(pdiff,'%10.3e')]);
         %pause
@@ -200,13 +201,37 @@ for n = 1:ntime
     
 end
 
+%% Plot gradT
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
+t = 1:2189:ntime;
+d = t/24;
+d = round(d);
 
+for i=1:length(t)
+    figure
+    surf(geolon_t,geolat_t,gT(:,:,t(i)));
+    view(2); shading interp;
+    caxis([-4e-3 4e-3])
+    colorbar
+    title(['GradT day ', num2str(d(i))]);
+    print('-dpng',[fpath 'POEM_diff_test_gradT_' num2str(d(i)) '.png'])
+end
 
-
-
-
-
+%% Arctic projection
+for i=1:length(t)
+    figure
+    m_proj('stereographic','lat',90,'long',30,'radius',30);
+    m_pcolor(geolon_t,geolat_t,gT(:,:,t(i)));
+    shading interp
+    colorbar
+    colormap('jet')
+    caxis([-4e-3 4e-3])
+    m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+    m_coast('patch',[.7 .7 .7],'edgecolor','k');
+    title(['GradT day ' num2str(d(i))])
+    print('-dpng',[fpath 'POEM_diff_test_gradT_arcticproj_' num2str(d(i)) '.png'])
+end
 
 
 

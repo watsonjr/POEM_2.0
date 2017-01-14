@@ -8,8 +8,8 @@ dpath = '/Volumes/GFDL/CSV/advect_tests/';
 %dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'bio_2Ddiff_test_Pac_dt12hr_k600_nt1_b100_fixgrad_mask.csv']);
-cname = 'Pac_dt12hr_k600_nt1_b100_fixgrad_mask';
+bio = csvread([dpath 'bio_2Ddiff_test_uh200_globalrand_dt12hr_k600_nt1_b100_fixgrad_mask2.csv']);
+cname = 'globalrand_uh200_dt12hr_k600_nt1_b100_fixgrad_mask2';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');

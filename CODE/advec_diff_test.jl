@@ -28,13 +28,13 @@ K = 600.0;
 
 const global DAYS = 365; # number of days
 
-bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Dadvec_diff_test_Atl_dt12hr_k600_nt1_b100_fixgrad_mask.csv","w")
+bio2D = open("/Volumes/GFDL/CSV/advect_tests/bio_2Ddiff_test_Atl_dt12hr_k600_nt1_b100_fixgrad_mask2.csv","w")
 
 tstart = now()
 for DAY = 1:DAYS
 	println(DAY)
-	U[ID] = COBALT["U"][:,DAY] ./ (60 * 60 * 24); #m/d -> m/s
-	V[ID] = COBALT["V"][:,DAY] ./ (60 * 60 * 24);
+	# U[ID] = COBALT["U"][:,DAY] ./ (60 * 60 * 24); #m/d -> m/s
+	# V[ID] = COBALT["V"][:,DAY] ./ (60 * 60 * 24);
 	bio = sub_advec_diff(GRD,bio,K,U,V,ni,nj)
 	biov=collect(bio[ID])
 	#! Save

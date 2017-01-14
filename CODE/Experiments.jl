@@ -44,6 +44,7 @@ function Testoneloc()
 		tld = string(1000+Int(100*LD_phi_MF))
 		tbe = string(100+Int(100*bent_eff))
 		tmort = string(MORT)
+		tkad = string(Int(100*(1-K_ad)))
 		if (rfrac >= 0.01)
 			tre = string(10000+Int(1000*rfrac))
 		else
@@ -55,12 +56,12 @@ function Testoneloc()
 			tfish = string(1000+Int(100*frate))
 		end
 		if (harv==1)
-			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K75","_LD_fish",tfish[2:end]);
+			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortPW",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad,"_LD_fish",tfish[2:end]);
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LD_fish",tfish[2:end]);
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_MF_fish",tfish[2:end]);
 			#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
 	else
-			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K75");
+			simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortPW",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad);
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim");
 			#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 			#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);

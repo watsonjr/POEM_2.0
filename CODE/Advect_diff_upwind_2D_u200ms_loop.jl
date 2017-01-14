@@ -77,10 +77,10 @@ function horz_advect_diff_upwind(K,uvel,vvel,Tracer,ni,nj)
 	# i-flux
 	for j=jsd:jed
 		for i=isd:ied #i=isd-1:ied
+			velocity = 0.5*uvel[i,j]
+			upos     = velocity + abs(velocity)
+			uneg     = velocity - abs(velocity)
 			if (GRD["lmask"][i,j,1] > 0)
-				velocity = 0.5*uvel[i,j]
-				upos     = velocity + abs(velocity)
-				uneg     = velocity - abs(velocity)
 				if (i == ied)
 					dfe[i,j]  = GRD["dyte"][i,j].*(kpos.*gradT[i,j] + kneg.*gradT[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
 					afe[i,j]  = GRD["dyte"][i,j].*(upos.*Tracer[i,j] + uneg.*Tracer[isd,j]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][isd,j,1]
@@ -95,10 +95,10 @@ function horz_advect_diff_upwind(K,uvel,vvel,Tracer,ni,nj)
 	# j-flux
 	for j=jsd:jed #j=jsd-1:jed
 		for i=isd:ied
+			velocity = 0.5*vvel[i,j]
+			upos     = velocity + abs(velocity)
+			uneg     = velocity - abs(velocity)
 			if (GRD["lmask"][i,j,1] > 0)
-				velocity = 0.5*vvel[i,j]
-				upos     = velocity + abs(velocity)
-				uneg     = velocity - abs(velocity)
 				if (j < jed)
 					dfn[i,j]  = GRD["dxtn"][i,j].*(kpos.*gradT[i,j] + kneg.*gradT[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]
 					afn[i,j]  = GRD["dxtn"][i,j].*(upos.*Tracer[i,j] + uneg.*Tracer[i,j+1]) .*GRD["lmask"][i,j,1] .*GRD["lmask"][i,j+1,1]

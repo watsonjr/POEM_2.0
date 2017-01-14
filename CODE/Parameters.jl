@@ -123,14 +123,14 @@ function make_parameters(harv,frate)
 	###! Consumption constants
 	const global h = 60.0  		# h=85 g^(0.25)/yr at 10C in Cmax eq; h=40 at 10C NS; h=60 at 15C?
 	# tune so Cobs/Cmax ~ 0.6
-	const global gamma = 2.9e3	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma = 0.8e4; mizer = 2.9e3?
+	#const global gam = 2.9e3	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma = 0.8e4; mizer = 2.9e3?
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
 
 	###! Transfer efficiency of detritus to benthic prey
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	#const global rfrac = 1.0
+	const global rfrac = 0.001
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -143,7 +143,7 @@ function make_parameters(harv,frate)
 	#Andersen & Beyer 2013 = 0.35 * 4.5 * s^(-0.25) (includes predation, excludes fishing)
 	const global Nat_mrt = 0.0 #0.44 / 365
 	#0=none, 1=constant, 2=temp-dep, 3=large only, 4=large temp-dep
-	const global MORT = 0
+	const global MORT = 2
 
 	###! Diet Preference Phi (j = prey, i = pred)
 	# The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
