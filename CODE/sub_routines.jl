@@ -190,14 +190,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.rep[JD],Lrg_d.egg[JD] = sub_rep(Lrg_d.nu[JD],K_ad,Lrg_d.S[JD,DY],Lrg_d.egg[JD])
 
 		#! recruitment (from smaller size class)
-		Sml_f.rec[JD] = sub_rec(Med_f.rep[JD],Med_f.bio[JD],M_s,rfrac)
-		Sml_p.rec[JD] = sub_rec(Lrg_p.rep[JD],Lrg_p.bio[JD],M_s,rfrac)
-		Sml_d.rec[JD] = sub_rec(Lrg_d.rep[JD],Lrg_d.bio[JD],M_s,rfrac)
-		Med_f.rec[JD] = sub_rec(Sml_f.gamma[JD],Sml_f.bio[JD],M_m,rfrac)
-		Med_p.rec[JD] = sub_rec(Sml_p.gamma[JD],Sml_p.bio[JD],M_m,rfrac)
-		Med_d.rec[JD] = sub_rec(Sml_d.gamma[JD],Sml_d.bio[JD],M_m,rfrac)
-		Lrg_p.rec[JD] = sub_rec(Med_p.gamma[JD],Med_p.bio[JD],M_l,rfrac)
-		Lrg_d.rec[JD] = sub_rec(Med_d.gamma[JD],Med_d.bio[JD],M_l,rfrac)
+		Sml_f.rec[JD] = sub_rec_larv(Med_f.rep[JD],Med_f.bio[JD],rfrac,ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD])
+		Sml_p.rec[JD] = sub_rec_larv(Lrg_p.rep[JD],Lrg_p.bio[JD],rfrac,ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD])
+		Sml_d.rec[JD] = sub_rec_larv(Lrg_d.rep[JD],Lrg_d.bio[JD],rfrac,ENVR.Tp[JD],ENVR.Tb[JD],1-Lrg_d.td[JD])
+		Med_f.rec[JD] = sub_rec(Sml_f.gamma[JD],Sml_f.bio[JD])
+		Med_p.rec[JD] = sub_rec(Sml_p.gamma[JD],Sml_p.bio[JD])
+		Med_d.rec[JD] = sub_rec(Sml_d.gamma[JD],Sml_d.bio[JD])
+		Lrg_p.rec[JD] = sub_rec(Med_p.gamma[JD],Med_p.bio[JD])
+		Lrg_d.rec[JD] = sub_rec(Med_d.gamma[JD],Med_d.bio[JD])
 
 		#! Mass balance
 		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])

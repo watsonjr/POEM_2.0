@@ -404,15 +404,54 @@ function sub_rep(nu,K,S,egg)
 end
 
 
-###! Biomass recruiting to size-class (g m-2 d-1)
-function sub_rec(X,bio,wgt,rfrac)
-	# X could be biomass of eggs (for larval class) or maturing from smaller sizes
-  if (wgt==M_s)
-    rec = rfrac * X * bio
-  else
-    rec = X * bio
-  end
-	return rec
+###! Biomass recruiting to larvae (g m-2 d-1)
+function sub_rec_larv(X,bio,rfrac,Tp,Tb,tpel)
+	#X: repro rate
+  #rfrac: repro efficiency ~ sex ratio * egg survival
+  #Tp: pelagic temp
+  #Tb: bottom temp
+  #tpel: frac pelagic time
+  #! Global constant RE
+  #rec = rfrac * X * bio
+
+  Tavg = (Tp.*tpel) + (Tb.*(1.0-tpel))
+  #! 2nd order polynomial for Demersal A = 100% or 50%
+  RE = 10^( 0.01293*Tavg^2 - 0.2293*Tavg - 3.469 )
+  #! 3rd order polynomial for Demersal A = 100% or 50%
+  #RE = 10^( -4.396e-4*Tavg^3 + 0.02945*Tavg^2 - 0.4288*Tavg - 2.173 )
+  #! 1st piecewise for Demersal A = 100% or 50%
+  # if (Tavg < 11)
+  #   RE = 10^( -3.856 + -0.05985 .* Tavg );
+  # else
+  #   RE = 10^( -7.21 + 0.2397 .* Tavg );
+  # end
+  #! 2nd piecewise for Demersal A = 100% or 50%
+  # if (Tavg < 11)
+  #   RE = 10^( -2.582 + -0.1581 .* Tavg );
+  # else
+  #   RE = 10^( -6.843 + 0.22 .* Tavg );
+  # end
+  #! 2nd order polynomial for Blanchard A & assim
+  #RE = 10^( 0.01347*Tavg^2 - 0.2352*Tavg - 3.459 )
+  #! 3rd order polynomial for Blanchard A & assim
+  #RE = 10^( -4.77e-4*Tavg^3 + 0.02646*Tavg^2 - 0.3559*Tavg - 2.105 )
+  #! 1st piecewise for Blanchard A & assim
+  # if (Tavg < 11)
+  #   RE = 10^( -2.48 + -0.1127 .* Tavg );
+  # else
+  #   RE = 10^( -5.429 + 0.1453 .* Tavg );
+  # end
+
+  rec = RE * X * bio
+
+  return rec
+end
+
+###! Biomass recruiting to next size-class (g m-2 d-1)
+function sub_rec(X,bio)
+	#X: biomass specific maturation rate
+  rec = X * bio
+  return rec
 end
 
 
@@ -434,13 +473,13 @@ function sub_nmort(Tp,Tb,tpel,wgt)
     #! Hartvig
     #nmort = exp(0.063*(temp-10.0)) * 0.84 * wgt^(-0.25) /365.0;
     #! mizer
-    #nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365.0;
+    nmort = exp(0.063*(temp-10.0)) * 3.0 * wgt^(-0.25) /365.0;
     #! J&C
     #nmort = exp(0.063*(temp-10.0)) * 0.5 * wgt^(-0.33) /365.0;
     #! Intermediate
     #nmort = exp(0.063*(temp-10.0)) * 1.5 * wgt^(-0.33) /365.0;
     #! Peterson & Wroblewski
-    nmort = exp(0.063*(temp-15.0)) * 5.26e-3 * (wgt/9.0)^(-0.25); #daily & uses dry weight
+    #nmort = exp(0.063*(temp-15.0)) * 5.26e-3 * (wgt/9.0)^(-0.25); #daily & uses dry weight
   end
   if (MORT==3) # Large fishes only
     if (wgt == M_l)

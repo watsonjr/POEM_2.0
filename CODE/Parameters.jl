@@ -114,7 +114,7 @@ function make_parameters(harv,frate)
 	###! Kappa rule K as a function of body size
 	# K = fraction of energy consumed diverted to somatic growth
 	const global K_imm = 1.0
-	const global K_ad = 0.25
+	const global K_ad = 0.0
 
 	###! Metabolism constants (activity and basal)
 	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
@@ -130,7 +130,7 @@ function make_parameters(harv,frate)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 0.001
+	const global rfrac = 1.0
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -164,14 +164,14 @@ function make_parameters(harv,frate)
 	const global MP_phi_MZ = 0.1
 	const global MP_phi_LZ = 1.0
 	const global MP_phi_S = 1.0
-	const global MD_phi_BE = 1.0
+	const global MD_phi_BE = 0.5
   const global LP_phi_MF = 1.0
 	const global LP_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
-	const global LD_phi_MF = 1.0
-	const global LD_phi_MP = 1.0
-	const global LD_phi_MD = 1.0
-	const global LD_phi_BE = 1.0
+	const global LD_phi_MF = 0.5
+	const global LD_phi_MP = 0.5
+	const global LD_phi_MD = 0.5
+	const global LD_phi_BE = 0.5
 
 	#-----
 end

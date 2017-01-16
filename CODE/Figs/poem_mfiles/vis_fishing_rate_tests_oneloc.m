@@ -1971,17 +1971,17 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K75_LD_fish08/';
 % npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K75_LD_fish09/';
 % npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K75_LD_fish10/';
-npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75/';
-npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish01/';
-npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish02/';
-npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish03/';
-npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish04/';
-npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish05/';
-npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish06/';
-npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish07/';
-npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish08/';
-npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish09/';
-npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish10/';
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fish10/';
 % npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75/';
 % npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75_LD_fish01/';
 % npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75_LD_fish02/';
@@ -1993,6 +1993,19 @@ npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010
 % npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75_LD_fish08/';
 % npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75_LD_fish09/';
 % npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75_LD_fish10/';
+
+
+% npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100/';
+% npath21 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish01/';
+% npath22 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish02/';
+% npath23 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish03/';
+% npath24 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish04/';
+% npath25 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish05/';
+% npath26 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish06/';
+% npath27 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish07/';
+% npath28 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish08/';
+% npath29 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish09/';
+% npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortM2_BE05_RE00010_K100_LD_fish10/';
 
 
 % dp = {npath0;npath1;npath2};
@@ -2016,7 +2029,7 @@ npath30 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010
 %DEMERSALS
 dp = {npath0;npath21;npath22;npath23;npath24;npath25;npath26;npath27;npath28;npath29;npath30}; 
 sims = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};
-cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortJC2_BE05_RE00010_K75_LD_fishing_catch';
+cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75_LD_fishing_catch';
 
 %BASELINE
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;...
