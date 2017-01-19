@@ -180,14 +180,14 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.gamma[JD] = sub_gamma(K_ad,Z_l,Lrg_d.nu[JD],Lrg_d.die[JD],Lrg_d.bio[JD],Lrg_d.S[JD,DY],Lrg_d.nmort[JD],dfrate,LDsel)
 
 		#! egg production (by med and large size classes only)
-		Sml_f.rep[JD],Sml_f.egg[JD] = sub_rep(Sml_f.nu[JD],K_imm,Sml_f.S[JD,DY],Sml_f.egg[JD])
-		Sml_p.rep[JD],Sml_p.egg[JD] = sub_rep(Sml_p.nu[JD],K_imm,Sml_p.S[JD,DY],Sml_p.egg[JD])
-		Sml_d.rep[JD],Sml_d.egg[JD] = sub_rep(Sml_d.nu[JD],K_imm,Sml_d.S[JD,DY],Sml_d.egg[JD])
-		Med_f.rep[JD],Med_f.egg[JD] = sub_rep(Med_f.nu[JD],K_ad,Med_f.S[JD,DY],Med_f.egg[JD])
-		Med_p.rep[JD],Med_p.egg[JD] = sub_rep(Med_p.nu[JD],K_imm,Med_p.S[JD,DY],Med_p.egg[JD])
-		Med_d.rep[JD],Med_d.egg[JD] = sub_rep(Med_d.nu[JD],K_imm,Med_d.S[JD,DY],Med_d.egg[JD])
-		Lrg_p.rep[JD],Lrg_p.egg[JD] = sub_rep(Lrg_p.nu[JD],K_ad,Lrg_p.S[JD,DY],Lrg_p.egg[JD])
-		Lrg_d.rep[JD],Lrg_d.egg[JD] = sub_rep(Lrg_d.nu[JD],K_ad,Lrg_d.S[JD,DY],Lrg_d.egg[JD])
+		Sml_f.nu[JD],Sml_f.rep[JD],Sml_f.egg[JD] = sub_rep(Sml_f.nu[JD],K_imm,Sml_f.S[JD,DY],Sml_f.egg[JD])
+		Sml_p.nu[JD],Sml_p.rep[JD],Sml_p.egg[JD] = sub_rep(Sml_p.nu[JD],K_imm,Sml_p.S[JD,DY],Sml_p.egg[JD])
+		Sml_d.nu[JD],Sml_d.rep[JD],Sml_d.egg[JD] = sub_rep(Sml_d.nu[JD],K_imm,Sml_d.S[JD,DY],Sml_d.egg[JD])
+		Med_f.nu[JD],Med_f.rep[JD],Med_f.egg[JD] = sub_rep(Med_f.nu[JD],K_ad,Med_f.S[JD,DY],Med_f.egg[JD])
+		Med_p.nu[JD],Med_p.rep[JD],Med_p.egg[JD] = sub_rep(Med_p.nu[JD],K_imm,Med_p.S[JD,DY],Med_p.egg[JD])
+		Med_d.nu[JD],Med_d.rep[JD],Med_d.egg[JD] = sub_rep(Med_d.nu[JD],K_imm,Med_d.S[JD,DY],Med_d.egg[JD])
+		Lrg_p.nu[JD],Lrg_p.rep[JD],Lrg_p.egg[JD] = sub_rep(Lrg_p.nu[JD],K_ad,Lrg_p.S[JD,DY],Lrg_p.egg[JD])
+		Lrg_d.nu[JD],Lrg_d.rep[JD],Lrg_d.egg[JD] = sub_rep(Lrg_d.nu[JD],K_ad,Lrg_d.S[JD,DY],Lrg_d.egg[JD])
 
 		#! recruitment (from smaller size class)
 		Sml_f.rec[JD] = sub_rec_larv(Med_f.rep[JD],Med_f.bio[JD],rfrac,ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD])
@@ -216,9 +216,9 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Med_d.bio[JD] = sub_update_fi(Med_d.bio[JD],Med_d.rec[JD],Med_d.nu[JD],
 								   Med_d.rep[JD],Med_d.gamma[JD],Med_d.die[JD],Med_d.egg[JD],Med_d.nmort[JD])
 
-		Lrg_p.bio[JD] = sub_update_lg(Lrg_p.bio[JD],Lrg_p.rec[JD],Lrg_p.nu[JD],
+		Lrg_p.bio[JD] = sub_update_fi(Lrg_p.bio[JD],Lrg_p.rec[JD],Lrg_p.nu[JD],
 								   Lrg_p.rep[JD],Lrg_p.gamma[JD],Lrg_p.die[JD],Lrg_p.egg[JD],Lrg_p.nmort[JD])
-	 	Lrg_d.bio[JD] = sub_update_lg(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
+	 	Lrg_d.bio[JD] = sub_update_fi(Lrg_d.bio[JD],Lrg_d.rec[JD],Lrg_d.nu[JD],
 								   Lrg_d.rep[JD],Lrg_d.gamma[JD],Lrg_d.die[JD],Lrg_d.egg[JD],Lrg_d.nmort[JD])
 
 		#! Fishing by rate

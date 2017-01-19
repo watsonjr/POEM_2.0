@@ -355,12 +355,6 @@ function sub_gamma(K,Z,nu,d,B,S,nmrt,dfrate,selec)
   else
      D = (d/B) + nmrt
   end
-  # Spawning flag
-  #if S>0.0
-  #  kap=min(1.0, K + (1.0-S));
-  #else
-  #  kap=1;
-  #end
   kap=K;
 	gg = ((kap*nu) - D)/(1-(Z^(1-(D/(kap*nu)))))
   if gg < 0 || isnan(gg)==true
@@ -383,24 +377,30 @@ function sub_rep(nu,K,S,egg)
   # If it is spawning season, it gets spawned
   # If it is not spawning season, it gets stored as repro energy
   # Need to determine a set fraction of energy that gets converted to larvae?
+
   if K<1.0
-      if nu > 0.0
-        rho = (1.0-K) * nu  #energy available for from eating
-      else
-        rho = 0.0
-      end
-      if S>0.0
-        rep = rho + S * egg         #fraction of pop reproducing now
-        egg = (1.0-S) * egg         #rest gets stored for later
-      else
-        rep = 0.0
-        egg = egg + rho
-      end
-  else
-    rep = 0.0
-    egg = 0.0
-  end
-	return rep, egg
+        if nu > 0.0
+            rho = (1.0-K) .* nu;  #energy available for from eating
+        else
+            rho = 0.0;
+        end
+        if S>0.0
+            #rep = eggs from energy now + eggs from stored energy
+            rep = S.*(rho+egg);         #fraction of pop reproducing now
+            egg = (1.0-S).*(rho+egg);   #rest gets stored for later
+        else
+            rep = 0.0;
+            egg = egg + rho;
+        end
+    else
+        rep = 0.0;
+        egg = 0.0;
+    end
+    if nu > 0.0
+        #nu is now split into used for repro (nu) and stored (egg)
+        nu = rep;
+    end
+	return nu, rep, egg
 end
 
 
@@ -521,7 +521,8 @@ function sub_update_fi(bio_in,rec,nu,rep,gamma,die,egg,nmort)
 	# mat = gamma = energy lost to maturation to larger size class
 	# nmort = natural mortality
 	# die = predator mort = biomass lost to predation
-  db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
+  #db = rec + ((nu - egg - rep - gamma - nmort) * bio_in) + (egg * bio_in) - die
+  db = rec + ((nu + egg - rep - gamma - nmort) .* bio_in) - die
   bio_out =  bio_in + db
 end
 
