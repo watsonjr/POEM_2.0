@@ -32,16 +32,16 @@ load('cmap_ppt_angles.mat')
 for i=1:length(frate)
     F = frate{i};
 %     dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_LD_fish' F];
+%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_MF_fish' F];
     dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-        '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_LD_fish' F];
+        '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_MF_fish' F];
     dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
     cfile = char(dp);
 %     cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_LD_fishing_catch'];
+%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_MF_fishing_catch'];
     cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-        '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_LD_fishing_catch'];
+        '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_MF_fishing_catch'];
     
     %%
     Psum = NaN*ones(3,length(spots));
@@ -349,9 +349,9 @@ for s=1:length(spots)
     for i=1:length(frate)
         F = frate{i};
 %         dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_LD_fish' F];
+%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_MF_fish' F];
         dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-            '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_LD_fish' F];
+            '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_MF_fish' F];
         dpath = [char(dp) '/'];
         load([datap dpath sname sname2 'lastyr_sum_mean_biom']);
         
@@ -363,16 +363,16 @@ for s=1:length(spots)
         Tot = Ftot+Ptot+Dtot;
         
         f7 = figure(7);
-        plot(i,Dtot,'.k','MarkerSize',20); hold on;
+        plot(i,Ftot,'.k','MarkerSize',20); hold on;
         xlim([0 length(frate)+1])
         if (i==length(frate))
             set(gca,'XTick',1:length(frate),'XTickLabel',fsim);
-            ylabel('All D')
+            ylabel('All F')
             title(['RE=' REfn ' ' loc])
             stamp(cfile2)
         end
     end
-    print(f7,'-dpng',[figp loc '/' sname sname2 cfile2 '_' lname 'D.png'])
+    print(f7,'-dpng',[figp loc '/' sname sname2 cfile2 '_' lname 'F.png'])
     
 end
 
@@ -386,9 +386,9 @@ for s=1:length(spots)
     for i=1:length(frate)
         F = frate{i};
 %         dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_LD_fish' F];
+%         '_' pref '_nmort'  nmort '_BE05_RE' REfn '_MF_fish' F];
         dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-            '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_LD_fish' F];
+            '_MZ01_nmort'  nmort '_BE05_RE' REfn '_BAassim_MF_fish' F];
         dpath = [char(dp) '/'];
         load([datap dpath sname sname2 'lastyr_sum_mean_biom']);
         
@@ -401,7 +401,7 @@ for s=1:length(spots)
         
         f12 = figure(12);
         subplot(4,3,s)
-        plot(i,Dtot,'.k','MarkerSize',25); hold on;
+        plot(i,Ftot,'.k','MarkerSize',25); hold on;
         xlim([0 length(frate)+1])
         if (i==length(frate))
             set(gca,'XTick',1:length(frate),'XTickLabel',fsim);
@@ -412,7 +412,7 @@ for s=1:length(spots)
                 title(loc)
             end
             if (s==4)
-                ylabel('Total D catch (g) in final year')
+                ylabel('Total F catch (g) in final year')
             end
             stamp(cfile2)
         end
@@ -420,5 +420,5 @@ for s=1:length(spots)
     end
     
 end
-print(f12,'-dpng',[figp sname sname2 cfile2 '_allD_locs.png'])
+print(f12,'-dpng',[figp sname sname2 cfile2 '_allF_locs.png'])
 

@@ -80,7 +80,7 @@ function make_parameters(harv,frate)
 	#! Benthic-pelagic coupling cutoff (depth, m)
 	const global PI_be_cutoff = 200
 	# 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
-	const global pdc = 1;
+	const global pdc = 0;
 
 	#! body lengths (mm)
 	const global L_s = 10^((log10(2)+log10(20))/2); # small
@@ -130,7 +130,7 @@ function make_parameters(harv,frate)
 	const global bent_eff = 0.05
 
 	###! Reproductive efficiency
-	const global rfrac = 1.0
+	#const global rfrac = 1.0
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -164,14 +164,14 @@ function make_parameters(harv,frate)
 	const global MP_phi_MZ = 0.1
 	const global MP_phi_LZ = 1.0
 	const global MP_phi_S = 1.0
-	const global MD_phi_BE = 0.5
+	const global MD_phi_BE = 1.0
   const global LP_phi_MF = 1.0
 	const global LP_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
-	const global LD_phi_MF = 0.5
-	const global LD_phi_MP = 0.5
-	const global LD_phi_MD = 0.5
-	const global LD_phi_BE = 0.5
+	const global LD_phi_MF = 1.0
+	const global LD_phi_MP = 1.0
+	const global LD_phi_MD = 1.0
+	const global LD_phi_BE = 1.0
 
 	#-----
 end

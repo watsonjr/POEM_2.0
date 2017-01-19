@@ -5,12 +5,16 @@ function Testoneloc()
 	Fmort = collect(0:0.1:1.0)
 	#RE = [1.0,0.5,0.1,0.09,0.08,0.07,0.06,0.05,0.04,0.03,0.02,0.01]
 	#RE = [0.009,0.008,0.007,0.006,0.005,0.004,0.003,0.002,0.001]
-	#RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001,0.00005,0.00001]
+	RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001,0.00005,0.00001]
+	#RE = [0.00175,0.0015,0.00125]
+	#RE = [0.00375,0.0035,0.00325]
+	#RE = [0.004,0.003,0.002]
+	#RE = [0.004,0.003,0.002,0.00175,0.0015,0.00125]
 	#RE = [0.0004,0.0003,0.0002]
 	#RE = [0.00004,0.00003,0.00002]
 
-	# for R = 1:length(RE)
-	# 	rfrac = RE[R]
+	for R = 1:length(RE)
+		rfrac = RE[R]
 
 		for F = 1:length(Fmort)
 
@@ -63,15 +67,17 @@ function Testoneloc()
 			end
 			if (harv==1)
 				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad,"_LD_fish",tfish[2:end]);
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LD_fish",tfish[2:end]);
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
-				simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly2","_LD_fish",tfish[2:end]);
+				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LP_fish",tfish[2:end]);
+				simname = string("NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
+				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly3","_LD_fish",tfish[2:end]);
+				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE2piece","_BAassim","_MF_fish",tfish[2:end]);
 				#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
 			else
 				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad);
 				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim");
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
-				simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly2");
+				simname = string("NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
+				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly3");
+				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE2piece","_BAassim");
 				#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 			end
 			if (isdir(string("/Volumes/GFDL/CSV/",simname)))
@@ -168,7 +174,7 @@ function Testoneloc()
 
 			end #Locations
 		end #Fmort
-	# end #RE
+	end #RE
 end
 
 

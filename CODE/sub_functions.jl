@@ -412,37 +412,48 @@ function sub_rec_larv(X,bio,rfrac,Tp,Tb,tpel)
   #Tb: bottom temp
   #tpel: frac pelagic time
   #! Global constant RE
-  #rec = rfrac * X * bio
+  rec = rfrac * X * bio
 
   Tavg = (Tp.*tpel) + (Tb.*(1.0-tpel))
-  #! 2nd order polynomial for Demersal A = 100% or 50%
-  RE = 10^( 0.01293*Tavg^2 - 0.2293*Tavg - 3.469 )
-  #! 3rd order polynomial for Demersal A = 100% or 50%
-  #RE = 10^( -4.396e-4*Tavg^3 + 0.02945*Tavg^2 - 0.4288*Tavg - 2.173 )
-  #! 1st piecewise for Demersal A = 100% or 50%
+  #! Exponential for Demersal A = 100% or 50%
+  #RE = 10^( -6.275*exp(-0.03527*Tavg) + 3.837*exp(-0.3701*Tavg) )
+  #! A 3rd order polynomial for Demersal A = 100% or 50%
+  #RE = 10^( -1.027e-3*Tavg^3 + 0.04538*Tavg^2 - 0.4882*Tavg - 3.016 )
+  #! B 3rd order polynomial for Demersal A = 100% or 50%
+  #RE = 10^( -7.864e-4*Tavg^3 + 0.03782*Tavg^2 - 0.4755*Tavg - 2.276 )
+  #! A piecewise for Demersal A = 100% or 50%
   # if (Tavg < 11)
   #   RE = 10^( -3.856 + -0.05985 .* Tavg );
   # else
-  #   RE = 10^( -7.21 + 0.2397 .* Tavg );
+  #   RE = 10^( -5.607 + 0.1227 .* Tavg );
   # end
-  #! 2nd piecewise for Demersal A = 100% or 50%
+  #! B piecewise for Demersal A = 100% or 50%
   # if (Tavg < 11)
-  #   RE = 10^( -2.582 + -0.1581 .* Tavg );
+  #   RE = 10^( -2.762 + -0.152 .* Tavg );
   # else
-  #   RE = 10^( -6.843 + 0.22 .* Tavg );
-  # end
-  #! 2nd order polynomial for Blanchard A & assim
-  #RE = 10^( 0.01347*Tavg^2 - 0.2352*Tavg - 3.459 )
-  #! 3rd order polynomial for Blanchard A & assim
-  #RE = 10^( -4.77e-4*Tavg^3 + 0.02646*Tavg^2 - 0.3559*Tavg - 2.105 )
-  #! 1st piecewise for Blanchard A & assim
-  # if (Tavg < 11)
-  #   RE = 10^( -2.48 + -0.1127 .* Tavg );
-  # else
-  #   RE = 10^( -5.429 + 0.1453 .* Tavg );
+  #   RE = 10^( -5.608 + 0.1227 .* Tavg );
   # end
 
-  rec = RE * X * bio
+  #! Exponential for Blanchard A & assim
+  #RE = 10^( -4.742*exp(-0.02429*Tavg) + 2.788*exp(-0.4168*Tavg) )
+  #! A 3rd order polynomial for Blanchard A & assim
+  #RE = 10^( -9.865e-4*Tavg^3 + 0.04195*Tavg^2 - 0.4479*Tavg - 2.549 )
+  #! B 3rd order polynomial for Blanchard A & assim
+  #RE = 10^( -6.893e-4*Tavg^3 + 0.03076*Tavg^2 - 0.36*Tavg - 2.307 )
+  #! A piecewise for Blanchard A & assim
+  # if (Tavg < 11)
+  #   RE = 10^( -3.34 + -0.04833 .* Tavg );
+  # else
+  #   RE = 10^( -4.591 + 0.08163 .* Tavg );
+  # end
+  #! B piecewise for Blanchard A & assim
+  # if (Tavg < 11)
+  #   RE = 10^( -2.715 + -0.09197 .* Tavg );
+  # else
+  #   RE = 10^( -4.591 + 0.08163 .* Tavg );
+  # end
+  #
+  # rec = RE * X * bio
 
   return rec
 end
