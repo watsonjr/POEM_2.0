@@ -102,7 +102,12 @@ for j = 1:NID
     
 end
 
-% convert to single precision to save space
+% Negative biomass or mortality loss from interp
+D_Zm(D_Zm<0) = 0.0;
+D_Zl(D_Zl<0) = 0.0;
+D_dZm(D_dZm<0) = 0.0;
+D_dZl(D_dZl<0) = 0.0;
+
 COBALT.Tp = D_Tp;
 COBALT.Tb = D_Tb;
 COBALT.Zm = D_Zm;

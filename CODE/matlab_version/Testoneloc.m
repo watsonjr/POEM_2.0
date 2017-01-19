@@ -42,8 +42,6 @@ for F = 1:length(Fmort)
     
     %! Where to run the model
     load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
-    XY = zeros(360,200);
-    XY(GRD.ID) = 1:GRD.N;
     ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248,33069];
     names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
     
