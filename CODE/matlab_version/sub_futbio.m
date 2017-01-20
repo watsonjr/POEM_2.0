@@ -1,6 +1,6 @@
 %%%% THE MODEL
 %%% DEMOGRAPHIC CALCULATIONS
-function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT] = sub_futbio(ID,DY,COBALT,ENVR,Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,dfrate)
+function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,ENVR] = sub_futbio(ID,DY,COBALT,ENVR,Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,dfrate,CC)
 
 global Tref TrefP TrefB Dthresh SP DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
@@ -14,7 +14,8 @@ global MFsel LPsel LDsel
 ENVR = get_COBALT(COBALT,ID,DY);
 
 % Update benthic biomass with new detritus avail at that time step
-BENT.mass = BENT.mass + bent_eff.*ENVR.det;
+BENT.mass = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
+sub_check(BENT.mass);
 
 % Pelagic-demersal coupling
 %Lp: fraction of time large piscivores spends in pelagic
@@ -206,7 +207,7 @@ Lp.rec = sub_rec(Mp.gamma,Mp.bio);
 Ld.rec = sub_rec(Md.gamma,Md.bio);
 
 % Mass balance
-BENT.mass = sub_update_be(BENT.mass,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
+%[BENT.mass, BENT.pred] = sub_update_be(BENT.mass,ENVR.Tb,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
 
 Sf.bio = sub_update_fi(Sf.bio,Sf.rec,Sf.nu,Sf.rep,Sf.gamma,Sf.die,Sf.egg,Sf.nmort);
 Sp.bio = sub_update_fi(Sp.bio,Sp.rec,Sp.nu,Sp.rep,Sp.gamma,Sp.die,Sp.egg,Sp.nmort);

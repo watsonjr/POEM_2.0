@@ -1,6 +1,6 @@
 #### THE MODEL
 ###! DEMOGRAPHIC CALCULATIONS
-function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,rfrac)
+function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,rfrac,CC)
 
 	###! COBALT information
 	get_COBALT!(COBALT,ID,DY,ENVR)
@@ -8,7 +8,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 	for JD = 1:NX
 
 		#! update benthic biomass with new detritus avail at that time step
-		BENT.mass[JD] = BENT.mass[JD] + bent_eff*ENVR.det[JD]
+		BENT.mass[JD] = sub_update_be(BENT.mass[JD],bent_eff,ENVR.det[JD],CC,[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
+		sub_check!(BENT.mass);
 
 		#! pelagic-demersal coupling
 		#Lrg_p: fraction of time large piscivores spends in pelagic
@@ -200,8 +201,6 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_d.rec[JD] = sub_rec(Med_d.gamma[JD],Med_d.bio[JD])
 
 		#! Mass balance
-		BENT.mass[JD] = sub_update_be(BENT.mass[JD],[Med_d.con_be[JD],Lrg_d.con_be[JD]],[Med_d.bio[JD],Lrg_d.bio[JD]])
-
 		Sml_f.bio[JD] = sub_update_fi(Sml_f.bio[JD],Sml_f.rec[JD],Sml_f.nu[JD],
 								   Sml_f.rep[JD],Sml_f.gamma[JD],Sml_f.die[JD],Sml_f.egg[JD],Sml_f.nmort[JD])
 		Sml_p.bio[JD] = sub_update_fi(Sml_p.bio[JD],Sml_p.rec[JD],Sml_p.nu[JD],

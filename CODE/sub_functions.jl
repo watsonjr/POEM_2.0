@@ -552,9 +552,29 @@ function sub_update_lg(bio_in,rec,nu,rep,gamma,die,egg,nmort)
   bio_out =  bio_in + db
 end
 
-function sub_update_be(bio_in,con,bio)
-  die = con.*bio
-  bio_out = bio_in - sum(die)
+function sub_update_be(bio_in,BE,det,CC,con,bio)
+  #bio_in = benthic invert biomass
+  #Tb = bottom temp
+  #con = vector of biomass specific consumption by MD and LD
+  #bio = vector MD and LD biomass
+  #omort = other mortality
+
+  #! Peterson & Wroblewski: daily & uses dry weight
+  #nmort = exp(0.063*(temp-15.0)) * 5.26e-3 * (wgt/9.0)^(-0.25);
+  # Use Wei et al mean (1.3956 gWW) or median (0.7656) wgt
+  # wgt = 0.7656;
+  # omort = exp(0.063*(Tb-15.0)) * 5.26e-3 * (wgt/9.0)^(-0.25)
+  # eaten = con.*bio
+  # bio_out = bio_in - sum(eaten) - bio_in*omort
+
+  #! Quadratic mortality from carrying capacity
+  r = BE*det
+  eaten = con.*bio
+  # Chemostat
+  bio_out = bio_in + r * (r*CC - bio_in) - sum(eaten)
+  # Logistic
+  #bio_out = bio_in + r * bio_in * (1 - bio_in/CC) - sum(eaten)
+
 end
 
 

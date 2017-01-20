@@ -64,5 +64,6 @@ function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT] = sub_init_fish(ID,phen,DAYS)
 
     %%%! Detritus
     BENT.mass = zeros(NX,1);
+    BENT.pred = zeros(NX,1);
 
 end

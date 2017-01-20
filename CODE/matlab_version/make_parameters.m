@@ -19,7 +19,7 @@ function make_parameters()
     %! Benthic-pelagic coupling cutoff (depth, m)
     PI_be_cutoff = 200;
     % 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
-    pdc = 1;
+    pdc = 0;
 
     %! body lengths (mm)
     L_s = 10^((log10(2)+log10(20))/2); % small
@@ -60,7 +60,7 @@ function make_parameters()
     fcrit = 0.40;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
     
     %%%! Transfer efficiency of detritus to benthic prey
-    bent_eff = 0.05;
+    bent_eff = 0.3;
 
     %%%! Reproductive efficiency
     rfrac = 0.01;

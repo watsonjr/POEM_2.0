@@ -80,7 +80,7 @@ function make_parameters(harv,frate)
 	#! Benthic-pelagic coupling cutoff (depth, m)
 	const global PI_be_cutoff = 200
 	# 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
-	const global pdc = 0;
+	const global pdc = 1;
 
 	#! body lengths (mm)
 	const global L_s = 10^((log10(2)+log10(20))/2); # small
@@ -143,7 +143,7 @@ function make_parameters(harv,frate)
 	#Andersen & Beyer 2013 = 0.35 * 4.5 * s^(-0.25) (includes predation, excludes fishing)
 	const global Nat_mrt = 0.0 #0.44 / 365
 	#0=none, 1=constant, 2=temp-dep, 3=large only, 4=large temp-dep
-	const global MORT = 2
+	const global MORT = 0
 
 	###! Diet Preference Phi (j = prey, i = pred)
 	# The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
@@ -160,10 +160,10 @@ function make_parameters(harv,frate)
 
 	const global MF_phi_MZ = 0.1
 	const global MF_phi_LZ = 1.0
-	const global MF_phi_S = 1.0
+	const global MF_phi_S  = 1.0
 	const global MP_phi_MZ = 0.1
 	const global MP_phi_LZ = 1.0
-	const global MP_phi_S = 1.0
+	const global MP_phi_S  = 1.0
 	const global MD_phi_BE = 1.0
   const global LP_phi_MF = 1.0
 	const global LP_phi_MP = 1.0
