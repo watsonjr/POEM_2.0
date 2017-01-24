@@ -9,13 +9,15 @@ datap = '/Volumes/GFDL/CSV/Matlab_test_runs/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
 sims = {'.05','.1','.15','.2','.25','.3'};
-benteff = {'05','10','15','20','25','30'};
+RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];
+CarCap = [0.25:0.25:5.0];
+benteff = [0.05:0.05:0.3];
 fcrit = 40;
 nmort = '0';
 kad = 100;
 pref = 'D100';
 
-spots = {'GB','EBS','NS'};
+spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
     'rec','egg','clev','DD','S','prod','pred','nmort','met','caught'};

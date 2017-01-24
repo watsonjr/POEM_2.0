@@ -80,7 +80,7 @@ function make_parameters(harv,frate)
 	#! Benthic-pelagic coupling cutoff (depth, m)
 	const global PI_be_cutoff = 200
 	# 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
-	const global pdc = 1;
+	const global pdc = 0;
 
 	#! body lengths (mm)
 	const global L_s = 10^((log10(2)+log10(20))/2); # small
@@ -127,7 +127,7 @@ function make_parameters(harv,frate)
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
 
 	###! Transfer efficiency of detritus to benthic prey
-	const global bent_eff = 0.05
+	#const global bent_eff = 0.05
 
 	###! Reproductive efficiency
 	#const global rfrac = 1.0

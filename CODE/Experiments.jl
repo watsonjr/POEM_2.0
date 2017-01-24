@@ -3,9 +3,10 @@
 function Testoneloc()
 
 	Fmort = collect(0:0.1:1.0)
+
 	#RE = [1.0,0.5,0.1,0.09,0.08,0.07,0.06,0.05,0.04,0.03,0.02,0.01]
 	#RE = [0.009,0.008,0.007,0.006,0.005,0.004,0.003,0.002,0.001]
-	RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001,0.00005,0.00001]
+	RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];#,0.00005,0.00001]
 	#RE = [0.00175,0.0015,0.00125]
 	#RE = [0.00375,0.0035,0.00325]
 	#RE = [0.004,0.003,0.002]
@@ -14,176 +15,191 @@ function Testoneloc()
 	#RE = [0.00004,0.00003,0.00002]
 
 	CarCap = collect(0.25:0.25:5.0)
+
+	BE = collect(0.05:0.05:0.3)
+
+for B = 4:length(BE)
+	bent_eff = BE[B]
+
 for C = 1:length(CarCap)
-	CC = CarCap[C]
-	for R = 3#1:length(RE)
-		rfrac = RE[R]
+		CC = CarCap[C]
 
-		for F = 1#:length(Fmort)
+		for R = 1:length(RE)
+			rfrac = RE[R]
 
-		#! Make parameters
-			frate = Fmort[F]
-			dfrate = frate/365.0;
-			#0=no fishing; 1=fishing
-			if (frate>0)
-				harv = 1
-			else
-				harv = 0
-			end
-			const global MFsel=0;
-			const global LPsel=0;
-			const global LDsel=1;
-			phen=0;
-			make_parameters(harv,frate) # make core parameters/constants
-
-			#! setup spinup (loop first year of COBALT)
-		  COBALT = load("/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_1990.jld"); # 120=1980
-
-			#! Add phenology params from csv file with ID as row
-			Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
-			global TrefP = Tref
-			global TrefB = Tref
-			global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
-			global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-			YEARS = 100
-		  global DAYS = 365
-
-			#! choose where to run the model
-			global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
-			XY = zeros(Int,360,200);
-		  XY[GRD["ID"]] = collect(1:GRD["N"])
-			ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248,33069]
-			names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus","PUp"]
-
-			tfcrit = string(Int(100*fcrit))
-			tmz = string(100+Int(10*MF_phi_MZ))
-			tld = string(1000+Int(100*LD_phi_MF))
-			tbe = string(100+Int(100*bent_eff))
-			tmort = string(MORT)
-			tkad = string(Int(100*(1-K_ad)))
-			if (rfrac >= 0.01)
-				tre = string(10000+Int(1000*rfrac))
-			elseif (rfrac >= 0.0001)
-				tre = string(100000+Int(round(10000*rfrac)))
-			else
-				tre = string(1000000+Int(round(100000*rfrac)))
-			end
-			if (frate >= 0.1)
-				tfish = string(100+Int(10*frate))
-			else
-				tfish = string(1000+Int(100*frate))
-			end
-			tcc = string(1000+Int(100*CC))
-			if (harv==1)
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad,"_LD_fish",tfish[2:end]);
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LP_fish",tfish[2:end]);
-				simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_CC",tcc[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly3","_LD_fish",tfish[2:end]);
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE2piece","_BAassim","_MF_fish",tfish[2:end]);
-				#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
-			else
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad);
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim");
-				simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_CC",tcc[2:end],"_RE",tre[2:end]);
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly3");
-				#simname = string("Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE2piece","_BAassim");
-				#simname = string("Dc_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
-			end
-			if (isdir(string("/Volumes/GFDL/CSV/",simname)))
-				nothing
-			else
-				mkdir(string("/Volumes/GFDL/CSV/",simname))
-			end
-			if (isdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname)))
-				nothing
-			else
-				mkdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname))
-			end
-
-			for L = 1:11
-				ID = ids[L]
-				loc = names[L]
-
-				const global NX = length(ID)
-				#! Initialize
-				Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
-				Med_d.td[1] = 0.0;
-				Lrg_d.td[1] = 0.0;
-				ENVR = sub_init_env(ID);
-
-				#! Storage
-				if (phen==1)
-					Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_f.csv"),"w")
-					Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_p.csv"),"w")
-					Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_d.csv"),"w")
-					Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_f.csv"),"w")
-					Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_p.csv"),"w")
-					Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_d.csv"),"w")
-					Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_p.csv"),"w")
-					Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_d.csv"),"w")
-					Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Cobalt.csv"),"w")
+			for F = 1#:length(Fmort)
+			#! Make parameters
+				frate = Fmort[F]
+				dfrate = frate/365.0
+				#0=no fishing; 1=fishing
+				if (frate>0)
+					harv = 1
 				else
-					Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
-					Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p.csv"),"w")
-					Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d.csv"),"w")
-					Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f.csv"),"w")
-					Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p.csv"),"w")
-					Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d.csv"),"w")
-					Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p.csv"),"w")
-					Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d.csv"),"w")
-					Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Cobalt.csv"),"w")
+					harv = 0
+				end
+				const global MFsel=0;
+				const global LPsel=0;
+				const global LDsel=1;
+				phen=0;
+				make_parameters(harv,frate) # make core parameters/constants
+
+				#! setup spinup (loop first year of COBALT)
+			  COBALT = load("/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_1990.jld"); # 120=1980
+
+				#! Add phenology params from csv file with ID as row
+				Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
+				global TrefP = Tref
+				global TrefB = Tref
+				global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
+				global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
+				YEARS = 100
+			  global DAYS = 365
+
+				#! choose where to run the model
+				global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
+				XY = zeros(Int,360,200);
+			  XY[GRD["ID"]] = collect(1:GRD["N"])
+				ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248,33069]
+				names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus","PUp"]
+
+				tfcrit = string(Int(100*fcrit))
+				tmz = string(100+Int(10*MF_phi_MZ))
+				tld = string(1000+Int(100*LD_phi_MF))
+				tbe = string(100+Int(100*bent_eff))
+				tmort = string(MORT)
+				tkad = string(Int(100*(1-K_ad)))
+				if (rfrac >= 0.01)
+					tre = string(10000+Int(1000*rfrac))
+				elseif (rfrac >= 0.0001)
+					tre = string(100000+Int(round(10000*rfrac)))
+				else
+					tre = string(1000000+Int(round(100000*rfrac)))
+				end
+				if (frate >= 0.1)
+					tfish = string(100+Int(10*frate))
+				else
+					tfish = string(1000+Int(100*frate))
+				end
+				tcc = string(1000+Int(100*CC))
+				if (pdc == 0)
+            coup = "NoDc";
+        elseif (pdc == 1)
+            coup = "Dc";
+        elseif (pdc == 2)
+            coup = "PDc";
+        end
+
+				if (harv==1)
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad,"_LD_fish",tfish[2:end]);
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim","_LP_fish",tfish[2:end]);
+					simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_CC",tcc[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly3","_LD_fish",tfish[2:end]);
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE2piece","_BAassim","_MF_fish",tfish[2:end]);
+					#simname = string(coup,"_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_LD_fish",tfish[2:end]);
+				else
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_K",tkad);
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE",tre[2:end],"_BAassim");
+					simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_CC",tcc[2:end],"_RE",tre[2:end]);
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_D",tld[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_REpoly3");
+					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE2piece","_BAassim");
+					#simname = string(coup,"_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
+				end
+				if (isdir(string("/Volumes/GFDL/CSV/",simname)))
+					nothing
+				else
+					mkdir(string("/Volumes/GFDL/CSV/",simname))
+				end
+				if (isdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname)))
+					nothing
+				else
+					mkdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname))
 				end
 
-				#! Iterate forward in time with NO fishing
-				for YR = 1:YEARS # years
+				for L = 1:11
+					ID = ids[L]
+					loc = names[L]
 
-					#reset spawning flag
-					if (phen == 1)
-						Med_f.S = zeros(Float64,NX,DAYS)
-						Lrg_d.S = zeros(Float64,NX,DAYS)
-						Lrg_p.S = zeros(Float64,NX,DAYS)
+					const global NX = length(ID)
+					#! Initialize
+					Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
+					Med_d.td[1] = 0.0;
+					Lrg_d.td[1] = 0.0;
+					ENVR = sub_init_env(ID);
+
+					#! Storage
+					if (phen==1)
+						Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_f.csv"),"w")
+						Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_p.csv"),"w")
+						Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_d.csv"),"w")
+						Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_f.csv"),"w")
+						Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_p.csv"),"w")
+						Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_d.csv"),"w")
+						Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_p.csv"),"w")
+						Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_d.csv"),"w")
+						Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Cobalt.csv"),"w")
+					else
+						Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
+						Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p.csv"),"w")
+						Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d.csv"),"w")
+						Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f.csv"),"w")
+						Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p.csv"),"w")
+						Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d.csv"),"w")
+						Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p.csv"),"w")
+						Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d.csv"),"w")
+						Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Cobalt.csv"),"w")
 					end
 
-					for DAY = 1:DT:DAYS # days
+					#! Iterate forward in time with NO fishing
+					for YR = 1:YEARS # years
 
-						###! ticker
-						DY  = Int(ceil(DAY))
-						println(YR," , ", mod(DY,365))
-
-						###! Future time step
-						sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,rfrac,CC);
-						DY+=1
-
-						#! Save
-						if (YR==YEARS)
-							writecsv(Spinup_Sml_f,[Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep Sml_f.rec Sml_f.egg Sml_f.clev Sml_f.DD Sml_f.S[DY-1] Sml_f.prod Sml_f.pred Sml_f.nmort Sml_f.met Sml_f.caught])
-							writecsv(Spinup_Sml_p,[Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.egg Sml_p.clev Sml_p.DD Sml_p.S[DY-1] Sml_p.prod Sml_p.pred Sml_p.nmort Sml_p.met Sml_p.caught])
-							writecsv(Spinup_Sml_d,[Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.egg Sml_d.clev Sml_d.DD Sml_d.S[DY-1] Sml_d.prod Sml_d.pred Sml_d.nmort Sml_d.met Sml_d.caught])
-							writecsv(Spinup_Med_f,[Med_f.bio Med_f.enc_f Med_f.enc_p Med_f.enc_d Med_f.enc_zm Med_f.enc_zl Med_f.enc_be Med_f.con_f Med_f.con_p Med_f.con_d Med_f.con_zm Med_f.con_zl Med_f.con_be Med_f.I Med_f.nu Med_f.gamma Med_f.die Med_f.rep Med_f.rec Med_f.egg Med_f.clev Med_f.DD Med_f.S[DY-1] Med_f.prod Med_f.pred Med_f.nmort Med_f.met Med_f.caught])
-							writecsv(Spinup_Med_p,[Med_p.bio Med_p.enc_f Med_p.enc_p Med_p.enc_d Med_p.enc_zm Med_p.enc_zl Med_p.enc_be Med_p.con_f Med_p.con_p Med_p.con_d Med_p.con_zm Med_p.con_zl Med_p.con_be Med_p.I Med_p.nu Med_p.gamma Med_p.die Med_p.rep Med_p.rec Med_p.egg Med_p.clev Med_p.DD Med_p.S[DY-1] Med_p.prod Med_p.pred Med_p.nmort Med_p.met Med_p.caught])
-							writecsv(Spinup_Med_d,[Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.egg Med_d.clev Med_d.DD Med_d.S[DY-1] Med_d.prod Med_d.pred Med_d.nmort Med_d.met Med_d.caught])
-							writecsv(Spinup_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1] Lrg_p.prod Lrg_p.pred Lrg_p.nmort Lrg_p.met Lrg_p.caught])
-							writecsv(Spinup_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1] Lrg_d.prod Lrg_d.pred Lrg_d.nmort Lrg_d.met Lrg_d.caught])
-							writecsv(Spinup_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl ENVR.fB])
+						#reset spawning flag
+						if (phen == 1)
+							Med_f.S = zeros(Float64,NX,DAYS)
+							Lrg_d.S = zeros(Float64,NX,DAYS)
+							Lrg_p.S = zeros(Float64,NX,DAYS)
 						end
-					end #Days
-				end #Years
 
-				### close save
-			  close(Spinup_Sml_f)
-			  close(Spinup_Sml_p)
-			  close(Spinup_Sml_d)
-			  close(Spinup_Med_f)
-			  close(Spinup_Med_p)
-			  close(Spinup_Med_d)
-			  close(Spinup_Lrg_p)
-				close(Spinup_Lrg_d)
-				close(Spinup_Cobalt)
+						for DAY = 1:DT:DAYS # days
 
-			end #Locations
-		end #Fmort
-	end #RE
-end #CC
+							###! ticker
+							DY  = Int(ceil(DAY))
+							println(YR," , ", mod(DY,365))
+
+							###! Future time step
+							sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,rfrac,CC,bent_eff);
+							DY+=1
+
+							#! Save
+							if (YR==YEARS)
+								writecsv(Spinup_Sml_f,[Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep Sml_f.rec Sml_f.egg Sml_f.clev Sml_f.DD Sml_f.S[DY-1] Sml_f.prod Sml_f.pred Sml_f.nmort Sml_f.met Sml_f.caught])
+								writecsv(Spinup_Sml_p,[Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.egg Sml_p.clev Sml_p.DD Sml_p.S[DY-1] Sml_p.prod Sml_p.pred Sml_p.nmort Sml_p.met Sml_p.caught])
+								writecsv(Spinup_Sml_d,[Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.egg Sml_d.clev Sml_d.DD Sml_d.S[DY-1] Sml_d.prod Sml_d.pred Sml_d.nmort Sml_d.met Sml_d.caught])
+								writecsv(Spinup_Med_f,[Med_f.bio Med_f.enc_f Med_f.enc_p Med_f.enc_d Med_f.enc_zm Med_f.enc_zl Med_f.enc_be Med_f.con_f Med_f.con_p Med_f.con_d Med_f.con_zm Med_f.con_zl Med_f.con_be Med_f.I Med_f.nu Med_f.gamma Med_f.die Med_f.rep Med_f.rec Med_f.egg Med_f.clev Med_f.DD Med_f.S[DY-1] Med_f.prod Med_f.pred Med_f.nmort Med_f.met Med_f.caught])
+								writecsv(Spinup_Med_p,[Med_p.bio Med_p.enc_f Med_p.enc_p Med_p.enc_d Med_p.enc_zm Med_p.enc_zl Med_p.enc_be Med_p.con_f Med_p.con_p Med_p.con_d Med_p.con_zm Med_p.con_zl Med_p.con_be Med_p.I Med_p.nu Med_p.gamma Med_p.die Med_p.rep Med_p.rec Med_p.egg Med_p.clev Med_p.DD Med_p.S[DY-1] Med_p.prod Med_p.pred Med_p.nmort Med_p.met Med_p.caught])
+								writecsv(Spinup_Med_d,[Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.egg Med_d.clev Med_d.DD Med_d.S[DY-1] Med_d.prod Med_d.pred Med_d.nmort Med_d.met Med_d.caught])
+								writecsv(Spinup_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1] Lrg_p.prod Lrg_p.pred Lrg_p.nmort Lrg_p.met Lrg_p.caught])
+								writecsv(Spinup_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1] Lrg_d.prod Lrg_d.pred Lrg_d.nmort Lrg_d.met Lrg_d.caught])
+								writecsv(Spinup_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl ENVR.fB])
+							end
+						end #Days
+					end #Years
+
+					### close save
+				  close(Spinup_Sml_f)
+				  close(Spinup_Sml_p)
+				  close(Spinup_Sml_d)
+				  close(Spinup_Med_f)
+				  close(Spinup_Med_p)
+				  close(Spinup_Med_d)
+				  close(Spinup_Lrg_p)
+					close(Spinup_Lrg_d)
+					close(Spinup_Cobalt)
+
+				end #Locations
+			end #Fmort
+		end #RE
+	end #CC
+end #BE
 end
 
 
