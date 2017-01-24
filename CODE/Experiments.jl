@@ -59,7 +59,7 @@ for C = 1:length(CarCap)
 				global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 				XY = zeros(Int,360,200);
 			  XY[GRD["ID"]] = collect(1:GRD["N"])
-				ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248,33069]
+				ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045]
 				names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus","PUp"]
 
 				tfcrit = string(Int(100*fcrit))
