@@ -34,7 +34,7 @@ load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_a
 cmap3=cmap_ppt([5,1,3],:);
 
 %%
-for i=1:2;%1:length(benteff)
+for i=5:6;%1:length(benteff)
     BE = benteff{i};
     for C = 1:length(CarCap)
         CC = CarCap{C};
@@ -371,14 +371,18 @@ end
 
 %%
 ndp = length(CarCap);
-for i=1%:2;%1:length(benteff)
+for i=5:6;%1:length(benteff)
     BE = benteff{i};
-    for R = 1%:length(RE)
+    for R = 1:length(RE)
         rfrac = RE{R};
         
-        MDlev = NaN*ones(length(CarCap),3);
-        LDlev = MDlev;
-        BBCC  = MDlev;
+        close all
+        MDlev   = NaN*ones(length(CarCap),3);
+        LDlev   = MDlev;
+        BBCC    = MDlev;
+        Bbio    = NaN*ones(length(CarCap),length(spots));
+        MLD     = NaN*ones(length(CarCap),length(spots));
+        fishsp  = NaN*ones(4,length(spots),length(CarCap));
         for C = 1:length(CarCap)
             CC = CarCap{C};
             cc = car(C);
@@ -394,60 +398,66 @@ for i=1%:2;%1:length(benteff)
             load([dpath sname 'lastyr_sum_mean_biom']);
             
             %%
-            MDlev(C,:) = Dlev(2,[1,2,6]);
-            LDlev(C,:) = Dlev(3,[1,2,6]);
-            BBCC(C,:)  = all_mean(1,4,[1,2,6]) ./ cc;
+            MDlev(C,:)    = Dlev(2,[1,2,6]);
+            LDlev(C,:)    = Dlev(3,[1,2,6]);
+            BBCC(C,:)     = all_mean(1,4,[1,2,6]) ./ cc;
+            Bbio(C,:)     = squeeze(all_mean(1,4,:));
+            fishsp(:,:,C) = squeeze(nansum(all_mean));
+            MLD(C,:)      = nansum(squeeze(all_mean(2:3,3,:)));
             
-            %%
-            for s=1:length(spots)
-                loc = spots{s};
-                lname = [loc '_'];
-                
-                %% B
-                f1 = figure(1);
-                subplot(4,3,s)
-                plot(C,log10(squeeze(all_mean(1,4,s))),'.k','MarkerSize',25); hold on;
-                xlim([0 ndp+1])
-                ylim([-3 1])
-                if (C==ndp)
-                    if (s==4)
-                        ylabel('log10 Mean Biom (g m^-^2) in final year')
-                    end
-                    set(gca,'XTick',1:ndp,'XTickLabel',[]);
-                    for t=2:2:ndp
-                        text(t,-3.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-                    end
-                    stamp(cfile2)
-                end
-                title([loc ' B'])
-                
-                %% Sum mean biom over stages
-                fishsp = squeeze(nansum(all_mean));
-                
-                f2=figure(2);
-                subplot(4,3,s)
-                plot(C-0.1,log10(fishsp(1,s)),'sk','MarkerFaceColor',cmap_ppt(3,:),...
-                    'MarkerSize',15); hold on;
-                plot(C,log10(fishsp(2,s)),'sk','MarkerFaceColor',cmap_ppt(1,:),...
-                    'MarkerSize',15); hold on;
-                plot(C+0.1,log10(fishsp(3,s)),'sk','MarkerFaceColor',cmap_ppt(2,:),...
-                    'MarkerSize',15); hold on;
-                xlim([0 ndp+1])
-                ylim([-2 1])
-                if (C==ndp)
-                    if (s==4)
-                        ylabel('log10 Mean Biom (g m^-^2) in final year')
-                    end
-                    set(gca,'XTick',1:ndp,'XTickLabel',[]);
-                    for t=2:2:ndp
-                        text(t,-2.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-                    end
-                    stamp(cfile2)
-                end
-                title([loc ' All stages'])
-                
-            end %spots
         end %CC
+        
+        %%
+        for s=1:length(spots)
+            loc = spots{s};
+            lname = [loc '_'];
+            
+            %% B
+            f1 = figure(1);
+            subplot(4,3,s)
+            plot(car,log10(Bbio(:,s)),'.k','MarkerSize',25); hold on;
+            xlim([0 car(end)+0.25])
+            ylim([-3 1])
+            if (s==4)
+                ylabel('log10 Mean Biom (g m^-^2) in final year')
+            end
+            set(gca,'XTick',0.5:0.5:car(end),'XTickLabel',[]);
+            for t=0.5:0.5:car(end)
+                text(t,-3.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
+            end
+            if (s==11)
+                text(7,0,['BE=' num2str(beff(i))]);
+                text(7,-1,['RE=' num2str(reff(R))]);
+            end
+            stamp(cfile2)
+            title([loc ' B'])
+            
+            %% Sum mean biom over stages
+            f2=figure(2);
+            subplot(4,3,s)
+            plot(car-0.05,log10(squeeze(fishsp(1,s,:))),'sk','MarkerFaceColor',cmap_ppt(3,:),...
+                'MarkerSize',15); hold on;
+            plot(car,log10(squeeze(fishsp(2,s,:))),'sk','MarkerFaceColor',cmap_ppt(1,:),...
+                'MarkerSize',15); hold on;
+            plot(car+0.05,log10(squeeze(fishsp(3,s,:))),'sk','MarkerFaceColor',cmap_ppt(2,:),...
+                'MarkerSize',15); hold on;
+            xlim([0 car(end)+0.25])
+            ylim([-2 1])
+            if (s==4)
+                ylabel('log10 Mean Biom (g m^-^2) in final year')
+            end
+            set(gca,'XTick',0.5:0.5:car(end),'XTickLabel',[]);
+            for t=0.5:0.5:car(end)
+                text(t,-2.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
+            end
+            if (s==11)
+                text(7,0,['BE=' num2str(beff(i))]);
+                text(7,-1,['RE=' num2str(reff(R))]);
+            end
+            stamp(cfile2)
+            title([loc ' All stages'])
+            
+        end %spots
         print(f1,'-dpng',[figp sname cfile2 '_tot_mean_bent_biomass_all_locs.png'])
         print(f2,'-dpng',[figp sname cfile2 '_tot_mean_biomass_type_all_locs.png'])
         
@@ -493,6 +503,10 @@ for i=1%:2;%1:length(benteff)
         title(['B/CC with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))])
         colormap(cmap3)
         print('-dpng',[figp sname cfile2 '_BBCC.png'])
+        
+        %% Save values for all locs and all CC for that RE and BE combo
+        save([datap 'Bent_CC_tests/' cfile2 '.mat'],'MDlev','LDlev','BBCC',...
+            'Bbio','fishsp','MLD')
         
     end %RE
 end %BE

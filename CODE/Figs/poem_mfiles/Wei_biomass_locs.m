@@ -80,9 +80,9 @@ lon=find(glon<=146 & glon>=145);
 lat=find(glat<=31 & glat>=30);
 sid=intersect(lon,lat);
 
-%% Australia
+% Australia
 lon=find(glon<=-125 & glon>=-126);
-lat=find(glat<=-1.5 & glat>=-1.75);
+lat=find(glat<=-13.5 & glat>=-13.75);
 aid=intersect(lon,lat);
 
 % Peru Upwelling
@@ -90,8 +90,8 @@ lon=find(glon<=-79 & glon>=-80);
 lat=find(glat<=13 & glat>=12);
 uid=intersect(lon,lat);
 
-names={'Georges Bank','Eastern Bering Sea','Ocean Station Papa',...
-    'HOT','BATS','North Sea','Eastern Equatorial Pacific','K2','S1','Peru Upwell'};
+names={'Georges Bank','Eastern Bering Sea','Ocean Station Papa','HOT',...
+    'BATS','North Sea','Eastern Equatorial Pacific','K2','S1','Aus','Peru Upwell'};
 
 ids(1,1)=gid;
 ids(2,1)=eid;
@@ -111,5 +111,5 @@ F = fish(ids);
 %
 T=table(names',B,F,...
     'VariableNames',{'Location','Inverts','Fish'});
-writetable(T,'Wei_inverts_fish_gWWm2_locs.csv','Delimiter',',');
-save('Wei_inverts_fish_gWWm2_locs.mat','T');
+writetable(T,'/Users/cpetrik/Dropbox/Princeton/POEM_other/Wei_inverts_fish_gWWm2_locs.csv','Delimiter',',');
+save('/Users/cpetrik/Dropbox/Princeton/POEM_other/Wei_inverts_fish_gWWm2_locs.mat','T');
