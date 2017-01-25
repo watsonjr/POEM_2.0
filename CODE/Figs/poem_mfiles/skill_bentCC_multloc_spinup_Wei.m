@@ -312,5 +312,3 @@ T=table(metrics,best);
 
 save([dpath 'skill_Wei.mat'],'model','obs','metrics','skill');
 
-
-
