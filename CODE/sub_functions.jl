@@ -568,12 +568,13 @@ function sub_update_be(bio_in,BE,det,CC,con,bio)
   # bio_out = bio_in - sum(eaten) - bio_in*omort
 
   #! Quadratic mortality from carrying capacity
-  r = BE*det
   eaten = con.*bio
   # Chemostat
-  bio_out = bio_in + r * (r*CC - bio_in) - sum(eaten)
+  # r = BE*det
+  # bio_out = bio_in + r * (r*CC - bio_in) - sum(eaten)
   # Logistic
-  #bio_out = bio_in + r * bio_in * (1 - bio_in/CC) - sum(eaten)
+  r = BE*det / bio_in #Needs to be in units of per time (g/m2/d) * (g/m2)
+  bio_out = bio_in + r * bio_in * (1 - bio_in/CC) - sum(eaten)
 
 end
 

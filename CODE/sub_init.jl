@@ -118,7 +118,7 @@ function sub_init_fish(ID,phen)
 	Lrg_d = deepcopy(Sml_f)
 
 	###! Detritus
-	mass = zeros(Float64,NX)
+	mass = ones(Float64,NX) * X
   BENT = detritus(mass)
 
 	return Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT
