@@ -13,7 +13,7 @@ function met = sub_met(Tp,Tb,tdif,wgt)
     temp = (Tp.*tdif) + (Tb.*(1.0-tdif));
     %Cmax
     % Specific ingestion rate from Hartvig et al (g/g/day) ref to 15C
-    cmax = (exp(0.063*(temp-15.0)) .* 60.0 .* wgt^(-0.25)) ./365.0;
+    cmax = (exp(0.063.*(temp-15.0)) .* 60.0 .* wgt^(-0.25)) ./365.0;
     % Specific ingestion rate from Hartvig et al (g/g/day) ref to 10C
     %cmax = (exp(0.063*(temp-10.0)) .* 85.0 .* wgt^(-0.25)) ./365.0;
     % Specific ingestion rate from mizer (g/g/day) ref to 10C

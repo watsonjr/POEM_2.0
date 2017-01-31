@@ -4,11 +4,11 @@ clear all
 close all
 
 %%%%!! EXPERIMENTS
-testoneloc = true;
+testoneloc = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
-spinup_pristine = false;
+spinup_pristine = true;
 pre_industrial = false;
 historic_pristine = false;
 historic_fished = false;
@@ -30,7 +30,9 @@ if oneloc_fore_pristine
     Oneloc_forecast_pristine()
 end
 if spinup_pristine
+    tic
     Spinup_pristine()
+    toc
 end
 if pre_industrial
     Pre_industrial()

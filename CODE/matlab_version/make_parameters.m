@@ -3,7 +3,7 @@
 function make_parameters()
     global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl 
     global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit 
-    global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT 
+    global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT CC
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE 
     global MFsel LPsel LDsel
@@ -14,12 +14,12 @@ function make_parameters()
     %! Which fishes harvested
     MFsel = 0;
     LPsel = 0;
-    LDsel = 1;
+    LDsel = 0;
 
     %! Benthic-pelagic coupling cutoff (depth, m)
     PI_be_cutoff = 200;
     % 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
-    pdc = 0;
+    pdc = 1;
 
     %! body lengths (mm)
     L_s = 10^((log10(2)+log10(20))/2); % small
@@ -60,10 +60,11 @@ function make_parameters()
     fcrit = 0.40;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
     
     %%%! Transfer efficiency of detritus to benthic prey
-    bent_eff = 0.3;
+    bent_eff = 0.05;
+    CC = 3.0;
 
     %%%! Reproductive efficiency
-    rfrac = 0.01;
+    rfrac = 0.5;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;

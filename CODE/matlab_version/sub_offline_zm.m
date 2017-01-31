@@ -25,5 +25,5 @@ function [out_1, out_2, out_3, out_4, out_5, zf] = sub_offline_zm(enc_1,enc_2,en
         out_4 = enc_4;
         out_5 = enc_5;
     end
-    zf = (out_1*bio_1 + out_2*bio_2 + out_3*bio_3 + out_4*bio_4 + out_5*bio_5) ./ dZ;
+    zf = (out_1.*bio_1 + out_2.*bio_2 + out_3.*bio_3 + out_4.*bio_4 + out_5.*bio_5) ./ dZ;
 end

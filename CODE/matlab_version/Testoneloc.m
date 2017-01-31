@@ -44,7 +44,7 @@ for C = 1%:length(CarCap)
         
         %! Where to run the model
         load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
-        ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,25248,33069];
+        ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045];
         names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
         
         %! Create a directory for output

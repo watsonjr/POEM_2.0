@@ -2,5 +2,5 @@
 function rec = sub_rec(X,bio)
     % X = biomass specific maturation rate of smaller size class (gamma)
     % bio = biomass of smaller size class
-    rec = X * bio;
+    rec = X .* bio;
 end

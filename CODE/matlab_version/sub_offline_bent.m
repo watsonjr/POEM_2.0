@@ -11,5 +11,5 @@ function [out_1, out_2, bf] = sub_offline_bent(enc_1,enc_2,bio_1,bio_2,B)
         out_1 = enc_1;
         out_2 = enc_2;
     end
-    bf = (out_1*bio_1 + out_2*bio_2) ./ B; 
+    bf = (out_1.*bio_1 + out_2.*bio_2) ./ B; 
 end

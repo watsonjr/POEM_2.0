@@ -35,7 +35,7 @@ function nmort = sub_nmort(Tp,Tb,tpel,wgt)
     if (MORT==4) % Large fishes only w/ temp-dep
         if (wgt == M_l)
             temp = (Tp.*tpel) + (Tb.*(1.0-tpel));
-            nmort = exp(0.063*(temp-15.0)) .* Nat_mrt;
+            nmort = exp(0.063.*(temp-15.0)) .* Nat_mrt;
         else
             nmort = 0.0;
         end

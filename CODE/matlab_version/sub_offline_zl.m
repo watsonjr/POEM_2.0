@@ -13,5 +13,5 @@ function [out_1, out_2, zf] = sub_offline_zl(enc_1,enc_2,bio_1,bio_2,dZ)
         out_1 = enc_1;
         out_2 = enc_2;
     end
-    zf = (out_1*bio_1 + out_2*bio_2) ./ dZ;
+    zf = (out_1.*bio_1 + out_2.*bio_2) ./ dZ;
 end

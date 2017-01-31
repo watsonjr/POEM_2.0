@@ -4,6 +4,6 @@ function rec = sub_rec_larv(X,bio,rfrac)
   %rfrac: repro efficiency ~ sex ratio * egg survival
   
   %! Global constant RE
-  rec = rfrac * X * bio;
+  rec = rfrac .* X .* bio;
 
 end
