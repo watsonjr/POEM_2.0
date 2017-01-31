@@ -43,16 +43,16 @@ latmin = -90;
 latmax = 90;
 aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
     (geolat_t < latmax) & (ht > 0) );
-TF(aa) = 100*rand(size(aa));
+% TF(aa) = 100*rand(size(aa));
 
-% TF(220:240,:) = 100.0;
-% TF = TF .* mask;
+TF(220:240,:) = 100.0;
+TF = TF .* mask;
 
 total_mass(1) = sum(TF(:).*area(:));
 
 %% Following Advect_upwind_2D
-dt = 3600;
-ntime = 365*24;
+dt = 60*60*0.5;
+ntime = 365 * (60*60*24) / dt;
 % uvel = Uth_200;
 % vvel = Vth_200;
 uvel = zeros(ni,nj);
@@ -187,7 +187,7 @@ for n = 1:ntime
     
     TF2(aa) = -999;
     
-    if n == 8760
+    if n == ntime
         figure(2)
         clf
         surf(geolon_t,geolat_t,TF2); view(2); shading interp;
@@ -215,7 +215,7 @@ for i=1:length(t)
     caxis([-4e-3 4e-3])
     colorbar
     title(['GradT day ', num2str(d(i))]);
-    print('-dpng',[fpath 'POEM_diff_test_gradT_' num2str(d(i)) '.png'])
+    print('-dpng',[fpath 'POEM_diff_test_gradT_dt30min_' num2str(d(i)) '.png'])
 end
 
 %% Arctic projection
@@ -230,7 +230,7 @@ for i=1:length(t)
     m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['GradT day ' num2str(d(i))])
-    print('-dpng',[fpath 'POEM_diff_test_gradT_arcticproj_' num2str(d(i)) '.png'])
+    print('-dpng',[fpath 'POEM_diff_test_gradT_arcticproj_dt30min_' num2str(d(i)) '.png'])
 end
 
 

@@ -4,7 +4,7 @@ function sub_advec_diff(GRD,Bio_in,K,U,V,ni,nj)
 	# U & V = velocities in m/s
 	# ntime = time steps in a day
 	# dtime = # seconds in ntime
-	dtime = 60.0*60.0*12.0
+	dtime = 60.0*60.0*0.25
 	ntime = (60.0*60.0*24.0) / dtime
 	nt = Int(ntime)
 	# biol concentration
