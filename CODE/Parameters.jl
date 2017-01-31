@@ -117,7 +117,7 @@ function make_parameters(harv,frate)
 	const global K_ad = 0.0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.30	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 	const global k = 4.8 		# 10 g^(1-p)/yr at 10C; 4.8 at 10C NS mizer
 
 	###! Consumption constants
@@ -127,11 +127,11 @@ function make_parameters(harv,frate)
 	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
 
 	###! Transfer efficiency of detritus to benthic prey & carrying capacity
-	const global bent_eff = 0.05
-	const global CC = 2.75
+	#const global bent_eff = 0.05
+	#const global CC = 2.75
 
 	###! Reproductive efficiency
-	const global rfrac = 0.5
+	#const global rfrac = 0.5
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
@@ -165,14 +165,14 @@ function make_parameters(harv,frate)
 	const global MP_phi_MZ = 0.1
 	const global MP_phi_LZ = 1.0
 	const global MP_phi_S  = 1.0
-	const global MD_phi_BE = 1.0
+	const global MD_phi_BE = 0.8
   const global LP_phi_MF = 1.0
 	const global LP_phi_MP = 1.0
 	const global LP_phi_MD = 1.0
-	const global LD_phi_MF = 1.0
-	const global LD_phi_MP = 1.0
-	const global LD_phi_MD = 1.0
-	const global LD_phi_BE = 1.0
+	const global LD_phi_MF = 0.8
+	const global LD_phi_MP = 0.8
+	const global LD_phi_MD = 0.8
+	const global LD_phi_BE = 0.8
 
 	#-----
 end

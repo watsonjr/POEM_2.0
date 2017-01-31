@@ -13,10 +13,10 @@ CarCap = {'200','225','250','275','300'};
 car = [2.0:0.25:3.0];
 benteff = {'05','10','15','20'};
 beff = [0.05:0.05:0.2];
-fcrit = 40;
+fcrit = 30;
 nmort = '0';
 kad = 100;
-pref = 'D080';
+pref = 'D100';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 

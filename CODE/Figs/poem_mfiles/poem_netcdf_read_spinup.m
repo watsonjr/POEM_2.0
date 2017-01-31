@@ -240,6 +240,17 @@ clear biomass
 
 %% Take means
 
+%Time
+sp_tmean=mean(SP.bio,1);
+sf_tmean=mean(SF.bio,1);
+sd_tmean=mean(SD.bio,1);
+mp_tmean=mean(MP.bio,1);
+mf_tmean=mean(MF.bio,1);
+md_tmean=mean(MD.bio,1);
+lp_tmean=mean(LP.bio,1);
+ld_tmean=mean(LD.bio,1);
+b_tmean=mean(BENT.bio,1);
+
 % Last year
 sp_mean=mean(SP.bio,2);
 sf_mean=mean(SF.bio,2);
@@ -260,7 +271,7 @@ MD_prod=mean(MD.prod,2);
 LP_prod=mean(LP.prod,2);
 LD_prod=mean(LD.prod,2);
 
-
+%%
 save([fpath 'Means_spinup_' cfile '.mat'],...
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
     'lp_mean','ld_mean','SF_prod','SP_prod','SD_prod','MF_prod','MP_prod',...
