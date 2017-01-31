@@ -27,13 +27,127 @@ cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE050
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-%load([dpath 'Data_spinup_pristine.mat']);
-%load([dpath 'Data_spinup_pristine_fcrit10.mat']);
-%load([dpath 'Data_spinup_pristine_fcrit10_Tmort_30yr.mat']);
-%load([dpath 'Data_spinup_pristine_fcrit10_FdiffA2_Tmort.mat']);
-% load([dpath 'Data_spinup_pristine_Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50.mat']);
-load([dpath 'Data_spinup_pristine_' cfile '.mat']);
-%load([dpath 'Means_spinup_' cfile '.mat']);
+%load([dpath 'Data_spinup_pristine_' cfile '.mat']);
+load([dpath 'Means_spinup_' cfile '.mat']);
+
+%% Plots in time
+y = SP.time;
+
+% Piscivore
+figure(1)
+subplot(4,1,1)
+plot(y,log10(SP.bio),'b','Linewidth',1); hold on;
+plot(y,log10(MP.bio),'r','Linewidth',1); hold on;
+plot(y,log10(LP.bio),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Spinup Pelagic Piscivores')
+ylabel('log10 Biomass (g m^-^2)')
+legend('Larvae','Juveniles','Adults')
+legend('location','southeast')
+stamp(cfile)
+
+subplot(4,1,2)
+plot(y,log10(SP.bio),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Larvae')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,3)
+plot(y,log10(MP.bio),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Juveniles')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,4)
+plot(y,log10(LP.bio),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Adults')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+print('-dpng',[ppath 'Spinup_pisc_time.png'])
+
+%% Planktivore
+figure(2)
+subplot(3,1,1)
+plot(y,log10(SF.bio),'b','Linewidth',1); hold on;
+plot(y,log10(MF.bio),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Spinup Forage Fishes')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+legend('Immature','Adults')
+legend('location','southeast')
+stamp(cfile)
+
+subplot(3,1,2)
+plot(y,log10(SF.bio),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Immature')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(3,1,3)
+plot(y,log10(MF.bio),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Adults')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+print('-dpng',[ppath 'Spinup_plan_time.png'])
+
+% Detritivore
+figure(3)
+subplot(4,1,1)
+plot(y,log10(SD.bio),'b','Linewidth',1); hold on;
+plot(y,log10(MD.bio),'r','Linewidth',1); hold on;
+plot(y,log10(LD.bio),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Spinup Demersal Piscivores')
+ylabel('log10 Biomass (g m^-^2)')
+legend('Larvae','Juveniles','Adults')
+legend('location','southeast')
+stamp(cfile)
+
+subplot(4,1,2)
+plot(y,log10(SD.bio),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Larvae')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,3)
+plot(y,log10(MD.bio),'r','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Juveniles')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(4,1,4)
+plot(y,log10(LD.bio),'k','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Adults')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+print('-dpng',[ppath 'Spinup_detr_time.png'])
+
+% All size classes of all
+
+figure(5)
+plot(y,log10(SP.bio),'Linewidth',1); hold on;
+plot(y,log10(MP.bio),'Linewidth',1); hold on;
+plot(y,log10(LP.bio),'Linewidth',1); hold on;
+plot(y,log10(SF.bio),'Linewidth',1); hold on;
+plot(y,log10(MF.bio),'Linewidth',1); hold on;
+plot(y,log10(SD.bio),'Linewidth',1); hold on;
+plot(y,log10(MD.bio),'Linewidth',1); hold on;
+plot(y,log10(LD.bio),'Linewidth',1); hold on;
+plot(y,log10(BENT.bio),'Linewidth',1); hold on;
+legend('SP','MP','LP','SF','MF','SD','MD','LD','B')
+legend('location','eastoutside')
+xlim([y(1) y(end)])
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+title('Spinup')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_all_sizes.png'])
+
 
 
 %%

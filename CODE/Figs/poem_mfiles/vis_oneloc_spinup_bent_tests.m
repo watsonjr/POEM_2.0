@@ -8,17 +8,16 @@ close all
 datap = '/Volumes/GFDL/CSV/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-RE = {'1000','0500','0100','0050','0010','00050','00010','00005','00001'};
-reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];
-CarCap = {'025','050','075','100','125','150','175','200','225','250','275',...
-    '300','325','350','375','400','425','450','475','500'};
-car = [0.25:0.25:5.0];
-benteff = {'05','10','15','20','25','30'};
-beff = [0.05:0.05:0.3];
+RE = {'1000','0500','0100','0050','0010','00050','00010'};%,'00005','00001'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001];%,0.0005,0.0001];
+CarCap = {'200','225','250','275','300'};
+car = [2.0:0.25:3.0];
+benteff = {'05','10','15','20'};
+beff = [0.05:0.05:0.2];
 fcrit = 40;
-nmort = 'M0';
+nmort = '0';
 kad = 100;
-pref = 'D100';
+pref = 'D080';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -34,18 +33,18 @@ load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_a
 cmap3=cmap_ppt([5,1,3],:);
 
 %%
-for i=5:6;%1:length(benteff)
+for i=1:length(benteff)
     BE = benteff{i};
     for C = 1:length(CarCap)
         CC = CarCap{C};
         for R = 1:length(RE)
             rfrac = RE{R};
-            dp = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+            dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
                 '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' rfrac];
             dpath = [datap char(dp) '/'];
             fpath = [figp char(dp) '/'];
             cfile = char(dp);
-            cfile2 = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+            cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
                 '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' rfrac...
                 '_BentMortTests'];
             %%
@@ -371,7 +370,7 @@ end
 
 %%
 ndp = length(CarCap);
-for i=5:6;%1:length(benteff)
+for i=1:length(benteff)
     BE = benteff{i};
     for R = 1:length(RE)
         rfrac = RE{R};
@@ -386,12 +385,12 @@ for i=5:6;%1:length(benteff)
         for C = 1:length(CarCap)
             CC = CarCap{C};
             cc = car(C);
-            dp = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+            dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
                 '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' rfrac];
             dpath = [datap char(dp) '/'];
             fpath = [figp char(dp) '/'];
             cfile = char(dp);
-            cfile2 = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+            cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
                 '_' pref '_nmort'  nmort '_BE' BE '_RE' rfrac...
                 '_BentCCtests'];
             
@@ -416,18 +415,18 @@ for i=5:6;%1:length(benteff)
             f1 = figure(1);
             subplot(4,3,s)
             plot(car,log10(Bbio(:,s)),'.k','MarkerSize',25); hold on;
-            xlim([0 car(end)+0.25])
+            xlim([car(1)-0.25 car(end)+0.25])
             ylim([-3 1])
             if (s==4)
                 ylabel('log10 Mean Biom (g m^-^2) in final year')
             end
-            set(gca,'XTick',0.5:0.5:car(end),'XTickLabel',[]);
-            for t=0.5:0.5:car(end)
+            set(gca,'XTick',car(1):0.25:car(end),'XTickLabel',[]);
+            for t=car(1):0.25:car(end)
                 text(t,-3.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
             end
             if (s==11)
-                text(7,0,['BE=' num2str(beff(i))]);
-                text(7,-1,['RE=' num2str(reff(R))]);
+                text(4,0,['BE=' num2str(beff(i))]);
+                text(4,-1,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
             title([loc ' B'])
@@ -441,18 +440,18 @@ for i=5:6;%1:length(benteff)
                 'MarkerSize',15); hold on;
             plot(car+0.05,log10(squeeze(fishsp(3,s,:))),'sk','MarkerFaceColor',cmap_ppt(2,:),...
                 'MarkerSize',15); hold on;
-            xlim([0 car(end)+0.25])
+            xlim([car(1)-0.25 car(end)+0.25])
             ylim([-2 1])
             if (s==4)
                 ylabel('log10 Mean Biom (g m^-^2) in final year')
             end
-            set(gca,'XTick',0.5:0.5:car(end),'XTickLabel',[]);
-            for t=0.5:0.5:car(end)
+            set(gca,'XTick',car(1):0.25:car(end),'XTickLabel',[]);
+            for t=car(1):0.25:car(end)
                 text(t,-2.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
             end
             if (s==11)
-                text(7,0,['BE=' num2str(beff(i))]);
-                text(7,-1,['RE=' num2str(reff(R))]);
+                text(4,0,['BE=' num2str(beff(i))]);
+                text(4,-1,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
             title([loc ' All stages'])
@@ -465,11 +464,11 @@ for i=5:6;%1:length(benteff)
         %MD
         f5=figure(5);
         bar(MDlev)
-        ylim([0 1])
-        xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',car(2:2:end))
+        ylim([0 1.1])
+        xlim([0 ndp+1.5])
+        set(gca,'XTick',1:ndp,'XTickLabel',car)
         legend('GB','EBS','NS')
-        legend('location','northwest')
+        legend('location','northeast')
         ylabel('MD C / Cmax')
         xlabel('CC')
         title(['MD feeding level with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))])
@@ -479,11 +478,11 @@ for i=5:6;%1:length(benteff)
         %LD
         f6=figure(6);
         bar(LDlev)
-        ylim([0 1])
-        xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',car(2:2:end))
+        ylim([0 1.1])
+        xlim([0 ndp+1.5])
+        set(gca,'XTick',1:ndp,'XTickLabel',car)
         legend('GB','EBS','NS')
-        legend('location','northwest')
+        legend('location','northeast')
         ylabel('LD C / Cmax')
         xlabel('CC')
         title(['LD feeding level with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))])
@@ -494,8 +493,9 @@ for i=5:6;%1:length(benteff)
         
         f7=figure(7);
         bar(BBCC)
-        xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',car(2:2:end))
+        ylim([0 1.1])
+        xlim([0 ndp+1.5])
+        set(gca,'XTick',1:ndp,'XTickLabel',car)
         legend('GB','EBS','NS')
         legend('location','northeast')
         ylabel('B / CC')

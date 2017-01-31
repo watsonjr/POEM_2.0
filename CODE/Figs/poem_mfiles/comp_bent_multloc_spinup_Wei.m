@@ -67,7 +67,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT.png'])
+%print('-dpng',[ppath 'Spinup_global_BENT.png'])
 
 % D
 figure(2)
@@ -81,7 +81,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_Demersal.png'])
+%print('-dpng',[ppath 'Spinup_global_Demersal.png'])
 
 % Inv
 figure(3)
@@ -95,7 +95,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Wei_inverts.png'])
+%print('-dpng',[ppath 'Wei_inverts.png'])
 
 % D
 figure(4)
@@ -109,7 +109,7 @@ colormap('jet')
 colorbar('h')
 caxis([-3 1])
 stamp(cfile)
-print('-dpng',[ppath 'Wei_fish.png'])
+%print('-dpng',[ppath 'Wei_fish.png'])
 
 %% Skill metrics 
 

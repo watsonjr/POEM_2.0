@@ -7,17 +7,16 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 datap = '/Volumes/GFDL/CSV/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-RE = {'1000','0500','0100','0050','0010','00050','00010','00005','00001'};
-reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];
-CarCap = {'025','050','075','100','125','150','175','200','225','250','275',...
-    '300','325','350','375','400','425','450','475','500'};
-car = [0.25:0.25:5.0];
-benteff = {'05','10','15','20','25','30'};
-beff = [0.05:0.05:0.3];
+RE = {'1000','0500','0100','0050','0010','00050','00010'};%,'00005','00001'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001];%,0.0005,0.0001];
+CarCap = {'200','225','250','275','300'};
+car = [2.0:0.25:3.0];
+benteff = {'05','10','15','20'};
+beff = [0.05:0.05:0.2];
 fcrit = 40;
-nmort = 'M0';
+nmort = '0';
 kad = 100;
-pref = 'D100';
+pref = 'D080';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 
@@ -79,12 +78,12 @@ AE = r;
 AAE = r;
 MEF = r;
 
-for i=5:6%1:length(benteff)
+for i=1:length(benteff)
     BE = benteff{i};
     for R = 1:length(RE)
         rfrac = RE{R};
         
-        cfile2 = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+        cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort'  nmort '_BE' BE '_RE' rfrac...
             '_BentCCtests'];
         load([datap 'Bent_CC_tests/' cfile2 '.mat'],'Bbio','MLD');
@@ -108,15 +107,15 @@ for i=5:6%1:length(benteff)
             if (s==4)
                 ylabel('Mean Biom (g m^-^2) in final year')
             end
-            set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-            if (s>=9)
-                for t=2:2:ndp
-                    text(t,-0.005,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-                end
-            end
+            set(gca,'XTick',1:ndp,'XTickLabel',car);
+%             if (s>=9)
+%                 for t=2:2:ndp
+%                     text(t,-0.005,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%                 end
+%             end
             if (s==11)
-                text(25,0.01,['BE=' num2str(beff(i))]);
-                text(25,0,['RE=' num2str(reff(R))]);
+                text(7,0.1,['BE=' num2str(beff(i))]);
+                text(7,0,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
             title([loc ' B biom'])
@@ -130,13 +129,15 @@ for i=5:6%1:length(benteff)
             if (s==4)
                 ylabel('log10 Mean Biom (g m^-^2) in final year')
             end
-            set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-            for t=2:2:ndp
-                text(t,-3.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-            end
+            set(gca,'XTick',1:ndp,'XTickLabel',car);
+%             if (s>=9)
+%                 for t=2:2:ndp
+%                     text(t,-0.005,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%                 end
+%             end
             if (s==11)
-                text(25,0,['BE=' num2str(beff(i))]);
-                text(25,-1,['RE=' num2str(reff(R))]);
+                text(7,0,['BE=' num2str(beff(i))]);
+                text(7,-1,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
             title([loc ' D biom'])
@@ -235,10 +236,10 @@ for i=5:6%1:length(benteff)
         ylabel('Correlation coefficient')
         ylim([-0.1 1])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
         stamp(cfile2)
         title(['Inverts skill with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))]...
             ,'HorizontalAlignment','left')
@@ -249,30 +250,30 @@ for i=5:6%1:length(benteff)
         set(gca,'XTick',1:ndp,'XTickLabel',[]);
         %ylim([0 2.5])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-0.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
         
         subplot(2,2,3)
         bar(iskill(3,:),'k')
         ylabel('Average error')
-        ylim([-1 1])
+        %ylim([-1 1])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
         
         subplot(2,2,4)
         bar(iskill(5,:),'k')
         ylabel('Modeling efficiency')
-        ylim([-1 1])
+        %ylim([-1 1])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
         print('-dpng',[figp sname cfile2 '_locs_skill_Wei_inverts'])
         
         %%
@@ -282,10 +283,10 @@ for i=5:6%1:length(benteff)
         ylabel('Correlation coefficient')
         ylim([-0.1 1])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
         stamp(cfile2)
         title(['Fish skill with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))]...
             ,'HorizontalAlignment','left')
@@ -296,30 +297,30 @@ for i=5:6%1:length(benteff)
         set(gca,'XTick',1:ndp,'XTickLabel',[]);
         %ylim([0 2.5])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-0.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
-        
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-0.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
+%         
         subplot(2,2,3)
         bar(fskill(3,:),'k')
         ylabel('Average error')
-        ylim([-1 1])
+        %ylim([-1 1])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
-        
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
+%         
         subplot(2,2,4)
         bar(fskill(5,:),'k')
         ylabel('Modeling efficiency')
-        ylim([-1 1])
+        %ylim([-1 1])
         xlim([0 ndp+1])
-        set(gca,'XTick',2:2:ndp,'XTickLabel',[]);
-        for t=2:2:ndp
-            text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        end
+        set(gca,'XTick',1:ndp,'XTickLabel',car);
+%         for t=2:2:ndp
+%             text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
+%         end
         print('-dpng',[figp sname cfile2 '_locs_skill_Wei_fish'])
         
         %% Best
@@ -387,7 +388,7 @@ Ibest(5,3) = Cmesh(maxMEF);
 I=table(metrics,value,Ibest(:,1),Ibest(:,2),Ibest(:,3),'VariableNames',...
     {'Metric','Value','BentEff','RepEff','CarCap'});
 
-cfile3 = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+cfile3 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort'  nmort '_BentCCtests'];
 save([datap 'Bent_CC_tests/' cfile3 '_locs_iskill_Wei.mat'],'r',...
             'RMSE','AE','AAE','MEF','beff','reff','car','I');
