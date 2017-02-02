@@ -51,7 +51,7 @@ TF = TF .* mask;
 total_mass(1) = sum(TF(:).*area(:));
 
 %% Following Advect_upwind_2D
-dt = 60*60*0.5;
+dt = 60*60*0.25;
 ntime = 365 * (60*60*24) / dt;
 % uvel = Uth_200;
 % vvel = Vth_200;
@@ -67,7 +67,8 @@ gradTi = zeros(ni,nj);
 gradTj = zeros(ni,nj);
 upwind = zeros(ni,nj);
 dupwind = zeros(ni,nj);
-gT = NaN(ni,nj,ntime);
+modt=1:100:ntime;
+gT = NaN(ni,nj,length(modt));
 
 %% Advection loop
 for n = 1:ntime
@@ -95,7 +96,10 @@ for n = 1:ntime
         end
     end
     gradT = (gradTi + gradTj); %.* mask;
-    gT(:,:,n) = gradT;
+    if (mod(n,100)==0)
+        modn = n/100;
+        gT(:,:,modn) = gradT;
+    end
     
     diffusiv = 0.5*K;
     kpos     = diffusiv + abs(diffusiv);
@@ -204,15 +208,19 @@ end
 %% Plot gradT
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-t = 1:2189:ntime;
-d = t/24;
+% t = 1:2189:ntime;
+% d = t/24;
+% d = round(d);
+mt=1:75:length(modt);
+t = modt(1:75:end);
+d = t/(24*4);
 d = round(d);
 
 for i=1:length(t)
     figure
-    surf(geolon_t,geolat_t,gT(:,:,t(i)));
+    surf(geolon_t,geolat_t,gT(:,:,mt(i)));
     view(2); shading interp;
-    caxis([-4e-3 4e-3])
+    caxis([-1e-3 1e-3])
     colorbar
     title(['GradT day ', num2str(d(i))]);
     print('-dpng',[fpath 'POEM_diff_test_gradT_dt30min_' num2str(d(i)) '.png'])
@@ -222,17 +230,18 @@ end
 for i=1:length(t)
     figure
     m_proj('stereographic','lat',90,'long',30,'radius',30);
-    m_pcolor(geolon_t,geolat_t,gT(:,:,t(i)));
+    m_pcolor(geolon_t,geolat_t,gT(:,:,mt(i)));
     shading interp
     colorbar
     colormap('jet')
-    caxis([-4e-3 4e-3])
+    caxis([-1e-3 1e-3])
     m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['GradT day ' num2str(d(i))])
     print('-dpng',[fpath 'POEM_diff_test_gradT_arcticproj_dt30min_' num2str(d(i)) '.png'])
 end
 
-
+%%
+save('/Volumes/GFDL/CSV/advect_tests/POEM_diff_test_gradT_Atl_dt15min','gT','geolon_t','geolat_t','TF2','pdiff','-v7.3')
 
 
