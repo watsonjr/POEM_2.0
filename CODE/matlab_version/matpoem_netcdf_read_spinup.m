@@ -3,9 +3,8 @@
 clear all
 close all
 
-cfile = 'NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC300_RE0500';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D100_nmort0_BE05_CC275_RE0500';
 
-%fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
 fpath=['/Volumes/GFDL/NC/Matlab_runs/' cfile '/'];
 
 
@@ -30,7 +29,7 @@ SP.rec = rec;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
-%% SF
+% SF
 ncid = netcdf.open([fpath 'Spinup_pristine_sml_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -189,7 +188,7 @@ LD.rep = rep;
 
 clear biomass clev con DD die egg gamma nu rec rep S X time prod
 
-%% Benthic material
+% Benthic material
 ncid = netcdf.open([fpath 'Spinup_pristine_bent.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -216,21 +215,22 @@ ld_tmean=mean(LD.bio,1);
 b_tmean=mean(BENT.bio,1);
 
 % Last year
-sp_mean=mean(SP.bio,2);
-sf_mean=mean(SF.bio,2);
-sd_mean=mean(SD.bio,2);
-mp_mean=mean(MP.bio,2);
-mf_mean=mean(MF.bio,2);
-md_mean=mean(MD.bio,2);
-lp_mean=mean(LP.bio,2);
-ld_mean=mean(LD.bio,2);
-b_mean=mean(BENT.bio,2);
+lyr=time((end-12+1):end);
+sp_mean=mean(SP.bio(:,lyr),2);
+sf_mean=mean(SF.bio(:,lyr),2);
+sd_mean=mean(SD.bio(:,lyr),2);
+mp_mean=mean(MP.bio(:,lyr),2);
+mf_mean=mean(MF.bio(:,lyr),2);
+md_mean=mean(MD.bio(:,lyr),2);
+lp_mean=mean(LP.bio(:,lyr),2);
+ld_mean=mean(LD.bio(:,lyr),2);
+b_mean=mean(BENT.bio(:,lyr),2);
 
 
 %%
 save([fpath 'Means_spinup_' cfile '.mat'],...
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
-    'lp_mean','ld_mean','SF_prod','SP_prod','SD_prod','MF_prod','MP_prod',...
-    'MD_prod','LP_prod','LD_prod');
+    'lp_mean','ld_mean','sf_tmean','sp_tmean','sd_tmean','mf_tmean','mp_tmean',...
+    'md_tmean','b_tmean','lp_tmean','ld_tmean','time','lyr');
 
 

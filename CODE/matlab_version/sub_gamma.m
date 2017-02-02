@@ -13,7 +13,9 @@ function gamma = sub_gamma(K,Z,nu,d,B,nmrt,Frate,selec)
     end
     kap=K;
     gg = ((kap.*nu) - D) ./ (1 - (Z.^(1 - (D ./ (kap.*nu)))));
-    gneg = (gg < 0);
     gamma = min(gg,nu);
+    gneg = (gg < 0);
     gamma(gneg) = 0.0;
+    gnan = (isnan(gg));
+    gamma(gnan) = 0.0;
 end

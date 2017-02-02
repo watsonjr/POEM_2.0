@@ -12,10 +12,15 @@ global MFsel LPsel LDsel
 
 %%% COBALT information
 ENVR = get_COBALT(COBALT,ID,DY);
+ENVR.det=sub_check(ENVR.det);
+ENVR.Zm=sub_check(ENVR.Zm);
+ENVR.Zl=sub_check(ENVR.Zl);
+ENVR.dZm=sub_check(ENVR.dZm);
+ENVR.dZl=sub_check(ENVR.dZl);
 
 % Update benthic biomass with new detritus avail at that time step
 BENT.mass = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
-sub_check(BENT.mass);
+BENT.mass=sub_check(BENT.mass);
 
 % Pelagic-demersal coupling
 %Lp: fraction of time large piscivores spends in pelagic
@@ -228,13 +233,13 @@ Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmor
 [Ld.bio, Ld.caught] = sub_fishing_rate(Ld.bio,dfrate,LDsel);
 
 % Forward Euler checks for demographics and movement
-sub_check(Sf.bio);
-sub_check(Sp.bio);
-sub_check(Sd.bio);
-sub_check(Mf.bio);
-sub_check(Mp.bio);
-sub_check(Md.bio);
-sub_check(Lp.bio);
-sub_check(Ld.bio);
+Sf.bio=sub_check(Sf.bio);
+Sp.bio=sub_check(Sp.bio);
+Sd.bio=sub_check(Sd.bio);
+Mf.bio=sub_check(Mf.bio);
+Mp.bio=sub_check(Mp.bio);
+Md.bio=sub_check(Md.bio);
+Lp.bio=sub_check(Lp.bio);
+Ld.bio=sub_check(Ld.bio);
 
 end
