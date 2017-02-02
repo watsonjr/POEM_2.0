@@ -1192,15 +1192,15 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 % npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00020_K75/';
 % npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K75/';
 
-npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00090_K50/';
-npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00080_K50/';
-npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00070_K50/';
-npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00060_K50/';
-npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00050_K50/';
-npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_K50/';
-npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00030_K50/';
-npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00020_K50/';
-npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_K50/';   
+% npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00090_K50/';
+% npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00080_K50/';
+% npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00070_K50/';
+% npath6 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00060_K50/';
+% npath7 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00050_K50/';
+% npath8 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00040_K50/';
+% npath9 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00030_K50/';
+% npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00020_K50/';
+% npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_K50/';   
 % npath3 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortH2_BE05_RE00090_K50/';
 % npath4 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortH2_BE05_RE00080_K50/';
 % npath5 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortH2_BE05_RE00070_K50/';
@@ -1238,6 +1238,11 @@ npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_K
 % npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00020_K50/';
 % npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_RE00010_K50/';
 
+npath1='Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D100_nmort0_BE05_CC275_RE0500/';
+npath2='Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE0500/';
+dp = {npath1;npath2};
+sims = {'.30','.40'};
+cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_D100_nmort0_BE05_CC275_RE0500_fcrit_tests';
 
 % npath1 = 'Dc_TrefO_Hartvig_all_MFeqMP_MZ01_nmort2_BE05_RE0100/';
 % npath2 = 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort2_BE05_RE0010/';
@@ -1259,9 +1264,9 @@ npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_RE00010_K
 % cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmortPW2_BE05_K25_REtests';
 
 %lower RE & mort
-dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11};
-sims = {'.009','.008','.007','.006','.005','.004','.003','.002','.001'};
-cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_K50_lowREtests';
+% dp = {npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11};
+% sims = {'.009','.008','.007','.006','.005','.004','.003','.002','.001'};
+% cfile2 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_nmort0_BE05_K50_lowREtests';
 
 
 %FORAGE
