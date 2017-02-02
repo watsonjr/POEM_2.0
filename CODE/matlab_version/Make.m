@@ -4,11 +4,11 @@ clear all
 close all
 
 %%%%!! EXPERIMENTS
-testoneloc = true;
+testoneloc = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
-spinup_pristine = false;
+spinup_pristine = true;
 pre_industrial = false;
 historic_pristine = false;
 historic_fished = false;

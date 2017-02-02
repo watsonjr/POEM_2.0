@@ -22,9 +22,9 @@ function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT] = sub_init_fish(ID,phen,DAYS)
     Sd.td = ones(NX,1);
     Mf.td = ones(NX,1);
     Mp.td = ones(NX,1);
-    Md.td = ones(NX,1);
+    Md.td = zeros(NX,1);
     Lp.td = ones(NX,1);
-    Ld.td = ones(NX,1);
+    Ld.td = zeros(NX,1);
 
     nzero = {'met' 'enc_f' 'enc_p' 'enc_d' 'enc_zm' 'enc_zl' 'enc_be' ...
         'con_f' 'con_p' 'con_d' 'con_zm' 'con_zl' 'con_be' 'I' 'die' 'pred' ...

@@ -4,7 +4,7 @@ function Testoneloc()
 global Tref TrefP TrefB Dthresh SP DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit
-global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT
+global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT CC 
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel LPsel LDsel
@@ -14,14 +14,14 @@ RE = [1.0,0.5,0.1,0.05,0.01];
 BE = [0.05:0.05:0.2];
 CarCap = [0.5:0.5:3.0];
 
-for B = 1:length(BE)
-    bent_eff = BE(B);
-    
-    for C = 1:length(CarCap)
-        CC = CarCap(C);
-        
-        for R = 1:length(RE)
-            rfrac = RE(R);
+% for B = 1:length(BE)
+%     bent_eff = BE(B);
+%     
+%     for C = 1:length(CarCap)
+%         CC = CarCap(C);
+%         
+%         for R = 1:length(RE)
+%             rfrac = RE(R);
             
             for F = 1%:length(Fmort)
                 %! Set fishing rate
@@ -49,7 +49,7 @@ for B = 1:length(BE)
                 SP = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Gaussian_spawn_2mo.csv');
                 
                 %! How long to run the model
-                YEARS = 100;
+                YEARS = 5;
                 DAYS = 365;
                 
                 %! Where to run the model
@@ -63,7 +63,7 @@ for B = 1:length(BE)
                 tld = num2str(1000+int64(100*LD_phi_MF));
                 tbe = num2str(100+int64(100*bent_eff));
                 tmort = num2str(MORT);
-                tcc = num2str(100+int64(100*CC));
+                tcc = num2str(1000+int64(100*CC));
                 if (rfrac >= 0.01)
                     tre = num2str(10000+int64(1000*rfrac));
                 else
@@ -96,10 +96,8 @@ for B = 1:length(BE)
                     coup = 'PDc';
                 end
                 if (harv==1)
-                    %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_BAassim','_nmort',tmort,'_BE',tbe(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                     simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                 else
-                    %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_BAassim','_nmort',tmort,'_BE',tbe(2:end),'_RE',tre(2:end)];
                     simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                 end
                 if (~isdir(['/Volumes/GFDL/CSV/Matlab_test_runs/',simname]))
@@ -198,7 +196,7 @@ for B = 1:length(BE)
                     
                 end %Locations
             end %Fmort
-        end %RE
-    end %CC
-end %BE
+%         end %RE
+%     end %CC
+% end %BE
 end

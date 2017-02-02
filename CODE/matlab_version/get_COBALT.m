@@ -16,9 +16,9 @@ function ENVR = get_COBALT(COBALT,ID,DY)
     ENVR.T0p(:,1) = TrefP(ID);
     ENVR.T0b(:,1) = TrefB(ID);
     ENVR.Dthresh(:,1) = Dthresh(ID);
-    ENVR.fZm(:,1) = int64(zeros(NX,1));
-    ENVR.fZl(:,1) = int64(zeros(NX,1));
-    ENVR.fB(:,1)  = int64(zeros(NX,1));
+    ENVR.fZm(:,1) = zeros(NX,1);
+    ENVR.fZl(:,1) = zeros(NX,1);
+    ENVR.fB(:,1)  = zeros(NX,1);
     ENVR.H(:,1)   = GRD.Z(ID);
     ENVR.A(:,1)   = GRD.AREA(ID);
 end

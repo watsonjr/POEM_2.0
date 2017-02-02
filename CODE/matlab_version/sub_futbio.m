@@ -12,15 +12,15 @@ global MFsel LPsel LDsel
 
 %%% COBALT information
 ENVR = get_COBALT(COBALT,ID,DY);
-ENVR.det=sub_check(ENVR.det);
-ENVR.Zm=sub_check(ENVR.Zm);
-ENVR.Zl=sub_check(ENVR.Zl);
-ENVR.dZm=sub_check(ENVR.dZm);
-ENVR.dZl=sub_check(ENVR.dZl);
+ENVR.det = sub_neg(ENVR.det);
+ENVR.Zm  = sub_neg(ENVR.Zm);
+ENVR.Zl  = sub_neg(ENVR.Zl);
+ENVR.dZm = sub_neg(ENVR.dZm);
+ENVR.dZl = sub_neg(ENVR.dZl);
 
 % Update benthic biomass with new detritus avail at that time step
 BENT.mass = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
-BENT.mass=sub_check(BENT.mass);
+BENT.mass = sub_check(BENT.mass);
 
 % Pelagic-demersal coupling
 %Lp: fraction of time large piscivores spends in pelagic
@@ -47,10 +47,10 @@ Lp.met = sub_met(ENVR.Tp,ENVR.Tb,Lp.td,M_l);
 Ld.met = sub_met(ENVR.Tp,ENVR.Tb,Ld.td,M_l);
 
 % Encounter rates
-%sub_enc(Tp,Tb,wgt,pred,prey,td,tprey,pref)
+%sub_enc(Tp,Tb,wgt,prey,td,tprey,pref)
 Sf.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sf.td,Sf.td,1);
-Sp.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sp.td,Sf.td,1);
-Sd.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sd.td,Sf.td,1);
+Sp.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sp.td,Sp.td,1);
+Sd.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sd.td,Sd.td,1);
 
 Mf.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_m,ENVR.Zm,Mf.td,Mf.td,MF_phi_MZ);
 Mf.enc_zl = sub_enc(ENVR.Tp,ENVR.Tb,M_m,ENVR.Zl,Mf.td,Mf.td,MF_phi_LZ);

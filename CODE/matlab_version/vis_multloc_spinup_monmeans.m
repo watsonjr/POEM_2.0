@@ -9,7 +9,7 @@
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D100_nmort0_BE05_CC275_RE0500';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE0500';
 
 fpath=['/Volumes/GFDL/NC/Matlab_runs/' cfile '/'];
 ppath = [pp cfile '/'];
@@ -115,7 +115,7 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 print('-dpng',[ppath 'Spinup_F_time.png'])
 
-%% Detritivore
+% Detritivore
 figure(3)
 subplot(4,1,1)
 plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
@@ -148,7 +148,7 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 print('-dpng',[ppath 'Spinup_D_time.png'])
 
-%% All size classes of all
+% All size classes of all
 
 figure(5)
 plot(y,log10(sp_tmean),'Linewidth',1); hold on;
@@ -181,7 +181,7 @@ y=-90:90;
 
 %% DEBUGGING -------------------------------------------------------------
 % Bio
-for n=12:18
+for n=46:2:52
     close all
     
     Zsp=griddata(grid(:,2),grid(:,3),SP.bio(:,n),X,Y);
@@ -325,17 +325,41 @@ for n=12:18
 end
 
 %% Con
-for n=12:18
+L_s = 10^((log10(2)+log10(20))/2);
+L_m = 10^((log10(20)+log10(200))/2);
+L_l = 10^((log10(200)+log10(2000))/2);
+
+M_s = 0.01 * (0.1*L_s)^3;
+M_m = 0.01 * (0.1*L_m)^3;
+M_l = 0.01 * (0.1*L_l)^3;
+
+mass = [M_s;M_m;M_l];
+
+A = 4.39;
+    fc = 0.2;
+    f0 = 0.6;
+    epsassim = 0.6;
+    n = 3/4;
+    
+    w = logspace(-3, 5);
+    
+    AvailEnergy = A*w.^n;
+    Consumption = A / (epsassim*(f0-fc)) * w.^n;
+    Consumption2 = A / (epsassim*(f0-fc)) * mass.^n;
+    
+    % Consump g/g/d --> g/d --> g/y
+    
+for n=48:2:54
     close all
     
-    Zsp=griddata(grid(:,2),grid(:,3),SP.con(:,n),X,Y);
-    Zsf=griddata(grid(:,2),grid(:,3),SF.con(:,n),X,Y);
-    Zsd=griddata(grid(:,2),grid(:,3),SD.con(:,n),X,Y);
-    Zmp=griddata(grid(:,2),grid(:,3),MP.con(:,n),X,Y);
-    Zmf=griddata(grid(:,2),grid(:,3),MF.con(:,n),X,Y);
-    Zmd=griddata(grid(:,2),grid(:,3),MD.con(:,n),X,Y);
-    Zlp=griddata(grid(:,2),grid(:,3),LP.con(:,n),X,Y);
-    Zld=griddata(grid(:,2),grid(:,3),LD.con(:,n),X,Y);
+    Zsp=griddata(grid(:,2),grid(:,3),SP.con(:,n),X,Y) .* M_s .* 365;
+    Zsf=griddata(grid(:,2),grid(:,3),SF.con(:,n),X,Y) .* M_s .* 365;
+    Zsd=griddata(grid(:,2),grid(:,3),SD.con(:,n),X,Y) .* M_s .* 365;
+    Zmp=griddata(grid(:,2),grid(:,3),MP.con(:,n),X,Y) .* M_m .* 365;
+    Zmf=griddata(grid(:,2),grid(:,3),MF.con(:,n),X,Y) .* M_m .* 365;
+    Zmd=griddata(grid(:,2),grid(:,3),MD.con(:,n),X,Y) .* M_m .* 365;
+    Zlp=griddata(grid(:,2),grid(:,3),LP.con(:,n),X,Y) .* M_l .* 365;
+    Zld=griddata(grid(:,2),grid(:,3),LD.con(:,n),X,Y) .* M_l .* 365;
     
     % sp
     figure(1)
@@ -450,6 +474,39 @@ for n=12:18
     stamp(cfile)
     print('-dpng',[ppath 'Spinup_global_LDcon' num2str(n) '.png'])
 end
+
+%Time
+clev_tmean(1,:)=mean(SF.clev(1:600),1);
+clev_tmean(2,:)=mean(SP.clev,1);
+clev_tmean(3,:)=mean(SD.clev,1);
+clev_tmean(4,:)=mean(MF.clev,1);
+clev_tmean(5,:)=mean(MP.clev,1);
+clev_tmean(6,:)=mean(MD.clev,1);
+clev_tmean(7,:)=mean(LP.clev,1);
+clev_tmean(8,:)=mean(LD.clev,1);
+
+figure
+plot(1:600,clev_tmean)
+legend('SF','SP','SD','MF','MP','MD','LP','LD')
+legend('location','eastoutside')
+xlim([1 600])
+xlabel('Time (mo)')
+ylabel('C/Cmax')
+title('Spinup')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_all_sizes_clev.png'])
+
+% Last year
+lyr=time((end-12+1):end);
+sp_mean=mean(SP.bio(:,lyr),2);
+sf_mean=mean(SF.bio(:,lyr),2);
+sd_mean=mean(SD.bio(:,lyr),2);
+mp_mean=mean(MP.bio(:,lyr),2);
+mf_mean=mean(MF.bio(:,lyr),2);
+md_mean=mean(MD.bio(:,lyr),2);
+lp_mean=mean(LP.bio(:,lyr),2);
+ld_mean=mean(LD.bio(:,lyr),2);
+b_mean=mean(BENT.bio(:,lyr),2);
 
 %% Gamma/rep
 for n=12:18

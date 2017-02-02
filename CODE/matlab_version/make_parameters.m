@@ -60,11 +60,11 @@ function make_parameters()
     fcrit = 0.40;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
     
     %%%! Transfer efficiency of detritus to benthic prey
-%     bent_eff = 0.05;
-%     CC = 2.75;
-% 
-%     %%%! Reproductive efficiency
-%     rfrac = 0.5;
+    bent_eff = 0.05;
+    CC = 2.75;
+
+    %%%! Reproductive efficiency
+    rfrac = 1.0;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
