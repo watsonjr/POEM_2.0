@@ -3,6 +3,8 @@
 clear all
 close all
 
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
+
 load('/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.mat',...
     'uh200','vh200');
 Uth_200 = uh200(:,:,1);
@@ -10,6 +12,8 @@ Vth_200 = vh200(:,:,1);
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'AREA_OCN','dat','dxtn','dyte','ht','geolon_t','geolat_t');
+
+cname='Across_Arc_dt1hr';
 
 %%
 area = AREA_OCN;
@@ -45,13 +49,15 @@ aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
     (geolat_t < latmax) & (ht > 0) );
 % TF(aa) = 100*rand(size(aa));
 
+%TF(220:240,:) = 100.0;
 TF(220:240,:) = 100.0;
+TF(121:141,195:200) = 100.0;
 TF = TF .* mask;
 
 total_mass(1) = sum(TF(:).*area(:));
 
 %% Following Advect_upwind_2D
-dt = 60*60*0.25;
+dt = 60*60*1;
 ntime = 365 * (60*60*24) / dt;
 % uvel = Uth_200;
 % vvel = Vth_200;
@@ -186,18 +192,32 @@ for n = 1:ntime
     if n == 1
         figure(1)
         surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 100]);
+        print('-dpng',[fpath 'POEM_diff_test_tracer_' cname '_day0.png'])
         %pause
+        
+        figure(2)
+        m_proj('stereographic','lat',90,'long',30,'radius',30);
+        m_pcolor(geolon_t,geolat_t,TF);
+        shading interp
+        colorbar
+        colormap('jet')
+        caxis([0 100])
+        m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+        m_coast('patch',[.7 .7 .7],'edgecolor','k');
+        title('Tracer day 1')
+        print('-dpng',[fpath 'POEM_diff_test_tracer_' cname '_day0.png'])
     end
     
     TF2(aa) = -999;
     
     if n == ntime
-        figure(2)
+        figure(3)
         clf
         surf(geolon_t,geolat_t,TF2); view(2); shading interp;
         caxis([0 100]); %caxis([0 2e3]) to see how big instabilities are
         pdiff = 100*(total_mass(n+1) - total_mass(n))/total_mass(n);
         title(['%diff = ', num2str(pdiff,'%10.3e')]);
+        print('-dpng',[fpath 'POEM_diff_test_tracer_arcticproj_' cname '_day365.png'])
         %pause
     end
     
@@ -205,15 +225,36 @@ for n = 1:ntime
     
 end
 
-%% Plot gradT
-fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
+%% Arctic projection of tracer
+figure
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,TF2);
+shading interp
+colorbar
+colormap('jet')
+caxis([0 100])
+m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+title('Tracer day 365')
+print('-dpng',[fpath 'POEM_diff_test_tracer_arcticproj_' cname '.png'])
 
-% t = 1:2189:ntime;
-% d = t/24;
+%% Plot gradT
+
+% DT=30 MIN
+% t = 1:4378:ntime;
+% d = t/48;
 % d = round(d);
-mt=1:75:length(modt);
-t = modt(1:75:end);
-d = t/(24*4);
+
+% DT=15 MIN
+% mt=1:75:length(modt);
+% t = modt(1:75:end);
+% d = t/(24*4);
+% d = round(d);
+
+%DT=1 HR
+mt=1:21:length(modt);
+t = modt(1:21:end);
+d = t/(24*1);
 d = round(d);
 
 for i=1:length(t)
@@ -223,7 +264,7 @@ for i=1:length(t)
     caxis([-1e-3 1e-3])
     colorbar
     title(['GradT day ', num2str(d(i))]);
-    print('-dpng',[fpath 'POEM_diff_test_gradT_dt30min_' num2str(d(i)) '.png'])
+    print('-dpng',[fpath 'POEM_diff_test_gradT_' cname '_' num2str(d(i)) '.png'])
 end
 
 %% Arctic projection
@@ -238,10 +279,10 @@ for i=1:length(t)
     m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['GradT day ' num2str(d(i))])
-    print('-dpng',[fpath 'POEM_diff_test_gradT_arcticproj_dt30min_' num2str(d(i)) '.png'])
+    print('-dpng',[fpath 'POEM_diff_test_gradT_arcticproj_' cname '_' num2str(d(i)) '.png'])
 end
 
 %%
-save('/Volumes/GFDL/CSV/advect_tests/POEM_diff_test_gradT_Atl_dt15min','gT','geolon_t','geolat_t','TF2','pdiff','-v7.3')
+save(['/Volumes/GFDL/CSV/advect_tests/POEM_diff_test_gradT_' cname '.mat'],'gT','geolon_t','geolat_t','TF2','pdiff','-v7.3')
 
 
