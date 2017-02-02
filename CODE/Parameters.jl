@@ -117,14 +117,7 @@ function make_parameters(harv,frate)
 	const global K_ad = 0.0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
-	const global k = 4.8 		# 10 g^(1-p)/yr at 10C; 4.8 at 10C NS mizer
-
-	###! Consumption constants
-	const global h = 60.0  		# h=85 g^(0.25)/yr at 10C in Cmax eq; h=40 at 10C NS; h=60 at 15C?
-	# tune so Cobs/Cmax ~ 0.6
-	#const global gam = 2.9e3	# m^3 g^(−q)/year at 10C; equiv to Andersen, Hartvig gamma = 0.8e4; mizer = 2.9e3?
-	const global q = 0.8 			# q=0.75-1 in beta eq in consumption
+	const global fcrit = 0.30	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 
 	###! Transfer efficiency of detritus to benthic prey & carrying capacity
 	const global bent_eff = 0.05

@@ -4,6 +4,11 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 	###! COBALT information
 	get_COBALT!(COBALT,ID,DY,ENVR)
+	sub_neg!(ENVR.det);
+	sub_neg!(ENVR.Zm);
+	sub_neg!(ENVR.Zl);
+	sub_neg!(ENVR.dZm);
+	sub_neg!(ENVR.dZl);
 
 	for JD = 1:NX
 
@@ -38,8 +43,8 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		#! encounter rates
 		#sub_enc(Tp,Tb,wgt,pred,prey,td,tprey,pref)
 		Sml_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_f.bio[JD],ENVR.Zm[JD],Sml_f.td[JD],Sml_f.td[JD],1)
-		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD],Sml_f.td[JD],1)
-		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],Sml_f.td[JD],1)
+		Sml_p.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_p.bio[JD],ENVR.Zm[JD],Sml_p.td[JD],Sml_p.td[JD],1)
+		Sml_d.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_s,Sml_d.bio[JD],ENVR.Zm[JD],Sml_d.td[JD],Sml_d.td[JD],1)
 
 		Med_f.enc_zm[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zm[JD],Med_f.td[JD],Med_f.td[JD],MF_phi_MZ)
 		Med_f.enc_zl[JD] = sub_enc(ENVR.Tp[JD],ENVR.Tb[JD],M_m,Med_f.bio[JD],ENVR.Zl[JD],Med_f.td[JD],Med_f.td[JD],MF_phi_LZ)
@@ -95,7 +100,9 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 
 		#! Offline coupling
 		#Zooplankton consumption cannot exceed amount lost to higher predation in COBALT runs
-		Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Med_f.con_zm[JD],Med_p.con_zm[JD],ENVR.fZm[JD] = sub_offline_zm(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Med_f.con_zm[JD],Med_p.con_zm[JD],Sml_f.bio[JD],Sml_p.bio[JD],Sml_d.bio[JD],Med_f.bio[JD],Med_p.bio[JD],ENVR.dZm[JD])
+		Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Med_f.con_zm[JD],Med_p.con_zm[JD],ENVR.fZm[JD] =
+		sub_offline_zm(Sml_f.con_zm[JD],Sml_p.con_zm[JD],Sml_d.con_zm[JD],Med_f.con_zm[JD],Med_p.con_zm[JD],Sml_f.bio[JD],Sml_p.bio[JD],Sml_d.bio[JD],Med_f.bio[JD],Med_p.bio[JD],ENVR.dZm[JD])
+
 		Med_f.con_zl[JD],Med_p.con_zl[JD],ENVR.fZl[JD] = sub_offline_zl(Med_f.con_zl[JD],Med_p.con_zl[JD],Med_f.bio[JD],Med_p.bio[JD],ENVR.dZl[JD])
 		#Benthic material consumption cannot exceed amount present
 		Med_d.con_be[JD], Lrg_d.con_be[JD], ENVR.fB[JD] = sub_offline_bent(Med_d.con_be[JD],Lrg_d.con_be[JD],Med_d.bio[JD],Lrg_d.bio[JD],BENT.mass[JD],ENVR.det[JD])
@@ -164,21 +171,21 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Sml_d.nu[JD], Sml_d.prod[JD] = sub_nu(Sml_d.I[JD],Sml_d.bio[JD],Sml_d.met[JD])
 		Med_f.nu[JD], Med_f.prod[JD] = sub_nu(Med_f.I[JD],Med_f.bio[JD],Med_f.met[JD])
 		Med_p.nu[JD], Med_p.prod[JD] = sub_nu(Med_p.I[JD],Med_p.bio[JD],Med_p.met[JD])
-		#Med_d.nu[JD], Med_d.prod[JD] = sub_nu(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
-		Med_d.nu[JD], Med_d.prod[JD] = sub_nu_MD(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
+		Med_d.nu[JD], Med_d.prod[JD] = sub_nu(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
+		#Med_d.nu[JD], Med_d.prod[JD] = sub_nu_MD(Med_d.I[JD],Med_d.bio[JD],Med_d.met[JD])
 		Lrg_p.nu[JD], Lrg_p.prod[JD] = sub_nu(Lrg_p.I[JD],Lrg_p.bio[JD],Lrg_p.met[JD])
-		#Lrg_d.nu[JD], Lrg_d.prod[JD] = sub_nu(Lrg_d.I[JD],Lrg_d.bio[JD],Lrg_d.met[JD])
-		Lrg_d.nu[JD], Lrg_d.prod[JD] = sub_nu_LD(Lrg_d.bio[JD],Lrg_d.met[JD],Lrg_d.con_f[JD],Lrg_d.con_p[JD],Lrg_d.con_d[JD],Lrg_d.con_be[JD])
+		Lrg_d.nu[JD], Lrg_d.prod[JD] = sub_nu(Lrg_d.I[JD],Lrg_d.bio[JD],Lrg_d.met[JD])
+		#Lrg_d.nu[JD], Lrg_d.prod[JD] = sub_nu_LD(Lrg_d.bio[JD],Lrg_d.met[JD],Lrg_d.con_f[JD],Lrg_d.con_p[JD],Lrg_d.con_d[JD],Lrg_d.con_be[JD])
 
-		#! maturation (note subscript on Kappa is larvae, juv, adult)
-		Sml_f.gamma[JD] = sub_gamma(K_imm,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD],Sml_f.S[JD,DY],Sml_f.nmort[JD],dfrate,0)
-		Sml_p.gamma[JD] = sub_gamma(K_imm,Z_s,Sml_p.nu[JD],Sml_p.die[JD],Sml_p.bio[JD],Sml_p.S[JD,DY],Sml_p.nmort[JD],dfrate,0)
-		Sml_d.gamma[JD] = sub_gamma(K_imm,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD],Sml_d.S[JD,DY],Sml_d.nmort[JD],dfrate,0)
-		Med_f.gamma[JD] = sub_gamma(K_ad,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD],Med_f.S[JD,DY],Med_f.nmort[JD],dfrate,MFsel)
-		Med_p.gamma[JD] = sub_gamma(K_imm,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD],Med_p.S[JD,DY],Med_p.nmort[JD],dfrate,0)
-		Med_d.gamma[JD] = sub_gamma(K_imm,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD],Med_d.S[JD,DY],Med_d.nmort[JD],dfrate,0)
-		Lrg_p.gamma[JD] = sub_gamma(K_ad,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD],Lrg_p.S[JD,DY],Lrg_p.nmort[JD],dfrate,LPsel)
-		Lrg_d.gamma[JD] = sub_gamma(K_ad,Z_l,Lrg_d.nu[JD],Lrg_d.die[JD],Lrg_d.bio[JD],Lrg_d.S[JD,DY],Lrg_d.nmort[JD],dfrate,LDsel)
+		#! maturation (note subscript on Kappa is immature, adult)
+		Sml_f.gamma[JD] = sub_gamma(K_imm,Z_s,Sml_f.nu[JD],Sml_f.die[JD],Sml_f.bio[JD],Sml_f.nmort[JD],dfrate,0)
+		Sml_p.gamma[JD] = sub_gamma(K_imm,Z_s,Sml_p.nu[JD],Sml_p.die[JD],Sml_p.bio[JD],Sml_p.nmort[JD],dfrate,0)
+		Sml_d.gamma[JD] = sub_gamma(K_imm,Z_s,Sml_d.nu[JD],Sml_d.die[JD],Sml_d.bio[JD],Sml_d.nmort[JD],dfrate,0)
+		Med_f.gamma[JD] = sub_gamma(K_ad,Z_m,Med_f.nu[JD],Med_f.die[JD],Med_f.bio[JD],Med_f.nmort[JD],dfrate,MFsel)
+		Med_p.gamma[JD] = sub_gamma(K_imm,Z_m,Med_p.nu[JD],Med_p.die[JD],Med_p.bio[JD],Med_p.nmort[JD],dfrate,0)
+		Med_d.gamma[JD] = sub_gamma(K_imm,Z_m,Med_d.nu[JD],Med_d.die[JD],Med_d.bio[JD],Med_d.nmort[JD],dfrate,0)
+		Lrg_p.gamma[JD] = sub_gamma(K_ad,Z_l,Lrg_p.nu[JD],Lrg_p.die[JD],Lrg_p.bio[JD],Lrg_p.nmort[JD],dfrate,LPsel)
+		Lrg_d.gamma[JD] = sub_gamma(K_ad,Z_l,Lrg_d.nu[JD],Lrg_d.die[JD],Lrg_d.bio[JD],Lrg_d.nmort[JD],dfrate,LDsel)
 
 		#! egg production (by med and large size classes only)
 		Sml_f.nu[JD],Sml_f.rep[JD],Sml_f.egg[JD] = sub_rep(Sml_f.nu[JD],K_imm,Sml_f.S[JD,DY],Sml_f.egg[JD])

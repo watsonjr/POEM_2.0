@@ -344,7 +344,7 @@ end
 
 
 ###! ENERGY AVAILABLE FOR SOMATIC GROWTH
-function sub_gamma(K,Z,nu,d,B,S,nmrt,dfrate,selec)
+function sub_gamma(K,Z,nu,d,B,nmrt,dfrate,selec)
   # d = predation loss
   # nmort = natural mortality rate
   # dfrate = fishing mortality rate
@@ -611,6 +611,14 @@ function sub_fishing_rate(bio,FISHING,selec)
     caught = 0.0
   end
 	return bio, caught
+end
+
+###! Neg interpolated value checks
+function sub_neg!(bio)
+	ID = find(bio .< 0)
+	bio[ID] = 0.0
+  #ID2 = find(isnan(bio))
+  #bio[ID2] = eps()
 end
 
 

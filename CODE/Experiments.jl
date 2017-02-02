@@ -27,7 +27,7 @@ function Testoneloc()
 # 		for R = 1:length(RE)
 # 			rfrac = RE[R]
 
-			for F = 1:length(Fmort)
+			for F = 1#:length(Fmort)
 			#! Make parameters
 				frate = Fmort[F]
 				dfrate = frate/365.0
@@ -44,7 +44,7 @@ function Testoneloc()
 				make_parameters(harv,frate) # make core parameters/constants
 
 				#! setup spinup (loop first year of COBALT)
-			  COBALT = load("/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_1990.jld"); # 120=1980
+			  COBALT = load("/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2005.jld"); # 120=1980
 
 				#! Add phenology params from csv file with ID as row
 				Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
