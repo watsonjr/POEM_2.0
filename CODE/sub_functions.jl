@@ -392,14 +392,15 @@ function sub_rep(nu,K,S,egg)
             rep = 0.0;
             egg = egg + rho;
         end
+        if nu > 0.0
+            #nu is now split into used for repro (nu) and stored (egg)
+            nu = rep;
+        end
     else
         rep = 0.0;
         egg = 0.0;
     end
-    if nu > 0.0
-        #nu is now split into used for repro (nu) and stored (egg)
-        nu = rep;
-    end
+
 	return nu, rep, egg
 end
 
