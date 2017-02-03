@@ -13,7 +13,7 @@ Vth_200 = vh200(:,:,1);
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'AREA_OCN','dat','dxtn','dyte','ht','geolon_t','geolat_t');
 
-cname='Across_Arc_dt5min';
+cname='Across_Arc_dt1min';
 
 %%
 area = AREA_OCN;
@@ -253,9 +253,15 @@ print('-dpng',[fpath 'POEM_diff_test_tracer_arcticproj_' cname '.png'])
 % d = round(d);
 
 % DT=5 MIN
-mt=1:20:length(modt);
-t = modt(1:20:end);
-d = t/(24*12);
+% mt=1:20:length(modt);
+% t = modt(1:20:end);
+% d = t/(24*12);
+% d = round(d);
+
+% DT=1 MIN
+mt=1:5:length(modt);
+t = modt(1:5:end);
+d = t/(24*60);
 d = round(d);
 
 % DT=1 HR
@@ -292,4 +298,28 @@ end
 %%
 save(['/Volumes/GFDL/CSV/advect_tests/POEM_diff_test_gradT_' cname '.mat'],'gT','geolon_t','geolat_t','TF2','pdiff','-v7.3')
 
+%% Arctic projection of dx and dy
+figure
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,dxtn);
+shading flat %interp
+colorbar
+colormap('jet')
+caxis([1e4 10e4])
+m_grid('xtick',6,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+title('dxtn (m)')
+print('-dpng',[fpath 'Arcticproj_dxtn.png'])
+
+figure
+m_proj('stereographic','lat',90,'long',30,'radius',30);
+m_pcolor(geolon_t,geolat_t,dyte);
+shading flat %interp
+colorbar
+colormap('jet')
+caxis([1e4 10e4])
+m_grid('xtick',6,'tickdir','out','ytick',[70 80],'linest','-');
+m_coast('patch',[.7 .7 .7],'edgecolor','k');
+title('dyte (m)')
+print('-dpng',[fpath 'Arcticproj_dyte.png'])
 
