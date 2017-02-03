@@ -7,13 +7,13 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 datap = '/Volumes/GFDL/CSV/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-RE = {'1000','0500','0100','0050','0010','00050','00010'};%,'00005','00001'};
-reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001];%,0.0005,0.0001];
-CarCap = {'200','225','250','275','300'};
-car = [2.0:0.25:3.0];
+RE = {'1000','0500','0100','0050','0010','00050','00010'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001];
+CarCap = {'050','100','150','200','250','300'};
+car = [0.5:0.5:3.0];
 benteff = {'05','10','15','20'};
 beff = [0.05:0.05:0.2];
-fcrit = 30;
+fcrit = 40;
 nmort = '0';
 kad = 100;
 pref = 'D100';
@@ -108,14 +108,14 @@ for i=1:length(benteff)
                 ylabel('Mean Biom (g m^-^2) in final year')
             end
             set(gca,'XTick',1:ndp,'XTickLabel',car);
-%             if (s>=9)
-%                 for t=2:2:ndp
-%                     text(t,-0.005,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-%                 end
-%             end
+            if (s==1 || s==2 || s==6 || s==10)
+                ylim([0 0.6])
+            else
+                ylim([0 0.1])
+            end
             if (s==11)
-                text(7,0.1,['BE=' num2str(beff(i))]);
-                text(7,0,['RE=' num2str(reff(R))]);
+                text(8,0.1,['BE=' num2str(beff(i))]);
+                text(8,0,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
             title([loc ' B biom'])
@@ -130,14 +130,9 @@ for i=1:length(benteff)
                 ylabel('log10 Mean Biom (g m^-^2) in final year')
             end
             set(gca,'XTick',1:ndp,'XTickLabel',car);
-%             if (s>=9)
-%                 for t=2:2:ndp
-%                     text(t,-0.005,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-%                 end
-%             end
             if (s==11)
-                text(7,0,['BE=' num2str(beff(i))]);
-                text(7,-1,['RE=' num2str(reff(R))]);
+                text(8,0,['BE=' num2str(beff(i))]);
+                text(8,-1,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
             title([loc ' D biom'])
@@ -248,7 +243,7 @@ for i=1:length(benteff)
         bar(iskill(2,:),'k')
         ylabel('Root mean square error')
         set(gca,'XTick',1:ndp,'XTickLabel',[]);
-        %ylim([0 2.5])
+        ylim([0 2.5])
         xlim([0 ndp+1])
         set(gca,'XTick',1:ndp,'XTickLabel',car);
 %         for t=2:2:ndp
@@ -258,7 +253,7 @@ for i=1:length(benteff)
         subplot(2,2,3)
         bar(iskill(3,:),'k')
         ylabel('Average error')
-        %ylim([-1 1])
+        ylim([0 2.5])
         xlim([0 ndp+1])
         set(gca,'XTick',1:ndp,'XTickLabel',car);
 %         for t=2:2:ndp
@@ -268,7 +263,7 @@ for i=1:length(benteff)
         subplot(2,2,4)
         bar(iskill(5,:),'k')
         ylabel('Modeling efficiency')
-        %ylim([-1 1])
+        ylim([-5 1])
         xlim([0 ndp+1])
         set(gca,'XTick',1:ndp,'XTickLabel',car);
 %         for t=2:2:ndp

@@ -8,13 +8,13 @@ close all
 datap = '/Volumes/GFDL/CSV/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
 
-RE = {'1000','0500','0100','0050','0010','00050','00010'};%,'00005','00001'};
-reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001];%,0.0005,0.0001];
-CarCap = {'200','225','250','275','300'};
-car = [2.0:0.25:3.0];
+RE = {'1000','0500','0100','0050','0010','00050','00010'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005,0.001];
+CarCap = {'050','100','150','200','250','300'};
+car = [0.5:0.5:3.0];
 benteff = {'05','10','15','20'};
 beff = [0.05:0.05:0.2];
-fcrit = 30;
+fcrit = 40;
 nmort = '0';
 kad = 100;
 pref = 'D100';
@@ -414,19 +414,24 @@ for i=1:length(benteff)
             %% B
             f1 = figure(1);
             subplot(4,3,s)
-            plot(car,log10(Bbio(:,s)),'.k','MarkerSize',25); hold on;
+            %plot(car,log10(Bbio(:,s)),'.k','MarkerSize',25); hold on;
+            plot(car,Bbio(:,s),'.k','MarkerSize',25); hold on;
             xlim([car(1)-0.25 car(end)+0.25])
-            ylim([-3 1])
+            %ylim([-2 1])
+            ylim([0 0.5])
             if (s==4)
                 ylabel('log10 Mean Biom (g m^-^2) in final year')
             end
-            set(gca,'XTick',car(1):0.25:car(end),'XTickLabel',[]);
-            for t=car(1):0.25:car(end)
-                text(t,-3.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
+            set(gca,'XTick',car(1):0.5:car(end),'XTickLabel',[]);
+            for t=car(1):0.5:car(end)
+                %text(t,-2.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
+                text(t,-0.01,num2str(t),'Rotation',45,'HorizontalAlignment','right')
             end
             if (s==11)
-                text(4,0,['BE=' num2str(beff(i))]);
-                text(4,-1,['RE=' num2str(reff(R))]);
+                %text(4,0,['BE=' num2str(beff(i))]);
+                %text(4,-1,['RE=' num2str(reff(R))]);
+                text(4,0.3,['BE=' num2str(beff(i))]);
+                text(4,0.1,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
             title([loc ' B'])
@@ -441,12 +446,12 @@ for i=1:length(benteff)
             plot(car+0.05,log10(squeeze(fishsp(3,s,:))),'sk','MarkerFaceColor',cmap_ppt(2,:),...
                 'MarkerSize',15); hold on;
             xlim([car(1)-0.25 car(end)+0.25])
-            ylim([-2 1])
+            ylim([-2 1.5])
             if (s==4)
                 ylabel('log10 Mean Biom (g m^-^2) in final year')
             end
-            set(gca,'XTick',car(1):0.25:car(end),'XTickLabel',[]);
-            for t=car(1):0.25:car(end)
+            set(gca,'XTick',car(1):0.5:car(end),'XTickLabel',[]);
+            for t=car(1):0.5:car(end)
                 text(t,-2.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
             end
             if (s==11)
@@ -463,46 +468,47 @@ for i=1:length(benteff)
         %% Feeding level
         %MD
         f5=figure(5);
+        subplot(2,2,1)
         bar(MDlev)
         ylim([0 1.1])
-        xlim([0 ndp+1.5])
+        xlim([0 ndp+1])
         set(gca,'XTick',1:ndp,'XTickLabel',car)
-        legend('GB','EBS','NS')
-        legend('location','northeast')
+        %legend('GB','EBS','NS')
+        %legend('location','northeast')
         ylabel('MD C / Cmax')
         xlabel('CC')
-        title(['MD feeding level with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))])
+        title('MD feeding level')
         colormap(cmap3)
-        print('-dpng',[figp sname cfile2 '_MD_flev.png'])
         
         %LD
-        f6=figure(6);
+        subplot(2,2,2)
         bar(LDlev)
         ylim([0 1.1])
-        xlim([0 ndp+1.5])
+        xlim([0 ndp+1])
         set(gca,'XTick',1:ndp,'XTickLabel',car)
-        legend('GB','EBS','NS')
-        legend('location','northeast')
+        %legend('GB','EBS','NS')
+        %legend('location','northeast')
         ylabel('LD C / Cmax')
         xlabel('CC')
-        title(['LD feeding level with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))])
+        title('LD feeding level')
         colormap(cmap3)
-        print('-dpng',[figp sname cfile2 '_LD_flev.png'])
         
-        %% B/B_CC
+        % B/B_CC
         
-        f7=figure(7);
+        subplot(2,2,3)
         bar(BBCC)
         ylim([0 1.1])
-        xlim([0 ndp+1.5])
+        xlim([0 ndp+1])
         set(gca,'XTick',1:ndp,'XTickLabel',car)
         legend('GB','EBS','NS')
         legend('location','northeast')
         ylabel('B / CC')
         xlabel('CC')
-        title(['B/CC with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))])
+        title('B/CC')
         colormap(cmap3)
-        print('-dpng',[figp sname cfile2 '_BBCC.png'])
+        text(9,0.8,['BE=' num2str(beff(i))]);
+        text(9,0.6,['RE=' num2str(reff(R))]);
+        print('-dpng',[figp sname cfile2 '_Clev_BBCC.png'])
         
         %% Save values for all locs and all CC for that RE and BE combo
         save([datap 'Bent_CC_tests/' cfile2 '.mat'],'MDlev','LDlev','BBCC',...

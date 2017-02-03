@@ -12,7 +12,7 @@ close all
 % dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/No_PD_coupling_no_activ_TrefOrig/';
 % fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/No_PD_coupling_no_activ_TrefOrig/';
 
-npath='Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE0500/';
+npath='Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_D100_nmort0_BE05_CC275_RE1000/';
 datap = '/Volumes/GFDL/CSV/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
 dpath = [datap npath];
@@ -68,177 +68,177 @@ for s=1:length(spots)
     %% Piscivore
     figure(1)
     subplot(4,1,1)
-    plot(y,SP(:,1),'b','Linewidth',1); hold on;
-    plot(y,MP(:,1),'r','Linewidth',1); hold on;
-    plot(y,LP(:,1),'k','Linewidth',1); hold on;
+    plot(y,log10(SP(:,1)),'b','Linewidth',1); hold on;
+    plot(y,log10(MP(:,1)),'r','Linewidth',1); hold on;
+    plot(y,log10(LP(:,1)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title(['Historical Pelagic Piscivores ' loc])
+    title(['Spinup Pelagic Piscivores ' loc])
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     legend('Larvae','Juveniles','Adults')
     
     subplot(4,1,2)
-    plot(y,SP(:,1),'b','Linewidth',1); hold on;
+    plot(y,log10(SP(:,1)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Larvae')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(4,1,3)
-    plot(y,MP(:,1),'r','Linewidth',1); hold on;
+    plot(y,log10(MP(:,1)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Juveniles')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(4,1,4)
-    plot(y,LP(:,1),'k','Linewidth',1); hold on;
+    plot(y,log10(LP(:,1)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Adults')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     print('-dpng',[fpath sname lname 'oneloc_pisc_time.png'])
     
     %% Planktivore
     figure(2)
     subplot(3,1,1)
-    plot(y,SF(:,1),'b','Linewidth',1); hold on;
-    plot(y,MF(:,1),'r','Linewidth',1); hold on;
+    plot(y,log10(SF(:,1)),'b','Linewidth',1); hold on;
+    plot(y,log10(MF(:,1)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title(['Historical Forage Fishes ' loc])
+    title(['log10 Spinup Forage Fishes ' loc])
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     legend('Immature','Adults')
     
     subplot(3,1,2)
-    plot(y,SF(:,1),'b','Linewidth',1); hold on;
+    plot(y,log10(SF(:,1)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Immature')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(3,1,3)
-    plot(y,MF(:,1),'r','Linewidth',1); hold on;
+    plot(y,log10(MF(:,1)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Adults')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     print('-dpng',[fpath sname lname 'oneloc_plan_time.png'])
     
     %% Detritivore
     figure(3)
     subplot(4,1,1)
-    plot(y,SD(:,1),'b','Linewidth',1); hold on;
-    plot(y,MD(:,1),'r','Linewidth',1); hold on;
-    plot(y,LD(:,1),'k','Linewidth',1); hold on;
+    plot(y,log10(SD(:,1)),'b','Linewidth',1); hold on;
+    plot(y,log10(MD(:,1)),'r','Linewidth',1); hold on;
+    plot(y,log10(LD(:,1)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title(['Historical Demersal Piscivores ' loc])
+    title(['Spinup Demersal Piscivores ' loc])
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     legend('Larvae','Juveniles','Adults')
     
     subplot(4,1,2)
-    plot(y,SD(:,1),'b','Linewidth',1); hold on;
+    plot(y,log10(SD(:,1)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Larvae')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(4,1,3)
-    plot(y,MD(:,1),'r','Linewidth',1); hold on;
+    plot(y,log10(MD(:,1)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Juveniles')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(4,1,4)
-    plot(y,LD(:,1),'k','Linewidth',1); hold on;
+    plot(y,log10(LD(:,1)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('Adults')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     print('-dpng',[fpath sname lname 'oneloc_detr_time.png'])
     
     %% All biomass in subplots
     %SP
     figure(4)
     subplot(3,3,2)
-    plot(y,SP(:,1),'b','Linewidth',1); hold on;
+    plot(y,log10(SP(:,1)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title({loc; 'SP'})
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(3,3,5)
-    plot(y,MP(:,1),'r','Linewidth',1); hold on;
+    plot(y,log10(MP(:,1)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MP')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(3,3,8)
-    plot(y,LP(:,1),'k','Linewidth',1); hold on;
+    plot(y,log10(LP(:,1)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('LP')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     %FF
     subplot(3,3,1)
-    plot(y,SF(:,1),'b','Linewidth',1); hold on;
+    plot(y,log10(SF(:,1)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('SF')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(3,3,4)
-    plot(y,MF(:,1),'r','Linewidth',1); hold on;
+    plot(y,log10(MF(:,1)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MF')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     %Detritivore
     subplot(3,3,3)
-    plot(y,SD(:,1),'b','Linewidth',1); hold on;
+    plot(y,log10(SD(:,1)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('SD')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(3,3,6)
-    plot(y,MD(:,1),'r','Linewidth',1); hold on;
+    plot(y,log10(MD(:,1)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MD')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     
     subplot(3,3,9)
-    plot(y,LD(:,1),'k','Linewidth',1); hold on;
+    plot(y,log10(LD(:,1)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('LD')
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
+    ylabel('log10 Biomass (g m^-^2)')
     print('-dpng',[fpath sname lname 'oneloc_all_sizes_sub.png'])
     
     %% All size classes of all
     
     figure(5)
-    plot(y,SP(:,1),'Linewidth',1); hold on;
-    plot(y,MP(:,1),'Linewidth',1); hold on;
-    plot(y,LP(:,1),'Linewidth',1); hold on;
-    plot(y,SF(:,1),'Linewidth',1); hold on;
-    plot(y,MF(:,1),'Linewidth',1); hold on;
-    plot(y,SD(:,1),'Linewidth',1); hold on;
-    plot(y,MD(:,1),'Linewidth',1); hold on;
-    plot(y,LD(:,1),'Linewidth',1); hold on;
-    legend('SP','MP','LP','SF','MF','SD','MD','LD')
+    plot(y,log10(SF(:,1)),'Linewidth',1); hold on;
+    plot(y,log10(MF(:,1)),'Linewidth',1); hold on;
+    plot(y,log10(SP(:,1)),'Linewidth',1); hold on;
+    plot(y,log10(MP(:,1)),'Linewidth',1); hold on;
+    plot(y,log10(LP(:,1)),'Linewidth',1); hold on;
+    plot(y,log10(SD(:,1)),'Linewidth',1); hold on;
+    plot(y,log10(MD(:,1)),'Linewidth',1); hold on;
+    plot(y,log10(LD(:,1)),'Linewidth',1); hold on;
+    legend('SF','MF','SP','MP','LP','SD','MD','LD')
     legend('location','eastoutside')
     xlim([y(1) y(end)])
     xlabel('Time (y)')
-    ylabel('Biomass (g m^-^2)')
-    title(['Historical ' loc])
+    ylabel('log10 Biomass (g m^-^2)')
+    title(['Spinup ' loc])
     print('-dpng',[fpath sname lname 'oneloc_all_sizes.png'])
     
     %% Reproduction
@@ -250,7 +250,7 @@ for s=1:length(spots)
     subplot(4,1,1)
     plot(y,rep,'Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title(['Historical Reproduction ' loc])
+    title(['Spinup Reproduction ' loc])
     xlabel('Time (y)')
     ylabel('Biomass (g m^-^2)')
     legend('F','D','P')
@@ -286,32 +286,32 @@ for s=1:length(spots)
     
     figure(7)
     subplot(3,2,1)
-    plot(y,m(:,1),'b','Linewidth',1); hold on;
+    plot(y,log10(m(:,1)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
-    title([loc ' Maturation Biomass (g m^-^2)'],'HorizontalAlignment','left')
+    title([loc ' log10 Maturation Biomass (g m^-^2)'],'HorizontalAlignment','left')
     ylabel('Forage Fishes')
     
     subplot(3,2,3)
-    plot(y,m(:,2),'r','Linewidth',1); hold on;
+    plot(y,log10(m(:,2)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('M')
     ylabel('Demersal Piscivores')
     
     subplot(3,2,5)
-    plot(y,m(:,3),'k','Linewidth',1); hold on;
+    plot(y,log10(m(:,3)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('M')
     ylabel('Pelagic Piscivores')
     xlabel('Time (y)')
     
     subplot(3,2,4)
-    plot(y,m(:,4),'r','Linewidth',1); hold on;
+    plot(y,log10(m(:,4)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('L')
     ylabel('Demersal Piscivores')
     
     subplot(3,2,6)
-    plot(y,m(:,5),'k','Linewidth',1); hold on;
+    plot(y,log10(m(:,5)),'k','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('L')
     xlabel('Time (y)')
@@ -322,25 +322,25 @@ for s=1:length(spots)
     %SP
     figure(8)
     subplot(2,3,2)
-    plot(y,SP(:,17),'b','Linewidth',1); hold on;
+    plot(y,log10(SP(:,17)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title({loc; 'SP'})
     
     subplot(2,3,5)
-    plot(y,MP(:,17),'r','Linewidth',1); hold on;
+    plot(y,log10(MP(:,17)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MP')
     xlabel('Time (y)')
     
     %FF
     subplot(2,3,1)
-    plot(y,SF(:,17),'b','Linewidth',1); hold on;
+    plot(y,log10(SF(:,17)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('SF')
-    ylabel('Biomass eaten by predators (g m^-^2)','HorizontalAlignment','right')
+    ylabel('log10 Biomass eaten by predators (g m^-^2)','HorizontalAlignment','right')
     
     subplot(2,3,4)
-    plot(y,MF(:,17),'r','Linewidth',1); hold on;
+    plot(y,log10(MF(:,17)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MF')
     xlabel('Time (y)')
@@ -348,12 +348,12 @@ for s=1:length(spots)
     
     %Detritivore
     subplot(2,3,3)
-    plot(y,SD(:,17),'b','Linewidth',1); hold on;
+    plot(y,log10(SD(:,17)),'b','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('SD')
     
     subplot(2,3,6)
-    plot(y,MD(:,17),'r','Linewidth',1); hold on;
+    plot(y,log10(MD(:,17)),'r','Linewidth',1); hold on;
     xlim([y(1) y(end)])
     title('MD')
     xlabel('Time (y)')

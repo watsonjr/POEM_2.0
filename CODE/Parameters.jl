@@ -117,14 +117,14 @@ function make_parameters(harv,frate)
 	const global K_ad = 0.0
 
 	###! Metabolism constants (activity and basal)
-	const global fcrit = 0.30	# feeding level needed to meet resting metabolic demands; 0.05-0.2
+	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 
 	###! Transfer efficiency of detritus to benthic prey & carrying capacity
-	const global bent_eff = 0.05
-	const global CC = 2.75
+	#const global bent_eff = 0.05
+	#const global CC = 2.75
 
 	###! Reproductive efficiency
-	const global rfrac = 0.5
+	#const global rfrac = 1.0
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0
