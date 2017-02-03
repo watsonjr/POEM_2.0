@@ -49,7 +49,7 @@ CarCap = [0.5:0.5:3.0];
                 SP = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Gaussian_spawn_2mo.csv');
                 
                 %! How long to run the model
-                YEARS = 5;
+                YEARS = 10;
                 DAYS = 365;
                 
                 %! Where to run the model

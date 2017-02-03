@@ -3,8 +3,8 @@
 % 50 years
 % Saved as mat files
 
-% clear all
-% close all
+clear all
+close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/';
@@ -14,7 +14,7 @@ cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE050
 fpath=['/Volumes/GFDL/NC/Matlab_runs/' cfile '/'];
 ppath = [pp cfile '/'];
 
-% load([fpath 'Means_spinup_' cfile '.mat']);
+load([fpath 'Means_spinup_' cfile '.mat']);
 
 %% colors
 cm9=[0.5 0.5 0;... %tan/army
@@ -48,7 +48,7 @@ cm21=[1 0.5 0;...   %orange
     188/255 143/255 143/255;... %rosy brown
     255/255 192/255 203/255;... %pink
     255/255 160/255 122/255]; %peach
-    
+
 set(groot,'defaultAxesColorOrder',cm9);
 
 %% Plots in time
@@ -336,19 +336,20 @@ M_l = 0.01 * (0.1*L_l)^3;
 mass = [M_s;M_m;M_l];
 
 A = 4.39;
-    fc = 0.2;
-    f0 = 0.6;
-    epsassim = 0.6;
-    n = 3/4;
-    
-    w = logspace(-3, 5);
-    
-    AvailEnergy = A*w.^n;
-    Consumption = A / (epsassim*(f0-fc)) * w.^n;
-    Consumption2 = A / (epsassim*(f0-fc)) * mass.^n;
-    
-    % Consump g/g/d --> g/d --> g/y
-    
+fc = 0.2;
+f0 = 0.6;
+epsassim = 0.6;
+n = 3/4;
+
+w = logspace(-3, 5);
+
+AvailEnergy = A*w.^n;
+Consumption = A / (epsassim*(f0-fc)) * w.^n;
+Consumption2 = A / (epsassim*(f0-fc)) * mass.^n;
+lgCon2 = log10(Consumption2);
+
+% Consump g/g/d --> g/d --> g/y
+
 for n=48:2:54
     close all
     
@@ -475,6 +476,7 @@ for n=48:2:54
     print('-dpng',[ppath 'Spinup_global_LDcon' num2str(n) '.png'])
 end
 
+%% Clev
 %Time
 clev_tmean(1,:)=mean(SF.clev(1:600),1);
 clev_tmean(2,:)=mean(SP.clev,1);
@@ -498,15 +500,208 @@ print('-dpng',[ppath 'Spinup_all_sizes_clev.png'])
 
 % Last year
 lyr=time((end-12+1):end);
-sp_mean=mean(SP.bio(:,lyr),2);
-sf_mean=mean(SF.bio(:,lyr),2);
-sd_mean=mean(SD.bio(:,lyr),2);
-mp_mean=mean(MP.bio(:,lyr),2);
-mf_mean=mean(MF.bio(:,lyr),2);
-md_mean=mean(MD.bio(:,lyr),2);
-lp_mean=mean(LP.bio(:,lyr),2);
-ld_mean=mean(LD.bio(:,lyr),2);
-b_mean=mean(BENT.bio(:,lyr),2);
+sp_cmean=mean(SP.clev(:,lyr),2);
+sf_cmean=mean(SF.clev(:,lyr),2);
+sd_cmean=mean(SD.clev(:,lyr),2);
+mp_cmean=mean(MP.clev(:,lyr),2);
+mf_cmean=mean(MF.clev(:,lyr),2);
+md_cmean=mean(MD.clev(:,lyr),2);
+lp_cmean=mean(LP.clev(:,lyr),2);
+ld_cmean=mean(LD.clev(:,lyr),2);
+
+Zsp=griddata(grid(:,2),grid(:,3),sp_cmean,X,Y) ;
+Zsf=griddata(grid(:,2),grid(:,3),sf_cmean,X,Y);
+Zsd=griddata(grid(:,2),grid(:,3),sd_cmean,X,Y);
+Zmp=griddata(grid(:,2),grid(:,3),mp_cmean,X,Y);
+Zmf=griddata(grid(:,2),grid(:,3),mf_cmean,X,Y);
+Zmd=griddata(grid(:,2),grid(:,3),md_cmean,X,Y);
+Zlp=griddata(grid(:,2),grid(:,3),lp_cmean,X,Y);
+Zld=griddata(grid(:,2),grid(:,3),ld_cmean,X,Y);
+
+% sp
+figure(1)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zsp); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['mean Larval P C/Cmax'])
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_SPclev.png'])
+
+% sf
+figure(2)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zsf); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('mean Larval F C/Cmax')
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_SFclev.png'])
+
+% sd
+figure(3)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zsd); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['mean Larval D C/Cmax'])
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_SDclev.png'])
+
+% mp
+figure(4)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zmp); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['mean Juvenile P C/Cmax'])
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_MPclev.png'])
+
+% mf
+figure(5)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zmf); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+%m_plot(-111,5,'o','w','MarkerSize',10);
+title(['mean Adult F C/Cmax'])
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_MFclev.png'])
+
+% md
+figure(6)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zmd); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['Juvenile D C/Cmax'])
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_MDclev.png'])
+
+% lp
+figure(7)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zlp); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['mean Adult P C/Cmax'])
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_LPclev.png'])
+
+% ld
+figure(8)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zld); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['mean Adult D C/Cmax'])
+colormap('jet')
+colorbar('h')
+%caxis([-4 2])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_LDclev.png'])
+
+%% Zoop
+load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2005.mat');
+
+% Last year
+zm_mean=mean(COBALT.Zm,2);
+zl_mean=mean(COBALT.Zl,2);
+dzm_mean=mean(COBALT.dZm,2);
+dzl_mean=mean(COBALT.dZl,2);
+
+Zm=griddata(grid(:,2),grid(:,3),zm_mean,X,Y) ;
+Zl=griddata(grid(:,2),grid(:,3),zl_mean,X,Y);
+dZm=griddata(grid(:,2),grid(:,3),dzm_mean,X,Y) ;
+dZl=griddata(grid(:,2),grid(:,3),dzl_mean,X,Y);
+
+%% mz
+figure(1)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zm); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['mean MZ'])
+colormap('jet')
+colorbar('h')
+%caxis([0 10])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_MZ.png'])
+
+% lz
+figure(2)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Zl); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('mean LZ')
+colormap('jet')
+colorbar('h')
+%caxis([0 10])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_LZ.png'])
+
+% mz
+figure(3)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,dZm); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title(['mean dMZ'])
+colormap('jet')
+colorbar('h')
+%caxis([0 10])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_dMZ.png'])
+
+% lz
+figure(4)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,dZl); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('mean dLZ')
+colormap('jet')
+colorbar('h')
+%caxis([0 10])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_global_dLZ.png'])
+
+
 
 %% Gamma/rep
 for n=12:18

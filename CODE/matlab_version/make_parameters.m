@@ -64,7 +64,7 @@ function make_parameters()
     CC = 2.75;
 
     %%%! Reproductive efficiency
-    rfrac = 1.0;
+    rfrac = 0.5;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
