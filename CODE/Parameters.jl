@@ -120,8 +120,8 @@ function make_parameters(harv,frate)
 	const global fcrit = 0.40	# feeding level needed to meet resting metabolic demands; 0.05-0.2
 
 	###! Transfer efficiency of detritus to benthic prey & carrying capacity
-	#const global bent_eff = 0.05
-	#const global CC = 2.75
+	const global bent_eff = 0.05
+	const global CC = 0.5
 
 	###! Reproductive efficiency
 	#const global rfrac = 1.0

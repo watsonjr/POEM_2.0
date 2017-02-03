@@ -18,16 +18,16 @@ function Testoneloc()
 
 	BE = collect(0.05:0.05:0.2)
 
-for B = 1:length(BE)
-	bent_eff = BE[B]
+# for B = 1:length(BE)
+# 	bent_eff = BE[B]
+#
+# for C = 1:length(CarCap)
+# 		CC = CarCap[C]
 
-for C = 1:length(CarCap)
-		CC = CarCap[C]
-
-		for R = 1:length(RE)
+		for R = length(RE)
 			rfrac = RE[R]
 
-			for F = 1#:length(Fmort)
+			for F = 1:length(Fmort)
 			#! Make parameters
 				frate = Fmort[F]
 				dfrate = frate/365.0
@@ -198,8 +198,8 @@ for C = 1:length(CarCap)
 				end #Locations
 			end #Fmort
 		end #RE
-	end #CC
-end #BE
+# 	end #CC
+# end #BE
 end
 
 
