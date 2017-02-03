@@ -13,7 +13,7 @@ Vth_200 = vh200(:,:,1);
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'AREA_OCN','dat','dxtn','dyte','ht','geolon_t','geolat_t');
 
-cname='Across_Arc_dt1hr';
+cname='Across_Arc_dt5min';
 
 %%
 area = AREA_OCN;
@@ -57,7 +57,7 @@ TF = TF .* mask;
 total_mass(1) = sum(TF(:).*area(:));
 
 %% Following Advect_upwind_2D
-dt = 60*60*1;
+dt = 60*60*(1/60);
 ntime = 365 * (60*60*24) / dt;
 % uvel = Uth_200;
 % vvel = Vth_200;
@@ -73,7 +73,8 @@ gradTi = zeros(ni,nj);
 gradTj = zeros(ni,nj);
 upwind = zeros(ni,nj);
 dupwind = zeros(ni,nj);
-modt=1:100:ntime;
+
+modt=1:1e4:ntime;
 gT = NaN(ni,nj,length(modt));
 
 %% Advection loop
@@ -102,8 +103,8 @@ for n = 1:ntime
         end
     end
     gradT = (gradTi + gradTj); %.* mask;
-    if (mod(n,100)==0)
-        modn = n/100;
+    if (mod(n,1e4)==0)
+        modn = n/1e4;
         gT(:,:,modn) = gradT;
     end
     
@@ -211,7 +212,7 @@ for n = 1:ntime
     TF2(aa) = -999;
     
     if n == ntime
-        figure(3)
+        figure(13)
         clf
         surf(geolon_t,geolat_t,TF2); view(2); shading interp;
         caxis([0 100]); %caxis([0 2e3]) to see how big instabilities are
@@ -226,7 +227,7 @@ for n = 1:ntime
 end
 
 %% Arctic projection of tracer
-figure
+figure(14)
 m_proj('stereographic','lat',90,'long',30,'radius',30);
 m_pcolor(geolon_t,geolat_t,TF2);
 shading interp
@@ -251,11 +252,17 @@ print('-dpng',[fpath 'POEM_diff_test_tracer_arcticproj_' cname '.png'])
 % d = t/(24*4);
 % d = round(d);
 
-%DT=1 HR
-mt=1:21:length(modt);
-t = modt(1:21:end);
-d = t/(24*1);
+% DT=5 MIN
+mt=1:20:length(modt);
+t = modt(1:20:end);
+d = t/(24*12);
 d = round(d);
+
+% DT=1 HR
+% mt=1:21:length(modt);
+% t = modt(1:21:end);
+% d = t/(24*1);
+% d = round(d);
 
 for i=1:length(t)
     figure
