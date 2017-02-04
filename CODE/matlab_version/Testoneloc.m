@@ -107,9 +107,10 @@ CarCap = [0.5:0.5:3.0];
                     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/',simname])
                 end
                 
-                for L = 1:length(ids);
-                    ID = ids(L);
-                    loc = names{L};
+                for L = 1%:length(ids);
+                    ID = 43320;
+                    %ID = ids(L);
+                    %loc = names{L};
                     
                     NX = length(ID);
                     %! Initialize

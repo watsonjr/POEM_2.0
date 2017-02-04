@@ -9,9 +9,7 @@ function tdif = sub_tdif_dem(Z,bio1,bio2,bio3,bio4)
     % use preference for benthic prey in calculation
     %biod = bio3+(LD_phi_BE*bio4)
     biod = bio3+bio4;
-    if Z < PI_be_cutoff
-        tdif = biop ./ (biop+biod);
-    else
-        tdif = 0.0;
-    end
+    tdif = zeros(size(Z));
+    id = (Z < PI_be_cutoff);
+    tdif(id,1) = biop ./ (biop+biod);
 end

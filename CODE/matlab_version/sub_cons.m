@@ -20,5 +20,5 @@ function con = sub_cons(Tp,Tb,tpel,wgt,enc)
     %cmax = (exp(0.063*(temp-15.0)) .* 10^(0.4) .* wgt^(-0.51)) .* 24e-3;
     ENC = sum(enc,2); % total biomass encountered
     con = cmax .* enc(:,1) ./ (cmax + ENC); % Type II
-    %con = cmax
+    
 end

@@ -9,6 +9,7 @@ function [out_1, out_2, zf] = sub_offline_zl(enc_1,enc_2,bio_1,bio_2,dZ)
     out_2 = enc_2;
     
     id=((con_1 + con_2) > dZ);
+    
     frac1(id,1) = con_1(id,1) ./ (con_1(id,1) + con_2(id,1));
     frac2(id,1) = con_2(id,1) ./ (con_1(id,1) + con_2(id,1));
     

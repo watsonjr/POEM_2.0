@@ -1,16 +1,16 @@
 %%% SPAWNING FLAG
 function [S, dd] = sub_kflag(S,dd,dthresh,dtot)
     global SP DAYS
-    if (dd >= dthresh)
-        dur=59;
-        %Change spawning flag
-        if ((dtot+dur) <= DAYS)
-            S(:,dtot:(dtot+dur)) = SP;
-        else
-            dleft = DAYS - dtot + 1;
-            S(:,dtot:DAYS) = SP(1:dleft);
-        end
-        %Reset cumulative deg days
-        dd = 0.0;
+    dur=59;
+    id = (dd >= dthresh);
+    %Change spawning flag
+    if ((dtot+dur) <= DAYS)
+        S(id,dtot:(dtot+dur)) = SP(id,:);
+    else
+        dleft = DAYS - dtot + 1;
+        S(id,dtot:DAYS) = SP(id,1:dleft);
     end
+    %Reset cumulative deg days
+    dd(id) = 0.0;
+    
 end

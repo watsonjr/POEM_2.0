@@ -3,8 +3,8 @@
 % 50 years
 % Saved as mat files
 
-clear all
-close all
+% clear all
+% close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/';
@@ -181,7 +181,7 @@ y=-90:90;
 
 %% DEBUGGING -------------------------------------------------------------
 % Bio
-for n=46:2:52
+for n=251:254
     close all
     
     Zsp=griddata(grid(:,2),grid(:,3),SP.bio(:,n),X,Y);
@@ -196,7 +196,7 @@ for n=46:2:52
     
     figure(50)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zb))); hold on;
+    m_pcolor(X,Y,log10(Zb)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -210,7 +210,7 @@ for n=46:2:52
     % sp
     figure(1)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsp))); hold on;
+    m_pcolor(X,Y,log10(Zsp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -224,7 +224,7 @@ for n=46:2:52
     % sf
     figure(2)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsf))); hold on;
+    m_pcolor(X,Y,log10(Zsf)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -238,7 +238,7 @@ for n=46:2:52
     % sd
     figure(3)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsd))); hold on;
+    m_pcolor(X,Y,log10(Zsd)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -252,7 +252,7 @@ for n=46:2:52
     % mp
     figure(4)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmp))); hold on;
+    m_pcolor(X,Y,log10(Zmp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -266,7 +266,7 @@ for n=46:2:52
     % mf
     figure(5)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmf))); hold on;
+    m_pcolor(X,Y,log10(Zmf)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -282,7 +282,7 @@ for n=46:2:52
     % md
     figure(6)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmd))); hold on;
+    m_pcolor(X,Y,log10(Zmd)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -296,7 +296,7 @@ for n=46:2:52
     % lp
     figure(7)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zlp))); hold on;
+    m_pcolor(X,Y,log10(Zlp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -311,7 +311,7 @@ for n=46:2:52
     % ld
     figure(8)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zld))); hold on;
+    m_pcolor(X,Y,log10(Zld)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -350,7 +350,7 @@ lgCon2 = log10(Consumption2);
 
 % Consump g/g/d --> g/d --> g/y
 
-for n=48:2:54
+for n=252:253
     close all
     
     Zsp=griddata(grid(:,2),grid(:,3),SP.con(:,n),X,Y) .* M_s .* 365;
@@ -365,7 +365,7 @@ for n=48:2:54
     % sp
     figure(1)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsp))); hold on;
+    m_pcolor(X,Y,log10(Zsp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -379,7 +379,7 @@ for n=48:2:54
     % sf
     figure(2)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsf))); hold on;
+    m_pcolor(X,Y,log10(Zsf)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -393,7 +393,7 @@ for n=48:2:54
     % sd
     figure(3)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsd))); hold on;
+    m_pcolor(X,Y,log10(Zsd)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -407,7 +407,7 @@ for n=48:2:54
     % mp
     figure(4)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmp))); hold on;
+    m_pcolor(X,Y,log10(Zmp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -421,7 +421,7 @@ for n=48:2:54
     % mf
     figure(5)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmf))); hold on;
+    m_pcolor(X,Y,log10(Zmf)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -436,7 +436,7 @@ for n=48:2:54
     % md
     figure(6)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmd))); hold on;
+    m_pcolor(X,Y,log10(Zmd)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -450,7 +450,7 @@ for n=48:2:54
     % lp
     figure(7)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zlp))); hold on;
+    m_pcolor(X,Y,log10(Zlp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -464,7 +464,7 @@ for n=48:2:54
     % ld
     figure(8)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zld))); hold on;
+    m_pcolor(X,Y,log10(Zld)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -645,7 +645,7 @@ Zl=griddata(grid(:,2),grid(:,3),zl_mean,X,Y);
 dZm=griddata(grid(:,2),grid(:,3),dzm_mean,X,Y) ;
 dZl=griddata(grid(:,2),grid(:,3),dzl_mean,X,Y);
 
-%% mz
+% mz
 figure(1)
 m_proj('miller','lat',82);
 m_pcolor(X,Y,Zm); hold on;
@@ -704,7 +704,7 @@ print('-dpng',[ppath 'Spinup_global_dLZ.png'])
 
 
 %% Gamma/rep
-for n=12:18
+for n=252:253
     close all
     
     Zsp=griddata(grid(:,2),grid(:,3),SP.gamma(:,n),X,Y);
@@ -719,7 +719,7 @@ for n=12:18
     % sp
     figure(1)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsp))); hold on;
+    m_pcolor(X,Y,log10(Zsp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -733,7 +733,7 @@ for n=12:18
     % sf
     figure(2)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsf))); hold on;
+    m_pcolor(X,Y,log10(Zsf)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -747,7 +747,7 @@ for n=12:18
     % sd
     figure(3)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zsd))); hold on;
+    m_pcolor(X,Y,log10(Zsd)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -761,7 +761,7 @@ for n=12:18
     % mp
     figure(4)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmp))); hold on;
+    m_pcolor(X,Y,log10(Zmp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -775,7 +775,7 @@ for n=12:18
     % mf
     figure(5)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmf))); hold on;
+    m_pcolor(X,Y,log10(Zmf)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -790,7 +790,7 @@ for n=12:18
     % md
     figure(6)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zmd))); hold on;
+    m_pcolor(X,Y,log10(Zmd)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -804,7 +804,7 @@ for n=12:18
     % lp
     figure(7)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zlp))); hold on;
+    m_pcolor(X,Y,log10(Zlp)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -818,7 +818,7 @@ for n=12:18
     % ld
     figure(8)
     m_proj('miller','lat',82);
-    m_pcolor(X,Y,real(log10(Zld))); hold on;
+    m_pcolor(X,Y,log10(Zld)); hold on;
     shading flat
     m_coast('patch',[.5 .5 .5],'edgecolor','none');
     m_grid;
@@ -830,8 +830,48 @@ for n=12:18
     print('-dpng',[ppath 'Spinup_global_LDrep' num2str(n) '.png'])
 end
 
+%% Gamma/rep
+for n=252:253
+    close all
+    
+    % mp
+    figure(4)
+    m_proj('miller','lat',82);
+    m_pcolor(X,Y,Zmp); hold on;
+    shading flat
+    m_coast('patch',[.5 .5 .5],'edgecolor','none');
+    m_grid;
+    title(['mean Juvenile P gamma (g m^-^2) mo ' num2str(n)])
+    colormap('jet')
+    colorbar('h')
+    caxis([-1e-25 0])
+    stamp(cfile)
+    print('-dpng',[ppath 'Spinup_global_MPgamma' num2str(n) '.png'])
+    
+    % md
+    figure(6)
+    m_proj('miller','lat',82);
+    m_pcolor(X,Y,Zmd); hold on;
+    shading flat
+    m_coast('patch',[.5 .5 .5],'edgecolor','none');
+    m_grid;
+    title(['mean Juvenile D gamma (g m^-^2) mo ' num2str(n)])
+    colormap('jet')
+    colorbar('h')
+    caxis([-1e-25 0])
+    stamp(cfile)
+    print('-dpng',[ppath 'Spinup_global_MDgamma' num2str(n) '.png'])
+    
+end
+%%
+figure
+plot(MP.gamma(:,252),'.')
+test=log10(MP.gamma(:,252));
+figure
+plot(test,'.')
+
 %% Nu
-for n=12:18
+for n=252:253
     close all
     
     Zsp=griddata(grid(:,2),grid(:,3),SP.nu(:,n),X,Y);
@@ -958,163 +998,325 @@ for n=12:18
 end
 
 %% Find negative values
-tend=12;
+mos=250:254;
+tend=length(mos);
 bio=NaN*ones(9,tend);
 con=NaN*ones(8,tend);
 die=NaN*ones(8,tend);
 gamma=NaN*ones(8,tend);
 rec=NaN*ones(8,tend);
 
-for n=1:tend
+for k=1:tend
+    n=mos(k);
     %bio
     id = (SP.bio(:,n) < 0);
-    bio(1,n) = sum(id);
+    bio(1,k) = sum(id);
     id = (SF.bio(:,n) < 0);
-    bio(2,n) = sum(id);
+    bio(2,k) = sum(id);
     id = (SD.bio(:,n) < 0);
-    bio(3,n) = sum(id);
+    bio(3,k) = sum(id);
     id = (MP.bio(:,n) < 0);
-    bio(4,n) = sum(id);
+    bio(4,k) = sum(id);
     id = (MF.bio(:,n) < 0);
-    bio(5,n) = sum(id);
+    bio(5,k) = sum(id);
     id = (MD.bio(:,n) < 0);
-    bio(6,n) = sum(id);
+    bio(6,k) = sum(id);
     id = (LP.bio(:,n) < 0);
-    bio(7,n) = sum(id);
+    bio(7,k) = sum(id);
     id = (LD.bio(:,n) < 0);
-    bio(8,n) = sum(id);
+    bio(8,k) = sum(id);
     id = (BENT.bio(:,n) < 0);
-    bio(9,n) = sum(id);
+    bio(9,k) = sum(id);
     %con
     id = (SP.con(:,n) < 0);
-    con(1,n) = sum(id);
+    con(1,k) = sum(id);
     id = (SF.con(:,n) < 0);
-    con(2,n) = sum(id);
+    con(2,k) = sum(id);
     id = (SD.con(:,n) < 0);
-    con(3,n) = sum(id);
+    con(3,k) = sum(id);
     id = (MP.con(:,n) < 0);
-    con(4,n) = sum(id);
+    con(4,k) = sum(id);
     id = (MF.con(:,n) < 0);
-    con(5,n) = sum(id);
+    con(5,k) = sum(id);
     id = (MD.con(:,n) < 0);
-    con(6,n) = sum(id);
+    con(6,k) = sum(id);
     id = (LP.con(:,n) < 0);
-    con(7,n) = sum(id);
+    con(7,k) = sum(id);
     id = (LD.con(:,n) < 0);
-    con(8,n) = sum(id);
+    con(8,k) = sum(id);
     %die
     id = (SP.die(:,n) < 0);
-    die(1,n) = sum(id);
+    die(1,k) = sum(id);
     id = (SF.die(:,n) < 0);
-    die(2,n) = sum(id);
+    die(2,k) = sum(id);
     id = (SD.die(:,n) < 0);
-    die(3,n) = sum(id);
+    die(3,k) = sum(id);
     id = (MP.die(:,n) < 0);
-    die(4,n) = sum(id);
+    die(4,k) = sum(id);
     id = (MF.die(:,n) < 0);
-    die(5,n) = sum(id);
+    die(5,k) = sum(id);
     id = (MD.die(:,n) < 0);
-    die(6,n) = sum(id);
+    die(6,k) = sum(id);
     id = (LP.die(:,n) < 0);
-    die(7,n) = sum(id);
+    die(7,k) = sum(id);
     id = (LD.die(:,n) < 0);
-    die(8,n) = sum(id);
+    die(8,k) = sum(id);
     %gamma/rep
     id = (SP.gamma(:,n) < 0);
-    gamma(1,n) = sum(id);
+    gamma(1,k) = sum(id);
     id = (SF.gamma(:,n) < 0);
-    gamma(2,n) = sum(id);
+    gamma(2,k) = sum(id);
     id = (SD.gamma(:,n) < 0);
-    gamma(3,n) = sum(id);
+    gamma(3,k) = sum(id);
     id = (MP.gamma(:,n) < 0);
-    gamma(4,n) = sum(id);
+    gamma(4,k) = sum(id);
     id = (MF.rep(:,n) < 0);
-    gamma(5,n) = sum(id);
+    gamma(5,k) = sum(id);
     id = (MD.gamma(:,n) < 0);
-    gamma(6,n) = sum(id);
+    gamma(6,k) = sum(id);
     id = (LP.rep(:,n) < 0);
-    gamma(7,n) = sum(id);
+    gamma(7,k) = sum(id);
     id = (LD.rep(:,n) < 0);
-    gamma(8,n) = sum(id);
+    gamma(8,k) = sum(id);
     %rec
     id = (SP.rec(:,n) < 0);
-    rec(1,n) = sum(id);
+    rec(1,k) = sum(id);
     id = (SF.rec(:,n) < 0);
-    rec(2,n) = sum(id);
+    rec(2,k) = sum(id);
     id = (SD.rec(:,n) < 0);
-    rec(3,n) = sum(id);
+    rec(3,k) = sum(id);
     id = (MP.rec(:,n) < 0);
-    rec(4,n) = sum(id);
+    rec(4,k) = sum(id);
     id = (MF.rec(:,n) < 0);
-    rec(5,n) = sum(id);
+    rec(5,k) = sum(id);
     id = (MD.rec(:,n) < 0);
-    rec(6,n) = sum(id);
+    rec(6,k) = sum(id);
     id = (LP.rec(:,n) < 0);
-    rec(7,n) = sum(id);
+    rec(7,k) = sum(id);
     id = (LD.rec(:,n) < 0);
-    rec(8,n) = sum(id);
+    rec(8,k) = sum(id);
     
 end
 %%
 figure
 plot(1:tend,bio)
-ylim([0 10])
+%ylim([0 10])
 legend('SP','MP','LP','SF','MF','SD','MD','LD','B')
 legend('location','northwest')
 print('-dpng',[ppath 'biotest.png'])
 
 figure
 plot(1:tend,con)
-ylim([0 10])
+%ylim([0 10])
 legend('SP','MP','LP','SF','MF','SD','MD','LD')
 legend('location','northwest')
 print('-dpng',[ppath 'contest.png'])
 
 figure
 plot(1:tend,die)
-ylim([0 10])
+%ylim([0 10])
 legend('SP','MP','LP','SF','MF','SD','MD','LD')
 legend('location','northwest')
 print('-dpng',[ppath 'dietest.png'])
 
 figure
 plot(1:tend,gamma)
-ylim([0 10])
+%ylim([0 10])
 legend('SP','MP','LP','SF','MF','SD','MD','LD')
 legend('location','northwest')
 print('-dpng',[ppath 'gammatest.png'])
 
 figure
 plot(1:tend,rec)
-ylim([0 10])
+%ylim([0 10])
 legend('SP','MP','LP','SF','MF','SD','MD','LD')
 legend('location','northwest')
 print('-dpng',[ppath 'rectest.png'])
 
+%% Find NaNs
+mos=250:254;
+tend=length(mos);
+bio=NaN*ones(9,tend);
+con=NaN*ones(8,tend);
+die=NaN*ones(8,tend);
+gamma=NaN*ones(8,tend);
+rec=NaN*ones(8,tend);
+
+for k=1:tend
+    n=mos(k);
+    %bio
+    id = isnan(SP.bio(:,n));
+    bio(1,k) = sum(id);
+    id = isnan(SF.bio(:,n));
+    bio(2,k) = sum(id);
+    id = isnan(SD.bio(:,n));
+    bio(3,k) = sum(id);
+    id = isnan(MP.bio(:,n));
+    bio(4,k) = sum(id);
+    id = isnan(MF.bio(:,n));
+    bio(5,k) = sum(id);
+    id = isnan(MD.bio(:,n));
+    bio(6,k) = sum(id);
+    id = isnan(LP.bio(:,n));
+    bio(7,k) = sum(id);
+    id = isnan(LD.bio(:,n));
+    bio(8,k) = sum(id);
+    id = isnan(BENT.bio(:,n));
+    bio(9,k) = sum(id);
+    %con
+    id = isnan(SP.con(:,n));
+    con(1,k) = sum(id);
+    id = isnan(SF.con(:,n));
+    con(2,k) = sum(id);
+    id = isnan(SD.con(:,n));
+    con(3,k) = sum(id);
+    id = isnan(MP.con(:,n));
+    con(4,k) = sum(id);
+    id = isnan(MF.con(:,n));
+    con(5,k) = sum(id);
+    id = isnan(MD.con(:,n));
+    con(6,k) = sum(id);
+    id = isnan(LP.con(:,n));
+    con(7,k) = sum(id);
+    id = isnan(LD.con(:,n));
+    con(8,k) = sum(id);
+    %die
+    id = isnan(SP.die(:,n));
+    die(1,k) = sum(id);
+    id = isnan(SF.die(:,n));
+    die(2,k) = sum(id);
+    id = isnan(SD.die(:,n));
+    die(3,k) = sum(id);
+    id = isnan(MP.die(:,n));
+    die(4,k) = sum(id);
+    id = isnan(MF.die(:,n));
+    die(5,k) = sum(id);
+    id = isnan(MD.die(:,n));
+    die(6,k) = sum(id);
+    id = isnan(LP.die(:,n));
+    die(7,k) = sum(id);
+    id = isnan(LD.die(:,n));
+    die(8,k) = sum(id);
+    %gamma/rep
+    id = isnan(SP.gamma(:,n));
+    gamma(1,k) = sum(id);
+    id = isnan(SF.gamma(:,n));
+    gamma(2,k) = sum(id);
+    id = isnan(SD.gamma(:,n));
+    gamma(3,k) = sum(id);
+    id = isnan(MP.gamma(:,n));
+    gamma(4,k) = sum(id);
+    id = isnan(MF.rep(:,n));
+    gamma(5,k) = sum(id);
+    id = isnan(MD.gamma(:,n));
+    gamma(6,k) = sum(id);
+    id = isnan(LP.rep(:,n));
+    gamma(7,k) = sum(id);
+    id = isnan(LD.rep(:,n));
+    gamma(8,k) = sum(id);
+    %rec
+    id = isnan(SP.rec(:,n));
+    rec(1,k) = sum(id);
+    id = isnan(SF.rec(:,n));
+    rec(2,k) = sum(id);
+    id = isnan(SD.rec(:,n));
+    rec(3,k) = sum(id);
+    id = isnan(MP.rec(:,n));
+    rec(4,k) = sum(id);
+    id = isnan(MF.rec(:,n));
+    rec(5,k) = sum(id);
+    id = isnan(MD.rec(:,n));
+    rec(6,k) = sum(id);
+    id = isnan(LP.rec(:,n));
+    rec(7,k) = sum(id);
+    id = isnan(LD.rec(:,n));
+    rec(8,k) = sum(id);
+    
+end
+%%
+figure
+bar(bio')
+legend('SP','SF','SD','MP','MF','MD','LP','LD','B')
+legend('location','northwest')
+print('-dpng',[ppath 'biotest.png'])
+
+figure
+bar(con')
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[ppath 'contest.png'])
+
+figure
+bar(die')
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[ppath 'dietest.png'])
+
+figure
+bar(gamma')
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[ppath 'gammatest.png'])
+
+figure
+bar(rec')
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[ppath 'rectest.png'])
+
+%%
+n=253;
+id=find(isnan(SP.bio(:,n)));    %43320
+grid(id,2:3);                   %-15.5000lon   60.5000lat
+id2=find(isnan(SP.die(:,n)));
+grid(id2,2:3);
+id3=find(isnan(SP.con(:,n)));
+grid(id3,2:3);
+id4=find(isnan(MP.con(:,n)));
+grid(id4,2:3);
+id5=find(isnan(SP.rec(:,n)))
+grid(id5,2:3)
+
+
 % END DEBUGGING -------------------------------------------------------------
 
 %%
-Zsp=griddata(grid(:,2),grid(:,3),sp_mean,X,Y);
-Zsf=griddata(grid(:,2),grid(:,3),sf_mean,X,Y);
-Zsd=griddata(grid(:,2),grid(:,3),sd_mean,X,Y);
-Zmp=griddata(grid(:,2),grid(:,3),mp_mean,X,Y);
-Zmf=griddata(grid(:,2),grid(:,3),mf_mean,X,Y);
-Zmd=griddata(grid(:,2),grid(:,3),md_mean,X,Y);
-Zlp=griddata(grid(:,2),grid(:,3),lp_mean,X,Y);
-Zld=griddata(grid(:,2),grid(:,3),ld_mean,X,Y);
-Zb=griddata(grid(:,2),grid(:,3),b_mean,X,Y);
+load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
+    'geolon_t','geolat_t');
+
+[ni,nj]=size(geolon_t);
+
+Zsf=NaN*ones(ni,nj);
+Zsp=NaN*ones(ni,nj);
+Zsd=NaN*ones(ni,nj);
+Zmf=NaN*ones(ni,nj);
+Zmp=NaN*ones(ni,nj);
+Zmd=NaN*ones(ni,nj);
+Zlp=NaN*ones(ni,nj);
+Zld=NaN*ones(ni,nj);
+Zb=NaN*ones(ni,nj);
+
+Zsf(grid(:,1))=sf_mean;
+Zsp(grid(:,1))=sp_mean;
+Zsd(grid(:,1))=sd_mean;
+Zmf(grid(:,1))=mf_mean;
+Zmp(grid(:,1))=mp_mean;
+Zmd(grid(:,1))=md_mean;
+Zlp(grid(:,1))=lp_mean;
+Zld(grid(:,1))=ld_mean;
+Zb(grid(:,1))=b_mean;
 
 % bent
 figure(50)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zb))); hold on;
+surf(geolon_t,geolat_t,log10(Zb)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean benthic biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_BENT.png'])
 
@@ -1122,10 +1324,10 @@ print('-dpng',[ppath 'Spinup_global_BENT.png'])
 mgZb = (Zb/9)*1e3;
 figure(51)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(mgZb))); hold on;
+surf(geolon_t,geolat_t,log10(mgZb)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean benthic biomass (mg C m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1136,112 +1338,112 @@ print('-dpng',[ppath 'Spinup_global_BENT_mgC.png'])
 % sp
 figure(11)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zsp))); hold on;
+surf(geolon_t,geolat_t,log10(Zsp)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+%caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SP.png'])
 
 % sf
 figure(12)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zsf))); hold on;
+surf(geolon_t,geolat_t,log10(Zsf)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+%caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SF.png'])
 
 % sd
 figure(13)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zsd))); hold on;
+surf(geolon_t,geolat_t,log10(Zsd)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+%caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SD.png'])
 
 % mp
 figure(14)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zmp))); hold on;
+surf(geolon_t,geolat_t,log10(Zmp)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+%caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MP.png'])
 
 % mf
 figure(15)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zmf))); hold on;
+surf(geolon_t,geolat_t,log10(Zmf)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MF.png'])
 
 % md
 figure(16)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zmd))); hold on;
+surf(geolon_t,geolat_t,log10(Zmd)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Juvenile D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+%caxis([-4 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MD.png'])
 
 % lp
 figure(17)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zlp))); hold on;
+surf(geolon_t,geolat_t,log10(Zlp)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LP.png'])
 
 % ld
 figure(18)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zld))); hold on;
+surf(geolon_t,geolat_t,log10(Zld)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-4 2])
+caxis([-2 2])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LD.png'])
 
@@ -1267,10 +1469,10 @@ FracPFvDm = (Zmp+Zmf) ./ (Zmp+Zmf+Zmd);
 %% ALL
 figure(21)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(All))); hold on;
+surf(geolon_t,geolat_t,log10(All)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean biomass All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1281,10 +1483,10 @@ print('-dpng',[ppath 'Spinup_global_All.png'])
 % all F
 figure(22)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(AllF))); hold on;
+surf(geolon_t,geolat_t,log10(AllF)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean biomass All F (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1295,10 +1497,10 @@ print('-dpng',[ppath 'Spinup_global_AllF.png'])
 % all D
 figure(23)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(AllD))); hold on;
+surf(geolon_t,geolat_t,log10(AllD)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean biomass All D (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1309,10 +1511,10 @@ print('-dpng',[ppath 'Spinup_global_AllD.png'])
 % All P
 figure(24)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(AllP))); hold on;
+surf(geolon_t,geolat_t,log10(AllP)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('log10 mean biomass All P (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1323,10 +1525,10 @@ print('-dpng',[ppath 'Spinup_global_AllP.png'])
 % FracPD
 figure(25)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPD)); hold on;
+surf(geolon_t,geolat_t,FracPD); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('P:D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1337,10 +1539,10 @@ print('-dpng',[ppath 'Spinup_global_FracPD.png'])
 % FracPF
 figure(26)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPF)); hold on;
+surf(geolon_t,geolat_t,FracPF); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('P:F mean biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1351,10 +1553,10 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 %% FracPFvD
 figure(27)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFvD)); hold on;
+surf(geolon_t,geolat_t,FracPFvD); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('(P+F):D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1365,10 +1567,10 @@ print('-dpng',[ppath 'Spinup_global_FracPFvD.png'])
 % FracPDs
 figure(28)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPDs)); hold on;
+surf(geolon_t,geolat_t,FracPDs); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('SP:SD mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1379,10 +1581,10 @@ print('-dpng',[ppath 'Spinup_global_FracPDs.png'])
 % FracPFs
 figure(29)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFs)); hold on;
+surf(geolon_t,geolat_t,FracPFs); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('SP:SF mean biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1393,10 +1595,10 @@ print('-dpng',[ppath 'Spinup_global_FracPFs.png'])
 % FracPFvDs
 figure(30)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFvDs)); hold on;
+surf(geolon_t,geolat_t,FracPFvDs); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('(SP+SF):SD mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1407,10 +1609,10 @@ print('-dpng',[ppath 'Spinup_global_FracPFvDs.png'])
 % FracPDm
 figure(31)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPDm)); hold on;
+surf(geolon_t,geolat_t,FracPDm); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('MP:MD mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1421,10 +1623,10 @@ print('-dpng',[ppath 'Spinup_global_FracPDm.png'])
 % FracPFm
 figure(32)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFm)); hold on;
+surf(geolon_t,geolat_t,FracPFm); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('MP:MF mean biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -1435,10 +1637,10 @@ print('-dpng',[ppath 'Spinup_global_FracPFm.png'])
 % FracPFvDm
 figure(33)
 m_proj('miller','lat',82);
-m_pcolor(X,Y,real(FracPFvDm)); hold on;
+surf(geolon_t,geolat_t,FracPFvDm); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
 title('(MP+MF):MD mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')

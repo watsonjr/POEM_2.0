@@ -15,11 +15,13 @@ function [out_1, out_2, out_3, out_4, out_5, zf] = sub_offline_zm(enc_1,enc_2,en
     out_5 = enc_5;
 
     id=((con_1 + con_2 + con_3 + con_4 + con_5) > dZ);
+    
     frac1(id,1) = con_1(id,1) ./ (con_1(id,1) + con_2(id,1) + con_3(id,1) + con_4(id,1) + con_5(id,1));
     frac2(id,1) = con_2(id,1) ./ (con_1(id,1) + con_2(id,1) + con_3(id,1) + con_4(id,1) + con_5(id,1));
     frac3(id,1) = con_3(id,1) ./ (con_1(id,1) + con_2(id,1) + con_3(id,1) + con_4(id,1) + con_5(id,1));
     frac4(id,1) = con_4(id,1) ./ (con_1(id,1) + con_2(id,1) + con_3(id,1) + con_4(id,1) + con_5(id,1));
     frac5(id,1) = con_5(id,1) ./ (con_1(id,1) + con_2(id,1) + con_3(id,1) + con_4(id,1) + con_5(id,1));
+    
     out_1(id,1) = (frac1(id,1) .* dZ(id,1)) ./ bio_1(id,1);
     out_2(id,1) = (frac2(id,1) .* dZ(id,1)) ./ bio_2(id,1);
     out_3(id,1) = (frac3(id,1) .* dZ(id,1)) ./ bio_3(id,1);

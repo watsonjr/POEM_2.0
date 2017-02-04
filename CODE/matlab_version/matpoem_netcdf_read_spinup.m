@@ -204,15 +204,15 @@ clear biomass
 %% Take means
 
 %Time
-sp_tmean=mean(SP.bio,1);
-sf_tmean=mean(SF.bio,1);
-sd_tmean=mean(SD.bio,1);
-mp_tmean=mean(MP.bio,1);
-mf_tmean=mean(MF.bio,1);
-md_tmean=mean(MD.bio,1);
-lp_tmean=mean(LP.bio,1);
-ld_tmean=mean(LD.bio,1);
-b_tmean=mean(BENT.bio,1);
+sp_tmean=nanmean(SP.bio,1);
+sf_tmean=nanmean(SF.bio,1);
+sd_tmean=nanmean(SD.bio,1);
+mp_tmean=nanmean(MP.bio,1);
+mf_tmean=nanmean(MF.bio,1);
+md_tmean=nanmean(MD.bio,1);
+lp_tmean=nanmean(LP.bio,1);
+ld_tmean=nanmean(LD.bio,1);
+b_tmean=nanmean(BENT.bio,1);
 
 % Last year
 lyr=time((end-12+1):end);

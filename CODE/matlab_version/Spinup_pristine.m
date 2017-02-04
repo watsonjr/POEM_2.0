@@ -27,13 +27,6 @@ phen=0;
 %! Setup spinup (loop last year of COBALT)
 load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2005.mat');
 
-%! Add phenology params from csv file with ID as row
-Tref = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_phenol_T0raw_NOflip.csv'); %min temp for each yr at each location
-TrefP = Tref;
-TrefB = Tref;
-Dthresh = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_phenol_DTraw_NOflip.csv');
-SP = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Gaussian_spawn_2mo.csv');
-
 %! How long to run the model
 YEARS = 50;
 DAYS = 365;
@@ -43,6 +36,15 @@ MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
 NX = 48111;
 ID = 1:NX;
+
+%! Add phenology params from csv file with ID as row
+Tref = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_phenol_T0raw_NOflip.csv'); %min temp for each yr at each location
+TrefP = Tref;
+TrefB = Tref;
+Dthresh = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_phenol_DTraw_NOflip.csv');
+SP = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Gaussian_spawn_2mo.csv');
+SP = SP';
+SP = repmat(SP,NX,1);
 
 %! Create a directory for output
 tfcrit = num2str(int64(100*fcrit));
