@@ -10,10 +10,10 @@ global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel LPsel LDsel
 
 Fmort = 0.0; %[0.1:0.1:1.0];
-RE = [1.0,0.5,0.1,0.05,0.01];
-BE = [0.05:0.05:0.2];
-CarCap = [0.5:0.5:3.0];
-
+% RE = [1.0,0.5,0.1,0.05,0.01];
+% BE = 0.05:0.05:0.2;
+% CarCap = 0.5:0.5:3.0;
+%
 % for B = 1:length(BE)
 %     bent_eff = BE(B);
 %     
@@ -47,19 +47,21 @@ CarCap = [0.5:0.5:3.0];
                 TrefB = Tref;
                 Dthresh = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_phenol_DTraw_NOflip.csv');
                 SP = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Gaussian_spawn_2mo.csv');
+                SP = SP';
                 
                 %! How long to run the model
-                YEARS = 10;
+                YEARS = 5;
                 DAYS = 365;
                 
                 %! Where to run the model
                 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
-                ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045];
-                names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
+%                 ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045];
+%                 names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
+                ids = [22448;33905;33906;37363];
+                names = {'Aus1','Car1','Car2','PG'};
                 
                 %! Create a directory for output
                 tfcrit = num2str(int64(100*fcrit));
-                tmz = num2str(100+int64(10*MF_phi_MZ));
                 tld = num2str(1000+int64(100*LD_phi_MF));
                 tbe = num2str(100+int64(100*bent_eff));
                 tmort = num2str(MORT);
@@ -107,10 +109,9 @@ CarCap = [0.5:0.5:3.0];
                     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/',simname])
                 end
                 
-                for L = 1%:length(ids);
-                    ID = 43320;
-                    %ID = ids(L);
-                    %loc = names{L};
+                for L = 1:length(ids);
+                    ID = ids(L);
+                    loc = names{L};
                     
                     NX = length(ID);
                     %! Initialize

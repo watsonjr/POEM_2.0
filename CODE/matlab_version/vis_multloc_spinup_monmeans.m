@@ -148,18 +148,18 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 print('-dpng',[ppath 'Spinup_D_time.png'])
 
-% All size classes of all
+%% All size classes of all
 
 figure(5)
+plot(y,log10(sf_tmean),'Linewidth',1); hold on;
+plot(y,log10(mf_tmean),'Linewidth',1); hold on;
 plot(y,log10(sp_tmean),'Linewidth',1); hold on;
 plot(y,log10(mp_tmean),'Linewidth',1); hold on;
 plot(y,log10(lp_tmean),'Linewidth',1); hold on;
-plot(y,log10(sf_tmean),'Linewidth',1); hold on;
-plot(y,log10(mf_tmean),'Linewidth',1); hold on;
 plot(y,log10(sd_tmean),'Linewidth',1); hold on;
 plot(y,log10(md_tmean),'Linewidth',1); hold on;
 plot(y,log10(ld_tmean),'Linewidth',1); hold on;
-legend('SP','MP','LP','SF','MF','SD','MD','LD')
+legend('SF','MF','SP','MP','LP','SD','MD','LD')
 legend('location','eastoutside')
 xlim([y(1) y(end)])
 xlabel('Time (mo)')
@@ -179,1108 +179,6 @@ x=-180:180;
 y=-90:90;
 [X,Y]=meshgrid(x,y);
 
-%% DEBUGGING -------------------------------------------------------------
-% Bio
-for n=251:254
-    close all
-    
-    Zsp=griddata(grid(:,2),grid(:,3),SP.bio(:,n),X,Y);
-    Zsf=griddata(grid(:,2),grid(:,3),SF.bio(:,n),X,Y);
-    Zsd=griddata(grid(:,2),grid(:,3),SD.bio(:,n),X,Y);
-    Zmp=griddata(grid(:,2),grid(:,3),MP.bio(:,n),X,Y);
-    Zmf=griddata(grid(:,2),grid(:,3),MF.bio(:,n),X,Y);
-    Zmd=griddata(grid(:,2),grid(:,3),MD.bio(:,n),X,Y);
-    Zlp=griddata(grid(:,2),grid(:,3),LP.bio(:,n),X,Y);
-    Zld=griddata(grid(:,2),grid(:,3),LD.bio(:,n),X,Y);
-    Zb=griddata(grid(:,2),grid(:,3),BENT.bio(:,n),X,Y);
-    
-    figure(50)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zb)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean benthic biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_BENT' num2str(n) '.png'])
-    
-    % sp
-    figure(1)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval P biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SP' num2str(n) '.png'])
-    
-    % sf
-    figure(2)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsf)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval F biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SF' num2str(n) '.png'])
-    
-    % sd
-    figure(3)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsd)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval D biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SD' num2str(n) '.png'])
-    
-    % mp
-    figure(4)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile P biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MP' num2str(n) '.png'])
-    
-    % mf
-    figure(5)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmf)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    %m_plot(-111,5,'o','w','MarkerSize',10);
-    m_text(-111,5,'EEP','Color','red','HorizontalAlignment','center');
-    title(['log10 mean Adult F biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MF' num2str(n) '.png'])
-    
-    % md
-    figure(6)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmd)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile D biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MD' num2str(n) '.png'])
-    
-    % lp
-    figure(7)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zlp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
-    title(['log10 mean Adult P biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LP' num2str(n) '.png'])
-    
-    % ld
-    figure(8)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zld)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    m_text(-111,5,'EEP','Color','black','HorizontalAlignment','center');
-    title(['log10 mean Adult D biomass (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LD' num2str(n) '.png'])
-end
-
-%% Con
-L_s = 10^((log10(2)+log10(20))/2);
-L_m = 10^((log10(20)+log10(200))/2);
-L_l = 10^((log10(200)+log10(2000))/2);
-
-M_s = 0.01 * (0.1*L_s)^3;
-M_m = 0.01 * (0.1*L_m)^3;
-M_l = 0.01 * (0.1*L_l)^3;
-
-mass = [M_s;M_m;M_l];
-
-A = 4.39;
-fc = 0.2;
-f0 = 0.6;
-epsassim = 0.6;
-n = 3/4;
-
-w = logspace(-3, 5);
-
-AvailEnergy = A*w.^n;
-Consumption = A / (epsassim*(f0-fc)) * w.^n;
-Consumption2 = A / (epsassim*(f0-fc)) * mass.^n;
-lgCon2 = log10(Consumption2);
-
-% Consump g/g/d --> g/d --> g/y
-
-for n=252:253
-    close all
-    
-    Zsp=griddata(grid(:,2),grid(:,3),SP.con(:,n),X,Y) .* M_s .* 365;
-    Zsf=griddata(grid(:,2),grid(:,3),SF.con(:,n),X,Y) .* M_s .* 365;
-    Zsd=griddata(grid(:,2),grid(:,3),SD.con(:,n),X,Y) .* M_s .* 365;
-    Zmp=griddata(grid(:,2),grid(:,3),MP.con(:,n),X,Y) .* M_m .* 365;
-    Zmf=griddata(grid(:,2),grid(:,3),MF.con(:,n),X,Y) .* M_m .* 365;
-    Zmd=griddata(grid(:,2),grid(:,3),MD.con(:,n),X,Y) .* M_m .* 365;
-    Zlp=griddata(grid(:,2),grid(:,3),LP.con(:,n),X,Y) .* M_l .* 365;
-    Zld=griddata(grid(:,2),grid(:,3),LD.con(:,n),X,Y) .* M_l .* 365;
-    
-    % sp
-    figure(1)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval P con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SPcon' num2str(n) '.png'])
-    
-    % sf
-    figure(2)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsf)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval F con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SFcon' num2str(n) '.png'])
-    
-    % sd
-    figure(3)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsd)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval D con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SDcon' num2str(n) '.png'])
-    
-    % mp
-    figure(4)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile P con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MPcon' num2str(n) '.png'])
-    
-    % mf
-    figure(5)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmf)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    %m_plot(-111,5,'o','w','MarkerSize',10);
-    title(['log10 mean Adult F con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MFcon' num2str(n) '.png'])
-    
-    % md
-    figure(6)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmd)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile D con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MDcon' num2str(n) '.png'])
-    
-    % lp
-    figure(7)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zlp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Adult P con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LPcon' num2str(n) '.png'])
-    
-    % ld
-    figure(8)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zld)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Adult D con (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LDcon' num2str(n) '.png'])
-end
-
-%% Clev
-%Time
-clev_tmean(1,:)=mean(SF.clev(1:600),1);
-clev_tmean(2,:)=mean(SP.clev,1);
-clev_tmean(3,:)=mean(SD.clev,1);
-clev_tmean(4,:)=mean(MF.clev,1);
-clev_tmean(5,:)=mean(MP.clev,1);
-clev_tmean(6,:)=mean(MD.clev,1);
-clev_tmean(7,:)=mean(LP.clev,1);
-clev_tmean(8,:)=mean(LD.clev,1);
-
-figure
-plot(1:600,clev_tmean)
-legend('SF','SP','SD','MF','MP','MD','LP','LD')
-legend('location','eastoutside')
-xlim([1 600])
-xlabel('Time (mo)')
-ylabel('C/Cmax')
-title('Spinup')
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_all_sizes_clev.png'])
-
-% Last year
-lyr=time((end-12+1):end);
-sp_cmean=mean(SP.clev(:,lyr),2);
-sf_cmean=mean(SF.clev(:,lyr),2);
-sd_cmean=mean(SD.clev(:,lyr),2);
-mp_cmean=mean(MP.clev(:,lyr),2);
-mf_cmean=mean(MF.clev(:,lyr),2);
-md_cmean=mean(MD.clev(:,lyr),2);
-lp_cmean=mean(LP.clev(:,lyr),2);
-ld_cmean=mean(LD.clev(:,lyr),2);
-
-Zsp=griddata(grid(:,2),grid(:,3),sp_cmean,X,Y) ;
-Zsf=griddata(grid(:,2),grid(:,3),sf_cmean,X,Y);
-Zsd=griddata(grid(:,2),grid(:,3),sd_cmean,X,Y);
-Zmp=griddata(grid(:,2),grid(:,3),mp_cmean,X,Y);
-Zmf=griddata(grid(:,2),grid(:,3),mf_cmean,X,Y);
-Zmd=griddata(grid(:,2),grid(:,3),md_cmean,X,Y);
-Zlp=griddata(grid(:,2),grid(:,3),lp_cmean,X,Y);
-Zld=griddata(grid(:,2),grid(:,3),ld_cmean,X,Y);
-
-% sp
-figure(1)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zsp); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['mean Larval P C/Cmax'])
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SPclev.png'])
-
-% sf
-figure(2)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zsf); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('mean Larval F C/Cmax')
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SFclev.png'])
-
-% sd
-figure(3)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zsd); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['mean Larval D C/Cmax'])
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SDclev.png'])
-
-% mp
-figure(4)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zmp); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['mean Juvenile P C/Cmax'])
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MPclev.png'])
-
-% mf
-figure(5)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zmf); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-%m_plot(-111,5,'o','w','MarkerSize',10);
-title(['mean Adult F C/Cmax'])
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MFclev.png'])
-
-% md
-figure(6)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zmd); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['Juvenile D C/Cmax'])
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MDclev.png'])
-
-% lp
-figure(7)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zlp); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['mean Adult P C/Cmax'])
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_LPclev.png'])
-
-% ld
-figure(8)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zld); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['mean Adult D C/Cmax'])
-colormap('jet')
-colorbar('h')
-%caxis([-4 2])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_LDclev.png'])
-
-%% Zoop
-load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2005.mat');
-
-% Last year
-zm_mean=mean(COBALT.Zm,2);
-zl_mean=mean(COBALT.Zl,2);
-dzm_mean=mean(COBALT.dZm,2);
-dzl_mean=mean(COBALT.dZl,2);
-
-Zm=griddata(grid(:,2),grid(:,3),zm_mean,X,Y) ;
-Zl=griddata(grid(:,2),grid(:,3),zl_mean,X,Y);
-dZm=griddata(grid(:,2),grid(:,3),dzm_mean,X,Y) ;
-dZl=griddata(grid(:,2),grid(:,3),dzl_mean,X,Y);
-
-% mz
-figure(1)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zm); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['mean MZ'])
-colormap('jet')
-colorbar('h')
-%caxis([0 10])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MZ.png'])
-
-% lz
-figure(2)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,Zl); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('mean LZ')
-colormap('jet')
-colorbar('h')
-%caxis([0 10])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_LZ.png'])
-
-% mz
-figure(3)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,dZm); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title(['mean dMZ'])
-colormap('jet')
-colorbar('h')
-%caxis([0 10])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_dMZ.png'])
-
-% lz
-figure(4)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,dZl); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('mean dLZ')
-colormap('jet')
-colorbar('h')
-%caxis([0 10])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_dLZ.png'])
-
-
-
-%% Gamma/rep
-for n=252:253
-    close all
-    
-    Zsp=griddata(grid(:,2),grid(:,3),SP.gamma(:,n),X,Y);
-    Zsf=griddata(grid(:,2),grid(:,3),SF.gamma(:,n),X,Y);
-    Zsd=griddata(grid(:,2),grid(:,3),SD.gamma(:,n),X,Y);
-    Zmp=griddata(grid(:,2),grid(:,3),MP.gamma(:,n),X,Y);
-    Zmf=griddata(grid(:,2),grid(:,3),MF.rep(:,n),X,Y);
-    Zmd=griddata(grid(:,2),grid(:,3),MD.gamma(:,n),X,Y);
-    Zlp=griddata(grid(:,2),grid(:,3),LP.rep(:,n),X,Y);
-    Zld=griddata(grid(:,2),grid(:,3),LD.rep(:,n),X,Y);
-    
-    % sp
-    figure(1)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval P gamma (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SPgamma' num2str(n) '.png'])
-    
-    % sf
-    figure(2)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsf)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval F gamma (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SFgamma' num2str(n) '.png'])
-    
-    % sd
-    figure(3)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zsd)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval D gamma (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SDgamma' num2str(n) '.png'])
-    
-    % mp
-    figure(4)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile P gamma (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MPgamma' num2str(n) '.png'])
-    
-    % mf
-    figure(5)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmf)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    %m_plot(-111,5,'o','w','MarkerSize',10);
-    title(['log10 mean Adult F rep (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MFrep' num2str(n) '.png'])
-    
-    % md
-    figure(6)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zmd)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile D gamma (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MDgamma' num2str(n) '.png'])
-    
-    % lp
-    figure(7)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zlp)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Adult P rep (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LPrep' num2str(n) '.png'])
-    
-    % ld
-    figure(8)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,log10(Zld)); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Adult D rep (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    %caxis([-4 2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LDrep' num2str(n) '.png'])
-end
-
-%% Gamma/rep
-for n=252:253
-    close all
-    
-    % mp
-    figure(4)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zmp); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['mean Juvenile P gamma (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-1e-25 0])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MPgamma' num2str(n) '.png'])
-    
-    % md
-    figure(6)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zmd); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['mean Juvenile D gamma (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-1e-25 0])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MDgamma' num2str(n) '.png'])
-    
-end
-%%
-figure
-plot(MP.gamma(:,252),'.')
-test=log10(MP.gamma(:,252));
-figure
-plot(test,'.')
-
-%% Nu
-for n=252:253
-    close all
-    
-    Zsp=griddata(grid(:,2),grid(:,3),SP.nu(:,n),X,Y);
-    Zsf=griddata(grid(:,2),grid(:,3),SF.nu(:,n),X,Y);
-    Zsd=griddata(grid(:,2),grid(:,3),SD.nu(:,n),X,Y);
-    Zmp=griddata(grid(:,2),grid(:,3),MP.nu(:,n),X,Y);
-    Zmf=griddata(grid(:,2),grid(:,3),MF.nu(:,n),X,Y);
-    Zmd=griddata(grid(:,2),grid(:,3),MD.nu(:,n),X,Y);
-    Zlp=griddata(grid(:,2),grid(:,3),LP.nu(:,n),X,Y);
-    Zld=griddata(grid(:,2),grid(:,3),LD.nu(:,n),X,Y);
-    
-    % sp
-    figure(1)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zsp); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval P nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SPnu' num2str(n) '.png'])
-    
-    % sf
-    figure(2)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zsf); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval F nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SFnu' num2str(n) '.png'])
-    
-    % sd
-    figure(3)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zsd); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Larval D nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_SDnu' num2str(n) '.png'])
-    
-    % mp
-    figure(4)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zmp); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile P nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MPnu' num2str(n) '.png'])
-    
-    % mf
-    figure(5)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zmf); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    %m_plot(-111,5,'o','w','MarkerSize',10);
-    title(['log10 mean Adult F nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MFnu' num2str(n) '.png'])
-    
-    % md
-    figure(6)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zmd); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Juvenile D nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_MDnu' num2str(n) '.png'])
-    
-    % lp
-    figure(7)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zlp); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Adult P nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LPnu' num2str(n) '.png'])
-    
-    % ld
-    figure(8)
-    m_proj('miller','lat',82);
-    m_pcolor(X,Y,Zld); hold on;
-    shading flat
-    m_coast('patch',[.5 .5 .5],'edgecolor','none');
-    m_grid;
-    title(['log10 mean Adult D nu (g m^-^2) mo ' num2str(n)])
-    colormap('jet')
-    colorbar('h')
-    caxis([-0.2 0.2])
-    stamp(cfile)
-    print('-dpng',[ppath 'Spinup_global_LDnu' num2str(n) '.png'])
-end
-
-%% Find negative values
-mos=250:254;
-tend=length(mos);
-bio=NaN*ones(9,tend);
-con=NaN*ones(8,tend);
-die=NaN*ones(8,tend);
-gamma=NaN*ones(8,tend);
-rec=NaN*ones(8,tend);
-
-for k=1:tend
-    n=mos(k);
-    %bio
-    id = (SP.bio(:,n) < 0);
-    bio(1,k) = sum(id);
-    id = (SF.bio(:,n) < 0);
-    bio(2,k) = sum(id);
-    id = (SD.bio(:,n) < 0);
-    bio(3,k) = sum(id);
-    id = (MP.bio(:,n) < 0);
-    bio(4,k) = sum(id);
-    id = (MF.bio(:,n) < 0);
-    bio(5,k) = sum(id);
-    id = (MD.bio(:,n) < 0);
-    bio(6,k) = sum(id);
-    id = (LP.bio(:,n) < 0);
-    bio(7,k) = sum(id);
-    id = (LD.bio(:,n) < 0);
-    bio(8,k) = sum(id);
-    id = (BENT.bio(:,n) < 0);
-    bio(9,k) = sum(id);
-    %con
-    id = (SP.con(:,n) < 0);
-    con(1,k) = sum(id);
-    id = (SF.con(:,n) < 0);
-    con(2,k) = sum(id);
-    id = (SD.con(:,n) < 0);
-    con(3,k) = sum(id);
-    id = (MP.con(:,n) < 0);
-    con(4,k) = sum(id);
-    id = (MF.con(:,n) < 0);
-    con(5,k) = sum(id);
-    id = (MD.con(:,n) < 0);
-    con(6,k) = sum(id);
-    id = (LP.con(:,n) < 0);
-    con(7,k) = sum(id);
-    id = (LD.con(:,n) < 0);
-    con(8,k) = sum(id);
-    %die
-    id = (SP.die(:,n) < 0);
-    die(1,k) = sum(id);
-    id = (SF.die(:,n) < 0);
-    die(2,k) = sum(id);
-    id = (SD.die(:,n) < 0);
-    die(3,k) = sum(id);
-    id = (MP.die(:,n) < 0);
-    die(4,k) = sum(id);
-    id = (MF.die(:,n) < 0);
-    die(5,k) = sum(id);
-    id = (MD.die(:,n) < 0);
-    die(6,k) = sum(id);
-    id = (LP.die(:,n) < 0);
-    die(7,k) = sum(id);
-    id = (LD.die(:,n) < 0);
-    die(8,k) = sum(id);
-    %gamma/rep
-    id = (SP.gamma(:,n) < 0);
-    gamma(1,k) = sum(id);
-    id = (SF.gamma(:,n) < 0);
-    gamma(2,k) = sum(id);
-    id = (SD.gamma(:,n) < 0);
-    gamma(3,k) = sum(id);
-    id = (MP.gamma(:,n) < 0);
-    gamma(4,k) = sum(id);
-    id = (MF.rep(:,n) < 0);
-    gamma(5,k) = sum(id);
-    id = (MD.gamma(:,n) < 0);
-    gamma(6,k) = sum(id);
-    id = (LP.rep(:,n) < 0);
-    gamma(7,k) = sum(id);
-    id = (LD.rep(:,n) < 0);
-    gamma(8,k) = sum(id);
-    %rec
-    id = (SP.rec(:,n) < 0);
-    rec(1,k) = sum(id);
-    id = (SF.rec(:,n) < 0);
-    rec(2,k) = sum(id);
-    id = (SD.rec(:,n) < 0);
-    rec(3,k) = sum(id);
-    id = (MP.rec(:,n) < 0);
-    rec(4,k) = sum(id);
-    id = (MF.rec(:,n) < 0);
-    rec(5,k) = sum(id);
-    id = (MD.rec(:,n) < 0);
-    rec(6,k) = sum(id);
-    id = (LP.rec(:,n) < 0);
-    rec(7,k) = sum(id);
-    id = (LD.rec(:,n) < 0);
-    rec(8,k) = sum(id);
-    
-end
-%%
-figure
-plot(1:tend,bio)
-%ylim([0 10])
-legend('SP','MP','LP','SF','MF','SD','MD','LD','B')
-legend('location','northwest')
-print('-dpng',[ppath 'biotest.png'])
-
-figure
-plot(1:tend,con)
-%ylim([0 10])
-legend('SP','MP','LP','SF','MF','SD','MD','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'contest.png'])
-
-figure
-plot(1:tend,die)
-%ylim([0 10])
-legend('SP','MP','LP','SF','MF','SD','MD','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'dietest.png'])
-
-figure
-plot(1:tend,gamma)
-%ylim([0 10])
-legend('SP','MP','LP','SF','MF','SD','MD','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'gammatest.png'])
-
-figure
-plot(1:tend,rec)
-%ylim([0 10])
-legend('SP','MP','LP','SF','MF','SD','MD','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'rectest.png'])
-
-%% Find NaNs
-mos=250:254;
-tend=length(mos);
-bio=NaN*ones(9,tend);
-con=NaN*ones(8,tend);
-die=NaN*ones(8,tend);
-gamma=NaN*ones(8,tend);
-rec=NaN*ones(8,tend);
-
-for k=1:tend
-    n=mos(k);
-    %bio
-    id = isnan(SP.bio(:,n));
-    bio(1,k) = sum(id);
-    id = isnan(SF.bio(:,n));
-    bio(2,k) = sum(id);
-    id = isnan(SD.bio(:,n));
-    bio(3,k) = sum(id);
-    id = isnan(MP.bio(:,n));
-    bio(4,k) = sum(id);
-    id = isnan(MF.bio(:,n));
-    bio(5,k) = sum(id);
-    id = isnan(MD.bio(:,n));
-    bio(6,k) = sum(id);
-    id = isnan(LP.bio(:,n));
-    bio(7,k) = sum(id);
-    id = isnan(LD.bio(:,n));
-    bio(8,k) = sum(id);
-    id = isnan(BENT.bio(:,n));
-    bio(9,k) = sum(id);
-    %con
-    id = isnan(SP.con(:,n));
-    con(1,k) = sum(id);
-    id = isnan(SF.con(:,n));
-    con(2,k) = sum(id);
-    id = isnan(SD.con(:,n));
-    con(3,k) = sum(id);
-    id = isnan(MP.con(:,n));
-    con(4,k) = sum(id);
-    id = isnan(MF.con(:,n));
-    con(5,k) = sum(id);
-    id = isnan(MD.con(:,n));
-    con(6,k) = sum(id);
-    id = isnan(LP.con(:,n));
-    con(7,k) = sum(id);
-    id = isnan(LD.con(:,n));
-    con(8,k) = sum(id);
-    %die
-    id = isnan(SP.die(:,n));
-    die(1,k) = sum(id);
-    id = isnan(SF.die(:,n));
-    die(2,k) = sum(id);
-    id = isnan(SD.die(:,n));
-    die(3,k) = sum(id);
-    id = isnan(MP.die(:,n));
-    die(4,k) = sum(id);
-    id = isnan(MF.die(:,n));
-    die(5,k) = sum(id);
-    id = isnan(MD.die(:,n));
-    die(6,k) = sum(id);
-    id = isnan(LP.die(:,n));
-    die(7,k) = sum(id);
-    id = isnan(LD.die(:,n));
-    die(8,k) = sum(id);
-    %gamma/rep
-    id = isnan(SP.gamma(:,n));
-    gamma(1,k) = sum(id);
-    id = isnan(SF.gamma(:,n));
-    gamma(2,k) = sum(id);
-    id = isnan(SD.gamma(:,n));
-    gamma(3,k) = sum(id);
-    id = isnan(MP.gamma(:,n));
-    gamma(4,k) = sum(id);
-    id = isnan(MF.rep(:,n));
-    gamma(5,k) = sum(id);
-    id = isnan(MD.gamma(:,n));
-    gamma(6,k) = sum(id);
-    id = isnan(LP.rep(:,n));
-    gamma(7,k) = sum(id);
-    id = isnan(LD.rep(:,n));
-    gamma(8,k) = sum(id);
-    %rec
-    id = isnan(SP.rec(:,n));
-    rec(1,k) = sum(id);
-    id = isnan(SF.rec(:,n));
-    rec(2,k) = sum(id);
-    id = isnan(SD.rec(:,n));
-    rec(3,k) = sum(id);
-    id = isnan(MP.rec(:,n));
-    rec(4,k) = sum(id);
-    id = isnan(MF.rec(:,n));
-    rec(5,k) = sum(id);
-    id = isnan(MD.rec(:,n));
-    rec(6,k) = sum(id);
-    id = isnan(LP.rec(:,n));
-    rec(7,k) = sum(id);
-    id = isnan(LD.rec(:,n));
-    rec(8,k) = sum(id);
-    
-end
-%%
-figure
-bar(bio')
-legend('SP','SF','SD','MP','MF','MD','LP','LD','B')
-legend('location','northwest')
-print('-dpng',[ppath 'biotest.png'])
-
-figure
-bar(con')
-legend('SP','SF','SD','MP','MF','MD','LP','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'contest.png'])
-
-figure
-bar(die')
-legend('SP','SF','SD','MP','MF','MD','LP','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'dietest.png'])
-
-figure
-bar(gamma')
-legend('SP','SF','SD','MP','MF','MD','LP','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'gammatest.png'])
-
-figure
-bar(rec')
-legend('SP','SF','SD','MP','MF','MD','LP','LD')
-legend('location','northwest')
-print('-dpng',[ppath 'rectest.png'])
-
-%%
-n=253;
-id=find(isnan(SP.bio(:,n)));    %43320
-grid(id,2:3);                   %-15.5000lon   60.5000lat
-id2=find(isnan(SP.die(:,n)));
-grid(id2,2:3);
-id3=find(isnan(SP.con(:,n)));
-grid(id3,2:3);
-id4=find(isnan(MP.con(:,n)));
-grid(id4,2:3);
-id5=find(isnan(SP.rec(:,n)))
-grid(id5,2:3)
-
-
-% END DEBUGGING -------------------------------------------------------------
-
-%%
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'geolon_t','geolat_t');
 
@@ -1296,6 +194,9 @@ Zlp=NaN*ones(ni,nj);
 Zld=NaN*ones(ni,nj);
 Zb=NaN*ones(ni,nj);
 
+ocean=NaN*ones(ni,nj);
+ocean(grid(:,1))=ones(size(sf_mean));
+
 Zsf(grid(:,1))=sf_mean;
 Zsp(grid(:,1))=sp_mean;
 Zsd(grid(:,1))=sd_mean;
@@ -1305,6 +206,20 @@ Zmd(grid(:,1))=md_mean;
 Zlp(grid(:,1))=lp_mean;
 Zld(grid(:,1))=ld_mean;
 Zb(grid(:,1))=b_mean;
+
+%% ocean cells
+figure(55)
+m_proj('miller','lat',82);
+surf(geolon_t,geolat_t,ocean); view(2); hold on;
+shading flat
+% m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% m_grid;
+title('Water cells')
+colormap('jet')
+colorbar('h')
+caxis([1 2])
+stamp(cfile)
+print('-dpng',[ppath 'Ocean_cells.png'])
 
 % bent
 figure(50)
@@ -1316,7 +231,7 @@ shading flat
 title('log10 mean benthic biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2.5 0.5])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_BENT.png'])
 
@@ -1345,7 +260,7 @@ shading flat
 title('log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-%caxis([-4 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SP.png'])
 
@@ -1359,7 +274,7 @@ shading flat
 title('log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-%caxis([-4 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SF.png'])
 
@@ -1373,7 +288,7 @@ shading flat
 title('log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-%caxis([-4 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SD.png'])
 
@@ -1387,7 +302,7 @@ shading flat
 title('log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-%caxis([-4 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MP.png'])
 
@@ -1401,7 +316,7 @@ shading flat
 title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MF.png'])
 
@@ -1415,7 +330,7 @@ shading flat
 title('log10 mean Juvenile D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-%caxis([-4 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MD.png'])
 
@@ -1429,7 +344,7 @@ shading flat
 title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LP.png'])
 
@@ -1443,7 +358,7 @@ shading flat
 title('log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-2 2])
+caxis([-2 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LD.png'])
 

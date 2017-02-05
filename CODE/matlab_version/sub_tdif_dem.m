@@ -11,5 +11,5 @@ function tdif = sub_tdif_dem(Z,bio1,bio2,bio3,bio4)
     biod = bio3+bio4;
     tdif = zeros(size(Z));
     id = (Z < PI_be_cutoff);
-    tdif(id,1) = biop ./ (biop+biod);
+    tdif(id,1) = biop(id,1) ./ (biop(id,1) + biod(id,1));
 end

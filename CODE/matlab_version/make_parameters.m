@@ -61,10 +61,10 @@ function make_parameters()
     
     %%%! Transfer efficiency of detritus to benthic prey
     bent_eff = 0.05;
-    CC = 2.75;
+    CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 0.5;
+    rfrac = 1.0;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;

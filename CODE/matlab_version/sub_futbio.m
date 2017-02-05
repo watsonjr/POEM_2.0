@@ -160,15 +160,15 @@ Md.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Md.td,M_m);
 Lp.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Lp.td,M_l);
 Ld.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Ld.td,M_l);
 
-% Degree days
-Mf.DD = sub_degday(Mf.DD,ENVR.Tp,ENVR.Tb,Mf.td,ENVR.T0p,Mf.S,DY);
-Lp.DD = sub_degday(Lp.DD,ENVR.Tp,ENVR.Tb,Lp.td,ENVR.T0p,Lp.S,DY);
-Ld.DD = sub_degday(Ld.DD,ENVR.Tp,ENVR.Tb,1-Ld.td,ENVR.T0b,Ld.S,DY);
-
-% Spawning flag determined from DD, dthresh
-[Mf.S, Mf.DD] = sub_kflag(Mf.S,Mf.DD,ENVR.Dthresh,DY);
-[Ld.S, Ld.DD] = sub_kflag(Ld.S,Ld.DD,ENVR.Dthresh,DY);
-[Lp.S, Lp.DD] = sub_kflag(Lp.S,Lp.DD,ENVR.Dthresh,DY);
+% % Degree days
+% Mf.DD = sub_degday(Mf.DD,ENVR.Tp,ENVR.Tb,Mf.td,ENVR.T0p,Mf.S,DY);
+% Lp.DD = sub_degday(Lp.DD,ENVR.Tp,ENVR.Tb,Lp.td,ENVR.T0p,Lp.S,DY);
+% Ld.DD = sub_degday(Ld.DD,ENVR.Tp,ENVR.Tb,1-Ld.td,ENVR.T0b,Ld.S,DY);
+% 
+% % Spawning flag determined from DD, dthresh
+% [Mf.S, Mf.DD] = sub_kflag(Mf.S,Mf.DD,ENVR.Dthresh,DY);
+% [Ld.S, Ld.DD] = sub_kflag(Ld.S,Ld.DD,ENVR.Dthresh,DY);
+% [Lp.S, Lp.DD] = sub_kflag(Lp.S,Lp.DD,ENVR.Dthresh,DY);
 
 % Energy available for somatic growth nu
 [Sf.nu, Sf.prod] = sub_nu(Sf.I,Sf.bio,Sf.met);
