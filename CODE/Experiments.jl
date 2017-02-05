@@ -24,10 +24,10 @@ function Testoneloc()
 # for C = 1:length(CarCap)
 # 		CC = CarCap[C]
 
-		for R = 1:length(RE)
-			rfrac = RE[R]
+		# for R = 1:length(RE)
+		# 	rfrac = RE[R]
 
-			for F = 1:length(Fmort)
+			for F = 1#:length(Fmort)
 			#! Make parameters
 				frate = Fmort[F]
 				dfrate = frate/365.0
@@ -52,15 +52,17 @@ function Testoneloc()
 				global TrefB = Tref
 				global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 				global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-				YEARS = 100
+				YEARS = 25 #100
 			  global DAYS = 365
 
 				#! choose where to run the model
 				global GRD = load("./Data/Data_grid_hindcast_NOTflipped.jld")
 				XY = zeros(Int,360,200);
 			  XY[GRD["ID"]] = collect(1:GRD["N"])
-				ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045]
-				names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus","PUp"]
+				# ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045]
+				# names = ["GB","EBS","OSP","HOT","BATS","NS","EEP","K2","S1","Aus","PUp"]
+				ids = [14143]
+				names = ["SPac"]
 
 				tfcrit = string(Int(100*fcrit))
 				tmz = string(100+Int(10*MF_phi_MZ))
@@ -115,7 +117,7 @@ function Testoneloc()
 					mkdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname))
 				end
 
-				for L = 1:11
+				for L = 1#:11
 					ID = ids[L]
 					loc = names[L]
 
@@ -170,7 +172,7 @@ function Testoneloc()
 							DY+=1
 
 							#! Save
-							if (YR==YEARS)
+							#if (YR==YEARS)
 								writecsv(Spinup_Sml_f,[Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep Sml_f.rec Sml_f.egg Sml_f.clev Sml_f.DD Sml_f.S[DY-1] Sml_f.prod Sml_f.pred Sml_f.nmort Sml_f.met Sml_f.caught])
 								writecsv(Spinup_Sml_p,[Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.egg Sml_p.clev Sml_p.DD Sml_p.S[DY-1] Sml_p.prod Sml_p.pred Sml_p.nmort Sml_p.met Sml_p.caught])
 								writecsv(Spinup_Sml_d,[Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.egg Sml_d.clev Sml_d.DD Sml_d.S[DY-1] Sml_d.prod Sml_d.pred Sml_d.nmort Sml_d.met Sml_d.caught])
@@ -180,7 +182,7 @@ function Testoneloc()
 								writecsv(Spinup_Lrg_p,[Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.egg Lrg_p.clev Lrg_p.DD Lrg_p.S[DY-1] Lrg_p.prod Lrg_p.pred Lrg_p.nmort Lrg_p.met Lrg_p.caught])
 								writecsv(Spinup_Lrg_d,[Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.egg Lrg_d.clev Lrg_d.DD Lrg_d.S[DY-1] Lrg_d.prod Lrg_d.pred Lrg_d.nmort Lrg_d.met Lrg_d.caught])
 								writecsv(Spinup_Cobalt,[BENT.mass ENVR.fZm ENVR.fZl ENVR.fB])
-							end
+							#end
 						end #Days
 					end #Years
 
@@ -197,7 +199,7 @@ function Testoneloc()
 
 				end #Locations
 			end #Fmort
-		end #RE
+		# end #RE
 # 	end #CC
 # end #BE
 end

@@ -363,7 +363,9 @@ npath10 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_JCnmort_BE05_RE01/';
 npath11 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_JCnmort_BE05_RE01/';
 npath12 = 'Dc_TrefO_JC_all_MFeqMP_MZ01_nmort_BE05_RE01/';
 
-dp = {npath12};
+npath0 = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE0500/';
+
+dp = {npath0};
 % dp = {npath0;npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9};
 % dp = {npath6;npath7;npath8;npath9;npath10};
 % dp = {npath14;npath15;npath16};
@@ -416,9 +418,6 @@ if (fplot==1)
             x=1:length(SP);
             y=x/365;
             lstd=length(SP);
-            id1 = 0:365:(lstd-1);
-            id2 = 365:365:(lstd);
-            ID  = [id1 id2];
             
             %% Mean consumption level
             c=[SF(:,21) SP(:,21) SD(:,21) MF(:,21) MP(:,21) MD(:,21) LP(:,21) LD(:,21)];
@@ -867,7 +866,7 @@ if (fplot==1)
             PAy = SPy;
             FAy = SPy;
             DAy = SPy;
-            for n=1:100
+            for n=1:25 %100
                 SPy(n) = nansum(SPL(st(n):en(n)));
                 SFy(n) = nansum(SFL(st(n):en(n)));
                 SDy(n) = nansum(SDL(st(n):en(n)));
@@ -964,4 +963,170 @@ else
         
     end
 end
+
+%% DEBUG ---------------------------------------------------
+% Find NaNs
+mos=8894:8897;
+tend=length(mos);
+bio=NaN*ones(9,tend);
+con=NaN*ones(8,tend);
+die=NaN*ones(8,tend);
+gamma=NaN*ones(8,tend);
+rec=NaN*ones(8,tend);
+nu=NaN*ones(8,tend);
+
+for k=1:tend
+    n=mos(k);
+    %bio
+    id = isnan(SP(n,1));
+    bio(1,k) = sum(id);
+    id = isnan(SF(n,1));
+    bio(2,k) = sum(id);
+    id = isnan(SD(n,1));
+    bio(3,k) = sum(id);
+    id = isnan(MP(n,1));
+    bio(4,k) = sum(id);
+    id = isnan(MF(n,1));
+    bio(5,k) = sum(id);
+    id = isnan(MD(n,1));
+    bio(6,k) = sum(id);
+    id = isnan(LP(n,1));
+    bio(7,k) = sum(id);
+    id = isnan(LD(n,1));
+    bio(8,k) = sum(id);
+    id = isnan(C(n,1));
+    bio(9,k) = sum(id);
+    %con
+    id = isnan(SP(n,14));
+    con(1,k) = sum(id);
+    id = isnan(SF(n,14));
+    con(2,k) = sum(id);
+    id = isnan(SD(n,14));
+    con(3,k) = sum(id);
+    id = isnan(MP(n,14));
+    con(4,k) = sum(id);
+    id = isnan(MF(n,14));
+    con(5,k) = sum(id);
+    id = isnan(MD(n,14));
+    con(6,k) = sum(id);
+    id = isnan(LP(n,14));
+    con(7,k) = sum(id);
+    id = isnan(LD(n,14));
+    con(8,k) = sum(id);
+    %die
+    id = isnan(SP(n,17));
+    die(1,k) = sum(id);
+    id = isnan(SF(n,17));
+    die(2,k) = sum(id);
+    id = isnan(SD(n,17));
+    die(3,k) = sum(id);
+    id = isnan(MP(n,17));
+    die(4,k) = sum(id);
+    id = isnan(MF(n,17));
+    die(5,k) = sum(id);
+    id = isnan(MD(n,17));
+    die(6,k) = sum(id);
+    id = isnan(LP(n,17));
+    die(7,k) = sum(id);
+    id = isnan(LD(n,17));
+    die(8,k) = sum(id);
+    %gamma/rep
+    id = isnan(SP(n,16));
+    gamma(1,k) = sum(id);
+    id = isnan(SF(n,16));
+    gamma(2,k) = sum(id);
+    id = isnan(SD(n,16));
+    gamma(3,k) = sum(id);
+    id = isnan(MP(n,16));
+    gamma(4,k) = sum(id);
+    id = isnan(MF(n,18));
+    gamma(5,k) = sum(id);
+    id = isnan(MD(n,16));
+    gamma(6,k) = sum(id);
+    id = isnan(LP(n,18));
+    gamma(7,k) = sum(id);
+    id = isnan(LD(n,18));
+    gamma(8,k) = sum(id);
+    %rec
+    id = isnan(SP(n,19));
+    rec(1,k) = sum(id);
+    id = isnan(SF(n,19));
+    rec(2,k) = sum(id);
+    id = isnan(SD(n,19));
+    rec(3,k) = sum(id);
+    id = isnan(MP(n,19));
+    rec(4,k) = sum(id);
+    id = isnan(MF(n,19));
+    rec(5,k) = sum(id);
+    id = isnan(MD(n,19));
+    rec(6,k) = sum(id);
+    id = isnan(LP(n,19));
+    rec(7,k) = sum(id);
+    id = isnan(LD(n,19));
+    rec(8,k) = sum(id);
+    %nu
+    id = isnan(SP(n,15));
+    nu(1,k) = sum(id);
+    id = isnan(SF(n,15));
+    nu(2,k) = sum(id);
+    id = isnan(SD(n,15));
+    nu(3,k) = sum(id);
+    id = isnan(MP(n,15));
+    nu(4,k) = sum(id);
+    id = isnan(MF(n,15));
+    nu(5,k) = sum(id);
+    id = isnan(MD(n,15));
+    nu(6,k) = sum(id);
+    id = isnan(LP(n,15));
+    nu(7,k) = sum(id);
+    id = isnan(LD(n,15));
+    nu(8,k) = sum(id);
+    
+end
+%%
+figure
+bar(bio')
+set(gca,'XTickLabel',mos)
+legend('SP','SF','SD','MP','MF','MD','LP','LD','B')
+legend('location','northwest')
+print('-dpng',[fpath 'nan_biotest.png'])
+
+figure
+bar(con')
+set(gca,'XTickLabel',mos)
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[fpath 'nan_contest.png'])
+
+figure
+bar(die')
+set(gca,'XTickLabel',mos)
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[fpath 'nan_dietest.png'])
+
+figure
+bar(gamma')
+set(gca,'XTickLabel',mos)
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[fpath 'nan_gammatest.png'])
+
+figure
+bar(rec')
+set(gca,'XTickLabel',mos)
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[fpath 'nan_rectest.png'])
+
+figure
+bar(nu')
+set(gca,'XTickLabel',mos)
+legend('SP','SF','SD','MP','MF','MD','LP','LD')
+legend('location','northwest')
+print('-dpng',[fpath 'nan_nutest.png'])
+
+
+
+
 
