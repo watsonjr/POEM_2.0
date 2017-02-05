@@ -13,12 +13,14 @@ frate = {'01','02','03','04','05','06','07','08','09','10'};
 % sims = {'1','0.5','0.1','0.05','0.01','5e-3','1e-3','5e-4','1e-4','5e-5','1e-5'};
 % rfrac = {'1000','0500','0100','0050','0010','00050','00010','00005',...
 %     '00001','000005','000001'};
-sims = {'4e-5','3e-5','2e-5'};
-rfrac = {'000004','000003','000002'};
+sims = {'1','0.5','0.1','0.05','0.01','5e-3','1e-3'};
+rfrac = {'1000','0500','0100','0050','0010','00050','00010'};
 fcrit = 40;
-nmort = 'M2';
+nmort = '0';
 kad = 100;
-pref = 'D050';
+pref = 'D100';
+BE = '05';
+CC = '050';
 
 sname = 'Spinup_';
 sname2 = '';
@@ -38,23 +40,15 @@ for r = 1:length(rfrac)
     RE = rfrac{r};
     for i=1:length(frate)
         F = frate{i};
-%         dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%             '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE)  '_K' num2str(kad) ...
-%             '_LD_fish' F];
         dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-            '_' pref '_nmort'  nmort '_BE05_RE' num2str(RE) '_LD_fish' F];
-%         dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%             '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE) '_BAassim_LD_fish' F];
+                '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' num2str(RE)...
+                '_LD_fish' F];
         dpath = [datap char(dp) '/'];
         fpath = [figp char(dp) '/'];
         cfile = char(dp);
-%         cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%             '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE)  '_K' num2str(kad) ...
-%             '_LD_fishing_catch'];
         cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-            '_' pref '_nmort'  nmort '_BE05_RE' num2str(RE) '_LD_fishing_catch'];
-%         cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%             '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE) '_BAassim_LD_fishing_catch'];
+            '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' num2str(RE)...
+            '_LD_fishing_catch'];
         
         %%
         Psum = NaN*ones(3,length(spots));
@@ -97,7 +91,7 @@ for r = 1:length(rfrac)
         z = NaN*ones(length(spots),3);
         
         %%
-        for s = [1,2,6] %=1:length(spots)
+        for s = 1:length(spots)
             %%
             loc = spots{s};
             lname = [sname2 loc '_'];
@@ -353,7 +347,7 @@ for r = 1:length(rfrac)
     end
     
     %%
-    for s=[1,2,6] %1:length(spots)
+    for s=1:length(spots)
         
         loc = spots{s};
         lname = [sname2 loc '_'];
@@ -361,13 +355,9 @@ for r = 1:length(rfrac)
         %%
         for i=1:length(frate)
             F = frate{i};
-%             dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%                 '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE)  '_K' num2str(kad) ...
-%                 '_LD_fish' F];
             dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-                '_' pref '_nmort'  nmort '_BE05_RE' num2str(RE) '_LD_fish' F];
-%             dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%                 '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE) '_BAassim_LD_fish' F];
+                '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' num2str(RE)...
+                '_LD_fish' F];
             dpath = [char(dp) '/'];
             load([datap dpath sname sname2 'lastyr_sum_mean_biom']);
             
@@ -393,7 +383,7 @@ for r = 1:length(rfrac)
     end
     
     %%
-    for s=[1,2,6] %1:length(spots)
+    for s=1:length(spots)
         
         loc = spots{s};
         lname = [sname2 loc '_'];
@@ -401,13 +391,9 @@ for r = 1:length(rfrac)
         %%
         for i=1:length(frate)
             F = frate{i};
-%             dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%                 '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE)  '_K' num2str(kad) ...
-%                 '_LD_fish' F];
             dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-                '_' pref '_nmort'  nmort '_BE05_RE' num2str(RE) '_LD_fish' F];
-%             dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%                 '_MZ01_nmort'  nmort '_BE05_RE' num2str(RE) '_BAassim_LD_fish' F];
+                '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' num2str(RE)...
+                '_LD_fish' F];
             dpath = [char(dp) '/'];
             load([datap dpath sname sname2 'lastyr_sum_mean_biom']);
             

@@ -121,10 +121,10 @@ function make_parameters(harv,frate)
 
 	###! Transfer efficiency of detritus to benthic prey & carrying capacity
 	const global bent_eff = 0.05
-	const global CC = 0.5
+	const global CC = 2.75
 
 	###! Reproductive efficiency
-	#const global rfrac = 1.0
+	const global rfrac = 0.5
 
 	#! Fraction of time spent swimming (from Van Leeuwen)
 	const global Tu_s = 1.0

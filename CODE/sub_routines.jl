@@ -153,17 +153,17 @@ function sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p
 		Lrg_p.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],M_l)
 		Lrg_d.nmort[JD] = sub_nmort(ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],M_l)
 
-		#! Degree days
-		Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0p[JD],Med_f.S[JD,:],DY)
-		Lrg_p.DD[JD] = sub_degday(Lrg_p.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],ENVR.T0p[JD],Lrg_p.S[JD,:],DY)
-		#Lrg_d.DD[JD] = sub_degday(Lrg_d.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],ENVR.T0b[JD],Lrg_d.S[JD,:],DY)
-		#Assume demersal spawn at same time as pelagic b/c larvae also need spring bloom
-		Lrg_d.DD[JD] = sub_degday(Lrg_d.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],1-Lrg_d.td[JD],ENVR.T0b[JD],Lrg_d.S[JD,:],DY)
-
-		#! Spawning flag determined from DD, dthresh
-		Med_f.S[JD,:], Med_f.DD[JD] = sub_kflag(Med_f.S[JD,:],Med_f.DD[JD],ENVR.Dthresh[JD],DY);
-		Lrg_d.S[JD,:], Lrg_d.DD[JD] = sub_kflag(Lrg_d.S[JD,:],Lrg_d.DD[JD],ENVR.Dthresh[JD],DY);
-		Lrg_p.S[JD,:], Lrg_p.DD[JD] = sub_kflag(Lrg_p.S[JD,:],Lrg_p.DD[JD],ENVR.Dthresh[JD],DY);
+		# #! Degree days
+		# Med_f.DD[JD] = sub_degday(Med_f.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Med_f.td[JD],ENVR.T0p[JD],Med_f.S[JD,:],DY)
+		# Lrg_p.DD[JD] = sub_degday(Lrg_p.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_p.td[JD],ENVR.T0p[JD],Lrg_p.S[JD,:],DY)
+		# #Lrg_d.DD[JD] = sub_degday(Lrg_d.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],Lrg_d.td[JD],ENVR.T0b[JD],Lrg_d.S[JD,:],DY)
+		# #Assume demersal spawn at same time as pelagic b/c larvae also need spring bloom
+		# Lrg_d.DD[JD] = sub_degday(Lrg_d.DD[JD],ENVR.Tp[JD],ENVR.Tb[JD],1-Lrg_d.td[JD],ENVR.T0b[JD],Lrg_d.S[JD,:],DY)
+		#
+		# #! Spawning flag determined from DD, dthresh
+		# Med_f.S[JD,:], Med_f.DD[JD] = sub_kflag(Med_f.S[JD,:],Med_f.DD[JD],ENVR.Dthresh[JD],DY);
+		# Lrg_d.S[JD,:], Lrg_d.DD[JD] = sub_kflag(Lrg_d.S[JD,:],Lrg_d.DD[JD],ENVR.Dthresh[JD],DY);
+		# Lrg_p.S[JD,:], Lrg_p.DD[JD] = sub_kflag(Lrg_p.S[JD,:],Lrg_p.DD[JD],ENVR.Dthresh[JD],DY);
 
 		#! energy available for somatic growth nu
 		Sml_f.nu[JD], Sml_f.prod[JD] = sub_nu(Sml_f.I[JD],Sml_f.bio[JD],Sml_f.met[JD])
