@@ -373,14 +373,15 @@ dp = {npath0};
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12;...
 %     npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;npath21};
 
-spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
+%spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
+spots = {'SPac'};
 
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
     'rec','egg','clev','DD','S','prod','pred','nmort','met','catch'};
 cols=cols';
 
-fplot=0;
+fplot=1;
 
 %%
 if (fplot==1)
@@ -866,7 +867,7 @@ if (fplot==1)
             PAy = SPy;
             FAy = SPy;
             DAy = SPy;
-            for n=1:25 %100
+            for n=1:100
                 SPy(n) = nansum(SPL(st(n):en(n)));
                 SFy(n) = nansum(SFL(st(n):en(n)));
                 SDy(n) = nansum(SDL(st(n):en(n)));
