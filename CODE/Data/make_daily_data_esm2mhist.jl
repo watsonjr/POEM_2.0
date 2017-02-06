@@ -43,6 +43,33 @@ dZl=ncread("/Volumes/GFDL/GCM_DATA/ESM2M_hist/ocean_cobalt_miscflux_100.186101-2
 #! Detrital flux at the sea floor (mol C m-2 s-1)
 dDet=ncread("/Volumes/GFDL/GCM_DATA/ESM2M_hist/ocean_cobalt_btm.186101-200512.fndet_btm.nc","fndet_btm");
 
+#! Add first month of next simulation period
+TIME2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
+    "average_T1");
+Tb2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_btm.200601-210012.btm_temp.nc","btm_temp", start=[1,1,1], count=[-1,-1,1]);
+Tp2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean.200601-210012.temp100.nc","TEMP100", start=[1,1,1], count=[-1,-1,1]);
+Zm2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_biomass_100.200601-210012.nmdz_100.nc",
+	"nmdz_100", start=[1,1,1], count=[-1,-1,1]);
+Zl2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_biomass_100.200601-210012.nlgz_100.nc",
+	"nlgz_100", start=[1,1,1], count=[-1,-1,1]);
+dZm2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_miscflux_100.200601-210012.jhploss_nmdz_100.nc",
+	"jhploss_nmdz_100", start=[1,1,1], count=[-1,-1,1]);
+dZl2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_miscflux_100.200601-210012.jhploss_nlgz_100.nc",
+	"jhploss_nlgz_100", start=[1,1,1], count=[-1,-1,1]);
+dDet2 = ncread("/Volumes/GFDL/GCM_DATA/RCP85/ocean_cobalt_btm.200601-210012.fndet_btm.nc","fndet_btm", start=[1,1,1], count=[-1,-1,1]);
+
+TIME3 = TIME[end]+TIME2[2:end];
+TIME4 = [TIME;TIME3];
+TIME5 = TIME4[1:length(TIME)+2];
+TIME = TIME5;
+Tb = cat(3,Tb,Tb2);
+Tp = cat(3,Tp,Tp2);
+Zm = cat(3,Zm,Zm2);
+Zl = cat(3,Zl,Zl2);
+dZm = cat(3,dZm,dZm2);
+dZl = cat(3,dZl,dZl2);
+dDet = cat(3,dDet,dDet2);
+
 #! Ocean currents
 #U = ncread("/Volumes/GFDL/GCM_DATA/ESM2M_hist/ocean.186101-200512.u_100_avg.nc","U_100");
 #V = ncread("/Volumes/GFDL/GCM_DATA/ESM2M_hist/ocean.186101-200512.v_100_avg.nc","V_100");
@@ -61,7 +88,8 @@ NID = length(WID); # number of water cells
 #! months in a year
 lstd = Int(TIME[length(TIME)])+31 - Int(TIME[1])
 id1 = collect(TIME[1]:365:(lstd-1))
-id2 = collect(TIME[1]+365:365:(lstd))
+#id2 = collect(TIME[1]+365:365:(lstd))
+id2 = collect(TIME[1]+365:365:(lstd+365)) #add 1yr for the first month of next period
 ID  = [id1 id2];
 nyr = Int(lstd/365)
 #! pull out annual information
@@ -69,7 +97,7 @@ nyr = Int(lstd/365)
 #! x 12.01  mol C --> grams C
 #! / 0.32 grams C --> dry weight.
 #! *60 *60 *24 --> per day (if flux)
-for i = 1:nyr
+for i = nyr-1#1:nyr-1
 	id = map(Float64,ID[i,:])
 	I = find(id[1].<=TIME.<=id[2])
 
