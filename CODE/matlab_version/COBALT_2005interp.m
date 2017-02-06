@@ -6,6 +6,9 @@ close all
 
 Cdir = '/Volumes/GFDL/GCM_DATA/ESM2M_hist/';
 Time  = ncread([Cdir 'ocean.186101-200512.temp100.nc'],'TIME');
+st = 1:12:length(Time);
+en = 12:12:length(Time);
+
 st_lyr = length(Time)-11;
 en_lyr = length(Time);
 Tp  = ncread([Cdir 'ocean.186101-200512.temp100.nc'],'TEMP100',[1 1 st_lyr],[Inf Inf 12],[1 1 1]);
