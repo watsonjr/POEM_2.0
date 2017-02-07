@@ -104,15 +104,15 @@ function Testoneloc()
 					#simname = string(coup,"_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit",tfcrit,"_MZ",tmz[2:end],"_nmortM",tmort,"_BE",tbe[2:end],"_RE2piece","_BAassim");
 					#simname = string(coup,"_TrefO_mizer_all_MFeqMP_MZ",tmz[2:end],"_nmort",tmort,"_BE",tbe[2:end],"_RE",tre[2:end]);
 				end
-				if (isdir(string("/Volumes/GFDL/CSV/",simname)))
+				if (isdir(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname)))
 					nothing
 				else
-					mkdir(string("/Volumes/GFDL/CSV/",simname))
+					mkdir(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname))
 				end
-				if (isdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname)))
+				if (isdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Julia_OG_sizes/",simname)))
 					nothing
 				else
-					mkdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/",simname))
+					mkdir(string("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Julia_OG_sizes/",simname))
 				end
 
 				for L = 1:11
@@ -128,25 +128,25 @@ function Testoneloc()
 
 					#! Storage
 					if (phen==1)
-						Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_f.csv"),"w")
-						Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_p.csv"),"w")
-						Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Sml_d.csv"),"w")
-						Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_f.csv"),"w")
-						Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_p.csv"),"w")
-						Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Med_d.csv"),"w")
-						Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_p.csv"),"w")
-						Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Lrg_d.csv"),"w")
-						Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_phen_",loc,"_Cobalt.csv"),"w")
+						Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Sml_f.csv"),"w")
+						Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Sml_p.csv"),"w")
+						Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Sml_d.csv"),"w")
+						Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Med_f.csv"),"w")
+						Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Med_p.csv"),"w")
+						Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Med_d.csv"),"w")
+						Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Lrg_p.csv"),"w")
+						Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Lrg_d.csv"),"w")
+						Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_phen_",loc,"_Cobalt.csv"),"w")
 					else
-						Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
-						Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_p.csv"),"w")
-						Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Sml_d.csv"),"w")
-						Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_f.csv"),"w")
-						Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_p.csv"),"w")
-						Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Med_d.csv"),"w")
-						Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_p.csv"),"w")
-						Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Lrg_d.csv"),"w")
-						Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/",simname, "/Spinup_",loc,"_Cobalt.csv"),"w")
+						Spinup_Sml_f  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Sml_f.csv"),"w")
+						Spinup_Sml_p  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Sml_p.csv"),"w")
+						Spinup_Sml_d  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Sml_d.csv"),"w")
+						Spinup_Med_f  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Med_f.csv"),"w")
+						Spinup_Med_p  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Med_p.csv"),"w")
+						Spinup_Med_d  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Med_d.csv"),"w")
+						Spinup_Lrg_p  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Lrg_p.csv"),"w")
+						Spinup_Lrg_d  = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Lrg_d.csv"),"w")
+						Spinup_Cobalt = open(string("/Volumes/GFDL/CSV/Julia_orig_size/",simname, "/Spinup_",loc,"_Cobalt.csv"),"w")
 					end
 
 					#! Iterate forward in time with NO fishing
@@ -614,7 +614,7 @@ function Spinup_pristine()
 	global TrefB = Tref
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-	YEARS = 50
+	YEARS = 12
 	global DAYS = 365
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 

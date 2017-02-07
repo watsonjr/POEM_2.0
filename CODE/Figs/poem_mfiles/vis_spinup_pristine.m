@@ -6,8 +6,8 @@ clear all
 close all
 
 %datap = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/';
-datap = '/Volumes/GFDL/CSV/';
-figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+datap = '/Volumes/GFDL/CSV/Julia_orig_size/';
+figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Julia_OG_sizes/';
 
 % dpath = [datap 'NoPDc_NoAct_TrefO_flev1e4/'];
 % fpath = [figp 'NoPDc_NoAct_TrefO_flev1e4/'];
@@ -373,8 +373,8 @@ dp = {npath0};
 % dp = {npath1;npath2;npath3;npath4;npath5;npath6;npath7;npath8;npath9;npath10;npath11;npath12;...
 %     npath13;npath14;npath15;npath16;npath17;npath18;npath19;npath20;npath21};
 
-%spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1'};
-spots = {'SPac'};
+spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
+% spots = {'SPac'};
 
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
@@ -389,6 +389,7 @@ if (fplot==1)
         %%
         dpath = [datap char(dp(i))];
         fpath = [figp char(dp(i))];
+        cfile = char(dp(i));
         
         mclev=NaN*ones(length(spots),8);
         Zcon=NaN*ones(length(spots),3);
@@ -595,15 +596,15 @@ if (fplot==1)
             %% All size classes of all
             
             figure(5)
+            plot(y,log10(SF(:,1)),'Linewidth',1); hold on;
+            plot(y,log10(MF(:,1)),'Linewidth',1); hold on;
             plot(y,log10(SP(:,1)),'Linewidth',1); hold on;
             plot(y,log10(MP(:,1)),'Linewidth',1); hold on;
             plot(y,log10(LP(:,1)),'Linewidth',1); hold on;
-            plot(y,log10(SF(:,1)),'Linewidth',1); hold on;
-            plot(y,log10(MF(:,1)),'Linewidth',1); hold on;
             plot(y,log10(SD(:,1)),'Linewidth',1); hold on;
             plot(y,log10(MD(:,1)),'Linewidth',1); hold on;
             plot(y,log10(LD(:,1)),'Linewidth',1); hold on;
-            legend('SP','MP','LP','SF','MF','SD','MD','LD')
+            legend('SF','MF','SP','MP','LP','SD','MD','LD')
             legend('location','eastoutside')
             xlim([y(1) y(end)])
             xlabel('Time (y)')
@@ -851,52 +852,52 @@ if (fplot==1)
             
             
             %% Recruitment
-            yr=x;
-            SFL=m(yr,3);
-            SDL=m(yr,4);
-            SPL=m(yr,5);
-            FA=MF(yr,1);
-            DA=LD(yr,1);
-            PA=LP(yr,1);
-            
-            st=1:365:length(yr);
-            en=365:365:length(yr);
-            SPy = NaN*ones(100,1);
-            SFy = SPy;
-            SDy = SPy;
-            PAy = SPy;
-            FAy = SPy;
-            DAy = SPy;
-            for n=1:100
-                SPy(n) = nansum(SPL(st(n):en(n)));
-                SFy(n) = nansum(SFL(st(n):en(n)));
-                SDy(n) = nansum(SDL(st(n):en(n)));
-                PAy(n) = nansum(PA(st(n):en(n)));
-                FAy(n) = nansum(FA(st(n):en(n)));
-                DAy(n) = nansum(DA(st(n):en(n)));
-            end
-            
-            %
-            figure(11)
-            subplot(3,1,3)
-            plot(1:100,log10(SPy),'k','Linewidth',2); hold on;
-            xlim([1 100])
-            ylabel('log10 Recruits (g m^-^2)')
-            title('Pelagic piscivores')
-            stamp(cfile)
-            
-            subplot(3,1,1)
-            plot(1:100,log10(SFy),'b','Linewidth',2); hold on;
-            xlim([1 100])
-            ylabel('log10 Recruits (g m^-^2)')
-            title({loc; 'Forage fishes'})
-            
-            subplot(3,1,2)
-            plot(1:100,log10(SDy),'r','Linewidth',2); hold on;
-            xlim([1 100])
-            ylabel('log10 Recruits (g m^-^2)')
-            title('Demersal piscivores')
-            print('-dpng',[fpath sname lname 'oneloc_recruitment.png'])
+%             yr=x;
+%             SFL=m(yr,3);
+%             SDL=m(yr,4);
+%             SPL=m(yr,5);
+%             FA=MF(yr,1);
+%             DA=LD(yr,1);
+%             PA=LP(yr,1);
+%             
+%             st=1:365:length(yr);
+%             en=365:365:length(yr);
+%             SPy = NaN*ones(100,1);
+%             SFy = SPy;
+%             SDy = SPy;
+%             PAy = SPy;
+%             FAy = SPy;
+%             DAy = SPy;
+%             for n=1:100
+%                 SPy(n) = nansum(SPL(st(n):en(n)));
+%                 SFy(n) = nansum(SFL(st(n):en(n)));
+%                 SDy(n) = nansum(SDL(st(n):en(n)));
+%                 PAy(n) = nansum(PA(st(n):en(n)));
+%                 FAy(n) = nansum(FA(st(n):en(n)));
+%                 DAy(n) = nansum(DA(st(n):en(n)));
+%             end
+%             
+%             %
+%             figure(11)
+%             subplot(3,1,3)
+%             plot(1:100,log10(SPy),'k','Linewidth',2); hold on;
+%             xlim([1 100])
+%             ylabel('log10 Recruits (g m^-^2)')
+%             title('Pelagic piscivores')
+%             stamp(cfile)
+%             
+%             subplot(3,1,1)
+%             plot(1:100,log10(SFy),'b','Linewidth',2); hold on;
+%             xlim([1 100])
+%             ylabel('log10 Recruits (g m^-^2)')
+%             title({loc; 'Forage fishes'})
+%             
+%             subplot(3,1,2)
+%             plot(1:100,log10(SDy),'r','Linewidth',2); hold on;
+%             xlim([1 100])
+%             ylabel('log10 Recruits (g m^-^2)')
+%             title('Demersal piscivores')
+%             print('-dpng',[fpath sname lname 'oneloc_recruitment.png'])
             
         end
         
