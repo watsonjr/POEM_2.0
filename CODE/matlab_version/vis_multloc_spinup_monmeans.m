@@ -3,15 +3,17 @@
 % 50 years
 % Saved as mat files
 
-% clear all
-% close all
+clear all
+close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
+% pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE0500';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC100_RE1000';
 
-fpath=['/Volumes/GFDL/NC/Matlab_runs/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
+% fpath=['/Volumes/GFDL/NC/Matlab_og_size/' cfile '/'];
 ppath = [pp cfile '/'];
 
 load([fpath 'Means_spinup_' cfile '.mat']);
@@ -87,7 +89,7 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 print('-dpng',[ppath 'Spinup_P_time.png'])
 
-%% Planktivore
+% Planktivore
 sf_tmean=sf_tmean(1:length(y));
 figure(2)
 subplot(3,1,1)
@@ -148,7 +150,7 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 print('-dpng',[ppath 'Spinup_D_time.png'])
 
-%% All size classes of all
+% All size classes of all
 
 figure(5)
 plot(y,log10(sf_tmean),'Linewidth',1); hold on;

@@ -3,9 +3,9 @@
 clear all
 close all
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE1000';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC100_RE1000';
 
-fpath=['/Volumes/GFDL/NC/Matlab_runs/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
 
 
 %% SP
@@ -19,15 +19,7 @@ end
 netcdf.close(ncid);
 
 SP.bio = biomass;
-SP.clev = clev;
-SP.con = con;
-SP.die = die;
-SP.gamma = gamma;
-SP.nu = nu;
-SP.prod = prod;
-SP.rec = rec;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % SF
 ncid = netcdf.open([fpath 'Spinup_pristine_sml_f.nc'],'NC_NOWRITE');
@@ -40,15 +32,7 @@ end
 netcdf.close(ncid);
 
 SF.bio = biomass;
-SF.clev = clev;
-SF.con = con;
-SF.die = die;
-SF.gamma = gamma;
-SF.nu = nu;
-SF.prod = prod;
-SF.rec = rec;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % SD
 ncid = netcdf.open([fpath 'Spinup_pristine_sml_d.nc'],'NC_NOWRITE');
@@ -61,15 +45,7 @@ end
 netcdf.close(ncid);
 
 SD.bio = biomass;
-SD.clev = clev;
-SD.con = con;
-SD.die = die;
-SD.gamma = gamma;
-SD.nu = nu;
-SD.prod = prod;
-SD.rec = rec;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % MP
 ncid = netcdf.open([fpath 'Spinup_pristine_med_p.nc'],'NC_NOWRITE');
@@ -82,15 +58,7 @@ end
 netcdf.close(ncid);
 
 MP.bio = biomass;
-MP.clev = clev;
-MP.con = con;
-MP.die = die;
-MP.gamma = gamma;
-MP.nu = nu;
-MP.prod = prod;
-MP.rec = rec;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % MF
 ncid = netcdf.open([fpath 'Spinup_pristine_med_f.nc'],'NC_NOWRITE');
@@ -103,19 +71,7 @@ end
 netcdf.close(ncid);
 
 MF.bio = biomass;
-MF.clev = clev;
-MF.con = con;
-% MF.DD = DD;
-MF.die = die;
-% MF.egg = egg;
-MF.gamma = gamma;
-MF.nu = nu;
-MF.prod = prod;
-MF.rec = rec;
-MF.rep = rep;
-% MF.S = S;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % MD
 ncid = netcdf.open([fpath 'Spinup_pristine_med_d.nc'],'NC_NOWRITE');
@@ -128,15 +84,7 @@ end
 netcdf.close(ncid);
 
 MD.bio = biomass;
-MD.clev = clev;
-MD.con = con;
-MD.die = die;
-MD.gamma = gamma;
-MD.nu = nu;
-MD.prod = prod;
-MD.rec = rec;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % LP
 ncid = netcdf.open([fpath 'Spinup_pristine_lrg_p.nc'],'NC_NOWRITE');
@@ -149,19 +97,7 @@ end
 netcdf.close(ncid);
 
 LP.bio = biomass;
-LP.clev = clev;
-LP.con = con;
-% LP.DD = DD;
-LP.die = die;
-% LP.egg = egg;
-LP.gamma = gamma;
-LP.nu = nu;
-LP.prod = prod;
-LP.rec = rec;
-LP.rep = rep;
-% LP.S = S;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % LD
 ncid = netcdf.open([fpath 'Spinup_pristine_lrg_d.nc'],'NC_NOWRITE');
@@ -174,19 +110,7 @@ end
 netcdf.close(ncid);
 
 LD.bio = biomass;
-LD.clev = clev;
-LD.con = con;
-% LD.DD = DD;
-LD.die = die;
-% LD.egg = egg;
-LD.gamma = gamma;
-LD.nu = nu;
-LD.prod = prod;
-LD.rec = rec;
-LD.rep = rep;
-% LD.S = S;
-
-clear biomass clev con DD die egg gamma nu rec rep S X time prod
+clear biomass 
 
 % Benthic material
 ncid = netcdf.open([fpath 'Spinup_pristine_bent.nc'],'NC_NOWRITE');

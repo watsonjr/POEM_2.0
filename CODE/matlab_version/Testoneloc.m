@@ -55,10 +55,10 @@ Fmort = 0.0; %[0.1:0.1:1.0];
                 
                 %! Where to run the model
                 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
-%                 ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045];
-%                 names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
-                ids = [22448;33905;33906;37363];
-                names = {'Aus1','Car1','Car2','PG'};
+                ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045];
+                names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
+%                 ids = [22448;33905;33906;37363];
+%                 names = {'Aus1','Car1','Car2','PG'};
                 
                 %! Create a directory for output
                 tfcrit = num2str(int64(100*fcrit));
