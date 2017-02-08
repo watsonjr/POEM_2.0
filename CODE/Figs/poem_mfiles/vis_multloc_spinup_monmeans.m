@@ -10,13 +10,13 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/Jul_og_sizes/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Julia_OG_sizes/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE1000';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE0100';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
 %load([dpath 'Data_spinup_pristine_' cfile '.mat']);
-load([dpath 'Means_spinup_' cfile '_6yr.mat']);
+load([dpath 'Means_spinup_' cfile '_5yr.mat']);
 
 %%
 cm9=[0.5 0.5 0;... %tan/army
