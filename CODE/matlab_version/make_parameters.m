@@ -22,12 +22,12 @@ function make_parameters()
     pdc = 1;
 
     %! body lengths (mm)
-%     L_s = 10^((log10(2)+log10(20))/2); % small
-%     L_m = 10^((log10(20)+log10(200))/2); % medium
-%     L_l = 10^((log10(200)+log10(2000))/2); % large
-    L_s = 10.0; % small
-    L_m = 200.0; % medium
-    L_l = 1.0e3;% large
+    L_s = 10^((log10(2)+log10(20))/2); % small
+    L_m = 10^((log10(20)+log10(200))/2); % medium
+    L_l = 10^((log10(200)+log10(2000))/2); % large
+%     L_s = 10.0; % small
+%     L_m = 200.0; % medium
+%     L_l = 1.0e3;% large
 
     %%! Mass from length using Andersen & Beyer 2013
     % Convert from mm to cm and use their const coeff = 0.01g/cm3
@@ -45,12 +45,12 @@ function make_parameters()
 %     M_zl = 9.0 * exp(1.953 + (2.399*log(L_zl)))*1.0e-6;
 
     %! Ratio of initial and final body sizes per size-class
-%     Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3);     %M_s./M_m
-%     Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3);   %M_m./M_l
-%     Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3); %NA
-    Z_s = M_s./M_m;
-    Z_m = M_m./M_l;
-    Z_l = 0.0;
+    Z_s = (0.01*(0.1*2)^3) / (0.01*(0.1*20)^3);     %M_s./M_m
+    Z_m = (0.01*(0.1*20)^3) / (0.01*(0.1*200)^3);   %M_m./M_l
+    Z_l = (0.01*(0.1*200)^3) / (0.01*(0.1*2000)^3); %NA
+%     Z_s = M_s./M_m;
+%     Z_m = M_m./M_l;
+%     Z_l = 0.0;
 
     %%%! Assimilation efficiency lambda (constant across everything)
     Lambda = 0.7;
@@ -67,10 +67,10 @@ function make_parameters()
     
     %%%! Transfer efficiency of detritus to benthic prey
     bent_eff = 0.05;
-    CC = 1.0;
+    CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 1.0;
+    rfrac = 0.1;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;

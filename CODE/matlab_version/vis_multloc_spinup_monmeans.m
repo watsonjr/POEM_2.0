@@ -7,13 +7,13 @@ clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
-% pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/';
+% pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC100_RE1000';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE1000';
 
-fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
-% fpath=['/Volumes/GFDL/NC/Matlab_og_size/' cfile '/'];
+% fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_og_size/' cfile '/'];
 ppath = [pp cfile '/'];
 
 load([fpath 'Means_spinup_' cfile '.mat']);
@@ -62,7 +62,8 @@ subplot(4,1,1)
 plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
 plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Spinup Pelagic Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
@@ -71,19 +72,22 @@ stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Larvae')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,3)
 plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Juveniles')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,4)
 plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
@@ -95,7 +99,8 @@ figure(2)
 subplot(3,1,1)
 plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Spinup Forage Fishes')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
@@ -105,13 +110,15 @@ stamp(cfile)
 
 subplot(3,1,2)
 plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Immature')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(3,1,3)
 plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
@@ -123,7 +130,8 @@ subplot(4,1,1)
 plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
 plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Spinup Demersal Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
@@ -132,19 +140,22 @@ stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Larvae')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,3)
 plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Juveniles')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,4)
 plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
@@ -163,7 +174,8 @@ plot(y,log10(md_tmean),'Linewidth',1); hold on;
 plot(y,log10(ld_tmean),'Linewidth',1); hold on;
 legend('SF','MF','SP','MP','LP','SD','MD','LD')
 legend('location','eastoutside')
-xlim([y(1) y(end)])
+%xlim([y(1) y(end)])
+xlim([y(1) 72])
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 title('Spinup')
@@ -199,15 +211,16 @@ Zb=NaN*ones(ni,nj);
 ocean=NaN*ones(ni,nj);
 ocean(grid(:,1))=ones(size(sf_mean));
 
-Zsf(grid(:,1))=sf_mean;
-Zsp(grid(:,1))=sp_mean;
-Zsd(grid(:,1))=sd_mean;
-Zmf(grid(:,1))=mf_mean;
-Zmp(grid(:,1))=mp_mean;
-Zmd(grid(:,1))=md_mean;
-Zlp(grid(:,1))=lp_mean;
-Zld(grid(:,1))=ld_mean;
-Zb(grid(:,1))=b_mean;
+
+Zsf(grid(:,1))=sf_mean6;
+Zsp(grid(:,1))=sp_mean6;
+Zsd(grid(:,1))=sd_mean6;
+Zmf(grid(:,1))=mf_mean6;
+Zmp(grid(:,1))=mp_mean6;
+Zmd(grid(:,1))=md_mean6;
+Zlp(grid(:,1))=lp_mean6;
+Zld(grid(:,1))=ld_mean6;
+Zb(grid(:,1))=b_mean6;
 
 %% ocean cells
 figure(55)

@@ -25,7 +25,7 @@ make_parameters()
 phen=0;
 
 %! Setup spinup (loop last year of COBALT)
-load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2005.mat');
+load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
 
 %! How long to run the model
 YEARS = 50;
@@ -88,11 +88,17 @@ if (harv==1)
 else
     simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
 end
-if (~isdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname]))
-    mkdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname])
+% if (~isdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname]))
+%     mkdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname])
+% end
+% if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname]))
+%     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname])
+% end
+if (~isdir(['/Volumes/GFDL/NC/Matlab_og_size/',simname]))
+    mkdir(['/Volumes/GFDL/NC/Matlab_og_size/',simname])
 end
-if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname]))
-    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname])
+if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/',simname]))
+    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/',simname])
 end
 
 %! Storage variables
@@ -194,15 +200,24 @@ ENVR = sub_init_env(ID);
 
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
-file_sml_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_f.nc'];
-file_sml_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_p.nc'];
-file_sml_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_d.nc'];
-file_med_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_f.nc'];
-file_med_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_p.nc'];
-file_med_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_d.nc'];
-file_lrg_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_p.nc'];
-file_lrg_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_d.nc'];
-file_bent  = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_bent.nc'];
+% file_sml_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_f.nc'];
+% file_sml_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_p.nc'];
+% file_sml_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_d.nc'];
+% file_med_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_f.nc'];
+% file_med_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_p.nc'];
+% file_med_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_d.nc'];
+% file_lrg_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_p.nc'];
+% file_lrg_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_d.nc'];
+% file_bent  = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_bent.nc'];
+file_sml_f = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_sml_f.nc'];
+file_sml_p = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_sml_p.nc'];
+file_sml_d = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_sml_d.nc'];
+file_med_f = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_med_f.nc'];
+file_med_p = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_med_p.nc'];
+file_med_d = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_med_d.nc'];
+file_lrg_p = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_lrg_p.nc'];
+file_lrg_d = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_lrg_d.nc'];
+file_bent  = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_bent.nc'];
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
 ncidSP = netcdf.create(file_sml_p,'NC_WRITE');
