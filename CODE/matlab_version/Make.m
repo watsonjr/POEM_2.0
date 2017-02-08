@@ -20,32 +20,33 @@ if testoneloc
     Testoneloc()
     toc
 end
-if oneloc_fishing
-    Oneloc_fishing()
-end
-if oneloc_hind_pristine
-    Oneloc_hindcast_pristine()
-end
-if oneloc_fore_pristine
-    Oneloc_forecast_pristine()
-end
 if spinup_pristine
     tic
     Spinup_pristine()
     toc
 end
 if pre_industrial
+    tic
     Pre_industrial()
+    toc
 end
 if historic_pristine
+    tic
     Historic_pristine()
+    toc
 end
 if historic_fished
+    tic
     Historic_fished()
+    toc
 end
 if forecast_pristine
+    tic
     Forecast_pristine()
+    toc
 end
 if forecast_fished
+    tic
     Forecast_fished()
+    toc
 end

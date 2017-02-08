@@ -5,8 +5,7 @@ close all
 
 cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE1000';
 
-% fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
-fpath=['/Volumes/GFDL/NC/Matlab_og_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
 
 
 %% SP
@@ -158,38 +157,6 @@ save([fpath 'Means_spinup_' cfile '.mat'],...
     'lp_mean','ld_mean','sf_tmean','sp_tmean','sd_tmean','mf_tmean','mp_tmean',...
     'md_tmean','b_tmean','lp_tmean','ld_tmean','time','lyr');
 
-%% Other year means for comparing to Julia output
 
-%12 yr
-lyr=time((144-12+1):144);
-sp_mean12=mean(SP.bio(:,lyr),2);
-sf_mean12=mean(SF.bio(:,lyr),2);
-sd_mean12=mean(SD.bio(:,lyr),2);
-mp_mean12=mean(MP.bio(:,lyr),2);
-mf_mean12=mean(MF.bio(:,lyr),2);
-md_mean12=mean(MD.bio(:,lyr),2);
-lp_mean12=mean(LP.bio(:,lyr),2);
-ld_mean12=mean(LD.bio(:,lyr),2);
-b_mean12=mean(BENT.bio(:,lyr),2);
-
-save([fpath 'Means_spinup_' cfile '_12yr.mat'],...
-    'sf_mean12','sp_mean12','sd_mean12','mf_mean12','mp_mean12','md_mean12','b_mean12',...
-    'lp_mean12','ld_mean12');
-
-%6yr
-lyr=time((72-12+1):72);
-sp_mean6=mean(SP.bio(:,lyr),2);
-sf_mean6=mean(SF.bio(:,lyr),2);
-sd_mean6=mean(SD.bio(:,lyr),2);
-mp_mean6=mean(MP.bio(:,lyr),2);
-mf_mean6=mean(MF.bio(:,lyr),2);
-md_mean6=mean(MD.bio(:,lyr),2);
-lp_mean6=mean(LP.bio(:,lyr),2);
-ld_mean6=mean(LD.bio(:,lyr),2);
-b_mean6=mean(BENT.bio(:,lyr),2);
-
-save([fpath 'Means_spinup_' cfile '_6yr.mat'],...
-    'sf_mean6','sp_mean6','sd_mean6','mf_mean6','mp_mean6','md_mean6','b_mean6',...
-    'lp_mean6','ld_mean6');
 
 

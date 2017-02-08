@@ -2,7 +2,7 @@
 %%% DEMOGRAPHIC CALCULATIONS
 function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,ENVR] = sub_futbio(ID,DY,COBALT,ENVR,Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,dfrate,CC)
 
-global Tref TrefP TrefB Dthresh SP DAYS GRD NX
+global DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit 
 global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT
@@ -19,7 +19,7 @@ ENVR.dZm = sub_neg(ENVR.dZm);
 ENVR.dZl = sub_neg(ENVR.dZl);
 
 % Update benthic biomass with new detritus avail at that time step
-BENT.mass = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
+[BENT.mass BENT.pred] = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
 BENT.mass = sub_check(BENT.mass);
 
 % Pelagic-demersal coupling
@@ -103,11 +103,11 @@ Ld.con_p  = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_p,Ld.enc_f,Ld.enc_d,Ld.en
 Ld.con_d  = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_d,Ld.enc_p,Ld.enc_f,Ld.enc_be]);
 Ld.con_be = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_be,Ld.enc_f,Ld.enc_p,Ld.enc_d]);
 
-
 % Offline coupling
-%Zooplankton consumption cannot exceed amount lost to higher predation in COBALT runs
+%MZ consumption cannot exceed amount lost to higher predation in COBALT runs
 [Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,ENVR.fZm] = ...
     sub_offline_zm(Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,ENVR.dZm);
+%LZ consumption cannot exceed amount lost to higher predation in COBALT runs
 [Mf.con_zl,Mp.con_zl,ENVR.fZl] = ...
     sub_offline_zl(Mf.con_zl,Mp.con_zl,Mf.bio,Mp.bio,ENVR.dZl);
 %Benthic material consumption cannot exceed amount present
@@ -160,16 +160,6 @@ Md.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Md.td,M_m);
 Lp.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Lp.td,M_l);
 Ld.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Ld.td,M_l);
 
-% % Degree days
-% Mf.DD = sub_degday(Mf.DD,ENVR.Tp,ENVR.Tb,Mf.td,ENVR.T0p,Mf.S,DY);
-% Lp.DD = sub_degday(Lp.DD,ENVR.Tp,ENVR.Tb,Lp.td,ENVR.T0p,Lp.S,DY);
-% Ld.DD = sub_degday(Ld.DD,ENVR.Tp,ENVR.Tb,1-Ld.td,ENVR.T0b,Ld.S,DY);
-% 
-% % Spawning flag determined from DD, dthresh
-% [Mf.S, Mf.DD] = sub_kflag(Mf.S,Mf.DD,ENVR.Dthresh,DY);
-% [Ld.S, Ld.DD] = sub_kflag(Ld.S,Ld.DD,ENVR.Dthresh,DY);
-% [Lp.S, Lp.DD] = sub_kflag(Lp.S,Lp.DD,ENVR.Dthresh,DY);
-
 % Energy available for somatic growth nu
 [Sf.nu, Sf.prod] = sub_nu(Sf.I,Sf.bio,Sf.met);
 [Sp.nu, Sp.prod] = sub_nu(Sp.I,Sp.bio,Sp.met);
@@ -179,7 +169,6 @@ Ld.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Ld.td,M_l);
 [Md.nu, Md.prod] = sub_nu(Md.I,Md.bio,Md.met);
 [Lp.nu, Lp.prod] = sub_nu(Lp.I,Lp.bio,Lp.met);
 [Ld.nu, Ld.prod] = sub_nu(Ld.I,Ld.bio,Ld.met);
-%[Ld.nu, Ld.prod] = sub_nu_LD(Ld.bio,Ld.met,Ld.con_f,Ld.con_p,Ld.con_d,Ld.con_be);
 
 % Maturation (note subscript on Kappa is larvae, juv, adult)
 Sf.gamma = sub_gamma(K_l,Z_s,Sf.nu,Sf.die,Sf.bio,Sf.nmort,0,0);
@@ -212,8 +201,6 @@ Lp.rec = sub_rec(Mp.gamma,Mp.bio);
 Ld.rec = sub_rec(Md.gamma,Md.bio);
 
 % Mass balance
-%[BENT.mass, BENT.pred] = sub_update_be(BENT.mass,ENVR.Tb,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
-
 Sf.bio = sub_update_fi(Sf.bio,Sf.rec,Sf.nu,Sf.rep,Sf.gamma,Sf.die,Sf.egg,Sf.nmort);
 Sp.bio = sub_update_fi(Sp.bio,Sp.rec,Sp.nu,Sp.rep,Sp.gamma,Sp.die,Sp.egg,Sp.nmort);
 Sd.bio = sub_update_fi(Sd.bio,Sd.rec,Sd.nu,Sd.rep,Sd.gamma,Sd.die,Sd.egg,Sd.nmort);

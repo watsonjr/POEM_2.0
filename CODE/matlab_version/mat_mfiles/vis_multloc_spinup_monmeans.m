@@ -7,16 +7,18 @@ clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-% pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
 
 cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE1000';
 
-% fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
-fpath=['/Volumes/GFDL/NC/Matlab_og_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
 ppath = [pp cfile '/'];
 
 load([fpath 'Means_spinup_' cfile '.mat']);
+
+load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
+    'geolon_t','geolat_t');
+grid = csvread([cpath 'grid_csv.csv']);
 
 %% colors
 cm9=[0.5 0.5 0;... %tan/army
@@ -62,8 +64,7 @@ subplot(4,1,1)
 plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
 plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Spinup Pelagic Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
@@ -72,22 +73,19 @@ stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Larvae')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,3)
 plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Juveniles')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,4)
 plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
@@ -99,8 +97,7 @@ figure(2)
 subplot(3,1,1)
 plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Spinup Forage Fishes')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
@@ -110,15 +107,13 @@ stamp(cfile)
 
 subplot(3,1,2)
 plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Immature')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(3,1,3)
 plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
@@ -130,8 +125,7 @@ subplot(4,1,1)
 plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
 plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Spinup Demersal Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
@@ -140,30 +134,27 @@ stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Larvae')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,3)
 plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Juveniles')
 ylabel('log10 Biomass (g m^-^2)')
 
 subplot(4,1,4)
 plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 print('-dpng',[ppath 'Spinup_D_time.png'])
 
-% All size classes of all
+%% All size classes of all
 
-figure(5)
+figure(4)
 plot(y,log10(sf_tmean),'Linewidth',1); hold on;
 plot(y,log10(mf_tmean),'Linewidth',1); hold on;
 plot(y,log10(sp_tmean),'Linewidth',1); hold on;
@@ -174,28 +165,33 @@ plot(y,log10(md_tmean),'Linewidth',1); hold on;
 plot(y,log10(ld_tmean),'Linewidth',1); hold on;
 legend('SF','MF','SP','MP','LP','SD','MD','LD')
 legend('location','eastoutside')
-%xlim([y(1) y(end)])
-xlim([y(1) 72])
+xlim([y(1) y(end)])
+ylim([-5 2])
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 title('Spinup')
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_all_sizes.png'])
 
+figure(5)
+F = sf_tmean+mf_tmean;
+P = sp_tmean+mp_tmean+lp_tmean;
+D = sd_tmean+md_tmean+ld_tmean;
+
+plot(y,log10(F),'r','Linewidth',2); hold on;
+plot(y,log10(P),'b','Linewidth',2); hold on;
+plot(y,log10(D),'k','Linewidth',2); hold on;
+legend('F','P','D')
+legend('location','eastoutside')
+xlim([y(1) y(end)])
+ylim([-5 2])
+xlabel('Time (y)')
+ylabel('log10 Biomass (g m^-^2)')
+title(['Spinup'])
+print('-dpng',[ppath 'Spinup_all_types.png'])
+
 
 %% Plots in space
-grid = csvread([cpath 'grid_csv.csv']);
-%fix lon shift
-id=find(grid(:,2)<-180);
-grid(id,2)=grid(id,2)+360;
-
-x=-180:180;
-y=-90:90;
-[X,Y]=meshgrid(x,y);
-
-load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
-    'geolon_t','geolat_t');
-
 [ni,nj]=size(geolon_t);
 
 Zsf=NaN*ones(ni,nj);
@@ -208,41 +204,34 @@ Zlp=NaN*ones(ni,nj);
 Zld=NaN*ones(ni,nj);
 Zb=NaN*ones(ni,nj);
 
+Zsf(grid(:,1))=sf_mean;
+Zsp(grid(:,1))=sp_mean;
+Zsd(grid(:,1))=sd_mean;
+Zmf(grid(:,1))=mf_mean;
+Zmp(grid(:,1))=mp_mean;
+Zmd(grid(:,1))=md_mean;
+Zlp(grid(:,1))=lp_mean;
+Zld(grid(:,1))=ld_mean;
+Zb(grid(:,1))=b_mean;
+
 ocean=NaN*ones(ni,nj);
 ocean(grid(:,1))=ones(size(sf_mean));
 
-
-Zsf(grid(:,1))=sf_mean6;
-Zsp(grid(:,1))=sp_mean6;
-Zsd(grid(:,1))=sd_mean6;
-Zmf(grid(:,1))=mf_mean6;
-Zmp(grid(:,1))=mp_mean6;
-Zmd(grid(:,1))=md_mean6;
-Zlp(grid(:,1))=lp_mean6;
-Zld(grid(:,1))=ld_mean6;
-Zb(grid(:,1))=b_mean6;
-
 %% ocean cells
-figure(55)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,ocean); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('Water cells')
-colormap('jet')
-colorbar('h')
-caxis([1 2])
-stamp(cfile)
-print('-dpng',[ppath 'Ocean_cells.png'])
+% figure(55)
+% surf(geolon_t,geolat_t,ocean); view(2); hold on;
+% shading flat
+% title('Water cells')
+% colormap('jet')
+% colorbar('h')
+% caxis([1 2])
+% stamp(cfile)
+% print('-dpng',[ppath 'Ocean_cells.png'])
 
 % bent
 figure(50)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zb)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean benthic biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -253,11 +242,8 @@ print('-dpng',[ppath 'Spinup_global_BENT.png'])
 %
 mgZb = (Zb/9)*1e3;
 figure(51)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(mgZb)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean benthic biomass (mg C m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -267,11 +253,8 @@ print('-dpng',[ppath 'Spinup_global_BENT_mgC.png'])
 
 % sp
 figure(11)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zsp)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -281,11 +264,8 @@ print('-dpng',[ppath 'Spinup_global_SP.png'])
 
 % sf
 figure(12)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zsf)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -295,11 +275,8 @@ print('-dpng',[ppath 'Spinup_global_SF.png'])
 
 % sd
 figure(13)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zsd)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -309,11 +286,8 @@ print('-dpng',[ppath 'Spinup_global_SD.png'])
 
 % mp
 figure(14)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zmp)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -323,11 +297,8 @@ print('-dpng',[ppath 'Spinup_global_MP.png'])
 
 % mf
 figure(15)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zmf)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -337,11 +308,8 @@ print('-dpng',[ppath 'Spinup_global_MF.png'])
 
 % md
 figure(16)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zmd)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Juvenile D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -351,11 +319,8 @@ print('-dpng',[ppath 'Spinup_global_MD.png'])
 
 % lp
 figure(17)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zlp)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -365,11 +330,8 @@ print('-dpng',[ppath 'Spinup_global_LP.png'])
 
 % ld
 figure(18)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(Zld)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -398,11 +360,8 @@ FracPFvDm = (Zmp+Zmf) ./ (Zmp+Zmf+Zmd);
 
 %% ALL
 figure(21)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(All)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean biomass All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -412,11 +371,8 @@ print('-dpng',[ppath 'Spinup_global_All.png'])
 
 % all F
 figure(22)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(AllF)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean biomass All F (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -426,11 +382,8 @@ print('-dpng',[ppath 'Spinup_global_AllF.png'])
 
 % all D
 figure(23)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(AllD)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean biomass All D (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -440,11 +393,8 @@ print('-dpng',[ppath 'Spinup_global_AllD.png'])
 
 % All P
 figure(24)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,log10(AllP)); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('log10 mean biomass All P (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -454,11 +404,8 @@ print('-dpng',[ppath 'Spinup_global_AllP.png'])
 
 % FracPD
 figure(25)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,FracPD); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('P:D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -468,11 +415,8 @@ print('-dpng',[ppath 'Spinup_global_FracPD.png'])
 
 % FracPF
 figure(26)
-m_proj('miller','lat',82);
 surf(geolon_t,geolat_t,FracPF); view(2); hold on;
 shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
 title('P:F mean biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
@@ -480,101 +424,80 @@ caxis([0 1])
 stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 
-%% FracPFvD
-figure(27)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,FracPFvD); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('(P+F):D mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFvD.png'])
-
-% FracPDs
-figure(28)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,FracPDs); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('SP:SD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPDs.png'])
-
-% FracPFs
-figure(29)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,FracPFs); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('SP:SF mean biomass (g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFs.png'])
-
-% FracPFvDs
-figure(30)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,FracPFvDs); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('(SP+SF):SD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFvDs.png'])
-
-% FracPDm
-figure(31)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,FracPDm); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('MP:MD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPDm.png'])
-
-% FracPFm
-figure(32)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,FracPFm); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('MP:MF mean biomass (g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFm.png'])
-
-% FracPFvDm
-figure(33)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,FracPFvDm); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('(MP+MF):MD mean biomass(g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([0 1])
-stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPFvDm.png'])
-
+% %% FracPFvD
+% figure(27)
+% surf(geolon_t,geolat_t,FracPFvD); view(2); hold on;
+% shading flat
+% title('(P+F):D mean biomass(g m^-^2)')
+% colormap('jet')
+% colorbar('h')
+% caxis([0 1])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_global_FracPFvD.png'])
+% 
+% % FracPDs
+% figure(28)
+% surf(geolon_t,geolat_t,FracPDs); view(2); hold on;
+% shading flat
+% title('SP:SD mean biomass(g m^-^2)')
+% colormap('jet')
+% colorbar('h')
+% caxis([0 1])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_global_FracPDs.png'])
+% 
+% % FracPFs
+% figure(29)
+% surf(geolon_t,geolat_t,FracPFs); view(2); hold on;
+% shading flat
+% title('SP:SF mean biomass (g m^-^2)')
+% colormap('jet')
+% colorbar('h')
+% caxis([0 1])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_global_FracPFs.png'])
+% 
+% % FracPFvDs
+% figure(30)
+% surf(geolon_t,geolat_t,FracPFvDs); view(2); hold on;
+% shading flat
+% title('(SP+SF):SD mean biomass(g m^-^2)')
+% colormap('jet')
+% colorbar('h')
+% caxis([0 1])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_global_FracPFvDs.png'])
+% 
+% % FracPDm
+% figure(31)
+% surf(geolon_t,geolat_t,FracPDm); view(2); hold on;
+% shading flat
+% title('MP:MD mean biomass(g m^-^2)')
+% colormap('jet')
+% colorbar('h')
+% caxis([0 1])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_global_FracPDm.png'])
+% 
+% % FracPFm
+% figure(32)
+% surf(geolon_t,geolat_t,FracPFm); view(2); hold on;
+% shading flat
+% title('MP:MF mean biomass (g m^-^2)')
+% colormap('jet')
+% colorbar('h')
+% caxis([0 1])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_global_FracPFm.png'])
+% 
+% % FracPFvDm
+% figure(33)
+% surf(geolon_t,geolat_t,FracPFvDm); view(2); hold on;
+% shading flat
+% title('(MP+MF):MD mean biomass(g m^-^2)')
+% colormap('jet')
+% colorbar('h')
+% caxis([0 1])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_global_FracPFvDm.png'])
+% 

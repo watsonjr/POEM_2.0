@@ -1,7 +1,7 @@
 %%% Get COBALT data
 function ENVR = get_COBALT(COBALT,ID,DY)
 
-    global GRD NX TrefP TrefB Dthresh
+    global GRD NX 
 
     %% Get data
     ENVR.Tp(:,1)  = COBALT.Tp(ID,DY);
@@ -13,9 +13,6 @@ function ENVR = get_COBALT(COBALT,ID,DY)
     ENVR.dZl(:,1) = COBALT.dZl(ID,DY);
     %ENVR.U(:,1)   = COBALT.U(ID,DY);
     %ENVR.V(:,1)   = COBALT.V(ID,DY);
-    ENVR.T0p(:,1) = TrefP(ID);
-    ENVR.T0b(:,1) = TrefB(ID);
-    ENVR.Dthresh(:,1) = Dthresh(ID);
     ENVR.fZm(:,1) = zeros(NX,1);
     ENVR.fZl(:,1) = zeros(NX,1);
     ENVR.fB(:,1)  = zeros(NX,1);

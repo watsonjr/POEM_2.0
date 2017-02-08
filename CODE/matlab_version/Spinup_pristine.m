@@ -1,7 +1,7 @@
 %%%%!! RUN SPINUP FOR ALL LOCATIONS
 function Spinup_pristine()
 
-global Tref TrefP TrefB Dthresh SP DAYS GRD NX ID
+global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit
 global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT CC
@@ -22,13 +22,12 @@ end
 
 %! Make core parameters/constants (global)
 make_parameters()
-phen=0;
 
 %! Setup spinup (loop last year of COBALT)
 load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
 
 %! How long to run the model
-YEARS = 50;
+YEARS = 5;
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
@@ -36,15 +35,6 @@ MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
 NX = 48111;
 ID = 1:NX;
-
-%! Add phenology params from csv file with ID as row
-Tref = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_phenol_T0raw_NOflip.csv'); %min temp for each yr at each location
-TrefP = Tref;
-TrefB = Tref;
-Dthresh = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_phenol_DTraw_NOflip.csv');
-SP = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Gaussian_spawn_2mo.csv');
-SP = SP';
-SP = repmat(SP,NX,1);
 
 %! Create a directory for output
 tfcrit = num2str(int64(100*fcrit));
@@ -88,17 +78,11 @@ if (harv==1)
 else
     simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
 end
-% if (~isdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname]))
-%     mkdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname])
-% end
-% if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname]))
-%     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname])
-% end
-if (~isdir(['/Volumes/GFDL/NC/Matlab_og_size/',simname]))
-    mkdir(['/Volumes/GFDL/NC/Matlab_og_size/',simname])
+if (~isdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname]))
+    mkdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname])
 end
-if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/',simname]))
-    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_OG_sizes/',simname])
+if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname]))
+    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname])
 end
 
 %! Storage variables
@@ -162,10 +146,6 @@ S_Med_f_rep = zeros(NX,DAYS);
 S_Lrg_p_rep = zeros(NX,DAYS);
 S_Lrg_d_rep = zeros(NX,DAYS);
 
-% S_Med_f_egg = zeros(NX,DAYS);
-% S_Lrg_p_egg = zeros(NX,DAYS);
-% S_Lrg_d_egg = zeros(NX,DAYS);
-
 S_Sml_f_die = zeros(NX,DAYS);
 S_Sml_p_die = zeros(NX,DAYS);
 S_Sml_d_die = zeros(NX,DAYS);
@@ -184,40 +164,23 @@ S_Med_d_clev = zeros(NX,DAYS);
 S_Lrg_p_clev = zeros(NX,DAYS);
 S_Lrg_d_clev = zeros(NX,DAYS);
 
-% S_Med_f_S = zeros(NX,DAYS);
-% S_Lrg_p_S = zeros(NX,DAYS);
-% S_Lrg_d_S = zeros(NX,DAYS);
-% 
-% S_Med_f_DD = zeros(NX,DAYS);
-% S_Lrg_p_DD = zeros(NX,DAYS);
-% S_Lrg_d_DD = zeros(NX,DAYS);
-
 %! Initialize
-[Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish(ID,phen,DAYS);
+[Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish(ID,DAYS);
 Med_d.td(1:NX) = 0.0;
 Lrg_d.td(1:NX) = 0.0;
 ENVR = sub_init_env(ID);
 
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
-% file_sml_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_f.nc'];
-% file_sml_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_p.nc'];
-% file_sml_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_d.nc'];
-% file_med_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_f.nc'];
-% file_med_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_p.nc'];
-% file_med_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_d.nc'];
-% file_lrg_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_p.nc'];
-% file_lrg_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_d.nc'];
-% file_bent  = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_bent.nc'];
-file_sml_f = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_sml_f.nc'];
-file_sml_p = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_sml_p.nc'];
-file_sml_d = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_sml_d.nc'];
-file_med_f = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_med_f.nc'];
-file_med_p = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_med_p.nc'];
-file_med_d = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_med_d.nc'];
-file_lrg_p = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_lrg_p.nc'];
-file_lrg_d = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_lrg_d.nc'];
-file_bent  = ['/Volumes/GFDL/NC/Matlab_og_size/',simname, '/Spinup_pristine_bent.nc'];
+file_sml_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_f.nc'];
+file_sml_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_p.nc'];
+file_sml_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_d.nc'];
+file_med_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_f.nc'];
+file_med_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_p.nc'];
+file_med_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_d.nc'];
+file_lrg_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_p.nc'];
+file_lrg_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_d.nc'];
+file_bent  = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_bent.nc'];
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
 ncidSP = netcdf.create(file_sml_p,'NC_WRITE');
@@ -280,11 +243,8 @@ vidbioMF    = netcdf.defVar(ncidMF,'biomass','double',[xy_dim,time_dim]);
 % vidnuMF     = netcdf.defVar(ncidMF,'nu','double',[xy_dim,time_dim]);
 % vidgammaMF  = netcdf.defVar(ncidMF,'gamma','double',[xy_dim,time_dim]);
 % vidrepMF    = netcdf.defVar(ncidMF,'rep','double',[xy_dim,time_dim]);
-% videggMF    = netcdf.defVar(ncidMF,'egg','double',[xy_dim,time_dim]);
 % viddieMF    = netcdf.defVar(ncidMF,'die','double',[xy_dim,time_dim]);
 % vidclevMF   = netcdf.defVar(ncidMF,'clev','double',[xy_dim,time_dim]);
-% vidSMF      = netcdf.defVar(ncidMF,'S','double',[xy_dim,time_dim]);
-% vidDDMF     = netcdf.defVar(ncidMF,'DD','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidMF);
 
 xy_dim      = netcdf.defDim(ncidMP,'nid',NX);
@@ -320,11 +280,8 @@ vidbioLP    = netcdf.defVar(ncidLP,'biomass','double',[xy_dim,time_dim]);
 % vidnuLP     = netcdf.defVar(ncidLP,'nu','double',[xy_dim,time_dim]);
 % vidgammaLP  = netcdf.defVar(ncidLP,'gamma','double',[xy_dim,time_dim]);
 % vidrepLP    = netcdf.defVar(ncidLP,'rep','double',[xy_dim,time_dim]);
-% videggLP    = netcdf.defVar(ncidLP,'egg','double',[xy_dim,time_dim]);
 % viddieLP    = netcdf.defVar(ncidLP,'die','double',[xy_dim,time_dim]);
 % vidclevLP   = netcdf.defVar(ncidLP,'clev','double',[xy_dim,time_dim]);
-% vidSLP      = netcdf.defVar(ncidLP,'S','double',[xy_dim,time_dim]);
-% vidDDLP     = netcdf.defVar(ncidLP,'DD','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidLP);
 
 xy_dim      = netcdf.defDim(ncidLD,'nid',NX);
@@ -336,11 +293,8 @@ vidbioLD    = netcdf.defVar(ncidLD,'biomass','double',[xy_dim,time_dim]);
 % vidnuLD     = netcdf.defVar(ncidLD,'nu','double',[xy_dim,time_dim]);
 % vidgammaLD  = netcdf.defVar(ncidLD,'gamma','double',[xy_dim,time_dim]);
 % vidrepLD    = netcdf.defVar(ncidLD,'rep','double',[xy_dim,time_dim]);
-% videggLD    = netcdf.defVar(ncidLD,'egg','double',[xy_dim,time_dim]);
 % viddieLD    = netcdf.defVar(ncidLD,'die','double',[xy_dim,time_dim]);
 % vidclevLD   = netcdf.defVar(ncidLD,'clev','double',[xy_dim,time_dim]);
-% vidSLD      = netcdf.defVar(ncidLD,'S','double',[xy_dim,time_dim]);
-% vidDDLD     = netcdf.defVar(ncidLD,'DD','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidLD);
 
 xy_dim     = netcdf.defDim(ncidB,'nid',NX);
@@ -354,13 +308,6 @@ netcdf.endDef(ncidB);
 %! Run model with no fishing
 MNT=0;
 for YR = 1:YEARS % years
-    
-    %reset spawning flag
-    if (phen == 1)
-        Med_f.S = zeros(NX,DAYS);
-        Lrg_d.S = zeros(NX,DAYS);
-        Lrg_p.S = zeros(NX,DAYS);
-    end
     
     for DAY = 1:DT:DAYS % days
         
@@ -431,10 +378,6 @@ for YR = 1:YEARS % years
 %         S_Lrg_p_rep(:,DY) = Lrg_p.rep;
 %         S_Lrg_d_rep(:,DY) = Lrg_d.rep;
         
-%         S_Med_f_egg(:,DY) = Med_f.egg;
-%         S_Lrg_p_egg(:,DY) = Lrg_p.egg;
-%         S_Lrg_d_egg(:,DY) = Lrg_d.egg;
-        
 %         S_Sml_f_die(:,DY) = Sml_f.die;
 %         S_Sml_p_die(:,DY) = Sml_p.die;
 %         S_Sml_d_die(:,DY) = Sml_d.die;
@@ -452,14 +395,6 @@ for YR = 1:YEARS % years
 %         S_Med_d_clev(:,DY) = Med_d.clev;
 %         S_Lrg_p_clev(:,DY) = Lrg_p.clev;
 %         S_Lrg_d_clev(:,DY) = Lrg_d.clev;
-        
-%         S_Med_f_S(:,DY) = Med_f.S(:,DY);
-%         S_Lrg_p_S(:,DY) = Lrg_p.S(:,DY);
-%         S_Lrg_d_S(:,DY) = Lrg_d.S(:,DY);
-%         
-%         S_Med_f_DD(:,DY) = Med_f.DD;
-%         S_Lrg_p_DD(:,DY) = Lrg_p.DD;
-%         S_Lrg_d_DD(:,DY) = Lrg_d.DD;
         
     end %Days
   
@@ -549,18 +484,6 @@ for YR = 1:YEARS % years
 %             netcdf.putVar(ncidMF,vidrepMF,[0 MNT-1],[NX 1],mean(S_Med_f_rep(:,a(i):b(i)),2));
 % 			netcdf.putVar(ncidLP,vidrepLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rep(:,a(i):b(i)),2));
 % 			netcdf.putVar(ncidLD,vidrepLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rep(:,a(i):b(i)),2));
-%             
-%           netcdf.putVar(ncidMF,videggMF,[0 MNT-1],[NX 1],mean(S_Med_f_egg(:,a(i):b(i)),2));
-% 			netcdf.putVar(ncidLP,videggLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_egg(:,a(i):b(i)),2));
-% 			netcdf.putVar(ncidLD,videggLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_egg(:,a(i):b(i)),2));
-%             
-%           netcdf.putVar(ncidMF,vidSMF,[0 MNT-1],[NX 1],mean(S_Med_f_S(:,a(i):b(i)),2));
-% 			netcdf.putVar(ncidLP,vidSLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_S(:,a(i):b(i)),2));
-% 			netcdf.putVar(ncidLD,vidSLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_S(:,a(i):b(i)),2));
-%             
-%           netcdf.putVar(ncidMF,vidDDMF,[0 MNT-1],[NX 1],mean(S_Med_f_DD(:,a(i):b(i)),2));
-% 			netcdf.putVar(ncidLP,vidDDLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_DD(:,a(i):b(i)),2));
-% 			netcdf.putVar(ncidLD,vidDDLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_DD(:,a(i):b(i)),2));
 			
 		end %Monthly mean
 
