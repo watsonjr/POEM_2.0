@@ -7,28 +7,16 @@ clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-% dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit05/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit05/';
-% dpath = '/Volumes/GFDL/NC/MFbetterMP4_fcrit10/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFbetterMP4_fcrit10/';
-% dpath = '/Volumes/GFDL/NC/MFeqMP4_fcrit10_Tmort/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_MFeqMP4_fcrit10_Tmort/';
-% dpath = '/Volumes/GFDL/NC/fcrit10_FdiffA2_Tmort/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/PDc_TrefO_KHparams_cmax-metab_fcrit10_FdiffA2_Tmort/';
-% dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort/';
-% dpath = '/Volumes/GFDL/NC/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
-% ppath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Dc_TrefO_KHparams_cmax-metab_MFeqMP_fcrit10_MZ01_NOnmort_fish50/';
-dp = '/Volumes/GFDL/NC/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+dp = '/Volumes/GFDL/NC/Jul_og_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Julia_OG_sizes/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE0500_35yr';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE1000';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
 %load([dpath 'Data_spinup_pristine_' cfile '.mat']);
-load([dpath 'Means_spinup_' cfile '.mat']);
+load([dpath 'Means_spinup_' cfile '_6yr.mat']);
 
 %%
 cm9=[0.5 0.5 0;... %tan/army
@@ -221,18 +209,18 @@ Zld(grid(:,1))=ld_mean;
 Zb(grid(:,1))=b_mean;
 
 %% ocean cells
-figure(55)
-m_proj('miller','lat',82);
-surf(geolon_t,geolat_t,ocean); view(2); hold on;
-shading flat
-% m_coast('patch',[.5 .5 .5],'edgecolor','none');
-% m_grid;
-title('Water cells')
-colormap('jet')
-colorbar('h')
-caxis([1 2])
-stamp(cfile)
-print('-dpng',[ppath 'Ocean_cells.png'])
+% figure(55)
+% m_proj('miller','lat',82);
+% surf(geolon_t,geolat_t,ocean); view(2); hold on;
+% shading flat
+% % m_coast('patch',[.5 .5 .5],'edgecolor','none');
+% % m_grid;
+% title('Water cells')
+% colormap('jet')
+% colorbar('h')
+% caxis([1 2])
+% stamp(cfile)
+% print('-dpng',[ppath 'Ocean_cells.png'])
 
 % bent
 figure(50)

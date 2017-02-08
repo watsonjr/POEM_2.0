@@ -606,7 +606,7 @@ function Spinup_pristine()
 	make_parameters(harv,frate) # make core parameters/constants
 
 	#! setup spinup (loop first year of COBALT)
-	COBALT = load("/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2005.jld"); # 120=1980
+	COBALT = load("/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.jld"); # 120=1980
 
 	#! Add phenology params from csv file with ID as row
 	Tref = readdlm("./Data/grid_phenol_T0raw_NOflip.csv",','); #min temp for each yr at each location
@@ -614,7 +614,7 @@ function Spinup_pristine()
 	global TrefB = Tref
 	global Dthresh = readdlm("./Data/grid_phenol_DTraw_NOflip.csv",',');
 	global Sp = readdlm("./Data/Gaussian_spawn_2mo.csv",',');
-	YEARS = 12
+	YEARS = 5
 	global DAYS = 365
 	const global MNTH = collect([31,28,31,30,31,30,31,31,30,31,30,31]) # days in month
 

@@ -3,10 +3,10 @@
 clear all
 close all
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC275_RE0500_35yr';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE1000';
 
 %fpath='/Volumes/GFDL/NC/Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05/';
-fpath=['/Volumes/GFDL/NC/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Jul_og_sizes/' cfile '/'];
 
 
 %% SP
@@ -225,7 +225,7 @@ LD.bio = biomass;
 
 clear biomass %clev con DD die egg gamma nu rec rep S X time prod
 
-%% Benthic material
+% Benthic material
 ncid = netcdf.open([fpath 'Data_spinup_pristine_bent.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
@@ -264,7 +264,7 @@ ld_mean=mean(LD.bio(:,lyr),2);
 b_mean=mean(BENT.bio(:,lyr),2);
 
 %%
-save([fpath 'Means_spinup_' cfile '.mat'],...
+save([fpath 'Means_spinup_' cfile '_6yr.mat'],...
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
     'lp_mean','ld_mean','sf_tmean','sp_tmean','sd_tmean','mf_tmean','mp_tmean',...
     'md_tmean','b_tmean','lp_tmean','ld_tmean','time','lyr');
