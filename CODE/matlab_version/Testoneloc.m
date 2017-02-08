@@ -38,11 +38,12 @@ Fmort = 0.0; %[0.1:0.1:1.0];
                 make_parameters()
                 
                 %! Setup spinup (loop last year of COBALT)
-                load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2005.mat');
+                load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
                 
                 %! How long to run the model
                 YEARS = 5;
                 DAYS = 365;
+                MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
                 
                 %! Where to run the model
                 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
@@ -110,23 +111,32 @@ Fmort = 0.0; %[0.1:0.1:1.0];
                     ENVR = sub_init_env(ID);
                     
                     %! Storage
-                    Spinup_Sml_f = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Sml_p = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Sml_d = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Med_f = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Med_p = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Med_d = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Lrg_p = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Lrg_d = NaN*ones(YEARS*DAYS,25);
-                    Spinup_Cobalt = NaN*ones(YEARS*DAYS,5);
+                    Spinup_Sml_f = NaN*ones(DAYS,25);
+                    Spinup_Sml_p = NaN*ones(DAYS,25);
+                    Spinup_Sml_d = NaN*ones(DAYS,25);
+                    Spinup_Med_f = NaN*ones(DAYS,25);
+                    Spinup_Med_p = NaN*ones(DAYS,25);
+                    Spinup_Med_d = NaN*ones(DAYS,25);
+                    Spinup_Lrg_p = NaN*ones(DAYS,25);
+                    Spinup_Lrg_d = NaN*ones(DAYS,25);
+                    Spinup_Cobalt = NaN*ones(DAYS,5);
+                    
+                    S_Sml_f = NaN*ones(12*YEARS,25);
+                    S_Sml_p = NaN*ones(12*YEARS,25);
+                    S_Sml_d = NaN*ones(12*YEARS,25);
+                    S_Med_f = NaN*ones(12*YEARS,25);
+                    S_Med_p = NaN*ones(12*YEARS,25);
+                    S_Med_d = NaN*ones(12*YEARS,25);
+                    S_Lrg_p = NaN*ones(12*YEARS,25);
+                    S_Lrg_d = NaN*ones(12*YEARS,25);
+                    S_Cobalt = NaN*ones(12*YEARS,5);
                     
                     %! Iterate forward in time with NO fishing
-                    n=0;
+                    MNT=0;
                     for YR = 1:YEARS % years
                         for DAY = 1:DT:DAYS % days
                             
                             %%%! ticker
-                            n = n+1;
                             DY = int64(ceil(DAY));
                             [num2str(YR),' , ', num2str(mod(DY,365))]
                             
@@ -136,47 +146,52 @@ Fmort = 0.0; %[0.1:0.1:1.0];
                                 Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,CC);
                             
                             %! Store last year
-                            %                 if (YR==YEARS)
-                            %                     Spinup_Sml_f(DY,:) = [Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm ...
-                            %                         Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm ...
-                            %                         Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep ...
-                            %                         Sml_f.rec Sml_f.clev Sml_f.prod Sml_f.pred Sml_f.nmort Sml_f.met Sml_f.caught];
-                            %                     Spinup_Sml_p(DY,:) = [Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.clev Sml_p.prod Sml_p.pred Sml_p.nmort Sml_p.met Sml_p.caught];
-                            %                     Spinup_Sml_d(DY,:) = [Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.clev Sml_d.prod Sml_d.pred Sml_d.nmort Sml_d.met Sml_d.caught];
-                            %                     Spinup_Med_f(DY,:) = [Med_f.bio Med_f.enc_f Med_f.enc_p Med_f.enc_d Med_f.enc_zm Med_f.enc_zl Med_f.enc_be Med_f.con_f Med_f.con_p Med_f.con_d Med_f.con_zm Med_f.con_zl Med_f.con_be Med_f.I Med_f.nu Med_f.gamma Med_f.die Med_f.rep Med_f.rec Med_f.clev Med_f.prod Med_f.pred Med_f.nmort Med_f.met Med_f.caught];
-                            %                     Spinup_Med_p(DY,:) = [Med_p.bio Med_p.enc_f Med_p.enc_p Med_p.enc_d Med_p.enc_zm Med_p.enc_zl Med_p.enc_be Med_p.con_f Med_p.con_p Med_p.con_d Med_p.con_zm Med_p.con_zl Med_p.con_be Med_p.I Med_p.nu Med_p.gamma Med_p.die Med_p.rep Med_p.rec Med_p.clev Med_p.prod Med_p.pred Med_p.nmort Med_p.met Med_p.caught];
-                            %                     Spinup_Med_d(DY,:) = [Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.clev Med_d.prod Med_d.pred Med_d.nmort Med_d.met Med_d.caught];
-                            %                     Spinup_Lrg_p(DY,:) = [Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.clev Lrg_p.prod Lrg_p.pred Lrg_p.nmort Lrg_p.met Lrg_p.caught];
-                            %                     Spinup_Lrg_d(DY,:) = [Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.clev Lrg_d.prod Lrg_d.pred Lrg_d.nmort Lrg_d.met Lrg_d.caught];
-                            %                     Spinup_Cobalt(DY,:) = [BENT.mass ENVR.fZm ENVR.fZl ENVR.fB];
-                            %                 end
+                            %if (YR==YEARS)
+                                Spinup_Sml_f(DY,:) = [Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm ...
+                                    Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm ...
+                                    Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep ...
+                                    Sml_f.rec Sml_f.clev Sml_f.prod Sml_f.pred Sml_f.nmort Sml_f.met Sml_f.caught];
+                                Spinup_Sml_p(DY,:) = [Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.clev Sml_p.prod Sml_p.pred Sml_p.nmort Sml_p.met Sml_p.caught];
+                                Spinup_Sml_d(DY,:) = [Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.clev Sml_d.prod Sml_d.pred Sml_d.nmort Sml_d.met Sml_d.caught];
+                                Spinup_Med_f(DY,:) = [Med_f.bio Med_f.enc_f Med_f.enc_p Med_f.enc_d Med_f.enc_zm Med_f.enc_zl Med_f.enc_be Med_f.con_f Med_f.con_p Med_f.con_d Med_f.con_zm Med_f.con_zl Med_f.con_be Med_f.I Med_f.nu Med_f.gamma Med_f.die Med_f.rep Med_f.rec Med_f.clev Med_f.prod Med_f.pred Med_f.nmort Med_f.met Med_f.caught];
+                                Spinup_Med_p(DY,:) = [Med_p.bio Med_p.enc_f Med_p.enc_p Med_p.enc_d Med_p.enc_zm Med_p.enc_zl Med_p.enc_be Med_p.con_f Med_p.con_p Med_p.con_d Med_p.con_zm Med_p.con_zl Med_p.con_be Med_p.I Med_p.nu Med_p.gamma Med_p.die Med_p.rep Med_p.rec Med_p.clev Med_p.prod Med_p.pred Med_p.nmort Med_p.met Med_p.caught];
+                                Spinup_Med_d(DY,:) = [Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.clev Med_d.prod Med_d.pred Med_d.nmort Med_d.met Med_d.caught];
+                                Spinup_Lrg_p(DY,:) = [Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.clev Lrg_p.prod Lrg_p.pred Lrg_p.nmort Lrg_p.met Lrg_p.caught];
+                                Spinup_Lrg_d(DY,:) = [Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.clev Lrg_d.prod Lrg_d.pred Lrg_d.nmort Lrg_d.met Lrg_d.caught];
+                                Spinup_Cobalt(DY,:) = [BENT.mass BENT.pred ENVR.fZm ENVR.fZl ENVR.fB];
+                            %end
                             
-                            %! Store all years
-                            Spinup_Sml_f(n,:) = [Sml_f.bio Sml_f.enc_f Sml_f.enc_p Sml_f.enc_d Sml_f.enc_zm ...
-                                Sml_f.enc_zl Sml_f.enc_be Sml_f.con_f Sml_f.con_p Sml_f.con_d Sml_f.con_zm ...
-                                Sml_f.con_zl Sml_f.con_be Sml_f.I Sml_f.nu Sml_f.gamma Sml_f.die Sml_f.rep ...
-                                Sml_f.rec Sml_f.clev Sml_f.prod Sml_f.pred Sml_f.nmort Sml_f.met Sml_f.caught];
-                            Spinup_Sml_p(n,:) = [Sml_p.bio Sml_p.enc_f Sml_p.enc_p Sml_p.enc_d Sml_p.enc_zm Sml_p.enc_zl Sml_p.enc_be Sml_p.con_f Sml_p.con_p Sml_p.con_d Sml_p.con_zm Sml_p.con_zl Sml_p.con_be Sml_p.I Sml_p.nu Sml_p.gamma Sml_p.die Sml_p.rep Sml_p.rec Sml_p.clev Sml_p.prod Sml_p.pred Sml_p.nmort Sml_p.met Sml_p.caught];
-                            Spinup_Sml_d(n,:) = [Sml_d.bio Sml_d.enc_f Sml_d.enc_p Sml_d.enc_d Sml_d.enc_zm Sml_d.enc_zl Sml_d.enc_be Sml_d.con_f Sml_d.con_p Sml_d.con_d Sml_d.con_zm Sml_d.con_zl Sml_d.con_be Sml_d.I Sml_d.nu Sml_d.gamma Sml_d.die Sml_d.rep Sml_d.rec Sml_d.clev Sml_d.prod Sml_d.pred Sml_d.nmort Sml_d.met Sml_d.caught];
-                            Spinup_Med_f(n,:) = [Med_f.bio Med_f.enc_f Med_f.enc_p Med_f.enc_d Med_f.enc_zm Med_f.enc_zl Med_f.enc_be Med_f.con_f Med_f.con_p Med_f.con_d Med_f.con_zm Med_f.con_zl Med_f.con_be Med_f.I Med_f.nu Med_f.gamma Med_f.die Med_f.rep Med_f.rec Med_f.clev Med_f.prod Med_f.pred Med_f.nmort Med_f.met Med_f.caught];
-                            Spinup_Med_p(n,:) = [Med_p.bio Med_p.enc_f Med_p.enc_p Med_p.enc_d Med_p.enc_zm Med_p.enc_zl Med_p.enc_be Med_p.con_f Med_p.con_p Med_p.con_d Med_p.con_zm Med_p.con_zl Med_p.con_be Med_p.I Med_p.nu Med_p.gamma Med_p.die Med_p.rep Med_p.rec Med_p.clev Med_p.prod Med_p.pred Med_p.nmort Med_p.met Med_p.caught];
-                            Spinup_Med_d(n,:) = [Med_d.bio Med_d.enc_f Med_d.enc_p Med_d.enc_d Med_d.enc_zm Med_d.enc_zl Med_d.enc_be Med_d.con_f Med_d.con_p Med_d.con_d Med_d.con_zm Med_d.con_zl Med_d.con_be Med_d.I Med_d.nu Med_d.gamma Med_d.die Med_d.rep Med_d.rec Med_d.clev Med_d.prod Med_d.pred Med_d.nmort Med_d.met Med_d.caught];
-                            Spinup_Lrg_p(n,:) = [Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.clev Lrg_p.prod Lrg_p.pred Lrg_p.nmort Lrg_p.met Lrg_p.caught];
-                            Spinup_Lrg_d(n,:) = [Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.clev Lrg_d.prod Lrg_d.pred Lrg_d.nmort Lrg_d.met Lrg_d.caught];
-                            Spinup_Cobalt(n,:) = [BENT.mass BENT.pred ENVR.fZm ENVR.fZl ENVR.fB];
                         end %Days
+                        
+                        %! Calculate monthly means and save
+                        aa = (cumsum(MNTH)+1);
+                        a = [1,aa(1:end-1)]; % start of the month
+                        b = cumsum(MNTH); % end of the month
+                        for i = 1:12
+                            MNT = MNT+1; % Update monthly ticker
+                            S_Cobalt(MNT,:) = mean(Spinup_Cobalt(a(i):b(i),:),1);
+                            S_Sml_f(MNT,:) = mean(Spinup_Sml_f(a(i):b(i),:),1);
+                            S_Sml_p(MNT,:) = mean(Spinup_Sml_p(a(i):b(i),:),1);
+                            S_Sml_d(MNT,:) = mean(Spinup_Sml_d(a(i):b(i),:),1);
+                            S_Med_f(MNT,:) = mean(Spinup_Med_f(a(i):b(i),:),1);
+                            S_Med_p(MNT,:) = mean(Spinup_Med_p(a(i):b(i),:),1);
+                            S_Med_d(MNT,:) = mean(Spinup_Med_d(a(i):b(i),:),1);
+                            S_Lrg_p(MNT,:) = mean(Spinup_Lrg_p(a(i):b(i),:),1);
+                            S_Lrg_d(MNT,:) = mean(Spinup_Lrg_d(a(i):b(i),:),1);
+                        end
+                        
                     end %Years
                     
                     %%% Save
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_f.csv'],Spinup_Sml_f)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_p.csv'],Spinup_Sml_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_d.csv'],Spinup_Sml_d)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_f.csv'],Spinup_Med_f)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_p.csv'],Spinup_Med_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_d.csv'],Spinup_Med_d)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Lrg_p.csv'],Spinup_Lrg_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Lrg_d.csv'],Spinup_Lrg_d)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Cobalt.csv'],Spinup_Cobalt)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_f.csv'],S_Sml_f)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_p.csv'],S_Sml_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_d.csv'],S_Sml_d)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_f.csv'],S_Med_f)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_p.csv'],S_Med_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_d.csv'],S_Med_d)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Lrg_p.csv'],S_Lrg_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Lrg_d.csv'],S_Lrg_d)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Cobalt.csv'],S_Cobalt)
                     
                 end %Locations
             end %Fmort

@@ -27,7 +27,7 @@ make_parameters()
 load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
 
 %! How long to run the model
-YEARS = 5;
+YEARS = 50;
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
