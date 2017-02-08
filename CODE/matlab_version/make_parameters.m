@@ -58,11 +58,11 @@ function make_parameters()
     fcrit = 0.40;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
     
     %%%! Transfer efficiency of detritus to benthic prey
-    bent_eff = 0.05;
-    CC = 0.5;
+%     bent_eff = 0.05;
+%     CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 0.5;
+%     rfrac = 0.5;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
@@ -71,7 +71,7 @@ function make_parameters()
 
     %%%! Background mortality
     Nat_mrt = 0.0; 
-    %0=none, 1=constant, 2=temp-dep, 3=large only, 4=large temp-dep
+    %0=none, 1=constant, 2=Hartvig T-dep, 3=mizer T-dep, 4=J&C T-dep, 5=P&W T-dep
     MORT = 0;
 
     %%%! Diet Preference Phi

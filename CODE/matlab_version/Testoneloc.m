@@ -10,18 +10,18 @@ global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel LPsel LDsel
 
 Fmort = 0.0; %[0.1:0.1:1.0];
-% RE = [1.0,0.5,0.1,0.05,0.01];
-% BE = 0.05:0.05:0.2;
-% CarCap = 0.5:0.5:3.0;
-%
-% for B = 1:length(BE)
-%     bent_eff = BE(B);
-%     
-%     for C = 1:length(CarCap)
-%         CC = CarCap(C);
-%         
-%         for R = 1:length(RE)
-%             rfrac = RE(R);
+RE = [1.0,0.5,0.1,0.05,0.01];
+BE = 0.05:0.05:0.1;
+CarCap = 0.5:0.5:2.0;
+
+for B = 1:length(BE)
+    bent_eff = BE(B);
+    
+    for C = 1:length(CarCap)
+        CC = CarCap(C);
+        
+        for R = 1:length(RE)
+            rfrac = RE(R);
             
             for F = 1%:length(Fmort)
                 %! Set fishing rate
@@ -41,7 +41,7 @@ Fmort = 0.0; %[0.1:0.1:1.0];
                 load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
                 
                 %! How long to run the model
-                YEARS = 5;
+                YEARS = 50;
                 DAYS = 365;
                 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
                 
@@ -195,7 +195,7 @@ Fmort = 0.0; %[0.1:0.1:1.0];
                     
                 end %Locations
             end %Fmort
-%         end %RE
-%     end %CC
-% end %BE
+        end %RE
+    end %CC
+end %BE
 end
