@@ -5,15 +5,15 @@ close all
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-load('/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.mat',...
-    'uh200','vh200','u200','v200');
-Uth_200 = uh200(:,:,1);
-Vth_200 = vh200(:,:,1);
+load('/Volumes/GFDL/GCM_DATA/CORE-forced/Natasha_jellies/ocean.194801-200712_uh50_vh50.mat',...
+    'uh50','vh50','u50','v50');
+Uth_50 = u50(:,:,41);
+Vth_50 = v50(:,:,41);
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'AREA_OCN','dat','dxtn','dyte','ht','geolon_t','geolat_t');
 
-cname='AtlNH_dt1hr_velH_Jan88_b100_no999';
+cname='AtlNH_dt1hr_vel50_Jan88_b100';
 
 %%
 area = AREA_OCN;
@@ -28,10 +28,9 @@ jsd = 1;
 ied = ni;
 jed = nj;
 
-% depth of the surface layer, 200m or less
+% depth not needed
 eps = 1;
-dep = min(ht,200);
-dep = max(dep,eps);
+dep = ones(ni,nj);
 
 % land mask
 mask = zeros(ni,nj);
@@ -47,9 +46,13 @@ latmin = -90;
 latmax = 90;
 aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
     (geolat_t < latmax) & (ht > 0) );
+%Global
 % TF(aa) = 100*ones(size(aa));
 
+%Atlantic
 %TF(220:240,:) = 100.0;
+
+%Atl across to arctic
 % TF(220:240,:) = 100.0;
 % TF(121:141,195:200) = 100.0;
 
@@ -63,8 +66,8 @@ TF0 = TF;
 %% Following Advect_upwind_2D
 dt = 60*60*(1);
 ntime = 365 * (60*60*24) / dt;
-uvel = Uth_200;
-vvel = Vth_200;
+uvel = Uth_50;
+vvel = Vth_50;
 K = 600.0;
 
 fe = zeros(ni,nj);

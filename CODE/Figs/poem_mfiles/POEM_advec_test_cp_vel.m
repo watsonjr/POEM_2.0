@@ -7,13 +7,13 @@ fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
 load('/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.mat',...
     'uh200','vh200','u200','v200');
-Uth_200 = uh200(:,:,1);
-Vth_200 = vh200(:,:,1);
+Uth_200 = u200(:,:,1);
+Vth_200 = v200(:,:,1);
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'AREA_OCN','dat','dxtn','dyte','ht','geolon_t','geolat_t');
 
-cname='AtlNH_dt1hr_velH_Jan88_b100_no999';
+cname='AtlNH_dt1hr_vel_Jan88_b100_no999';
 
 %%
 area = AREA_OCN;
@@ -30,8 +30,7 @@ jed = nj;
 
 % depth of the surface layer, 200m or less
 eps = 1;
-dep = min(ht,200);
-dep = max(dep,eps);
+dep = ones(ni,nj);
 
 % land mask
 mask = zeros(ni,nj);
@@ -47,9 +46,13 @@ latmin = -90;
 latmax = 90;
 aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
     (geolat_t < latmax) & (ht > 0) );
+%Global
 % TF(aa) = 100*ones(size(aa));
 
+%Atlantic
 %TF(220:240,:) = 100.0;
+
+%Atl across to arctic
 % TF(220:240,:) = 100.0;
 % TF(121:141,195:200) = 100.0;
 
@@ -65,7 +68,7 @@ dt = 60*60*(1);
 ntime = 365 * (60*60*24) / dt;
 uvel = Uth_200;
 vvel = Vth_200;
-K = 600.0;
+K = 0.0;
 
 fe = zeros(ni,nj);
 fn = zeros(ni,nj);
@@ -188,7 +191,7 @@ for n = 1:ntime
     if n == 1
         figure(1)
         surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 100]);
-        print('-dpng',[fpath 'POEM_adv_diff_test_tracer_' cname '_day0.png'])
+        print('-dpng',[fpath 'POEM_adv_test_tracer_' cname '_day0.png'])
         %pause
         
         figure(2)
@@ -201,7 +204,7 @@ for n = 1:ntime
         m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
         m_coast('patch',[.7 .7 .7],'edgecolor','k');
         title('Tracer day 1')
-        print('-dpng',[fpath 'POEM_adv_diff_test_tracer_arcticproj_' cname '_day0.png'])
+        print('-dpng',[fpath 'POEM_adv_test_tracer_arcticproj_' cname '_day0.png'])
     end
     
 %     TF2(aa) = -999;
@@ -213,7 +216,7 @@ for n = 1:ntime
         caxis([0 100]); %caxis([0 2e3]) to see how big instabilities are
         pdiff = 100*(total_mass(end) - total_mass(1))/total_mass(1);
         title(['%diff = ', num2str(pdiff,'%10.3e')]);
-        print('-dpng',[fpath 'POEM_adv_diff_test_tracer_' cname '_day365.png'])
+        print('-dpng',[fpath 'POEM_adv_test_tracer_' cname '_day365.png'])
         %pause
     end
     
@@ -232,7 +235,7 @@ caxis([0 100])
 m_grid('xtick',6,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
 title('Tracer day 365')
-print('-dpng',[fpath 'POEM_adv_diff_test_tracer_arcticproj_' cname '_day365.png'])
+print('-dpng',[fpath 'POEM_adv_test_tracer_arcticproj_' cname '_day365.png'])
 
-save(['/Volumes/GFDL/CSV/advect_tests/POEM_adv_diff_test_' cname '.mat'],'TF0','TF2','pdiff','total_mass')
+save(['/Volumes/GFDL/CSV/advect_tests/POEM_adv_test_' cname '.mat'],'TF0','TF2','pdiff','total_mass')
 

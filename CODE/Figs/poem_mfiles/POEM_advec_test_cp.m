@@ -65,7 +65,7 @@ dt = 60*60*(1);
 ntime = 365 * (60*60*24) / dt;
 uvel = Uth_200;
 vvel = Vth_200;
-K = 600.0;
+K = 0.0;
 
 fe = zeros(ni,nj);
 fn = zeros(ni,nj);
@@ -188,7 +188,7 @@ for n = 1:ntime
     if n == 1
         figure(1)
         surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 100]);
-        print('-dpng',[fpath 'POEM_adv_diff_test_tracer_' cname '_day0.png'])
+        print('-dpng',[fpath 'POEM_adv_test_tracer_' cname '_day0.png'])
         %pause
         
         figure(2)
@@ -201,7 +201,7 @@ for n = 1:ntime
         m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
         m_coast('patch',[.7 .7 .7],'edgecolor','k');
         title('Tracer day 1')
-        print('-dpng',[fpath 'POEM_adv_diff_test_tracer_arcticproj_' cname '_day0.png'])
+        print('-dpng',[fpath 'POEM_adv_test_tracer_arcticproj_' cname '_day0.png'])
     end
     
 %     TF2(aa) = -999;
@@ -213,7 +213,7 @@ for n = 1:ntime
         caxis([0 100]); %caxis([0 2e3]) to see how big instabilities are
         pdiff = 100*(total_mass(end) - total_mass(1))/total_mass(1);
         title(['%diff = ', num2str(pdiff,'%10.3e')]);
-        print('-dpng',[fpath 'POEM_adv_diff_test_tracer_' cname '_day365.png'])
+        print('-dpng',[fpath 'POEM_adv_test_tracer_' cname '_day365.png'])
         %pause
     end
     
@@ -232,7 +232,7 @@ caxis([0 100])
 m_grid('xtick',6,'tickdir','out','ytick',[70 80],'linest','-');
 m_coast('patch',[.7 .7 .7],'edgecolor','k');
 title('Tracer day 365')
-print('-dpng',[fpath 'POEM_adv_diff_test_tracer_arcticproj_' cname '_day365.png'])
+print('-dpng',[fpath 'POEM_adv_test_tracer_arcticproj_' cname '_day365.png'])
 
-save(['/Volumes/GFDL/CSV/advect_tests/POEM_adv_diff_test_' cname '.mat'],'TF0','TF2','pdiff','total_mass')
+save(['/Volumes/GFDL/CSV/advect_tests/POEM_adv_test_' cname '.mat'],'TF0','TF2','pdiff','total_mass')
 

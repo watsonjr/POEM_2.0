@@ -3,9 +3,7 @@
 clear all
 close all
 
-%dpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/CSV/advect_tests/';
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
-%dpath = '/Volumes/GFDL/NC/AdvectTests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
 bio = csvread([dpath 'bio_2Dadvect_swim_Zl_global_velH200_dt1hr_sep_lBLtemp.csv']);
@@ -14,18 +12,28 @@ cname = 'swim_Zl_global_velH200_dt1hr_sep_lBLtemp';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
+load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_hindcast_grid_cp2D.mat')
 
-% Conservation of mass
-area = grid(:,5);
-area = area';
-mass = bio .* repmat(area,365,1);
-totb = sum(mass,2);
+%% Conservation of mass
+[nid,nd] = size(biov);
+
+% Grid with area instead of vectors of area
+[ni,nj] = size(GRD.area);
+bio2 = NaN*ones(ni,nj,nd);
+for d = 1:nd
+    bio = NaN*ones(ni,nj);
+    bio(grid(:,1)) = (biov(:,d));
+    bio2(:,:,d) = bio;
+end
+
+mass = bio2 .* repmat(GRD.area,1,1,nd);
+totb = squeeze(nansum(nansum(mass,1)));
 figure(10)
 subplot(2,2,1)
 plot(totb)
-cons = 100*(totb(end)-totb(1))/totb(1)
+cons = 100*(totb(end)-totb(1))/totb(1) 
 
-%
+%%
 yrs=[1:length(totb)]/365;
 figure(11)
 plot(yrs,totb,'LineWidth',2)
@@ -34,60 +42,73 @@ plot(yrs,totb,'LineWidth',2)
 xlabel('Year')
 %title(cname)
 ylabel('Total number of particles')
-print('-dpng',[fpath 'advec_test_' cname '_totb.png'])
+print('-dpng',[fpath 'swim_advec_diff_test_' cname '_totb.png'])
 
-%% Global flat
-t = 1:72.75:365;
-%t = 1:5:30;
+%% plot info
+% Land
+lmask = GRD.mask;
+lmask(lmask==0) = 999;
+lmask(lmask==1) = NaN;
+
+%axes labels
+xt = -250:50:50;
+xl = xt;
+xl(xl<-180) = xl(xl<-180) + 350;
+
+t = 1:72.75:nd;
+%t = 1:3:15;
 t = round(t);
 
-%Global map
+%% Global flat
 for n=1:length(t)
-    B1 = NaN*ones(size(geolat_t));
-    B1(grid(:,1))=bio(t(n),:);
+%     B1 = NaN*ones(size(geolat_t));
+%     B1(grid(:,1))=bio(:,t(n));
+    B1 = bio2(:,:,t(n));
     
     figure
     surf(geolon_t,geolat_t,B1);
     view(2);
     shading interp;
     colorbar;
-    caxis([0 2e6]);
+    caxis([0 1e2]);
     colormap('jet')
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'advec_test_' cname '_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'swim_advec_diff_test_' cname '_' num2str(t(n)) '.png'])
 end
 
 
 %% Arctic projection
 for n=1:length(t)
-    B1(grid(:,1))=bio(t(n),:);
+%     B1(grid(:,1))=bio(:,t(n));
+    B1 = bio2(:,:,t(n));
     
     figure
     m_proj('stereographic','lat',90,'long',30,'radius',30);
     m_pcolor(geolon_t,geolat_t,B1);
-    shading flat
+    shading interp
     colorbar
     colormap('jet')
-    caxis([0 2e6])
-    m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+    caxis([0 1e2])
+    m_grid('xtick',6,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'advec_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'swim_advec_diff_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
 end
 
 %% Antarctic projection
 for n=1:length(t)
-    B1(grid(:,1))=bio(t(n),:);
+%     B1(grid(:,1))=bio(:,t(n));
+    B1 = bio2(:,:,t(n));
     
     figure
     m_proj('stereographic','lat',-90,'long',30,'radius',50);
     m_pcolor(geolon_t,geolat_t,B1);
-    shading flat
+    shading interp
     colorbar
     colormap('jet')
-    caxis([0 2e6])
+    caxis([0 1e2])
     m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'advec_test_' cname '_Spoleproj_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'swim_advec_diff_test_' cname '_Spoleproj_' num2str(t(n)) '.png'])
 end

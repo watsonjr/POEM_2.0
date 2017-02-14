@@ -5,32 +5,29 @@ close all
 
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-load('/Volumes/GFDL/GCM_DATA/CORE-forced/feb152013_run25_ocean.198801-200712_uh200_vh200.mat',...
-    'uh200','vh200','u200','v200');
-Uth_200 = uh200(:,:,1);
-Vth_200 = vh200(:,:,1);
+load('/Volumes/GFDL/GCM_DATA/CORE-forced/Natasha_jellies/ocean.194801-200712_uh50_vh50.mat',...
+    'uh50','vh50','u50','v50');
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'AREA_OCN','dat','dxtn','dyte','ht','geolon_t','geolat_t');
 
-cname='AtlNH_dt1hr_velH_Jan88_b100_no999';
+cname='AtlNH_dt1hr_velH50_Jan88_b100_v2';
 
 %%
 area = AREA_OCN;
 area = (area)*510072000*1e6;
 area = max(area,1);
 
-% grid size
-ni = 360;
-nj = 200;
+% grid size 
+[ni,nj] = size(geolon_t);
 isd = 1;
 jsd = 1;
 ied = ni;
 jed = nj;
 
-% depth of the surface layer, 200m or less
+% depth of the surface layer, 50m or less
 eps = 1;
-dep = min(ht,200);
+dep = min(ht,50);
 dep = max(dep,eps);
 
 % land mask
@@ -39,32 +36,27 @@ aa = find(ht > 0);
 mask(aa) = 1;
 
 %define a patch to advect
-TF = zeros(360,200);
-TF2 = zeros(360,200);
-lonmin = -280;
-lonmax = 80;
-latmin = -90;
-latmax = 90;
-aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
-    (geolat_t < latmax) & (ht > 0) );
-% TF(aa) = 100*ones(size(aa));
-
-%TF(220:240,:) = 100.0;
-% TF(220:240,:) = 100.0;
-% TF(121:141,195:200) = 100.0;
+TF = zeros(ni,nj);
+TF2 = zeros(ni,nj);
 
 %Natasha NAtl region
 TF(206:295,150:177) = 100.0;
 
 TF = TF .* mask;
-total_mass(1) = sum(TF(:).*area(:));
 TF0 = TF;
+total_mass(1) = sum(TF(:).*area(:));
 
 %% Following Advect_upwind_2D
 dt = 60*60*(1);
 ntime = 365 * (60*60*24) / dt;
-uvel = Uth_200;
-vvel = Vth_200;
+
+%I pulled out one more on each side of Natasha's region
+iids = [205:296];
+jids = [149:178];
+uvel = zeros(ni,nj);
+vvel = zeros(ni,nj);
+uvel(iids,jids) = uh50(:,:,41);
+vvel(iids,jids) = vh50(:,:,41);
 K = 600.0;
 
 fe = zeros(ni,nj);
@@ -183,13 +175,10 @@ for n = 1:ntime
     total_mass(n+1) = sum(TF2(:).*area(:));
     
     % Plot, do mass balance, reset tracer fields
-    aa = find(ht == 0);
-%     TF(aa) = -999;
     if n == 1
         figure(1)
         surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 100]);
         print('-dpng',[fpath 'POEM_adv_diff_test_tracer_' cname '_day0.png'])
-        %pause
         
         figure(2)
         m_proj('stereographic','lat',90,'long',30,'radius',30);
@@ -204,8 +193,6 @@ for n = 1:ntime
         print('-dpng',[fpath 'POEM_adv_diff_test_tracer_arcticproj_' cname '_day0.png'])
     end
     
-%     TF2(aa) = -999;
-    
     if n == ntime
         figure(13)
         clf
@@ -214,7 +201,6 @@ for n = 1:ntime
         pdiff = 100*(total_mass(end) - total_mass(1))/total_mass(1);
         title(['%diff = ', num2str(pdiff,'%10.3e')]);
         print('-dpng',[fpath 'POEM_adv_diff_test_tracer_' cname '_day365.png'])
-        %pause
     end
     
     TF = TF2;

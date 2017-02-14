@@ -6,8 +6,8 @@ close all
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-bio = csvread([dpath 'Matlab_diff_Across_Arc_dt1hr_b1.csv']);
-cname = 'Across_Arc_dt1hr_b1';
+bio = csvread([dpath 'Matlab_adv_AtlNH_dt1hr_b1.csv']);
+cname = 'AtlNH_dt1hr_b1';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -32,7 +32,7 @@ plot(yrs,totb,'LineWidth',2)
 xlabel('Year')
 %title(cname)
 ylabel('Total number of particles')
-print('-dpng',[fpath 'diff_test_' cname '_totb.png'])
+print('-dpng',[fpath 'advec_test_' cname '_totb.png'])
 
 %% plot info
 % Land
@@ -60,10 +60,10 @@ for n=1:length(t)
     view(2);
     shading interp;
     colorbar;
-    caxis([0 1e0]);
+    caxis([0 1e1]);
     colormap('jet')
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'diff_test_' cname '_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'advec_test_' cname '_' num2str(t(n)) '.png'])
 end
 
 
@@ -81,7 +81,7 @@ for n=1:length(t)
     m_grid('xtick',6,'tickdir','out','ytick',[70 80],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'diff_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'advec_test_' cname '_arcticproj_' num2str(t(n)) '.png'])
 end
 
 %% Antarctic projection
@@ -98,5 +98,5 @@ for n=1:length(t)
     m_grid('xtick',12,'tickdir','out','ytick',[-50 -60 -70],'linest','-');
     m_coast('patch',[.7 .7 .7],'edgecolor','k');
     title(['Day ' num2str(t(n)) ' Year 1'])
-    print('-dpng',[fpath 'diff_test_' cname '_Spoleproj_' num2str(t(n)) '.png'])
+    print('-dpng',[fpath 'advec_test_' cname '_Spoleproj_' num2str(t(n)) '.png'])
 end
