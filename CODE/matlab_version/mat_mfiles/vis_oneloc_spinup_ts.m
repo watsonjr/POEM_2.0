@@ -6,7 +6,7 @@ clear all
 close all
 
 %data path
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC050_RE0500';
+cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE05_CC200_RE1000';
 dpath = ['/Volumes/GFDL/CSV/Matlab_big_size/' cfile '/'];
 %figures path
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
@@ -420,8 +420,8 @@ for s=1:length(spots)
         DA=LD(yr,19);
         PA=LP(yr,19);
         
-        st=1:365:length(yr);
-        en=365:365:length(yr);
+        st=1:12:length(yr);
+        en=12:12:length(yr);
         SPy = NaN*ones(length(st),1);
         SFy = SPy;
         SDy = SPy;

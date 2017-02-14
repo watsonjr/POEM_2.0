@@ -1,17 +1,19 @@
-% Visualize output of POEM
+% Visualize output of POEM BE and CC tests
 % Spinup at one location
-% 100 years, but only last year saved
+% 50 years, monthly means saved
 
 clear all
 close all
 
-datap = '/Volumes/GFDL/CSV/Matlab_test_runs/';
-figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Comparisons/';
+datap = '/Volumes/GFDL/CSV/Matlab_big_size/';
+figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/Bent_CC/';
 
-sims = {'.05','.1','.15','.2','.25','.3'};
-RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];
-CarCap = [0.25:0.25:5.0];
-benteff = [0.05:0.05:0.3];
+RE = {'1000','0500','0100','0050','0010'};
+reff = [1.0,0.5,0.1,0.05,0.01];
+CarCap = {'050','100','150','200'};
+car = 0.5:0.5:2.0;
+benteff = {'05','10'};
+beff = 0.05:0.05:0.1;
 fcrit = 40;
 nmort = '0';
 kad = 100;
@@ -20,7 +22,7 @@ pref = 'D100';
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
-    'rec','egg','clev','DD','S','prod','pred','nmort','met','caught'};
+    'rec','clev','prod','pred','nmort','met','caught'};
 cols=cols';
 
 sname = 'Spinup_';
@@ -28,285 +30,426 @@ mclev=NaN*ones(length(spots),8);
 Zcon=NaN*ones(length(spots),3);
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
+cmap3=cmap_ppt([5,1,3],:);
 
 %%
 for i=1:length(benteff)
     BE = benteff{i};
-%     dp = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-%         '_' pref '_nmort'  nmort '_BE' BE '_RE0010'];
-    dp = 'NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort0_BE30_CC25_RE0010';
-    dpath = [datap char(dp) '/'];
-    fpath = [figp char(dp) '/'];
-    cfile = char(dp);
-    cfile2 = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-        '_' pref '_nmort'  nmort '_BE' BE '_RE0010_BentMortTests'];
-    
-    %%
-    Bmean = NaN*ones(1,length(spots));
-    Psum = NaN*ones(3,length(spots));
-    Fsum = NaN*ones(2,length(spots));
-    Pmean = Psum;
-    Fmean = Fsum;
-    Dmean = Psum;
-    Pcon = Psum;
-    Fcon = Fsum;
-    Dcon = Psum;
-    all_mean=NaN*ones(3,4,length(spots));
-    Zcon = NaN*ones(length(spots),3);
-    mclev = NaN*ones(length(spots),8);
-    
-    %%
-    for s=1:length(spots)
-        %%
-        close all
-        loc = spots{s};
-        lname = [loc '_'];
-        %lname = ['phen_' loc '_'];
-        
-        %     SF = Spinup_Sml_f;
-        %     SP = Spinup_Sml_p;
-        %     SD = Spinup_Sml_d;
-        %     MF = Spinup_Med_f;
-        %     MP = Spinup_Med_p;
-        %     MD = Spinup_Med_d;
-        %     LP = Spinup_Lrg_p;
-        %     LD = Spinup_Lrg_d;
-        %     C  = Spinup_Cobalt;
-        
-        SP = csvread([dpath sname lname 'Sml_p.csv']);
-        SF = csvread([dpath sname lname 'Sml_f.csv']);
-        SD = csvread([dpath sname lname 'Sml_d.csv']);
-        MP = csvread([dpath sname lname 'Med_p.csv']);
-        MF = csvread([dpath sname lname 'Med_f.csv']);
-        MD = csvread([dpath sname lname 'Med_d.csv']);
-        LP = csvread([dpath sname lname 'Lrg_p.csv']);
-        LD = csvread([dpath sname lname 'Lrg_d.csv']);
-        C = csvread([dpath sname lname 'Cobalt.csv']);
-        z(:,1) = C(:,3);
-        z(:,2) = C(:,4);
-        z(:,3) = C(:,5);
-        
-        
-        %% Plots over time
-        x=182:365:length(SP);
-        %x=1:90:length(SP);
-        y=x/365;
-        lstd=length(SP);
-        t=1:lstd;
-        lyr=t((end-365+1):end);
-        
-        %% Mean biomasses
-        
-        SP_mean=mean(SP(lyr,1));
-        SF_mean=mean(SF(lyr,1));
-        SD_mean=mean(SD(lyr,1));
-        MP_mean=mean(MP(lyr,1));
-        MF_mean=mean(MF(lyr,1));
-        MD_mean=mean(MD(lyr,1));
-        LP_mean=mean(LP(lyr,1));
-        LD_mean=mean(LD(lyr,1));
-        B_mean =mean(C(lyr,1));
-        
-        P_mean=[SP_mean;MP_mean;LP_mean];
-        F_mean=[SF_mean;MF_mean];
-        D_mean=[SD_mean;MD_mean;LD_mean];
-        
-        Pmean(:,s) = P_mean;
-        Fmean(:,s) = F_mean;
-        Dmean(:,s) = D_mean;
-        Bmean(:,s) = B_mean;
-        
-        all_mean(1:2,1,s) = F_mean;
-        all_mean(:,2,s) = P_mean;
-        all_mean(:,3,s) = D_mean;
-        all_mean(1,4,s) = B_mean;
-        
-        %% Mean consumption level
-        c=[SF(:,21) SP(:,21) SD(:,21) MF(:,21) MP(:,21) MD(:,21) LP(:,21) LD(:,21)];
-        mclev(s,:) = nanmean(c);
-        
-        % Zoop overconsumption
-        Zcon(s,:) = nansum(z)/lstd;
-        
-        %% Benthic invert biomass
-        figure(11)
-        subplot(4,1,1)
-        plot(y,log10(C(x,1)),'b','Linewidth',1); hold on;
-        plot(y,log10(C(x,2)),'k','Linewidth',1); hold on;
-        plot(y,log10(C(x,5)),'r','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title('Benthic inverts')
-        xlabel('Time (y)')
-        ylabel('log10')
-        legend('biomass','eaten','frac')
-        
-        subplot(4,1,2)
-        plot(y,log10(C(x,1)),'b','Linewidth',1); hold on;
-        %plot(y,C(x,1),'b','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title('Benthic inverts biomass')
-        xlabel('Time (y)')
-        ylabel('log10 Biomass (g m^-^2)')
-        
-        subplot(4,1,3)
-        plot(y,log10(C(x,2)),'k','Linewidth',1); hold on;
-        %plot(y,C(x,2),'k','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title('Benthic inverts consumed')
-        xlabel('Time (y)')
-        ylabel('log10 Biomass (g m^-^2)')
-        
-        subplot(4,1,4)
-        %plot(y,log10(C(x,5)),'r','Linewidth',1); hold on;
-        plot(y,C(x,5),'r','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title('Fraction of total benthic invertsconsumed')
-        xlabel('Time (y)')
-        ylabel('Fraction')
-        print('-dpng',[dpath sname lname 'oneloc_B_time.png'])
-        
-        %% Demersal
-        figure(3)
-        subplot(4,1,1)
-        plot(y,log10(SD(x,1)),'b','Linewidth',1); hold on;
-        plot(y,log10(MD(x,1)),'r','Linewidth',1); hold on;
-        plot(y,log10(LD(x,1)),'k','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title(['Spinup Demersal Piscivores ' loc])
-        xlabel('Time (y)')
-        ylabel('Biomass (g m^-^2)')
-        legend('Larvae','Juveniles','Adults')
-        
-        subplot(4,1,2)
-        plot(y,log10(SD(x,1)),'b','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title('Larvae')
-        xlabel('Time (y)')
-        ylabel('Biomass (g m^-^2)')
-        
-        subplot(4,1,3)
-        plot(y,log10(MD(x,1)),'r','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title('Juveniles')
-        xlabel('Time (y)')
-        ylabel('Biomass (g m^-^2)')
-        
-        subplot(4,1,4)
-        plot(y,log10(LD(x,1)),'k','Linewidth',1); hold on;
-        xlim([y(1) y(end)])
-        title('Adults')
-        xlabel('Time (y)')
-        ylabel('Biomass (g m^-^2)')
-        print('-dpng',[dpath sname lname 'oneloc_D_time.png'])
-        
-        %% All size classes of all
-        
-        figure(5)
-        plot(y,log10(SP(x,1)),'Linewidth',2); hold on;
-        plot(y,log10(MP(x,1)),'Linewidth',2); hold on;
-        plot(y,log10(LP(x,1)),'Linewidth',2); hold on;
-        plot(y,log10(SF(x,1)),'Linewidth',2); hold on;
-        plot(y,log10(MF(x,1)),'Linewidth',2); hold on;
-        plot(y,log10(SD(x,1)),'Linewidth',2); hold on;
-        plot(y,log10(MD(x,1)),'Linewidth',2); hold on;
-        plot(y,log10(LD(x,1)),'Linewidth',2); hold on;
-        legend('SP','MP','LP','SF','MF','SD','MD','LD')
-        legend('location','eastoutside')
-        xlim([y(1) y(end)])
-        ylim([-10 2])
-        xlabel('Time (y)')
-        ylabel('Biomass (g m^-^2)')
-        title(['Spinup ' loc])
-        print('-dpng',[dpath sname lname 'oneloc_all_sizes.png'])
-        
-        %% All fish summed over sizes
-        figure(15)
-        BE = SF(x,1)+MF(x,1);
-        P = SP(x,1)+MP(x,1)+LP(x,1);
-        D = SD(x,1)+MD(x,1)+LD(x,1);
-        
-        plot(y,log10(P),'k','Linewidth',2); hold on;
-        plot(y,log10(BE),'b','Linewidth',2); hold on;
-        plot(y,log10(D),'r','Linewidth',2); hold on;
-        legend('P','F','D')
-        legend('location','eastoutside')
-        xlim([y(1) y(end)])
-        ylim([-10 2])
-        xlabel('Time (y)')
-        ylabel('Biomass (g m^-^2)')
-        title(['Spinup ' loc])
-        print('-dpng',[dpath sname lname 'oneloc_all_type.png'])
-        
-        
+    for C = 1:length(CarCap)
+        CC = CarCap{C};
+        for R = 1:length(RE)
+            rfrac = RE{R};
+            dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+                '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' rfrac];
+            dpath = [datap char(dp) '/'];
+            fpath = [figp char(dp) '/'];
+            cfile = char(dp);
+            
+            %%
+            Psum = NaN*ones(3,length(spots));
+            Fsum = NaN*ones(2,length(spots));
+            Dsum = Psum;
+            Bmean = NaN*ones(1,length(spots));
+            Pmean = Psum;
+            Fmean = Fsum;
+            Dmean = Psum;
+            Pmgr = Psum;
+            Fmgr = Fsum;
+            Dmgr = Psum;
+            Pgge = Psum;
+            Fgge = Fsum;
+            Dgge = Psum;
+            Pprod = Psum;
+            Fprod = Fsum;
+            Dprod = Psum;
+            Pcon = Psum;
+            Fcon = Fsum;
+            Dcon = Psum;
+            Prep = Fsum;
+            Frep = Fsum;
+            Drep = Fsum;
+            Pmet = Psum;
+            Fmet = Fsum;
+            Dmet = Psum;
+            Ppred = Psum;
+            Fpred = Fsum;
+            Dpred = Psum;
+            Pnat = Psum;
+            Fnat = Fsum;
+            Dnat = Psum;
+            Pfish = Psum;
+            Ffish = Fsum;
+            Dfish = Psum;
+            Ptotcatch = Psum;
+            Ftotcatch = Fsum;
+            Dtotcatch = Psum;
+            Plev = Psum;
+            Flev = Fsum;
+            Dlev = Psum;
+            all_mean=NaN*ones(3,4,length(spots));
+            z = NaN*ones(length(spots),3);
+            
+            %%
+            for s=1:length(spots)
+                %%
+                loc = spots{s};
+                lname = [loc '_'];
+                SP = csvread([dpath sname lname 'Sml_p.csv']);
+                SF = csvread([dpath sname lname 'Sml_f.csv']);
+                SD = csvread([dpath sname lname 'Sml_d.csv']);
+                MP = csvread([dpath sname lname 'Med_p.csv']);
+                MF = csvread([dpath sname lname 'Med_f.csv']);
+                MD = csvread([dpath sname lname 'Med_d.csv']);
+                LP = csvread([dpath sname lname 'Lrg_p.csv']);
+                LD = csvread([dpath sname lname 'Lrg_d.csv']);
+                CO = csvread([dpath sname lname 'Cobalt.csv']);
+                
+                t=1:length(SP);
+                lyr=t((end-12+1):end);
+                
+                %% Final mean biomass in each size
+                
+                SP_mean=mean(SP(lyr,1));
+                SF_mean=mean(SF(lyr,1));
+                SD_mean=mean(SD(lyr,1));
+                MP_mean=mean(MP(lyr,1));
+                MF_mean=mean(MF(lyr,1));
+                MD_mean=mean(MD(lyr,1));
+                LP_mean=mean(LP(lyr,1));
+                LD_mean=mean(LD(lyr,1));
+                B_mean =mean(CO(lyr,1));
+                
+                P_mean=[SP_mean;MP_mean;LP_mean];
+                F_mean=[SF_mean;MF_mean];
+                D_mean=[SD_mean;MD_mean;LD_mean];
+                
+                Pmean(:,s) = P_mean;
+                Fmean(:,s) = F_mean;
+                Dmean(:,s) = D_mean;
+                Bmean(:,s) = B_mean;
+                
+                all_mean(1:2,1,s) = F_mean;
+                all_mean(:,2,s) = P_mean;
+                all_mean(:,3,s) = D_mean;
+                all_mean(1,4,s) = B_mean;
+                
+                %% Growth rate (nu - energy for biomass production)
+                SP_mgr=nanmean(SP(lyr,15));
+                SF_mgr=nanmean(SF(lyr,15));
+                SD_mgr=nanmean(SD(lyr,15));
+                MP_mgr=nanmean(MP(lyr,15));
+                MF_mgr=nanmean(MF(lyr,15));
+                MD_mgr=nanmean(MD(lyr,15));
+                LP_mgr=nanmean(LP(lyr,15));
+                LD_mgr=nanmean(LD(lyr,15));
+                
+                P_mgr=[SP_mgr;MP_mgr;LP_mgr];
+                F_mgr=[SF_mgr;MF_mgr];
+                D_mgr=[SD_mgr;MD_mgr;LD_mgr];
+                
+                Pmgr(:,s) = P_mgr;
+                Fmgr(:,s) = F_mgr;
+                Dmgr(:,s) = D_mgr;
+                
+                %% Consump per biomass (I)
+                SP_con=nanmean(SP(lyr,14));
+                SF_con=nanmean(SF(lyr,14));
+                SD_con=nanmean(SD(lyr,14));
+                MP_con=nanmean(MP(lyr,14));
+                MF_con=nanmean(MF(lyr,14));
+                MD_con=nanmean(MD(lyr,14));
+                LP_con=nanmean(LP(lyr,14));
+                LD_con=nanmean(LD(lyr,14));
+                
+                P_con=[SP_con;MP_con;LP_con];
+                F_con=[SF_con;MF_con];
+                D_con=[SD_con;MD_con;LD_con];
+                
+                Pcon(:,s) = P_con;
+                Fcon(:,s) = F_con;
+                Dcon(:,s) = D_con;
+                
+                %% Feeding level = con/cmax
+                SP_lev=nanmean(SP(lyr,20));
+                SF_lev=nanmean(SF(lyr,20));
+                SD_lev=nanmean(SD(lyr,20));
+                MP_lev=nanmean(MP(lyr,20));
+                MF_lev=nanmean(MF(lyr,20));
+                MD_lev=nanmean(MD(lyr,20));
+                LP_lev=nanmean(LP(lyr,20));
+                LD_lev=nanmean(LD(lyr,20));
+                
+                P_lev=[SP_lev;MP_lev;LP_lev];
+                F_lev=[SF_lev;MF_lev];
+                D_lev=[SD_lev;MD_lev;LD_lev];
+                
+                Plev(:,s) = P_lev;
+                Flev(:,s) = F_lev;
+                Dlev(:,s) = D_lev;
+                
+                %% Fraction zoop losses consumed
+                z(s,1) = nanmean(CO(lyr,3));
+                z(s,2) = nanmean(CO(lyr,4));
+                z(s,3) = nanmean(CO(lyr,5));
+                
+                %% Size spectrum (sum stages)
+                spec = nansum(all_mean(:,:,s),2);
+                
+                %% Production (= nu * biom)
+                SP_prod=nanmean(SP(lyr,21));
+                SF_prod=nanmean(SF(lyr,21));
+                SD_prod=nanmean(SD(lyr,21));
+                MP_prod=nanmean(MP(lyr,21));
+                MF_prod=nanmean(MF(lyr,21));
+                MD_prod=nanmean(MD(lyr,21));
+                LP_prod=nanmean(LP(lyr,21));
+                LD_prod=nanmean(LD(lyr,21));
+                
+                P_prod=[SP_prod;MP_prod;LP_prod];
+                F_prod=[SF_prod;MF_prod];
+                D_prod=[SD_prod;MD_prod;LD_prod];
+                
+                Pprod(:,s) = P_prod;
+                Fprod(:,s) = F_prod;
+                Dprod(:,s) = D_prod;
+                
+                %% Reproduction
+                F_rep(1,1)=nanmean(MF(lyr,18));
+                D_rep(1,1)=nanmean(LD(lyr,18));
+                P_rep(1,1)=nanmean(LP(lyr,18));
+                F_rep(2,1)=nanmean(MF(lyr,1).*MF(lyr,18));
+                D_rep(2,1)=nanmean(LD(lyr,1).*LD(lyr,18));
+                P_rep(2,1)=nanmean(LP(lyr,1).*LP(lyr,18));
+                
+                Prep(:,s) = P_rep;
+                Frep(:,s) = F_rep;
+                Drep(:,s) = D_rep;
+                
+                %% Metabolism
+                SP_met=nanmean(SP(lyr,24));
+                SF_met=nanmean(SF(lyr,24));
+                SD_met=nanmean(SD(lyr,24));
+                MP_met=nanmean(MP(lyr,24));
+                MF_met=nanmean(MF(lyr,24));
+                MD_met=nanmean(MD(lyr,24));
+                LP_met=nanmean(LP(lyr,24));
+                LD_met=nanmean(LD(lyr,24));
+                
+                P_met=[SP_met;MP_met;LP_met];
+                F_met=[SF_met;MF_met];
+                D_met=[SD_met;MD_met;LD_met];
+                
+                Pmet(:,s) = P_met;
+                Fmet(:,s) = F_met;
+                Dmet(:,s) = D_met;
+                
+                %% Predation
+                SP_pred=nanmean(SP(lyr,22));
+                SF_pred=nanmean(SF(lyr,22));
+                SD_pred=nanmean(SD(lyr,22));
+                MP_pred=nanmean(MP(lyr,22));
+                MF_pred=nanmean(MF(lyr,22));
+                MD_pred=nanmean(MD(lyr,22));
+                LP_pred=nanmean(LP(lyr,22));
+                LD_pred=nanmean(LD(lyr,22));
+                
+                P_pred=[SP_pred;MP_pred;LP_pred];
+                F_pred=[SF_pred;MF_pred];
+                D_pred=[SD_pred;MD_pred;LD_pred];
+                
+                Ppred(:,s) = P_pred;
+                Fpred(:,s) = F_pred;
+                Dpred(:,s) = D_pred;
+                
+                %% Natural mortality
+                Pnat(1,s)=nanmean(SP(lyr,23));
+                Fnat(1,s)=nanmean(SF(lyr,23));
+                Dnat(1,s)=nanmean(SD(lyr,23));
+                Pnat(2,s)=nanmean(MP(lyr,23));
+                Fnat(2,s)=nanmean(MF(lyr,23));
+                Dnat(2,s)=nanmean(MD(lyr,23));
+                Pnat(3,s)=nanmean(LP(lyr,23));
+                Dnat(3,s)=nanmean(LD(lyr,23));
+                
+                %% Fishing
+                MP_fish=nanmean(MP(lyr,25));
+                MF_fish=nanmean(MF(lyr,25));
+                MD_fish=nanmean(MD(lyr,25));
+                LP_fish=nanmean(LP(lyr,25));
+                LD_fish=nanmean(LD(lyr,25));
+                
+                P_fish=[0;MP_fish;LP_fish];
+                F_fish=[0;MF_fish];
+                D_fish=[0;MD_fish;LD_fish];
+                
+                Pfish(:,s) = P_fish;
+                Ffish(:,s) = F_fish;
+                Dfish(:,s) = D_fish;
+                
+                MP_totcatch=nansum(MP(lyr,25));
+                MF_totcatch=nansum(MF(lyr,25));
+                MD_totcatch=nansum(MD(lyr,25));
+                LP_totcatch=nansum(LP(lyr,25));
+                LD_totcatch=nansum(LD(lyr,25));
+                
+                P_totcatch=[0;MP_totcatch;LP_totcatch];
+                F_totcatch=[0;MF_totcatch];
+                D_totcatch=[0;MD_totcatch;LD_totcatch];
+                
+                Ptotcatch(:,s) = P_totcatch;
+                Ftotcatch(:,s) = F_totcatch;
+                Dtotcatch(:,s) = D_totcatch;
+                
+                %% Total mortality w/o fishing
+                %model lengths
+                L(1) = 10;
+                L(2) = 200;
+                L(3) = 1e3;
+                %model mass in grams
+                M = 0.01 .* (0.1.*L).^3;
+                %Andersen & Beyer mortality rate per year (natural + predation)
+                %physiol mort * growth constant * M^-0.25
+                AB = (0.35 .* 4.5 .* M.^(-0.25)) ./365;
+                
+                Fmort = Fpred + Fnat;
+                Pmort = Ppred + Pnat;
+                Dmort = Dpred + Dnat;
+                
+                %% Total mortality w/ fishing
+                Fmortf = Fpred + Fnat + Ffish;
+                Pmortf = Ppred + Pnat + Pfish;
+                Dmortf = Dpred + Dnat + Dfish;
+                
+                %% Gross growth efficiency (= nu/consump)
+                SP_gge=nanmean(SP(lyr,15)./SP(lyr,14));
+                SF_gge=nanmean(SF(lyr,15)./SF(lyr,14));
+                SD_gge=nanmean(SD(lyr,15)./SD(lyr,14));
+                MP_gge=nanmean(MP(lyr,15)./MP(lyr,14));
+                MF_gge=nanmean(MF(lyr,15)./MF(lyr,14));
+                MD_gge=nanmean(MD(lyr,15)./MD(lyr,14));
+                LP_gge=nanmean(LP(lyr,15)./LP(lyr,14));
+                LD_gge=nanmean(LD(lyr,15)./LD(lyr,14));
+                
+                P_gge=[SP_gge;MP_gge;LP_gge];
+                F_gge=[SF_gge;MF_gge];
+                D_gge=[SD_gge;MD_gge;LD_gge];
+                
+                Pgge(:,s) = P_gge;
+                Fgge(:,s) = F_gge;
+                Dgge(:,s) = D_gge;
+                
+            end
+            save([dpath sname 'lastyr_sum_mean_biom.mat'],'Psum','Fsum',...
+                'Dsum','Pmean','Fmean','Dmean','all_mean',...
+                'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
+                'Prep','Frep','Drep','Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
+                'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch',...
+                'Dtotcatch','Pgge','Fgge','Dgge','Plev','Flev','Dlev','Bmean');
+            
+        end
     end
-    save([dpath sname 'lastyr_sum_mean_biom'],'Pmean','Fmean','Dmean','Bmean',...
-        'all_mean','z','mclev','Zcon');
-    
 end
 
 %%
-ndp = length(benteff);
-for s=1:length(spots)
-    
-    loc = spots{s};
-    lname = [loc '_'];
-    
-    %%
-    for i=1:length(benteff)
-        BE = benteff{i};
-        dp = ['NoDc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-        '_' pref '_nmort'  nmort '_BE' BE '_RE0010'];
-        dpath = [datap char(dp) '/'];
-        load([dpath sname 'lastyr_sum_mean_biom']);
+ndp = length(CarCap);
+for i=1:length(benteff)
+    BE = benteff{i};
+    for R = 1:length(RE)
+        rfrac = RE{R};
         
-        %% Sum mean biom over stages
-        fishsp = squeeze(nansum(all_mean));
+        close all
+        MDlev   = NaN*ones(length(CarCap),3);
+        LDlev   = MDlev;
+        BBCC    = MDlev;
+        Bbio    = NaN*ones(length(CarCap),length(spots));
+        MLD     = NaN*ones(length(CarCap),length(spots));
+        fishsp  = NaN*ones(4,length(spots),length(CarCap));
+        for C = 1:length(CarCap)
+            CC = CarCap{C};
+            cc = car(C);
+            dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+                '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' rfrac];
+            dpath = [datap char(dp) '/'];
+            fpath = [figp char(dp) '/'];
+            cfile = char(dp);
+            cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+                '_' pref '_nmort'  nmort '_BE' BE '_RE' rfrac...
+                '_BentCCtests'];
+            
+            load([dpath sname 'lastyr_sum_mean_biom.mat']);
+            
+            %%
+            MDlev(C,:)    = Dlev(2,[1,2,6]);
+            LDlev(C,:)    = Dlev(3,[1,2,6]);
+            BBCC(C,:)     = all_mean(1,4,[1,2,6]) ./ cc;
+            Bbio(C,:)     = squeeze(all_mean(1,4,:));
+            fishsp(:,:,C) = squeeze(nansum(all_mean));
+            MLD(C,:)      = nansum(squeeze(all_mean(2:3,3,:)));
+            
+        end %CC
         
-        f17=figure(17);
-        subplot(3,1,s)
-        plot(i-0.1,log10(fishsp(1,s)),'sk','MarkerFaceColor',cmap_ppt(3,:),...
-            'MarkerSize',15); hold on;
-        plot(i,log10(fishsp(2,s)),'sk','MarkerFaceColor',cmap_ppt(1,:),...
-            'MarkerSize',15); hold on;
-        plot(i+0.1,log10(fishsp(3,s)),'sk','MarkerFaceColor',cmap_ppt(2,:),...
-            'MarkerSize',15); hold on;
-        xlim([0 ndp+1])
-        ylim([-5 0])
-        if (i==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',[]);
-            for t=1:ndp
-                text(t,-5.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+        %%
+        for s=1:length(spots)
+            loc = spots{s};
+            lname = [loc '_'];
+            
+            %% B
+            f1 = figure(1);
+            subplot(4,3,s)
+            %plot(car,log10(Bbio(:,s)),'.k','MarkerSize',25); hold on;
+            plot(car,Bbio(:,s),'.k','MarkerSize',25); hold on;
+            xlim([car(1)-0.25 car(end)+0.25])
+            %ylim([-2.3 0.3])
+            ylim([0 1])
+            if (s==4)
+                ylabel('Mean Biom (g m^-^2) in final year')
+            end
+            set(gca,'XTick',car(1):0.5:car(end),'XTickLabel',[]);
+            for t=car(1):0.5:car(end)
+                %text(t,-2.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
+                text(t,-0.01,num2str(t),'Rotation',45,'HorizontalAlignment','right')
+            end
+            if (s==11)
+                %text(4,0,['BE=' num2str(beff(i))]);
+                %text(4,-1,['RE=' num2str(reff(R))]);
+                text(3,0.75,['BE=' num2str(beff(i))]);
+                text(3,0.25,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
-        end
-        if (s==2)
-            ylabel('log10 Mean Biom (g m^-^2) in final year')
-        end
-        title([loc ' All stages'])
-        
-        
-        %% Mean bent biom
-        f19=figure(19);
-        subplot(3,1,s)
-        plot(i,log10(all_mean(1,4,s)),'k.','MarkerSize',25); hold on;
-        xlim([0 ndp+1])
-        ylim([-2 0])
-        set(gca,'XTick',1:ndp,'XTickLabel',[])
-        if (i==ndp)
-            set(gca,'XTick',1:ndp,'XTickLabel',[]);
-            for t=1:ndp
-                text(t,-2.1,sims{t},'Rotation',45,'HorizontalAlignment','right')
+            title([loc ' B'])
+            
+            %% Sum mean biom over stages
+            f2=figure(2);
+            subplot(4,3,s)
+            plot(car-0.05,log10(squeeze(fishsp(1,s,:))),'sk','MarkerFaceColor',cmap_ppt(3,:),...
+                'MarkerSize',15); hold on;
+            plot(car,log10(squeeze(fishsp(2,s,:))),'sk','MarkerFaceColor',cmap_ppt(1,:),...
+                'MarkerSize',15); hold on;
+            plot(car+0.05,log10(squeeze(fishsp(3,s,:))),'sk','MarkerFaceColor',cmap_ppt(2,:),...
+                'MarkerSize',15); hold on;
+            xlim([car(1)-0.25 car(end)+0.25])
+            ylim([-2 1.5])
+            if (s==4)
+                ylabel('log10 Mean Biom (g m^-^2) in final year')
+            end
+            set(gca,'XTick',car(1):0.5:car(end),'XTickLabel',[]);
+            for t=car(1):0.5:car(end)
+                text(t,-2.1,num2str(t),'Rotation',45,'HorizontalAlignment','right')
+            end
+            if (s==11)
+                text(3,0,['BE=' num2str(beff(i))]);
+                text(3,-1,['RE=' num2str(reff(R))]);
             end
             stamp(cfile2)
-        end
-        if (s==2)
-            ylabel('log10 Mean Bent Biom (g m^-^2) in final year')
-        end
-        title([loc ' Bent'])
+            title([loc ' All stages'])
+            
+        end %spots
+        print(f1,'-dpng',[figp sname cfile2 '_tot_mean_bent_biomass_all_locs.png'])
+        print(f2,'-dpng',[figp sname cfile2 '_tot_mean_biomass_type_all_locs.png'])
         
-    end
-    
-end
-print(f17,'-dpng',[figp 'Matlab_' sname cfile2 '_tot_mean_biomass_type_all_locs.png'])
-print(f19,'-dpng',[figp 'Matlab_' sname cfile2 '_mean_bent_biomass_all_locs.png'])
-
+        % Save values for all locs and all CC for that RE and BE combo
+        save([datap 'Bent_CC_tests/' cfile2 '.mat'],...
+            'Bbio','fishsp','MLD')
+        
+    end %RE
+end %BE

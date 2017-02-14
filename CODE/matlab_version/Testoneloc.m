@@ -4,26 +4,27 @@ function Testoneloc()
 global DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit
-global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT CC 
+global bent_eff rfrac CC
+global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel LPsel LDsel
 
-Fmort = 0.0; %[0.1:0.1:1.0];
+Fmort = [0.1:0.1:1.0];
 RE = [1.0,0.5,0.1,0.05,0.01];
-BE = 0.05:0.05:0.1;
-CarCap = 0.5:0.5:2.0;
+%BE = 0.05:0.05:0.1;
+%CarCap = 0.5:0.5:2.0;
 
-for B = 1:length(BE)
-    bent_eff = BE(B);
-    
-    for C = 1:length(CarCap)
-        CC = CarCap(C);
+% for B = 1:length(BE)
+%     bent_eff = BE(B);
+%     
+%     for C = 1:length(CarCap)
+%         CC = CarCap(C);
         
-        for R = 1:length(RE)
+        for R = 1:3
             rfrac = RE(R);
             
-            for F = 1%:length(Fmort)
+            for F = 1:length(Fmort)
                 %! Set fishing rate
                 frate = Fmort(F);
                 dfrate = Fmort(F)/365.0;
@@ -196,6 +197,6 @@ for B = 1:length(BE)
                 end %Locations
             end %Fmort
         end %RE
-    end %CC
-end %BE
+%     end %CC
+% end %BE
 end
