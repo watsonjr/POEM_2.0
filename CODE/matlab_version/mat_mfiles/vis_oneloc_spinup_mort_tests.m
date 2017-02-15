@@ -10,9 +10,9 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes
 
 RE = {'1000','0500','0100','0050','0010'};
 reff = [1.0,0.5,0.1,0.05,0.01];
-nmrt = [0,2:5];
-Mort = {'None','Hartvig','mizer','J&C','P&W'};
-fcrit = 40;
+nmrt = [0,2:3]; %[0,2:5];
+Mort = {'None','Hartvig','mizer'};%,'J&C','P&W'};
+fcrit = 50;
 kad = 100;
 pref = 'D100';
 BE = '05';
@@ -32,7 +32,7 @@ load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_a
 cmap3=cmap_ppt([5,1,3],:);
 
 %%
-for i=2:length(nmrt)
+for i=1:length(nmrt)
     nmort = num2str(nmrt(i));
     for R = 1:length(RE)
         rfrac = RE{R};
