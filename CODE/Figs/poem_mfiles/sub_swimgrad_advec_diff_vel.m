@@ -106,11 +106,13 @@ function Tracer = sub_swimgrad_advec_diff_vel(GRD,Tracer,K,uvel,vvel,nu,Q,ni,nj,
                     if (i == ied)
                         fe(i,j) = dyte(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(isd,j)) .* mask(i,j) .*mask(isd,j);
                         dfe(i,j) = dyte(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(isd,j)) .* mask(i,j) .* mask(isd,j);
-                        sfe(i,j) = dyte(i,j).*(wpos.*gradK(i,j) + wneg.*gradK(isd,j)) .* mask(i,j) .* mask(isd,j);
+                        sfe(i,j) = dyte(i,j).*(wpos.*gradK(i,j).*Tracer(i,j) + wneg.*gradK(isd,j).*Tracer(isd,j)) ...
+                            .* mask(i,j) .* mask(isd,j);
                     else
                         fe(i,j) = dyte(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(i+1,j)) .* mask(i,j) .*mask(i+1,j);
                         dfe(i,j) = dyte(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(i+1,j)) .* mask(i,j) .* mask(i+1,j);
-                        sfe(i,j) = dyte(i,j).*(wpos.*gradK(i,j) + wneg.*gradK(i+1,j)) .* mask(i,j) .* mask(i+1,j);
+                        sfe(i,j) = dyte(i,j).*(wpos.*gradK(i,j).*Tracer(i,j) + wneg.*gradK(i+1,j).*Tracer(i+1,j)) ...
+                            .* mask(i,j) .* mask(i+1,j);
                     end
 
                 end
@@ -133,11 +135,13 @@ function Tracer = sub_swimgrad_advec_diff_vel(GRD,Tracer,K,uvel,vvel,nu,Q,ni,nj,
                     if (j < jed)
                         fn(i,j) = dxtn(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(i,j+1)) .* mask(i,j) .* mask(i,j+1);
                         dfn(i,j)  = dxtn(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(i,j+1)) .* mask(i,j) .* mask(i,j+1);
-                        sfn(i,j)  = dxtn(i,j).*(wpos.*gradK(i,j) + wneg.*gradK(i,j+1)) .* mask(i,j) .* mask(i,j+1);
+                        sfn(i,j)  = dxtn(i,j).*(wpos.*gradK(i,j).*Tracer(i,j) + wneg.*gradK(i,j+1).*Tracer(i,j+1)) ...
+                            .* mask(i,j) .* mask(i,j+1);
                     else
                         fn(i,j) = dxtn(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(ni-i+1,j)) .* mask(i,j) .* mask(ni-i+1,j);
                         dfn(i,j) = dxtn(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(ni-i+1,j)) .* mask(i,j) .* mask(ni-i+1,j);
-                        sfn(i,j) = dxtn(i,j).*(wpos.*gradK(i,j) + wneg.*gradK(ni-i+1,j)) .* mask(i,j) .* mask(ni-i+1,j);
+                        sfn(i,j) = dxtn(i,j).*(wpos.*gradK(i,j).*Tracer(i,j) + wneg.*gradK(ni-i+1,j).*Tracer(ni-i+1,j)) ...
+                            .* mask(i,j) .* mask(ni-i+1,j);
                     end
 
                 end

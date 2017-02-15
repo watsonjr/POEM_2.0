@@ -6,10 +6,10 @@ close all
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-biov = csvread([dpath 'Matlab_swim_Global_even_dt1hr_esm2m2000_vel_b100_area_temp_daily.csv']);
+biov = csvread([dpath 'Matlab_swimgrad_Global_even_dt1hr_esm2m2000_vel_b100_area_deep.csv']);
 %prey = csvread([dpath 'prey_2Dadvect_swim_Zl_test_global_vel0_dt1hr_j2_nodiv_divdepth3_passQ_depdiv0_v2_sep.csv']);
-cname = 'Global_even_dt1hr_esm2m2000_vel_b100_area_temp_daily';
-tname = 'swim';
+cname = 'Global_even_dt1hr_esm2m2000_vel_b100_area_deep';
+tname = 'swimgrad';
 
 grid = csvread('grid_csv.csv');
 load('gridspec_forecast.mat');
@@ -71,7 +71,8 @@ for n=1:length(t)
     view(2);
     shading interp;
     colorbar;
-    caxis([0 1e2]);
+    %caxis([0 1e2]);
+    caxis([80 120]);
     colormap('jet')
     title(['Day ' num2str(t(n)) ' Year 1'])
     print('-dpng',[fpath tname '_test_' cname '_' num2str(t(n)) '.png'])
