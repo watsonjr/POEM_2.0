@@ -3,6 +3,8 @@
 clear all
 close all
 
+tic
+
 % Transports path
 % vpath = '/Volumes/GFDL/GCM_DATA/CORE-forced/';
 vpath = '/Volumes/GFDL/POEM_JLD/esm2m_hist/';
@@ -24,9 +26,9 @@ jed = nj;
 % define a patch to advect
 bio = zeros(ni,nj);
 %Global
-bio = 100*ones(ni,nj);   %Global
-%bio(220:240,:) = 1.0; bio(121:141,195:200) = 1.0; %Atl-Arctic
-%bio(:,84:109) = 1.0e2;     %seed equator
+%bio = 100*ones(ni,nj);   %Global
+%bio(220:240,:) = 100.0; bio(121:141,195:200) = 100.0; %Atl-Arctic
+bio(:,84:109) = 1.0e2;     %seed equator
 %bio(220:240,:) = 1.0e2;    %seed Atl
 %bio(59:79,:) = 1.0e2;      %seed Pac
 %bio(5:25,:) = 1.0e2;       %seed Indian W
@@ -75,13 +77,13 @@ w = exp(0.063*(ti-15.0)) * 0.5*L_m*1e-3;  %medium
 %w = exp(0.063*(ti-15.0)) * 0.5*L_l*1e-3;  %large
 
 % define value to maximize
-nu = GRD.ht;           %go to deep
+%nu = GRD.ht;           %go to deep
 %nu = -1.0 * GRD.ht;    %go to shallow
-%nu = zoop(:,:,75);     %go to food
-%nu = ti(:,:,75);       %go to high temp
+%nu = zoopi(:,:,75);    %go to food
+nu = ti(:,:,75);       %go to high temp
 
 % files to save
-cname='Global_even_dt1hr_esm2m2000_vel_b100_area_deep';
+cname='Eq_dt1hr_esm2m2000_vel_b100_area_temp_const';
 biov = zeros(NX,DAYS*YEARS);
 
 %% do swim + advec-diff
@@ -99,7 +101,7 @@ biov = zeros(NX,DAYS*YEARS);
 %         U = u(:,:,DAY); 
 %         V = v(:,:,DAY);
 %         Q = w(:,:,DAY) .* GRD.mask;
-%         %nu = zoop(:,:,DAY);     %go to food
+%         %nu = zoopi(:,:,DAY);     %go to food
 %         %nu = ti(:,:,DAY);       %go to high temp
 %         bio = sub_swim_advec_diff_vel(GRD,bio,K,U,V,nu,Q,ni,nj,tstep);
 %         biov(:,n) = bio(ID);
@@ -124,7 +126,7 @@ biov = zeros(NX,DAYS*YEARS);
 %         U = u(:,:,DAY); 
 %         V = v(:,:,DAY);
 %         Q = w(:,:,DAY) .* GRD.mask;
-%         %nu = zoop(:,:,DAY);     %go to food
+%         %nu = zoopi(:,:,DAY);     %go to food
 %         %nu = ti(:,:,DAY);       %go to high temp
 %         bio = sub_swim_advec_diff_vel(GRD,bio,K,U,V,nu,Q,ni,nj,tstep);
 %         biov(:,n) = bio(ID);
@@ -133,9 +135,9 @@ biov = zeros(NX,DAYS*YEARS);
 % 
 % % Save
 % csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_swim_adv_' cname '.csv'],biov);
-% 
+
 %% do swim only
-% define diffusivity
+%define diffusivity
 K = 0.0;
 U = zeros(ni,nj);
 V = zeros(ni,nj);
@@ -146,7 +148,7 @@ for Y=1:YEARS
         DAY
         n=n+1;
         Q = w(:,:,DAY) .* GRD.mask;
-        %nu = zoop(:,:,DAY);     %go to food
+        %nu = zoopi(:,:,DAY);     %go to food
         %nu = ti(:,:,DAY);       %go to high temp
         bio = sub_swim_advec_diff_vel(GRD,bio,K,U,V,nu,Q,ni,nj,tstep);
         biov(:,n) = bio(ID);
@@ -158,6 +160,6 @@ csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_swim_' cname '.csv'],biov);
 
 
 
-
+toc
 
 
