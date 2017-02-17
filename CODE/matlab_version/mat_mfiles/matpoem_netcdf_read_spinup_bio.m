@@ -3,7 +3,7 @@
 clear all
 close all
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_D100_nmort3_BE05_CC050_RE1000';
+cfile = 'Dc_TrefO_Hold_cmax-metab_MFeqMP_fcrit40_D100_nmort4_BE05_CC050_RE0500';
 
 fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
 
