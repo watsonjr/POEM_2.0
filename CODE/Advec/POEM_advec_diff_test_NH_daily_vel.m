@@ -42,15 +42,6 @@ latmin = -90;
 latmax = 90;
 aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
     (geolat_t < latmax) & (ht > 0) );
-%Global
-% TF(aa) = 100*ones(size(aa));
-
-%Atlantic
-%TF(220:240,:) = 100.0;
-
-%Atl across to arctic
-% TF(220:240,:) = 100.0;
-% TF(121:141,195:200) = 100.0;
 
 %Natasha NAtl region
 TF(206:295,150:177) = 100.0;

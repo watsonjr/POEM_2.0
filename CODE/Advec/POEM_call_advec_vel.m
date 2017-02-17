@@ -4,7 +4,7 @@ clear all
 close all
 
 % Velocities path
-vpath = '/Volumes/GFDL/GCM_DATA/CORE-forced/';
+vpath = '/Volumes/GFDL/POEM_JLD/esm2m_hist/';
 
 % Grid
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_hindcast_grid_cp2D.mat')
@@ -46,20 +46,19 @@ cname='Global_even_dt1hr_vel_b100_area2';
 biov = zeros(NX,DAYS*YEARS);
 
 %% do advec-diff
-% define diffusivity
-K = 0.0;
 
 n=0;
 for Y=1:YEARS
     yr = num2str(Y+1988-1);
     % Velocities
-    load([vpath 'Vel200_feb152013_run25_ocean_' yr '.mat'],'u','v');
+    %load([vpath 'Vel200_ESM2Mhist_' num2str(yr) '.mat'],'u','v');
+    load([vpath 'Vel200_ESM2Mhist_2000.mat'],'u','v');
     for DAY = 1:DAYS
         DAY
         n=n+1;
         U = u(:,:,DAY); 
         V = v(:,:,DAY);
-        bio = sub_advec_vel(GRD,bio,K,U,V,ni,nj,tstep);
+        bio = sub_advec_vel(GRD,bio,U,V,ni,nj,tstep);
         biov(:,n) = bio(ID);
     end
 end

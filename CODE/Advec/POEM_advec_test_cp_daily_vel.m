@@ -9,7 +9,7 @@ vpath = '/Volumes/GFDL/GCM_DATA/CORE-forced/';
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
     'AREA_OCN','dat','dxtn','dyte','ht','geolon_t','geolat_t');
 
-cname='AtlNH_dt1hr_vel_daily_b100_no999';
+cname='Global_even_dt1hr_vel_daily_b100_core2000';
 
 %%
 area = AREA_OCN;
@@ -43,17 +43,17 @@ latmax = 90;
 aa = find( (geolon_t > lonmin) & (geolon_t < lonmax) & (geolat_t > latmin) & ...
     (geolat_t < latmax) & (ht > 0) );
 %Global
-% TF(aa) = 100*ones(size(aa));
+TF(aa) = 100*ones(size(aa));
 
 %Atlantic
-%TF(220:240,:) = 100.0;
+% TF(220:240,:) = 100.0;
 
 %Atl across to arctic
 % TF(220:240,:) = 100.0;
 % TF(121:141,195:200) = 100.0;
 
 %Natasha NAtl region
-TF(206:295,150:177) = 100.0;
+% TF(206:295,150:177) = 100.0;
 
 TF = TF .* mask;
 total_mass(1) = sum(TF(:).*area(:));
@@ -77,10 +77,15 @@ gradTj = zeros(ni,nj);
 upwind = zeros(ni,nj);
 dupwind = zeros(ni,nj);
 
+ID = aa;
+NX = length(ID);
+biov = zeros(NX,DAYS*YEARS);
+total_mass = NaN*ones(DAYS*YEARS,1);
+
 %% Advection loop
 n=0;
 for Y=1:YEARS
-    yr = num2str(Y+1988-1);
+    yr = num2str(Y+2000-1);
     % Velocities
     load([vpath 'Vel200_feb152013_run25_ocean_' yr '.mat'],'u','v');
     for DAY = 1:DAYS
@@ -88,8 +93,28 @@ for Y=1:YEARS
         n=n+1;
         uvel = u(:,:,DAY);
         vvel = v(:,:,DAY);
+        
+        %Plot
+        if n == 1
+            figure(1)
+            surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 100]);
+            print('-dpng',[fpath 'POEM_adv_test_tracer_' cname '_day0.png'])
+            %pause
+            
+            figure(2)
+            m_proj('stereographic','lat',90,'long',30,'radius',30);
+            m_pcolor(geolon_t,geolat_t,TF);
+            shading interp
+            colorbar
+            %colormap('jet')
+            caxis([0 100])
+            m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
+            m_coast('patch',[.7 .7 .7],'edgecolor','k');
+            title('Tracer day 1')
+            print('-dpng',[fpath 'POEM_adv_test_tracer_arcticproj_' cname '_day0.png'])
+        end
+        
         for t = 1:ntime
-            n=n+1
             
             % Calculate biomass gradient
             %Gradient i
@@ -124,10 +149,8 @@ for Y=1:YEARS
                     velocity = 0.5*uvel(i,j);
                     upos = velocity + abs(velocity);
                     uneg = velocity - abs(velocity);
-                    
                     % define only for ocean cells
                     if (mask(i,j) > 0)
-                        
                         if (i == ied)
                             fe(i,j) = dyte(i,j)*(upos.*TF(i,j)/dep(i,j) + uneg.*TF(isd,j))/dep(isd,j)* ...
                                 mask(i,j)*mask(isd,j);
@@ -139,7 +162,6 @@ for Y=1:YEARS
                             dfe(i,j)  = dyte(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(i+1,j)) ...
                                 .* mask(i,j) .* mask(i+1,j);
                         end
-                        
                     end
                 end
             end
@@ -150,10 +172,8 @@ for Y=1:YEARS
                     velocity = 0.5*vvel(i,j);
                     upos = velocity + abs(velocity);
                     uneg = velocity - abs(velocity);
-                    
                     % define only for ocean cells
                     if (mask(i,j) > 0)
-                        
                         if (j < jed)
                             fn(i,j) = dxtn(i,j)*(upos.*TF(i,j)/dep(i,j) + uneg.*TF(i,j+1)/dep(i,j+1))* ...
                                 mask(i,j)*mask(i,j+1);
@@ -165,7 +185,6 @@ for Y=1:YEARS
                             dfn(i,j)  = dxtn(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(ni-i+1,j)) .* ...
                                 mask(i,j) .* mask(ni-i+1,j);
                         end
-                        
                     end
                 end
             end
@@ -191,37 +210,18 @@ for Y=1:YEARS
                     TF2(i,j) = TF(i,j) + (dt*upwind(i,j))/area(i,j) - (dt*dupwind(i,j))/area(i,j);
                 end
             end
-            total_mass(n+1) = sum(TF2(:).*area(:));
+            total_mass(n) = sum(TF2(:).*area(:));
             
-            % Plot, do mass balance, reset tracer fields
+            %reset tracer fields
             aa = find(ht == 0);
             %TF(aa) = -999;
-            if n == 1
-                figure(1)
-                surf(geolon_t,geolat_t,TF); view(2); shading interp; caxis([0 100]);
-                print('-dpng',[fpath 'POEM_adv_test_tracer_' cname '_day0.png'])
-                %pause
-                
-                figure(2)
-                m_proj('stereographic','lat',90,'long',30,'radius',30);
-                m_pcolor(geolon_t,geolat_t,TF);
-                shading interp
-                colorbar
-                %colormap('jet')
-                caxis([0 100])
-                m_grid('xtick',12,'tickdir','out','ytick',[70 80],'linest','-');
-                m_coast('patch',[.7 .7 .7],'edgecolor','k');
-                title('Tracer day 1')
-                print('-dpng',[fpath 'POEM_adv_test_tracer_arcticproj_' cname '_day0.png'])
-            end
-            
-            %TF2(aa) = -999;
             
             TF = TF2;
             
-        end
-    end
-end
+        end %nt
+        biov(:,n) = TF(ID);
+    end %Days
+end %Years
 
 figure(13)
 clf
@@ -245,7 +245,8 @@ title('Tracer day 365')
 print('-dpng',[fpath 'POEM_adv_test_tracer_arcticproj_' cname '_day365.png'])
 
 %%
-save(['/Volumes/GFDL/CSV/advect_tests/POEM_adv_test_' cname '.mat'],'TF0','TF2','pdiff','total_mass')
-
+save(['/Volumes/GFDL/CSV/advect_tests/POEM_adv_test_' cname '.mat'],'TF0',...
+    'TF2','pdiff','total_mass','biov','-v7.3');
+csvwrite(['/Volumes/GFDL/CSV/advect_tests/POEM_adv_diff_' cname '.csv'],biov);
 
 

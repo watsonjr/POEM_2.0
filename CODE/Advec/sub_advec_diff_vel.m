@@ -64,10 +64,8 @@ function Tracer = sub_advec_diff_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
                 velocity = 0.5*uvel(i,j);
                 upos = velocity + abs(velocity);
                 uneg = velocity - abs(velocity);
-
                 % define only for ocean cells
                 if (mask(i,j) > 0)
-
                     if (i == ied)
                         fe(i,j) = dyte(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(isd,j)) .* mask(i,j) .*mask(isd,j);
                         dfe(i,j) = dyte(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(isd,j)) .* mask(i,j) .* mask(isd,j);
@@ -75,7 +73,6 @@ function Tracer = sub_advec_diff_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
                         fe(i,j) = dyte(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(i+1,j)) .* mask(i,j) .*mask(i+1,j);
                         dfe(i,j) = dyte(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(i+1,j)) .* mask(i,j) .* mask(i+1,j);
                     end
-
                 end
             end
         end
@@ -86,10 +83,8 @@ function Tracer = sub_advec_diff_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
                 velocity = 0.5*vvel(i,j);
                 upos = velocity + abs(velocity);
                 uneg = velocity - abs(velocity);
-
                 % define only for ocean cells
                 if (mask(i,j) > 0)
-
                     if (j < jed)
                         fn(i,j) = dxtn(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(i,j+1)) .* mask(i,j) .* mask(i,j+1);
                         dfn(i,j)  = dxtn(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(i,j+1)) .* mask(i,j) .* mask(i,j+1);
@@ -97,7 +92,6 @@ function Tracer = sub_advec_diff_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
                         fn(i,j) = dxtn(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(ni-i+1,j)) .* mask(i,j) .* mask(ni-i+1,j);
                         dfn(i,j) = dxtn(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(ni-i+1,j)) .* mask(i,j) .* mask(ni-i+1,j);
                     end
-
                 end
             end
         end

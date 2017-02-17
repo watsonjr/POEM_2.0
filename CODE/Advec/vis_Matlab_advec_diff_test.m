@@ -6,11 +6,12 @@ close all
 dpath = '/Volumes/GFDL/CSV/advect_tests/';
 fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/advect_tests/';
 
-biov = csvread([dpath 'Matlab_adv_diff_Global_even_dt1hr_velMO_b100_area.csv']);
-cname = 'Matlab_Global_even_dt1hr_velMO_b100_area';
+%biov = csvread([dpath 'POEM_adv_diff_Global_even_dt1hr_vel_daily_b100_core2000.csv']);
+cname = 'Global_even_dt1hr_esm2m2000_vel_b100_area';
+load([dpath 'Matlab_adv_diff_' cname '.mat']);
 
-grid = csvread('grid_csv.csv');
-load('gridspec_forecast.mat');
+grid = csvread('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/grid_csv.csv');
+load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/gridspec_forecast.mat');
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_hindcast_grid_cp2D.mat')
 
 
@@ -19,6 +20,7 @@ load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_hindcast_grid_cp2
 
 % Grid with area instead of vectors of area
 [ni,nj] = size(GRD.area);
+
 bio2 = NaN*ones(ni,nj,nd);
 for d = 1:nd
     bio = NaN*ones(ni,nj);

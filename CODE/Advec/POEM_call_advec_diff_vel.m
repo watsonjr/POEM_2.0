@@ -4,7 +4,6 @@ clear all
 close all
 
 % Transports path
-% vpath = '/Volumes/GFDL/GCM_DATA/CORE-forced/';
 vpath = '/Volumes/GFDL/POEM_JLD/esm2m_hist/';
 
 % Grid
@@ -47,36 +46,15 @@ cname='Global_even_dt1hr_esm2m2000_vel_b100_area';
 biov = zeros(NX,DAYS*YEARS);
 
 %% do advec-diff
-% define diffusivity
-K = 600.0;
-
-n=0;
-for Y=1:YEARS
-    yr = num2str(Y+1988-1);
-    % Velocities
-    %load([vpath 'Vel200_ESM2Mhist_' num2str(yr) '.mat'],'u','v');
-    load([vpath 'Vel200_ESM2Mhist_2000.mat'],'u','v');
-    for DAY = 1:DAYS
-        DAY
-        n=n+1;
-        U = u(:,:,DAY); 
-        V = v(:,:,DAY);
-        bio = sub_advec_diff_vel(GRD,bio,K,U,V,ni,nj,tstep);
-        biov(:,n) = bio(ID);
-    end
-end
-
-% Save
-csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_adv_diff_' cname '.csv'],biov);
-
-%% do advec only
 % % define diffusivity
-% K = 0.0;
+% K = 600.0;
+% 
 % n=0;
 % for Y=1:YEARS
 %     yr = num2str(Y+1988-1);
 %     % Velocities
-%     load([vpath 'Vel200_feb152013_run25_ocean_' yr '.mat'],'u','v');
+%     %load([vpath 'Vel200_ESM2Mhist_' num2str(yr) '.mat'],'u','v');
+%     load([vpath 'Vel200_ESM2Mhist_2000.mat'],'u','v');
 %     for DAY = 1:DAYS
 %         DAY
 %         n=n+1;
@@ -88,24 +66,70 @@ csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_adv_diff_' cname '.csv'],biov);
 % end
 % 
 % % Save
-% csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_adv_' cname '.csv'],biov);
+% %csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_adv_diff_' cname '.csv'],biov);
+% save(['/Volumes/GFDL/CSV/advect_tests/Matlab_adv_diff_' cname '.mat'],'biov');
+
+%% do advec only
+
+% bio = 100*ones(ni,nj);   %Global
+% bio = bio .* GRD.mask;
 % 
-%% do diff only
-% % define diffusivity
-% K = 600.0;
-% U = zeros(ni,nj);
-% V = zeros(ni,nj);
 % n=0;
 % for Y=1:YEARS
 %     yr = num2str(Y+1988-1);
+%     % Velocities
+%     %load([vpath 'Vel200_ESM2Mhist_' num2str(yr) '.mat'],'u','v');
+%     load([vpath 'Vel200_ESM2Mhist_2000.mat'],'u','v');
 %     for DAY = 1:DAYS
 %         DAY
 %         n=n+1;
-%         bio = sub_advec_diff_vel(GRD,bio,K,U,V,ni,nj,tstep);
+%         U = u(:,:,DAY); 
+%         V = v(:,:,DAY);
+%         bio = sub_advec_vel(GRD,bio,U,V,ni,nj,tstep);
 %         biov(:,n) = bio(ID);
 %     end
 % end
 % 
 % % Save
-% csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_diff_' cname '.csv'],biov);
+% %csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_adv_' cname '.csv'],biov);
+% save(['/Volumes/GFDL/CSV/advect_tests/Matlab_adv_' cname '.mat'],'biov');
+
+%% do diff only
+%Global
+% bio = 100*rand(ni,nj);   
+%Gradient highest at eq
+g1 = 1:100;
+g2 = 100:-1:1;
+bio = zeros(ni,nj);
+bio(:,1:100) = repmat(g1,ni,1);
+bio(:,101:200) = repmat(g2,ni,1);
+%Gradient highest at poles
+% g1 = 1:100;
+% g2 = 100:-1:1;
+% bio = zeros(ni,nj);
+% bio(:,1:100) = repmat(g2,ni,1);
+% bio(:,101:200) = repmat(g1,ni,1);
+
+bio = bio .* GRD.mask;
+
+cname='Eq_grad_dt1hr_esm2m2000_vel_b100_area';
+
+% define diffusivity
+K = 600.0;
+U = zeros(ni,nj);
+V = zeros(ni,nj);
+n=0;
+for Y=1:YEARS
+    yr = num2str(Y+1988-1);
+    for DAY = 1:DAYS
+        DAY
+        n=n+1;
+        bio = sub_advec_diff_vel(GRD,bio,K,U,V,ni,nj,tstep);
+        biov(:,n) = bio(ID);
+    end
+end
+
+% Save
+%csvwrite(['/Volumes/GFDL/CSV/advect_tests/Matlab_diff_' cname '.csv'],biov);
+save(['/Volumes/GFDL/CSV/advect_tests/Matlab_diff_' cname '.mat'],'biov');
 

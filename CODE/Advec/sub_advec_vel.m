@@ -1,4 +1,4 @@
-function Tracer = sub_advec_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
+function Tracer = sub_advec_vel(GRD,Tracer,uvel,vvel,ni,nj,tstep)
     % K = diffusivity in m2/s
 	% U & V = velocities in m/s
 	% tstep = time step in hours
@@ -22,40 +22,23 @@ function Tracer = sub_advec_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
 
     fe = zeros(ni,nj);
     fn = zeros(ni,nj);
-    dfe = zeros(ni,nj);
-    dfn = zeros(ni,nj);
-    gradTi = zeros(ni,nj);
-    gradTj = zeros(ni,nj);
     upwind = zeros(ni,nj);
-    dupwind = zeros(ni,nj);
 
     %% Advection loop
     for n = 1:nt
-        % Calculate biomass gradient
-        gradT = (gradTi + gradTj); %.* mask;
-
-        diffusiv = 0.5*K;
-        kpos     = diffusiv + abs(diffusiv);
-        kneg     = diffusiv - abs(diffusiv);
-
         % Westward flux
         for j = jsd:jed
             for i = isd:ied
                 velocity = 0.5*uvel(i,j);
                 upos = velocity + abs(velocity);
                 uneg = velocity - abs(velocity);
-
                 % define only for ocean cells
                 if (mask(i,j) > 0)
-
                     if (i == ied)
                         fe(i,j) = dyte(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(isd,j)) .* mask(i,j) .*mask(isd,j);
-                        dfe(i,j) = dyte(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(isd,j)) .* mask(i,j) .* mask(isd,j);
                     else
                         fe(i,j) = dyte(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(i+1,j)) .* mask(i,j) .*mask(i+1,j);
-                        dfe(i,j) = dyte(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(i+1,j)) .* mask(i,j) .* mask(i+1,j);
                     end
-
                 end
             end
         end
@@ -66,18 +49,13 @@ function Tracer = sub_advec_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
                 velocity = 0.5*vvel(i,j);
                 upos = velocity + abs(velocity);
                 uneg = velocity - abs(velocity);
-
                 % define only for ocean cells
                 if (mask(i,j) > 0)
-
                     if (j < jed)
                         fn(i,j) = dxtn(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(i,j+1)) .* mask(i,j) .* mask(i,j+1);
-                        dfn(i,j)  = dxtn(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(i,j+1)) .* mask(i,j) .* mask(i,j+1);
                     else
                         fn(i,j) = dxtn(i,j).*(upos.*Tracer(i,j) + uneg.*Tracer(ni-i+1,j)) .* mask(i,j) .* mask(ni-i+1,j);
-                        dfn(i,j) = dxtn(i,j).*(kpos.*gradT(i,j) + kneg.*gradT(ni-i+1,j)) .* mask(i,j) .* mask(ni-i+1,j);
                     end
-
                 end
             end
         end
@@ -88,10 +66,8 @@ function Tracer = sub_advec_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
                 if (j > 1)
                     if (i > 1)
                         upwind(i,j) = mask(i,j).*(fe(i-1,j)-fe(i,j)+fn(i,j-1)-fn(i,j));
-                        dupwind(i,j) = mask(i,j).*(dfe(i-1,j)-dfe(i,j)+dfn(i,j-1)-dfn(i,j));
                     else
                         upwind(i,j) = mask(i,j).*(fe(ied,j)-fe(i,j)+fn(i,j-1)-fn(i,j));
-                        dupwind(i,j) = mask(i,j).*(dfe(ied,j)-dfe(i,j)+dfn(i,j-1)-dfn(i,j));
                     end
                 end
             end
@@ -100,7 +76,7 @@ function Tracer = sub_advec_vel(GRD,Tracer,K,uvel,vvel,ni,nj,tstep)
         % Update tracers
         for j = jsd:jed
             for i = isd:ied
-                Tracer(i,j) = Tracer(i,j) + (dt.*upwind(i,j))./area(i,j) - (dt.*dupwind(i,j))./area(i,j);
+                Tracer(i,j) = Tracer(i,j) + (dt.*upwind(i,j))./area(i,j);
             end
         end
 
