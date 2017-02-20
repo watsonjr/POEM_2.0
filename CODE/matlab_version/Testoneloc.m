@@ -8,22 +8,26 @@ global bent_eff rfrac CC
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel
+global MFsel LPsel LDsel efn mfn cfn
 
 %fracm = 0.1:0.1:0.5;
 Fmort = 0.0;%[0.1:0.1:1.0];
 RE = [1.0,0.5,0.1,0.05,0.01];
 %BE = 0.05:0.05:0.1;
 %CarCap = 0.5:0.5:2.0;
+encs = 1:4;
+cmaxs = [0,2:4];
+%mets = 2:4;
 
-% for fc = 1:length(fracm)
-%     fcrit = fracm(fc);
-%     
-% for B = 1:length(BE)
-%     bent_eff = BE(B);
-%     
-%     for C = 1:length(CarCap)
-%         CC = CarCap(C);
+
+for E = 4%1:length(encs)
+    efn = encs(E);
+    
+for C = 1:length(cmaxs)
+    cfn = cmaxs(C);
+    
+%     for M = 1:length(mets)
+%         mfn = mets(M);
         
         for R = 1:length(RE)
             rfrac = RE(R);
@@ -92,16 +96,17 @@ RE = [1.0,0.5,0.1,0.05,0.01];
                 elseif (pdc == 2)
                     coup = 'PDc';
                 end
+                tcfn = num2str(cfn);
+                tefn = num2str(efn);
+                tmfn = num2str(mfn);
                 if (harv==1)
                     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    %simname = [coup,'_TrefO_Hartvig_cmax-metab_Menc_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    %simname = [coup,'_TrefO_JC_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+                    %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+                    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                 else
                     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                    simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                    %simname = [coup,'_TrefO_Hartvig_cmax-metab_Menc_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                    %simname = [coup,'_TrefO_JC_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+                    %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+                    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                 end
                 if (~isdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname]))
                     mkdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname])
@@ -207,7 +212,7 @@ RE = [1.0,0.5,0.1,0.05,0.01];
                 end %Locations
             end %Fmort
         end %RE
-%     end %CC
-% end %BE
-%end %fcrit
+    %end %met
+end %cmax
+end %enc
 end
