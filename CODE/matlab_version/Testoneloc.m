@@ -8,10 +8,10 @@ global bent_eff rfrac CC
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel efn mfn cfn
+global MFsel LPsel LDsel efn cfn
 
 %fracm = 0.1:0.1:0.5;
-Fmort = 0.0;%[0.1:0.1:1.0];
+Fmort = [0.0:0.1:1.0]; %[1.2:0.2:2.0]; %
 RE = [1.0,0.5,0.1,0.05,0.01];
 %BE = 0.05:0.05:0.1;
 %CarCap = 0.5:0.5:2.0;
@@ -20,19 +20,19 @@ cmaxs = [0,2:4];
 %mets = 2:4;
 
 
-for E = 4%1:length(encs)
-    efn = encs(E);
+% for E = 1:length(encs)
+    efn = 4;%encs(E);
     
-for C = 1:length(cmaxs)
-    cfn = cmaxs(C);
+% for C = 1:length(cmaxs)
+    cfn = 4;%cmaxs(C);
     
 %     for M = 1:length(mets)
 %         mfn = mets(M);
         
-        for R = 1:length(RE)
+        for R = 4:length(RE)
             rfrac = RE(R);
             
-            for F = 1%:length(Fmort)
+            for F = 1:length(Fmort)
                 %! Set fishing rate
                 frate = Fmort(F);
                 dfrate = Fmort(F)/365.0;
@@ -82,10 +82,11 @@ for C = 1:length(cmaxs)
                         sel='MF';
                     end
                 else
-                    if (LPsel == 1)
+                    if (LPsel == 1 && LDsel == 1)
+                        sel = 'L';
+                    elseif (LPsel == 1)
                         sel = 'LP';
-                    end
-                    if (LDsel == 1)
+                    elseif (LDsel == 1)
                         sel = 'LD';
                     end
                 end
@@ -98,22 +99,21 @@ for C = 1:length(cmaxs)
                 end
                 tcfn = num2str(cfn);
                 tefn = num2str(efn);
-                tmfn = num2str(mfn);
                 if (harv==1)
                     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                     %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+                    simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                 else
                     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                     %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+                    simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                 end
                 if (~isdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname]))
                     mkdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname])
                 end
-                if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname]))
-                    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname])
-                end
+%                 if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname]))
+%                     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname])
+%                 end
                 
                 for L = 1:length(ids);
                     ID = ids(L);
@@ -212,7 +212,7 @@ for C = 1:length(cmaxs)
                 end %Locations
             end %Fmort
         end %RE
-    %end %met
-end %cmax
-end %enc
+    % end %met
+% end %cmax
+% end %enc
 end

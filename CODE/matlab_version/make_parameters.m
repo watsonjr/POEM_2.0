@@ -13,7 +13,7 @@ function make_parameters()
     DT = 1.0; % time step
     
     %! Which fishes harvested
-    MFsel = 0;
+    MFsel = 1;
     LPsel = 0;
     LDsel = 0;
 
@@ -63,7 +63,7 @@ function make_parameters()
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    %rfrac = 1.0;
+    %rfrac = 0.5;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;

@@ -8,9 +8,13 @@ global bent_eff rfrac CC
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel
+global MFsel LPsel LDsel efn cfn mfn
 
 %%%%%%%%%%%%%%% Initialize Model Variables
+%! Cmax-metab & enc fns to use
+cfn = 4; 
+efn = 4; 
+%mfn = 4;
 %! Set fishing rate
 frate = 0;
 dfrate = frate/365.0;
@@ -74,18 +78,25 @@ elseif (pdc == 1)
 elseif (pdc == 2)
     coup = 'PDc';
 end
+tcfn = num2str(cfn);
+tmfn = num2str(mfn);
+tefn = num2str(efn);
 if (harv==1)
     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-    simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    %simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
 else
     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-    simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    %simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
 end
 if (~isdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname]))
     mkdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname])
 end
-if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname]))
-    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_Big_sizes/',simname])
+if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname]))
+    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname])
 end
 
 %! Storage variables
@@ -380,7 +391,7 @@ for YR = 1:YEARS % years
 %         S_Med_f_rep(:,DY) = Med_f.rep;
 %         S_Lrg_p_rep(:,DY) = Lrg_p.rep;
 %         S_Lrg_d_rep(:,DY) = Lrg_d.rep;
-        
+%         
 %         S_Sml_f_die(:,DY) = Sml_f.die;
 %         S_Sml_p_die(:,DY) = Sml_p.die;
 %         S_Sml_d_die(:,DY) = Sml_d.die;
@@ -487,7 +498,7 @@ for YR = 1:YEARS % years
 %             netcdf.putVar(ncidMF,vidrepMF,[0 MNT-1],[NX 1],mean(S_Med_f_rep(:,a(i):b(i)),2));
 % 			netcdf.putVar(ncidLP,vidrepLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rep(:,a(i):b(i)),2));
 % 			netcdf.putVar(ncidLD,vidrepLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rep(:,a(i):b(i)),2));
-			
+% 			
 		end %Monthly mean
 
 end %Years

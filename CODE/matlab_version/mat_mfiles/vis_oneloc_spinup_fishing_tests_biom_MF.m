@@ -11,9 +11,9 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes
 Frate = 0.1:0.1:1;
 fsim = {'.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};
 frate = {'01','02','03','04','05','06','07','08','09','10'};
-RE = {'1000','0500','0100'};
-reff = [1.0,0.5,0.1];
-nmrt = 5;
+RE = {'1000','0500','0100','0050','0010'};
+reff = [1.0,0.5,0.1,0.05,0.01];
+nmrt = 2;
 % nmrt = [0,2:5];
 % Mort = {'None','Hartvig','mizer','J&C','P&W'};
 fcrit = 40;
@@ -45,13 +45,13 @@ for r = 1:length(RE)
     fishsp  = NaN*ones(4,length(spots),ndp);
     for i=1:length(frate)
         F = frate{i};
-        dp = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+        dp = ['Dc_TrefO_cmax-metab2_enc1_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac '_MF_fish' F];
         dpath = [datap char(dp) '/'];
         %fpath = [figp char(dp) '/'];
         fpath = figp;
         cfile = char(dp);
-        cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+        cfile2 = ['Dc_TrefO_cmax-metab2_enc1_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac ...
             '_MF_fishing'];
         

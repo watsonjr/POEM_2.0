@@ -7,14 +7,14 @@ cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/';
 datap = '/Volumes/GFDL/CSV/Matlab_orig_size/';
 
-RE = {'1000','0500','0100','0050'};%,'0010','00050','00010'};
-reff = [1.0,0.5,0.1,0.05];%,0.01,0.005,0.001];
+RE = {'1000','0500','0100'};%,'0050','0010','00050','00010'};
+reff = [1.0,0.5,0.1];%,0.05,0.01,0.005,0.001];
 CarCap = {'050','100','150','200','250','300'};
-car = 0.5:0.5:1.0;
+car = 0.5:0.5:3.0;
 benteff = {'05','10'};%,'15','20'};
 beff = 0.05:0.05:0.1;
 fcrit = 40;
-nmort = '3';
+nmort = '0';
 kad = 100;
 pref = 'D100';
 
@@ -35,45 +35,22 @@ fish = seafl(:,9);
 invert = 10.^(invert) * 1e-3 * 9.0;
 fish = 10.^(fish) * 1e-3 * 9.0;
 
-%% put on same grid as POEM output
-load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
-    'geolon_t','geolat_t');
+% put on same grid as POEM output
 grid = csvread([cpath 'grid_csv.csv']);
+%fix lon shift
+id=find(grid(:,2)<-180);
+grid(id,2)=grid(id,2)+360;
 
-x=-279.5:79.5;
-y=-77.5:82.5;
+x=-180:180;
+y=-90:90;
 [X,Y]=meshgrid(x,y);
 
-test=seafl(:,2);
-id=find(test>80);
-test(id)=test(id)-360;
-
-Zi=griddata(test,seafl(:,1),invert,X,Y);
-Zf=griddata(test,seafl(:,1),fish,X,Y);
-
-[ni,nj]=size(geolon_t);
-ocean=ones(ni,nj);
-ocean(grid(:,1))=NaN*ones(size(grid(:,1)));
-
-%% ocean cells
-% figure(55)
-% surf(geolon_t,geolat_t,ocean); view(2); hold on;
+Zi=griddata(seafl(:,2),seafl(:,1),invert,X,Y);
+Zf=griddata(seafl(:,2),seafl(:,1),fish,X,Y);
 
 %% Maps
 % Inv
 figure(1)
-surf(X,Y,log10(Zi)); view(2); hold on;
-surf(geolon_t,geolat_t,ocean); view(2); hold on;
-shading flat
-title('log10 mean benthic invert biomass (g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([-2.5 0.5])
-%%
-print('-dpng','/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Wei_inverts.png')
-
-
-
 m_proj('miller','lat',82);
 m_pcolor(X,Y,real(log10(Zi))); hold on;
 shading flat
