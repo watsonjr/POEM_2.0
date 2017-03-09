@@ -54,7 +54,7 @@ function make_parameters()
     % subscript is larvae, juv, adult)
     K_l = 1;
     K_j = 1;
-    K_a = 0;
+    K_a = 0.5;
 
     %%%! Metabolism constants (activity and basal)
     fcrit = 0.40;	% feeding level needed to meet resting metabolic demands; 0.05-0.2

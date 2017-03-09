@@ -1,5 +1,5 @@
 %%% BIOMASS MADE FROM REPRODUCTION
-function [nu, rep, egg] = sub_rep(nu,K,S,egg)
+function [gamma, nu, rep, egg] = sub_rep(gamma,nu,K,S,egg)
 %nu: energy for growth or spawning
 %K: proportion allocated to growth
 %S: fraction = fraction of pop spawning at that time
@@ -26,6 +26,10 @@ global NX
         rep(id3,1) = 0.0;
         egg(id3,1) = egg(id3,1) + rho(id3,1);
         
+        %add what would be growth to next size up as repro
+        rep = rep + gamma;
+        gamma = 0.0;
+        
         id4 = (nu > 0.0);
         %nu is now split into used for repro (nu) and stored (egg)
         nu(id4,1) = rep(id4,1);
@@ -33,5 +37,6 @@ global NX
         rep = zeros(NX,1);
         egg = zeros(NX,1);
     end
+
 
 end

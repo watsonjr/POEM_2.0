@@ -62,6 +62,7 @@ RE = [1.0,0.5,0.1,0.05,0.01];
                 %! Create a directory for output
                 tfcrit = num2str(int64(100*fcrit));
                 tld = num2str(1000+int64(100*LD_phi_MF));
+                tkap = num2str(100+int64(10*K_a));
                 tbe = num2str(100+int64(100*bent_eff));
                 tmort = num2str(MORT);
                 tcc = num2str(1000+int64(100*CC));
@@ -103,11 +104,11 @@ RE = [1.0,0.5,0.1,0.05,0.01];
                 if (harv==1)
                     %simname = ['Ponly',coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                     %simname = ['Ponly',coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    simname = ['Ponly',coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end),'_Msel',msel(2:end)];
+                    simname = ['Ponly',coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_nmort',tmort,'_K',tkap(2:end),'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end),'_Msel',msel(2:end)];
                 else
                     %simname = ['Ponly',coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                     %simname = ['Ponly',coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                    simname = ['Ponly',coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+                    simname = ['Ponly',coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_nmort',tmort,'_K',tkap(2:end),'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                 end
                 if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
                     mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])

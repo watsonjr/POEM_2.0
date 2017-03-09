@@ -90,13 +90,11 @@ Lp.nmort = sub_nmort(ENVR.Tp,ENVR.Tb,Lp.td,M_l);
 
 % Maturation (note subscript on Kappa is larvae, juv, adult)
 Sp.gamma = sub_gamma(K_l,Z_s,Sp.nu,Sp.die,Sp.bio,Sp.nmort,0,0);
-Mp.gamma = sub_gamma(K_j,Z_m,Mp.nu,Mp.die,Mp.bio,Mp.nmort,0,0);
+Mp.gamma = sub_gamma(K_j,Z_m,Mp.nu,Mp.die,Mp.bio,Mp.nmort,0,MPsel);
 Lp.gamma = sub_gamma(K_a,Z_l,Lp.nu,Lp.die,Lp.bio,Lp.nmort,dfrate,LPsel);
 
 % Egg production (by med and large size classes only)
-[Sp.nu,Sp.rep,Sp.egg] = sub_rep(Sp.nu,K_l,Sp.S(:,DY),Sp.egg);
-[Mp.nu,Mp.rep,Mp.egg] = sub_rep(Mp.nu,K_j,Mp.S(:,DY),Mp.egg);
-[Lp.nu,Lp.rep,Lp.egg] = sub_rep(Lp.nu,K_a,Lp.S(:,DY),Lp.egg);
+[Lp.gamma,Lp.nu,Lp.rep,Lp.egg] = sub_rep(Lp.gamma,Lp.nu,K_a,Lp.S(:,DY),Lp.egg);
 
 % Recruitment (from smaller size class)
 Sp.rec = sub_rec_larv(Lp.rep,Lp.bio,rfrac);

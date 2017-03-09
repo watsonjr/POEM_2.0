@@ -8,7 +8,7 @@ global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit
 global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel
+global MFsel MPsel LPsel LDsel
 
 %%% COBALT information
 ENVR = get_COBALT(COBALT,ID,DY);
@@ -175,20 +175,15 @@ Sf.gamma = sub_gamma(K_l,Z_s,Sf.nu,Sf.die,Sf.bio,Sf.nmort,0,0);
 Sp.gamma = sub_gamma(K_l,Z_s,Sp.nu,Sp.die,Sp.bio,Sp.nmort,0,0);
 Sd.gamma = sub_gamma(K_l,Z_s,Sd.nu,Sd.die,Sd.bio,Sd.nmort,0,0);
 Mf.gamma = sub_gamma(K_a,Z_m,Mf.nu,Mf.die,Mf.bio,Mf.nmort,dfrate,MFsel);
-Mp.gamma = sub_gamma(K_j,Z_m,Mp.nu,Mp.die,Mp.bio,Mp.nmort,0,0);
-Md.gamma = sub_gamma(K_j,Z_m,Md.nu,Md.die,Md.bio,Md.nmort,0,0);
+Mp.gamma = sub_gamma(K_j,Z_m,Mp.nu,Mp.die,Mp.bio,Mp.nmort,0,MPsel);
+Md.gamma = sub_gamma(K_j,Z_m,Md.nu,Md.die,Md.bio,Md.nmort,0,MDsel);
 Lp.gamma = sub_gamma(K_a,Z_l,Lp.nu,Lp.die,Lp.bio,Lp.nmort,dfrate,LPsel);
 Ld.gamma = sub_gamma(K_a,Z_l,Ld.nu,Ld.die,Ld.bio,Ld.nmort,dfrate,LDsel);
 
 % Egg production (by med and large size classes only)
-[Sf.nu,Sf.rep,Sf.egg] = sub_rep(Sf.nu,K_l,Sf.S(:,DY),Sf.egg);
-[Sp.nu,Sp.rep,Sp.egg] = sub_rep(Sp.nu,K_l,Sp.S(:,DY),Sp.egg);
-[Sd.nu,Sd.rep,Sd.egg] = sub_rep(Sd.nu,K_l,Sd.S(:,DY),Sd.egg);
-[Mf.nu,Mf.rep,Mf.egg] = sub_rep(Mf.nu,K_a,Mf.S(:,DY),Mf.egg);
-[Mp.nu,Mp.rep,Mp.egg] = sub_rep(Mp.nu,K_j,Mp.S(:,DY),Mp.egg);
-[Md.nu,Md.rep,Md.egg] = sub_rep(Md.nu,K_j,Md.S(:,DY),Md.egg);
-[Lp.nu,Lp.rep,Lp.egg] = sub_rep(Lp.nu,K_a,Lp.S(:,DY),Lp.egg);
-[Ld.nu,Ld.rep,Ld.egg] = sub_rep(Ld.nu,K_a,Ld.S(:,DY),Ld.egg);
+[Mf.gamma,Mf.nu,Mf.rep,Mf.egg] = sub_rep(Mf.gamma,Mf.nu,K_a,Mf.S(:,DY),Mf.egg);
+[Lp.gamma,Lp.nu,Lp.rep,Lp.egg] = sub_rep(Lp.gamma,Lp.nu,K_a,Lp.S(:,DY),Lp.egg);
+[Ld.gamma,Ld.nu,Ld.rep,Ld.egg] = sub_rep(Ld.gamma,Ld.nu,K_a,Ld.S(:,DY),Ld.egg);
 
 % Recruitment (from smaller size class)
 Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac);
@@ -214,7 +209,7 @@ Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmor
 
 % Fishing by rate
 [Mf.bio, Mf.caught] = sub_fishing_rate(Mf.bio,dfrate,MFsel);
-%[Mp.bio, Mp.caught] = sub_fishing_rate(Mp.bio,dfrate,1);
+[Mp.bio, Mp.caught] = sub_fishing_rate(Mp.bio,dfrate,MPsel);
 %[Md.bio, Md.caught] = sub_fishing_rate(Md.bio,dfrate,1);
 [Lp.bio, Lp.caught] = sub_fishing_rate(Lp.bio,dfrate,LPsel);
 [Ld.bio, Ld.caught] = sub_fishing_rate(Ld.bio,dfrate,LDsel);
