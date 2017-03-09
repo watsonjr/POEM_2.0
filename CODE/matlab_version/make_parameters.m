@@ -22,16 +22,16 @@ function make_parameters()
     % 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
     pdc = 1;
 
-    %! body lengths (mm)
-    L_s = 10.0; % small
-    L_m = 200.0; % medium
-    L_l = 1.0e3;% large
+    %!Individual Mass (g)
+    M_s = 10^((log10(0.001)+log10(0.5))/2);
+    M_m = 10^((log10(0.5)+log10(250))/2);
+    M_l = 10^((log10(250)+log10(125000))/2);
 
-    %%! Mass from length using Andersen & Beyer 2013
+    %! Body lengths (mm)
     % Convert from mm to cm and use their const coeff = 0.01g/cm3
-    M_s = 0.01 * (0.1*L_s)^3;
-    M_m = 0.01 * (0.1*L_m)^3;
-    M_l = 0.01 * (0.1*L_l)^3;
+    L_s = 10.0 * (M_s/0.01)^(1/3); % small
+    L_m = 10.0 * (M_m/0.01)^(1/3); % medium
+    L_l = 10.0 * (M_l/0.01)^(1/3); % large
 
     %! Median Zooplankton size in mm from Charlie/COBALT
     %! Median Zooplankton body mass in g wet weight
