@@ -36,18 +36,18 @@ load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_a
 cmap3=cmap_ppt([5,1,3],:);
 
 %%
-for r = 1:length(RE)
+for r = 3;%1:length(RE)
     close all
     rfrac = RE{r};
     for i=1:length(frate)
         F = frate{i};
-        dp = ['PonlyDc_TrefO_cmax-metab0_enc1_MFeqMP_fcrit' num2str(fcrit) ...
+        dp = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac '_LP_fish' F];
         dpath = [datap char(dp) '/'];
         %fpath = [figp char(dp) '/'];
         fpath = figp;
         cfile = char(dp);
-        cfile2 = ['PonlyDc_TrefO_cmax-metab0_enc1_MFeqMP_fcrit' num2str(fcrit) ...
+        cfile2 = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac ...
             '_LP_fishing_catch'];
         
@@ -59,7 +59,7 @@ for r = 1:length(RE)
         all_mean=NaN*ones(3,4,length(spots));
         
         %%
-        for s=1:length(spots)
+        for s=11;%1:length(spots)
             %%
             loc = spots{s};
             lname = [loc '_'];
@@ -149,7 +149,7 @@ for r = 1:length(RE)
         %%
         for i=1:length(frate)
             F = frate{i};
-            dp = ['PonlyDc_TrefO_cmax-metab0_enc1_MFeqMP_fcrit' num2str(fcrit) ...
+            dp = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac '_LP_fish' F];
             dpath = [char(dp) '/'];
             load([datap dpath sname 'lastyr_sum_mean_biom']);

@@ -21,18 +21,18 @@ RE = [1.0,0.5,0.1,0.05,0.01];
 
 
 % for E = 1:length(encs)
-    efn = 1;%encs(E);
+    efn = 4;%encs(E);
     
 % for C = 1:length(cmaxs)
-    cfn = 0;%cmaxs(C);
+    cfn = 4;%cmaxs(C);
     
 %     for M = 1:length(mets)
 %         mfn = mets(M);
         
-        for R = 1:length(RE)
+        for R = 3;%1:length(RE)
             rfrac = RE(R);
             
-            for F = 1%:length(Fmort)
+            for F = 1:length(Fmort)
                 %! Set fishing rate
                 frate = Fmort(F);
                 dfrate = Fmort(F)/365.0;
