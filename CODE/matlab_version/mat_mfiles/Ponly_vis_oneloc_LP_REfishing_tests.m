@@ -5,8 +5,8 @@
 clear all
 close all
 
-datap = '/Volumes/GFDL/CSV/Matlab_big_size/';
-figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/Fishing/Ponly_';
+datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
+figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Fishing/Ponly_';
 
 fnum = [0.1:0.1:1];%,1.2:0.2:2];
 fsim = {'.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};%,'1.2','1.4','1.6','1.8','2'};
@@ -36,7 +36,7 @@ load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_a
 cmap3=cmap_ppt([5,1,3],:);
 
 %%
-for r = 3;%1:length(RE)
+for r = 1:length(RE)
     close all
     rfrac = RE{r};
     for i=1:length(frate)

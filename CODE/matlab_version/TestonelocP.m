@@ -8,7 +8,7 @@ global bent_eff rfrac CC
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel efn cfn
+global MFsel MPsel LPsel LDsel efn cfn
 
 %fracm = 0.1:0.1:0.5;
 Fmort = [0.0:0.1:1.0]; %[1.2:0.2:2.0]; %
@@ -29,7 +29,7 @@ RE = [1.0,0.5,0.1,0.05,0.01];
 %     for M = 1:length(mets)
 %         mfn = mets(M);
         
-        for R = 3;%1:length(RE)
+        for R = 1:length(RE)
             rfrac = RE(R);
             
             for F = 1:length(Fmort)
@@ -90,6 +90,7 @@ RE = [1.0,0.5,0.1,0.05,0.01];
                         sel = 'LD';
                     end
                 end
+                msel = num2str(100+int64(10*MPsel));
                 if (pdc == 0)
                     coup = 'NoDc';
                 elseif (pdc == 1)
@@ -102,14 +103,14 @@ RE = [1.0,0.5,0.1,0.05,0.01];
                 if (harv==1)
                     %simname = ['Ponly',coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                     %simname = ['Ponly',coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    simname = ['Ponly',coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+                    simname = ['Ponly',coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end),'_Msel',msel(2:end)];
                 else
                     %simname = ['Ponly',coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                     %simname = ['Ponly',coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                     simname = ['Ponly',coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                 end
-                if (~isdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname]))
-                    mkdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname])
+                if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
+                    mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
                 end
 %                 if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname]))
 %                     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname])
@@ -174,10 +175,10 @@ RE = [1.0,0.5,0.1,0.05,0.01];
                     end %Years
                     
                     %%% Save
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_p.csv'],S_Sml_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_p.csv'],S_Med_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Lrg_p.csv'],S_Lrg_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Cobalt.csv'],S_Cobalt)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Sml_p.csv'],S_Sml_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Med_p.csv'],S_Med_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Lrg_p.csv'],S_Lrg_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Cobalt.csv'],S_Cobalt)
                     
                 end %Locations
             end %Fmort

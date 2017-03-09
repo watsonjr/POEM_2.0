@@ -7,13 +7,14 @@ function make_parameters()
     global Tu_s Tu_m Tu_l Nat_mrt MORT
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE 
-    global MFsel LPsel LDsel
+    global MFsel MPsel LPsel LDsel
     
     %! Integration parameters
     DT = 1.0; % time step
     
     %! Which fishes harvested
     MFsel = 0;
+    MPsel = 0.1;
     LPsel = 1;
     LDsel = 0;
 

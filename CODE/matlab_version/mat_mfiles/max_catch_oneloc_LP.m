@@ -3,8 +3,8 @@
 clear all
 close all
 
-datap = '/Volumes/GFDL/CSV/Matlab_big_size/';
-figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/Fishing/';
+datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
+figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Fishing/';
 
 fnum = [0.1:0.1:1];%,1.2:0.2:2];
 fsim = {'.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};%,'1.2','1.4','1.6','1.8','2'};
@@ -51,7 +51,7 @@ set(groot,'defaultAxesColorOrder',cm7);
 maxC = NaN*ones(length(frate),length(RE),length(spots));
 BF = NaN*ones(length(frate),length(RE),length(spots));
 B0 = NaN*ones(length(RE),length(spots),length(nmrt));
-for n = 3;%1:length(nmrt)
+for n = 1;%1:length(nmrt)
     nmort = num2str(nmrt(n));
     %%
     for r = 1:length(RE)
@@ -158,8 +158,8 @@ print(f2,'-dpng',[figp cfile2 '_allRE_nmort2.png'])
 for s = 1:length(spots)
     f3=figure(3);
     subplot(4,3,s)
-    plot(1:10,m3_maxC(:,:,s),'LineWidth',1.5)
-    xlim([0 length(frate)+1])
+    plot(fnum,m3_maxC(:,:,s),'LineWidth',1.5)
+    xlim([0 fnum(end)+0.1])
     if (s==2)
         str = {['M=' Mort{3}], spots{s}};
         title(str)

@@ -1,15 +1,15 @@
-% Find RE of max LD catch for each loc and mort
+% Find RE of max LP catch for each loc and mort
 
 clear all
 close all
 
-datap = '/Volumes/GFDL/CSV/Matlab_big_size/';
-figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/Fishing/';
+datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
+figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Fishing/';
 
 fnum = [0.1:0.1:1];%,1.2:0.2:2];
 fsim = {'.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};%,'1.2','1.4','1.6','1.8','2'};
 frate = {'01','02','03','04','05','06','07','08','09','10'};%,'12','14','16','18','20'};
-Frate = [0.1:0.1:1.0];%,12:2:20];
+Frate = [1:10];%,12:2:20];
 RE = {'1000','0500','0100','0050','0010'};
 reff = [1.0,0.5,0.1,0.05,0.01];
 sreff = {'1.0','0.5','0.1','0.05','0.01'};
@@ -21,7 +21,7 @@ pref = 'D100';
 BE = '05';
 CC = '050';
 cfile2 = ['Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
-                '_' pref '_BE' BE '_CC' CC '_LD_fishing_catch'];
+                '_' pref '_BE' BE '_CC' CC '_LP_fishing_catch'];
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -51,14 +51,14 @@ set(groot,'defaultAxesColorOrder',cm7);
 maxC = NaN*ones(length(frate),length(RE),length(spots));
 BF = NaN*ones(length(frate),length(RE),length(spots));
 B0 = NaN*ones(length(RE),length(spots),length(nmrt));
-for n = 3;%1:length(nmrt)
+for n = 1;%1:length(nmrt)
     nmort = num2str(nmrt(n));
     %%
     for r = 1:length(RE)
         
         rfrac = RE{r};
         
-        dp0 = ['Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+        dp0 = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac];
         dpath0 = [char(dp0) '/'];
         load([datap dpath0 sname 'lastyr_sum_mean_biom'],'all_mean');
@@ -68,14 +68,14 @@ for n = 3;%1:length(nmrt)
         %%
         for i=1:length(frate)
             F = frate{i};
-            dp = ['Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
-            '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac '_LD_fish' F];
+            dp = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+            '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac '_LP_fish' F];
             dpath = [char(dp) '/'];
-            load([datap dpath sname 'lastyr_sum_mean_biom'],'Dtotcatch','all_mean');
+            load([datap dpath sname 'lastyr_sum_mean_biom'],'Ptotcatch','all_mean');
             
             %% Fishing
-            Dtot = sum(Dtotcatch);
-            maxC(i,r,:) = Dtot;
+            Ptot = sum(Ptotcatch);
+            maxC(i,r,:) = Ptot;
             
             %% Unharvested Biomass
             BF(i,r,:) = squeeze(all_mean(3,3,:));
@@ -101,7 +101,7 @@ for n = 3;%1:length(nmrt)
     end
 end %nmort
 
-%% Plot D catch
+%% Plot P catch
 leg=1:5;
 leg=repmat(leg,10,1);
 
@@ -109,8 +109,8 @@ leg=repmat(leg,10,1);
 for s = 1:length(spots)
     f1=figure(1);
     subplot(4,3,s)
-    plot(1:10,m0_maxC(:,:,s),'LineWidth',1.5)
-    xlim([0 length(frate)+1])
+    plot(fnum,m0_maxC(:,:,s),'LineWidth',1.5)
+    xlim([0 fnum(end)+0.1])
     if (s==2)
         str = {['M=' Mort{1}], spots{s}};
         title(str)
@@ -118,7 +118,7 @@ for s = 1:length(spots)
         title(spots{s})
     end
     if (s==4)
-        ylabel('Total D catch (g) in final year')
+        ylabel('Total P catch (g) in final year')
     end
 end
 subplot(4,3,12)
@@ -143,7 +143,7 @@ for s = 1:length(spots)
         title(spots{s})
     end
     if (s==4)
-        ylabel('Total D catch (g) in final year')
+        ylabel('Total P catch (g) in final year')
     end
 end
 subplot(4,3,12)
@@ -167,7 +167,7 @@ for s = 1:length(spots)
         title(spots{s})
     end
     if (s==4)
-        ylabel('Total D catch (g) in final year')
+        ylabel('Total P catch (g) in final year')
     end
 end
 subplot(4,3,12)
@@ -191,7 +191,7 @@ for s = 1:length(spots)
         title(spots{s})
     end
     if (s==4)
-        ylabel('Total D catch (g) in final year')
+        ylabel('Total P catch (g) in final year')
     end
 end
 subplot(4,3,12)
@@ -215,7 +215,7 @@ for s = 1:length(spots)
         title(spots{s})
     end
     if (s==4)
-        ylabel('Total D catch (g) in final year')
+        ylabel('Total P catch (g) in final year')
     end
 end
 subplot(4,3,12)
@@ -227,8 +227,8 @@ stamp(cfile2)
 print(f5,'-dpng',[figp cfile2 '_allRE_nmort5.png'])
 
 %% Plot Bf:B0
-cfile3 = ['Dc_TrefO_cmax-metab2_enc1_MFeqMP_fcrit' num2str(fcrit) ...
-                '_' pref '_BE' BE '_CC' CC '_LD_BfB0'];
+cfile3 = ['Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+                '_' pref '_BE' BE '_CC' CC '_LP_BfB0'];
 y = 0.4*ones(length(frate),1);            
 
 %% nmort0
@@ -262,7 +262,7 @@ legend(sreff)
 stamp(cfile2)
 print('-dpng',[figp cfile3 '_allRE_nmort0.png'])
 
-%% nmort2
+% nmort2
 b0 = NaN*ones(length(frate),length(RE),length(spots));
 for f=1:length(frate)
     b0(f,:,:) = B0(:,:,2);
@@ -275,7 +275,7 @@ for s = 1:length(spots)
     plot(fnum,bfb0(:,:,s),'LineWidth',1.5)
     xlim([0 fnum(end)+0.1])
     %set(gca,'XTick',2:2:10,'XTickLabel',0.2:0.2:1)
-    ylim([0 1])
+    ylim([0 1.5])
     if (s==2)
         str = {['M=' Mort{2}], spots{s}};
         title(str)
@@ -303,10 +303,10 @@ bfb0 = m3_BF ./ b0;
 for s = 1:length(spots)
     figure(8);
     subplot(4,3,s)
-    plot(fnum,y,'--k'); hold on;
-    plot(fnum,bfb0(:,:,s),'LineWidth',1.5)
-    xlim([0 fnum(end)+0.1])
-    ylim([0 0.9])
+    plot(1:10,y,'--k'); hold on;
+    plot(1:10,bfb0(:,:,s),'LineWidth',1.5)
+    xlim([0 length(frate)+1])
+    ylim([0 1.2])
     if (s==2)
         str = {['M=' Mort{3}], spots{s}};
         title(str)
@@ -388,11 +388,11 @@ stamp(cfile2)
 print('-dpng',[figp cfile3 '_allRE_nmort5.png'])
 
 %% Plot Bmsy:B0
-cfile4 = ['Dc_TrefO_cmax-metab2_enc1_MFeqMP_fcrit' num2str(fcrit) ...
-                '_' pref '_BE' BE '_CC' CC '_LD_BmsyB0'];
+cfile4 = ['Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+                '_' pref '_BE' BE '_CC' CC '_LP_BmsyB0'];
 
 %% nmort0
-[maxD0,fid] = max(m0_maxC,[],1);
+[maxP0,fid] = max(m0_maxC,[],1);
 fid = squeeze(fid);
 bmsy = NaN*ones(length(RE),length(spots));
 for r = 1:length(RE)
@@ -422,8 +422,8 @@ end
 stamp(cfile2)
 print('-dpng',[figp cfile4 '_allRE_nmort0.png'])
 
-%% nmort2
-[maxD2,fid] = max(m2_maxC,[],1);
+% nmort2
+[maxP2,fid] = max(m2_maxC,[],1);
 fid = squeeze(fid);
 bmsy = NaN*ones(length(RE),length(spots));
 for r = 1:length(RE)
@@ -439,7 +439,7 @@ for s = 1:length(spots)
     plot(1:5,bb(:,s),'.k','MarkerSize',15)
     xlim([0 length(RE)+1])
     set(gca,'XTick',1:length(RE),'XTickLabel',reff);
-    ylim([0 0.9])
+    ylim([0 1.5])
     if (s==2)
         str = {['M=' Mort{2}], spots{s}};
         title(str)
@@ -454,7 +454,7 @@ stamp(cfile2)
 print('-dpng',[figp cfile4 '_allRE_nmort2.png'])
 
 %% nmort3
-[maxD3,fid] = max(m3_maxC,[],1);
+[maxP3,fid] = max(m3_maxC,[],1);
 fid = squeeze(fid);
 bmsy = NaN*ones(length(RE),length(spots));
 for r = 1:length(RE)
@@ -470,7 +470,7 @@ for s = 1:length(spots)
     plot(1:5,bb(:,s),'.k','MarkerSize',15)
     xlim([0 length(RE)+1])
     set(gca,'XTick',1:length(RE),'XTickLabel',reff);
-    ylim([0 0.9])
+    ylim([0 1.2])
     if (s==2)
         str = {['M=' Mort{3}], spots{s}};
         title(str)
@@ -485,7 +485,7 @@ stamp(cfile2)
 print('-dpng',[figp cfile4 '_allRE_nmort3.png'])
 
 %% nmort4
-[maxD4,fid] = max(m4_maxC,[],1);
+[maxP4,fid] = max(m4_maxC,[],1);
 fid = squeeze(fid);
 bmsy = NaN*ones(length(RE),length(spots));
 for r = 1:length(RE)
@@ -516,7 +516,7 @@ stamp(cfile2)
 print('-dpng',[figp cfile4 '_allRE_nmort4.png'])
 
 % nmort5
-[maxD5,fid] = max(m5_maxC,[],1);
+[maxP5,fid] = max(m5_maxC,[],1);
 fid = squeeze(fid);
 bmsy = NaN*ones(length(RE),length(spots));
 for r = 1:length(RE)
@@ -551,34 +551,34 @@ print('-dpng',[figp cfile4 '_allRE_nmort5.png'])
 [Rmesh,Fmesh] = meshgrid(reff,fnum);
 Cmax = nan*ones(length(spots),2,length(nmrt));
 for s=1:11
-%     maxD0 = m0_maxC(:,:,s);
-%     m0 = find(maxD0==max(maxD0(:)));
+%     maxP0 = m0_maxC(:,:,s);
+%     m0 = find(maxP0==max(maxP0(:)));
 %     Cmax(s,1,1) = Rmesh(m0);
 %     Cmax(s,2,1) = Fmesh(m0);
     
-%     maxD2 = m2_maxC(:,:,s);
-%     m2 = find(maxD2==max(maxD2(:)));
+%     maxP2 = m2_maxC(:,:,s);
+%     m2 = find(maxP2==max(maxP2(:)));
 %     Cmax(s,1,2) = Rmesh(m2);
 %     Cmax(s,2,2) = Fmesh(m2);
     
-    maxD3 = m3_maxC(:,:,s);
-    m3 = find(maxD3==max(maxD3(:)));
+    maxP3 = m3_maxC(:,:,s);
+    m3 = find(maxP3==max(maxP3(:)));
     Cmax(s,1,3) = Rmesh(m3);
     Cmax(s,2,3) = Fmesh(m3);
     
-%     maxD4 = m4_maxC(:,:,s);
-%     m4 = find(maxD4==max(maxD4(:)));
+%     maxP4 = m4_maxC(:,:,s);
+%     m4 = find(maxP4==max(maxP4(:)));
 %     Cmax(s,1,4) = Rmesh(m4);
 %     Cmax(s,2,4) = Fmesh(m4);
 %     
-%     maxD5 = m5_maxC(:,:,s);
-%     m5 = find(maxD5==max(maxD5(:)));
+%     maxP5 = m5_maxC(:,:,s);
+%     m5 = find(maxP5==max(maxP5(:)));
 %     Cmax(s,1,5) = Rmesh(m5);
 %     Cmax(s,2,5) = Fmesh(m5);
 end
 
-Cmax([1,2,6],:,3)
-mean(Cmax([1,2,6],:,3))
+Cmax(:,:,3)
+mean(Cmax(:,:,3))
 
 %%
 % save([figp cfile2 '_allRE_allMort.mat'],'Cmax','m0_maxC','m2_maxC',...

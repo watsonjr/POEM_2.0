@@ -156,8 +156,8 @@ print(f2,'-dpng',[figp cfile2 '_allRE_nmort2.png'])
 for s = 1:length(spots)
     f3=figure(3);
     subplot(4,3,s)
-    plot(1:10,m3_maxC(:,:,s),'LineWidth',1.5)
-    xlim([0 length(frate)+1])
+    plot(fnum,m3_maxC(:,:,s),'LineWidth',1.5)
+    xlim([0 fnum(end)+0.1])
     if (s==2)
         str = {['M=' Mort{3}], spots{s}};
         title(str)

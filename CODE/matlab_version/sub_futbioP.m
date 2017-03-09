@@ -8,7 +8,7 @@ global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit
 global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel
+global MFsel MPsel LPsel LDsel
 
 %%% COBALT information
 ENVR = get_COBALT(COBALT,ID,DY);
@@ -109,6 +109,7 @@ Mp.bio = sub_update_fi(Mp.bio,Mp.rec,Mp.nu,Mp.rep,Mp.gamma,Mp.die,Mp.egg,Mp.nmor
 Lp.bio = sub_update_fi(Lp.bio,Lp.rec,Lp.nu,Lp.rep,Lp.gamma,Lp.die,Lp.egg,Lp.nmort);
 
 % Fishing by rate
+[Mp.bio, Mp.caught] = sub_fishing_rate(Mp.bio,dfrate,MPsel);
 [Lp.bio, Lp.caught] = sub_fishing_rate(Lp.bio,dfrate,LPsel);
 
 % Forward Euler checks for demographics and movement
