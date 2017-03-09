@@ -4,7 +4,10 @@ clear all
 close all
 
 %%%%!! EXPERIMENTS
-testoneloc = true;
+testoneloc = false;
+testonelocF = false;
+testonelocP = true;
+testonelocD = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
@@ -18,6 +21,21 @@ forecast_fished = false;
 if testoneloc
     tic
     Testoneloc()
+    toc
+end
+if testonelocF
+    tic
+    TestonelocF()
+    toc
+end
+if testonelocP
+    tic
+    TestonelocP()
+    toc
+end
+if testonelocD
+    tic
+    TestonelocD()
     toc
 end
 if spinup_pristine

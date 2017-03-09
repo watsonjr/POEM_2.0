@@ -13,8 +13,8 @@ function make_parameters()
     DT = 1.0; % time step
     
     %! Which fishes harvested
-    MFsel = 1;
-    LPsel = 0;
+    MFsel = 0;
+    LPsel = 1;
     LDsel = 0;
 
     %! Benthic-pelagic coupling cutoff (depth, m)
@@ -73,7 +73,7 @@ function make_parameters()
     %%%! Background mortality
     Nat_mrt = 0.0; 
     %0=none, 1=constant, 2=Hartvig T-dep, 3=mizer T-dep, 4=J&C T-dep, 5=P&W T-dep
-    MORT = 3;
+    MORT = 0;
 
     %%%! Diet Preference Phi
     % The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down

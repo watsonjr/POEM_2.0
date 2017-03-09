@@ -4,15 +4,15 @@ clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Mat_runs/';
-datap = '/Volumes/GFDL/CSV/Matlab_orig_size/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/Bent_CC/';
+datap = '/Volumes/GFDL/CSV/Matlab_big_size/';
 
-RE = {'1000','0500','0100','0050'};%,'0010','00050','00010'};
-reff = [1.0,0.5,0.1,0.05];%,0.01,0.005,0.001];
-CarCap = {'050','100','150','200','250','300'};
-car = 0.5:0.5:1.0;
-benteff = {'05','10'};%,'15','20'};
-beff = 0.05:0.05:0.1;
+RE = {'0500','0100','0050','0010'}; %{'1000','0500','0100','0050','0010','00050','00010'};
+reff = [0.5,0.1,0.05,0.01]; %[1.0,0.5,0.1,0.05,0.01,0.005,0.001];
+CarCap = {'050'};%,'100','150','200','250','300'};
+car = 0.5;%:0.5:1.0;
+benteff = {'05'};%,'10','15','20'};
+beff = 0.05;%:0.05:0.1;
 fcrit = 40;
 nmort = '3';
 kad = 100;
@@ -37,65 +37,48 @@ fish = 10.^(fish) * 1e-3 * 9.0;
 
 %% put on same grid as POEM output
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
-    'geolon_t','geolat_t');
+    'geolon_t','geolat_t','tmask');
 grid = csvread([cpath 'grid_csv.csv']);
 
-x=-279.5:79.5;
-y=-77.5:82.5;
-[X,Y]=meshgrid(x,y);
+mask = tmask(:,:,1);
 
 test=seafl(:,2);
 id=find(test>80);
 test(id)=test(id)-360;
 
-Zi=griddata(test,seafl(:,1),invert,X,Y);
-Zf=griddata(test,seafl(:,1),fish,X,Y);
+Zi = griddata(test,seafl(:,1),invert,geolon_t,geolat_t);
+Zf = griddata(test,seafl(:,1),fish,geolon_t,geolat_t);
+Zi = Zi.*mask;
+Zf = Zf.*mask;
 
 [ni,nj]=size(geolon_t);
-ocean=ones(ni,nj);
-ocean(grid(:,1))=NaN*ones(size(grid(:,1)));
 
 %% ocean cells
+% ocean=zeros(ni,nj);
+% ocean(grid(:,1))=ones(size(grid(:,1)));
 % figure(55)
 % surf(geolon_t,geolat_t,ocean); view(2); hold on;
 
 %% Maps
 % Inv
 figure(1)
-surf(X,Y,log10(Zi)); view(2); hold on;
-surf(geolon_t,geolat_t,ocean); view(2); hold on;
+surf(geolon_t,geolat_t,log10(Zi)); view(2); hold on;
 shading flat
 title('log10 mean benthic invert biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2.5 0.5])
-%%
 print('-dpng','/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Wei_inverts.png')
 
-
-
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zi))); hold on;
-shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('log10 mean Wei benthic invert biomass (g m^-^2)')
-colormap('jet')
-colorbar('h')
-caxis([-3 1])
-print('-dpng','/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Wei_inverts.png')
 
 % Fish
 figure(2)
-m_proj('miller','lat',82);
-m_pcolor(X,Y,real(log10(Zf))); hold on;
+surf(geolon_t,geolat_t,log10(Zf)); view(2); hold on;
 shading flat
-m_coast('patch',[.5 .5 .5],'edgecolor','none');
-m_grid;
-title('log10 mean Wei benthic fish biomass (g m^-^2)')
+title('log10 mean benthic fish biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
-caxis([-3 1])
+caxis([-2.5 0.5])
 print('-dpng','/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Wei_fish.png')
 
 %% colors
@@ -151,346 +134,318 @@ RMSD = r;
 %%
 for i=1:length(benteff)
     BE = benteff{i};
+    iskill=NaN*ones(7,length(RE));
+    fskill=NaN*ones(7,length(RE));
+    ibest=cell(5,1);
+    fbest=cell(5,1);
     for R = 1:length(RE)
         rfrac = RE{R};
-        iskill=NaN*ones(7,ndp);
-        fskill=NaN*ones(7,ndp);
-        ibest=cell(5,1);
-        fbest=cell(5,1);
-        for c = 1:length(CarCap)
-            CC = CarCap{c};
-            
-            %%
-            cfile = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-                '_' pref '_nmort'  nmort '_BE' BE '_CC' CC '_RE' rfrac];
-            fpath=['/Volumes/GFDL/NC/Matlab_runs/' cfile '/'];
-            ppath = [pp cfile];
-            load([fpath 'Means_spinup_' cfile '.mat'],'md_mean','ld_mean','b_mean');
-            
-            cfile2 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
-                '_' pref '_nmort'  nmort '_BE' BE '_RE' rfrac '_BentCCtests'];
-            
-            close all
-            
-            %% Model bent & dem
-            Zmd=griddata(grid(:,2),grid(:,3),md_mean,X,Y);
-            Zld=griddata(grid(:,2),grid(:,3),ld_mean,X,Y);
-            Zb=griddata(grid(:,2),grid(:,3),b_mean,X,Y);
-            
-            Zd = Zmd+Zld;
-            
-            % Bent
-            figure(1)
-            m_proj('miller','lat',82);
-            m_pcolor(X,Y,real(log10(Zb))); hold on;
-            shading flat
-            m_coast('patch',[.5 .5 .5],'edgecolor','none');
-            m_grid;
-            title('log10 mean model benthic biomass (g m^-^2)')
-            colormap('jet')
-            colorbar('h')
-            caxis([-3 1])
-            stamp(cfile)
-            print('-dpng',[ppath '_Spinup_global_Bent.png'])
-            
-            % D
-            figure(2)
-            m_proj('miller','lat',82);
-            m_pcolor(X,Y,real(log10(Zd))); hold on;
-            shading flat
-            m_coast('patch',[.5 .5 .5],'edgecolor','none');
-            m_grid;
-            title('log10 mean model M&L D biomass (g m^-^2)')
-            colormap('jet')
-            colorbar('h')
-            caxis([-3 1])
-            stamp(cfile)
-            print('-dpng',[ppath '_Spinup_global_Demersal.png'])
-            
-            
-            %% Inverts
-            obs = real(log(Zi(:)));
-            model = real(log(Zb(:)));
-            
-            n = length(obs);
-            
-            o=obs;
-            p=model;
-            %             o(isnan(o))=0;
-            %             p(isnan(p))=0;
-            
-            omean=repmat(nanmean(o),n,1);
-            pmean=repmat(nanmean(p),n,1);
-            osig=nanstd(o);
-            psig=nanstd(p);
-            
-            % corr coeff
-            num=nansum((o-omean).*(p-pmean));
-            d1=nansum((o-omean).^2);
-            d2=nansum((p-pmean).^2);
-            den=sqrt(d1*d2);
-            iskill(1,c) = num/den;
-            
-            % root mean square error
-            num=nansum((p-o).^2);
-            iskill(2,c) = sqrt(num/n);
-            
-            % average error
-            iskill(3,c) = nansum(p-o) / n;
-            
-            % average absolute error
-            iskill(4,c) = nansum(abs(p-o)) / n;
-            
-            % modeling efficiency
-            num1=nansum((o-omean).^2);
-            num2=nansum((p-o).^2);
-            iskill(5,c) = (num1-num2)/num1;
-            
-            % Taylor normalized std
-            iskill(6,c) = psig/osig;
-            
-            % total root mean square difference
-            q1=nansum((o-p).^2);
-            iskill(7,c) = sqrt(q1/n);
-            
-            
-            %% Fish
-            obs = real(log(Zf(:)));
-            model = real(log(Zd(:)));
-            
-            n = length(obs);
-            
-            o=obs;
-            p=model;
-            
-            omean=repmat(nanmean(o),n,1);
-            pmean=repmat(nanmean(p),n,1);
-            osig=nanstd(o);
-            psig=nanstd(p);
-            
-            % corr coeff
-            num=nansum((o-omean).*(p-pmean));
-            d1=nansum((o-omean).^2);
-            d2=nansum((p-pmean).^2);
-            den=sqrt(d1*d2);
-            fskill(1,c) = num/den;
-            
-            % root mean square error
-            num=nansum((p-o).^2);
-            fskill(2,c) = sqrt(num/n);
-            
-            % average error
-            fskill(3,c) = nansum(p-o) / n;
-            
-            % average absolute error
-            fskill(4,c) = nansum(abs(p-o)) / n;
-            
-            % modeling efficiency
-            num1=nansum((o-omean).^2);
-            num2=nansum((p-o).^2);
-            fskill(5,c) = (num1-num2)/num1;
-            
-            % Taylor normalized std
-            fskill(6,c) = psig/osig;
-            
-            % total root mean square difference
-            q1=nansum((o-p).^2);
-            fskill(7,c) = sqrt(q1/n);
-            
-        end %CC
-        
-        %% Plot results
-        
-        % Bar graphs
-        figure(4)
-        subplot(2,2,1)
-        bar(iskill(1,:),'k')
-        ylabel('Correlation coefficient')
-        ylim([-0.1 1])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        stamp(cfile2)
-        title(['Inverts skill with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))]...
-            ,'HorizontalAlignment','left')
-        
-        subplot(2,2,2)
-        bar(iskill(2,:),'k')
-        ylabel('Root mean square error')
-        set(gca,'XTick',1:ndp,'XTickLabel',[]);
-        ylim([0 1])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        
-        subplot(2,2,3)
-        bar(iskill(3,:),'k')
-        ylabel('Average error')
-        ylim([-0.1 0.4])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        
-        subplot(2,2,4)
-        bar(iskill(5,:),'k')
-        ylabel('Modeling efficiency')
-        ylim([0 0.5])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        print('-dpng',[ppath '_Spinup_skill_Wei_inverts'])
+        CC = CarCap{1};
         
         %%
-        figure(5)
-        subplot(2,2,1)
-        bar(fskill(1,:),'k')
-        ylabel('Correlation coefficient')
-        ylim([-0.1 1])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-0.15,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        stamp(cfile2)
-        title(['Fish skill with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))]...
-            ,'HorizontalAlignment','left')
+        cfile = ['Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+            '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac];
+        fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
+        ppath = [pp cfile];
+        load([fpath 'Means_spinup_' cfile '.mat'],'md_mean','ld_mean','b_mean');
         
-        subplot(2,2,2)
-        bar(fskill(2,:),'k')
-        ylabel('Root mean square error')
-        set(gca,'XTick',1:ndp,'XTickLabel',[]);
-        %ylim([0 2.5])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-0.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        %
-        subplot(2,2,3)
-        bar(fskill(3,:),'k')
-        ylabel('Average error')
-        %ylim([-1 1])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        %
-        subplot(2,2,4)
-        bar(fskill(5,:),'k')
-        ylabel('Modeling efficiency')
-        %ylim([-1 1])
-        xlim([0 ndp+1])
-        set(gca,'XTick',1:ndp,'XTickLabel',car);
-        %         for t=2:2:ndp
-        %             text(t,-1.1,num2str(car(t)),'Rotation',45,'HorizontalAlignment','right')
-        %         end
-        print('-dpng',[ppath '_Spinup_skill_Wei_fish'])
+        cfile2 = [cfile '_BentCCtests'];
         
-        %% Taylor diagrams
-        % INVERTS
-        [rmsd,it]=sort(iskill(7,:),'descend');
-        theta=acos(iskill(1,it));    %corr coeff
-        rho=iskill(6,it);            %stdev
-        simtex=CarCap(it);
-        simtex{ndp+1}='obs';
+        close all
         
-        % % Just those <2
-        % id = find(rho<2);
-        % theta = theta(id);
-        % rho = rho(id);
-        % simtex=sims(id);
-        % simtex{length(id)+1}='obs';
+        %% Model bent & dem
+        Zmd=NaN*ones(ni,nj);
+        Zld=NaN*ones(ni,nj);
+        Zb=NaN*ones(ni,nj);
         
-        tr=0;
-        rr=1;
-        figure(6)
-        h0=polar(0,1.5,'.'); hold on;
-        set(h0,'color','w');
-        for s=1:ndp
-            h=polar(theta(s),rho(s),'.'); hold on;
-            set(h,'color',cm{s},'MarkerSize',25);
-            %     set(h,'MarkerSize',25);
+        Zmd(grid(:,1))=md_mean;
+        Zld(grid(:,1))=ld_mean;
+        Zb(grid(:,1))=b_mean;
+        
+        Zd = Zmd+Zld;
+        
+        % Bent
+        figure(1)
+        surf(geolon_t,geolat_t,log10(Zb)); view(2); hold on;
+        shading flat
+        title('log10 mean benthic biomass (g m^-^2)')
+        colormap('jet')
+        colorbar('h')
+        caxis([-2.5 0.5])
+        stamp(cfile)
+        print('-dpng',[ppath '_Spinup_global_Bent.png'])
+        
+        % D
+        figure(2)
+        surf(geolon_t,geolat_t,log10(Zd)); view(2); hold on;
+        shading flat
+        title('log10 mean model M&L D biomass (g m^-^2)')
+        colormap('jet')
+        colorbar('h')
+        caxis([-2.5 0.5])
+        stamp(cfile)
+        print('-dpng',[ppath '_Spinup_global_Demersal.png'])
+        
+        
+        %% Inverts
+        obs = real(log(Zi(grid(:,1))));
+        model = real(log(b_mean));
+        
+        n = length(obs);
+        
+        o=obs;
+        p=model;
+        %             o(isnan(o))=0;
+        %             p(isnan(p))=0;
+        
+        omean=repmat(nanmean(o),n,1);
+        pmean=repmat(nanmean(p),n,1);
+        osig=nanstd(o);
+        psig=nanstd(p);
+        
+        % corr coeff
+        num=nansum((o-omean).*(p-pmean));
+        d1=nansum((o-omean).^2);
+        d2=nansum((p-pmean).^2);
+        den=sqrt(d1*d2);
+        iskill(1,R) = num/den;
+        
+        % root mean square error
+        num=nansum((p-o).^2);
+        iskill(2,R) = sqrt(num/n);
+        
+        % average error
+        iskill(3,R) = nansum(p-o) / n;
+        
+        % average absolute error
+        iskill(4,R) = nansum(abs(p-o)) / n;
+        
+        % modeling efficiency
+        num1=nansum((o-omean).^2);
+        num2=nansum((p-o).^2);
+        iskill(5,R) = (num1-num2)/num1;
+        
+        % Taylor normalized std
+        iskill(6,R) = psig/osig;
+        
+        % total root mean square difference
+        q1=nansum((o-p).^2);
+        iskill(7,R) = sqrt(q1/n);
+        
+        
+        %% Fish
+        obs = real(log(Zf(grid(:,1))));
+        model = real(log(md_mean+ld_mean));
+        
+        n = length(obs);
+        
+        o=obs;
+        p=model;
+        
+        omean=repmat(nanmean(o),n,1);
+        pmean=repmat(nanmean(p),n,1);
+        osig=nanstd(o);
+        psig=nanstd(p);
+        
+        % corr coeff
+        num=nansum((o-omean).*(p-pmean));
+        d1=nansum((o-omean).^2);
+        d2=nansum((p-pmean).^2);
+        den=sqrt(d1*d2);
+        fskill(1,R) = num/den;
+        
+        % root mean square error
+        num=nansum((p-o).^2);
+        fskill(2,R) = sqrt(num/n);
+        
+        % average error
+        fskill(3,R) = nansum(p-o) / n;
+        
+        % average absolute error
+        fskill(4,R) = nansum(abs(p-o)) / n;
+        
+        % modeling efficiency
+        num1=nansum((o-omean).^2);
+        num2=nansum((p-o).^2);
+        fskill(5,R) = (num1-num2)/num1;
+        
+        % Taylor normalized std
+        fskill(6,R) = psig/osig;
+        
+        % total root mean square difference
+        q1=nansum((o-p).^2);
+        fskill(7,R) = sqrt(q1/n);
+        
+    end %R
+    
+    %% Plot results
+    
+    % Bar graphs
+    figure(4)
+    subplot(2,2,1)
+    bar(iskill(1,:),'k')
+    ylabel('Correlation coefficient')
+    ylim([-0.1 1])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    stamp(cfile2)
+    title(['Inverts skill with BE=' num2str(beff(i)) ' and CC=' num2str(car)]...
+        ,'HorizontalAlignment','left')
+    
+    subplot(2,2,2)
+    bar(iskill(2,:),'k')
+    ylabel('Root mean square error')
+    set(gca,'XTick',1:ndp,'XTickLabel',[]);
+    %ylim([0 1])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    
+    subplot(2,2,3)
+    bar(iskill(3,:),'k')
+    ylabel('Average error')
+    %ylim([-0.1 0.4])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    
+    subplot(2,2,4)
+    bar(iskill(5,:),'k')
+    ylabel('Modeling efficiency')
+    %ylim([0 0.5])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    print('-dpng',[ppath '_Spinup_skill_Wei_inverts'])
+    
+    %%
+    figure(5)
+    subplot(2,2,1)
+    bar(fskill(1,:),'k')
+    ylabel('Correlation coefficient')
+    ylim([-0.1 1])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    stamp(cfile2)
+    title(['Fish skill with BE=' num2str(beff(i)) ' and RE=' num2str(reff(R))]...
+        ,'HorizontalAlignment','left')
+    
+    subplot(2,2,2)
+    bar(fskill(2,:),'k')
+    ylabel('Root mean square error')
+    set(gca,'XTick',1:ndp,'XTickLabel',[]);
+    %ylim([0 2.5])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    
+    subplot(2,2,3)
+    bar(fskill(3,:),'k')
+    ylabel('Average error')
+    %ylim([-1 1])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    
+    subplot(2,2,4)
+    bar(fskill(5,:),'k')
+    ylabel('Modeling efficiency')
+    %ylim([-1 1])
+    xlim([0 length(RE)+1])
+    set(gca,'XTick',1:length(RE),'XTickLabel',reff);
+    print('-dpng',[ppath '_Spinup_skill_Wei_fish'])
+    
+    %% Taylor diagrams
+    % INVERTS
+    [rmsd,it]=sort(iskill(7,:),'descend');
+    theta=acos(iskill(1,it));    %corr coeff
+    rho=iskill(6,it);            %stdev
+    simtex=RE(it);
+    simtex{length(RE)+1}='obs';
+    
+    % % Just those <2
+    % id = find(rho<2);
+    % theta = theta(id);
+    % rho = rho(id);
+    % simtex=sims(id);
+    % simtex{length(id)+1}='obs';
+    
+    tr=0;
+    rr=1;
+    figure(6)
+    h0=polar(0,1.5,'.'); hold on;
+    set(h0,'color','w');
+    for s=1:length(RE)
+        h=polar(theta(s),rho(s),'.'); hold on;
+        set(h,'color',cm{s},'MarkerSize',25);
+        %     set(h,'MarkerSize',25);
+    end
+    h2=polar(tr,rr,'k*');
+    set(h2,'MarkerSize',10);
+    axis([0 1.5 0 1.5])
+    title('Inverts Taylor diagram')
+    legend([' ' simtex])
+    legend('location','northeast')
+    print('-dpng',[ppath '_Spinup_global_invert_Taylor_Wei'])
+    
+    %% FISH
+    
+    [rmsd,it]=sort(fskill(7,:),'descend');
+    theta=acos(fskill(1,it));    %corr coeff
+    rho=fskill(6,it);            %stdev
+    simtex=RE(it);
+    simtex{length(RE)+1}='obs';
+    
+    % Just those <1.5
+    % id = find(rho<1.5);
+    % theta = theta(id);
+    % rho = rho(id);
+    % simtex=sims(id);
+    % simtex{length(id)+1}='obs';
+    
+    tr=0;
+    rr=1;
+    figure(7)
+    h0=polar(0,1.5,'.'); hold on;
+    set(h0,'color','w');
+    for s=1:length(RE)
+        h=polar(theta(s),rho(s),'.'); hold on;
+        set(h,'color',cm{s},'MarkerSize',25);
+        %     set(h,'MarkerSize',25);
+    end
+    h2=polar(tr,rr,'k*');
+    set(h2,'MarkerSize',10);
+    axis([0 1.5 0 1.5])
+    title('Fish Taylor diagram')
+    legend([' ' simtex])
+    legend('location','northeast')
+    print('-dpng',[ppath '_Spinup_global_fish_Taylor_Wei'])
+    
+    %% Best
+    one=[1;5];
+    zer=[2;3;4];
+    for z=1:5
+        Z1=sum(z==one);
+        Z2=sum(z==zer);
+        if (Z1>0)
+            ibest{z,1}=car(find(min(abs(1-(iskill(z,:))))==abs(1-(iskill(z,:)))));
+            fbest{z,1}=car(find(min(abs(1-(fskill(z,:))))==abs(1-(fskill(z,:)))));
+        elseif (Z2>0)
+            ibest{z,1}=car(find(min(abs(0-(iskill(z,:))))==abs(0-(iskill(z,:)))));
+            fbest{z,1}=car(find(min(abs(0-(fskill(z,:))))==abs(0-(fskill(z,:)))));
         end
-        h2=polar(tr,rr,'k*');
-        set(h2,'MarkerSize',10);
-        axis([0 1.5 0 1.5])
-        title('Inverts Taylor diagram')
-        legend([' ' simtex])
-        legend('location','northeast')
-        print('-dpng',[ppath '_Spinup_global_invert_Taylor_Wei'])
-        
-        %% FISH
-        
-        [rmsd,it]=sort(fskill(7,:),'descend');
-        theta=acos(fskill(1,it));    %corr coeff
-        rho=fskill(6,it);            %stdev
-        simtex=CarCap(it);
-        simtex{ndp+1}='obs';
-        
-        % Just those <1.5
-        % id = find(rho<1.5);
-        % theta = theta(id);
-        % rho = rho(id);
-        % simtex=sims(id);
-        % simtex{length(id)+1}='obs';
-        
-        tr=0;
-        rr=1;
-        figure(7)
-        h0=polar(0,1.5,'.'); hold on;
-        set(h0,'color','w');
-        for s=1:ndp
-            h=polar(theta(s),rho(s),'.'); hold on;
-            set(h,'color',cm{s},'MarkerSize',25);
-            %     set(h,'MarkerSize',25);
-        end
-        h2=polar(tr,rr,'k*');
-        set(h2,'MarkerSize',10);
-        axis([0 1.5 0 1.5])
-        title('Fish Taylor diagram')
-        legend([' ' simtex])
-        legend('location','northeast')
-        print('-dpng',[ppath '_Spinup_global_fish_Taylor_Wei'])
-        
-        %% Best
-        one=[1;5];
-        zer=[2;3;4];
-        for z=1:5
-            Z1=sum(z==one);
-            Z2=sum(z==zer);
-            if (Z1>0)
-                ibest{z,1}=car(find(min(abs(1-(iskill(z,:))))==abs(1-(iskill(z,:)))));
-                fbest{z,1}=car(find(min(abs(1-(fskill(z,:))))==abs(1-(fskill(z,:)))));
-            elseif (Z2>0)
-                ibest{z,1}=car(find(min(abs(0-(iskill(z,:))))==abs(0-(iskill(z,:)))));
-                fbest{z,1}=car(find(min(abs(0-(fskill(z,:))))==abs(0-(fskill(z,:)))));
-            end
-        end
-        
-        Ti=table(metrics,ibest);
-        Tf=table(metrics,fbest);
-        
-        save([datap 'Bent_CC_tests/' cfile2 '_global_skill_Wei.mat'],...
-            'invert','fish','metrics','iskill','fskill','Ti','Tf');
-        
-        r(R,:,i) = iskill(1,:);
-        RMSE(R,:,i) = iskill(2,:);
-        AE(R,:,i) = iskill(3,:);
-        AAE(R,:,i) = iskill(4,:);
-        MEF(R,:,i) = iskill(5,:);
-        NSTD(R,:,i) = iskill(6,:);
-        RMSD(R,:,i) = iskill(7,:);
-        
-    end %RE
+    end
+    
+    Ti=table(metrics,ibest);
+    Tf=table(metrics,fbest);
+    
+    save([datap 'Bent_CC_tests/' cfile2 '_global_skill_Wei.mat'],...
+        'invert','fish','metrics','iskill','fskill','Ti','Tf');
+    
+    r(R,:,i) = iskill(1,:);
+    RMSE(R,:,i) = iskill(2,:);
+    AE(R,:,i) = iskill(3,:);
+    AAE(R,:,i) = iskill(4,:);
+    MEF(R,:,i) = iskill(5,:);
+    NSTD(R,:,i) = iskill(6,:);
+    RMSD(R,:,i) = iskill(7,:);
+    
+    
 end %BE
 
 %% Find best
@@ -529,7 +484,7 @@ I=table(metrics,value,Ibest(:,1),Ibest(:,2),Ibest(:,3),'VariableNames',...
     {'Metric','Value','BentEff','RepEff','CarCap'});
 
 %%
-cfile3 = ['Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit' num2str(fcrit) ...
+cfile3 = ['Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
     '_' pref '_nmort'  nmort '_BentCCtests'];
 save([datap 'Bent_CC_tests/' cfile3 '_global_iskill_Wei.mat'],'r',...
     'RMSE','AE','AAE','MEF','beff','reff','car','I');

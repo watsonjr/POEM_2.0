@@ -12,11 +12,11 @@ global MFsel LPsel LDsel efn cfn mfn
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Cmax-metab & enc fns to use
-cfn = 4; 
-efn = 4; 
+cfn = 2; 
+efn = 1; 
 %mfn = 4;
 %! Set fishing rate
-frate = 0;
+frate = 0.4;
 dfrate = frate/365.0;
 %0=no fishing; 1=fishing
 if (frate>0)
@@ -79,18 +79,18 @@ elseif (pdc == 2)
     coup = 'PDc';
 end
 tcfn = num2str(cfn);
-tmfn = num2str(mfn);
+%tmfn = num2str(mfn);
 tefn = num2str(efn);
 if (harv==1)
     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
     %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-    %simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    %simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
 else
     %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
     %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-    simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-    %simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    %simname = [coup,'_TrefO_cmax',tcfn,'_metab',tmfn,'_enc',tefn,'_MFeqMP_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
 end
 if (~isdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname]))
     mkdir(['/Volumes/GFDL/NC/Matlab_big_size/',simname])
@@ -159,6 +159,10 @@ S_Lrg_d_gamma = zeros(NX,DAYS);
 S_Med_f_rep = zeros(NX,DAYS);
 S_Lrg_p_rep = zeros(NX,DAYS);
 S_Lrg_d_rep = zeros(NX,DAYS);
+
+S_Med_f_fish = zeros(NX,DAYS);
+S_Lrg_p_fish = zeros(NX,DAYS);
+S_Lrg_d_fish = zeros(NX,DAYS);
 
 S_Sml_f_die = zeros(NX,DAYS);
 S_Sml_p_die = zeros(NX,DAYS);
@@ -259,6 +263,7 @@ vidbioMF    = netcdf.defVar(ncidMF,'biomass','double',[xy_dim,time_dim]);
 % vidrepMF    = netcdf.defVar(ncidMF,'rep','double',[xy_dim,time_dim]);
 % viddieMF    = netcdf.defVar(ncidMF,'die','double',[xy_dim,time_dim]);
 % vidclevMF   = netcdf.defVar(ncidMF,'clev','double',[xy_dim,time_dim]);
+vidfishMF   = netcdf.defVar(ncidMF,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidMF);
 
 xy_dim      = netcdf.defDim(ncidMP,'nid',NX);
@@ -296,6 +301,7 @@ vidbioLP    = netcdf.defVar(ncidLP,'biomass','double',[xy_dim,time_dim]);
 % vidrepLP    = netcdf.defVar(ncidLP,'rep','double',[xy_dim,time_dim]);
 % viddieLP    = netcdf.defVar(ncidLP,'die','double',[xy_dim,time_dim]);
 % vidclevLP   = netcdf.defVar(ncidLP,'clev','double',[xy_dim,time_dim]);
+vidfishLP   = netcdf.defVar(ncidLP,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidLP);
 
 xy_dim      = netcdf.defDim(ncidLD,'nid',NX);
@@ -309,6 +315,7 @@ vidbioLD    = netcdf.defVar(ncidLD,'biomass','double',[xy_dim,time_dim]);
 % vidrepLD    = netcdf.defVar(ncidLD,'rep','double',[xy_dim,time_dim]);
 % viddieLD    = netcdf.defVar(ncidLD,'die','double',[xy_dim,time_dim]);
 % vidclevLD   = netcdf.defVar(ncidLD,'clev','double',[xy_dim,time_dim]);
+vidfishLD   = netcdf.defVar(ncidLD,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidLD);
 
 xy_dim     = netcdf.defDim(ncidB,'nid',NX);
@@ -409,6 +416,10 @@ for YR = 1:YEARS % years
 %         S_Med_d_clev(:,DY) = Med_d.clev;
 %         S_Lrg_p_clev(:,DY) = Lrg_p.clev;
 %         S_Lrg_d_clev(:,DY) = Lrg_d.clev;
+
+        S_Med_f_fish(:,DY) = Med_f.caught;
+        S_Lrg_p_fish(:,DY) = Lrg_p.caught;
+        S_Lrg_d_fish(:,DY) = Lrg_d.caught;
         
     end %Days
   
@@ -499,6 +510,10 @@ for YR = 1:YEARS % years
 % 			netcdf.putVar(ncidLP,vidrepLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rep(:,a(i):b(i)),2));
 % 			netcdf.putVar(ncidLD,vidrepLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rep(:,a(i):b(i)),2));
 % 			
+            netcdf.putVar(ncidMF,vidfishMF,[0 MNT-1],[NX 1],mean(S_Med_f_fish(:,a(i):b(i)),2));
+			netcdf.putVar(ncidLP,vidfishLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_fish(:,a(i):b(i)),2));
+			netcdf.putVar(ncidLD,vidfishLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_fish(:,a(i):b(i)),2));
+
 		end %Monthly mean
 
 end %Years
