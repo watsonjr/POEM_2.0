@@ -4,14 +4,20 @@ param.tEnd = 100;
 %
 % Resources:
 %
+%Indices
 param.ixR = [1 2 3];
+%Mean weight
 param.wc(param.ixR) = [0.00001 0.001 0.1];
+%Growth rate
 param.r = 10*[10 1 0.1];
+%Carrying cap
 param.K = 1*[1 1 1];
 %
 % Species:
 %
+%Num of spp
 param.nSpecies = 1;
+%Location of those indices
 % large pelagics
 param.ix1(1) = 4;
 param.ix2(1) = 6;

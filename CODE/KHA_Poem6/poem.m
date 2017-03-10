@@ -23,7 +23,7 @@ result.R = y(:,param.ixR);
 result.B = y(:,param.ixFish);
 result.t = t;
 
-result.Y = result.B .* (ones(length(t),1)*param.F');
+result.Y = result.B .* (ones(length(t),1) * param.F');
 
 [result.f, result.mortpred, result.Eavail] = calcEncounter(y(end,:)', param);
 result.mort = result.mortpred(param.ixFish)' + param.mort0 + param.F;
