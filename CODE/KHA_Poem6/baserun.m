@@ -4,11 +4,7 @@
 
 baseparameters
 
-%Fishing rate
-param.F = 0.0 * [0 1 10]';
-%Length of run (yrs)
-param.tEnd = 500;
-%Result
+param.F = 0.0*[0 0 0 0 0 0 0.1 1]';
+param.tEnd = 200;
 result = poem(param);
-%Plot
 plotPoem(param, result)
