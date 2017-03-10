@@ -15,7 +15,7 @@ RE = {'1000','0500','0100','0050','0010'};
 reff = [1.0,0.5,0.1,0.05,0.01];
 % nmrt = [0,2:5];
 % Mort = {'None','Hartvig','mizer','J&C','P&W'};
-nmort = '0';
+nmort = '2';
 fcrit = 40;
 kad = '05';
 pref = 'D100';
@@ -44,14 +44,14 @@ for r = 1:length(RE)
     rfrac = RE{r};
     for i=1:length(frate)
         F = frate{i};
-        dp = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+        dp = ['PonlyDc_TrefO_cmax-metab2_enc2_MFeqMP_fcrit' num2str(fcrit) ...
             '_nmort' nmort '_K' kad '_BE' BE '_CC' CC '_RE' rfrac '_LP_fish' F ...
             '_Msel01'];
         dpath = [datap char(dp) '/'];
         %fpath = [figp char(dp) '/'];
         fpath = figp;
         cfile = char(dp);
-        cfile2 = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+        cfile2 = ['PonlyDc_TrefO_cmax-metab2_enc2_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac ...
             '_Msel01_P_fishing_catch'];
         
@@ -148,7 +148,7 @@ for r = 1:length(RE)
     %
     %     end
 end
-cfile3 = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+cfile3 = ['PonlyDc_TrefO_cmax-metab2_enc2_MFeqMP_fcrit' num2str(fcrit) ...
     '_' pref '_nmort' nmort '_BE' BE '_CC' CC ...
     '_Msel01_P_fishing_catch'];
 save([datap 'Fishing/' cfile3],'MPcatch','LPcatch','Pcatch');
@@ -156,7 +156,7 @@ save([datap 'Fishing/' cfile3],'MPcatch','LPcatch','Pcatch');
 %%
 for r = 1:length(RE)
     rfrac = RE{r};
-    cfile2 = ['PonlyDc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit' num2str(fcrit) ...
+    cfile2 = ['PonlyDc_TrefO_cmax-metab2_enc2_MFeqMP_fcrit' num2str(fcrit) ...
             '_' pref '_nmort' nmort '_BE' BE '_CC' CC '_RE' rfrac ...
             '_Msel01_P_fishing_catch'];
     close all

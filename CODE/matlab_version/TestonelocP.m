@@ -21,10 +21,10 @@ RE = [1.0,0.5,0.1,0.05,0.01];
 
 
 % for E = 1:length(encs)
-    efn = 4;%encs(E);
+    efn = 2;%encs(E);
     
 % for C = 1:length(cmaxs)
-    cfn = 4;%cmaxs(C);
+    cfn = 2;%cmaxs(C);
     
 %     for M = 1:length(mets)
 %         mfn = mets(M);
