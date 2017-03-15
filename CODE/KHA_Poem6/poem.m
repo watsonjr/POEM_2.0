@@ -20,14 +20,21 @@ end
 %
 % Construct output:
 %
+%Diff eq result
 result.y = y;
+%Resources
 result.R = y(:,param.ixR);
+%Fish biomass
 result.B = y(:,param.ixFish);
+%Time
 result.t = t;
 
+%Fishing yield
 result.Y = result.B .* (ones(length(t),1)*param.F');
-
+%Consumption
 [result.f, result.mortpred, result.Eavail] = calcEncounter(y(end,:)', param);
+%Mortality
 result.mort = result.mortpred(param.ixFish)' + param.mort0 + param.F;
+%Growth
 [result.v  result.nu] = calcNu(result.Eavail, result.mort, param);
 

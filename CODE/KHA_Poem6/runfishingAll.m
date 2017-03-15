@@ -11,7 +11,7 @@ B = NaN*ones(length(F),8);
 Y = NaN*ones(length(F),1);
 for i = 1:length(F)
     %Fish F
-    param.F = [0.1*F(i) F(i)  0 0 0               0 0 0]';
+%     param.F = [0.1*F(i) F(i)  0 0 0               0 0 0]';
 %     %Fish P
 %     param.F = [0 0            0 0.1*F(i) F(i)     0 0 0]';
 %     %Fish D
@@ -19,7 +19,7 @@ for i = 1:length(F)
 %     %Fish only large fishes
 %     param.F = [0 0            0 0.1*F(i) F(i)     0 0.1*F(i) F(i)]';
 %     %Fish all adults
-%     param.F = [0.1*F(i) F(i)  0 0.1*F(i) F(i)     0 0.1*F(i) F(i)]';
+    param.F = [0.1*F(i) F(i)  0 0.1*F(i) F(i)     0 0.1*F(i) F(i)]';
     result = poem(param, result);
     results(i) = result;
     Y(i) = sum(result.Y(end,:));

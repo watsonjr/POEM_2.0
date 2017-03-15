@@ -1,23 +1,24 @@
 %
-% Sweep over benthic production to test carrying capacity
+% Sweep over 2 sizes smaller preference
 %
 baserun
 result0 = result;
 
-factor = linspace(2.0,0.1,20);
+factor = linspace(0.05,1,20);
 param.tEnd = 50;
 
 %%
 B = NaN*ones(length(factor),13);
 for i = 1:length(factor)
-    param.K(3:5) = factor(i);
+    Sm = factor(i);
+    set_theta
     result = poem(param, result);
     results(i) = result;
     B(i,:) = result.y(end,:);
 end
 %%
 
-save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/bentrun.mat'],'results','factor','B')
+save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/smallrun.mat'],'results','factor','B')
 
 %Plot
 ix = cell([3,1]);
@@ -40,8 +41,8 @@ for i = 1:3
     hold on
 end
 legend('MF','LP','LD')
-xlabel('Benthic K')
+xlabel('M Foraging on 2 sizes smaller (MZ & SB)')
 ylabel('log10 Biomass')
-print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/bentrun_' simname])
+print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/smallrun_' simname])
 
 
