@@ -1,16 +1,16 @@
 %
-% Sweep over 2 sizes smaller preference
+% Sweep over juvenile foraging reduction
 %
 baserun
 result0 = result;
 
-factor = linspace(1,0,20);
+factor = linspace(1,0.1,10);
 param.tEnd = 50;
 
 %%
 B = NaN*ones(length(factor),13);
 for i = 1:length(factor)
-    Sm = factor(i);
+    J = factor(i);
     set_theta
     result = poem(param, result);
     results(i) = result;
@@ -18,7 +18,7 @@ for i = 1:length(factor)
 end
 %%
 
-save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/smallrun.mat'],'results','factor','B')
+save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/juverun.mat'],'results','factor','B')
 
 %Plot
 ix = cell([3,1]);
@@ -41,8 +41,8 @@ for i = 1:3
     hold on
 end
 legend('MF','LP','LD')
-xlabel('M Foraging on 2 sizes smaller (MZ & SB)')
+xlabel('Juvenile foraging')
 ylabel('log10 Biomass')
-print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/smallrun_' simname])
+print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/juverun_' simname])
 
 

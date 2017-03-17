@@ -2,7 +2,7 @@
 % Interactions
 %
 J = 0.5;   % Juvenile foraging reduction
-D = 0.5;   % Demersal foraging on pelagics
+%D = 0.5;   % Demersal foraging on pelagics
 Sm = 0.25; % 2 size classes down
 param.theta = ...% Z   Benthos    F      Pelag     Demersal
               ...%MZ LZ   SB MB LB   SF MF  SP MP LP  SD MD LD
