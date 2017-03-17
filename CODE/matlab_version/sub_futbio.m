@@ -4,11 +4,11 @@ function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,ENVR] = sub_futbio(ID,DY,COBALT,ENVR,Sf,S
 
 global DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
-global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit 
+global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
 global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel MPsel LPsel LDsel
+global MFsel MPsel MDsel LPsel LDsel
 
 %%% COBALT information
 ENVR = get_COBALT(COBALT,ID,DY);
@@ -19,7 +19,7 @@ ENVR.dZm = sub_neg(ENVR.dZm);
 ENVR.dZl = sub_neg(ENVR.dZl);
 
 % Update benthic biomass with new detritus avail at that time step
-[BENT.mass BENT.pred] = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
+[BENT.mass,BENT.pred] = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
 BENT.mass = sub_check(BENT.mass);
 
 % Pelagic-demersal coupling
@@ -34,6 +34,9 @@ elseif (pdc == 1)
 elseif (pdc == 2)
     Lp.td = sub_tdif_pel(ENVR.H,Mf.bio,Mp.bio,Md.bio);
     Ld.td = sub_tdif_dem(ENVR.H,Mf.bio,Mp.bio,Md.bio,BENT.mass);
+else
+    Lp.td = 1.0;
+    Ld.td = 1.0;
 end
 
 % Metabolism
@@ -175,8 +178,8 @@ Sf.gamma = sub_gamma(K_l,Z_s,Sf.nu,Sf.die,Sf.bio,Sf.nmort,0,0);
 Sp.gamma = sub_gamma(K_l,Z_s,Sp.nu,Sp.die,Sp.bio,Sp.nmort,0,0);
 Sd.gamma = sub_gamma(K_l,Z_s,Sd.nu,Sd.die,Sd.bio,Sd.nmort,0,0);
 Mf.gamma = sub_gamma(K_a,Z_m,Mf.nu,Mf.die,Mf.bio,Mf.nmort,dfrate,MFsel);
-Mp.gamma = sub_gamma(K_j,Z_m,Mp.nu,Mp.die,Mp.bio,Mp.nmort,0,MPsel);
-Md.gamma = sub_gamma(K_j,Z_m,Md.nu,Md.die,Md.bio,Md.nmort,0,MDsel);
+Mp.gamma = sub_gamma(K_j,Z_m,Mp.nu,Mp.die,Mp.bio,Mp.nmort,dfrate,MPsel);
+Md.gamma = sub_gamma(K_j,Z_m,Md.nu,Md.die,Md.bio,Md.nmort,dfrate,MDsel);
 Lp.gamma = sub_gamma(K_a,Z_l,Lp.nu,Lp.die,Lp.bio,Lp.nmort,dfrate,LPsel);
 Ld.gamma = sub_gamma(K_a,Z_l,Ld.nu,Ld.die,Ld.bio,Ld.nmort,dfrate,LDsel);
 
@@ -210,7 +213,7 @@ Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmor
 % Fishing by rate
 [Mf.bio, Mf.caught] = sub_fishing_rate(Mf.bio,dfrate,MFsel);
 [Mp.bio, Mp.caught] = sub_fishing_rate(Mp.bio,dfrate,MPsel);
-%[Md.bio, Md.caught] = sub_fishing_rate(Md.bio,dfrate,1);
+[Md.bio, Md.caught] = sub_fishing_rate(Md.bio,dfrate,MDsel);
 [Lp.bio, Lp.caught] = sub_fishing_rate(Lp.bio,dfrate,LPsel);
 [Ld.bio, Ld.caught] = sub_fishing_rate(Ld.bio,dfrate,LDsel);
 

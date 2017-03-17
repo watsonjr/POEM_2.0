@@ -2,25 +2,26 @@
 %============= PARAMETER TYPE ==========%
 function make_parameters()
     global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl 
-    global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit 
+    global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
     global bent_eff rfrac CC
     global Tu_s Tu_m Tu_l Nat_mrt MORT
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE 
-    global MFsel MPsel LPsel LDsel
+    global MFsel MPsel MDsel LPsel LDsel
     
     %! Integration parameters
     DT = 1.0; % time step
     
     %! Which fishes harvested
-    MFsel = 0;
     MPsel = 0.1;
+    MDsel = 0.1;
+    MFsel = 1;
     LPsel = 1;
-    LDsel = 0;
+    LDsel = 1;
 
     %! Benthic-pelagic coupling cutoff (depth, m)
     PI_be_cutoff = 200;
-    % 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled
+    % 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled;
     pdc = 1;
 
     %!Individual Mass (g)
@@ -42,9 +43,9 @@ function make_parameters()
     L_zl = 10^((log10(2)+log10(20))/2);
 
     %! Ratio of initial and final body sizes per size-class
-    Z_s = M_s./M_m;
-    Z_m = M_m./M_l;
-    Z_l = 0.0;
+    Z_s = 0.001/0.5;
+    Z_m = 0.5/250;
+    Z_l = 250/125000;
 
     %%%! Assimilation efficiency lambda (constant across everything)
     Lambda = 0.7;
@@ -57,14 +58,16 @@ function make_parameters()
     K_a = 0.5;
 
     %%%! Metabolism constants (activity and basal)
-    fcrit = 0.40;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
+    fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
+    h = 20;         % coeff on Cmax
+    gam = 70;       % coeff on search area
     
     %%%! Transfer efficiency of detritus to benthic prey
     bent_eff = 0.05;
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    %rfrac = 0.5;
+    rfrac = 0.1;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
@@ -72,9 +75,9 @@ function make_parameters()
     Tu_l = 1.0; %0.1
 
     %%%! Background mortality
-    Nat_mrt = 0.0; 
+    Nat_mrt = 0.1/365; 
     %0=none, 1=constant, 2=Hartvig T-dep, 3=mizer T-dep, 4=J&C T-dep, 5=P&W T-dep
-    MORT = 3;
+    MORT = 1;
 
     %%%! Diet Preference Phi
     % The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
@@ -89,19 +92,26 @@ function make_parameters()
     %medium detritivore eats detritus
     %large piscivore eats medium forage fish, medium piscivore, medium detritivore
     %large detritivore eats detritus, medium forage fish, medium piscivore, medium detrivore
+    Sm = 0.25;  %Feeding 2 sizes down
+    J = 0.5;    %Juvenile reduction
+    D = 0.5;    %Demersal in pelagic reduction
 
-    MF_phi_MZ = 0.1;
+    MF_phi_MZ = Sm;
     MF_phi_LZ = 1.0;
     MF_phi_S  = 1.0;
-    MP_phi_MZ = 0.1;
-    MP_phi_LZ = 1.0;
-    MP_phi_S  = 1.0;
+    
+    MP_phi_MZ = Sm*J;
+    MP_phi_LZ = J;
+    MP_phi_S  = J;
+    
     MD_phi_BE = 1.0;
+    
     LP_phi_MF = 1.0;
     LP_phi_MP = 1.0;
-    LP_phi_MD = 1.0;
-    LD_phi_MF = 1.0;
-    LD_phi_MP = 1.0;
+    LP_phi_MD = 0.0;
+    
+    LD_phi_MF = D;
+    LD_phi_MP = D;
     LD_phi_MD = 1.0;
     LD_phi_BE = 1.0;
     
