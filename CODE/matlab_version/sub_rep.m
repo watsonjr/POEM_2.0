@@ -28,7 +28,7 @@ global NX
         
         %add what would be growth to next size up as repro
         rep = rep + gamma;
-        gamma = 0.0;
+        gamma = zeros(NX,1);
         
         id4 = (nu > 0.0);
         %nu is now split into used for repro (nu) and stored (egg)

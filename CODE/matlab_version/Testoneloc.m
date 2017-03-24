@@ -3,36 +3,32 @@ function Testoneloc()
 
 global DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
-global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit
+global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
 global bent_eff rfrac CC
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel efn cfn
+global MFsel MPsel MDsel LPsel LDsel efn cfn
 
 %fracm = 0.1:0.1:0.5;
 Fmort = [0.0:0.1:1.0]; %[1.2:0.2:2.0]; %
 RE = [1.0,0.5,0.1,0.05,0.01];
 %BE = 0.05:0.05:0.1;
 %CarCap = 0.5:0.5:2.0;
-encs = 1:4;
-cmaxs = [0,2:4];
-%mets = 2:4;
+encs = linspace(10,90,9);
+%cmaxs = linspace(10,100,10);
 
 
-% for E = 1:length(encs)
-    efn = 4;%encs(E);
+for E = 1:length(encs)
+    gam = encs(E);
     
-% for C = 1:length(cmaxs)
-    cfn = 4;%cmaxs(C);
-    
-%     for M = 1:length(mets)
-%         mfn = mets(M);
+%   for C = 1:length(cmaxs)
+%       h = cmaxs(C);
         
-        for R = 4:length(RE)
+        for R = 3;%1:length(RE)
             rfrac = RE(R);
             
-            for F = 1:length(Fmort)
+            for F = 1%:length(Fmort)
                 %! Set fishing rate
                 frate = Fmort(F);
                 dfrate = Fmort(F)/365.0;
@@ -61,7 +57,9 @@ cmaxs = [0,2:4];
                 
                 %! Create a directory for output
                 tfcrit = num2str(int64(100*fcrit));
-                tld = num2str(1000+int64(100*LD_phi_MF));
+                td = num2str(1000+int64(100*LD_phi_MF));
+                tj = num2str(1000+int64(100*MP_phi_S));
+                tsm = num2str(1000+int64(100*MF_phi_MZ));
                 tbe = num2str(100+int64(100*bent_eff));
                 tmort = num2str(MORT);
                 tcc = num2str(1000+int64(100*CC));
@@ -97,22 +95,18 @@ cmaxs = [0,2:4];
                 elseif (pdc == 2)
                     coup = 'PDc';
                 end
-                tcfn = num2str(cfn);
-                tefn = num2str(efn);
+                tcfn = num2str(h);
+                tefn = num2str(round(gam));
                 if (harv==1)
-                    %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                    simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+                    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
                 else
-                    %simname = [coup,'_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                    %simname = [coup,'_TrefO_Hold_cmax-metab_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                    simname = [coup,'_TrefO_cmax-metab',tcfn,'_enc',tefn,'_MFeqMP_fcrit',tfcrit,'_D',tld(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+                    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
                 end
-                if (~isdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname]))
-                    mkdir(['/Volumes/GFDL/CSV/Matlab_big_size/',simname])
+                if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
+                    mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
                 end
-%                 if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname]))
-%                     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/',simname])
+%                 if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
+%                     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
 %                 end
                 
                 for L = 1:length(ids);
@@ -199,20 +193,19 @@ cmaxs = [0,2:4];
                     end %Years
                     
                     %%% Save
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_f.csv'],S_Sml_f)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_p.csv'],S_Sml_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Sml_d.csv'],S_Sml_d)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_f.csv'],S_Med_f)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_p.csv'],S_Med_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Med_d.csv'],S_Med_d)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Lrg_p.csv'],S_Lrg_p)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Lrg_d.csv'],S_Lrg_d)
-                    csvwrite(['/Volumes/GFDL/CSV/Matlab_big_size/' simname '/Spinup_' loc '_Cobalt.csv'],S_Cobalt)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Sml_f.csv'],S_Sml_f)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Sml_p.csv'],S_Sml_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Sml_d.csv'],S_Sml_d)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Med_f.csv'],S_Med_f)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Med_p.csv'],S_Med_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Med_d.csv'],S_Med_d)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Lrg_p.csv'],S_Lrg_p)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Lrg_d.csv'],S_Lrg_d)
+                    csvwrite(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_' loc '_Cobalt.csv'],S_Cobalt)
                     
                 end %Locations
             end %Fmort
         end %RE
-    % end %met
-% end %cmax
+    end %cmax
 % end %enc
 end

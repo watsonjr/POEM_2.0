@@ -5,9 +5,8 @@ close all
 
 %%%%!! EXPERIMENTS
 testoneloc = false;
-testonelocF = false;
-testonelocP = true;
-testonelocD = false;
+testlocs = true;
+testonelocP = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
@@ -23,19 +22,14 @@ if testoneloc
     Testoneloc()
     toc
 end
-if testonelocF
+if testlocs
     tic
-    TestonelocF()
+    Testlocs()
     toc
 end
 if testonelocP
     tic
     TestonelocP()
-    toc
-end
-if testonelocD
-    tic
-    TestonelocD()
     toc
 end
 if spinup_pristine

@@ -4,13 +4,13 @@ function nmort = sub_nmort(Tp,Tb,tpel,wgt)
     %Tb: bottom temp
     %tpel: frac pelagic time
     
-    global MORT Nat_mrt
+    global MORT Nat_mrt NX
     
     if (MORT==0) % None
         nmort = 0.0;
     end
     if (MORT==1) % Constant
-        nmort = Nat_mrt;
+        nmort = Nat_mrt * ones(NX,1);
     end
     if (MORT==2) % Hartvig Temperature-dependent mortality
         temp = (Tp.*tpel) + (Tb.*(1.0-tpel));

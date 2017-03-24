@@ -3,7 +3,7 @@
 function make_parameters()
     global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl 
     global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
-    global bent_eff rfrac CC
+    global bent_eff rfrac CC D J Sm
     global Tu_s Tu_m Tu_l Nat_mrt MORT
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE 
@@ -92,10 +92,7 @@ function make_parameters()
     %medium detritivore eats detritus
     %large piscivore eats medium forage fish, medium piscivore, medium detritivore
     %large detritivore eats detritus, medium forage fish, medium piscivore, medium detrivore
-    Sm = 0.25;  %Feeding 2 sizes down
-    J = 0.5;    %Juvenile reduction
-    D = 0.5;    %Demersal in pelagic reduction
-
+    
     MF_phi_MZ = Sm;
     MF_phi_LZ = 1.0;
     MF_phi_S  = 1.0;
