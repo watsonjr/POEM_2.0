@@ -39,9 +39,11 @@ Zl = mean(ENVR.Zl,2);
 dZm = mean(ENVR.dZm,2);
 dZl = mean(ENVR.dZl,2);
 
-%%
 result0=result;
+dirname
 clear result
+%%
+
 load([dpath,simname,'/baserun_log_S1.mat'],'result')
 resultS=result;
 clear result
@@ -56,15 +58,21 @@ RG = mean(resultG.R(lyr,:));
 Rs = R./RS;
 Rg = R./RG;
 
+%%
 figure
-subplot(2,2,1)
+%subplot(2,2,1)
 bar([R;RS;RG]')
+set(gca,'XTickLabel',{'Zm','Zl','Bs','Bm','Bl'})
+ylabel('mean biomass in last year (g/m^2)')
+xlabel('resource')
+legend('Ken0D','S1','GB')
+print('-dpng',[fpath 'Ken0D_1D_comp_resources.png'])
 
+%%
 figure
 subplot(2,2,1)
 bar(log10([Rs;Rg]'))
 
-%%
 figure
 subplot(2,2,1)
 plot(DY,ENVR.Zm,'LineWidth',1); hold on
