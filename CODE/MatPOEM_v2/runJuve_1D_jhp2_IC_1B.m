@@ -36,26 +36,26 @@ for L = 1:length(ids);
     NX = length(ID);
     ENVR = sub_init_env(ID);
     %! Length of run (years)
-%     param.tEnd = 100;
-%     t=0;
-%     for YR = 1:param.tEnd % years
-%         for DAY = 1:365
-%             t=t+1;
-%             ENVR = get_COBALT(COBALT,GRD,ID,DAY);
-%             if (YR==1 && DAY==1)
-%                 result = poem_1D_jhp2_1B(param,ENVR,t);
-%             else
-%                 result = poem_1D_jhp2_1B(param,ENVR,t,result);
-%             end
-%         end
-%     end
-%     %! Save
-%     save([dpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc '.mat'],'result')
-%     %! Plot
-%     plotPoem_1D_1B(param, result)
-%     print('-dpng',[fpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc])
-%     result0.y = result.y(end,:);
-%     clear result
+    param.tEnd = 100;
+    t=0;
+    for YR = 1:param.tEnd % years
+        for DAY = 1:365
+            t=t+1;
+            ENVR = get_COBALT(COBALT,GRD,ID,DAY);
+            if (YR==1 && DAY==1)
+                result = poem_1D_jhp2_1B(param,ENVR,t);
+            else
+                result = poem_1D_jhp2_1B(param,ENVR,t,result);
+            end
+        end
+    end
+    %! Save
+    save([dpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc '.mat'],'result')
+    %! Plot
+    plotPoem_1D_1B(param, result)
+    print('-dpng',[fpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc])
+    result0.y = result.y(end,:);
+    clear result
     load([dpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc '.mat'],'result')
     result0.y = result.y(end,:);
     clear result

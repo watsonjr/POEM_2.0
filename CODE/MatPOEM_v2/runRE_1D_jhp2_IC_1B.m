@@ -4,127 +4,159 @@
 clear all
 close all
 
-%Set parameters
-baseparameters
+tic
 
-%Simname & directory
-dirname
+%! Set parameters
+baseparams_1D_lowIC_1B
+
+%! Setup spinup (loop year of COBALT)
+load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
+
+%! Where to run the model
+load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
+ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045];
+names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
+
+%! Fishing rate
+param.F = param.dt * 0.0 *[0 0 0 0 0 0 0.1 1];
+
+%! Length of run (years)
+param.tEnd = 100;
+
+%! Simname & directory
+dirname_1B
 simname0 = simname;
+dpath = '/Volumes/GFDL/CSV/Matlab_new_size/';
+fpath = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-factor = logspace(-5,0,20);
-%%
-B = NaN*ones(length(factor),13);
-F = linspace(0, 1, 10);
-YF = NaN*ones(length(F),length(factor));
-YP = NaN*ones(length(F),length(factor));
-YD = NaN*ones(length(F),length(factor));
-for r = 1:length(factor)
-    %Fishing rate
-    param.F = 0.0*[0 0 0 0 0 0 0.1 1]';
-    %Length of run (years)
-    param.tEnd = 200;
-    %Repro effic
-    param.RE = factor(r);
-    param.eRepro = param.RE*[1 1 1];
-    result = poem(param);
-    result0 = result;
-    base(r) = result;
-    B(r,:) = result.y(end,:);
+%% ! Results
+for L = 1:length(ids);
+    ID = ids(L);
+    loc = names{L};
+    NX = length(ID);
+    ENVR = sub_init_env(ID);
+    %! Length of run (years)
+    param.tEnd = 100;
+    t=0;
+    for YR = 1:param.tEnd % years
+        for DAY = 1:365
+            t=t+1;
+            ENVR = get_COBALT(COBALT,GRD,ID,DAY);
+            if (YR==1 && DAY==1)
+                result = poem_1D_jhp2_1B(param,ENVR,t);
+            else
+                result = poem_1D_jhp2_1B(param,ENVR,t,result);
+            end
+        end
+    end
+    %! Save
+    save([dpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc '.mat'],'result')
+    %! Plot
+    plotPoem_1D_1B(param, result)
+    print('-dpng',[fpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc])
+    result0.y = result.y(end,:);
+    clear result
+    load([dpath,simname,'/baserun_1B_lowIC_jhp2_log_' loc '.mat'],'result')
+    result0.y = result.y(end,:);
+    clear result
     
-    dirname
-    %Plot
+    %! Search
+    C = logspace(-5,0,20);
+    %C = sort(C,'descend');
+    %Lenth of model run (years)
+    param.tEnd = 50;
+    B = NaN*ones(length(C),11);
+    fl = NaN*ones(length(C),11);
+    for i = 1:length(C)
+        param.RE = C(i);
+        param.eRepro = param.RE*[1 1 1];
+        t=0;
+        for YR = 1:param.tEnd % years
+            for DAY = 1:365
+                t=t+1;
+                ENVR = get_COBALT(COBALT,GRD,ID,DAY);
+                if (YR==1 && DAY==1)
+                    result = poem_1D_jhp2_1B(param,ENVR,t,result0);
+                else
+                    result = poem_1D_jhp2_1B(param,ENVR,t,result);
+                end
+            end
+        end
+        lyr = (result.t(end)-364):result.t(end);
+        B(i,:) = mean(result.y(lyr,:));
+        fl(i,:) = mean(result.f(lyr,:));
+        %! Save
+        dirname_1B
+        save([dpath,simname,'/baserun_1B_lowIC_jhp2_log_asc_' loc '.mat'],'result')
+        %! Plot
+        plotPoem_1D_1B(param, result)
+        print('-dpng',[fpath,simname,'/baserun_1B_lowIC_jhp2_log_asc_' loc])
+        clear result
+    end
+    %! Save
+    save([dpath,simname0,'/RE_1B_lowIC_jhp2_log_asc_' loc '.mat'],'B','fl','C')
+    
+    %Plot adult biomasses
+    ix = cell([3,1]);
+    FF = 1;
+    LP = 2;
+    LD = 3;
+    
+    ix{FF} = 4:5;
+    ix{LP} = 6:8;
+    ix{LD} = 9:11;
+    col = cell([3,1]);
+    col{FF} = 'r-';
+    col{LP} = 'b-';
+    col{LD} = 'k-';
+    
     clf
-    plotPoem(param, result)
-    print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/baserun_' simname])
+    for i = 1:3
+        plot(C, log10(B(:,ix{i}(end))), col{i},'LineWidth',2)
+        hold on
+    end
+    legend('MF','LP','LD')
+    xlabel('RE')
+    ylabel('log10 Biomass')
+    print('-dpng',[fpath,'RE_biom_1B_lowIC_jhp2_log_asc_' simname0 '_' loc])
     
-    %Fishing
-    result = result0;
-    runfishingF
-    YF(:,r) = Y;
-    result = result0;
-    runfishingP
-    YP(:,r) = Y;
-    result = result0;
-    runfishingD
-    YD(:,r) = Y;
+    %Plot Feeding level
+    clf
+    subplot(3,1,1)
+    bar(fl(:,[4,6,9])); hold on;
+    colormap([1 0 0; 0 0 1; 0 0 0]);
+    plot(0:11, param.fc*ones(12,1), 'k--')
+    ylim([0 1])
+    xlim([0 11])
+    ylabel('Feeding level')
+    xlabel('RE')
+    title('S')
+    set(gca,'XTickLabel',C)
+    
+    subplot(3,1,2)
+    bar(fl(:,[5,7,10])); hold on;
+    colormap([1 0 0; 0 0 1; 0 0 0]);
+    plot(0:11, param.fc*ones(12,1), 'k--')
+    ylim([0 1])
+    xlim([0 11])
+    ylabel('Feeding level')
+    xlabel('RE')
+    title('M')
+    set(gca,'XTickLabel',C)
+    
+    subplot(3,1,3)
+    bar(fl(:,[1,8,11])); hold on;
+    %colormap([0 0 1; 0 0 0]);
+    plot(0:11, param.fc*ones(12,1), 'k--')
+    ylim([0 1])
+    xlim([0 11])
+    ylabel('Feeding level')
+    xlabel('RE')
+    title('L')
+    set(gca,'XTickLabel',C)
+    print('-dpng',[fpath,'RE_flev_1B_lowIC_jhp2_asc_' simname0 '_' loc])
 end
+%%
 
-%Save
-save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname0,'/RErun.mat'],'base','B','factor',...
-    'YF','YP','YD');
-
-%% Plot all yield curves together
-cm21=[1 0.5 0;...   %orange
-    0.5 0.5 0;... %tan/army
-    0 0.7 0;...   %g
-    0 1 1;...     %c
-    0 0 0.75;...  %b
-    0.5 0 1;...   %purple
-    1 0 1;...     %m
-    1 0 0;...     %r
-    0.5 0 0;...   %maroon
-    0.75 0.75 0.75;... %lt grey
-    0.5 0.5 0.5;...    %med grey
-    49/255 79/255 79/255;... %dk grey
-    0 0 0;...      %black
-    1 1 0;...      %yellow
-    127/255 255/255 0;... %lime green
-    0 0.5 0;...    %dk green
-    0/255 206/255 209/255;... %turq
-    0 0.5 0.75;...   %med blue
-    188/255 143/255 143/255;... %rosy brown
-    255/255 192/255 203/255;... %pink
-    255/255 160/255 122/255]; %peach
-
-set(groot,'defaultAxesColorOrder',cm21);
-
-clf
-plot(F,YF,'-')
-xlabel('Fishing rate (yr^-^1)','LineWidth',1.5)
-ylabel('F Yield')
-legend(num2str(factor'))
-legend('location','eastoutside')
-print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/fishing_F_allRE_' simname0])
-
-figure
-plot(F,YP,'-')
-xlabel('Fishing rate (yr^-^1)','LineWidth',1.5)
-ylabel('P Yield')
-legend(num2str(factor'))
-legend('location','eastoutside')
-print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/fishing_P_allRE_' simname0])
-
-figure
-plot(F,YD,'-')
-xlabel('Fishing rate (yr^-^1)','LineWidth',1.5)
-ylabel('D Yield')
-legend(num2str(factor'))
-legend('location','eastoutside')
-print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/fishing_D_allRE_' simname0])
-
-%% Plot biomass without fishing
-ix = cell([3,1]);
-FF = 1;
-LP = 2;
-LD = 3;
-
-ix{FF} = 6:7;
-ix{LP} = 8:10;
-ix{LD} = 11:13;
-col = cell([3,1]);
-col{FF} = 'r-';
-col{LP} = 'b-';
-col{LD} = 'k-';
-
-clf
-%subplot(2,2,1)
-for i = 1:3
-    plot(log10(factor), log10(B(:,ix{i}(end))), col{i},'LineWidth',2)
-    hold on
-end
-legend('MF','LP','LD')
-xlabel('log10 RE')
-ylabel('log10 Biomass')
-print('-dpng',['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/baserun_allRE_' simname0])
-
-
+toc
+    

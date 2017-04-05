@@ -60,7 +60,7 @@ for L = 1:length(ids);
     %! Search
     C = linspace(0,1,11);
     %C = sort(C,'descend');
-    %Lenth of model run (years)
+    %Length of model run (years)
     param.tEnd = 50;
     B = NaN*ones(length(C),11);
     fl = NaN*ones(length(C),11);
