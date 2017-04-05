@@ -4,7 +4,7 @@ function Testoneloc()
 global DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
-global bent_eff rfrac CC D J Sm
+global bent_eff rfrac CC D J Sm A
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
@@ -12,26 +12,34 @@ global MFsel MPsel MDsel LPsel LDsel efn cfn
 
 %fracm = 0.1:0.1:0.5;
 Fmort = [0.0:0.1:1.0]; %[1.2:0.2:2.0]; %
-RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001];
+RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];
 %BE = 0.05:0.05:0.1;
 %CarCap = 0.5:0.5:2.0;
-%encs = linspace(10,90,9);
-%cmaxs = linspace(10,100,10);
+encs = linspace(10,100,10);
+cmaxs = linspace(10,100,10);
 Dprefs = 0.1:0.1:1;
 Jprefs = 0.5:0.1:1;
-Sprefs = 0.05:0.05:0.5;
+Aprefs = 0.7:0.1:1;
+Sprefs = 0:0.05:0.5;
 Sm = 0.25;  %Feeding 2 sizes down
-J = 0.75;    %Juvenile reduction
-D = 0.75;    %Demersal in pelagic reduction
+J = 0.75;    %Juvenile feeding reduction
+D = 0.75;   %Demersal feeding in pelagic reduction
+A = 1.0;   %Adult predation reduction
 
-% for n = 1:length(Sprefs)
-%     Sm = Sprefs(n);
+% for j = 1:length(Jprefs)
+%     J = Jprefs(j);
+%
+%     for n = 1:length(Aprefs)
+%     A = Aprefs(n);
 
-%   for n = 1:length(cmaxs)
-%       h = cmaxs(n);
+% for n = 1:length(cmaxs)
+%     h = cmaxs(n);
 
-% for n = 1:length(RE)
-%     rfrac = RE(n);
+%     for g = 3:6%1:length(encs)
+%         gam = encs(g);
+
+for n = 1:length(RE)
+    rfrac = RE(n);
     
     for F = 1%:length(Fmort)
         %! Set fishing rate
@@ -51,7 +59,7 @@ D = 0.75;    %Demersal in pelagic reduction
         load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
         
         %! How long to run the model
-        YEARS = 50;
+        YEARS = 75;
         DAYS = 365;
         MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
         
@@ -63,9 +71,10 @@ D = 0.75;    %Demersal in pelagic reduction
         
         %! Create a directory for output
         tfcrit = num2str(int64(100*fcrit));
-        td = num2str(1000+int64(100*LD_phi_MF));
+        td = num2str(1000+int64(100*LD_phi_MP));
         tj = num2str(1000+int64(100*MP_phi_S));
         tsm = num2str(1000+int64(100*MF_phi_MZ));
+        ta = num2str(1000+int64(100*LP_phi_MF));
         tbe = num2str(100+int64(100*bent_eff));
         tmort = num2str(MORT);
         tcc = num2str(1000+int64(100*CC));
@@ -104,9 +113,9 @@ D = 0.75;    %Demersal in pelagic reduction
         tcfn = num2str(h);
         tefn = num2str(round(gam));
         if (harv==1)
-            simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+            simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
         else
-            simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+            simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
         end
         if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
             mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
@@ -196,5 +205,6 @@ D = 0.75;    %Demersal in pelagic reduction
             'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
         
     end %Fmort
-% end
+end %n
+% end %j
 end

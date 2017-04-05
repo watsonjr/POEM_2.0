@@ -21,8 +21,8 @@ kad = 50;
 Dprefs = 0.1:0.1:1;
 Jprefs = 0.5:0.1:1;
 Sprefs = 0.05:0.05:0.5;
-D = 0.5;
-J = 0.5;
+D = 0.75;
+J = 0.75;
 Ad = 1.0;
 Sm = 0.25;
 td = num2str(1000+int64(100*D));
@@ -31,7 +31,7 @@ ta = num2str(1000+int64(100*Ad));
 tsm = num2str(1000+int64(100*Sm));
 BE = '05';
 CC = '050';
-rfrac = '0100';
+rfrac = '0010';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -104,7 +104,7 @@ stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
 dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
-    '_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
+    '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))
@@ -319,7 +319,7 @@ for s=1:length(spots)
     lname = [loc '_'];
     
     %% TIME SERIES ----------------------------------------------------
-    y=t;
+    y=t/12;
     figure(50)
     clf
     plot(y,log10(SF(:,1,s)),'Linewidth',1); hold on;
@@ -338,13 +338,14 @@ for s=1:length(spots)
     ylabel('log10 Biomass (g m^-^2)')
     title(['Spinup ' loc])
     stamp(cfile)
-    print('-dpng',[fpath sname sname2 'All_oneloc_timeseries_Logmean_biomass_' loc '.png'])
+    print('-dpng',[fpath sname sname2 'timeseries_logmean_biomass_' loc '.png'])
     
-    figure(51)
     F = SF(:,1,s)+MF(:,1,s);
     P = SP(:,1,s)+MP(:,1,s)+LP(:,1,s);
     D = SD(:,1,s)+MD(:,1,s)+LD(:,1,s);
     
+    figure(51)
+    clf
     plot(y,log10(F),'r','Linewidth',2); hold on;
     plot(y,log10(P),'b','Linewidth',2); hold on;
     plot(y,log10(D),'k','Linewidth',2); hold on;
@@ -355,7 +356,7 @@ for s=1:length(spots)
     xlabel('Year')
     ylabel('log10 Biomass (g m^-^2)')
     title(['Spinup ' loc])
-    print('-dpng',[fpath sname sname2 'All_oneloc_timeseries_Logmean_biomass_types_' loc '.png'])
+    print('-dpng',[fpath sname sname2 'timeseries_Logmean_biomass_types_' loc '.png'])
     
     %  TIME SERIES ----------------------------------------------------
     

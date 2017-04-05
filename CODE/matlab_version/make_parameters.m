@@ -3,10 +3,10 @@
 function make_parameters()
     global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl 
     global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
-    global bent_eff rfrac CC D J Sm
+    global bent_eff rfrac CC D J Sm A
     global Tu_s Tu_m Tu_l Nat_mrt MORT
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
-    global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE 
+    global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE  
     global MFsel MPsel MDsel LPsel LDsel
     
     %! Integration parameters
@@ -67,7 +67,7 @@ function make_parameters()
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 0.1;
+    %rfrac = 0.01;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
@@ -103,11 +103,11 @@ function make_parameters()
     
     MD_phi_BE = 1.0;
     
-    LP_phi_MF = 1.0;
+    LP_phi_MF = 1.0*A;
     LP_phi_MP = 1.0;
     LP_phi_MD = 0.0;
     
-    LD_phi_MF = D;
+    LD_phi_MF = D*A;
     LD_phi_MP = D;
     LD_phi_MD = 1.0;
     LD_phi_BE = 1.0;
