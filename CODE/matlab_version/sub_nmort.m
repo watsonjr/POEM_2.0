@@ -32,4 +32,8 @@ function nmort = sub_nmort(Tp,Tb,tpel,wgt)
         % Peterson & Wroblewski (daily & uses dry weight)
         nmort = exp(0.063*(temp-15.0)) * 5.26e-3 * (wgt/9.0)^(-0.25); 
     end
+    if (MORT==6) % Temp-dep but constant by weight
+        temp = (Tp.*tpel) + (Tb.*(1.0-tpel));
+        nmort = exp(0.063*(temp-10.0)) .* Nat_mrt;
+    end
 end

@@ -67,7 +67,7 @@ function make_parameters()
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    %rfrac = 0.01;
+    rfrac = 0.1;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
@@ -76,8 +76,9 @@ function make_parameters()
 
     %%%! Background mortality
     Nat_mrt = 0.1/365; 
-    %0=none, 1=constant, 2=Hartvig T-dep, 3=mizer T-dep, 4=J&C T-dep, 5=P&W T-dep
-    MORT = 1;
+    %0=none, 1=constant, 6=const wgt, T-dep
+    %2=Hartvig T-dep, 3=mizer T-dep, 4=J&C T-dep, 5=P&W T-dep
+    MORT = 6;
 
     %%%! Diet Preference Phi
     % The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
