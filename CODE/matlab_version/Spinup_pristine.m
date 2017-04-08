@@ -4,7 +4,7 @@ function Spinup_pristine()
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
-global bent_eff rfrac CC D J Sm
+global bent_eff rfrac CC D J Sm A
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
@@ -13,10 +13,11 @@ global MFsel MPsel MDsel LPsel LDsel efn cfn
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Feeding preferences
 Sm = 0.25;  %Feeding 2 sizes down
-J = 0.75;    %Juvenile reduction
-D = 0.75;    %Demersal in pelagic reduction
+J = 0.75;   %Juvenile feeding reduction
+D = 0.75;   %Demersal feeding in pelagic reduction
+A = 0.75;    %Adult predation reduction
 %! Set fishing rate
-frate = 0.4;
+frate = 0.0;
 dfrate = frate/365.0;
 %0=no fishing; 1=fishing
 if (frate>0)
@@ -32,7 +33,7 @@ make_parameters()
 load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
 
 %! How long to run the model
-YEARS = 50;
+YEARS = 100;
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
@@ -43,9 +44,10 @@ ID = 1:NX;
 
 %! Create a directory for output
 tfcrit = num2str(int64(100*fcrit));
-td = num2str(1000+int64(100*LD_phi_MF));
+td = num2str(1000+int64(100*LD_phi_MP));
 tj = num2str(1000+int64(100*MP_phi_S));
 tsm = num2str(1000+int64(100*MF_phi_MZ));
+ta = num2str(1000+int64(100*LP_phi_MF));
 tbe = num2str(100+int64(100*bent_eff));
 tmort = num2str(MORT);
 tcc = num2str(1000+int64(100*CC));
@@ -83,12 +85,12 @@ end
 tcfn = num2str(h);
 tefn = num2str(round(gam));
 if (harv==1)
-    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
 else
-    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
 end
-if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
-    mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
+if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
+    mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])
 end
 if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
     mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
@@ -185,15 +187,15 @@ ENVR = sub_init_env(ID);
 
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
-file_sml_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_f.nc'];
-file_sml_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_p.nc'];
-file_sml_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_sml_d.nc'];
-file_med_f = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_f.nc'];
-file_med_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_p.nc'];
-file_med_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_med_d.nc'];
-file_lrg_p = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_p.nc'];
-file_lrg_d = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_lrg_d.nc'];
-file_bent  = ['/Volumes/GFDL/NC/Matlab_big_size/',simname, '/Spinup_pristine_bent.nc'];
+file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_sml_f.nc'];
+file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_sml_p.nc'];
+file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_sml_d.nc'];
+file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_med_f.nc'];
+file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_med_p.nc'];
+file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_med_d.nc'];
+file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_lrg_p.nc'];
+file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_lrg_d.nc'];
+file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Spinup_pristine_bent.nc'];
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
 ncidSP = netcdf.create(file_sml_p,'NC_WRITE');

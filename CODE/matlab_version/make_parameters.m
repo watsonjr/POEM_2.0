@@ -59,15 +59,15 @@ function make_parameters()
 
     %%%! Metabolism constants (activity and basal)
     fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
-    h = 20;         % coeff on Cmax
-    gam = 70;       % coeff on search area
+    %h = 15;         % coeff on Cmax
+    %gam = 30;       % coeff on search area
     
     %%%! Transfer efficiency of detritus to benthic prey
     bent_eff = 0.05;
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 0.1;
+    rfrac = 0.005;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;

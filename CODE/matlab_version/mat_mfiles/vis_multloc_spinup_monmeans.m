@@ -7,11 +7,11 @@ clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-cfile = 'Dc_TrefO_cmax-metab2_enc1_MFeqMP_fcrit40_D100_nmort2_BE05_CC050_RE0500_All_fish04';
+cfile = 'Dc_enc30_cmax-metab15_fcrit20_D075_J075_A075_Sm025_nmort1_BE05_CC100_RE0010';
 
-fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 ppath = [pp cfile '/'];
 
 load([fpath 'Means_spinup_' cfile '.mat']);

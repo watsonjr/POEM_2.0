@@ -15,7 +15,7 @@ efn = 70;
 tefn = num2str(efn);
 cfn = 20;
 tcfn = num2str(cfn);
-fcrit = 20;
+fcrit = 30;
 nmort = '6';
 kad = 50;
 Dprefs = 0.1:0.1:1;
@@ -31,7 +31,7 @@ ta = num2str(1000+int64(100*Ad));
 tsm = num2str(1000+int64(100*Sm));
 BE = '05';
 CC = '050';
-rfrac = '0010';
+rfrac = '0100';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...

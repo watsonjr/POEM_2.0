@@ -3,9 +3,9 @@
 clear all
 close all
 
-cfile = 'Adv_diff_test_Dc_TrefO_Hold_cmax-metab_MFeqMP_fcrit40_D100_nmort2_BE05_CC050_RE0500';
+cfile = 'Dc_enc30_cmax-metab15_fcrit20_D075_J075_A075_Sm025_nmort1_BE05_CC100_RE0010';
 
-fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 
 
 %% SP

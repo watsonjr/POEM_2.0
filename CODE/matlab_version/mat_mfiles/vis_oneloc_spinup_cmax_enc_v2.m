@@ -8,21 +8,21 @@ close all
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-RE = {'1000','0500','0100','0050','0010'};
-reff = [1.0,0.5,0.1,0.05,0.01];
-sreff = {'1.0','0.5','0.1','0.05','0.01'};
+RE = {'1000','0500','0100','0050','0010','00050'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005];
+sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
 encs = linspace(10,100,10); %logspace(2,4,10); %
 cmaxs = linspace(10,100,10);
 fcrit = 20;
-nmort = '1';
+nmort = '6';
 kad = 50;
 D = 'D075';
 J = 'J075';
 Ad = 'A100';
 Sm = 'Sm025';
 BE = '05';
-CC = '100';
-R = 5;
+CC = '050';
+R = 3;
 rfrac = RE{R};
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
