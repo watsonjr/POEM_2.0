@@ -10,7 +10,7 @@ function enc = sub_enc(Tp,Tb,wgt,prey,tpel,tprey,pref)
     % tprey: time spent in area with that prey item.
     % pref: preference for prey item
     
-    global efn gam
+    global efn gam NX
     
     temp = (Tp.*tpel) + (Tb.*(1.0-tpel));
     
@@ -31,5 +31,9 @@ function enc = sub_enc(Tp,Tb,wgt,prey,tpel,tprey,pref)
     
     A = (exp(0.063*(temp-10.0)) .* gam .* wgt^(-0.2)) ./365.0;
     %Encounter per predator, mult by biomass later
-    enc = prey.*A.*tprey.*pref;
+    frac = zeros(NX,1);
+    ID = (tprey>0);
+    frac(ID) = 1.0;
+    
+    enc = prey.*A.*frac.*pref;
 end

@@ -32,11 +32,11 @@ A = 1.0;   %Adult predation reduction
 %     for n = 1:length(Aprefs)
 %     A = Aprefs(n);
 
-for n = 1:length(cmaxs)
-    h = cmaxs(n);
-    
-    for g = 1:length(encs)
-        gam = encs(g);
+% for n = 1:length(cmaxs)
+%     h = cmaxs(n);
+%     
+%     for g = 1:length(encs)
+%         gam = encs(g);
         
         % for n = 1:length(RE)
         %     rfrac = RE(n);
@@ -205,6 +205,6 @@ for n = 1:length(cmaxs)
                 'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
             
         end %Fmort
-    end %n
-end %j
+%     end %n
+% end %j
 end

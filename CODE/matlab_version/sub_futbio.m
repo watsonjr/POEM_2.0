@@ -26,17 +26,17 @@ BENT.mass = sub_check(BENT.mass);
 %Lp: fraction of time large piscivores spends in pelagic
 %Ld: fraction of time large demersals spends in pelagic
 if (pdc == 0)
-    Lp.td = 1.0;
-    Ld.td = 0.0;
+    Lp.td = ones(NX,1);
+    Ld.td = zeros(NX,1);
 elseif (pdc == 1)
-    Lp.td = 1.0;
+    Lp.td = ones(NX,1);
     Ld.td = sub_tdif_dem(ENVR.H,Mf.bio,Mp.bio,Md.bio,BENT.mass);
 elseif (pdc == 2)
     Lp.td = sub_tdif_pel(ENVR.H,Mf.bio,Mp.bio,Md.bio);
     Ld.td = sub_tdif_dem(ENVR.H,Mf.bio,Mp.bio,Md.bio,BENT.mass);
 else
-    Lp.td = 1.0;
-    Ld.td = 1.0;
+    Lp.td = ones(NX,1);
+    Ld.td = ones(NX,1);
 end
 
 % Metabolism
@@ -50,7 +50,7 @@ Lp.met = sub_met(ENVR.Tp,ENVR.Tb,Lp.td,M_l);
 Ld.met = sub_met(ENVR.Tp,ENVR.Tb,Ld.td,M_l);
 
 % Encounter rates
-%sub_enc(Tp,Tb,wgt,prey,td,tprey,pref)
+%           sub_enc(Tp     ,Tb     ,wgt,prey   ,tpel ,tprey,pref)
 Sf.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sf.td,Sf.td,1);
 Sp.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sp.td,Sp.td,1);
 Sd.enc_zm = sub_enc(ENVR.Tp,ENVR.Tb,M_s,ENVR.Zm,Sd.td,Sd.td,1);

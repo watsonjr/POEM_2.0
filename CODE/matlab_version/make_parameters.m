@@ -59,15 +59,15 @@ function make_parameters()
 
     %%%! Metabolism constants (activity and basal)
     fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
-    %h = 15;         % coeff on Cmax
-    %gam = 30;       % coeff on search area
+    h = 70;         % coeff on Cmax
+    gam = 20;       % coeff on search area
     
     %%%! Transfer efficiency of detritus to benthic prey
     bent_eff = 0.05;
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 0.005;
+    rfrac = 0.01;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
@@ -78,7 +78,7 @@ function make_parameters()
     Nat_mrt = 0.1/365; 
     %0=none, 1=constant, 6=const wgt, T-dep
     %2=Hartvig T-dep, 3=mizer T-dep, 4=J&C T-dep, 5=P&W T-dep
-    MORT = 6;
+    MORT = 1;
 
     %%%! Diet Preference Phi
     % The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down

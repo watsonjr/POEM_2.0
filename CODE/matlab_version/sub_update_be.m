@@ -1,8 +1,8 @@
 %%% Update biomass
 function [bio_out, pred] = sub_update_be(bio_in,BE,det,CC,con,bio)
     %bio_in = benthic biomass
-    %con = biomass specific consumption rate by MD and LD
-    %bio = biomass of MD and LD
+    %con = biomass specific consumption rate by MD & LD
+    %bio = biomass of MD & LD
     
     %! Peterson & Wroblewski: daily & uses dry weight
     %nmort = exp(0.063*(temp-15.0)) * 5.26e-3 * (wgt/9.0)^(-0.25);
@@ -14,12 +14,17 @@ function [bio_out, pred] = sub_update_be(bio_in,BE,det,CC,con,bio)
 %     bio_out = bio_in - sum(eaten) - bio_in*omort;
     
     %! Quadratic mortality from carrying capacity
-  eaten = con.*bio;
-  pred = sum(eaten,2);
-  % Chemostat
-  %r = BE*det;
-  %bio_out = bio_in + r * (r*CC - bio_in) - pred;
-  % Logistic
-  r = BE*det ./ bio_in; %Needs to be in units of per time (g/m2/d) * (g/m2)
-  bio_out = bio_in + r .* bio_in .* (1 - bio_in./CC) - pred;
+    eaten = con.*bio;
+    pred = sum(eaten,2);
+    
+    %Half of detritus becomes small, half becomes medium benthic inverts
+    %det2 = det.*0.5;
+    
+    % Chemostat
+    %r = BE*det;
+    %bio_out = bio_in + r * (r*CC - bio_in) - pred;
+    
+    % Logistic
+    r = BE*det ./ bio_in; %Needs to be in units of per time (g/m2/d) * (g/m2)
+    bio_out = bio_in + r .* bio_in .* (1 - bio_in./CC) - pred;
 end
