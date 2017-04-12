@@ -7,8 +7,8 @@ clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-dp = '/Volumes/GFDL/NC/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+dp = '/Volumes/GFDL/NC/Jul_og_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Julia_OG_sizes/';
 
 cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
 
@@ -35,11 +35,23 @@ b_smean=b_mean5000;
 yr=1865:10:2005;
 
 all_bio = sp_mean+sf_mean+sd_mean+mp_mean+mf_mean+md_mean+lp_mean+ld_mean;
-
 all_bio_ts = nansum(all_bio);
 all_bio_ts = all_bio_ts(2:16);
 
-save([dpath 'All_biom_mcatch_hist_pristine.mat'],'all_bio');
+F_bio = sf_mean+mf_mean;
+F_bio_ts = nansum(F_bio);
+F_bio_ts = F_bio_ts(2:16);
+
+P_bio = sp_mean+mp_mean+lp_mean;
+P_bio_ts = nansum(P_bio);
+P_bio_ts = P_bio_ts(2:16);
+
+D_bio = sd_mean+md_mean+ld_mean;
+D_bio_ts = nansum(D_bio);
+D_bio_ts = D_bio_ts(2:16);
+
+save([dpath 'All_biom_mcatch_hist_pristine.mat'],'all_bio','F_bio',...
+    'P_bio','D_bio');
 
 figure(70)
 plot(yr,all_bio_ts,'k','LineWidth',2)
@@ -47,6 +59,31 @@ xlabel('Year')
 ylabel('All fish mean biomass (g/m^2)')
 title('Historic pristine')
 print('-dpng',[ppath 'Hist_pristine_ts_mbio.png'])
+
+%Colormap
+load('MyColormaps.mat')
+load('cmap_ppt_angles.mat')
+
+figure(71)
+plot(yr,F_bio_ts,'color',cmap_ppt(3,:),'LineWidth',2); hold on;
+plot(yr,P_bio_ts,'color',cmap_ppt(1,:),'LineWidth',2); hold on;
+plot(yr,D_bio_ts,'color',cmap_ppt(5,:),'LineWidth',2); hold on;
+legend('F','P','D')
+xlabel('Year')
+ylabel('Mean biomass (g/m^2)')
+title('Historic pristine')
+print('-dpng',[ppath 'Hist_pristine_ts_mbio_type.png'])
+
+figure(72)
+plot(yr,log10(F_bio_ts),'color',cmap_ppt(3,:),'LineWidth',2); hold on;
+plot(yr,log10(P_bio_ts),'color',cmap_ppt(1,:),'LineWidth',2); hold on;
+plot(yr,log10(D_bio_ts),'color',cmap_ppt(5,:),'LineWidth',2); hold on;
+colormap(cmap2)
+legend('F','P','D')
+xlabel('Year')
+ylabel('log10 Mean biomass (g/m^2)')
+title('Historic pristine')
+print('-dpng',[ppath 'Hist_pristine_ts_mbio_typeLog.png'])
 
 %% Plots in space
 %fix lon shift
