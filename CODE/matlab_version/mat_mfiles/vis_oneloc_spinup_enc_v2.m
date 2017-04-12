@@ -8,26 +8,26 @@ close all
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-RE = {'1000','0500','0100','0050','0010'};
-reff = [1.0,0.5,0.1,0.05,0.01];
-sreff = {'1.0','0.5','0.1','0.05','0.01'};
+%RE = {'1000','0500','0100','0050','0010','00050'};
+RE = {'10000','05000','01000','00500','00100','00050'};
+RE2 = {'10000','05000','01000','00500','00100','00050'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005];
+sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
 encs = linspace(10,100,10); %logspace(2,4,10); %
 cmaxs = linspace(10,100,10);
-% efn = 70;
-% tefn = num2str(efn);
-cfn = 15;
-tcfn = num2str(cfn);
 fcrit = 20;
 nmort = '1';
 kad = 50;
 D = 'D075';
 J = 'J075';
-Ad = 'A100';
+Ad = 'A075';
 Sm = 'Sm025';
 BE = '05';
-CC = '100';
-R = 5;
-rfrac = RE{R};
+CC = '050';
+rfrac = RE{5};
+rfrac2 = RE2{3};
+cfn = 20;
+tcfn = num2str(cfn);
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -91,14 +91,17 @@ stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 for E = 1:length(encs)
     efn = encs(E);
     tefn = num2str(round(efn));
-    dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-        D,'_',J,'_',Ad,'_',Sm,...
-        '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
-    dpath = [datap char(dp) '/'];
+    %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+%             D,'_',J,'_',Ad,'_',Sm,...
+%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
+        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+            D,'_',J,'_',Ad,'_',Sm,...
+            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+        dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
-    if (~isdir([figp char(dp)]))
-        mkdir([figp char(dp)])
-    end
+%     if (~isdir([figp char(dp)]))
+%         mkdir([figp char(dp)])
+%     end
     cfile = char(dp);
     
     all_mean=NaN*ones(3,4,length(spots));
@@ -315,15 +318,22 @@ for n = 1:length(encs)
     tefn = num2str(round(efn));
     close all
     
-    dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-        D,'_',J,'_',Ad,'_',Sm,...
-        '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
-    dpath = [datap char(dp) '/'];
+    %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+%             D,'_',J,'_',Ad,'_',Sm,...
+%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
+        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+            D,'_',J,'_',Ad,'_',Sm,...
+            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+        dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
     cfile = char(dp);
-    cfile2 = ['Dc_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-        D,'_',J,'_',Ad,'_',Sm,...
-        '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac,'_Enctests'];
+%     cfile2 = ['Dc_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+%         D,'_',J,'_',Ad,'_',Sm,...
+%         '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac,'_Enctests'];
+    cfile2 = ['Dc_fcrit',num2str(fcrit),'_',...
+            D,'_',J,'_',Ad,'_',Sm,...
+            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,...
+            '_CmaxEnctests'];
     
     load([dpath sname 'lastyr_sum_mean_biom.mat']);
     
@@ -390,27 +400,27 @@ print(f2,'-dpng',[figp sname cfile2 '_tot_mean_biomass_type_all_locs.png'])
 
 %% encs
 % Consump vs. weight
-figure(1)
-subplot(3,1,1)
-bar(mcon(1,:))
-set(gca,'XTick',1:np,'XTickLabel',encs); hold on;
-plot(0.5:10.5, Consumption(1,:),'--k','LineWidth',2)
-ylabel('S')
-title('Mean consumption (g yr^-^1)')
-
-subplot(3,1,2)
-bar(mcon(2,:))
-set(gca,'XTick',1:np,'XTickLabel',encs); hold on;
-plot(0.5:10.5, Consumption(2,:),'--k','LineWidth',2)
-ylabel('M')
-
-subplot(3,1,3)
-bar(mcon(3,:))
-set(gca,'XTick',1:np,'XTickLabel',encs); hold on;
-plot(0.5:10.5, Consumption(3,:),'--k','LineWidth',2)
-ylabel('L')
-xlabel('enc coeff')
-print('-dpng',[figp sname cfile2 '_mean_con_size_all_locs.png'])
+% figure(1)
+% subplot(3,1,1)
+% bar(mcon(1,:))
+% set(gca,'XTick',1:np,'XTickLabel',encs); hold on;
+% plot(0.5:10.5, Consumption(1,:),'--k','LineWidth',2)
+% ylabel('S')
+% title('Mean consumption (g yr^-^1)')
+% 
+% subplot(3,1,2)
+% bar(mcon(2,:))
+% set(gca,'XTick',1:np,'XTickLabel',encs); hold on;
+% plot(0.5:10.5, Consumption(2,:),'--k','LineWidth',2)
+% ylabel('M')
+% 
+% subplot(3,1,3)
+% bar(mcon(3,:))
+% set(gca,'XTick',1:np,'XTickLabel',encs); hold on;
+% plot(0.5:10.5, Consumption(3,:),'--k','LineWidth',2)
+% ylabel('L')
+% xlabel('enc coeff')
+% print('-dpng',[figp sname cfile2 '_mean_con_size_all_locs.png'])
 
 % Feeding level
 figure(3)

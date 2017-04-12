@@ -17,14 +17,14 @@ fcrit = 20;
 nmort = '1';
 kad = 50;
 D = 'D075';
-J = 'J075';
+J = 'J050';
 Ad = 'A100';
 Sm = 'Sm025';
 BE = '05';
 CC = '050';
 R = 6;
 rfrac = RE{R};
-efn = 100;
+efn = 10;
 tefn = num2str(efn);
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};

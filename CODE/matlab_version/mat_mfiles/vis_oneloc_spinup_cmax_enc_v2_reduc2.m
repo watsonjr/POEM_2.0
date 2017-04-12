@@ -11,29 +11,17 @@ figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes
 RE = {'1000','0500','0100','0050','0010','00050'};
 reff = [1.0,0.5,0.1,0.05,0.01,0.005];
 sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
-efn = 70;
-tefn = num2str(efn);
-cfn = 10;
-tcfn = num2str(cfn);
+encs = linspace(10,100,10); %logspace(2,4,10); %
+cmaxs = linspace(10,30,3);
 fcrit = 20;
 nmort = '1';
 kad = 50;
-Dprefs = 0.1:0.1:1;
-Jprefs = 0.5:0.1:1;
-Aprefs = 0.7:0.1:1;
-Sprefs = 0:0.05:0.5;
-D = 0.75;
-J = 0.75;
-Ad = 1.0;
-Sm = 0.25;
-td = num2str(1000+int64(100*D));
-tj = num2str(1000+int64(100*J));
-ta = num2str(1000+int64(100*Ad));
-tsm = num2str(1000+int64(100*Sm));
+D = 'D075';
+J = 'J050';
+Ad = 'A075';
+Sm = 'Sm025';
 BE = '05';
 CC = '050';
-R = 6;
-rfrac = RE{R};
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -94,21 +82,24 @@ Consumption = A / (epsassim*(f0-fc)) * mass.^n;
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
-for j = 1:length(Jprefs)
-    J = Jprefs(j);
-    tj = num2str(1000+int64(100*J));
-    for n = 1:length(Aprefs)
-        Ad = Aprefs(n);
-        ta = num2str(1000+int64(100*Ad));
+R = 6;
+rfrac = RE{R};
+for C = 1:length(cmaxs)
+    cfn = cmaxs(C);
+    tcfn = num2str(cfn);
+    for E = 1:length(encs)
+        efn = encs(E);
+        tefn = num2str(round(efn));
         
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
-            '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,...
-            '_BE',BE,'_CC',CC,'_RE',rfrac];
+        close all
+        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+            D,'_',J,'_',Ad,'_',Sm,...
+            '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
         dpath = [datap char(dp) '/'];
         fpath = [figp char(dp) '/'];
-%         if (~isdir([figp char(dp)]))
-%             mkdir([figp char(dp)])
-%         end
+        if (~isdir([figp char(dp)]))
+            mkdir([figp char(dp)])
+        end
         cfile = char(dp);
         
         all_mean=NaN*ones(3,4,length(spots));
@@ -311,40 +302,41 @@ for j = 1:length(Jprefs)
             'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch',...
             'Dtotcatch','Pgge','Fgge','Dgge','Plev','Flev','Dlev','Bmean');
         
-    end %A
-end %J
+    end %enc
+end %cmax
 
 %%
-nc = length(Jprefs);
-ne = length(Aprefs);
+nc = length(cmaxs);
+ne = length(encs);
 allF  = NaN*ones(length(spots),nc,ne);
 allP  = NaN*ones(length(spots),nc,ne);
 allD  = NaN*ones(length(spots),nc,ne);
 mcon  = NaN*ones(3,nc,ne);
 mlev  = NaN*ones(3,nc,ne);
-for j = 1:length(Jprefs)
-    J = Jprefs(j);
-    tj = num2str(1000+int64(100*J));
-    for n = 1:length(Aprefs)
-        Ad = Aprefs(n);
-        ta = num2str(1000+int64(100*Ad));
+for C = 1:length(cmaxs)
+    cfn = cmaxs(C);
+    tcfn = num2str(cfn);
+    for E = 1:length(encs)
+        efn = encs(E);
+        tefn = num2str(round(efn));
+        close all
         
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
-            '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,...
-            '_BE',BE,'_CC',CC,'_RE',rfrac];
+        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+            D,'_',J,'_',Ad,'_',Sm,...
+            '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
         dpath = [datap char(dp) '/'];
         fpath = [figp char(dp) '/'];
         cfile = char(dp);
-        cfile2 = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
-            '_Sm',tsm(2:end),'_nmort',nmort,...
-            '_BE',BE,'_CC',CC,'_RE',rfrac,'_JprefApreftests'];
+        cfile2 = ['Dc_fcrit',num2str(fcrit),'_',...
+            D,'_',J,'_',Ad,'_',Sm,...
+            '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac,'_CmaxEnctests'];
         
         load([dpath sname 'lastyr_sum_mean_biom.mat']);
         
         %% Biomass of each type
-        allF(:,j,n) = squeeze(nansum(all_mean(:,1,:)));
-        allP(:,j,n) = squeeze(nansum(all_mean(:,2,:)));
-        allD(:,j,n) = squeeze(nansum(all_mean(:,3,:)));
+        allF(:,C,E) = squeeze(nansum(all_mean(:,1,:)));
+        allP(:,C,E) = squeeze(nansum(all_mean(:,2,:)));
+        allD(:,C,E) = squeeze(nansum(all_mean(:,3,:)));
         
         %% Consump vs. weight
         Pcon = Pcon .* mass .* 365;
@@ -353,22 +345,22 @@ for j = 1:length(Jprefs)
         Fcon(3,:) = nan;
         Tcon = [Fcon,Pcon,Dcon];
         Mcon = nanmean(Tcon,2);
-        mcon(:,j,n) = Mcon;
+        mcon(:,C,E) = Mcon;
         
         %% Feeding level
         Flev(3,:) = nan;
         Tlev = [Flev,Plev,Dlev];
         Mlev = nanmean(Tlev,2);
-        mlev(:,j,n) = Mlev;
+        mlev(:,C,E) = Mlev;
         
-    end %A
-end %J
+    end %enc
+end %cmaxs
 
-% Save values for all locs and all cmaxs that combo
+%% Save values for all locs and all cmaxs that combo
 save([datap 'Bio_rates/' cfile2 '.mat'],'allF','allP','allD','mcon','mlev');
 
 %%
-[agrid,jgrid]=meshgrid([Aprefs Aprefs(end)+0.1],[Jprefs Jprefs(end)+0.1]);
+[cgrid,egrid]=meshgrid([encs encs(end)+10],[cmaxs cmaxs(end)+10]);
 allF(:,nc+1,:) = nan;
 allF(:,:,ne+1) = nan;
 allP(:,nc+1,:) = nan;
@@ -379,6 +371,7 @@ mcon(:,nc+1,:) = nan;
 mcon(:,:,ne+1) = nan;
 mlev(:,nc+1,:) = nan;
 mlev(:,:,ne+1) = nan;
+%%
 for s=1:length(spots)
     loc = spots{s};
     lname = [loc '_'];
@@ -386,7 +379,7 @@ for s=1:length(spots)
     %% Sum mean biom over stages
     f2=figure(2);
     subplot(4,3,s)
-    pcolor(jgrid,agrid,squeeze(log10(allF(s,:,:))))
+    pcolor(cgrid,egrid,squeeze(log10(allF(s,:,:))))
     colorbar
     caxis([-4 2])
     if (s==2)
@@ -394,13 +387,13 @@ for s=1:length(spots)
     else
         title(loc)
     end
-    xlabel('J pref')
-    ylabel('A pref')
+    ylabel('Cmax coeff')
+    xlabel('Enc coeff')
     stamp(cfile2)
     
     f3=figure(3);
     subplot(4,3,s)
-    pcolor(jgrid,agrid,squeeze(log10(allP(s,:,:))))
+    pcolor(cgrid,egrid,squeeze(log10(allP(s,:,:))))
     colorbar
     caxis([-4 2])
     if (s==2)
@@ -408,14 +401,14 @@ for s=1:length(spots)
     else
         title(loc)
     end
-    xlabel('J pref')
-    ylabel('A pref')
+    ylabel('Cmax coeff')
+    xlabel('Enc coeff')
     stamp(cfile2)
     
     
     f4=figure(4);
     subplot(4,3,s)
-    pcolor(jgrid,agrid,squeeze(log10(allD(s,:,:))))
+    pcolor(cgrid,egrid,squeeze(log10(allD(s,:,:))))
     colorbar
     caxis([-4 2])
     if (s==2)
@@ -423,8 +416,8 @@ for s=1:length(spots)
     else
         title(loc)
     end
-    xlabel('J pref')
-    ylabel('A pref')
+    ylabel('Cmax coeff')
+    xlabel('Enc coeff')
     stamp(cfile2)
     
     
@@ -436,26 +429,26 @@ print(f4,'-dpng',[figp sname cfile2 '_totD_mean_biomass_type_all_locs.png'])
 %% Feeding level
 figure(1)
 subplot(2,2,1)
-pcolor(jgrid,agrid,squeeze(mlev(1,:,:)))
+pcolor(cgrid,egrid,squeeze(mlev(1,:,:)))
 colorbar
 caxis([0 1])
-xlabel('J pref')
-ylabel('A pref')
+ylabel('Cmax coeff')
+xlabel('Enc coeff')
 title('S Mean feeding level')
 
 subplot(2,2,2)
-pcolor(jgrid,agrid,squeeze(mlev(2,:,:)))
+pcolor(cgrid,egrid,squeeze(mlev(2,:,:)))
 colorbar
 caxis([0 1])
-xlabel('J pref')
-ylabel('A pref')
+ylabel('Cmax coeff')
+xlabel('Enc coeff')
 title('M Mean feeding level')
 
 subplot(2,2,3)
-pcolor(jgrid,agrid,squeeze(mlev(3,:,:)))
+pcolor(cgrid,egrid,squeeze(mlev(3,:,:)))
 colorbar
 caxis([0 1])
-xlabel('J pref')
-ylabel('A pref')
+ylabel('Cmax coeff')
+xlabel('Enc coeff')
 title('L Mean feeding level')
 print('-dpng',[figp sname cfile2 '_mean_flev_size_all_locs.png'])

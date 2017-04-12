@@ -8,10 +8,12 @@ close all
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-RE = {'1000','0500','0100','0050','0010'};
-reff = [1.0,0.5,0.1,0.05,0.01];
-sreff = {'1.0','0.5','0.1','0.05','0.01'};
-efn = 70;
+%RE = {'1000','0500','0100','0050','0010','00050'};
+RE = {'10000','05000','01000','00500','00100','00050'};
+RE2 = {'10000','05000','01000','00500','00100','00050'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005];
+sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
+efn = 100;
 tefn = num2str(efn);
 cfn = 20;
 tcfn = num2str(cfn);
@@ -20,18 +22,20 @@ nmort = '1';
 kad = 50;
 Dprefs = 0.1:0.1:1;
 Jprefs = 0.5:0.1:1;
-Sprefs = 0.05:0.05:0.5;
-D = 0.75;
-J = 0.75;
-Ad = 1.0;
-Sm = 0.25;
+Aprefs = 0.7:0.1:1;
+Sprefs = 0:0.05:0.5;
+D = 'D075';
+J = 'J075';
+Ad = 'A075';
+Sm = 'Sm025';
 td = num2str(1000+int64(100*D));
 tj = num2str(1000+int64(100*J));
 ta = num2str(1000+int64(100*Ad));
 tsm = num2str(1000+int64(100*Sm));
 BE = '05';
 CC = '050';
-rfrac = '0010';
+rfrac = RE{5};
+rfrac2 = RE2{3};
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -103,8 +107,12 @@ AB = (0.35 .* 4.5 .* M.^(-0.25)) ./365;
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
-dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
-    '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
+%         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+%             D,'_',J,'_',Ad,'_',Sm,...
+%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
+dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+    D,'_',J,'_',Ad,'_',Sm,...
+    '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))

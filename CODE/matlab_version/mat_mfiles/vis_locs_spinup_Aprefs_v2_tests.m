@@ -8,12 +8,12 @@ close all
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-RE = {'1000','0500','0100','0050','0010'};
-reff = [1.0,0.5,0.1,0.05,0.01];
-sreff = {'1.0','0.5','0.1','0.05','0.01'};
-efn = 60;
+RE = {'1000','0500','0100','0050','0010','00050'};
+reff = [1.0,0.5,0.1,0.05,0.01,0.005];
+sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
+efn = 70;
 tefn = num2str(efn);
-cfn = 15;
+cfn = 10;
 tcfn = num2str(cfn);
 fcrit = 20;
 nmort = '1';
@@ -23,7 +23,7 @@ Jprefs = 0.5:0.1:1;
 Aprefs = 0.7:0.1:1;
 Sprefs = 0.05:0.05:0.5;
 D = 0.75;
-J = 0.75;
+J = 1.0;
 Ad = 1.0;
 Sm = 0.25;
 td = num2str(1000+int64(100*D));
@@ -31,8 +31,8 @@ tj = num2str(1000+int64(100*J));
 ta = num2str(1000+int64(100*Ad));
 tsm = num2str(1000+int64(100*Sm));
 BE = '05';
-CC = '100';
-R = 5;
+CC = '050';
+R = 6;
 rfrac = RE{R};
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
@@ -91,9 +91,9 @@ for n = 1:length(Aprefs)
         '_BE',BE,'_CC',CC,'_RE',rfrac];
     dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
-    if (~isdir([figp char(dp)]))
-        mkdir([figp char(dp)])
-    end
+%     if (~isdir([figp char(dp)]))
+%         mkdir([figp char(dp)])
+%     end
     cfile = char(dp);
     
     all_mean=NaN*ones(3,4,length(spots));
@@ -380,27 +380,27 @@ print(f2,'-dpng',[figp sname cfile2 '_tot_mean_biomass_type_all_locs.png'])
 
 %% Prefs
 % Consump vs. weight
-figure(1)
-subplot(3,1,1)
-bar(mcon(1,:))
-set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
-plot(0.5:10.5, Consumption(1,:),'--k','LineWidth',2)
-ylabel('S')
-title('Mean consumption (g yr^-^1)')
-
-subplot(3,1,2)
-bar(mcon(2,:))
-set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
-plot(0.5:10.5, Consumption(2,:),'--k','LineWidth',2)
-ylabel('M')
-
-subplot(3,1,3)
-bar(mcon(3,:))
-set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
-plot(0.5:10.5, Consumption(3,:),'--k','LineWidth',2)
-ylabel('L')
-xlabel('Adult predation reduction')
-print('-dpng',[figp sname cfile2 '_mean_con_size_all_locs.png'])
+% figure(1)
+% subplot(3,1,1)
+% bar(mcon(1,:))
+% set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
+% plot(0.5:10.5, Consumption(1,:),'--k','LineWidth',2)
+% ylabel('S')
+% title('Mean consumption (g yr^-^1)')
+% 
+% subplot(3,1,2)
+% bar(mcon(2,:))
+% set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
+% plot(0.5:10.5, Consumption(2,:),'--k','LineWidth',2)
+% ylabel('M')
+% 
+% subplot(3,1,3)
+% bar(mcon(3,:))
+% set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
+% plot(0.5:10.5, Consumption(3,:),'--k','LineWidth',2)
+% ylabel('L')
+% xlabel('Adult predation reduction')
+% print('-dpng',[figp sname cfile2 '_mean_con_size_all_locs.png'])
 
 % Feeding level
 figure(3)

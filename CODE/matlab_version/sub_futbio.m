@@ -189,7 +189,7 @@ Ld.gamma = sub_gamma(K_a,Z_l,Ld.nu,Ld.die,Ld.bio,Ld.nmort,dfrate,LDsel);
 [Ld.gamma,Ld.nu,Ld.rep,Ld.egg] = sub_rep(Ld.gamma,Ld.nu,K_a,Ld.S(:,DY),Ld.egg);
 
 % Recruitment (from smaller size class)
-Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac);
+Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac*5);
 Sp.rec = sub_rec_larv(Lp.rep,Lp.bio,rfrac);
 Sd.rec = sub_rec_larv(Ld.rep,Ld.bio,rfrac);
 Mf.rec = sub_rec(Sf.gamma,Sf.bio);
