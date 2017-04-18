@@ -33,7 +33,7 @@ make_parameters()
 load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
 
 %! How long to run the model
-YEARS = 100;
+YEARS = 150;
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
@@ -51,11 +51,8 @@ ta = num2str(1000+int64(100*LP_phi_MF));
 tbe = num2str(100+int64(100*bent_eff));
 tmort = num2str(MORT);
 tcc = num2str(1000+int64(100*CC));
-if (rfrac >= 0.01)
-    tre = num2str(10000+int64(1000*rfrac));
-else
-    tre = num2str(100000+int64(round(10000*rfrac)));
-end
+tre = num2str(100000+int64(round(10000*rfrac)));
+tre2 = num2str(100000+int64(round(10000*rfrac*5)));
 if (frate >= 0.1)
     tfish = num2str(100+int64(10*frate));
 else
@@ -85,9 +82,11 @@ end
 tcfn = num2str(h);
 tefn = num2str(round(gam));
 if (harv==1)
-    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end),'_',sel,'_fish',tfish(2:end)];
 else
-    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
 end
 if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
     mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])

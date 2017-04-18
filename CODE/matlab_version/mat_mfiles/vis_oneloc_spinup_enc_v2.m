@@ -24,9 +24,9 @@ Ad = 'A075';
 Sm = 'Sm025';
 BE = '05';
 CC = '050';
-rfrac = RE{5};
-rfrac2 = RE2{3};
-cfn = 20;
+rfrac = RE{3};
+rfrac2 = '05000';
+cfn = 30;
 tcfn = num2str(cfn);
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
@@ -330,7 +330,7 @@ for n = 1:length(encs)
 %     cfile2 = ['Dc_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
 %         D,'_',J,'_',Ad,'_',Sm,...
 %         '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac,'_Enctests'];
-    cfile2 = ['Dc_fcrit',num2str(fcrit),'_',...
+    cfile2 = ['Dc_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
             D,'_',J,'_',Ad,'_',Sm,...
             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,...
             '_CmaxEnctests'];

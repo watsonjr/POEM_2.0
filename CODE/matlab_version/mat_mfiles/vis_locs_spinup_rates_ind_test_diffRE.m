@@ -8,11 +8,12 @@ close all
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-RE = {'1000','0500','0100','0050','00100','00050'};
+%RE = {'1000','0500','0100','0050','0010','00050'};
+RE = {'10000','05000','01000','00500','00100','00050'};
 RE2 = {'10000','05000','01000','00500','00100','00050'};
 reff = [1.0,0.5,0.1,0.05,0.01,0.005];
 sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
-efn = 70;
+efn = 100;
 tefn = num2str(efn);
 cfn = 20;
 tcfn = num2str(cfn);
@@ -34,7 +35,7 @@ tsm = num2str(1000+int64(100*Sm));
 BE = '05';
 CC = '050';
 rfrac = RE{5};
-rfrac2 = '00500';
+rfrac2 = RE2{3};
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -106,12 +107,12 @@ AB = (0.35 .* 4.5 .* M.^(-0.25)) ./365;
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
-% dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-%     D,'_',J,'_',Ad,'_',Sm,...
-%     '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
+%         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+%             D,'_',J,'_',Ad,'_',Sm,...
+%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
 dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-            D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+    D,'_',J,'_',Ad,'_',Sm,...
+    '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))

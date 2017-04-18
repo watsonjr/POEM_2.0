@@ -9,10 +9,13 @@ close all
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-cfile = 'Dc_enc30_cmax-metab15_fcrit20_D075_J075_A075_Sm025_nmort1_BE05_CC100_RE0010';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J075_A075_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00500';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 ppath = [pp cfile '/'];
+if (~isdir(ppath))
+    mkdir(ppath)
+end
 
 load([fpath 'Means_spinup_' cfile '.mat']);
 

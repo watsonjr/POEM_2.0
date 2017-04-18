@@ -3,7 +3,7 @@
 clear all
 close all
 
-cfile = 'Dc_enc30_cmax-metab15_fcrit20_D075_J075_A075_Sm025_nmort1_BE05_CC100_RE0010';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J075_A075_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00500';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 

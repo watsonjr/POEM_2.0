@@ -24,8 +24,8 @@ Ad = 'A075';
 Sm = 'Sm025';
 BE = '05';
 CC = '050';
-rfrac = RE{5};
-rfrac2 = RE2{3};
+rfrac = RE{3};
+rfrac2 = '05000';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...

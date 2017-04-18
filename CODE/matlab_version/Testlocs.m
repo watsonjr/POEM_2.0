@@ -22,9 +22,9 @@ Jprefs = 0.5:0.1:1;
 Aprefs = 0.7:0.1:1;
 Sprefs = 0:0.05:0.5;
 Sm = 0.25;  %Feeding 2 sizes down
-J = 0.75;   %Juvenile feeding reduction
+J = 0.5;   %Juvenile feeding reduction
 D = 0.75;   %Demersal feeding in pelagic reduction
-A = 0.75;   %Adult predation reduction
+A = 0.5;   %Adult predation reduction
 
 % for j = 1:length(Jprefs)
 %     J = Jprefs(j);
@@ -32,11 +32,11 @@ A = 0.75;   %Adult predation reduction
 %     for n = 1:length(Aprefs)
 %     A = Aprefs(n);
 
-for n = 1:length(cmaxs)
-    h = cmaxs(n);
-    
-    for g = 1:length(encs)
-        gam = encs(g);
+% for n = 1:length(cmaxs)
+%     h = cmaxs(n);
+%     
+%     for g = 1:length(encs)
+%         gam = encs(g);
         
         % for n = 1:length(RE)
         %     rfrac = RE(n);
@@ -59,7 +59,7 @@ for n = 1:length(cmaxs)
             load('/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_2000.mat');
             
             %! How long to run the model
-            YEARS = 100;
+            YEARS = 200;
             DAYS = 365;
             MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
             
@@ -82,7 +82,7 @@ for n = 1:length(cmaxs)
 %                 tre = num2str(10000+int64(1000*rfrac));
 %             else
                 tre = num2str(100000+int64(round(10000*rfrac)));
-                tre2 = num2str(100000+int64(round(10000*rfrac*5)));
+                tre2 = num2str(100000+int64(round(10000*rfrac*1)));
 %             end
             if (frate >= 0.1)
                 tfish = num2str(100+int64(10*frate));
@@ -114,11 +114,11 @@ for n = 1:length(cmaxs)
             tcfn = num2str(h);
             tefn = num2str(round(gam));
             if (harv==1)
-                %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end),'_',sel,'_fish',tfish(2:end)];
+                simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
+                %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end),'_',sel,'_fish',tfish(2:end)];
             else
-                %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+                simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+                %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
             end
             if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
                 mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
@@ -208,6 +208,6 @@ for n = 1:length(cmaxs)
                 'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
             
         end %Fmort
-    end %n
-end %j
+%     end %n
+% end %j
 end
