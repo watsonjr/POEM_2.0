@@ -13,9 +13,9 @@ global MFsel MPsel MDsel LPsel LDsel efn cfn
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Feeding preferences
 Sm = 0.25;  %Feeding 2 sizes down
-J = 0.75;   %Juvenile feeding reduction
+J = 1.0;   %Juvenile feeding reduction
 D = 0.75;   %Demersal feeding in pelagic reduction
-A = 0.75;    %Adult predation reduction
+A = 0.5;    %Adult predation reduction
 %! Set fishing rate
 frate = 0.0;
 dfrate = frate/365.0;
@@ -52,7 +52,7 @@ tbe = num2str(100+int64(100*bent_eff));
 tmort = num2str(MORT);
 tcc = num2str(1000+int64(100*CC));
 tre = num2str(100000+int64(round(10000*rfrac)));
-tre2 = num2str(100000+int64(round(10000*rfrac*5)));
+tre2 = num2str(100000+int64(round(10000*rfrac*3)));
 if (frate >= 0.1)
     tfish = num2str(100+int64(10*frate));
 else

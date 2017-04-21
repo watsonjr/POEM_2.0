@@ -8,9 +8,9 @@ close all
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-RE = {'1000','0500','0100','0050','0010','00050'};
-reff = [1.0,0.5,0.1,0.05,0.01,0.005];
-sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
+RE = {'1000','0500','0100','0050','0010'};
+reff = [1.0,0.5,0.1,0.05,0.01];
+sreff = {'1.0','0.5','0.1','0.05','0.01'};
 efn = 70;
 tefn = num2str(efn);
 cfn = 20;
@@ -20,11 +20,11 @@ nmort = '1';
 kad = 50;
 Dprefs = 0.1:0.1:1;
 Jprefs = 0.5:0.1:1;
-Aprefs = 0.5:0.1:1;
-Sprefs = 0.05:0.05:0.5;
+Aprefs = 0.7:0.1:1;
+Sprefs = 0:0.05:0.5;
 D = 0.75;
-J = 0.9;
-Ad = 1.0;
+J = 0.75;
+Ad = 0.75;
 Sm = 0.25;
 td = num2str(1000+int64(100*D));
 tj = num2str(1000+int64(100*J));
@@ -83,9 +83,9 @@ AB = (0.35 .* 4.5 .* M.^(-0.25)) ./365;
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
-for n = 1:length(Aprefs)
-    Ad = Aprefs(n);
-    ta = num2str(1000+int64(100*Ad));
+for n = 1:length(Dprefs)
+    D = Dprefs(n);
+    td = num2str(1000+int64(100*D));
     %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
 %             '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,...
 %             '_BE',BE,'_CC',CC,'_RE',rfrac];
@@ -94,9 +94,9 @@ for n = 1:length(Aprefs)
             '_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
     dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
-%     if (~isdir([figp char(dp)]))
-%         mkdir([figp char(dp)])
-%     end
+    if (~isdir([figp char(dp)]))
+        mkdir([figp char(dp)])
+    end
     cfile = char(dp);
     
     all_mean=NaN*ones(3,4,length(spots));
@@ -301,14 +301,14 @@ for n = 1:length(Aprefs)
 end %prefs
 
 %%
-prefs = Aprefs;
+prefs = Dprefs;
 np = length(prefs);
 fishsp  = NaN*ones(4,length(spots),np);
 mcon  = NaN*ones(3,np);
 mlev  = NaN*ones(3,np);
 for n = 1:np
-    Ad = Aprefs(n);
-    ta = num2str(1000+int64(100*Ad));
+    D = prefs(n);
+    td = num2str(1000+int64(100*D));
     %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
 %             '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,...
 %             '_BE',BE,'_CC',CC,'_RE',rfrac];
@@ -319,8 +319,8 @@ for n = 1:np
     fpath = [figp char(dp) '/'];
     cfile = char(dp);
     cfile2 = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
-        '_J',tj(2:end),'_Sm',tsm(2:end),'_nmort',nmort,...
-        '_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,'_AprefTests'];
+        '_J',tj(2:end),'_A',ta(2:end),'_nmort',nmort,'_BE',BE,'_CC',CC,...
+        '_lgRE',rfrac,'_mdRE',rfrac2,'_DprefTests'];
     
     load([dpath sname 'lastyr_sum_mean_biom.mat']);
     
@@ -371,12 +371,12 @@ for s=1:length(spots)
         text(t,-2.1,num2str(prefs(t)),'Rotation',45,'HorizontalAlignment','right')
     end
     if (s==11)
-        text(8,1.5,['D=' num2str(D)]);
-        text(8,1,['J=' num2str(J)]);
-        text(8,0.5,['Sm=' num2str(Sm)]);
-        text(8,0,['RE=' rfrac]);
-        text(8,-0.5,['enc=' tefn]);
-        text(8,-1,['cmax-metab=' tcfn]);
+        text(12,1.5,['Sm=' num2str(Sm)]);
+        text(12,1,['J=' num2str(J)]);
+        text(12,0.5,['A=' num2str(Ad)]);
+        text(12,0,['RE=' rfrac]);
+        text(12,-0.5,['enc=' tefn]);
+        text(12,-1,['cmax-metab=' tcfn]);
     end
     stamp(cfile2)
     title([loc ' All stages'])
@@ -386,26 +386,26 @@ print(f2,'-dpng',[figp sname cfile2 '_tot_mean_biomass_type_all_locs.png'])
 
 %% Prefs
 % Consump vs. weight
-% figure(1)
-% subplot(3,1,1)
-% bar(mcon(1,:))
-% set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
-% plot(0.5:10.5, Consumption(1,:),'--k','LineWidth',2)
-% ylabel('S')
-% title('Mean consumption (g yr^-^1)')
-% 
-% subplot(3,1,2)
-% bar(mcon(2,:))
-% set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
-% plot(0.5:10.5, Consumption(2,:),'--k','LineWidth',2)
-% ylabel('M')
-% 
-% subplot(3,1,3)
-% bar(mcon(3,:))
-% set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
-% plot(0.5:10.5, Consumption(3,:),'--k','LineWidth',2)
-% ylabel('L')
-% xlabel('Adult predation reduction')
+figure(1)
+subplot(3,1,1)
+bar(mcon(1,:))
+set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
+plot(0.5:10.5, Consumption(1,:),'--k','LineWidth',2)
+ylabel('S')
+title('Mean consumption (g yr^-^1)')
+
+subplot(3,1,2)
+bar(mcon(2,:))
+set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
+plot(0.5:10.5, Consumption(2,:),'--k','LineWidth',2)
+ylabel('M')
+
+subplot(3,1,3)
+bar(mcon(3,:))
+set(gca,'XTick',1:np,'XTickLabel',prefs); hold on;
+plot(0.5:10.5, Consumption(3,:),'--k','LineWidth',2)
+ylabel('L')
+xlabel('M pref for ZM')
 % print('-dpng',[figp sname cfile2 '_mean_con_size_all_locs.png'])
 
 % Feeding level
@@ -428,7 +428,7 @@ bar(mlev(3,:))
 ylim([0 1])
 set(gca,'XTick',1:np,'XTickLabel',prefs,'YTick',0.2:0.2:0.8);
 ylabel('L')
-xlabel('Adult predation reduction')
+xlabel('M pref for ZM')
 print('-dpng',[figp sname cfile2 '_mean_flev_size_all_locs.png'])
 
 

@@ -34,7 +34,7 @@ tsm = num2str(1000+int64(100*Sm));
 BE = '05';
 CC = '050';
 rfrac = RE{5};
-rfrac2 = '00500';
+rfrac2 = '00400';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
