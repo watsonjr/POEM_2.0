@@ -9,6 +9,7 @@ global bent_eff rfrac Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel MPsel MDsel LPsel LDsel
+global tstep K CGRD ni nj
 
 %%% COBALT information
 ENVR = get_COBALT(COBALT,ID,DY);
@@ -189,7 +190,7 @@ Ld.gamma = sub_gamma(K_a,Z_l,Ld.nu,Ld.die,Ld.bio,Ld.nmort,dfrate,LDsel);
 [Ld.gamma,Ld.nu,Ld.rep,Ld.egg] = sub_rep(Ld.gamma,Ld.nu,K_a,Ld.S(:,DY),Ld.egg);
 
 % Recruitment (from smaller size class)
-Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac*3);
+Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac*1);
 Sp.rec = sub_rec_larv(Lp.rep,Lp.bio,rfrac);
 Sd.rec = sub_rec_larv(Ld.rep,Ld.bio,rfrac);
 Mf.rec = sub_rec(Sf.gamma,Sf.bio);
@@ -216,6 +217,18 @@ Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmor
 [Md.bio, Md.caught] = sub_fishing_rate(Md.bio,dfrate,MDsel);
 [Lp.bio, Lp.caught] = sub_fishing_rate(Lp.bio,dfrate,LPsel);
 [Ld.bio, Ld.caught] = sub_fishing_rate(Ld.bio,dfrate,LDsel);
+
+% Advection-Diffusion
+% Sf.bio = sub_diff_sep(CGRD,Sf.bio,K,ni,nj,tstep);
+% Sp.bio = sub_diff_sep(CGRD,Sp.bio,K,ni,nj,tstep);
+% Sd.bio = sub_diff_sep(CGRD,Sd.bio,K,ni,nj,tstep);
+% Mf.bio = sub_diff_sep(CGRD,Mf.bio,K,ni,nj,tstep);
+% Mp.bio = sub_diff_sep(CGRD,Mp.bio,K,ni,nj,tstep);
+% Md.bio = sub_diff_sep(CGRD,Md.bio,K,ni,nj,tstep);
+% Lp.bio = sub_diff_sep(CGRD,Lp.bio,K,ni,nj,tstep);
+% Ld.bio = sub_diff_sep(CGRD,Ld.bio,K,ni,nj,tstep);
+[Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,Md.bio,Lp.bio,Ld.bio] = sub_diff(CGRD,K,...
+    ni,nj,tstep,Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,Md.bio,Lp.bio,Ld.bio);
 
 % Forward Euler checks for demographics and movement
 Sf.bio=sub_check(Sf.bio);

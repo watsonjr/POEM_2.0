@@ -8,9 +8,14 @@ function make_parameters()
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE  
     global MFsel MPsel MDsel LPsel LDsel
+    global tstep K
     
     %! Integration parameters
     DT = 1.0; % time step
+    tstep = 1.0;    % time step in hours for adv-diff
+    
+    % define diffusivity
+    K = 600.0;
     
     %! Which fishes harvested
     MPsel = 0.1;
@@ -67,7 +72,7 @@ function make_parameters()
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 0.01;
+    rfrac = 0.005;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;

@@ -9,7 +9,7 @@ close all
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J075_A075_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00500';
+cfile = 'Diff_Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_RE00050';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 ppath = [pp cfile '/'];
