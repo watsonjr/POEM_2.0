@@ -11,7 +11,7 @@ function make_parameters()
     global tstep K
     
     %! Integration parameters
-    DT = 1.0; % time step
+    DT = 1.0;       % time step
     tstep = 1.0;    % time step in hours for adv-diff
     
     % define diffusivity
