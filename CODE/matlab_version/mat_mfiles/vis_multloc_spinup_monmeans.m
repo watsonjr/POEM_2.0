@@ -6,8 +6,11 @@
 clear all
 close all
 
-cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
+Pdrpbx = '/Users/cpetrik/Dropbox/';
+Fdrpbx = '/Users/Colleen/Dropbox/';
+
+cpath = [Fdrpbx 'Princeton/POEM_other/grid_cobalt/'];
+pp = [Fdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 
 cfile = 'Diff_Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_RE00050';
 
@@ -19,7 +22,7 @@ end
 
 load([fpath 'Means_spinup_' cfile '.mat']);
 
-load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat',...
+load([Fdrpbx 'Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat'],...
     'geolon_t','geolat_t');
 grid = csvread([cpath 'grid_csv.csv']);
 
@@ -72,7 +75,7 @@ title('Spinup Pelagic Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
 legend('location','southeast')
-stamp(cfile)
+%stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
@@ -106,7 +109,7 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Immature','Adults')
 legend('location','southeast')
-stamp(cfile)
+%stamp(cfile)
 
 subplot(3,1,2)
 plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
@@ -133,7 +136,7 @@ title('Spinup Demersal Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
 legend('location','southeast')
-stamp(cfile)
+%stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
@@ -173,7 +176,7 @@ ylim([-5 2])
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 title('Spinup')
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_all_sizes.png'])
 
 figure(5)
@@ -228,7 +231,7 @@ ocean(grid(:,1))=ones(size(sf_mean));
 % colormap('jet')
 % colorbar('h')
 % caxis([1 2])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Ocean_cells.png'])
 
 % bent
@@ -239,7 +242,7 @@ title('log10 mean benthic biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2.5 0.5])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_BENT.png'])
 
 %
@@ -251,7 +254,7 @@ title('log10 mean benthic biomass (mg C m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-0.8 2.3])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_BENT_mgC.png'])
 
 % sp
@@ -262,7 +265,7 @@ title('log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SP.png'])
 
 % sf
@@ -273,7 +276,7 @@ title('log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SF.png'])
 
 % sd
@@ -284,7 +287,7 @@ title('log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_SD.png'])
 
 % mp
@@ -295,7 +298,7 @@ title('log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MP.png'])
 
 % mf
@@ -306,7 +309,7 @@ title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MF.png'])
 
 % md
@@ -317,7 +320,7 @@ title('log10 mean Juvenile D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_MD.png'])
 
 % lp
@@ -328,7 +331,7 @@ title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LP.png'])
 
 % ld
@@ -339,7 +342,7 @@ title('log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_LD.png'])
 
 %% Diff maps of all fish
@@ -369,7 +372,7 @@ title('log10 mean biomass All Fishes (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-1 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_All.png'])
 
 % all F
@@ -380,7 +383,7 @@ title('log10 mean biomass All F (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllF.png'])
 
 % all D
@@ -391,7 +394,7 @@ title('log10 mean biomass All D (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllD.png'])
 
 % All P
@@ -402,7 +405,7 @@ title('log10 mean biomass All P (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_AllP.png'])
 
 % FracPD
@@ -413,7 +416,7 @@ title('P:D mean biomass(g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_FracPD.png'])
 
 % FracPF
@@ -424,7 +427,7 @@ title('P:F mean biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([0 1])
-stamp(cfile)
+%stamp(cfile)
 print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 
 % %% FracPFvD
@@ -435,7 +438,7 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Spinup_global_FracPFvD.png'])
 % 
 % % FracPDs
@@ -446,7 +449,7 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Spinup_global_FracPDs.png'])
 % 
 % % FracPFs
@@ -457,7 +460,7 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Spinup_global_FracPFs.png'])
 % 
 % % FracPFvDs
@@ -468,7 +471,7 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Spinup_global_FracPFvDs.png'])
 % 
 % % FracPDm
@@ -479,7 +482,7 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Spinup_global_FracPDm.png'])
 % 
 % % FracPFm
@@ -490,7 +493,7 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Spinup_global_FracPFm.png'])
 % 
 % % FracPFvDm
@@ -501,6 +504,6 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% stamp(cfile)
+% %stamp(cfile)
 % print('-dpng',[ppath 'Spinup_global_FracPFvDm.png'])
 % 

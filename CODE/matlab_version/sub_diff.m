@@ -94,6 +94,15 @@ for n = 1:nt
                 gradTi6(i,j) = (T6(isd,j) - T6(i,j)) ./ dyte(i,j) *mask(i,j)*mask(isd,j);
                 gradTi7(i,j) = (T7(isd,j) - T7(i,j)) ./ dyte(i,j) *mask(i,j)*mask(isd,j);
                 gradTi8(i,j) = (T8(isd,j) - T8(i,j)) ./ dyte(i,j) *mask(i,j)*mask(isd,j);
+            else
+                gradTi1(i,j) = (T1(i+1,j) - T1(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
+                gradTi2(i,j) = (T2(i+1,j) - T2(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
+                gradTi3(i,j) = (T3(i+1,j) - T3(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
+                gradTi4(i,j) = (T4(i+1,j) - T4(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
+                gradTi5(i,j) = (T5(i+1,j) - T5(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
+                gradTi6(i,j) = (T6(i+1,j) - T6(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
+                gradTi7(i,j) = (T7(i+1,j) - T7(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
+                gradTi8(i,j) = (T8(i+1,j) - T8(i,j)) ./ dyte(i,j) *mask(i,j)*mask(i+1,j);
             end
         end
     end

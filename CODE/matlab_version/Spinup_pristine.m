@@ -39,11 +39,13 @@ DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %! choose where and when to run the model
-load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
+Pdrpbx = '/Users/cpetrik/Dropbox/';
+Fdrpbx = '/Users/Colleen/Dropbox/';
+load([Fdrpbx 'Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat']);
 NX = 48111;
 ID = 1:NX;
 %2D Grid for advect-diff
-load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Hindcast_cgrid_cp2D.mat');
+load([Fdrpbx 'Princeton/POEM_2.0/CODE/Data/Hindcast_cgrid_cp2D.mat']);
 [ni,nj] = size(CGRD.mask);
 
 %! Create a directory for output
@@ -97,8 +99,8 @@ end
 if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
     mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])
 end
-if (~isdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
-    mkdir(['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
+if (~isdir([Fdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
+    mkdir([Fdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
 end
 
 %! Storage variables
