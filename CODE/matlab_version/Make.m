@@ -5,12 +5,12 @@ close all
 
 %%%%!! EXPERIMENTS
 testoneloc = false;
-testlocs = false;
+testlocs = true;
 testonelocP = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
-spinup_pristine = true;
+spinup_pristine = false;
 pre_industrial = false;
 historic_pristine = false;
 historic_fished = false;

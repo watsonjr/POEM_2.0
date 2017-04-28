@@ -22,12 +22,12 @@ Jprefs = 0.5:0.1:1;
 Aprefs = 0.5:0.1:1;
 Sprefs = 0:0.05:0.5;
 Sm = 0.25;  %Feeding 2 sizes down
-J = 0.75;   %Juvenile feeding reduction
+J = 1.0;   %Juvenile feeding reduction
 D = 0.75;   %Demersal feeding in pelagic reduction
 A = 0.5;   %Adult predation reduction
 
-for j = 1:length(Jprefs)
-    J = Jprefs(j);
+% for j = 1:length(Jprefs)
+%     J = Jprefs(j);
 
 %     for n = 1:length(Aprefs)
 %     A = Aprefs(n);
@@ -41,7 +41,7 @@ for j = 1:length(Jprefs)
         % for n = 1:length(RE)
         %     rfrac = RE(n);
         
-        for F = 1%:length(Fmort)
+        for F = 1:length(Fmort)
             %! Set fishing rate
             frate = Fmort(F);
             dfrate = Fmort(F)/365.0;
@@ -64,7 +64,7 @@ for j = 1:length(Jprefs)
             MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
             
             %! Where to run the model
-            load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
+            load('/Volumes/GFDL/Data/Data_grid_hindcast_NOTflipped.mat');
             ids = [40319,42639,41782,36334,38309,42744,30051,41284,38003,19327,20045];
             names = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
             ID = ids;
@@ -82,7 +82,7 @@ for j = 1:length(Jprefs)
 %                 tre = num2str(10000+int64(1000*rfrac));
 %             else
                 tre = num2str(100000+int64(round(10000*rfrac)));
-                tre2 = num2str(100000+int64(round(10000*rfrac*3)));
+                tre2 = num2str(100000+int64(round(10000*rfrac*4)));
 %             end
             if (frate >= 0.1)
                 tfish = num2str(100+int64(10*frate));
@@ -93,15 +93,15 @@ for j = 1:length(Jprefs)
                 if (LPsel == 1 && LDsel == 1)
                     sel='All';
                 else
-                    sel='MF';
+                    sel='F';
                 end
             else
                 if (LPsel == 1 && LDsel == 1)
                     sel = 'L';
                 elseif (LPsel == 1)
-                    sel = 'LP';
+                    sel = 'P';
                 elseif (LDsel == 1)
-                    sel = 'LD';
+                    sel = 'D';
                 end
             end
             if (pdc == 0)
@@ -113,13 +113,8 @@ for j = 1:length(Jprefs)
             end
             tcfn = num2str(h);
             tefn = num2str(round(gam));
-            if (harv==1)
-                %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end),'_',sel,'_fish',tfish(2:end)];
-                simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end),'_',sel,'_fish',tfish(2:end)];
-            else
-                %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-                simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            end
+            %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+            simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
             if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
                 mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
             end
@@ -182,6 +177,7 @@ for j = 1:length(Jprefs)
                     Spinup_Cobalt(DY,:,:) = [BENT.mass BENT.pred ENVR.fZm ENVR.fZl ENVR.fB]';
                     %end
                     
+   
                 end %Days
                 
                 %! Calculate monthly means and save
@@ -204,10 +200,14 @@ for j = 1:length(Jprefs)
             end %Years
             
             %%% Save
-            save(['/Volumes/GFDL/CSV/Matlab_new_size/' simname '/Spinup_locs.mat'],...
+            if harv==1
+                save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Spinup_locs','_',sel,'_fish',tfish(2:end),'.mat'],...
                 'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
-            
+            else
+                save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Spinup_locs.mat'],...
+                'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
+            end
         end %Fmort
 %     end %n
-end %j
+% end %j
 end

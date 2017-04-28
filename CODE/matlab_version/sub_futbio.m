@@ -190,7 +190,7 @@ Ld.gamma = sub_gamma(K_a,Z_l,Ld.nu,Ld.die,Ld.bio,Ld.nmort,dfrate,LDsel);
 [Ld.gamma,Ld.nu,Ld.rep,Ld.egg] = sub_rep(Ld.gamma,Ld.nu,K_a,Ld.S(:,DY),Ld.egg);
 
 % Recruitment (from smaller size class)
-Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac*1);
+Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac*4);
 Sp.rec = sub_rec_larv(Lp.rep,Lp.bio,rfrac);
 Sd.rec = sub_rec_larv(Ld.rep,Ld.bio,rfrac);
 Mf.rec = sub_rec(Sf.gamma,Sf.bio);
@@ -227,8 +227,8 @@ Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmor
 % Md.bio = sub_diff_sep(CGRD,Md.bio,K,ni,nj,tstep);
 % Lp.bio = sub_diff_sep(CGRD,Lp.bio,K,ni,nj,tstep);
 % Ld.bio = sub_diff_sep(CGRD,Ld.bio,K,ni,nj,tstep);
-[Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,Md.bio,Lp.bio,Ld.bio] = sub_diff(CGRD,K,...
-    ni,nj,tstep,Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,Md.bio,Lp.bio,Ld.bio);
+% [Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,Md.bio,Lp.bio,Ld.bio] = sub_diff(CGRD,K,...
+%     ni,nj,tstep,Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,Md.bio,Lp.bio,Ld.bio);
 
 % Forward Euler checks for demographics and movement
 Sf.bio=sub_check(Sf.bio);

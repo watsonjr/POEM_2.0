@@ -18,10 +18,10 @@ function make_parameters()
     K = 600.0;
     
     %! Which fishes harvested
-    MPsel = 0.1;
+    MPsel = 0;
     MDsel = 0.1;
-    MFsel = 1;
-    LPsel = 1;
+    MFsel = 0;
+    LPsel = 0;
     LDsel = 1;
 
     %! Benthic-pelagic coupling cutoff (depth, m)
@@ -72,7 +72,7 @@ function make_parameters()
     CC = 0.5;
 
     %%%! Reproductive efficiency
-    rfrac = 0.005;
+    rfrac = 0.01;
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
