@@ -6,13 +6,14 @@ close all
 
 gpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/';
-dp = '/Volumes/GFDL/NC/Jul_og_sizes/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Julia_OG_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
+dp = '/Volumes/GFDL/NC/Matlab_new_size/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00400';
+harv = '03';
 
-dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
+dpath = [dp cfile '/'];
 
 load([gpath 'hindcast_gridspec.mat'],'dat','geolat_t','geolon_t');
 load([gpath 'lme_mask_esm2m.mat']);
@@ -53,9 +54,9 @@ cmap4(3,:)=cmap_ppt(5,:);
 % Biomes 1 = LC; 2 = ECCS; 3 = ECSS;
 
 %% Hist fished
-load([dpath 'LME_hist_fished_' cfile '.mat'],'lme_bio00','lme_mbio00');
-load([dpath 'Biomes_hist_fished_' cfile '.mat'],'biome_mbio50');
-load([dpath 'Means_hist_fished_' cfile '.mat'],'sf_mean5000','sp_mean5000',...
+load([dpath 'LME_hist_fished',harv,'_' cfile '.mat'],'lme_bio50','lme_mbio50');
+load([dpath 'Biomes_hist_fished',harv,'_' cfile '.mat'],'biome_mbio50');
+load([dpath 'Means_hist_fished',harv,'_' cfile '.mat'],'sf_mean5000','sp_mean5000',...
     'sd_mean5000','mf_mean5000','mp_mean5000','md_mean5000','b_mean5000',...
     'lp_mean5000','ld_mean5000');
 

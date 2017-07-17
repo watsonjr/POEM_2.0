@@ -1,652 +1,511 @@
 %%%%!! RUN FORECASE WITHOUT FISHING FOR ALL LOCATIONS
 function Forecast_pristine()
 
-	%%%%%%%%%%%%%%% Initialize Model Variables
-	%! Make parameters
-	make_parameters(0) % make core parameters/constants
-
-	%! Add phenology params from csv file with ID as row
-	Tref = readdlm('./Data/grid_phenol_T0raw_NOflip.csv',','); %min temp for each yr at each location
-	%global TrefP = readdlm('./Data/grid_phenol_T0p_clim_min_NOflip.csv',','); %1901-1950 climatological min temp at each location for upper 100m
-	%global TrefB = readdlm('./Data/grid_phenol_T0b_clim_min_NOflip.csv',','); %1901-1950 climatological min temp at each location for bottom
-	global TrefP = Tref
-	global TrefB = Tref
-	global Dthresh = readdlm('./Data/grid_phenol_DTraw_NOflip.csv',',');
-	global Sp = readdlm('./Data/Gaussian_spawn_2mo.csv',',');
-	global GRD = load('./Data/Data_grid_hindcast_NOTflipped.jld')
-	YEARS = 95
-  global DAYS = 365
-	const global MNTH = collect((31,28,31,30,31,30,31,31,30,31,30,31)) % days in month
-
-	%! choose where and when to run the model
-	const global NX = 48111
-	const global ID = collect(1:NX);
-
-	simname = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit40_MZ01_NOnmort_BE05';
-
-	%! Initialize
-	phen=0;
-	Sml_f, Sml_p, Sml_d, Med_f, Med_p, Med_d, Lrg_p, Lrg_d, BENT = sub_init_fish(ID,phen);
-	Med_d.td(1:NX) = 0.0;
-	Lrg_d.td(1:NX) = 0.0;
-	ENVR = sub_init_env(ID);
-	%! read in final biomass from historic run
-	sf=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_sml_f.nc'),'biomass');
-	sp=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_sml_p.nc'),'biomass');
-	sd=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_sml_d.nc'),'biomass');
-	mf=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_med_f.nc'),'biomass');
-	mp=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_med_p.nc'),'biomass');
-	md=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_med_d.nc'),'biomass');
-	lp=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_lrg_p.nc'),'biomass');
-	ld=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_lrg_d.nc'),'biomass');
-	bent=ncread(string('/Volumes/GFDL/NC/', simname, '/Data_hist_pristine_bent.nc'),'biomass');
-	Sml_f.bio = sf(:,1740);
-	Sml_p.bio = sp(:,1740);
-	Sml_d.bio = sd(:,1740);
-	Med_f.bio = mf(:,1740);
-	Med_p.bio = mp(:,1740);
-	Med_d.bio = md(:,1740);
-	Lrg_p.bio = lp(:,1740);
-	Lrg_d.bio = ld(:,1740);
-	BENT.mass = bent(:,1740);
-
-
-	%%%%%%%%%%%%%%% Setup NetCDF save
-	% %! Init netcdf file for storage
-	% %biomatts = {'longname' => 'Biomass','units' => 'kg/m^2'}
-	% %X_atts = {'longname' => 'Space', 'units' => 'grid cell'}
-	% %timatts = {'longname' => 'Time', 'units' => 'hours since 01-01-2000 00:00:00'}
-	% %Use 'Dict{Any,Any}(a=>b, ...)' instead.
-	biomatts = Dict('longname' => 'Biomass',
-	         'units'    => 'g/m^2')
-	X_atts = Dict('longname' => 'Space',
-			'units'    => 'grid cell')
-	timatts = Dict('longname' => 'Time',
-			'units'    => 'days since 01-01-1980 00:00:00')
-	specatts = Dict('longname' => 'Biomass rate',
-			         'units'    => 'g/g/day')
-	fracatts = Dict('longname' => 'Fraction',
-			'units'    => 'unitless')
-	DDatts = Dict('longname' => 'Cumulative degree days',
-			'units'    => 'degrees Celsius')
-
-	% %! Init dims of netcdf file
-	X   = collect(1:NX);
-	tim = collect(1:12*YEARS);
-
-	% %! setup netcdf path to store to
-	file_sml_f = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_sml_f.nc')
-	file_sml_p = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_sml_p.nc')
-	file_sml_d = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_sml_d.nc')
-	file_med_f = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_med_f.nc')
-	file_med_p = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_med_p.nc')
-	file_med_d = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_med_d.nc')
-	file_lrg_p = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_lrg_p.nc')
-	file_lrg_d = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_lrg_d.nc')
-	file_bent = string('/Volumes/GFDL/NC/',simname, '/Data_fore_pristine_bent.nc')
-
-	% %! remove if already in existence
-	isfile(file_sml_f) ? rm(file_sml_f) : nothing
-	isfile(file_sml_p) ? rm(file_sml_p) : nothing
-	isfile(file_sml_d) ? rm(file_sml_d) : nothing
-	isfile(file_med_f) ? rm(file_med_f) : nothing
-	isfile(file_med_p) ? rm(file_med_p) : nothing
-	isfile(file_med_d) ? rm(file_med_d) : nothing
-	isfile(file_lrg_p) ? rm(file_lrg_p) : nothing
-	isfile(file_lrg_d) ? rm(file_lrg_d) : nothing
-	isfile(file_bent) ? rm(file_bent) : nothing
-
-	nccreate(file_sml_f,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_sml_p,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_sml_d,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_f,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_p,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_d,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_lrg_p,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_lrg_d,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_bent,'biomass','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-
-	nccreate(file_sml_f,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_sml_p,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_sml_d,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_f,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_p,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_d,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_lrg_p,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_lrg_d,'prod','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-
-	nccreate(file_sml_f,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_sml_p,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_sml_d,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_f,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_p,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_med_d,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_lrg_p,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-	nccreate(file_lrg_d,'rec','X',X,X_atts,'time',tim,timatts,atts=biomatts);
-
-	nccreate(file_sml_f,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_p,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_d,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_f,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_p,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_d,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_p,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_d,'con','X',X,X_atts,'time',tim,timatts,atts=specatts);
-
-	nccreate(file_sml_f,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_p,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_d,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_f,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_p,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_d,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_p,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_d,'nu','X',X,X_atts,'time',tim,timatts,atts=specatts);
-
-	nccreate(file_sml_f,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_p,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_d,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_f,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_p,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_d,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_p,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_d,'gamma','X',X,X_atts,'time',tim,timatts,atts=specatts);
-
-	nccreate(file_sml_f,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_p,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_d,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_f,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_p,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_d,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_p,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_d,'rep','X',X,X_atts,'time',tim,timatts,atts=specatts);
-
-	nccreate(file_sml_f,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_p,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_d,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_f,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_p,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_d,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_p,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_d,'egg','X',X,X_atts,'time',tim,timatts,atts=specatts);
-
-	nccreate(file_sml_f,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_p,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_sml_d,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_f,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_p,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_med_d,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_p,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-	nccreate(file_lrg_d,'die','X',X,X_atts,'time',tim,timatts,atts=specatts);
-
-	nccreate(file_sml_f,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-	nccreate(file_sml_p,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-	nccreate(file_sml_d,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-	nccreate(file_med_f,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-	nccreate(file_med_p,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-	nccreate(file_med_d,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-	nccreate(file_lrg_p,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-	nccreate(file_lrg_d,'clev','X',X,X_atts,'time',tim,timatts,atts=fracatts);
-
-	nccreate(file_sml_f,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-	nccreate(file_sml_p,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-	nccreate(file_sml_d,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-	nccreate(file_med_f,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-	nccreate(file_med_p,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-	nccreate(file_med_d,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-	nccreate(file_lrg_p,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-	nccreate(file_lrg_d,'S','X',X,X_atts,'time',tim,timatts,atts=fracatts)
-
-	nccreate(file_sml_f,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-	nccreate(file_sml_p,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-	nccreate(file_sml_d,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-	nccreate(file_med_f,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-	nccreate(file_med_p,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-	nccreate(file_med_d,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-	nccreate(file_lrg_p,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-	nccreate(file_lrg_d,'DD','X',X,X_atts,'time',tim,timatts,atts=DDatts)
-
-	% %! Initializing netcdf files
-	println('Initializing file system (takes about 5 minutes)')
-	ncwrite(zeros(NX,1),file_sml_f,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'biomass',(1,1))
-	ncwrite(zeros(NX,1),file_bent,'biomass',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'prod',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'prod',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'prod',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'prod',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'prod',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'prod',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'prod',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'prod',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'con',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'con',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'con',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'con',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'con',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'con',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'con',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'con',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'rec',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'rec',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'rec',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'rec',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'rec',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'rec',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'rec',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'rec',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'nu',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'nu',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'nu',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'nu',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'nu',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'nu',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'nu',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'nu',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'gamma',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'gamma',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'gamma',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'gamma',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'gamma',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'gamma',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'gamma',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'gamma',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'rep',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'rep',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'rep',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'rep',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'rep',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'rep',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'rep',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'rep',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'egg',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'egg',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'egg',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'egg',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'egg',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'egg',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'egg',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'egg',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'die',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'die',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'die',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'die',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'die',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'die',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'die',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'die',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'clev',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'clev',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'clev',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'clev',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'clev',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'clev',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'clev',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'clev',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'S',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'S',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'S',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'S',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'S',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'S',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'S',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'S',(1,1))
-
-	ncwrite(zeros(NX,1),file_sml_f,'DD',(1,1))
-	ncwrite(zeros(NX,1),file_sml_p,'DD',(1,1))
-	ncwrite(zeros(NX,1),file_sml_d,'DD',(1,1))
-	ncwrite(zeros(NX,1),file_med_f,'DD',(1,1))
-	ncwrite(zeros(NX,1),file_med_p,'DD',(1,1))
-	ncwrite(zeros(NX,1),file_med_d,'DD',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_p,'DD',(1,1))
-	ncwrite(zeros(NX,1),file_lrg_d,'DD',(1,1))
-
-	%%%%%%%%%%%%%%%%%%%%%% Run the Model
-	%! Run model with no fishing
-	MNT = 0
-	for YR = 1:YEARS % years
-		%! Load a year's COBALT data
-		ti = string(2005+YR)
-		COBALT = load(string('/Volumes/GFDL/POEM_JLD/rcp85/Data_rcp85_',ti(1:end),'.jld'));
-
-		%! Storage variables
-		S_Bent_bio = zeros(NX,DAYS);
-
-		S_Sml_f = zeros(NX,DAYS);
-		S_Sml_p = zeros(NX,DAYS);
-		S_Sml_d = zeros(NX,DAYS);
-		S_Med_f = zeros(NX,DAYS);
-		S_Med_p = zeros(NX,DAYS);
-		S_Med_d = zeros(NX,DAYS);
-		S_Lrg_p = zeros(NX,DAYS);
-		S_Lrg_d = zeros(NX,DAYS);
-
-		S_Sml_f_rec = zeros(NX,DAYS);
-		S_Sml_p_rec = zeros(NX,DAYS);
-		S_Sml_d_rec = zeros(NX,DAYS);
-		S_Med_f_rec = zeros(NX,DAYS);
-		S_Med_p_rec = zeros(NX,DAYS);
-		S_Med_d_rec = zeros(NX,DAYS);
-		S_Lrg_p_rec = zeros(NX,DAYS);
-		S_Lrg_d_rec = zeros(NX,DAYS);
-
-		S_Sml_f_con = zeros(NX,DAYS);
-		S_Sml_p_con = zeros(NX,DAYS);
-		S_Sml_d_con = zeros(NX,DAYS);
-		S_Med_f_con = zeros(NX,DAYS);
-		S_Med_p_con = zeros(NX,DAYS);
-		S_Med_d_con = zeros(NX,DAYS);
-		S_Lrg_p_con = zeros(NX,DAYS);
-		S_Lrg_d_con = zeros(NX,DAYS);
-
-		S_Sml_f_nu = zeros(NX,DAYS);
-		S_Sml_p_nu = zeros(NX,DAYS);
-		S_Sml_d_nu = zeros(NX,DAYS);
-		S_Med_f_nu = zeros(NX,DAYS);
-		S_Med_p_nu = zeros(NX,DAYS);
-		S_Med_d_nu = zeros(NX,DAYS);
-		S_Lrg_p_nu = zeros(NX,DAYS);
-		S_Lrg_d_nu = zeros(NX,DAYS);
-
-		S_Sml_f_prod = zeros(NX,DAYS);
-		S_Sml_p_prod = zeros(NX,DAYS);
-		S_Sml_d_prod = zeros(NX,DAYS);
-		S_Med_f_prod = zeros(NX,DAYS);
-		S_Med_p_prod = zeros(NX,DAYS);
-		S_Med_d_prod = zeros(NX,DAYS);
-		S_Lrg_p_prod = zeros(NX,DAYS);
-		S_Lrg_d_prod = zeros(NX,DAYS);
-
-		S_Sml_f_gamma = zeros(NX,DAYS);
-		S_Sml_p_gamma = zeros(NX,DAYS);
-		S_Sml_d_gamma = zeros(NX,DAYS);
-		S_Med_f_gamma = zeros(NX,DAYS);
-		S_Med_p_gamma = zeros(NX,DAYS);
-		S_Med_d_gamma = zeros(NX,DAYS);
-		S_Lrg_p_gamma = zeros(NX,DAYS);
-		S_Lrg_d_gamma = zeros(NX,DAYS);
-
-		S_Sml_f_rep = zeros(NX,DAYS);
-		S_Sml_p_rep = zeros(NX,DAYS);
-		S_Sml_d_rep = zeros(NX,DAYS);
-		S_Med_f_rep = zeros(NX,DAYS);
-		S_Med_p_rep = zeros(NX,DAYS);
-		S_Med_d_rep = zeros(NX,DAYS);
-		S_Lrg_p_rep = zeros(NX,DAYS);
-		S_Lrg_d_rep = zeros(NX,DAYS);
-
-		S_Sml_f_egg = zeros(NX,DAYS);
-		S_Sml_p_egg = zeros(NX,DAYS);
-		S_Sml_d_egg = zeros(NX,DAYS);
-		S_Med_f_egg = zeros(NX,DAYS);
-		S_Med_p_egg = zeros(NX,DAYS);
-		S_Med_d_egg = zeros(NX,DAYS);
-		S_Lrg_p_egg = zeros(NX,DAYS);
-		S_Lrg_d_egg = zeros(NX,DAYS);
-
-		S_Sml_f_die = zeros(NX,DAYS);
-		S_Sml_p_die = zeros(NX,DAYS);
-		S_Sml_d_die = zeros(NX,DAYS);
-		S_Med_f_die = zeros(NX,DAYS);
-		S_Med_p_die = zeros(NX,DAYS);
-		S_Med_d_die = zeros(NX,DAYS);
-		S_Lrg_p_die = zeros(NX,DAYS);
-		S_Lrg_d_die = zeros(NX,DAYS);
-
-		S_Sml_f_clev = zeros(NX,DAYS);
-		S_Sml_p_clev = zeros(NX,DAYS);
-		S_Sml_d_clev = zeros(NX,DAYS);
-		S_Med_f_clev = zeros(NX,DAYS);
-		S_Med_p_clev = zeros(NX,DAYS);
-		S_Med_d_clev = zeros(NX,DAYS);
-		S_Lrg_p_clev = zeros(NX,DAYS);
-		S_Lrg_d_clev = zeros(NX,DAYS);
-
-		S_Sml_f_S = zeros(NX,DAYS);
-		S_Sml_p_S = zeros(NX,DAYS);
-		S_Sml_d_S = zeros(NX,DAYS);
-		S_Med_f_S = zeros(NX,DAYS);
-		S_Med_p_S = zeros(NX,DAYS);
-		S_Med_d_S = zeros(NX,DAYS);
-		S_Lrg_p_S = zeros(NX,DAYS);
-		S_Lrg_d_S = zeros(NX,DAYS);
-
-		S_Sml_f_DD = zeros(NX,DAYS);
-		S_Sml_p_DD = zeros(NX,DAYS);
-		S_Sml_d_DD = zeros(NX,DAYS);
-		S_Med_f_DD = zeros(NX,DAYS);
-		S_Med_p_DD = zeros(NX,DAYS);
-		S_Med_d_DD = zeros(NX,DAYS);
-		S_Lrg_p_DD = zeros(NX,DAYS);
-		S_Lrg_d_DD = zeros(NX,DAYS);
-
-		%reset spawning flag
-		if (phen == 1)
-			Med_f.S = zeros(Float64,NX,DAYS)
-			Lrg_d.S = zeros(Float64,NX,DAYS)
-			Lrg_p.S = zeros(Float64,NX,DAYS)
-		end
-
-		for DAY = 1:DT:DAYS % days
-
-			%%%! Future time step
-			DY  = Int(ceil(DAY))
-			println(ti,' , ', mod(DY,365))
-			sub_futbio!(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
-
-			%! Store
-			for i = 1:NX
-				S_Bent_bio(i,DY) = BENT.mass(i)
-
-				S_Sml_f(i,DY) = Sml_f.bio(i)
-				S_Sml_p(i,DY) = Sml_p.bio(i)
-				S_Sml_d(i,DY) = Sml_d.bio(i)
-				S_Med_f(i,DY) = Med_f.bio(i)
-				S_Med_p(i,DY) = Med_p.bio(i)
-				S_Med_d(i,DY) = Med_d.bio(i)
-				S_Lrg_p(i,DY) = Lrg_p.bio(i)
-				S_Lrg_d(i,DY) = Lrg_d.bio(i)
-
-				S_Sml_f_rec(i,DY) = Sml_f.rec(i)
-				S_Sml_p_rec(i,DY) = Sml_p.rec(i)
-				S_Sml_d_rec(i,DY) = Sml_d.rec(i)
-				S_Med_f_rec(i,DY) = Med_f.rec(i)
-				S_Med_p_rec(i,DY) = Med_p.rec(i)
-				S_Med_d_rec(i,DY) = Med_d.rec(i)
-				S_Lrg_p_rec(i,DY) = Lrg_p.rec(i)
-				S_Lrg_d_rec(i,DY) = Lrg_d.rec(i)
-
-				S_Sml_f_con(i,DY) = Sml_f.I(i)
-				S_Sml_p_con(i,DY) = Sml_p.I(i)
-				S_Sml_d_con(i,DY) = Sml_d.I(i)
-				S_Med_f_con(i,DY) = Med_f.I(i)
-				S_Med_p_con(i,DY) = Med_p.I(i)
-				S_Med_d_con(i,DY) = Med_d.I(i)
-				S_Lrg_p_con(i,DY) = Lrg_p.I(i)
-				S_Lrg_d_con(i,DY) = Lrg_d.I(i)
-
-				S_Sml_f_nu(i,DY) = Sml_f.nu(i)
-				S_Sml_p_nu(i,DY) = Sml_p.nu(i)
-				S_Sml_d_nu(i,DY) = Sml_d.nu(i)
-				S_Med_f_nu(i,DY) = Med_f.nu(i)
-				S_Med_p_nu(i,DY) = Med_p.nu(i)
-				S_Med_d_nu(i,DY) = Med_d.nu(i)
-				S_Lrg_p_nu(i,DY) = Lrg_p.nu(i)
-				S_Lrg_d_nu(i,DY) = Lrg_d.nu(i)
-
-				S_Sml_f_prod(i,DY) = Sml_f.prod(i)
-				S_Sml_p_prod(i,DY) = Sml_p.prod(i)
-				S_Sml_d_prod(i,DY) = Sml_d.prod(i)
-				S_Med_f_prod(i,DY) = Med_f.prod(i)
-				S_Med_p_prod(i,DY) = Med_p.prod(i)
-				S_Med_d_prod(i,DY) = Med_d.prod(i)
-				S_Lrg_p_prod(i,DY) = Lrg_p.prod(i)
-				S_Lrg_d_prod(i,DY) = Lrg_d.prod(i)
-
-				S_Sml_f_gamma(i,DY) = Sml_f.gamma(i)
-				S_Sml_p_gamma(i,DY) = Sml_p.gamma(i)
-				S_Sml_d_gamma(i,DY) = Sml_d.gamma(i)
-				S_Med_f_gamma(i,DY) = Med_f.gamma(i)
-				S_Med_p_gamma(i,DY) = Med_p.gamma(i)
-				S_Med_d_gamma(i,DY) = Med_d.gamma(i)
-				S_Lrg_p_gamma(i,DY) = Lrg_p.gamma(i)
-				S_Lrg_d_gamma(i,DY) = Lrg_d.gamma(i)
-
-				S_Sml_f_rep(i,DY) = Sml_f.rep(i)
-				S_Sml_p_rep(i,DY) = Sml_p.rep(i)
-				S_Sml_d_rep(i,DY) = Sml_d.rep(i)
-				S_Med_f_rep(i,DY) = Med_f.rep(i)
-				S_Med_p_rep(i,DY) = Med_p.rep(i)
-				S_Med_d_rep(i,DY) = Med_d.rep(i)
-				S_Lrg_p_rep(i,DY) = Lrg_p.rep(i)
-				S_Lrg_d_rep(i,DY) = Lrg_d.rep(i)
-
-				S_Sml_f_egg(i,DY) = Sml_f.egg(i)
-				S_Sml_p_egg(i,DY) = Sml_p.egg(i)
-				S_Sml_d_egg(i,DY) = Sml_d.egg(i)
-				S_Med_f_egg(i,DY) = Med_f.egg(i)
-				S_Med_p_egg(i,DY) = Med_p.egg(i)
-				S_Med_d_egg(i,DY) = Med_d.egg(i)
-				S_Lrg_p_egg(i,DY) = Lrg_p.egg(i)
-				S_Lrg_d_egg(i,DY) = Lrg_d.egg(i)
-
-				S_Sml_f_die(i,DY) = Sml_f.die(i)
-				S_Sml_p_die(i,DY) = Sml_p.die(i)
-				S_Sml_d_die(i,DY) = Sml_d.die(i)
-				S_Med_f_die(i,DY) = Med_f.die(i)
-				S_Med_p_die(i,DY) = Med_p.die(i)
-				S_Med_d_die(i,DY) = Med_d.die(i)
-				S_Lrg_p_die(i,DY) = Lrg_p.die(i)
-				S_Lrg_d_die(i,DY) = Lrg_d.die(i)
-
-				S_Sml_f_clev(i,DY) = Sml_f.clev(i)
-				S_Sml_p_clev(i,DY) = Sml_p.clev(i)
-				S_Sml_d_clev(i,DY) = Sml_d.clev(i)
-				S_Med_f_clev(i,DY) = Med_f.clev(i)
-				S_Med_p_clev(i,DY) = Med_p.clev(i)
-				S_Med_d_clev(i,DY) = Med_d.clev(i)
-				S_Lrg_p_clev(i,DY) = Lrg_p.clev(i)
-				S_Lrg_d_clev(i,DY) = Lrg_d.clev(i)
-
-				S_Sml_f_S(i,DY) = Sml_f.S(i)
-				S_Sml_p_S(i,DY) = Sml_p.S(i)
-				S_Sml_d_S(i,DY) = Sml_d.S(i)
-				S_Med_f_S(i,DY) = Med_f.S(i)
-				S_Med_p_S(i,DY) = Med_p.S(i)
-				S_Med_d_S(i,DY) = Med_d.S(i)
-				S_Lrg_p_S(i,DY) = Lrg_p.S(i)
-				S_Lrg_d_S(i,DY) = Lrg_d.S(i)
-
-				S_Sml_f_DD(i,DY) = Sml_f.DD(i)
-				S_Sml_p_DD(i,DY) = Sml_p.DD(i)
-				S_Sml_d_DD(i,DY) = Sml_d.DD(i)
-				S_Med_f_DD(i,DY) = Med_f.DD(i)
-				S_Med_p_DD(i,DY) = Med_p.DD(i)
-				S_Med_d_DD(i,DY) = Med_d.DD(i)
-				S_Lrg_p_DD(i,DY) = Lrg_p.DD(i)
-				S_Lrg_d_DD(i,DY) = Lrg_d.DD(i)
-
-			end %Grid cells
-
-		end %Days
-
-		%! Calculate monthly means and save
-		a = (1;(cumsum(MNTH)+1)(1:end-1)) % start of the month
-		b = cumsum(MNTH) % end of the month
-		for i = 1:12
-			MNT += 1 % Update monthly ticker
-			ncwrite(mean(S_Bent_bio(:,a(i):b(i)),2),file_bent,'biomass',(1,MNT))
-			ncwrite(mean(S_Sml_f(:,a(i):b(i)),2),file_sml_f,'biomass',(1,MNT))
-			ncwrite(mean(S_Sml_p(:,a(i):b(i)),2),file_sml_p,'biomass',(1,MNT))
-			ncwrite(mean(S_Sml_d(:,a(i):b(i)),2),file_sml_d,'biomass',(1,MNT))
-			ncwrite(mean(S_Med_f(:,a(i):b(i)),2),file_med_f,'biomass',(1,MNT))
-			ncwrite(mean(S_Med_p(:,a(i):b(i)),2),file_med_p,'biomass',(1,MNT))
-			ncwrite(mean(S_Med_d(:,a(i):b(i)),2),file_med_d,'biomass',(1,MNT))
-			ncwrite(mean(S_Lrg_p(:,a(i):b(i)),2),file_lrg_p,'biomass',(1,MNT))
-			ncwrite(mean(S_Lrg_d(:,a(i):b(i)),2),file_lrg_d,'biomass',(1,MNT))
-
-			ncwrite(mean(S_Sml_f_rec(:,a(i):b(i)),2),file_sml_f,'rec',(1,MNT))
-			ncwrite(mean(S_Sml_p_rec(:,a(i):b(i)),2),file_sml_p,'rec',(1,MNT))
-			ncwrite(mean(S_Sml_d_rec(:,a(i):b(i)),2),file_sml_d,'rec',(1,MNT))
-			ncwrite(mean(S_Med_f_rec(:,a(i):b(i)),2),file_med_f,'rec',(1,MNT))
-			ncwrite(mean(S_Med_p_rec(:,a(i):b(i)),2),file_med_p,'rec',(1,MNT))
-			ncwrite(mean(S_Med_d_rec(:,a(i):b(i)),2),file_med_d,'rec',(1,MNT))
-			ncwrite(mean(S_Lrg_p_rec(:,a(i):b(i)),2),file_lrg_p,'rec',(1,MNT))
-			ncwrite(mean(S_Lrg_d_rec(:,a(i):b(i)),2),file_lrg_d,'rec',(1,MNT))
-
-			ncwrite(mean(S_Sml_f_prod(:,a(i):b(i)),2),file_sml_f,'prod',(1,MNT))
-			ncwrite(mean(S_Sml_p_prod(:,a(i):b(i)),2),file_sml_p,'prod',(1,MNT))
-			ncwrite(mean(S_Sml_d_prod(:,a(i):b(i)),2),file_sml_d,'prod',(1,MNT))
-			ncwrite(mean(S_Med_f_prod(:,a(i):b(i)),2),file_med_f,'prod',(1,MNT))
-			ncwrite(mean(S_Med_p_prod(:,a(i):b(i)),2),file_med_p,'prod',(1,MNT))
-			ncwrite(mean(S_Med_d_prod(:,a(i):b(i)),2),file_med_d,'prod',(1,MNT))
-			ncwrite(mean(S_Lrg_p_prod(:,a(i):b(i)),2),file_lrg_p,'prod',(1,MNT))
-			ncwrite(mean(S_Lrg_d_prod(:,a(i):b(i)),2),file_lrg_d,'prod',(1,MNT))
-
-			ncwrite(mean(S_Sml_f_con(:,a(i):b(i)),2),file_sml_f,'con',(1,MNT))
-			ncwrite(mean(S_Sml_p_con(:,a(i):b(i)),2),file_sml_p,'con',(1,MNT))
-			ncwrite(mean(S_Sml_d_con(:,a(i):b(i)),2),file_sml_d,'con',(1,MNT))
-			ncwrite(mean(S_Med_f_con(:,a(i):b(i)),2),file_med_f,'con',(1,MNT))
-			ncwrite(mean(S_Med_p_con(:,a(i):b(i)),2),file_med_p,'con',(1,MNT))
-			ncwrite(mean(S_Med_d_con(:,a(i):b(i)),2),file_med_d,'con',(1,MNT))
-			ncwrite(mean(S_Lrg_p_con(:,a(i):b(i)),2),file_lrg_p,'con',(1,MNT))
-			ncwrite(mean(S_Lrg_d_con(:,a(i):b(i)),2),file_lrg_d,'con',(1,MNT))
-
-			ncwrite(mean(S_Sml_f_nu(:,a(i):b(i)),2),file_sml_f,'nu',(1,MNT))
-			ncwrite(mean(S_Sml_p_nu(:,a(i):b(i)),2),file_sml_p,'nu',(1,MNT))
-			ncwrite(mean(S_Sml_d_nu(:,a(i):b(i)),2),file_sml_d,'nu',(1,MNT))
-			ncwrite(mean(S_Med_f_nu(:,a(i):b(i)),2),file_med_f,'nu',(1,MNT))
-			ncwrite(mean(S_Med_p_nu(:,a(i):b(i)),2),file_med_p,'nu',(1,MNT))
-			ncwrite(mean(S_Med_d_nu(:,a(i):b(i)),2),file_med_d,'nu',(1,MNT))
-			ncwrite(mean(S_Lrg_p_nu(:,a(i):b(i)),2),file_lrg_p,'nu',(1,MNT))
-			ncwrite(mean(S_Lrg_d_nu(:,a(i):b(i)),2),file_lrg_d,'nu',(1,MNT))
-
-			ncwrite(mean(S_Sml_f_rep(:,a(i):b(i)),2),file_sml_f,'rep',(1,MNT))
-			ncwrite(mean(S_Sml_p_rep(:,a(i):b(i)),2),file_sml_p,'rep',(1,MNT))
-			ncwrite(mean(S_Sml_d_rep(:,a(i):b(i)),2),file_sml_d,'rep',(1,MNT))
-			ncwrite(mean(S_Med_f_rep(:,a(i):b(i)),2),file_med_f,'rep',(1,MNT))
-			ncwrite(mean(S_Med_p_rep(:,a(i):b(i)),2),file_med_p,'rep',(1,MNT))
-			ncwrite(mean(S_Med_d_rep(:,a(i):b(i)),2),file_med_d,'rep',(1,MNT))
-			ncwrite(mean(S_Lrg_p_rep(:,a(i):b(i)),2),file_lrg_p,'rep',(1,MNT))
-			ncwrite(mean(S_Lrg_d_rep(:,a(i):b(i)),2),file_lrg_d,'rep',(1,MNT))
-
-			ncwrite(mean(S_Sml_f_die(:,a(i):b(i)),2),file_sml_f,'die',(1,MNT))
-			ncwrite(mean(S_Sml_p_die(:,a(i):b(i)),2),file_sml_p,'die',(1,MNT))
-			ncwrite(mean(S_Sml_d_die(:,a(i):b(i)),2),file_sml_d,'die',(1,MNT))
-			ncwrite(mean(S_Med_f_die(:,a(i):b(i)),2),file_med_f,'die',(1,MNT))
-			ncwrite(mean(S_Med_p_die(:,a(i):b(i)),2),file_med_p,'die',(1,MNT))
-			ncwrite(mean(S_Med_d_die(:,a(i):b(i)),2),file_med_d,'die',(1,MNT))
-			ncwrite(mean(S_Lrg_p_die(:,a(i):b(i)),2),file_lrg_p,'die',(1,MNT))
-			ncwrite(mean(S_Lrg_d_die(:,a(i):b(i)),2),file_lrg_d,'die',(1,MNT))
-
-		end %Monthly mean
-
-	end %Years
-
-	%! Close save
-  ncclose(file_sml_f)
-  ncclose(file_sml_p)
-  ncclose(file_sml_d)
-  ncclose(file_med_f)
-  ncclose(file_med_p)
-  ncclose(file_med_d)
-  ncclose(file_lrg_p)
-	ncclose(file_lrg_d)
-	ncclose(file_bent)
+global DAYS GRD NX ID
+global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
+global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
+global bent_eff rfrac CC D J Sm A
+global Tu_s Tu_m Tu_l Nat_mrt MORT
+global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
+global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
+global MFsel LPsel LDsel
+
+%%%%%%%%%%%%%%% Initialize Model Variables
+%! Feeding preferences
+Sm = 0.25;  %Feeding 2 sizes down
+J = 1.0;    %Juvenile feeding reduction
+D = 0.75;   %Demersal feeding in pelagic reduction
+A = 0.5;    %Adult predation reduction
+%! Set fishing rate
+frate = 0;
+dfrate = frate/365.0;
+
+%! Make core parameters/constants (global)
+make_parameters() % make core parameters/constants
+
+%! Grid
+Pdrpbx = '/Users/cpetrik/Dropbox/';
+Fdrpbx = '/Users/Colleen/Dropbox/';
+load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
+NX = 48111;
+ID = 1:NX;
+
+%! How long to run the model
+YEARS = 95;
+DAYS = 365;
+MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+%! Create a directory for output
+tfcrit = num2str(int64(100*fcrit));
+td = num2str(1000+int64(100*LD_phi_MP));
+tj = num2str(1000+int64(100*MP_phi_S));
+tsm = num2str(1000+int64(100*MF_phi_MZ));
+ta = num2str(1000+int64(100*LP_phi_MF));
+tbe = num2str(100+int64(100*bent_eff));
+tmort = num2str(MORT);
+tcc = num2str(1000+int64(100*CC));
+tre = num2str(100000+int64(round(10000*rfrac)));
+tre2 = num2str(100000+int64(round(10000*rfrac*4)));
+if (frate >= 0.1)
+    tfish = num2str(100+int64(10*frate));
+else
+    tfish = num2str(1000+int64(100*frate));
+end
+if (MFsel == 1)
+    if (LPsel == 1 && LDsel == 1)
+        sel='All';
+    else
+        sel='F';
+    end
+else
+    if (LPsel == 1 && LDsel == 1)
+        sel = 'L';
+    elseif (LPsel == 1)
+        sel = 'P';
+    elseif (LDsel == 1)
+        sel = 'D';
+    end
+end
+if (pdc == 0)
+    coup = 'NoDc';
+elseif (pdc == 1)
+    coup = 'Dc';
+elseif (pdc == 2)
+    coup = 'PDc';
+end
+tcfn = num2str(h);
+tefn = num2str(round(gam));
+%simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+%simname = ['Diff_',coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
+    mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])
+end
+if (~isdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
+    mkdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
+end
+
+%! Storage variables
+
+S_Bent_bio = zeros(NX,DAYS);
+
+S_Sml_f = zeros(NX,DAYS);
+S_Sml_p = zeros(NX,DAYS);
+S_Sml_d = zeros(NX,DAYS);
+S_Med_f = zeros(NX,DAYS);
+S_Med_p = zeros(NX,DAYS);
+S_Med_d = zeros(NX,DAYS);
+S_Lrg_p = zeros(NX,DAYS);
+S_Lrg_d = zeros(NX,DAYS);
+
+S_Sml_f_rec = zeros(NX,DAYS);
+S_Sml_p_rec = zeros(NX,DAYS);
+S_Sml_d_rec = zeros(NX,DAYS);
+S_Med_f_rec = zeros(NX,DAYS);
+S_Med_p_rec = zeros(NX,DAYS);
+S_Med_d_rec = zeros(NX,DAYS);
+S_Lrg_p_rec = zeros(NX,DAYS);
+S_Lrg_d_rec = zeros(NX,DAYS);
+
+% S_Sml_f_con = zeros(NX,DAYS);
+% S_Sml_p_con = zeros(NX,DAYS);
+% S_Sml_d_con = zeros(NX,DAYS);
+% S_Med_f_con = zeros(NX,DAYS);
+% S_Med_p_con = zeros(NX,DAYS);
+% S_Med_d_con = zeros(NX,DAYS);
+% S_Lrg_p_con = zeros(NX,DAYS);
+% S_Lrg_d_con = zeros(NX,DAYS);
+% 
+% S_Sml_f_nu = zeros(NX,DAYS);
+% S_Sml_p_nu = zeros(NX,DAYS);
+% S_Sml_d_nu = zeros(NX,DAYS);
+% S_Med_f_nu = zeros(NX,DAYS);
+% S_Med_p_nu = zeros(NX,DAYS);
+% S_Med_d_nu = zeros(NX,DAYS);
+% S_Lrg_p_nu = zeros(NX,DAYS);
+% S_Lrg_d_nu = zeros(NX,DAYS);
+
+S_Sml_f_prod = zeros(NX,DAYS);
+S_Sml_p_prod = zeros(NX,DAYS);
+S_Sml_d_prod = zeros(NX,DAYS);
+S_Med_f_prod = zeros(NX,DAYS);
+S_Med_p_prod = zeros(NX,DAYS);
+S_Med_d_prod = zeros(NX,DAYS);
+S_Lrg_p_prod = zeros(NX,DAYS);
+S_Lrg_d_prod = zeros(NX,DAYS);
+
+% S_Sml_f_gamma = zeros(NX,DAYS);
+% S_Sml_p_gamma = zeros(NX,DAYS);
+% S_Sml_d_gamma = zeros(NX,DAYS);
+% S_Med_f_gamma = zeros(NX,DAYS);
+% S_Med_p_gamma = zeros(NX,DAYS);
+% S_Med_d_gamma = zeros(NX,DAYS);
+% S_Lrg_p_gamma = zeros(NX,DAYS);
+% S_Lrg_d_gamma = zeros(NX,DAYS);
+% 
+% S_Med_f_rep = zeros(NX,DAYS);
+% S_Lrg_p_rep = zeros(NX,DAYS);
+% S_Lrg_d_rep = zeros(NX,DAYS);
+% 
+% S_Sml_f_die = zeros(NX,DAYS);
+% S_Sml_p_die = zeros(NX,DAYS);
+% S_Sml_d_die = zeros(NX,DAYS);
+% S_Med_f_die = zeros(NX,DAYS);
+% S_Med_p_die = zeros(NX,DAYS);
+% S_Med_d_die = zeros(NX,DAYS);
+% S_Lrg_p_die = zeros(NX,DAYS);
+% S_Lrg_d_die = zeros(NX,DAYS);
+% 
+% S_Sml_f_clev = zeros(NX,DAYS);
+% S_Sml_p_clev = zeros(NX,DAYS);
+% S_Sml_d_clev = zeros(NX,DAYS);
+% S_Med_f_clev = zeros(NX,DAYS);
+% S_Med_p_clev = zeros(NX,DAYS);
+% S_Med_d_clev = zeros(NX,DAYS);
+% S_Lrg_p_clev = zeros(NX,DAYS);
+% S_Lrg_d_clev = zeros(NX,DAYS);
+
+%% ! Initialize
+load(['/Volumes/GFDL/NC/Matlab_new_size/',simname '/Last_mo_hist_pristine_' simname '.mat']);
+BENT.mass = BENT.bio;
+[Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish_hist(ID,DAYS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
+Med_d.td(1:NX) = 0.0;
+Lrg_d.td(1:NX) = 0.0;
+ENVR = sub_init_env(ID);
+
+%%%%%%%%%%%%%%% Setup NetCDF save
+%! Setup netcdf path to store to
+file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_sml_f.nc'];
+file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_sml_p.nc'];
+file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_sml_d.nc'];
+file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_med_f.nc'];
+file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_med_p.nc'];
+file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_med_d.nc'];
+file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_lrg_p.nc'];
+file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_lrg_d.nc'];
+file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Forecast_pristine_bent.nc'];
+
+oldFormat = netcdf.setDefaultFormat('NC_FORMAT_64BIT');
+
+ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
+ncidSP = netcdf.create(file_sml_p,'NC_WRITE');
+ncidSD = netcdf.create(file_sml_d,'NC_WRITE');
+ncidMF = netcdf.create(file_med_f,'NC_WRITE');
+ncidMP = netcdf.create(file_med_p,'NC_WRITE');
+ncidMD = netcdf.create(file_med_d,'NC_WRITE');
+ncidLP = netcdf.create(file_lrg_p,'NC_WRITE');
+ncidLD = netcdf.create(file_lrg_d,'NC_WRITE');
+ncidB  = netcdf.create(file_bent,'NC_WRITE');
+
+%! Dims of netcdf file
+nt = 12*YEARS;
+
+%% ! Def vars of netcdf file
+['Defining netcdfs, takes ~5 minutes ... ']
+xy_dim      = netcdf.defDim(ncidSF,'nid',NX);
+time_dim    = netcdf.defDim(ncidSF,'ntime',nt+1);
+vidbioSF    = netcdf.defVar(ncidSF,'biomass','double',[xy_dim,time_dim]);
+vidprodSF   = netcdf.defVar(ncidSF,'prod','double',[xy_dim,time_dim]);
+vidrecSF    = netcdf.defVar(ncidSF,'rec','double',[xy_dim,time_dim]);
+% vidconSF    = netcdf.defVar(ncidSF,'con','double',[xy_dim,time_dim]);
+% vidnuSF     = netcdf.defVar(ncidSF,'nu','double',[xy_dim,time_dim]);
+% vidgammaSF  = netcdf.defVar(ncidSF,'gamma','double',[xy_dim,time_dim]);
+% viddieSF    = netcdf.defVar(ncidSF,'die','double',[xy_dim,time_dim]);
+% vidclevSF   = netcdf.defVar(ncidSF,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidSF);
+
+xy_dim      = netcdf.defDim(ncidSP,'nid',NX);
+time_dim    = netcdf.defDim(ncidSP,'ntime',nt);
+vidbioSP    = netcdf.defVar(ncidSP,'biomass','double',[xy_dim,time_dim]);
+vidprodSP   = netcdf.defVar(ncidSP,'prod','double',[xy_dim,time_dim]);
+vidrecSP    = netcdf.defVar(ncidSP,'rec','double',[xy_dim,time_dim]);
+% vidconSP    = netcdf.defVar(ncidSP,'con','double',[xy_dim,time_dim]);
+% vidnuSP     = netcdf.defVar(ncidSP,'nu','double',[xy_dim,time_dim]);
+% vidgammaSP  = netcdf.defVar(ncidSP,'gamma','double',[xy_dim,time_dim]);
+% viddieSP    = netcdf.defVar(ncidSP,'die','double',[xy_dim,time_dim]);
+% vidclevSP   = netcdf.defVar(ncidSP,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidSP);
+
+xy_dim      = netcdf.defDim(ncidSD,'nid',NX);
+time_dim    = netcdf.defDim(ncidSD,'ntime',nt);
+vidbioSD    = netcdf.defVar(ncidSD,'biomass','double',[xy_dim,time_dim]);
+vidprodSD   = netcdf.defVar(ncidSD,'prod','double',[xy_dim,time_dim]);
+vidrecSD    = netcdf.defVar(ncidSD,'rec','double',[xy_dim,time_dim]);
+% vidconSD    = netcdf.defVar(ncidSD,'con','double',[xy_dim,time_dim]);
+% vidnuSD     = netcdf.defVar(ncidSD,'nu','double',[xy_dim,time_dim]);
+% vidgammaSD  = netcdf.defVar(ncidSD,'gamma','double',[xy_dim,time_dim]);
+% viddieSD    = netcdf.defVar(ncidSD,'die','double',[xy_dim,time_dim]);
+% vidclevSD   = netcdf.defVar(ncidSD,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidSD);
+
+xy_dim      = netcdf.defDim(ncidMF,'nid',NX);
+time_dim    = netcdf.defDim(ncidMF,'ntime',nt);
+vidbioMF    = netcdf.defVar(ncidMF,'biomass','double',[xy_dim,time_dim]);
+vidprodMF   = netcdf.defVar(ncidMF,'prod','double',[xy_dim,time_dim]);
+vidrecMF    = netcdf.defVar(ncidMF,'rec','double',[xy_dim,time_dim]);
+% vidconMF    = netcdf.defVar(ncidMF,'con','double',[xy_dim,time_dim]);
+% vidnuMF     = netcdf.defVar(ncidMF,'nu','double',[xy_dim,time_dim]);
+% vidgammaMF  = netcdf.defVar(ncidMF,'gamma','double',[xy_dim,time_dim]);
+% vidrepMF    = netcdf.defVar(ncidMF,'rep','double',[xy_dim,time_dim]);
+% viddieMF    = netcdf.defVar(ncidMF,'die','double',[xy_dim,time_dim]);
+% vidclevMF   = netcdf.defVar(ncidMF,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidMF);
+
+xy_dim      = netcdf.defDim(ncidMP,'nid',NX);
+time_dim    = netcdf.defDim(ncidMP,'ntime',nt);
+vidbioMP    = netcdf.defVar(ncidMP,'biomass','double',[xy_dim,time_dim]);
+vidprodMP   = netcdf.defVar(ncidMP,'prod','double',[xy_dim,time_dim]);
+vidrecMP    = netcdf.defVar(ncidMP,'rec','double',[xy_dim,time_dim]);
+% vidconMP    = netcdf.defVar(ncidMP,'con','double',[xy_dim,time_dim]);
+% vidnuMP     = netcdf.defVar(ncidMP,'nu','double',[xy_dim,time_dim]);
+% vidgammaMP  = netcdf.defVar(ncidMP,'gamma','double',[xy_dim,time_dim]);
+% viddieMP    = netcdf.defVar(ncidMP,'die','double',[xy_dim,time_dim]);
+% vidclevMP   = netcdf.defVar(ncidMP,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidMP);
+
+xy_dim      = netcdf.defDim(ncidMD,'nid',NX);
+time_dim    = netcdf.defDim(ncidMD,'ntime',nt);
+vidbioMD    = netcdf.defVar(ncidMD,'biomass','double',[xy_dim,time_dim]);
+vidprodMD   = netcdf.defVar(ncidMD,'prod','double',[xy_dim,time_dim]);
+vidrecMD    = netcdf.defVar(ncidMD,'rec','double',[xy_dim,time_dim]);
+% vidconMD    = netcdf.defVar(ncidMD,'con','double',[xy_dim,time_dim]);
+% vidnuMD     = netcdf.defVar(ncidMD,'nu','double',[xy_dim,time_dim]);
+% vidgammaMD  = netcdf.defVar(ncidMD,'gamma','double',[xy_dim,time_dim]);
+% viddieMD    = netcdf.defVar(ncidMD,'die','double',[xy_dim,time_dim]);
+% vidclevMD   = netcdf.defVar(ncidMD,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidMD);
+
+xy_dim      = netcdf.defDim(ncidLP,'nid',NX);
+time_dim    = netcdf.defDim(ncidLP,'ntime',nt);
+vidbioLP    = netcdf.defVar(ncidLP,'biomass','double',[xy_dim,time_dim]);
+vidprodLP   = netcdf.defVar(ncidLP,'prod','double',[xy_dim,time_dim]);
+vidrecLP    = netcdf.defVar(ncidLP,'rec','double',[xy_dim,time_dim]);
+% vidconLP    = netcdf.defVar(ncidLP,'con','double',[xy_dim,time_dim]);
+% vidnuLP     = netcdf.defVar(ncidLP,'nu','double',[xy_dim,time_dim]);
+% vidgammaLP  = netcdf.defVar(ncidLP,'gamma','double',[xy_dim,time_dim]);
+% vidrepLP    = netcdf.defVar(ncidLP,'rep','double',[xy_dim,time_dim]);
+% viddieLP    = netcdf.defVar(ncidLP,'die','double',[xy_dim,time_dim]);
+% vidclevLP   = netcdf.defVar(ncidLP,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidLP);
+
+xy_dim      = netcdf.defDim(ncidLD,'nid',NX);
+time_dim    = netcdf.defDim(ncidLD,'ntime',nt);
+vidbioLD    = netcdf.defVar(ncidLD,'biomass','double',[xy_dim,time_dim]);
+vidprodLD   = netcdf.defVar(ncidLD,'prod','double',[xy_dim,time_dim]);
+vidrecLD    = netcdf.defVar(ncidLD,'rec','double',[xy_dim,time_dim]);
+% vidconLD    = netcdf.defVar(ncidLD,'con','double',[xy_dim,time_dim]);
+% vidnuLD     = netcdf.defVar(ncidLD,'nu','double',[xy_dim,time_dim]);
+% vidgammaLD  = netcdf.defVar(ncidLD,'gamma','double',[xy_dim,time_dim]);
+% vidrepLD    = netcdf.defVar(ncidLD,'rep','double',[xy_dim,time_dim]);
+% viddieLD    = netcdf.defVar(ncidLD,'die','double',[xy_dim,time_dim]);
+% vidclevLD   = netcdf.defVar(ncidLD,'clev','double',[xy_dim,time_dim]);
+netcdf.endDef(ncidLD);
+
+xy_dim     = netcdf.defDim(ncidB,'nid',NX);
+time_dim   = netcdf.defDim(ncidB,'ntime',nt);
+vidbioB    = netcdf.defVar(ncidB,'biomass','double',[xy_dim,time_dim]);
+vidTB      = netcdf.defVar(ncidB,'time','double',time_dim);
+netcdf.endDef(ncidB);
+
+%% %%%%%%%%%%%%%%%%%%%% Run the Model
+MNT = 0;
+%! Run model with no fishing
+for YR = 1:YEARS % years
+    %! Load a year's COBALT data
+    ti = num2str(YR+2005);
+    load(['/Volumes/GFDL/POEM_JLD/rcp85/Data_rcp85_',ti,'.mat']);
+    
+    for DAY = 1:DT:DAYS % days
+        
+        %%%! Future time step
+        DY = int64(ceil(DAY));
+        [num2str(YR),' , ', num2str(mod(DY,365))]
+        [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,ENVR] = ...
+            sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,...
+            Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,CC);
+        
+        %! Store
+        S_Bent_bio(:,DY) = BENT.mass;
+        
+        S_Sml_f(:,DY) = Sml_f.bio;
+        S_Sml_p(:,DY) = Sml_p.bio;
+        S_Sml_d(:,DY) = Sml_d.bio;
+        S_Med_f(:,DY) = Med_f.bio;
+        S_Med_p(:,DY) = Med_p.bio;
+        S_Med_d(:,DY) = Med_d.bio;
+        S_Lrg_p(:,DY) = Lrg_p.bio;
+        S_Lrg_d(:,DY) = Lrg_d.bio;
+        
+        S_Sml_f_rec(:,DY) = Sml_f.rec;
+        S_Sml_p_rec(:,DY) = Sml_p.rec;
+        S_Sml_d_rec(:,DY) = Sml_d.rec;
+        S_Med_f_rec(:,DY) = Med_f.rec;
+        S_Med_p_rec(:,DY) = Med_p.rec;
+        S_Med_d_rec(:,DY) = Med_d.rec;
+        S_Lrg_p_rec(:,DY) = Lrg_p.rec;
+        S_Lrg_d_rec(:,DY) = Lrg_d.rec;
+        
+%         S_Sml_f_con(:,DY) = Sml_f.I;
+%         S_Sml_p_con(:,DY) = Sml_p.I;
+%         S_Sml_d_con(:,DY) = Sml_d.I;
+%         S_Med_f_con(:,DY) = Med_f.I;
+%         S_Med_p_con(:,DY) = Med_p.I;
+%         S_Med_d_con(:,DY) = Med_d.I;
+%         S_Lrg_p_con(:,DY) = Lrg_p.I;
+%         S_Lrg_d_con(:,DY) = Lrg_d.I;
+%         
+%         S_Sml_f_nu(:,DY) = Sml_f.nu;
+%         S_Sml_p_nu(:,DY) = Sml_p.nu;
+%         S_Sml_d_nu(:,DY) = Sml_d.nu;
+%         S_Med_f_nu(:,DY) = Med_f.nu;
+%         S_Med_p_nu(:,DY) = Med_p.nu;
+%         S_Med_d_nu(:,DY) = Med_d.nu;
+%         S_Lrg_p_nu(:,DY) = Lrg_p.nu;
+%         S_Lrg_d_nu(:,DY) = Lrg_d.nu;
+        
+        S_Sml_f_prod(:,DY) = Sml_f.prod;
+        S_Sml_p_prod(:,DY) = Sml_p.prod;
+        S_Sml_d_prod(:,DY) = Sml_d.prod;
+        S_Med_f_prod(:,DY) = Med_f.prod;
+        S_Med_p_prod(:,DY) = Med_p.prod;
+        S_Med_d_prod(:,DY) = Med_d.prod;
+        S_Lrg_p_prod(:,DY) = Lrg_p.prod;
+        S_Lrg_d_prod(:,DY) = Lrg_d.prod;
+        
+%         S_Sml_f_gamma(:,DY) = Sml_f.gamma;
+%         S_Sml_p_gamma(:,DY) = Sml_p.gamma;
+%         S_Sml_d_gamma(:,DY) = Sml_d.gamma;
+%         S_Med_f_gamma(:,DY) = Med_f.gamma;
+%         S_Med_p_gamma(:,DY) = Med_p.gamma;
+%         S_Med_d_gamma(:,DY) = Med_d.gamma;
+%         S_Lrg_p_gamma(:,DY) = Lrg_p.gamma;
+%         S_Lrg_d_gamma(:,DY) = Lrg_d.gamma;
+%         
+%         S_Med_f_rep(:,DY) = Med_f.rep;
+%         S_Lrg_p_rep(:,DY) = Lrg_p.rep;
+%         S_Lrg_d_rep(:,DY) = Lrg_d.rep;
+%         
+%         S_Sml_f_die(:,DY) = Sml_f.die;
+%         S_Sml_p_die(:,DY) = Sml_p.die;
+%         S_Sml_d_die(:,DY) = Sml_d.die;
+%         S_Med_f_die(:,DY) = Med_f.die;
+%         S_Med_p_die(:,DY) = Med_p.die;
+%         S_Med_d_die(:,DY) = Med_d.die;
+%         S_Lrg_p_die(:,DY) = Lrg_p.die;
+%         S_Lrg_d_die(:,DY) = Lrg_d.die;
+%         
+%         S_Sml_f_clev(:,DY) = Sml_f.clev;
+%         S_Sml_p_clev(:,DY) = Sml_p.clev;
+%         S_Sml_d_clev(:,DY) = Sml_d.clev;
+%         S_Med_f_clev(:,DY) = Med_f.clev;
+%         S_Med_p_clev(:,DY) = Med_p.clev;
+%         S_Med_d_clev(:,DY) = Med_d.clev;
+%         S_Lrg_p_clev(:,DY) = Lrg_p.clev;
+%         S_Lrg_d_clev(:,DY) = Lrg_d.clev;
+        
+    end %Days
+    
+    %! Calculate monthly means and save
+    aa = (cumsum(MNTH)+1);
+    a = [1,aa(1:end-1)]; % start of the month
+    b = cumsum(MNTH); % end of the month
+    for i = 1:12
+        MNT = MNT+1; % Update monthly ticker
+        
+        %! Put vars of netcdf file
+        netcdf.putVar(ncidB,vidbioB,[0 MNT-1],[NX 1],mean(S_Bent_bio(:,a(i):b(i)),2));
+        netcdf.putVar(ncidB,vidTB,MNT-1,1,MNT);
+        
+        netcdf.putVar(ncidSF,vidbioSF,[0 MNT-1],[NX 1],mean(S_Sml_f(:,a(i):b(i)),2));
+        netcdf.putVar(ncidSP,vidbioSP,[0 MNT-1],[NX 1],mean(S_Sml_p(:,a(i):b(i)),2));
+        netcdf.putVar(ncidSD,vidbioSD,[0 MNT-1],[NX 1],mean(S_Sml_d(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMF,vidbioMF,[0 MNT-1],[NX 1],mean(S_Med_f(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMP,vidbioMP,[0 MNT-1],[NX 1],mean(S_Med_p(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMD,vidbioMD,[0 MNT-1],[NX 1],mean(S_Med_d(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLP,vidbioLP,[0 MNT-1],[NX 1],mean(S_Lrg_p(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLD,vidbioLD,[0 MNT-1],[NX 1],mean(S_Lrg_d(:,a(i):b(i)),2));
+        
+        netcdf.putVar(ncidSF,vidprodSF,[0 MNT-1],[NX 1],mean(S_Sml_f_prod(:,a(i):b(i)),2));
+        netcdf.putVar(ncidSP,vidprodSP,[0 MNT-1],[NX 1],mean(S_Sml_p_prod(:,a(i):b(i)),2));
+        netcdf.putVar(ncidSD,vidprodSD,[0 MNT-1],[NX 1],mean(S_Sml_d_prod(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMF,vidprodMF,[0 MNT-1],[NX 1],mean(S_Med_f_prod(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMP,vidprodMP,[0 MNT-1],[NX 1],mean(S_Med_p_prod(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMD,vidprodMD,[0 MNT-1],[NX 1],mean(S_Med_d_prod(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLP,vidprodLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_prod(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLD,vidprodLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_prod(:,a(i):b(i)),2));
+        
+        netcdf.putVar(ncidSF,vidrecSF,[0 MNT-1],[NX 1],mean(S_Sml_f_rec(:,a(i):b(i)),2));
+        netcdf.putVar(ncidSP,vidrecSP,[0 MNT-1],[NX 1],mean(S_Sml_p_rec(:,a(i):b(i)),2));
+        netcdf.putVar(ncidSD,vidrecSD,[0 MNT-1],[NX 1],mean(S_Sml_d_rec(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMF,vidrecMF,[0 MNT-1],[NX 1],mean(S_Med_f_rec(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMP,vidrecMP,[0 MNT-1],[NX 1],mean(S_Med_p_rec(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMD,vidrecMD,[0 MNT-1],[NX 1],mean(S_Med_d_rec(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLP,vidrecLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rec(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLD,vidrecLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rec(:,a(i):b(i)),2));
+        
+%         netcdf.putVar(ncidSF,vidconSF,[0 MNT-1],[NX 1],mean(S_Sml_f_con(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSP,vidconSP,[0 MNT-1],[NX 1],mean(S_Sml_p_con(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSD,vidconSD,[0 MNT-1],[NX 1],mean(S_Sml_d_con(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMF,vidconMF,[0 MNT-1],[NX 1],mean(S_Med_f_con(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMP,vidconMP,[0 MNT-1],[NX 1],mean(S_Med_p_con(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMD,vidconMD,[0 MNT-1],[NX 1],mean(S_Med_d_con(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,vidconLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_con(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,vidconLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_con(:,a(i):b(i)),2));
+%         
+%         netcdf.putVar(ncidSF,vidnuSF,[0 MNT-1],[NX 1],mean(S_Sml_f_nu(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSP,vidnuSP,[0 MNT-1],[NX 1],mean(S_Sml_p_nu(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSD,vidnuSD,[0 MNT-1],[NX 1],mean(S_Sml_d_nu(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMF,vidnuMF,[0 MNT-1],[NX 1],mean(S_Med_f_nu(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMP,vidnuMP,[0 MNT-1],[NX 1],mean(S_Med_p_nu(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMD,vidnuMD,[0 MNT-1],[NX 1],mean(S_Med_d_nu(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,vidnuLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_nu(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,vidnuLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_nu(:,a(i):b(i)),2));
+%         
+%         netcdf.putVar(ncidSF,vidgammaSF,[0 MNT-1],[NX 1],mean(S_Sml_f_gamma(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSP,vidgammaSP,[0 MNT-1],[NX 1],mean(S_Sml_p_gamma(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSD,vidgammaSD,[0 MNT-1],[NX 1],mean(S_Sml_d_gamma(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMF,vidgammaMF,[0 MNT-1],[NX 1],mean(S_Med_f_gamma(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMP,vidgammaMP,[0 MNT-1],[NX 1],mean(S_Med_p_gamma(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMD,vidgammaMD,[0 MNT-1],[NX 1],mean(S_Med_d_gamma(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,vidgammaLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_gamma(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,vidgammaLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_gamma(:,a(i):b(i)),2));
+%         
+%         netcdf.putVar(ncidSF,vidclevSF,[0 MNT-1],[NX 1],mean(S_Sml_f_clev(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSP,vidclevSP,[0 MNT-1],[NX 1],mean(S_Sml_p_clev(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSD,vidclevSD,[0 MNT-1],[NX 1],mean(S_Sml_d_clev(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMF,vidclevMF,[0 MNT-1],[NX 1],mean(S_Med_f_clev(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMP,vidclevMP,[0 MNT-1],[NX 1],mean(S_Med_p_clev(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMD,vidclevMD,[0 MNT-1],[NX 1],mean(S_Med_d_clev(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,vidclevLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_clev(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,vidclevLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_clev(:,a(i):b(i)),2));
+%         
+%         netcdf.putVar(ncidSF,viddieSF,[0 MNT-1],[NX 1],mean(S_Sml_f_die(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSP,viddieSP,[0 MNT-1],[NX 1],mean(S_Sml_p_die(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSD,viddieSD,[0 MNT-1],[NX 1],mean(S_Sml_d_die(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMF,viddieMF,[0 MNT-1],[NX 1],mean(S_Med_f_die(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMP,viddieMP,[0 MNT-1],[NX 1],mean(S_Med_p_die(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMD,viddieMD,[0 MNT-1],[NX 1],mean(S_Med_d_die(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,viddieLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_die(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,viddieLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_die(:,a(i):b(i)),2));
+%         
+%         netcdf.putVar(ncidMF,vidrepMF,[0 MNT-1],[NX 1],mean(S_Med_f_rep(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,vidrepLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rep(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,vidrepLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rep(:,a(i):b(i)),2));
+         
+    end %Monthly mean
+    
+end %Years
+
+
+%! Close save
+netcdf.close(ncidSF);
+netcdf.close(ncidSP);
+netcdf.close(ncidSD);
+netcdf.close(ncidMF);
+netcdf.close(ncidMP);
+netcdf.close(ncidMD);
+netcdf.close(ncidLP);
+netcdf.close(ncidLD);
+netcdf.close(ncidB);
 
 end

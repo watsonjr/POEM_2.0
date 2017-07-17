@@ -2,13 +2,13 @@
 %============= PARAMETER TYPE ==========%
 function make_parameters()
     global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl 
-    global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
+    global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam kt bpow
     global bent_eff rfrac CC D J Sm A
     global Tu_s Tu_m Tu_l Nat_mrt MORT
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE  
     global MFsel MPsel MDsel LPsel LDsel
-    global tstep K
+    global tstep K 
     
     %! Integration parameters
     DT = 1.0;       % time step
@@ -18,12 +18,12 @@ function make_parameters()
     K = 600.0;
     
     %! Which fishes harvested
-    MPsel = 0;
-    MDsel = 0.1;
-    MFsel = 0;
-    LPsel = 0;
+    MFsel = 1;
+    LPsel = 1;
     LDsel = 1;
-
+    MPsel = 0.1 * LPsel;
+    MDsel = 0.1 * LDsel;
+    
     %! Benthic-pelagic coupling cutoff (depth, m)
     PI_be_cutoff = 200;
     % 0:no coupling; 1:demersal coupled only; 2:pelagic & demersal coupled;
@@ -66,10 +66,12 @@ function make_parameters()
     fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
     h = 20;         % coeff on Cmax
     gam = 70;       % coeff on search area
+    kt = 0.0905;     % coeff on T-dep fn (orig 0.063)
+    bpow = 0.125;    % power on metab fn (orig 0.25)
     
     %%%! Transfer efficiency of detritus to benthic prey
     bent_eff = 0.05;
-    CC = 0.5;
+    CC = 1.0;
 
     %%%! Reproductive efficiency
     rfrac = 0.01;

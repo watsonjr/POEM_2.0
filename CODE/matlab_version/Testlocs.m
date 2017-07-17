@@ -1,9 +1,9 @@
 %%%%!! RUN SPINUP FOR ONE LOCATION
-function Testoneloc()
+function Testlocs()
 
 global DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
-global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
+global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam kt bpow
 global bent_eff rfrac CC D J Sm A
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
@@ -12,15 +12,18 @@ global MFsel MPsel MDsel LPsel LDsel efn cfn
 
 %fracm = 0.1:0.1:0.5;
 Fmort = [0.0:0.1:1.0]; %[1.2:0.2:2.0]; %
-RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];
-%BE = 0.05:0.05:0.1;
-%CarCap = 0.5:0.5:2.0;
+% RE = [1.0,0.5,0.1,0.05,0.01,0.005,0.001,0.0005,0.0001];
+% BE = 0.05:0.05:0.1;
+% CarCap = 0.5:0.5:2.0;
 encs = linspace(10,100,10);
+% encs = 80:10:100;
 cmaxs = linspace(10,100,10);
-Dprefs = 0.1:0.1:1;
-Jprefs = 0.5:0.1:1;
-Aprefs = 0.5:0.1:1;
-Sprefs = 0:0.05:0.5;
+% Dprefs = 0.1:0.1:1;
+% Jprefs = 0.5:0.1:1;
+% Aprefs = 0.5:0.1:1;
+% Sprefs = 0:0.05:0.5;
+% kays = 0.0405:0.01:0.0916;
+% bees = 0.1:0.05:0.35;
 Sm = 0.25;  %Feeding 2 sizes down
 J = 1.0;   %Juvenile feeding reduction
 D = 0.75;   %Demersal feeding in pelagic reduction
@@ -32,16 +35,16 @@ A = 0.5;   %Adult predation reduction
 %     for n = 1:length(Aprefs)
 %     A = Aprefs(n);
 
-% for n = 1:length(cmaxs)
-%     h = cmaxs(n);
-%     
-%     for g = 1:length(encs)
-%         gam = encs(g);
+for n = 2%1:length(cmaxs)
+    h = cmaxs(n);
+    
+    for g = 7%1:length(encs)
+        gam = encs(g);
         
         % for n = 1:length(RE)
         %     rfrac = RE(n);
         
-        for F = 1:length(Fmort)
+        for F = 4%1:length(Fmort)
             %! Set fishing rate
             frate = Fmort(F);
             dfrate = Fmort(F)/365.0;
@@ -78,12 +81,8 @@ A = 0.5;   %Adult predation reduction
             tbe = num2str(100+int64(100*bent_eff));
             tmort = num2str(MORT);
             tcc = num2str(1000+int64(100*CC));
-%             if (rfrac >= 0.01)
-%                 tre = num2str(10000+int64(1000*rfrac));
-%             else
-                tre = num2str(100000+int64(round(10000*rfrac)));
-                tre2 = num2str(100000+int64(round(10000*rfrac*4)));
-%             end
+            tre = num2str(100000+int64(round(10000*rfrac)));
+            tre2 = num2str(100000+int64(round(10000*rfrac*1)));
             if (frate >= 0.1)
                 tfish = num2str(100+int64(10*frate));
             else
@@ -113,8 +112,11 @@ A = 0.5;   %Adult predation reduction
             end
             tcfn = num2str(h);
             tefn = num2str(round(gam));
+            tkfn = num2str(100+int64(100*kt));
+            tbfn = num2str(100+int64(100*bpow));
             %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-            simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+            %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+            simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
             if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
                 mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
             end
@@ -175,6 +177,7 @@ A = 0.5;   %Adult predation reduction
                     Spinup_Lrg_p(DY,:,:) = [Lrg_p.bio Lrg_p.enc_f Lrg_p.enc_p Lrg_p.enc_d Lrg_p.enc_zm Lrg_p.enc_zl Lrg_p.enc_be Lrg_p.con_f Lrg_p.con_p Lrg_p.con_d Lrg_p.con_zm Lrg_p.con_zl Lrg_p.con_be Lrg_p.I Lrg_p.nu Lrg_p.gamma Lrg_p.die Lrg_p.rep Lrg_p.rec Lrg_p.clev Lrg_p.prod Lrg_p.pred Lrg_p.nmort Lrg_p.met Lrg_p.caught]';
                     Spinup_Lrg_d(DY,:,:) = [Lrg_d.bio Lrg_d.enc_f Lrg_d.enc_p Lrg_d.enc_d Lrg_d.enc_zm Lrg_d.enc_zl Lrg_d.enc_be Lrg_d.con_f Lrg_d.con_p Lrg_d.con_d Lrg_d.con_zm Lrg_d.con_zl Lrg_d.con_be Lrg_d.I Lrg_d.nu Lrg_d.gamma Lrg_d.die Lrg_d.rep Lrg_d.rec Lrg_d.clev Lrg_d.prod Lrg_d.pred Lrg_d.nmort Lrg_d.met Lrg_d.caught]';
                     Spinup_Cobalt(DY,:,:) = [BENT.mass BENT.pred ENVR.fZm ENVR.fZl ENVR.fB]';
+                    %Spinup_Cobalt(DY,:,:) = [BENT.sm BENT.md ENVR.fZm ENVR.fZl ENVR.fB]';
                     %end
                     
    
@@ -208,6 +211,6 @@ A = 0.5;   %Adult predation reduction
                 'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
             end
         end %Fmort
-%     end %n
-% end %j
+    end %n
+end %j
 end

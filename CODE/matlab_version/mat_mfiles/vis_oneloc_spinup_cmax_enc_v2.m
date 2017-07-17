@@ -1,6 +1,6 @@
 % Visualize output of POEM biol rate eq tests
 % Spinup at one location
-% 50 years, monthly means saved
+% 150 years, monthly means saved
 
 clear all
 close all
@@ -19,13 +19,13 @@ fcrit = 20;
 nmort = '1';
 kad = 50;
 D = 'D075';
-J = 'J075';
-Ad = 'A075';
+J = 'J100';
+Ad = 'A050';
 Sm = 'Sm025';
 BE = '05';
-CC = '050';
-rfrac = RE{3};
-rfrac2 = '05000';
+CC = '100';
+rfrac = '00100';
+rfrac2 = '00100';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -37,6 +37,7 @@ sname = 'Spinup_';
 sname2 = '';
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
+load('MyColormaps.mat')
 cmap3=cmap_ppt([5,1,3],:);
 cm={[1 0.5 0],...   %orange
     [0.5 0.5 0],... %tan/army
@@ -93,11 +94,10 @@ for C = 1:length(cmaxs)
         efn = encs(E);
         tefn = num2str(round(efn));
         
-        close all
 %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
 %             D,'_',J,'_',Ad,'_',Sm,...
 %             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b18_k09_fcrit',num2str(fcrit),'_',...
             D,'_',J,'_',Ad,'_',Sm,...
             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
         dpath = [datap char(dp) '/'];
@@ -110,7 +110,7 @@ for C = 1:length(cmaxs)
         all_mean=NaN*ones(3,4,length(spots));
         z = NaN*ones(length(spots),3);
         
-        load([dpath sname 'locs.mat'])
+        load([dpath sname 'locs_All_fish02.mat'])
         SP = S_Sml_p;
         SF = S_Sml_f;
         SD = S_Sml_d;
@@ -313,11 +313,11 @@ end %cmax
 %%
 nc = length(cmaxs);
 ne = length(encs);
-allF  = NaN*ones(length(spots),nc,ne);
-allP  = NaN*ones(length(spots),nc,ne);
-allD  = NaN*ones(length(spots),nc,ne);
-mcon  = NaN*ones(3,nc,ne);
-mlev  = NaN*ones(3,nc,ne);
+allF  = NaN*ones(length(spots),nc+1,ne+1);
+allP  = NaN*ones(length(spots),nc+1,ne+1);
+allD  = NaN*ones(length(spots),nc+1,ne+1);
+mcon  = NaN*ones(3,nc+1,ne+1);
+mlev  = NaN*ones(3,nc+1,ne+1);
 for C = 1:length(cmaxs)
     cfn = cmaxs(C);
     tcfn = num2str(cfn);
@@ -329,7 +329,7 @@ for C = 1:length(cmaxs)
 %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
 %             D,'_',J,'_',Ad,'_',Sm,...
 %             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b18_k09_fcrit',num2str(fcrit),'_',...
             D,'_',J,'_',Ad,'_',Sm,...
             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
         dpath = [datap char(dp) '/'];
@@ -338,7 +338,7 @@ for C = 1:length(cmaxs)
 %         cfile2 = ['Dc_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
 %         D,'_',J,'_',Ad,'_',Sm,...
 %         '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac,'_Enctests'];
-        cfile2 = ['Dc_fcrit',num2str(fcrit),'_',...
+        cfile2 = ['Dc_b18_k09_fcrit',num2str(fcrit),'_',...
             D,'_',J,'_',Ad,'_',Sm,...
             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,...
             '_CmaxEnctests'];
@@ -372,7 +372,9 @@ end %cmaxs
 save([datap 'Bio_rates/' cfile2 '.mat'],'allF','allP','allD','mcon','mlev');
 
 %%
-[egrid,cgrid]=meshgrid(cmaxs,encs);
+[egrid,cgrid]=meshgrid([cmaxs 110],[encs 110]);
+FPrat = allF./(allF+allP);
+DPrat = allD./(allD+allP);
 for s=1:length(spots)
     loc = spots{s};
     lname = [loc '_'];
@@ -421,14 +423,45 @@ for s=1:length(spots)
     ylabel('Enc coeff')
     stamp(cfile2)
     
+    f5=figure(5);
+    subplot(4,3,s)
+    pcolor(cgrid,egrid,squeeze(FPrat(s,:,:)))
+    colorbar
+    colormap(cmap_color_rb)
+    caxis([0 1])
+    if (s==2)
+        title({'Frac F:P in final year'; loc})
+    else
+        title(loc)
+    end
+    xlabel('Cmax coeff')
+    ylabel('Enc coeff')
+    stamp(cfile2)
+    
+    f6=figure(6);
+    subplot(4,3,s)
+    pcolor(cgrid,egrid,squeeze(DPrat(s,:,:)))
+    colorbar
+    colormap(cmap_color_rb)
+    caxis([0 1])
+    if (s==2)
+        title({'Frac D:P in final year'; loc})
+    else
+        title(loc)
+    end
+    xlabel('Cmax coeff')
+    ylabel('Enc coeff')
+    stamp(cfile2)
     
 end %spots
 print(f2,'-dpng',[figp sname cfile2 '_totF_mean_biomass_type_all_locs.png'])
 print(f3,'-dpng',[figp sname cfile2 '_totP_mean_biomass_type_all_locs.png'])
 print(f4,'-dpng',[figp sname cfile2 '_totD_mean_biomass_type_all_locs.png'])
+print(f5,'-dpng',[figp sname cfile2 '_FP_frac_all_locs.png'])
+print(f6,'-dpng',[figp sname cfile2 '_DP_frac_all_locs.png'])
 
 %% Feeding level
-figure(1)
+figure(10)
 subplot(2,2,1)
 pcolor(cgrid,egrid,squeeze(mlev(1,:,:)))
 colorbar

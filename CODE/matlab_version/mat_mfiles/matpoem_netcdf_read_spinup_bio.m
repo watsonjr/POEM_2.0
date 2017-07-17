@@ -3,10 +3,11 @@
 clear all
 close all
 
-cfile = 'Diff_Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_RE00050';
+cfile = 'Dc_enc70_cmax-metab20_b10_k04_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00100';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 
+nt=12*150;
 
 %% SP
 ncid = netcdf.open([fpath 'Spinup_pristine_sml_p.nc'],'NC_NOWRITE');
@@ -31,7 +32,7 @@ for i = 1:nvars
 end
 netcdf.close(ncid);
 
-SF.bio = biomass;
+SF.bio = biomass(:,1:nt);
 clear biomass 
 
 % SD
@@ -122,8 +123,8 @@ for i = 1:nvars
 end
 netcdf.close(ncid);
 
-BENT.bio = biomass;
-clear biomass 
+B.bio = biomass;
+clear biomass
 
 %% Take means
 
@@ -136,7 +137,7 @@ mf_tmean=mean(MF.bio,1);
 md_tmean=mean(MD.bio,1);
 lp_tmean=mean(LP.bio,1);
 ld_tmean=mean(LD.bio,1);
-b_tmean=mean(BENT.bio,1);
+b_tmean=mean(B.bio,1);
 
 % Last year
 lyr=time((end-12+1):end);
@@ -148,10 +149,10 @@ mf_mean=mean(MF.bio(:,lyr),2);
 md_mean=mean(MD.bio(:,lyr),2);
 lp_mean=mean(LP.bio(:,lyr),2);
 ld_mean=mean(LD.bio(:,lyr),2);
-b_mean=mean(BENT.bio(:,lyr),2);
+b_mean=mean(B.bio(:,lyr),2);
 
 
-%
+%%
 save([fpath 'Means_spinup_' cfile '.mat'],...
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
     'lp_mean','ld_mean','sf_tmean','sp_tmean','sd_tmean','mf_tmean','mp_tmean',...

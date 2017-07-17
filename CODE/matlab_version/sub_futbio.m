@@ -114,9 +114,8 @@ Ld.con_be = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_be,Ld.enc_f,Ld.enc_p,Ld.e
 %LZ consumption cannot exceed amount lost to higher predation in COBALT runs
 [Mf.con_zl,Mp.con_zl,ENVR.fZl] = ...
     sub_offline_zl(Mf.con_zl,Mp.con_zl,Mf.bio,Mp.bio,ENVR.dZl);
-%Benthic material consumption cannot exceed amount present
-[Md.con_be, Ld.con_be, ENVR.fB] = ...
-    sub_offline_bent(Md.con_be,Ld.con_be,Md.bio,Ld.bio,BENT.mass);
+%Track fraction of benthic material consumed
+[ENVR.fB] = sub_offline_bent([Md.con_be,Ld.con_be],[Md.bio,Ld.bio],BENT.mass);
 
 % Total consumption rates (could factor in handling times here; g m-2 d-1)
 Sf.I = Sf.con_zm;
@@ -190,7 +189,7 @@ Ld.gamma = sub_gamma(K_a,Z_l,Ld.nu,Ld.die,Ld.bio,Ld.nmort,dfrate,LDsel);
 [Ld.gamma,Ld.nu,Ld.rep,Ld.egg] = sub_rep(Ld.gamma,Ld.nu,K_a,Ld.S(:,DY),Ld.egg);
 
 % Recruitment (from smaller size class)
-Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac*4);
+Sf.rec = sub_rec_larv(Mf.rep,Mf.bio,rfrac*1);
 Sp.rec = sub_rec_larv(Lp.rep,Lp.bio,rfrac);
 Sd.rec = sub_rec_larv(Ld.rep,Ld.bio,rfrac);
 Mf.rec = sub_rec(Sf.gamma,Sf.bio);

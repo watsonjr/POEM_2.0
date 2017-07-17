@@ -8,7 +8,7 @@ function met = sub_met(Tp,Tb,tdif,wgt)
     %cmax: max consumption rate
     %U: swimming speed
     
-    global fcrit mfn cfn h
+    global fcrit mfn cfn h kt bpow
     
     temp = (Tp.*tdif) + (Tb.*(1.0-tdif));
     
@@ -27,7 +27,9 @@ function met = sub_met(Tp,Tb,tdif,wgt)
 %         cmax = (exp(0.063*(temp-10.0)) .* 25.0 .* wgt^(-0.33)) ./365.0;
 %     end
     
-    cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-0.25)) ./365.0;
+    %cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-0.25)) ./365.0;
+    cmax = (exp(kt*(temp-10.0)) .* h .* wgt.^(-bpow)) ./365.0;
+    %cmax = (exp(kt*(temp-10.0)) .* h .* wgt.^(-0.175)) ./365.0;
     %Metabolism
     bas = fcrit .* cmax;
     met = bas;

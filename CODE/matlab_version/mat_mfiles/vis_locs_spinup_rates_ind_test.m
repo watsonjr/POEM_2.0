@@ -1,12 +1,13 @@
 % Visualize output of POEM biol rate eq tests
 % Spinup at one location
-% 100 years, monthly means saved
+% 150 years, monthly means saved
 
 clear all
 close all
 
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
+%figp = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 RE = {'1000','0500','0100','0050','00100','00050'};
 RE2 = {'10000','05000','01000','00500','00100','00050'};
@@ -17,15 +18,15 @@ tefn = num2str(efn);
 cfn = 20;
 tcfn = num2str(cfn);
 fcrit = 20;
-nmort = '1';
+nmort = '6';
 kad = 50;
 Dprefs = 0.1:0.1:1;
 Jprefs = 0.5:0.1:1;
 Aprefs = 0.7:0.1:1;
 Sprefs = 0:0.05:0.5;
 D = 'D075';
-J = 'J075';
-Ad = 'A075';
+J = 'J100';
+Ad = 'A050';
 Sm = 'Sm025';
 td = num2str(1000+int64(100*D));
 tj = num2str(1000+int64(100*J));
@@ -42,10 +43,8 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
     'rec','clev','prod','pred','nmort','met','caught'};
 cols=cols';
 
-sname = 'Spinup_';
-sname2 = '';
-
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
+%load('/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
 cmap3=cmap_ppt([5,1,3],:);
 cm={[1 0.5 0],...   %orange
     [0.5 0.5 0],... %tan/army
@@ -109,9 +108,12 @@ stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 % dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
 %     D,'_',J,'_',Ad,'_',Sm,...
 %     '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
-dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-            D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+% dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+%             D,'_',J,'_',Ad,'_',Sm,...
+%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+dp = 'Dc_enc70_cmax-metab20_b18_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+sname = 'Spinup_';
+harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))
@@ -122,7 +124,7 @@ cfile = char(dp);
 all_mean=NaN*ones(3,4,length(spots));
 z = NaN*ones(length(spots),3);
 
-load([dpath sname 'locs.mat'])
+load([dpath sname 'locs_' harv '.mat'])
 SP = S_Sml_p;
 SF = S_Sml_f;
 SD = S_Sml_d;
@@ -345,7 +347,7 @@ for s=1:length(spots)
     ylabel('log10 Biomass (g m^-^2)')
     title(['Spinup ' loc])
     stamp(cfile)
-    print('-dpng',[fpath sname sname2 'timeseries_logmean_biomass_' loc '.png'])
+    print('-dpng',[fpath sname  'timeseries_logmean_biomass_' loc '.png'])
     
     F = SF(:,1,s)+MF(:,1,s);
     P = SP(:,1,s)+MP(:,1,s)+LP(:,1,s);
@@ -363,7 +365,7 @@ for s=1:length(spots)
     xlabel('Year')
     ylabel('log10 Biomass (g m^-^2)')
     title(['Spinup ' loc])
-    print('-dpng',[fpath sname sname2 'timeseries_Logmean_biomass_types_' loc '.png'])
+    print('-dpng',[fpath sname  'timeseries_Logmean_biomass_types_' loc '.png'])
     
     %  TIME SERIES ----------------------------------------------------
     
@@ -904,18 +906,18 @@ for s=1:length(spots)
     end
     
 end
-print(f21,'-dpng',[fpath sname sname2 'All_oneloc_Logmean_biomass_axes.png'])
-print(f2,'-dpng',[fpath sname sname2 'All_oneloc_con_level.png'])
-print(f3,'-dpng',[fpath sname sname2 'All_oneloc_nu.png'])
-print(f5,'-dpng',[fpath sname sname2 'All_oneloc_frac_zoop_loss.png'])
-print(f8,'-dpng',[fpath sname sname2 'All_oneloc_prod.png'])
-print(f9,'-dpng',[fpath sname sname2 'All_oneloc_rep.png'])
-print(f10,'-dpng',[fpath sname sname2 'All_oneloc_met.png'])
-print(f11,'-dpng',[fpath sname sname2 'All_oneloc_pred.png'])
-print(f12,'-dpng',[fpath sname sname2 'All_oneloc_catch.png'])
-print(f13,'-dpng',[fpath sname sname2 'All_oneloc_mort_nof.png'])
-print(f14,'-dpng',[fpath sname sname2 'All_oneloc_mort_f.png'])
-print(f15,'-dpng',[fpath sname sname2 'All_oneloc_gge.png'])
+print(f21,'-dpng',[fpath sname  'All_oneloc_Logmean_biomass_axes.png'])
+print(f2,'-dpng',[fpath sname  'All_oneloc_con_level.png'])
+print(f3,'-dpng',[fpath sname  'All_oneloc_nu.png'])
+print(f5,'-dpng',[fpath sname  'All_oneloc_frac_zoop_loss.png'])
+print(f8,'-dpng',[fpath sname  'All_oneloc_prod.png'])
+print(f9,'-dpng',[fpath sname  'All_oneloc_rep.png'])
+print(f10,'-dpng',[fpath sname  'All_oneloc_met.png'])
+print(f11,'-dpng',[fpath sname  'All_oneloc_pred.png'])
+print(f12,'-dpng',[fpath sname  'All_oneloc_catch.png'])
+print(f13,'-dpng',[fpath sname  'All_oneloc_mort_nof.png'])
+print(f14,'-dpng',[fpath sname  'All_oneloc_mort_f.png'])
+print(f15,'-dpng',[fpath sname  'All_oneloc_gge.png'])
 
 %% Sum mean biom over stages
 fishsp = squeeze(nansum(all_mean));
@@ -936,7 +938,7 @@ end
 ylabel('log10 Mean Biom (g m^-^2) in final year')
 title('All stages')
 stamp(cfile)
-print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_type.png'])
+print('-dpng',[fpath sname  'All_oneloc_tot_mean_biomass_type.png'])
 
 sumspec = squeeze(nansum(nansum(all_mean)));
 
@@ -951,7 +953,7 @@ end
 ylabel('log10 Mean Biom (g m^-^2) in final year')
 title('All fishes and stages')
 stamp(cfile)
-print('-dpng',[fpath sname sname2 'All_oneloc_tot_mean_biomass_spec.png'])
+print('-dpng',[fpath sname  'All_oneloc_tot_mean_biomass_spec.png'])
 
 %% Consump g/g/d --> g/d --> g/y
 Pcon = Pcon .* mass .* 365;
@@ -1001,7 +1003,7 @@ set(gca,'XTick',1:11,'XTickLabel',spots)
 xlabel('Location')
 stamp(cfile)
 
-print(f18,'-dpng',[fpath sname sname2 'All_oneloc_consump_gyr.png'])
+print(f18,'-dpng',[fpath sname  'All_oneloc_consump_gyr.png'])
 
 %% Consump vs. weight
 f19=figure(19);

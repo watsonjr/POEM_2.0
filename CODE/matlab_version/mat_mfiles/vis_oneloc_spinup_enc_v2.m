@@ -13,20 +13,20 @@ RE = {'10000','05000','01000','00500','00100','00050'};
 RE2 = {'10000','05000','01000','00500','00100','00050'};
 reff = [1.0,0.5,0.1,0.05,0.01,0.005];
 sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
-encs = linspace(10,100,10); %logspace(2,4,10); %
+encs = 70:10:100; %linspace(10,100,10); %logspace(2,4,10); %
 cmaxs = linspace(10,100,10);
 fcrit = 20;
 nmort = '1';
 kad = 50;
 D = 'D075';
-J = 'J075';
-Ad = 'A075';
+J = 'J100';
+Ad = 'A050';
 Sm = 'Sm025';
 BE = '05';
 CC = '050';
-rfrac = RE{3};
-rfrac2 = '05000';
-cfn = 30;
+rfrac = RE{5};
+rfrac2 = '00300';
+cfn = 10;
 tcfn = num2str(cfn);
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
@@ -91,13 +91,10 @@ stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 for E = 1:length(encs)
     efn = encs(E);
     tefn = num2str(round(efn));
-    %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-%             D,'_',J,'_',Ad,'_',Sm,...
-%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-            D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
-        dpath = [datap char(dp) '/'];
+    dp = ['Dc_2B_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+        D,'_',J,'_',Ad,'_',Sm,...
+        '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+    dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
 %     if (~isdir([figp char(dp)]))
 %         mkdir([figp char(dp)])
@@ -318,22 +315,16 @@ for n = 1:length(encs)
     tefn = num2str(round(efn));
     close all
     
-    %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-%             D,'_',J,'_',Ad,'_',Sm,...
-%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac];
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-            D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
-        dpath = [datap char(dp) '/'];
+    dp = ['Dc_2B_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+        D,'_',J,'_',Ad,'_',Sm,...
+        '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+    dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
     cfile = char(dp);
-%     cfile2 = ['Dc_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-%         D,'_',J,'_',Ad,'_',Sm,...
-%         '_nmort',nmort,'_BE',BE,'_CC',CC,'_RE',rfrac,'_Enctests'];
-    cfile2 = ['Dc_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
-            D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,...
-            '_CmaxEnctests'];
+    cfile2 = ['Dc_2B_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+        D,'_',J,'_',Ad,'_',Sm,...
+        '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,...
+            '_Enctests'];
     
     load([dpath sname 'lastyr_sum_mean_biom.mat']);
     
@@ -384,13 +375,13 @@ for s=1:length(spots)
         text(t,-2.1,num2str(encs(t)),'Rotation',45,'HorizontalAlignment','right')
     end
     if (s==11)
-        text(13,1.5,['D=' num2str(D)]);
-        text(13,1,['J=' num2str(J)]);
-        text(13,0.5,['A=' num2str(Ad)]);
-        text(13,0,['Sm=' num2str(Sm)]);
-        %text(13,-0.5,['enc=' tefn]);
-        text(13,-0.5,['RE=' rfrac]);
-        text(13,-1,['cmax-metab=' tcfn]);
+        text(np+2,1.5,['D=' num2str(D)]);
+        text(np+2,1,['J=' num2str(J)]);
+        text(np+2,0.5,['A=' num2str(Ad)]);
+        text(np+2,0,['Sm=' num2str(Sm)]);
+        %text(np+2,-0.5,['enc=' tefn]);
+        text(np+2,-0.5,['lgRE=' rfrac ', mdRE=' rfrac2]);
+        text(np+2,-1,['cmax-metab=' tcfn]);
     end
     stamp(cfile2)
     title([loc ' All stages'])

@@ -3,9 +3,11 @@
 clear all
 close all
 
-cfile = 'Dc_TrefO_cmax-metab2_enc1_MFeqMP_fcrit40_D100_nmort2_BE05_CC050_RE0500';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00400';
 
-fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
+
+nt=12*145;
 
 %% SP
 ncid = netcdf.open([fpath 'Hindcast_pristine_sml_p.nc'],'NC_NOWRITE');
@@ -18,15 +20,15 @@ end
 netcdf.close(ncid);
 
 SP.bio = biomass;
-SP.clev = clev;
-SP.con = con;
-SP.die = die;
-SP.gamma = gamma;
-SP.nu = nu;
+% SP.clev = clev;
+% SP.con = con;
+% SP.die = die;
+% SP.gamma = gamma;
+% SP.nu = nu;
 SP.prod = prod;
 SP.rec = rec;
 
-Sml_p.bio = biomass(:,end);
+Sml_p.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec time prod
 
@@ -40,16 +42,16 @@ for i = 1:nvars
 end
 netcdf.close(ncid);
 
-SF.bio = biomass;
-SF.clev = clev;
-SF.con = con;
-SF.die = die;
-SF.gamma = gamma;
-SF.nu = nu;
-SF.prod = prod;
-SF.rec = rec;
+SF.bio = biomass(:,1:nt);
+% SF.clev = clev(:,1:nt);
+% SF.con = con(:,1:nt);
+% SF.die = die(:,1:nt);
+% SF.gamma = gamma(:,1:nt);
+% SF.nu = nu(:,1:nt);
+SF.prod = prod(:,1:nt);
+SF.rec = rec(:,1:nt);
 
-Sml_f.bio = biomass(:,end);
+Sml_f.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec time prod
 
@@ -64,15 +66,15 @@ end
 netcdf.close(ncid);
 
 SD.bio = biomass;
-SD.clev = clev;
-SD.con = con;
-SD.die = die;
-SD.gamma = gamma;
-SD.nu = nu;
+% SD.clev = clev;
+% SD.con = con;
+% SD.die = die;
+% SD.gamma = gamma;
+% SD.nu = nu;
 SD.prod = prod;
 SD.rec = rec;
 
-Sml_d.bio = biomass(:,end);
+Sml_d.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec time prod
 
@@ -87,15 +89,15 @@ end
 netcdf.close(ncid);
 
 MP.bio = biomass;
-MP.clev = clev;
-MP.con = con;
-MP.die = die;
-MP.gamma = gamma;
-MP.nu = nu;
+% MP.clev = clev;
+% MP.con = con;
+% MP.die = die;
+% MP.gamma = gamma;
+% MP.nu = nu;
 MP.prod = prod;
 MP.rec = rec;
 
-Med_p.bio = biomass(:,end);
+Med_p.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec time prod
 
@@ -110,19 +112,16 @@ end
 netcdf.close(ncid);
 
 MF.bio = biomass;
-MF.clev = clev;
-MF.con = con;
-% MF.DD = DD;
-MF.die = die;
-% MF.egg = egg;
-MF.gamma = gamma;
-MF.nu = nu;
+% MF.clev = clev;
+% MF.con = con;
+% MF.die = die;
+% MF.gamma = gamma;
+% MF.nu = nu;
 MF.prod = prod;
 MF.rec = rec;
-MF.rep = rep;
-% MF.S = S;
+% MF.rep = rep;
 
-Med_f.bio = biomass(:,end);
+Med_f.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec rep time prod
 
@@ -137,15 +136,15 @@ end
 netcdf.close(ncid);
 
 MD.bio = biomass;
-MD.clev = clev;
-MD.con = con;
-MD.die = die;
-MD.gamma = gamma;
-MD.nu = nu;
+% MD.clev = clev;
+% MD.con = con;
+% MD.die = die;
+% MD.gamma = gamma;
+% MD.nu = nu;
 MD.prod = prod;
 MD.rec = rec;
 
-Med_d.bio = biomass(:,end);
+Med_d.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec time prod
 
@@ -160,19 +159,16 @@ end
 netcdf.close(ncid);
 
 LP.bio = biomass;
-LP.clev = clev;
-LP.con = con;
-% LP.DD = DD;
-LP.die = die;
-% LP.egg = egg;
-LP.gamma = gamma;
-LP.nu = nu;
+% LP.clev = clev;
+% LP.con = con;
+% LP.die = die;
+% LP.gamma = gamma;
+% LP.nu = nu;
 LP.prod = prod;
 LP.rec = rec;
-LP.rep = rep;
-% LP.S = S;
+% LP.rep = rep;
 
-Lrg_p.bio = biomass(:,end);
+Lrg_p.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec rep time prod
 
@@ -187,19 +183,16 @@ end
 netcdf.close(ncid);
 
 LD.bio = biomass;
-LD.clev = clev;
-LD.con = con;
-% LD.DD = DD;
-LD.die = die;
-% LD.egg = egg;
-LD.gamma = gamma;
-LD.nu = nu;
+% LD.clev = clev;
+% LD.con = con;
+% LD.die = die;
+% LD.gamma = gamma;
+% LD.nu = nu;
 LD.prod = prod;
 LD.rec = rec;
-LD.rep = rep;
-% LD.S = S;
+% LD.rep = rep;
 
-Lrg_d.bio = biomass(:,end);
+Lrg_d.bio = biomass(:,nt);
 
 clear biomass clev con die gamma nu rec rep time prod
 
@@ -214,7 +207,7 @@ end
 netcdf.close(ncid);
 
 Bent.bio = biomass;
-BENT.bio = biomass(:,end);
+BENT.bio = biomass(:,nt);
 clear biomass 
 
 %% Take means

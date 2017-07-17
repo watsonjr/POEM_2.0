@@ -6,10 +6,11 @@ close all
 
 gpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/';
-dp = '/Volumes/GFDL/NC/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
+dp = '/Volumes/GFDL/NC/Matlab_new_size/';
 
-cfile = 'Dc_TrefO_Hartvig_cmax-metab_MFeqMP_fcrit30_MZ01_NOnmort_BE05';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00400';
+harv = '03';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -53,142 +54,196 @@ cmap4(3,:)=cmap_ppt(5,:);
 % Biomes 1 = LC; 2 = ECCS; 3 = ECSS;
 
 %% Preindust
-load([dpath 'LME_preindust_' cfile '.mat']);
-load([dpath 'Biomes_preindust_' cfile '.mat'],'biome_mbio');
-load([dpath 'Preindust_1800-1850_means.mat']); %fcrit30
-
-pre_g = lme_bio;
-pre_gm2 = lme_mbio;
-
-pre_biome = biome_mbio;
+load([dpath 'Means_preindust_' cfile '.mat']); 
 
 %Mean global biomass in g/m2
-all_pre(:,1) = sf_smean+sp_smean+sd_smean+mf_smean+mp_smean+md_smean+...
-    lp_smean+ld_smean;
-all_pre(:,2) = sf_smean+mf_smean; %all f
-all_pre(:,3) = sp_smean+mp_smean+lp_smean; %all p
-all_pre(:,4) = sd_smean+md_smean+ld_smean; %all d
-all_pre(:,5) = sf_smean+sp_smean+sd_smean; %all s
-all_pre(:,6) = mf_smean+mp_smean+md_smean; %all m
-all_pre(:,7) = lp_smean+ld_smean; %all l
+all_pre(:,1) = sf_mean+sp_mean+sd_mean+mf_mean+mp_mean+md_mean+...
+    lp_mean+ld_mean;
+all_pre(:,2) = sf_mean+mf_mean; %all f
+all_pre(:,3) = sp_mean+mp_mean+lp_mean; %all p
+all_pre(:,4) = sd_mean+md_mean+ld_mean; %all d
+all_pre(:,5) = sf_mean+sp_mean+sd_mean; %all s
+all_pre(:,6) = mf_mean+mp_mean+md_mean; %all m
+all_pre(:,7) = lp_mean+ld_mean; %all l
+
+%Time series
+ts_pre(1,:) = sf_tmean;
+ts_pre(2,:) = sp_tmean;
+ts_pre(3,:) = sd_tmean;
+ts_pre(4,:) = mf_tmean;
+ts_pre(5,:) = mp_tmean;
+ts_pre(6,:) = md_tmean;
+ts_pre(7,:) = lp_tmean;
+ts_pre(8,:) = ld_tmean;
+ts_pre(9,:) = b_tmean;
 
 %Mean total global biomass in g
 tot_all_pre = all_pre .* repmat(grid(:,5),1,7);
 
-clear lme_bio lme_mbio biome_mbio sf_smean sp_smean sd_smean
-clear mf_smean mp_smean md_smean b_smean lp_smean ld_smean
+clear sf_mean sp_mean sd_mean mf_mean mp_mean md_mean b_mean lp_mean ld_mea
+clear sf_tmean sp_tmean sd_tmean mf_tmean mp_tmean md_tmean b_tmean lp_tmean ld_tmean
 
 %% Hist prist
-load([dpath 'LME_hist_pristine_' cfile '.mat'],'lme_bio00','lme_mbio00');
+load([dpath 'LME_hist_pristine_' cfile '.mat'],'lme_mbio');
 load([dpath 'Biomes_hist_pristine_' cfile '.mat'],'biome_mbio50');
-load([dpath 'Means_hist_pristine_' cfile '.mat'],'sf_mean5000','sp_mean5000',...
-    'sd_mean5000','mf_mean5000','mp_mean5000','md_mean5000','b_mean5000',...
-    'lp_mean5000','ld_mean5000');
+load([dpath 'Means_hist_pristine_' cfile '.mat']);
 
-histp_g = lme_bio00;
-histp_gm2 = lme_mbio00;
-
+histp_gm2 = lme_mbio;
 histp_biome = biome_mbio50;
 
 %Mean global biomass in g/m2
-all_histp(:,1) = sf_mean5000+sp_mean5000+sd_mean5000+mf_mean5000+...
-    mp_mean5000+md_mean5000+lp_mean5000+ld_mean5000;
-all_histp(:,2) = sf_mean5000+mf_mean5000; %all f
-all_histp(:,3) = sp_mean5000+mp_mean5000+lp_mean5000; %all p
-all_histp(:,4) = sd_mean5000+md_mean5000+ld_mean5000; %all d
-all_histp(:,5) = sf_mean5000+sp_mean5000+sd_mean5000; %all s
-all_histp(:,6) = mf_mean5000+mp_mean5000+md_mean5000; %all m
-all_histp(:,7) = lp_mean5000+ld_mean5000; %all l
+all_histp(:,1) = sf_mean50+sp_mean50+sd_mean50+mf_mean50+...
+    mp_mean50+md_mean50+lp_mean50+ld_mean50;
+all_histp(:,2) = sf_mean50+mf_mean50; %all f
+all_histp(:,3) = sp_mean50+mp_mean50+lp_mean50; %all p
+all_histp(:,4) = sd_mean50+md_mean50+ld_mean50; %all d
+all_histp(:,5) = sf_mean50+sp_mean50+sd_mean50; %all s
+all_histp(:,6) = mf_mean50+mp_mean50+md_mean50; %all m
+all_histp(:,7) = lp_mean50+ld_mean50; %all l
+
+%Time series
+ts_histp(1,:) = sf_tmean;
+ts_histp(2,:) = sp_tmean;
+ts_histp(3,:) = sd_tmean;
+ts_histp(4,:) = mf_tmean;
+ts_histp(5,:) = mp_tmean;
+ts_histp(6,:) = md_tmean;
+ts_histp(7,:) = lp_tmean;
+ts_histp(8,:) = ld_tmean;
+ts_histp(9,:) = b_tmean;
 
 %Mean total global biomass in g
 tot_all_histp = all_histp .* repmat(grid(:,5),1,7);
 
-clear lme_bio00 lme_mbio00 biome_mbio50 sf_mean5000 sp_mean5000 sd_mean5000
-clear mf_mean5000 mp_mean5000 md_mean5000 b_mean5000 lp_mean5000 ld_mean5000
+clear lme_mbio biome_mbio50 sf_mean50 sp_mean50 sd_mean50
+clear mf_mean50 mp_mean50 md_mean50 b_mean50 lp_mean50 ld_mean50
+clear sf_mean sp_mean sd_mean mf_mean mp_mean md_mean b_mean lp_mean ld_mea
+clear sf_tmean sp_tmean sd_tmean mf_tmean mp_tmean md_tmean b_tmean lp_tmean ld_tmean
 
 %% Hist fished
-load([dpath 'LME_hist_fished_' cfile '.mat'],'lme_bio00','lme_mbio00');
-load([dpath 'Biomes_hist_fished_' cfile '.mat'],'biome_mbio50');
-load([dpath 'Means_hist_fished_' cfile '.mat'],'sf_mean5000','sp_mean5000',...
-    'sd_mean5000','mf_mean5000','mp_mean5000','md_mean5000','b_mean5000',...
-    'lp_mean5000','ld_mean5000');
+load([dpath 'LME_hist_fished',harv,'_' cfile '.mat'],'lme_mbio');
+load([dpath 'Biomes_hist_fished',harv,'_' cfile '.mat'],'biome_mbio50');
+load([dpath 'Means_hist_fished',harv,'_' cfile '.mat']);
 
-histf_g = lme_bio00;
-histf_gm2 = lme_mbio00;
-
+histf_gm2 = lme_mbio;
 histf_biome = biome_mbio50;
 
 %Mean global biomass in g/m2
-all_histf(:,1) = sf_mean5000+sp_mean5000+sd_mean5000+mf_mean5000+...
-    mp_mean5000+md_mean5000+lp_mean5000+ld_mean5000;
-all_histf(:,2) = sf_mean5000+mf_mean5000; %all f
-all_histf(:,3) = sp_mean5000+mp_mean5000+lp_mean5000; %all p
-all_histf(:,4) = sd_mean5000+md_mean5000+ld_mean5000; %all d
-all_histf(:,5) = sf_mean5000+sp_mean5000+sd_mean5000; %all s
-all_histf(:,6) = mf_mean5000+mp_mean5000+md_mean5000; %all m
-all_histf(:,7) = lp_mean5000+ld_mean5000; %all l
+all_histf(:,1) = sf_mean50+sp_mean50+sd_mean50+mf_mean50+...
+    mp_mean50+md_mean50+lp_mean50+ld_mean50;
+all_histf(:,2) = sf_mean50+mf_mean50; %all f
+all_histf(:,3) = sp_mean50+mp_mean50+lp_mean50; %all p
+all_histf(:,4) = sd_mean50+md_mean50+ld_mean50; %all d
+all_histf(:,5) = sf_mean50+sp_mean50+sd_mean50; %all s
+all_histf(:,6) = mf_mean50+mp_mean50+md_mean50; %all m
+all_histf(:,7) = lp_mean50+ld_mean50; %all l
+
+%Time series
+ts_histf(1,:) = sf_tmean;
+ts_histf(2,:) = sp_tmean;
+ts_histf(3,:) = sd_tmean;
+ts_histf(4,:) = mf_tmean;
+ts_histf(5,:) = mp_tmean;
+ts_histf(6,:) = md_tmean;
+ts_histf(7,:) = lp_tmean;
+ts_histf(8,:) = ld_tmean;
+ts_histf(9,:) = b_tmean;
+
+ts_histf_catch(1,:) = mf_tmy;
+ts_histf_catch(2,:) = mp_tmy;
+ts_histf_catch(3,:) = md_tmy;
+ts_histf_catch(4,:) = lp_tmy;
+ts_histf_catch(5,:) = ld_tmy;
 
 %Mean total global biomass in g
 tot_all_histf = all_histf .* repmat(grid(:,5),1,7);
 
-clear lme_bio00 lme_mbio00 biome_mbio50 sf_mean5000 sp_mean5000 sd_mean5000
-clear mf_mean5000 mp_mean5000 md_mean5000 b_mean5000 lp_mean5000 ld_mean5000
+clear lme_mbio biome_mbio50 sf_mean50 sp_mean50 sd_mean50
+clear mf_mean50 mp_mean50 md_mean50 b_mean50 lp_mean50 ld_mean50
+clear sf_mean sp_mean sd_mean mf_mean mp_mean md_mean b_mean lp_mean ld_mea
+clear sf_tmean sp_tmean sd_tmean mf_tmean mp_tmean md_tmean b_tmean lp_tmean ld_tmean
+clear mf_tmy mp_tmy md_tmy lp_tmy ld_tmy
 
 %% Fore pristine
-load([dpath 'LME_fore_pristine_' cfile '.mat'],'lme_bio00','lme_mbio00');
+load([dpath 'LME_fore_pristine_' cfile '.mat'],'lme_mbio');
 load([dpath 'Biomes_fore_pristine_' cfile '.mat'],'biome_mbio50');
-load([dpath 'Means_fore_pristine_' cfile '.mat'],'sf_mean5000','sp_mean5000',...
-    'sd_mean5000','mf_mean5000','mp_mean5000','md_mean5000','b_mean5000',...
-    'lp_mean5000','ld_mean5000');
+load([dpath 'Means_fore_pristine_' cfile '.mat']);
 
-forep_g = lme_bio00;
-forep_gm2 = lme_mbio00;
-
+forep_gm2 = lme_mbio;
 forep_biome = biome_mbio50;
 
 %Mean global biomass in g/m2
-all_forep(:,1) = sf_mean5000+sp_mean5000+sd_mean5000+mf_mean5000+...
-    mp_mean5000+md_mean5000+lp_mean5000+ld_mean5000;
-all_forep(:,2) = sf_mean5000+mf_mean5000; %all f
-all_forep(:,3) = sp_mean5000+mp_mean5000+lp_mean5000; %all p
-all_forep(:,4) = sd_mean5000+md_mean5000+ld_mean5000; %all d
-all_forep(:,5) = sf_mean5000+sp_mean5000+sd_mean5000; %all s
-all_forep(:,6) = mf_mean5000+mp_mean5000+md_mean5000; %all m
-all_forep(:,7) = lp_mean5000+ld_mean5000; %all l
+all_forep(:,1) = sf_mean50+sp_mean50+sd_mean50+mf_mean50+...
+    mp_mean50+md_mean50+lp_mean50+ld_mean50;
+all_forep(:,2) = sf_mean50+mf_mean50; %all f
+all_forep(:,3) = sp_mean50+mp_mean50+lp_mean50; %all p
+all_forep(:,4) = sd_mean50+md_mean50+ld_mean50; %all d
+all_forep(:,5) = sf_mean50+sp_mean50+sd_mean50; %all s
+all_forep(:,6) = mf_mean50+mp_mean50+md_mean50; %all m
+all_forep(:,7) = lp_mean50+ld_mean50; %all l
+
+%Time series
+ts_forep(1,:) = sf_tmean;
+ts_forep(2,:) = sp_tmean;
+ts_forep(3,:) = sd_tmean;
+ts_forep(4,:) = mf_tmean;
+ts_forep(5,:) = mp_tmean;
+ts_forep(6,:) = md_tmean;
+ts_forep(7,:) = lp_tmean;
+ts_forep(8,:) = ld_tmean;
+ts_forep(9,:) = b_tmean;
 
 %Mean total global biomass in g
 tot_all_forep = all_forep .* repmat(grid(:,5),1,7);
 
-clear lme_bio00 lme_mbio00 biome_mbio50 sf_mean5000 sp_mean5000 sd_mean5000
-clear mf_mean5000 mp_mean5000 md_mean5000 b_mean5000 lp_mean5000 ld_mean5000
+clear lme_mbio biome_mbio50 sf_mean50 sp_mean50 sd_mean50
+clear mf_mean50 mp_mean50 md_mean50 b_mean50 lp_mean50 ld_mean50
+clear sf_mean sp_mean sd_mean mf_mean mp_mean md_mean b_mean lp_mean ld_mea
+clear sf_tmean sp_tmean sd_tmean mf_tmean mp_tmean md_tmean b_tmean lp_tmean ld_tmean
 
 %% Fore fished
-load([dpath 'LME_fore_fished_' cfile '.mat'],'lme_bio00','lme_mbio00');
-load([dpath 'Biomes_fore_fished_' cfile '.mat'],'biome_mbio50');
-load([dpath 'Means_fore_fished_' cfile '.mat'],'sf_mean5000','sp_mean5000',...
-    'sd_mean5000','mf_mean5000','mp_mean5000','md_mean5000','b_mean5000',...
-    'lp_mean5000','ld_mean5000');
+load([dpath 'LME_fore_fished',harv,'_' cfile '.mat'],'lme_mbio');
+load([dpath 'Biomes_fore_fished',harv,'_' cfile '.mat'],'biome_mbio50');
+load([dpath 'Means_fore_fished',harv,'_' cfile '.mat']);
 
-foref_g = lme_bio00;
-foref_gm2 = lme_mbio00;
-
+foref_gm2 = lme_mbio;
 foref_biome = biome_mbio50;
 
 %Mean global biomass in g/m2
-all_foref(:,1) = sf_mean5000+sp_mean5000+sd_mean5000+mf_mean5000+...
-    mp_mean5000+md_mean5000+lp_mean5000+ld_mean5000;
-all_foref(:,2) = sf_mean5000+mf_mean5000; %all f
-all_foref(:,3) = sp_mean5000+mp_mean5000+lp_mean5000; %all p
-all_foref(:,4) = sd_mean5000+md_mean5000+ld_mean5000; %all d
-all_foref(:,5) = sf_mean5000+sp_mean5000+sd_mean5000; %all s
-all_foref(:,6) = mf_mean5000+mp_mean5000+md_mean5000; %all m
-all_foref(:,7) = lp_mean5000+ld_mean5000; %all l
+all_foref(:,1) = sf_mean50+sp_mean50+sd_mean50+mf_mean50+...
+    mp_mean50+md_mean50+lp_mean50+ld_mean50;
+all_foref(:,2) = sf_mean50+mf_mean50; %all f
+all_foref(:,3) = sp_mean50+mp_mean50+lp_mean50; %all p
+all_foref(:,4) = sd_mean50+md_mean50+ld_mean50; %all d
+all_foref(:,5) = sf_mean50+sp_mean50+sd_mean50; %all s
+all_foref(:,6) = mf_mean50+mp_mean50+md_mean50; %all m
+all_foref(:,7) = lp_mean50+ld_mean50; %all l
+
+%Time series
+ts_foref(1,:) = sf_tmean;
+ts_foref(2,:) = sp_tmean;
+ts_foref(3,:) = sd_tmean;
+ts_foref(4,:) = mf_tmean;
+ts_foref(5,:) = mp_tmean;
+ts_foref(6,:) = md_tmean;
+ts_foref(7,:) = lp_tmean;
+ts_foref(8,:) = ld_tmean;
+ts_foref(9,:) = b_tmean;
+
+ts_foref_catch(1,:) = mf_tmy;
+ts_foref_catch(2,:) = mp_tmy;
+ts_foref_catch(3,:) = md_tmy;
+ts_foref_catch(4,:) = lp_tmy;
+ts_foref_catch(5,:) = ld_tmy;
 
 %Mean total global biomass in g
 tot_all_foref = all_foref .* repmat(grid(:,5),1,7);
 
-clear lme_bio00 lme_mbio00 biome_mbio50 sf_mean5000 sp_mean5000 sd_mean5000
-clear mf_mean5000 mp_mean5000 md_mean5000 b_mean5000 lp_mean5000 ld_mean5000
+clear lme_mbio biome_mbio50 sf_mean50 sp_mean50 sd_mean50
+clear mf_mean50 mp_mean50 md_mean50 b_mean50 lp_mean50 ld_mean50
+clear sf_mean sp_mean sd_mean mf_mean mp_mean md_mean b_mean lp_mean ld_mea
+clear sf_tmean sp_tmean sd_tmean mf_tmean mp_tmean md_tmean b_tmean lp_tmean ld_tmean
+clear mf_tmy mp_tmy md_tmy lp_tmy ld_tmy
 
 %% Global
 
@@ -232,117 +287,6 @@ Tdiff_foref_forep = (Tsum_foref - Tsum_forep) ./ Tsum_forep;
 Mdiff_forep_histp = (Msum_forep - Msum_histp) ./ Msum_histp;
 Tdiff_forep_histp = (Tsum_forep - Tsum_histp) ./ Tsum_histp;
 
-%% Quad figures
-%example
-Equad(1,1) = 0;
-Equad(1,2) = -0.2;
-Equad(2,1) = 0.1;
-Equad(2,2) = -0.5;
-Equad(3,1:3) = nan;
-Equad(1:2,3) = nan;
-
-Pquad(1,1) = 0;
-Pquad(1,2) = nan;
-Pquad(2,1) = Mdiff_histp_pre(1);
-Pquad(2,2) = Mdiff_histf_pre(1);
-Pquad(3,1:3) = nan;
-Pquad(1:2,3) = nan;
-
-Hquad(1,1) = 0;
-Hquad(1,2) = Mdiff_histf_histp(1);
-Hquad(2,1) = Mdiff_forep_histp(1);
-Hquad(2,2) = Mdiff_foref_histp(1);
-Hquad(3,1:3) = nan;
-Hquad(1:2,3) = nan;
-
-Hquad_s(1,1) = 0;
-Hquad_s(1,2) = Mdiff_histf_histp(5);
-Hquad_s(2,1) = Mdiff_forep_histp(5);
-Hquad_s(2,2) = Mdiff_foref_histp(5);
-Hquad_s(3,1:3) = nan;
-Hquad_s(1:2,3) = nan;
-
-Hquad_m(1,1) = 0;
-Hquad_m(1,2) = Mdiff_histf_histp(6);
-Hquad_m(2,1) = Mdiff_forep_histp(6);
-Hquad_m(2,2) = Mdiff_foref_histp(6);
-Hquad_m(3,1:3) = nan;
-Hquad_m(1:2,3) = nan;
-
-Hquad_l(1,1) = 0;
-Hquad_l(1,2) = Mdiff_histf_histp(7);
-Hquad_l(2,1) = Mdiff_forep_histp(7);
-Hquad_l(2,2) = Mdiff_foref_histp(7);
-Hquad_l(3,1:3) = nan;
-Hquad_l(1:2,3) = nan;
-
-%% Global total
-y=3:-1:1;
-x=1:3;
-[a,b]=meshgrid(x,y);
-
-figure(1)
-pcolor(a,b,Equad)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Time 2','Time 1'})
-title('Global')
-print('-dpng',[ppath 'Quad_eg.png'])
-
-figure(2)
-pcolor(a,b,Pquad)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Historic','Pre-Industrial'})
-title('Global')
-print('-dpng',[ppath 'Global_fish_mean_biom_preindust_quad.png'])
-
-%
-figure(3)
-pcolor(a,b,Hquad)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Global')
-print('-dpng',[ppath 'Global_fish_mean_biom_histp_quad.png'])
-
-%% Global by fish size
-figure(3)
-pcolor(a,b,Hquad_s)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Small')
-print('-dpng',[ppath 'Global_fish_mean_biomS_histp_quad.png'])
-
-figure(4)
-pcolor(a,b,Hquad_m)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Medium')
-print('-dpng',[ppath 'Global_fish_mean_biomM_histp_quad.png'])
-
-figure(5)
-pcolor(a,b,Hquad_l)
-caxis([-0.5 0.5])
-colorbar
-colormap(cmap_color_rb)
-set(gca,'XTick',1.5:2.5,'XTickLabel',{'Pristine','Fishing'},...
-    'YTick',1.5:2.5,'YTickLabel',{'Forecast','Historic'})
-title('Large')
-print('-dpng',[ppath 'Global_fish_mean_biomL_size_histp_quad.png'])
-
 %% Bar plots by simulation
 
 % Historic vs. Pre-industrial
@@ -358,7 +302,7 @@ ylim([-18 0])
 set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
 ylabel('Percent change')
 %xlabel('Driver')
-title('Global change in mean fish biomass 1951-2000 vs. 1801-1850')
+title('Global change in mean fish biomass 1956-2005 vs. 1811-1860')
 print('-dpng',[ppath 'Global_mean_biom_pre_hist.png'])
 
 %Type
@@ -370,7 +314,7 @@ set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
 ylabel('Percent change')
 legend('Forage','Pelagic','Demersal')
 legend('location','northwest')
-title('Global change in mean fish biomass 1951-2000 vs. 1801-1850')
+title('Global change in mean fish biomass 1956-2005 vs. 1811-1860')
 print('-dpng',[ppath 'Global_mean_biom_type_pre_hist.png'])
 
 %Size
@@ -382,7 +326,7 @@ set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
 ylabel('Percent change')
 legend('S','M','L')
 legend('location','northwest')
-title('Global change in mean fish biomass 1951-2000 vs. 1801-1850')
+title('Global change in mean fish biomass 1956-2005 vs. 1811-1860')
 print('-dpng',[ppath 'Global_mean_biom_size_pre_hist.png'])
 
 
@@ -396,14 +340,14 @@ fhc(4,:) = Mdiff_foref_histp;
 figure(9)
 bar(fhc(:,1)*100)
 colormap(cmap3)
-ylim([-18 0])
+ylim([-23 0])
 set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristine'})
 ylabel('Percent change')
 %xlabel('Driver')
-title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('Global change in mean fish biomass 2006-2100 vs. 1956-2005')
 print('-dpng',[ppath 'Global_mean_biom_hist_fore.png'])
 
-%Type
+% Type
 figure(10)
 bar(fhc(:,2:4)*100)
 colormap(cmap4)
@@ -412,7 +356,7 @@ set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristi
 ylabel('Percent change')
 legend('Forage','Pelagic','Demersal')
 legend('location','northwest')
-title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('Global change in mean fish biomass 2006-2100 vs. 1956-2005')
 print('-dpng',[ppath 'Global_mean_biom_type_hist_fore.png'])
 
 %Size
@@ -424,7 +368,7 @@ set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristi
 ylabel('Percent change')
 legend('S','M','L')
 legend('location','northwest')
-title('Global change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('Global change in mean fish biomass 2006-2100 vs. 1956-2005')
 print('-dpng',[ppath 'Global_mean_biom_size_hist_fore.png'])
 
 %% Bar plot by size
@@ -447,50 +391,47 @@ title('Global change in productivity')
 print('-dpng',[ppath 'Global_prod_size_pre_hist.png'])
 
 %% Time series
-load([dpath 'All_biom_mcatch_hist_pristine.mat'],'all_bio');
-all_bio_ts = nansum(all_bio);
-ts_bio_histp = all_bio_ts(2:16);
-clear all_bio all_bio_ts
+ts_bio_pre = sum(ts_pre(1:8,:));
+ts_bio_histp = sum(ts_histp(1:8,:));
+ts_bio_histf = sum(ts_histf(1:8,:));
+ts_bio_forep = sum(ts_forep(1:8,:));
+ts_bio_foref = sum(ts_foref(1:8,:));
 
-load([dpath 'All_biom_mcatch_hist_fished.mat'],'all_bio','all_mcatch');
-all_bio_ts = nansum(all_bio);
-ts_bio_histf = all_bio_ts(2:16);
-all_mcatch_ts = nansum(all_mcatch);
-ts_mcatch_histf = all_mcatch_ts(2:16);
-clear all_bio all_bio_ts all_mcatch all_mcatch_ts
+ts_mcatch_histf = sum(ts_histf_catch);
+ts_mcatch_foref = sum(ts_foref_catch);
 
-load([dpath 'All_biom_fore_pristine.mat'],'all_bio');
-all_bio_ts = nansum(all_bio);
-ts_bio_forep = all_bio_ts(2:11);
-clear all_bio all_bio_ts
-
-load([dpath 'All_biom_mcatch_fore_fished.mat'],'all_bio','all_mcatch');
-all_bio_ts = nansum(all_bio);
-ts_bio_foref = all_bio_ts(2:11);
-all_mcatch_ts = nansum(all_mcatch);
-ts_mcatch_foref = all_mcatch_ts(2:11);
-clear all_bio all_bio_ts all_mcatch all_mcatch_ts
 %%
-yrh=1865:10:2005;
-yrf=2005:10:2100;
+yrp=1760+(1/12):(1/12):1860;
+yrh=1860+(1/12):(1/12):2005;
+yrf=2005+(1/12):(1/12):2100;
+
+mts_bio_pre = movmean(ts_bio_pre,12);
+mts_bio_histp = movmean(ts_bio_histp,12);
+mts_bio_histf = movmean(ts_bio_histf,12);
+mts_bio_forep = movmean(ts_bio_forep,12);
+mts_bio_foref = movmean(ts_bio_foref,12);
+
+mts_catch_histf = movmean(ts_mcatch_histf,12);
+mts_catch_foref = movmean(ts_mcatch_foref,12);
 
 figure(70)
-plot(yrh,ts_bio_histp,'k','LineWidth',2); hold on;
-plot(yrh,ts_bio_histf,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
-plot(yrf,ts_bio_forep,'k','LineWidth',2); hold on;
-plot(yrf,ts_bio_foref,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
-xlim([1860 2100])
+plot(yrp,mts_bio_pre,'k','LineWidth',2); hold on;
+plot(yrh,mts_bio_histp,'k','LineWidth',2); hold on;
+plot(yrh,mts_bio_histf,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
+plot(yrf,mts_bio_forep,'k','LineWidth',2); hold on;
+plot(yrf,mts_bio_foref,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
+xlim([1800 2100])
 xlabel('Year')
 ylabel('All fish mean biomass (g/m^2)')
 %legend('Pristine','Fished')
 %legend('location','southwest')
 title('Mean biomass')
 print('-dpng',[ppath 'ts_mbio_all.png'])
-
+%
 figure(71)
-plot(yrh,ts_mcatch_histf*365,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
-plot(yrf,ts_mcatch_foref*365,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
-xlim([1860 2100])
+plot(yrh,mts_catch_histf*365,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
+plot(yrf,mts_catch_foref*365,'color',[0.5 0.5 0.5],'LineWidth',2); hold on;
+xlim([1800 2100])
 xlabel('Year')
 ylabel('All fish mean annual catch (g/m^2)')
 %legend('Pristine','Fished')
@@ -541,14 +482,6 @@ Tdiff_foref_forep_np = (Tsum_foref_np - Tsum_forep_np) ./ Tsum_forep_np;
 %% NPac biomes
 
 %Global biomes mean biomass in g/m2
-pre_b(:,1) = nansum(pre_biome(:,1:8),2);
-pre_b(:,2) = pre_biome(:,1) + pre_biome(:,4); %all f
-pre_b(:,3) = pre_biome(:,2) + pre_biome(:,5) + pre_biome(:,7); %all p
-pre_b(:,4) = pre_biome(:,3) + pre_biome(:,6) + pre_biome(:,8); %all d
-pre_b(:,5) = nansum(pre_biome(:,1:3),2); %all s
-pre_b(:,6) = nansum(pre_biome(:,4:6),2); %all m
-pre_b(:,7) = nansum(pre_biome(:,7:8),2); %all l
-
 histp_b(:,1) = nansum(histp_biome(:,1:8),2);
 histp_b(:,2) = histp_biome(:,1) + histp_biome(:,4);
 histp_b(:,3) = histp_biome(:,2) + histp_biome(:,5) + histp_biome(:,7);
@@ -574,16 +507,6 @@ foref_b(:,6) = nansum(foref_biome(:,4:6),2);
 foref_b(:,7) = nansum(foref_biome(:,7:8),2);
 
 %% NPac biomes grid cells
-%Preindust
-pb1 = find(biome_pre==1);
-NPpb1 = intersect(NPid,pb1);
-[nppb1,ia,grid_nppb1] = intersect(NPpb1,grid(:,1));
-pb2 = find(biome_pre==2);
-NPpb2 = intersect(NPid,pb2);
-[nppb2,ia2,grid_nppb2] = intersect(NPpb2,grid(:,1));
-pb3 = find(biome_pre==3);
-NPpb3 = intersect(NPid,pb3);
-[nppb3,ia3,grid_nppb3] = intersect(NPpb3,grid(:,1));
 %Hist
 hb1 = find(biome_hist==1);
 NPhb1 = intersect(NPid,hb1);
@@ -608,23 +531,16 @@ NPfb3 = intersect(NPid,fb3);
 NPbiome_pre = zeros(360,200);
 NPbiome_hist = NPbiome_pre;
 NPbiome_fore = NPbiome_pre;
-NPbiome_pre(NPpb1) = ones(size(NPpb1));
 NPbiome_hist(NPhb1) = ones(size(NPhb1));
 NPbiome_fore(NPfb1) = ones(size(NPfb1));
-NPbiome_pre(NPpb2) = 2*ones(size(NPpb2));
 NPbiome_hist(NPhb2) = 2*ones(size(NPhb2));
 NPbiome_fore(NPfb2) = 2*ones(size(NPfb2));
-NPbiome_pre(NPpb3) = 3*ones(size(NPpb3));
 NPbiome_hist(NPhb3) = 3*ones(size(NPhb3));
 NPbiome_fore(NPfb3) = 3*ones(size(NPfb3));
 
 
 %% calcs
 %Only total g to see effect of change in biome size
-sum_pre_np1 = nansum(tot_all_pre(grid_nppb1,:));
-sum_pre_np2 = nansum(tot_all_pre(grid_nppb2,:));
-sum_pre_np3 = nansum(tot_all_pre(grid_nppb3,:));
-
 sum_histp_np1 = nansum(tot_all_histp(grid_nphb1,:));
 sum_histp_np2 = nansum(tot_all_histp(grid_nphb2,:));
 sum_histp_np3 = nansum(tot_all_histp(grid_nphb3,:));
@@ -641,10 +557,6 @@ sum_foref_np1 = nansum(tot_all_foref(grid_npfb1,:));
 sum_foref_np2 = nansum(tot_all_foref(grid_npfb2,:));
 sum_foref_np3 = nansum(tot_all_foref(grid_npfb3,:));
 
-%Indust vs. Preindust
-diff_histp_pre_np(1,:) = (sum_histp_np1 - sum_pre_np1) ./ sum_pre_np1;
-diff_histp_pre_np(2,:) = (sum_histp_np2 - sum_pre_np2) ./ sum_pre_np2;
-diff_histp_pre_np(3,:) = (sum_histp_np3 - sum_pre_np3) ./ sum_pre_np3;
 %Fishing vs. no fishing hist
 diff_histf_histp_np(1,:) = (sum_histf_np1 - sum_histp_np1) ./ sum_histp_np1;
 diff_histf_histp_np(2,:) = (sum_histf_np2 - sum_histp_np2) ./ sum_histp_np2;
@@ -701,7 +613,6 @@ Tdiff(1,:) = Tdiff_histp_pre;
 Tdiff(2,:) = Tdiff_histf_histp;
 Tdiff(3,:) = Tdiff_foref_histf;
 Tdiff(4,:) = Tdiff_histp_pre_np;
-Tdiff(5:7,:) = diff_histp_pre_np;
 Tdiff(8,:) = Tdiff_histf_histp_np;
 Tdiff(9:11,:) = diff_histf_histp_np;
 Tdiff(12,:) = Tdiff_foref_histf_np;
@@ -714,48 +625,7 @@ MdiffA(1,2) = Mdiff(4,1);
 MdiffA(2,2) = Mdiff(5,1);
 MdiffA(3,2) = Mdiff(6,1);
 
-%% NPac Historic vs. Pre-industrial
-hpc_np(1,:) = Mdiff_histp_pre_np;
-hpc_np(2,:) = Mdiff_histf_histp_np;
-hpc_np(3,:) = Mdiff_histf_pre_np;
-
-%Total
-figure(6)
-bar(hpc_np(:,1)*100)
-colormap(cmap3)
-ylim([-15 0])
-set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
-ylabel('Percent change')
-%xlabel('Driver')
-title('N Pac change in mean fish biomass 1951-2000 vs. 1801-1850')
-print('-dpng',[ppath 'NPac_mean_biom_pre_hist.png'])
-
-%Type
-figure(7)
-bar(hpc_np(:,2:4)*100)
-colormap(cmap4)
-ylim([-50 50])
-set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
-ylabel('Percent change')
-legend('Forage','Pelagic','Demersal')
-legend('location','northwest')
-title('N Pac change in mean fish biomass 1951-2000 vs. 1801-1850')
-print('-dpng',[ppath 'NPac_mean_biom_type_pre_hist.png'])
-
-%Size
-figure(8)
-bar(hpc_np(:,5:7)*100)
-colormap(cmap4)
-ylim([-50 50])
-set(gca,'XTickLabel',{'Indust CO_2','Fishing','Indust CO_2 + Fishing'})
-ylabel('Percent change')
-legend('S','M','L')
-legend('location','northwest')
-title('N Pac change in mean fish biomass 1951-2000 vs. 1801-1850')
-print('-dpng',[ppath 'NPac_mean_biom_size_pre_hist.png'])
-
-
-%% Future vs. Historic 
+%% NPac Future vs. Historic 
 fhc_np(1,:) = Mdiff_forep_histp_np;
 fhc_np(2,:) = Mdiff_foref_forep_np;
 fhc_np(3,:) = Mdiff_foref_histf_np;
@@ -765,11 +635,11 @@ fhc_np(4,:) = Mdiff_foref_histp_np;
 figure(9)
 bar(fhc_np(:,1)*100)
 colormap(cmap3)
-ylim([-15 0])
+%ylim([-20 0])
 set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristine'})
 ylabel('Percent change')
 %xlabel('Driver')
-title('N Pac change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('N Pac change in mean fish biomass 2006-2100 vs. 1956-2005')
 print('-dpng',[ppath 'NPac_mean_biom_hist_fore.png'])
 
 %Type
@@ -781,7 +651,7 @@ set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristi
 ylabel('Percent change')
 legend('Forage','Pelagic','Demersal')
 legend('location','northwest')
-title('N Pac change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('N Pac change in mean fish biomass 2006-2100 vs. 1956-2005')
 print('-dpng',[ppath 'NPac_mean_biom_type_hist_fore.png'])
 
 %Size
@@ -793,7 +663,7 @@ set(gca,'XTickLabel',{'CC','Fishing','CC + Fishing contemp','CC + Fishing pristi
 ylabel('Percent change')
 legend('S','M','L')
 legend('location','northwest')
-title('N Pac change in mean fish biomass 2006-2100 vs. 1951-2000')
+title('N Pac change in mean fish biomass 2006-2100 vs. 1956-2005')
 print('-dpng',[ppath 'NPac_mean_biom_size_hist_fore.png'])
 
 
@@ -848,7 +718,7 @@ figure(38)
 bar(biome_diff*100)
 colormap(cmap2)
 xlim([0.5 1.5])
-ylim([-30 30])
+ylim([-40 30])
 set(gca,'XTickLabel',{'Biome area (m)','Fish biomass (g/m^2)'})
 ylabel('Percent change')
 legend('LC','ECCS','ECSS')
@@ -861,46 +731,13 @@ figure(39)
 bar(biome_diff*100)
 colormap(cmap2)
 xlim([1.5 2.5])
-ylim([-30 30])
+ylim([-40 30])
 set(gca,'XTickLabel',{'Biome area (m)','Fish biomass (g/m^2)'})
 ylabel('Percent change')
 legend('LC','ECCS','ECSS')
 legend('location','southeast')
 title('N Pac biome change in fish mean abundance')
 print('-dpng',[ppath 'NPacBiome_changes_biomass_foref_histf.png'])
-
-%% Timeseries
-
-% load([dpath 'All_biom_mcatch_hist_fished.mat'],'all_bio','all_mcatch');
-% histf_all_bio = all_bio;
-% histf_all_mcatch = all_mcatch;
-% clear all_bio all_mcatch
-% 
-% load([dpath 'All_biom_mcatch_fore_fished.mat'],'all_bio','all_mcatch');
-% foref_all_bio = all_bio;
-% foref_all_mcatch = all_mcatch;
-% clear all_bio all_mcatch
-% 
-% hyr=1865:10:2005;
-% fyr=2010:10:2100;
-% 
-% yr = [hyr fyr];
-% all_bio_ts = [nansum(histf_all_bio(:,2:end)) nansum(foref_all_bio(:,2:end))];
-% all_mcatch_ts = [nansum(histf_all_mcatch(:,2:end)) nansum(foref_all_mcatch(:,2:end))];
-% 
-% figure(70)
-% plot(yr,all_bio_ts,'k','LineWidth',2)
-% xlabel('Year')
-% ylabel('All fish mean biomass (g/m^2)')
-% %title('Future fished')
-% print('-dpng',[ppath 'TS_mbio.png'])
-% 
-% figure(71)
-% plot(yr,all_mcatch_ts*365,'k','LineWidth',2)
-% xlabel('Year')
-% ylabel('All fish mean annual catch (g/m^2)')
-% %title('Future fished')
-% print('-dpng',[ppath 'TS_mcatch.png'])
 
 
 %% Maps
@@ -943,16 +780,29 @@ m_pcolor(X,Y,Diff_foref_histf_gg*100); hold on;
 shading flat
 m_coast('patch',[.5 .5 .5],'edgecolor','none');
 m_grid;
-title('2051-2100 % difference from 1951-2000 mean biomass of all fishes')
+title('2051-2100 % difference from 1956-2005 mean biomass of all fishes')
 colormap(cmap_color_rb)
 colorbar('h')
 caxis([-100 100])
 stamp(cfile)
 print('-dpng',[ppath 'Diff_global_all_foref_histf_v1.png'])
 
+figure(221)
+m_proj('miller','lat',82);
+m_pcolor(X,Y,Diff_foref_histf_gg*100); hold on;
+shading flat
+m_coast('patch',[.5 .5 .5],'edgecolor','none');
+m_grid;
+title('2051-2100 % difference from 1956-2005 mean biomass of all fishes')
+colormap(cmap_color_rb)
+colorbar('h')
+caxis([-50 50])
+stamp(cfile)
+print('-dpng',[ppath 'Diff_global_all_foref_histf_cobaltv1.png'])
+
 % 
 figure(22)
-axesm ('mollweid','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-280 80],'frame','on',...
     'Grid','off','FLineWidth',1)
 surfm(geolat_t,geolon_t,Diff_foref_histf_mg*100)
 colormap(cmap_color_rb)              
@@ -962,10 +812,25 @@ caxis([-100 100]);
 hcb = colorbar('h');
 ylim(hcb,[-100 100])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2051-2100 % difference from 1951-2000 mean biomass of all fishes')
-axesmui
+title('2051-2100 % difference from 1956-2005 mean biomass of all fishes')
 stamp(cfile)
 print('-dpng',[ppath 'Diff_global_all_foref_histf_v2.png'])
+
+% 
+figure(222)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-280 80],'frame','on',...
+    'Grid','off','FLineWidth',1)
+surfm(geolat_t,geolon_t,Diff_foref_histf_mg*100)
+colormap(cmap_color_rb)              
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-50 50]);
+hcb = colorbar('h');
+ylim(hcb,[-50 50])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('2051-2100 % difference from 1956-2005 mean biomass of all fishes')
+stamp(cfile)
+print('-dpng',[ppath 'Diff_global_all_foref_histf_cobaltv2.png'])
 
 % all L
 figure(23)
@@ -979,7 +844,7 @@ caxis([-100 100]);
 hcb = colorbar('h');
 ylim(hcb,[-100 100])                   %Set color axis if needed
 set(gcf,'renderer','painters')
-title('2051-2100 % difference from 1951-2000 mean biomass of all fishes')
+title('2051-2100 % difference from 1956-2005 mean biomass of all fishes')
 stamp(cfile)
 print('-dpng',[ppath 'Diff_NPac_all_foref_histf.png'])
 

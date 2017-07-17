@@ -9,12 +9,25 @@ datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 %RE = {'1000','0500','0100','0050','0010','00050','00010','00005','00001'};
-RE = {'00200','00300','00400','00500'};
-reff = 0.02:0.01:0.05;
-sreff = {'0.02','0.03','0.04','0.05'};
-% RE = {'00075','00100','00150','00200','00250'};
-% reff = [0.0075;0.01;0.015;0.02;0.025];
-% sreff = {'0.0075','0.01','0.015','0.02','0.025'};
+% RE = {'01000','02000','03000','04000','05000'};
+% reff = 0.1:0.1:0.5;
+% sreff = {'0.1','0.2','0.3','0.4','0.5'};
+% RE = {'00500','01000','01500','02000','02500'};
+% reff = 0.05:0.05:0.25;
+% sreff = {'0.05','0.1','0.15','0.2','0.25'};
+% RE = {'00250','00500','00750','01000','01250'};
+% reff = 0.025:0.025:0.125;
+% sreff = {'0.025','0.05','0.075','0.1','0.125'};
+% RE = {'00100','00200','00300','00400','00500'};
+% reff = 0.01:0.01:0.05;
+% sreff = {'0.01','0.02','0.03','0.04','0.05'};
+RE = {'00075','00150','00225','00300','00375'};
+reff = 0.0075:0.0075:0.0375;
+sreff = {'0.0075','0.015','0.0225','0.03','0.0375'};
+% RE = {'00050','00100','00150','00200','00250'};
+% reff = 0.005:0.005:0.025;
+% sreff = {'0.005','0.01','0.015','0.02','0.025'};
+
 efn = 70;
 tefn = num2str(efn);
 cfn = 20;
@@ -36,7 +49,7 @@ ta = num2str(1000+int64(100*Ad));
 tsm = num2str(1000+int64(100*Sm));
 BE = '05';
 CC = '050';
-rfrac = '00100';
+rfrac = '00075';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -322,9 +335,11 @@ for n = 1:length(RE)
     dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
     cfile = char(dp);
-    cfile2 = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
-        '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,...
-        '_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdREtests'];
+%     cfile2 = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_D',td(2:end),...
+%         '_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',nmort,...
+%         '_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdREtests'];
+    cfile2 = ['Dc_2B_enc',tefn,'_cmax-metab',tcfn,'_fcrit',num2str(fcrit),'_',...
+        D,'_',J,'_',Ad,'_',Sm,'_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdREtests'];
     
     load([dpath sname 'lastyr_sum_mean_biom.mat']);
     

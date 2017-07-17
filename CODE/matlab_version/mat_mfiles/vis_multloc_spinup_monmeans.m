@@ -1,6 +1,6 @@
 % Visualize output of POEM
 % Spinup at 100 locations
-% 50 years
+% 150 years
 % Saved as mat files
 
 clear all
@@ -9,10 +9,10 @@ close all
 Pdrpbx = '/Users/cpetrik/Dropbox/';
 Fdrpbx = '/Users/Colleen/Dropbox/';
 
-cpath = [Fdrpbx 'Princeton/POEM_other/grid_cobalt/'];
-pp = [Fdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
+cpath = [Pdrpbx 'Princeton/POEM_other/grid_cobalt/'];
+pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 
-cfile = 'Diff_Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_RE00050';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort5_BE05_CC050_lgRE00100_mdRE00400';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 ppath = [pp cfile '/'];
@@ -22,19 +22,20 @@ end
 
 load([fpath 'Means_spinup_' cfile '.mat']);
 
-load([Fdrpbx 'Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat'],...
+load([Pdrpbx 'Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat'],...
     'geolon_t','geolat_t');
 grid = csvread([cpath 'grid_csv.csv']);
 
 %% colors
-cm9=[0.5 0.5 0;... %tan/army
+cm10=[0.5 0.5 0;... %tan/army
     0 0.7 0;...   %g
     1 0 1;...     %m
     1 0 0;...     %r
     0.5 0 0;...   %maroon
     0/255 206/255 209/255;... %turq
     0 0.5 0.75;...   %med blue
-    0 0 0.75;...  %b
+    0 0 0.75;...    %b
+    0.5 0.5 0.5; ...    %med grey
     0 0 0];...      %black
     
 cm21=[1 0.5 0;...   %orange
@@ -59,7 +60,7 @@ cm21=[1 0.5 0;...   %orange
     255/255 192/255 203/255;... %pink
     255/255 160/255 122/255]; %peach
 
-set(groot,'defaultAxesColorOrder',cm9);
+set(groot,'defaultAxesColorOrder',cm10);
 
 %% Plots in time
 y = time;
@@ -158,9 +159,25 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 print('-dpng',[ppath 'Spinup_D_time.png'])
 
+%% Benthic inverts
+figure(92)
+subplot(2,1,1)
+plot(y,log10(b_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+title('Spinup Benthic Inverts')
+xlabel('Time (mo)')
+ylabel('log10 Biomass (g m^-^2)')
+
+subplot(2,1,2)
+plot(y,(b_tmean),'b','Linewidth',1); hold on;
+xlim([y(1) y(end)])
+ylabel('Biomass (g m^-^2)')
+print('-dpng',[ppath 'Spinup_B_time.png'])
+
 %% All size classes of all
 
 figure(4)
+plot(y,log10(b_tmean),'Linewidth',1); hold on;
 plot(y,log10(sf_tmean),'Linewidth',1); hold on;
 plot(y,log10(mf_tmean),'Linewidth',1); hold on;
 plot(y,log10(sp_tmean),'Linewidth',1); hold on;
@@ -169,7 +186,7 @@ plot(y,log10(lp_tmean),'Linewidth',1); hold on;
 plot(y,log10(sd_tmean),'Linewidth',1); hold on;
 plot(y,log10(md_tmean),'Linewidth',1); hold on;
 plot(y,log10(ld_tmean),'Linewidth',1); hold on;
-legend('SF','MF','SP','MP','LP','SD','MD','LD')
+legend('B','SF','MF','SP','MP','LP','SD','MD','LD')
 legend('location','eastoutside')
 xlim([y(1) y(end)])
 ylim([-5 2])
@@ -183,11 +200,13 @@ figure(5)
 F = sf_tmean+mf_tmean;
 P = sp_tmean+mp_tmean+lp_tmean;
 D = sd_tmean+md_tmean+ld_tmean;
+B = b_tmean;
 
+plot(y,log10(B),'color',[0.5 0.5 0.5],'Linewidth',2); hold on;
 plot(y,log10(F),'r','Linewidth',2); hold on;
 plot(y,log10(P),'b','Linewidth',2); hold on;
 plot(y,log10(D),'k','Linewidth',2); hold on;
-legend('F','P','D')
+legend('B','F','P','D')
 legend('location','eastoutside')
 xlim([y(1) y(end)])
 ylim([-5 2])

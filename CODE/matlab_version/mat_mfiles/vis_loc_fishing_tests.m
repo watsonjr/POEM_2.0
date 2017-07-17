@@ -1,13 +1,14 @@
 % Visualize output of POEM fishing tests
 % Spinup at all single locations
 % 150 years, monthly means saved
+% Only 1 type of fish harvested
 
 clear all
 close all
 
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
-%figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Fishing/';
-figp = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Fishing/';
+figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Fishing/';
+%figp = '/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Fishing/';
 
 fnum = [0:0.1:1];%,1.2:0.2:2];
 fsim = {'0','.1','.2','.3','.4','.5','.6','.7','.8','.9','1'};%,'1.2','1.4','1.6','1.8','2'};
@@ -35,7 +36,7 @@ BE = '05';
 CC = '050';
 rfrac = '00100';
 rfrac2 = '00400';
-sel = 'D';
+sel = 'F';
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -47,8 +48,8 @@ sname = 'Spinup_';
 mclev=NaN*ones(length(spots),8);
 Zcon=NaN*ones(length(spots),3);
 
-%load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
-load('/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
+load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
+%load('/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
 cmap3=cmap_ppt([5,1,3],:);
 
 %%
@@ -282,6 +283,7 @@ end
 %%
 cfile2 = [dp,'_',sel,'_fishing_catch'];
 caught  = NaN*ones(2,length(spots),length(frate));
+fishsp  = NaN*ones(4,length(spots),length(frate));
 for i=1:length(frate)
     F = frate{i};
     if F=='0'
@@ -289,15 +291,19 @@ for i=1:length(frate)
     else
         load([dpath sname 'lastyr_sum_mean_biom','_',sel,'_fish',F,'.mat'])
     end
+    % Biomass of each type
+    fishsp(:,:,i) = squeeze(nansum(all_mean));
+    % Catch
     if (sel=='F')
-        caught(2,:,i) = Ftotcatch(2,:);
+        caught(1,:,i) = Ftotcatch(2,:);
+        caught(2,:,i) = zeros(1,length(spots));
     elseif (sel=='P')
         caught(:,:,i) = Ptotcatch(2:3,:);
     elseif (sel=='D')
         caught(:,:,i) = Dtotcatch(2:3,:);
     end
 end
-save([dpath cfile2 '.mat'],'caught','fnum');
+save([dpath cfile2 '.mat'],'caught','fnum','fishsp');
 
 %%
 if (sel=='F')
@@ -311,10 +317,45 @@ elseif (sel=='D')
     Lname = 'LD';
 end
 
+np = length(frate);
 for s=1:length(spots)
     
     loc = spots{s};
     lname = [loc '_'];
+    
+    %% Sum mean biom over stages
+    f1=figure(1);
+    subplot(4,3,s)
+    plot(1-0.25:np,log10(squeeze(fishsp(1,s,:))),'sk','MarkerFaceColor',cmap_ppt(3,:),...
+        'MarkerSize',15); hold on;
+    plot(1:np,log10(squeeze(fishsp(2,s,:))),'sk','MarkerFaceColor',cmap_ppt(1,:),...
+        'MarkerSize',15); hold on;
+    plot(1+0.25:np+1,log10(squeeze(fishsp(3,s,:))),'sk','MarkerFaceColor',cmap_ppt(2,:),...
+        'MarkerSize',15); hold on;
+    xlim([0 np+1])
+    ylim([-2 2])
+    set(gca,'XTick',1:np,'XTickLabel',[]);
+    for t=1:np
+        text(t,-2.1,fsim(t),'Rotation',45,'HorizontalAlignment','right')
+    end
+    if (s==4)
+        ylabel('log10 Mean Biom (g m^-^2) in final year')
+    end
+    if (s==11)
+        text(13,1.5,['D=' num2str(D)]);
+        text(13,1,['A=' num2str(Ad)]);
+        text(13,0.5,['J=' num2str(J)]);
+        text(13,0,['Sm=' num2str(Sm)]);
+        text(13,-0.5,['RE=' rfrac]);
+        text(13,-1,['enc=' tefn]);
+        text(13,-1.5,['cmax-metab=' tcfn]);
+    end
+    if (s==11)
+        xlabel('Annual fishing rate')
+    end
+    title([loc ' All stages'])
+    stamp(cfile2)
+    
     
     %% Fishing
     
@@ -358,8 +399,11 @@ for s=1:length(spots)
     stamp(cfile2)
     
 end %spots
+print(f1,'-dpng',[figp sname cfile2 '_tot_mean_biomass_type_locs.png'])
 print(f10,'-dpng',[figp sname cfile2 '_M_locs.png'])
-print(f11,'-dpng',[figp sname cfile2 '_L_locs.png'])
+if (sel~='F')
+    print(f11,'-dpng',[figp sname cfile2 '_L_locs.png'])
+end
 print(f12,'-dpng',[figp sname cfile2 '_all_locs.png'])
 
 

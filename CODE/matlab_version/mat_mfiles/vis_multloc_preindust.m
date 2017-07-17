@@ -7,11 +7,11 @@ clear all
 close all
 
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-cfile = 'Dc_TrefO_cmax-metab4_enc4_MFeqMP_fcrit40_D100_nmort3_BE05_CC050_RE0100';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00400';
 
-fpath=['/Volumes/GFDL/NC/Matlab_big_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 ppath = [pp cfile '/'];
 
 load([fpath 'Means_preindust_' cfile '.mat']);

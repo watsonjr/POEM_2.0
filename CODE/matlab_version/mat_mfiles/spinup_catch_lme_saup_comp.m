@@ -5,15 +5,16 @@ close all
 
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-dp = '/Volumes/GFDL/NC/Matlab_big_size/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_Big_sizes/';
+dp = '/Volumes/GFDL/NC/Matlab_new_size/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-cfile = 'Dc_TrefO_cmax-metab2_enc1_MFeqMP_fcrit40_D100_nmort2_BE05_CC050_RE0500_All_fish04';
+cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00400';
+harv = '03';
 
 dpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
 
-load([dpath 'LME_spinup_fished_' cfile '.mat']);
+load([dpath 'LME_hist_fished_' cfile '.mat']);
 load([spath 'LME_Catch_annual.mat']);
 load([cpath 'hindcast_gridspec.mat'],'AREA_OCN','geolat_t','geolon_t');
 load([cpath 'lme_mask_esm2m.mat']);
