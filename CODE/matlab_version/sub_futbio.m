@@ -211,11 +211,11 @@ Lp.bio = sub_update_fi(Lp.bio,Lp.rec,Lp.nu,Lp.rep,Lp.gamma,Lp.die,Lp.egg,Lp.nmor
 Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmort);
 
 % Fishing by rate
-[Mf.bio, Mf.caught] = sub_fishing_rate(Mf.bio,dfrate,MFsel);
-[Mp.bio, Mp.caught] = sub_fishing_rate(Mp.bio,dfrate,MPsel);
-[Md.bio, Md.caught] = sub_fishing_rate(Md.bio,dfrate,MDsel);
-[Lp.bio, Lp.caught] = sub_fishing_rate(Lp.bio,dfrate,LPsel);
-[Ld.bio, Ld.caught] = sub_fishing_rate(Ld.bio,dfrate,LDsel);
+[Mf.bio, Mf.caught, Mf.fmort] = sub_fishing_rate(Mf.bio,dfrate,MFsel);
+[Mp.bio, Mp.caught, Mp.fmort] = sub_fishing_rate(Mp.bio,dfrate,MPsel);
+[Md.bio, Md.caught, Md.fmort] = sub_fishing_rate(Md.bio,dfrate,MDsel);
+[Lp.bio, Lp.caught, Lp.fmort] = sub_fishing_rate(Lp.bio,dfrate,LPsel);
+[Ld.bio, Ld.caught, Ld.fmort] = sub_fishing_rate(Ld.bio,dfrate,LDsel);
 
 % Advection-Diffusion
 % Sf.bio = sub_diff_sep(CGRD,Sf.bio,K,ni,nj,tstep);
