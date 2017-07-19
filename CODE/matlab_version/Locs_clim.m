@@ -28,11 +28,11 @@ else
     harv = 0;
 end
 
-bees = 0.5:0.5:7;
-for b1=1:length(bees)
-    MFsel = bees(b1);
-    LPsel = bees(b1);
-    LDsel = bees(b1);
+% bees = 0.5:0.5:7;
+% for b1=1:length(bees)
+%     MFsel = bees(b1);
+%     LPsel = bees(b1);
+%     LDsel = bees(b1);
         
 %! Make core parameters/constants (global)
 make_parameters()
@@ -126,24 +126,24 @@ Lrg_d.td(1) = 0.0;
 ENVR = sub_init_env(ID);
 
 %! Storage
-Spinup_Sml_f = NaN*ones(DAYS,25,NX);
-Spinup_Sml_p = NaN*ones(DAYS,25,NX);
-Spinup_Sml_d = NaN*ones(DAYS,25,NX);
-Spinup_Med_f = NaN*ones(DAYS,25,NX);
-Spinup_Med_p = NaN*ones(DAYS,25,NX);
-Spinup_Med_d = NaN*ones(DAYS,25,NX);
-Spinup_Lrg_p = NaN*ones(DAYS,25,NX);
-Spinup_Lrg_d = NaN*ones(DAYS,25,NX);
+Spinup_Sml_f = NaN*ones(DAYS,26,NX);
+Spinup_Sml_p = NaN*ones(DAYS,26,NX);
+Spinup_Sml_d = NaN*ones(DAYS,26,NX);
+Spinup_Med_f = NaN*ones(DAYS,26,NX);
+Spinup_Med_p = NaN*ones(DAYS,26,NX);
+Spinup_Med_d = NaN*ones(DAYS,26,NX);
+Spinup_Lrg_p = NaN*ones(DAYS,26,NX);
+Spinup_Lrg_d = NaN*ones(DAYS,26,NX);
 Spinup_Cobalt = NaN*ones(DAYS,5,NX);
 
-S_Sml_f = NaN*ones(12*YEARS,25,NX);
-S_Sml_p = NaN*ones(12*YEARS,25,NX);
-S_Sml_d = NaN*ones(12*YEARS,25,NX);
-S_Med_f = NaN*ones(12*YEARS,25,NX);
-S_Med_p = NaN*ones(12*YEARS,25,NX);
-S_Med_d = NaN*ones(12*YEARS,25,NX);
-S_Lrg_p = NaN*ones(12*YEARS,25,NX);
-S_Lrg_d = NaN*ones(12*YEARS,25,NX);
+S_Sml_f = NaN*ones(12*YEARS,26,NX);
+S_Sml_p = NaN*ones(12*YEARS,26,NX);
+S_Sml_d = NaN*ones(12*YEARS,26,NX);
+S_Med_f = NaN*ones(12*YEARS,26,NX);
+S_Med_p = NaN*ones(12*YEARS,26,NX);
+S_Med_d = NaN*ones(12*YEARS,26,NX);
+S_Lrg_p = NaN*ones(12*YEARS,26,NX);
+S_Lrg_d = NaN*ones(12*YEARS,26,NX);
 S_Cobalt = NaN*ones(12*YEARS,5,NX);
 
 %! Iterate forward in time with NO fishing
@@ -211,6 +211,6 @@ else
 end
 
 
-end
+% end
 
 end

@@ -59,9 +59,9 @@ L = [L_s;L_m;L_l];
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
-dp = 'Dc_enc70-b200_cm20_m-b150-k09_fcrit20_c-b225_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
 sname = 'Clim_';
-harv = 'All_fish03';
+harv = 'fish_F020_P005_D030';
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))
@@ -73,7 +73,7 @@ all_mean=NaN*ones(3,4,length(spots));
 z = NaN*ones(length(spots),3);
 
 load([dpath sname 'locs_' harv '.mat'])
-load([dpath sname 'lastyr_sum_mean_biom.mat']);
+load([dpath sname 'locs_' harv '_lastyr_sum_mean_biom.mat']);
 
 %%
 mlev = [Flev;Plev;Dlev];
@@ -159,7 +159,7 @@ for s=1:length(spots)
     ylim([0 3])
     title(loc)
     set(gca,'XTickLabel','','YTickLabel','')
-    print('-dpng',[fpath sname  'fluxes_' loc '.png'])
+    print('-dpng',[fpath sname harv '_fluxes_' loc '.png'])
     
 end
 

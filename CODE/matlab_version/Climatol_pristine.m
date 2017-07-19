@@ -21,10 +21,20 @@ A = 0.50;    %Adult predation reduction
 % bees = 0.125:0.025:0.25; %bees = 0.1:0.05:0.35;
 % bees = 0.175:0.005:0.195;
 % Fish = 0.1:0.1:0.6;
+fqs = 0.5:0.5:3.5;
+pqs = 0.25:0.25:1.5;
+dqs = 1:6;
 
-for F=1%:length(Fish)
+for fq=1:length(fqs)
+    for pq=1:length(pqs)
+        for dq=1:length(dqs)
+            MFsel = fqs(fq);
+            LPsel = pqs(pq);
+            LDsel = dqs(dq);
+
+%for F=1%:length(Fish)
 %! Set fishing rate
-frate = 0.3; %Fish(F);
+frate = 0.1; %Fish(F);
 dfrate = frate/365.0;
 %0=no fishing; 1=fishing
 if (frate>0)
@@ -33,13 +43,6 @@ else
     harv = 0;
 end
  
-% for n = 6;%length(kays)
-%     kt = kays(n);
-%     
-%     for g = 1:length(bees)
-%         bpow = bees(g);
-benc = 0.20;
-        bcmx = 0.20;
 
 %! Make core parameters/constants (global)
 make_parameters()
@@ -75,24 +78,27 @@ tre = num2str(100000+int64(round(10000*rfrac)));
 tre2 = num2str(100000+int64(round(10000*rfrac*1)));
 if (frate >= 0.1)
     tfish = num2str(100+int64(10*frate));
-    tF = num2str(100+int64(10*frate*MFsel));
-    tP = num2str(100+int64(10*frate*LPsel));
-    tD = num2str(100+int64(10*frate*LDsel));
+    tF = num2str(1000+int64(100*frate*MFsel));
+    tP = num2str(1000+int64(100*frate*LPsel));
+    tD = num2str(1000+int64(100*frate*LDsel));
 else
     tfish = num2str(1000+int64(100*frate));
+    tF = num2str(1000+int64(100*frate*MFsel));
+    tP = num2str(1000+int64(100*frate*LPsel));
+    tD = num2str(1000+int64(100*frate*LDsel));
 end
-if (MFsel == 1)
-    if (LPsel == 1 && LDsel == 1)
+if (MFsel > 0)
+    if (LPsel > 0 && LDsel > 0)
         sel='All';
     else
         sel='F';
     end
 else
-    if (LPsel == 1 && LDsel == 1)
+    if (LPsel > 0 && LDsel > 0)
         sel = 'L';
-    elseif (LPsel == 1)
+    elseif (LPsel > 0)
         sel = 'P';
-    elseif (LDsel == 1)
+    elseif (LDsel > 0)
         sel = 'D';
     end
 end
@@ -227,24 +233,24 @@ if harv==0
     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_lrg_d.nc'];
     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_bent.nc'];
 else
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_d.nc'];
-    file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_bent.nc'];
-%     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_f.nc'];
-%     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_p.nc'];
-%     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_d.nc'];
-%     file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_f.nc'];
-%     file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_p.nc'];
-%     file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_d.nc'];
-%     file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_lrg_p.nc'];
-%     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_lrg_d.nc'];
-%     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_bent.nc'];
+%     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_f.nc'];
+%     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_p.nc'];
+%     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_d.nc'];
+%     file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_f.nc'];
+%     file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_p.nc'];
+%     file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_d.nc'];
+%     file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_p.nc'];
+%     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_d.nc'];
+%     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_bent.nc'];
+    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_f.nc'];
+    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_p.nc'];
+    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_d.nc'];
+    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_f.nc'];
+    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_p.nc'];
+    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_d.nc'];
+    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_lrg_p.nc'];
+    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_lrg_d.nc'];
+    file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_bent.nc'];
 end
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');

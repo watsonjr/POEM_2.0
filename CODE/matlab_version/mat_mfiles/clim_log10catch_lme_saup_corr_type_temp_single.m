@@ -102,10 +102,12 @@ x5l = x-log10(5);
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_cm20_m-b125-k09_fcrit20_c-b200_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
-                    
-charv = ['All_fish',tfish(2:end)];
-harv = tfish(2:end);
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+
+charv = 'fish_F015_P010_D035';
+harv = 'F015_P010_D035';
+% charv = ['All_fish',tfish(2:end)];
+% harv = tfish(2:end);
 
 ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];

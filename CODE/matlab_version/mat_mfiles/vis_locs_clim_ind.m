@@ -17,9 +17,9 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 spots=spots';
 
-dp = 'Dc_enc70-b200_cm20_m-b125-k09_fcrit20_c-b200_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
 sname = 'Clim_';
-harv = 'All_fish03';
+harv = 'fish_F020_P005_D030';
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))
@@ -263,6 +263,16 @@ Pfish=[zeros(size(MP_fish));MP_fish;LP_fish];
 Ffish=[zeros(size(MF_fish));MF_fish];
 Dfish=[zeros(size(MD_fish));MD_fish;LD_fish];
 
+MP_frate=squeeze(nanmean(MP(lyr,26,:)))';
+MF_frate=squeeze(nanmean(MF(lyr,26,:)))';
+MD_frate=squeeze(nanmean(MD(lyr,26,:)))';
+LP_frate=squeeze(nanmean(LP(lyr,26,:)))';
+LD_frate=squeeze(nanmean(LD(lyr,26,:)))';
+
+Pfrate=[zeros(size(MP_frate));MP_frate;LP_frate];
+Ffrate=[zeros(size(MF_frate));MF_frate];
+Dfrate=[zeros(size(MD_frate));MD_frate;LD_frate];
+
 MP_totcatch=squeeze(nansum(MP(lyr,25,:)))';
 MF_totcatch=squeeze(nansum(MF(lyr,25,:)))';
 MD_totcatch=squeeze(nansum(MD(lyr,25,:)))';
@@ -297,12 +307,12 @@ Pgge=[SP_gge;MP_gge;LP_gge];
 Fgge=[SF_gge;MF_gge];
 Dgge=[SD_gge;MD_gge;LD_gge];
 
-save([dpath sname 'lastyr_sum_mean_biom.mat'],'Pmean','Fmean','Dmean','all_mean',...
+save([dpath sname 'locs_' harv '_lastyr_sum_mean_biom.mat'],'Pmean','Fmean','Dmean','all_mean',...
     'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
     'Prep','Frep','Drep','Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
     'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch',...
     'Dtotcatch','Pgge','Fgge','Dgge','Plev','Flev','Dlev','Bmean',...
-    'conF','conP','conD','conZm','conZl','conB');
+    'conF','conP','conD','conZm','conZl','conB','Pfrate','Ffrate','Dfrate');
 
 mlev = [Flev;Plev;Dlev];
 %%
@@ -330,7 +340,7 @@ for s=1:length(spots)
     ylabel('log10 Biomass (g m^-^2)')
     title(['Clim ' loc])
     stamp(cfile)
-    print('-dpng',[fpath sname  'timeseries_logmean_biomass_' loc '.png'])
+    print('-dpng',[fpath sname harv '_timeseries_logmean_biomass_' loc '.png'])
     
     F = SF(:,1,s)+MF(:,1,s);
     P = SP(:,1,s)+MP(:,1,s)+LP(:,1,s);
@@ -349,7 +359,7 @@ for s=1:length(spots)
     ylabel('log10 Biomass (g m^-^2)')
     title(['Clim ' loc])
     stamp(cfile)
-    print('-dpng',[fpath sname  'timeseries_Logmean_biomass_types_' loc '.png'])
+    print('-dpng',[fpath sname harv '_timeseries_Logmean_biomass_types_' loc '.png'])
     
     %  TIME SERIES ----------------------------------------------------
     
@@ -883,18 +893,18 @@ for s=1:length(spots)
     end
     
 end
-print(f21,'-dpng',[fpath sname  'All_oneloc_Logmean_biomass_axes.png'])
-print(f2,'-dpng',[fpath sname  'All_oneloc_con_level.png'])
-print(f3,'-dpng',[fpath sname  'All_oneloc_nu.png'])
-print(f5,'-dpng',[fpath sname  'All_oneloc_frac_zoop_loss.png'])
-print(f8,'-dpng',[fpath sname  'All_oneloc_prod.png'])
-print(f9,'-dpng',[fpath sname  'All_oneloc_rep.png'])
-print(f10,'-dpng',[fpath sname  'All_oneloc_met.png'])
-print(f11,'-dpng',[fpath sname  'All_oneloc_pred.png'])
-print(f12,'-dpng',[fpath sname  'All_oneloc_catch.png'])
-print(f13,'-dpng',[fpath sname  'All_oneloc_mort_nof.png'])
-print(f14,'-dpng',[fpath sname  'All_oneloc_mort_f.png'])
-print(f15,'-dpng',[fpath sname  'All_oneloc_gge.png'])
+print(f21,'-dpng',[fpath sname harv '_All_oneloc_Logmean_biomass_axes.png'])
+print(f2,'-dpng',[fpath sname harv '_All_oneloc_con_level.png'])
+print(f3,'-dpng',[fpath sname harv '_All_oneloc_nu.png'])
+print(f5,'-dpng',[fpath sname harv '_All_oneloc_frac_zoop_loss.png'])
+print(f8,'-dpng',[fpath sname harv '_All_oneloc_prod.png'])
+print(f9,'-dpng',[fpath sname harv '_All_oneloc_rep.png'])
+print(f10,'-dpng',[fpath sname harv '_All_oneloc_met.png'])
+print(f11,'-dpng',[fpath sname harv '_All_oneloc_pred.png'])
+print(f12,'-dpng',[fpath sname harv '_All_oneloc_catch.png'])
+print(f13,'-dpng',[fpath sname harv '_All_oneloc_mort_nof.png'])
+print(f14,'-dpng',[fpath sname harv '_All_oneloc_mort_f.png'])
+print(f15,'-dpng',[fpath sname harv '_All_oneloc_gge.png'])
 
 %% Sum mean biom over stages
 fishsp = squeeze(nansum(all_mean));
@@ -915,7 +925,7 @@ end
 ylabel('log10 Mean Biom (g m^-^2) in final year')
 title('All stages')
 stamp(cfile)
-print('-dpng',[fpath sname  'All_oneloc_tot_mean_biomass_type.png'])
+print('-dpng',[fpath sname harv '_All_oneloc_tot_mean_biomass_type.png'])
 
 sumspec = squeeze(nansum(nansum(all_mean)));
 
@@ -930,7 +940,27 @@ end
 ylabel('log10 Mean Biom (g m^-^2) in final year')
 title('All fishes and stages')
 stamp(cfile)
-print('-dpng',[fpath sname  'All_oneloc_tot_mean_biomass_spec.png'])
+print('-dpng',[fpath sname harv '_All_oneloc_tot_mean_biomass_spec.png'])
+
+%% Fishing rate
+figure(54);
+plot((1-0.2):16,Ffrate(2,:)*365,'sk','MarkerFaceColor',cmap_ppt(3,:),...
+    'MarkerSize',15); hold on;
+plot(1:16,Pfrate(3,:)*365,'sk','MarkerFaceColor',cmap_ppt(1,:),...
+    'MarkerSize',15); hold on;
+plot((1+0.2):17,Dfrate(3,:)*365,'sk','MarkerFaceColor',cmap_ppt(2,:),...
+    'MarkerSize',15); hold on;
+xlim([0 17])
+%ylim([0 1])
+set(gca,'XTick',1:16,'XTickLabel',[])
+for n=1:16
+    text(n,-0.05,spots{n},'HorizontalAlignment','center')
+end
+ylabel('Mean fishing rate (yr^-^1) in final year')
+title('Adult stages')
+stamp(cfile)
+print('-dpng',[fpath sname harv '_All_oneloc_mean_frate_type.png'])
+
 
 %% Consump g/g/d --> g/d --> g/y
 Pcon = Pcon .* mass .* 365;
@@ -980,7 +1010,7 @@ set(gca,'XTick',1:16,'XTickLabel',spots)
 xlabel('Location')
 stamp(cfile)
 
-print(f18,'-dpng',[fpath sname  'All_oneloc_consump_gyr.png'])
+print(f18,'-dpng',[fpath sname harv '_All_oneloc_consump_gyr.png'])
 
 %% Consump vs. weight
 f19=figure(19);
@@ -1028,6 +1058,6 @@ loglog(w, Consumption,'k')
 subplot(2,2,4)
 legend('location','eastoutside')
 legend('orientation','vertical')
-print(f19,'-dpng',[fpath sname 'All_oneloc_consump_gyr_vs_weight_compare.png'])
+print(f19,'-dpng',[fpath sname harv '_All_oneloc_consump_gyr_vs_weight_compare.png'])
 
 
