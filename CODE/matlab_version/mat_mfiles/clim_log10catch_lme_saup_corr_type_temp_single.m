@@ -5,7 +5,8 @@ close all
 
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-dp = '/Volumes/GFDL/NC/Matlab_new_size/';
+%dp = '/Volumes/GFDL/NC/Matlab_new_size/';
+dp = '/Volumes/GFDL/CSV/Matlab_new_size/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
@@ -25,7 +26,7 @@ load('cmap_ppt_angles.mat')
 AREA_OCN = max(area,1);
 
 lfile = 'Dc_enc70_cmax-metab20_b18_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00100';
-lpath = [dp lfile '/'];
+lpath = ['/Volumes/GFDL/NC/Matlab_new_size/' lfile '/'];
 load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
 lme_area_km2 = lme_area * 1e-6;
 
@@ -104,15 +105,16 @@ tfish = num2str(100+int64(10*frate));
 
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
 
-charv = 'fish_F015_P010_D035';
-harv = 'F015_P010_D035';
+charv = 'fish_F003_P010_D070';
+harv = 'F003_P010_D070';
 % charv = ['All_fish',tfish(2:end)];
 % harv = tfish(2:end);
 
 ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
-load([dpath 'LME_clim_fished',harv,'_' cfile '.mat'],'lme_mcatch');
+%load([dpath 'LME_clim_fished',harv,'_' cfile '.mat'],'lme_mcatch');
+load([dpath 'LME_clim_fished_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
 
 close all
 

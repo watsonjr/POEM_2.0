@@ -83,12 +83,12 @@ tfish = num2str(100+int64(10*frate));
 %     tbfn = num2str(1000+int64(1000*bpow));
 %     
 %     cfile = ['Dc_enc70_cmax-metab20_b',tbfn(2:end),'_k',tkfn(2:end),'_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100'];
-    cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+    cfile = 'Dc_enc70_cmax-metab20_b175_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE10_CC100_lgRE00100_mdRE00100';
     
-%     harv = ['All_fish',tfish(2:end)];
-%     tharv = ['Harvest all fish ' num2str(frate)];
-    harv = 'fish_F015_P010_D035';
-    tharv = 'Harvest all fish F:0.15 P:0.1 D:0.35';
+    harv = ['All_fish',tfish(2:end)];
+    tharv = ['Harvest all fish ' num2str(frate)];
+%     harv = 'fish_F015_P010_D035';
+%     tharv = 'Harvest all fish F:0.15 P:0.1 D:0.35';
     
     fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
     ppath = [pp cfile '/'];
@@ -638,69 +638,9 @@ tfish = num2str(100+int64(10*frate));
 %     stamp(cfile)
     print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot.png'])
     
-    %% All 4 on subplots
-    figure(27)
-    % all F
-    subplot('Position',[0 0.51 0.5 0.5])
-    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-    surfm(geolat_t,geolon_t,log10(AllF))
-    colormap('jet')
-    load coast;                     %decent looking coastlines
-    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-    caxis([-1 1]);
-%     hcb = colorbar('h');
-%     ylim(hcb,[-1 1])                   %Set color axis if needed
-    colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
-    set(gcf,'renderer','painters')
-    title('A. Forage Fishes')
-    
-    % all D
-    subplot('Position',[0 0 0.5 0.5])
-    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-    surfm(geolat_t,geolon_t,log10(AllD))
-    colormap('jet')
-    load coast;                     %decent looking coastlines
-    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-    caxis([-1 1]);
-%     hcb = colorbar('h');
-%     ylim(hcb,[-1 1])                   %Set color axis if needed
-    set(gcf,'renderer','painters')
-    title('C. Demersals')
-    
-    % All P
-    subplot('Position',[0.5 0.51 0.5 0.5])
-    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-    surfm(geolat_t,geolon_t,log10(AllP))
-    colormap('jet')
-    load coast;                     %decent looking coastlines
-    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-    caxis([-1 1]);
-%     hcb = colorbar('h');
-%     ylim(hcb,[-1 1])                   
-    set(gcf,'renderer','painters')
-    title('B. Large Pelagics')
-    
-    % All
-    subplot('Position',[0.5 0 0.5 0.5])
-    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-    surfm(geolat_t,geolon_t,log10(All))
-    colormap('jet')
-    load coast;                     %decent looking coastlines
-    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-    caxis([-1 1]);
-%     hcb = colorbar('h');
-%     ylim(hcb,[-1 1])                   %Set color axis if needed
-    set(gcf,'renderer','painters')
-    title('D. All fishes')
-%     stamp(cfile)
-    print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_v2.png'])
     
     %% cmocean
-    % All 4 on subplots
+    % All 4 on subplots thermal
     figure
     % all F
     subplot('Position',[0 0.51 0.5 0.5])
@@ -750,6 +690,268 @@ tfish = num2str(100+int64(10*frate));
     caxis([-1 1]);
     set(gcf,'renderer','painters')
     title('D. All fishes')
+    print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_thermal.png'])
+    
+    
+    %% All 4 on subplots tempo
+%     figure
+%     % all F
+%     subplot('Position',[0 0.51 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllF))
+%     cmocean('tempo')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
+%     set(gcf,'renderer','painters')
+%     title('A. Forage Fishes')
+%     
+%     % all D
+%     subplot('Position',[0 0 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllD))
+%     cmocean('tempo')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('C. Demersals')
+%     
+%     % All P
+%     subplot('Position',[0.5 0.51 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllP))
+%     cmocean('tempo')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('B. Large Pelagics')
+%     
+%     % All
+%     subplot('Position',[0.5 0 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(All))
+%     cmocean('tempo')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('D. All fishes')
+%     print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_tempo.png'])
+%     
+    %% All 4 on subplots matter
+    figure
+    % all F
+    subplot('Position',[0 0.51 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(AllF))
+    cmocean('matter')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
+    set(gcf,'renderer','painters')
+    title('A. Forage Fishes')
+    
+    % all D
+    subplot('Position',[0 0 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(AllD))
+    cmocean('matter')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    set(gcf,'renderer','painters')
+    title('C. Demersals')
+    
+    % All P
+    subplot('Position',[0.5 0.51 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(AllP))
+    cmocean('matter')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    set(gcf,'renderer','painters')
+    title('B. Large Pelagics')
+    
+    % All
+    subplot('Position',[0.5 0 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(All))
+    cmocean('matter')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    set(gcf,'renderer','painters')
+    title('D. All fishes')
+    print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_matter.png'])
+    
+    %% All 4 on subplots dense
+%     figure
+%     % all F
+%     subplot('Position',[0 0.51 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllF))
+%     cmocean('dense')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
+%     set(gcf,'renderer','painters')
+%     title('A. Forage Fishes')
+%     
+%     % all D
+%     subplot('Position',[0 0 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllD))
+%     cmocean('dense')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('C. Demersals')
+%     
+%     % All P
+%     subplot('Position',[0.5 0.51 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllP))
+%     cmocean('dense')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('B. Large Pelagics')
+%     
+%     % All
+%     subplot('Position',[0.5 0 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(All))
+%     cmocean('dense')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('D. All fishes')
+%     print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_dense.png'])
+%     
+    %% All 4 on subplots deep
+%     figure
+%     % all F
+%     subplot('Position',[0 0.51 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllF))
+%     cmocean('deep')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
+%     set(gcf,'renderer','painters')
+%     title('A. Forage Fishes')
+%     
+%     % all D
+%     subplot('Position',[0 0 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllD))
+%     cmocean('deep')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('C. Demersals')
+%     
+%     % All P
+%     subplot('Position',[0.5 0.51 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(AllP))
+%     cmocean('deep')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('B. Large Pelagics')
+%     
+%     % All
+%     subplot('Position',[0.5 0 0.5 0.5])
+%     axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%         'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+%     surfm(geolat_t,geolon_t,log10(All))
+%     cmocean('deep')
+%     load coast;                     %decent looking coastlines
+%     h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%     caxis([-1 1]);
+%     set(gcf,'renderer','painters')
+%     title('D. All fishes')
+%     print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_deep.png'])
+%     
+    %% All 4 on subplots haline
+    figure
+    % all F
+    subplot('Position',[0 0.51 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(AllF))
+    cmocean('haline')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
+    set(gcf,'renderer','painters')
+    title('A. Forage Fishes')
+    
+    % all D
+    subplot('Position',[0 0 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(AllD))
+    cmocean('haline')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    set(gcf,'renderer','painters')
+    title('C. Demersals')
+    
+    % All P
+    subplot('Position',[0.5 0.51 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(AllP))
+    cmocean('haline')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    set(gcf,'renderer','painters')
+    title('B. Large Pelagics')
+    
+    % All
+    subplot('Position',[0.5 0 0.5 0.5])
+    axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+        'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+    surfm(geolat_t,geolon_t,log10(All))
+    cmocean('haline')
+    load coast;                     %decent looking coastlines
+    h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+    caxis([-1 1]);
+    set(gcf,'renderer','painters')
+    title('D. All fishes')
+    print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_haline.png'])
     
     %% Ratios on subplots
     figure(28)

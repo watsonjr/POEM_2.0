@@ -42,11 +42,11 @@ A = 0.50;    %Adult predation reduction
 % Fish = 0.1:0.1:0.6;
 fqs = 0.5:0.5:3.5;
 pqs = 0.25:0.25:1.5;
-dqs = 1:6;
+dqs = 1:7;
 
 for fq=1:length(fqs)
-    for pq=1:length(pqs)
-        for dq=1:length(dqs)
+    for pq=4;%1:length(pqs)
+        for dq=7;%1:length(dqs)
             MFsel = fqs(fq);
             LPsel = pqs(pq);
             LDsel = dqs(dq);
@@ -239,7 +239,7 @@ for fq=1:length(fqs)
             %%% Save
             if harv==1
                 save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,...
-                    '/Clim_means_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'.mat'],...
+                    '/Clim_means_fish_lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'],...
                     'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
                     'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
                     'Spinup_Bent')
