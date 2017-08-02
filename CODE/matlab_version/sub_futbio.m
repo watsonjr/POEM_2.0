@@ -211,7 +211,7 @@ Lp.bio = sub_update_fi(Lp.bio,Lp.rec,Lp.nu,Lp.rep,Lp.gamma,Lp.die,Lp.egg,Lp.nmor
 Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmort);
 
 % Fishing by rate
-[Mf.bio, Mf.caught, Mf.fmort] = sub_fishing_rate(Mf.bio,dfrate,MFsel);
+[Mf.bio, Mf.caught, Mf.fmort] = sub_quad_fishing(Mf.bio,dfrate,MFsel);
 [Mp.bio, Mp.caught, Mp.fmort] = sub_quad_fishing(Mp.bio,dfrate,MPsel);
 [Md.bio, Md.caught, Md.fmort] = sub_quad_fishing(Md.bio,dfrate,MDsel);
 [Lp.bio, Lp.caught, Lp.fmort] = sub_quad_fishing(Lp.bio,dfrate,LPsel);

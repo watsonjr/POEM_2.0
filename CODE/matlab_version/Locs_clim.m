@@ -28,12 +28,6 @@ else
     harv = 0;
 end
 
-% bees = 0.5:0.5:7;
-% for b1=1:length(bees)
-%     MFsel = bees(b1);
-%     LPsel = bees(b1);
-%     LDsel = bees(b1);
-        
 %! Make core parameters/constants (global)
 make_parameters()
 
@@ -203,7 +197,7 @@ end %Years
 if harv==1
 %     save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs','_',sel,'_fish',tfish(2:end),'.mat'],...
 %         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
-    save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'.mat'],...
+    save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs_fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'],...
         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
 else
     save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs.mat'],...

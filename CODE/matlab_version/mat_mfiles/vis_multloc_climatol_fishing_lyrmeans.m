@@ -69,8 +69,8 @@ set(groot,'defaultAxesColorOrder',cm9);
 
 %%
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
-harv = 'fish_F003_P005_D070';
-tharv = 'Harvest all fish F:0.025 P:0.05 D:0.7';
+harv = 'fish_F005_P010_D060';
+tharv = 'Harvest all fish F:0.05 P:0.1 D:0.7';
 
 fpath=['/Volumes/GFDL/CSV/Matlab_new_size/' cfile '/'];
 ppath = [pp cfile '/'];
@@ -133,37 +133,37 @@ ocean(ID)=ones(size(sf_mean));
 % print('-dpng',[ppath 'Ocean_cells.png'])
 
 % bent
-figure(50)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(Zb))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2.5 0.5]);
-hcb = colorbar('h');
-ylim(hcb,[-2.5 0.5])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology log10 mean Benthic inverts (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_BENT.png'])
-
-%
-mgZb = (Zb/9)*1e3;
-figure(51)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(mgZb))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-0.8 2.3]);
-hcb = colorbar('h');
-ylim(hcb,[-0.8 2.3])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology log10 mean Benthic inverts (mg m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_BENT_mgC.png'])
+% figure(50)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,log10(Zb))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-2.5 0.5]);
+% hcb = colorbar('h');
+% ylim(hcb,[-2.5 0.5])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology log10 mean Benthic inverts (g m^-^2)')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_BENT.png'])
+% 
+% %
+% mgZb = (Zb/9)*1e3;
+% figure(51)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,log10(mgZb))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-0.8 2.3]);
+% hcb = colorbar('h');
+% ylim(hcb,[-0.8 2.3])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology log10 mean Benthic inverts (mg m^-^2)')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_BENT_mgC.png'])
 
 % % sp
 % figure(11)
@@ -289,100 +289,100 @@ FracPFvDs = (Zsp+Zsf) ./ (Zsp+Zsf+Zsd);
 FracPFvDm = (Zmp+Zmf) ./ (Zmp+Zmf+Zmd);
 
 %% ALL
-figure(21)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(All))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1 2]);
-hcb = colorbar('h');
-ylim(hcb,[-1 2])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology log10 mean All fishes (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_All.png'])
-
-% all F
-figure(22)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllF))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1 1]);
-hcb = colorbar('h');
-ylim(hcb,[-1 1])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology log10 mean All F (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_AllF.png'])
-
-% all D
-figure(23)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllD))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1 1]);
-hcb = colorbar('h');
-ylim(hcb,[-1 1])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology log10 mean All D (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_AllD.png'])
-
-% All P
-figure(24)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllP))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1 1]);
-hcb = colorbar('h');
-ylim(hcb,[-1 1])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology log10 mean All P (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_AllP.png'])
-
-% FracPD
-figure(25)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,FracPD)
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 1]);
-hcb = colorbar('h');
-ylim(hcb,[0 1])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology Fraction P:D')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_FracPD.png'])
-
-% FracPF
-figure(26)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,FracPF)
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 1]);
-hcb = colorbar('h');
-ylim(hcb,[0 1])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology Fraction P:F')
-stamp(cfile)
-print('-dpng',[ppath 'Climatol_' harv '_global_FracPF.png'])
+% figure(21)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,log10(All))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-1 2]);
+% hcb = colorbar('h');
+% ylim(hcb,[-1 2])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology log10 mean All fishes (g m^-^2)')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_All.png'])
+% 
+% % all F
+% figure(22)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,log10(AllF))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-1 1]);
+% hcb = colorbar('h');
+% ylim(hcb,[-1 1])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology log10 mean All F (g m^-^2)')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllF.png'])
+% 
+% % all D
+% figure(23)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,log10(AllD))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-1 1]);
+% hcb = colorbar('h');
+% ylim(hcb,[-1 1])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology log10 mean All D (g m^-^2)')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllD.png'])
+% 
+% % All P
+% figure(24)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,log10(AllP))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-1 1]);
+% hcb = colorbar('h');
+% ylim(hcb,[-1 1])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology log10 mean All P (g m^-^2)')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllP.png'])
+% 
+% % FracPD
+% figure(25)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,FracPD)
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([0 1]);
+% hcb = colorbar('h');
+% ylim(hcb,[0 1])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology Fraction P:D')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_FracPD.png'])
+% 
+% % FracPF
+% figure(26)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,FracPF)
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([0 1]);
+% hcb = colorbar('h');
+% ylim(hcb,[0 1])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology Fraction P:F')
+% stamp(cfile)
+% print('-dpng',[ppath 'Climatol_' harv '_global_FracPF.png'])
 
 %% All 4 on subplots
 figure(27)

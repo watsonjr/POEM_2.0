@@ -3,7 +3,7 @@
 clear all
 close all
 
-fqs = 0.25:0.5:3.5;
+fqs = 0.5:0.5:3.5;
 pqs = 0.25:0.25:1.5;
 dqs = 1:7;
 frate = 0.1; %Fish(F);
@@ -11,9 +11,9 @@ cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort
 fpath=['/Volumes/GFDL/CSV/Matlab_new_size/' cfile '/'];
 
 %%
-for fq=1%length(fqs)
-    for pq=2:length(pqs)
-        for dq=6:length(dqs)
+for fq=1:length(fqs)
+    for pq=4;%1:length(pqs)
+        for dq=7;%1:length(dqs)
             MFsel = fqs(fq);
             LPsel = pqs(pq);
             LDsel = dqs(dq);
@@ -22,9 +22,9 @@ for fq=1%length(fqs)
             tD = num2str(1000+int64(100*frate*LDsel));
             
             sfile = ['/Volumes/GFDL/CSV/Matlab_new_size/',cfile,...
-                '/Clim_means_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'.mat'];
+                '/Clim_means_fish_lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'];
             load(sfile);
-            harv = ['fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end)];
+            harv = ['fish_lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
             
             % Last year
             [id,nt] = size(Spinup_Bent.bio);

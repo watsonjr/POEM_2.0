@@ -117,12 +117,13 @@ x5h = x+log10(5);
 x5l = x-log10(5);
 
 %% Loop over POEM params
-fqs = [0.25 0.5:0.5:3.5];
+fqs = 0.5:0.5:3.5;
 pqs = 0.25:0.25:1.5;
 dqs = 1:7;
 frate = 0.1;
 
-rall = NaN*ones(length(fqs),length(pqs),length(dqs));
+%rall = NaN*ones(length(fqs),length(pqs),length(dqs));
+rall = NaN*ones(length(fqs),1,1);
 rF = rall;
 rP = rall;
 rD = rall;
@@ -138,8 +139,8 @@ dpath = [datap char(dp) '/'];
 ppath = [pp char(dp) '/'];
 
 for fq=1:length(fqs)
-    for pq=1:length(pqs)
-        for dq=1:length(dqs)
+    for pq=4;%1:length(pqs)
+        for dq=7;%1:length(dqs)
             MFsel = fqs(fq);
             LPsel = pqs(pq);
             LDsel = dqs(dq);
@@ -147,85 +148,85 @@ for fq=1:length(fqs)
             tP = num2str(1000+int64(100*frate*LPsel));
             tD = num2str(1000+int64(100*frate*LDsel));
             
-            charv = ['fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end)];
-            harv = ['F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end)];
+            charv = ['fish_lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
+            harv = ['lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
             cfile = [harv,'_cm20_m-b175-k09_D075_J100_A050_Sm025_nmort1_BE05_CC100_RE00100'];
-
+            
             if exist([dpath 'LME_clim_fished_',harv,'_loop_' dp '.mat'],'file')
-            load([dpath 'LME_clim_fished_',harv,'_loop_' dp '.mat'],'lme_mcatch');
-            
-            close all 
-            
-            %% POEM LME biomass in MT
-            plme_mcatch = nansum(lme_mcatch,2) * 1e-6;
-            plme_Fmcatch = (lme_mcatch(:,1)) * 1e-6;
-            plme_Pmcatch = (lme_mcatch(:,2)+lme_mcatch(:,4)) * 1e-6;
-            plme_Dmcatch = (lme_mcatch(:,3)+lme_mcatch(:,5)) * 1e-6;
-            % MT/km2
-            plme_mcatch = plme_mcatch ./ lme_area_km2;
-            plme_Fmcatch = plme_Fmcatch ./ lme_area_km2;
-            plme_Pmcatch = plme_Pmcatch ./ lme_area_km2;
-            plme_Dmcatch = plme_Dmcatch ./ lme_area_km2;
-            
-            %log10 Difference
-            diff_catch = (log10(plme_mcatch) - log10(slme_mcatch10)) ./ log10((slme_mcatch10+eps));
-            Fdiff_catch = (log10(plme_Fmcatch) - log10(Flme_mcatch10)) ./ log10((Flme_mcatch10+eps));
-            Pdiff_catch = (log10(plme_Pmcatch) - log10(Plme_mcatch10)) ./ log10((Plme_mcatch10+eps));
-            Ddiff_catch = (log10(plme_Dmcatch) - log10(Dlme_mcatch10)) ./ log10((Dlme_mcatch10+eps));
-            
-            code = [1:66]';
-            T = table(code,slme_mcatch10,plme_mcatch,Flme_mcatch10,plme_Fmcatch,...
-                Plme_mcatch10,plme_Pmcatch,Dlme_mcatch10,plme_Dmcatch,'VariableNames',...
-                {'lme','saupAll','poemAll','saupF','poemF','saupP','poemP','saupD','poemD'});
-            writetable(T,[dpath 'LME_saup_catch_clim_fished',harv,'.csv']);
-            
-            %% Plots
-            l10s=log10(slme_mcatch10+eps);
-            l10p=log10(plme_mcatch);
-            l10sF=log10(Flme_mcatch10+eps);
-            l10pF=log10(plme_Fmcatch);
-            l10sP=log10(Plme_mcatch10+eps);
-            l10pP=log10(plme_Pmcatch);
-            l10sD=log10(Dlme_mcatch10+eps);
-            l10pD=log10(plme_Dmcatch);
-            
-            
-            %% Drop Arctic, Antarctic, Hawaii, Australia -------------------------
-             
-            % Stats
-            %r
-            rall(fq,pq,dq)=corr(l10s(keep),l10p(keep));
-            rF(fq,pq,dq)=corr(l10sF(keep),l10pF(keep));
-            rP(fq,pq,dq)=corr(l10sP(keep),l10pP(keep));
-            rD(fq,pq,dq)=corr(l10sD(keep),l10pD(keep));
-            
-            %root mean square error
-            o=l10s(keep);
-            p=l10p(keep);
-            n = length(o);
-            num=nansum((p-o).^2);
-            rmse(fq,pq,dq) = sqrt(num/n);
-            
-            o=l10sF(keep);
-            p=l10pF(keep);
-            n = length(o);
-            num=nansum((p-o).^2);
-            rmseF(fq,pq,dq) = sqrt(num/n);
-            
-            o=l10sP(keep);
-            p=l10pP(keep);
-            n = length(o);
-            num=nansum((p-o).^2);
-            rmseP(fq,pq,dq) = sqrt(num/n);
-            
-            o=l10sD(keep);
-            p=l10pD(keep);
-            n = length(o);
-            num=nansum((p-o).^2);
-            rmseD(fq,pq,dq) = sqrt(num/n);
-            
+                load([dpath 'LME_clim_fished_',harv,'_loop_' dp '.mat'],'lme_mcatch');
+                
+                close all
+                
+                %% POEM LME biomass in MT
+                plme_mcatch = nansum(lme_mcatch,2) * 1e-6;
+                plme_Fmcatch = (lme_mcatch(:,1)) * 1e-6;
+                plme_Pmcatch = (lme_mcatch(:,2)+lme_mcatch(:,4)) * 1e-6;
+                plme_Dmcatch = (lme_mcatch(:,3)+lme_mcatch(:,5)) * 1e-6;
+                % MT/km2
+                plme_mcatch = plme_mcatch ./ lme_area_km2;
+                plme_Fmcatch = plme_Fmcatch ./ lme_area_km2;
+                plme_Pmcatch = plme_Pmcatch ./ lme_area_km2;
+                plme_Dmcatch = plme_Dmcatch ./ lme_area_km2;
+                
+                %log10 Difference
+                diff_catch = (log10(plme_mcatch) - log10(slme_mcatch10)) ./ log10((slme_mcatch10+eps));
+                Fdiff_catch = (log10(plme_Fmcatch) - log10(Flme_mcatch10)) ./ log10((Flme_mcatch10+eps));
+                Pdiff_catch = (log10(plme_Pmcatch) - log10(Plme_mcatch10)) ./ log10((Plme_mcatch10+eps));
+                Ddiff_catch = (log10(plme_Dmcatch) - log10(Dlme_mcatch10)) ./ log10((Dlme_mcatch10+eps));
+                
+                code = [1:66]';
+                T = table(code,slme_mcatch10,plme_mcatch,Flme_mcatch10,plme_Fmcatch,...
+                    Plme_mcatch10,plme_Pmcatch,Dlme_mcatch10,plme_Dmcatch,'VariableNames',...
+                    {'lme','saupAll','poemAll','saupF','poemF','saupP','poemP','saupD','poemD'});
+                writetable(T,[dpath 'LME_saup_catch_clim_fished',harv,'.csv']);
+                
+                %% Plots
+                l10s=log10(slme_mcatch10+eps);
+                l10p=log10(plme_mcatch);
+                l10sF=log10(Flme_mcatch10+eps);
+                l10pF=log10(plme_Fmcatch);
+                l10sP=log10(Plme_mcatch10+eps);
+                l10pP=log10(plme_Pmcatch);
+                l10sD=log10(Dlme_mcatch10+eps);
+                l10pD=log10(plme_Dmcatch);
+                
+                
+                %% Drop Arctic, Antarctic, Hawaii, Australia -------------------------
+                
+                % Stats
+                %r
+                rall(fq,1,1)=corr(l10s(keep),l10p(keep));
+                rF(fq,1,1)=corr(l10sF(keep),l10pF(keep));
+                rP(fq,1,1)=corr(l10sP(keep),l10pP(keep));
+                rD(fq,1,1)=corr(l10sD(keep),l10pD(keep));
+                
+                %root mean square error
+                o=l10s(keep);
+                p=l10p(keep);
+                n = length(o);
+                num=nansum((p-o).^2);
+                rmse(fq,1,1) = sqrt(num/n);
+                
+                o=l10sF(keep);
+                p=l10pF(keep);
+                n = length(o);
+                num=nansum((p-o).^2);
+                rmseF(fq,1,1) = sqrt(num/n);
+                
+                o=l10sP(keep);
+                p=l10pP(keep);
+                n = length(o);
+                num=nansum((p-o).^2);
+                rmseP(fq,1,1) = sqrt(num/n);
+                
+                o=l10sD(keep);
+                p=l10pD(keep);
+                n = length(o);
+                num=nansum((p-o).^2);
+                rmseD(fq,1,1) = sqrt(num/n);
+                
             end %if
-          
+            
         end
     end
 end
@@ -233,402 +234,116 @@ end
 %% Plots of r and RMSE
 cfile2 = ['_cm20_m-b175-k09_D075_J100_A050_Sm025_nmort1_BE05_CC100_RE00100'];
 
-fqs2 = [0.25 0.5:0.5:4];
-pqs2 = 0.25:0.25:1.75;
-dqs2 = 1:8;
-[pgrid1,fgrid1]=meshgrid(pqs2,fqs2);
-[dgrid1,fgrid2]=meshgrid(dqs2,fqs2);
-[dgrid2,pgrid2]=meshgrid(dqs2,pqs2);
 nf = length(fqs);
 np = length(pqs);
 nd = length(dqs);
 
-Rall= NaN*ones(nf+1,np+1,nd+1);
-RF  = NaN*ones(nf+1,np+1,nd+1);
-RP  = NaN*ones(nf+1,np+1,nd+1);
-RD  = NaN*ones(nf+1,np+1,nd+1);
-Rall(1:nf,1:np,1:nd)=rall;
-RF(1:nf,1:np,1:nd)=rF;
-RP(1:nf,1:np,1:nd)=rP;
-RD(1:nf,1:np,1:nd)=rD;
+%%
+figure(10)
+subplot(2,2,1)
+bar(squeeze(rall))
+xlabel('F sel')
+title('Corr all fish')
 
-% for j=1:nd
-%     figure(2)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,Rall(:,:,j))
-%     colorbar
-%     caxis([0.3 0.5])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('Corr all fish')
-%     %%print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrAll_frates_FP'])
-%     
-%     figure(3)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,RF(:,:,j))
-%     colorbar
-%     caxis([0.3 0.45])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('Corr F')
-%     %%print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrF_frates_FP'])
-%     
-%     figure(4)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,RP(:,:,j))
-%     colorbar
-%     caxis([0.5 0.6])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('Corr P')
-%     %%print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrP_frates_FP'])
-%     
-%     figure(5)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,RD(:,:,j))
-%     colorbar
-%     caxis([0.5 0.55])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('Corr D')
-%     stamp(cfile2)
-%     %%print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrD_frates_FP'])
-% end
-%%
-for j=1:np
-    figure(6)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(Rall(:,j,:)))
-    colorbar
-    caxis([0.3 0.5])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('Corr all fish')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrAll_frates_FD'])
-    
-    figure(7)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(RF(:,j,:)))
-    colorbar
-    caxis([0.3 0.45])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('Corr F')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrF_frates_FD'])
-    
-    figure(8)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(RP(:,j,:)))
-    colorbar
-    caxis([0.5 0.6])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('Corr P')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrP_frates_FD'])
-    
-    figure(9)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(RD(:,j,:)))
-    colorbar
-    caxis([0.5 0.55])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('Corr D')
-    stamp(cfile2)
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrD_frates_FD'])
-end
-%%
-for j=1:nf
-    figure(10)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(Rall(j,:,:)))
-    colorbar
-    caxis([0.3 0.5])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('Corr all fish')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrAll_frates_PD'])
-    
-    figure(11)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(RF(j,:,:)))
-    colorbar
-    caxis([0.3 0.45])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('Corr F')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrF_frates_PD'])
-    
-    figure(12)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(RP(j,:,:)))
-    colorbar
-    caxis([0.5 0.6])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('Corr P')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrP_frates_PD'])
-    
-    figure(13)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(RD(j,:,:)))
-    colorbar
-    caxis([0.5 0.55])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('Corr D')
-    stamp(cfile2)
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrD_frates_PD'])
-    
-end
+subplot(2,2,2)
+bar(squeeze(rF))
+xlabel('F sel')
+title('Corr F')
+
+subplot(2,2,3)
+bar(squeeze(rP))
+xlabel('F sel')
+title('Corr P')
+
+subplot(2,2,4)
+bar(squeeze(rD))
+xlabel('F sel')
+title('Corr D')
+stamp(cfile2)
+%print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_corrD_frates_PD'])
 
 %%
-Rmseall  = NaN*ones(nf+1,np+1,nd+1);
-RmseF  = NaN*ones(nf+1,np+1,nd+1);
-RmseP  = NaN*ones(nf+1,np+1,nd+1);
-RmseD  = NaN*ones(nf+1,np+1,nd+1);
-Rmseall(1:nf,1:np,1:nd)=rmse;
-RmseF(1:nf,1:np,1:nd)=rmseF;
-RmseP(1:nf,1:np,1:nd)=rmseP;
-RmseD(1:nf,1:np,1:nd)=rmseD;
+figure(22)
+subplot(2,2,1)
+bar(squeeze(rmse))
+xlabel('F sel')
+title('RMSE all fish')
 
-% for j=1:nd
-%     figure(14)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,Rmseall(:,:,j))
-%     colorbar
-%     caxis([0.525 0.675])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('RMSE all fish')
-%     %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseAll_frates_FP'])
-%     
-%     figure(15)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,RmseF(:,:,j))
-%     colorbar
-%     caxis([1.15 1.25])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('RMSE F')
-%     %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseF_frates_FP'])
-%     
-%     figure(16)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,RmseP(:,:,j))
-%     colorbar
-%     caxis([1 1.1])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('RMSE P')
-%     %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseP_frates_FP'])
-%     
-%     figure(17)
-%     subplot(2,3,j)
-%     pcolor(fgrid1,pgrid1,RmseD(:,:,j))
-%     colorbar
-%     caxis([0.6 1])
-%     %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-%     xlabel('F sel')
-%     ylabel('P sel')
-%     title('RMSE D')
-%     stamp(cfile2)
-%     %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseD_frates_FP'])
-% end
-for j=1:np
-    figure(18)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(Rmseall(:,j,:)))
-    colorbar
-    caxis([0.525 0.675])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('RMSE all fish')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseAll_frates_FD'])
-    
-    figure(19)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(RmseF(:,j,:)))
-    colorbar
-    caxis([1.15 1.25])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('RMSE F')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseF_frates_FD'])
-    
-    figure(20)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(RmseP(:,j,:)))
-    colorbar
-    caxis([1 1.1])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('RMSE P')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseP_frates_FD'])
-    
-    figure(21)
-    subplot(2,3,j)
-    pcolor(fgrid2,dgrid1,squeeze(RmseD(:,j,:)))
-    colorbar
-    caxis([0.6 1])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('F sel')
-    ylabel('D sel')
-    title('RMSE D')
-    stamp(cfile2)
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseD_frates_FD'])
-end
-%%
-for j=1:nf
-    figure(22)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(Rmseall(j,:,:)))
-    colorbar
-    caxis([0.525 0.675])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('RMSE all fish')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseAll_frates_PD'])
-    
-    figure(23)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(RmseF(j,:,:)))
-    colorbar
-    caxis([1.15 1.25])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('RMSE F')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseF_frates_PD'])
-    
-    figure(24)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(RmseP(j,:,:)))
-    colorbar
-    caxis([1 1.1])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('RMSE P')
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseP_frates_PD'])
-    
-    figure(25)
-    subplot(3,3,j)
-    pcolor(pgrid2,dgrid2,squeeze(RmseD(j,:,:)))
-    colorbar
-    caxis([0.6 1])
-    %set(gca,'XTickLabel',bees(1:2:end),'YTickLabel',kays(2:2:end))
-    xlabel('P sel')
-    ylabel('D sel')
-    title('RMSE D')
-    stamp(cfile2)
-    %print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseD_frates_PD'])
-    
-end
+subplot(2,2,2)
+bar(squeeze(rmseF))
+xlabel('F sel')
+title('RMSE F')
+
+subplot(2,2,3)
+bar(squeeze(rmseP))
+xlabel('F sel')
+title('RMSE P')
+
+subplot(2,2,4)
+bar(squeeze(rmseD))
+xlabel('F sel')
+title('RMSE D')
+stamp(cfile2)
+%print('-dpng',[ppath 'Clim_',harv,'_LME_SAUP_catch_rmseD_frates_PD'])
+
+
 
 %%
-[pgrid3,fgrid3,dgrid3]=meshgrid(pqs2,fqs2,dqs2);
-
 vals = NaN*ones(2,6);
-qr = NaN*ones(3,6);
-qrmse = NaN*ones(3,6);
+qr = NaN*ones(2,6);
 
-corr_all = 0.25*(normalize(Rall)+normalize(RF)+normalize(RP)+normalize(RD));
-rmse_all = normalize(Rmseall)+normalize(RmseF)+normalize(RmseP)+normalize(RmseD);
-corr_PD = 0.5*(normalize(RP)+normalize(RD));
-rmse_PD = normalize(RmseP)+normalize(RmseD);
+corr_all = 0.25*(normalize(rall)+normalize(rF)+normalize(rP)+normalize(rD));
+rmse_all = normalize(rmse)+normalize(rmseF)+normalize(rmseP)+normalize(rmseD);
+corr_PD = 0.5*(normalize(rP)+normalize(rD));
+rmse_PD = normalize(rmseP)+normalize(rmseD);
 
-ax1 = find(Rall(:)==max(Rall(:)));
-fx1 = find(RF(:)==max(RF(:)));
-px1 = find(RP(:)==max(RP(:)));
-dx1 = find(RD(:)==max(RD(:)));
+ax1 = find(rall(:)==max(rall(:)));
+fx1 = find(rF(:)==max(rF(:)));
+px1 = find(rP(:)==max(rP(:)));
+dx1 = find(rD(:)==max(rD(:)));
 lx1 = find(corr_all(:)==max(corr_all(:)));
 pdx1 = find(corr_PD(:)==max(corr_PD(:)));
 
-ax2 = find(Rmseall(:)==min(Rmseall(:)));
-fx2 = find(RmseF(:)==min(RmseF(:)));
-px2 = find(RmseP(:)==min(RmseP(:)));
-dx2 = find(RmseD(:)==min(RmseD(:)));
+ax2 = find(rmse(:)==min(rmse(:)));
+fx2 = find(rmseF(:)==min(rmseF(:)));
+px2 = find(rmseP(:)==min(rmseP(:)));
+dx2 = find(rmseD(:)==min(rmseD(:)));
 lx2 = find(rmse_all(:)==min(rmse_all(:)));
 pdx2 = find(rmse_PD(:)==min(rmse_PD(:)));
 
-vals(1,1) = Rall(ax1);
-vals(1,2) = RF(fx1);
-vals(1,3) = RP(px1);
-vals(1,4) = RD(dx1);
+vals(1,1) = rall(ax1);
+vals(1,2) = rF(fx1);
+vals(1,3) = rP(px1);
+vals(1,4) = rD(dx1);
 vals(1,5) = corr_all(lx1);
 vals(1,6) = corr_PD(pdx1);
-vals(2,1) = Rmseall(ax2);
-vals(2,2) = RmseF(fx2);
-vals(2,3) = RmseP(px2);
-vals(2,4) = RmseD(dx2);
+vals(2,1) = rmse(ax2);
+vals(2,2) = rmseF(fx2);
+vals(2,3) = rmseP(px2);
+vals(2,4) = rmseD(dx2);
 vals(2,5) = rmse_all(lx2);
 vals(2,6) = rmse_PD(pdx2);
 
-qr(1,1) = fgrid3(ax1);
-qr(1,2) = fgrid3(fx1);
-qr(1,3) = fgrid3(px1);
-qr(1,4) = fgrid3(dx1);
-qr(1,5) = fgrid3(lx1);
-qr(1,6) = fgrid3(pdx1);
-qr(2,1) = pgrid3(ax1);
-qr(2,2) = pgrid3(fx1);
-qr(2,3) = pgrid3(px1);
-qr(2,4) = pgrid3(dx1);
-qr(2,5) = pgrid3(lx1);
-qr(2,6) = pgrid3(pdx1);
-qr(3,1) = dgrid3(ax1);
-qr(3,2) = dgrid3(fx1);
-qr(3,3) = dgrid3(px1);
-qr(3,4) = dgrid3(dx1);
-qr(3,5) = dgrid3(lx1);
-qr(3,6) = dgrid3(pdx1);
+qr(1,1) = fqs(ax1);
+qr(1,2) = fqs(fx1);
+qr(1,3) = fqs(px1);
+qr(1,4) = fqs(dx1);
+qr(1,5) = fqs(lx1);
+qr(1,6) = fqs(pdx1);
 
-qrmse(1,1) = fgrid3(ax2);
-qrmse(1,2) = fgrid3(fx2);
-qrmse(1,3) = fgrid3(px2);
-qrmse(1,4) = fgrid3(dx2);
-qrmse(1,5) = fgrid3(lx2);
-qrmse(1,6) = fgrid3(pdx2);
-qrmse(2,1) = pgrid3(ax2);
-qrmse(2,2) = pgrid3(fx2);
-qrmse(2,3) = pgrid3(px2);
-qrmse(2,4) = pgrid3(dx2);
-qrmse(2,5) = pgrid3(lx2);
-qrmse(2,6) = pgrid3(pdx2);
-qrmse(3,1) = dgrid3(ax2);
-qrmse(3,2) = dgrid3(fx2);
-qrmse(3,3) = dgrid3(px2);
-qrmse(3,4) = dgrid3(dx2);
-qrmse(3,5) = dgrid3(lx2);
-qrmse(3,6) = dgrid3(pdx2);
+qr(2,1) = fqs(ax2);
+qr(2,2) = fqs(fx2);
+qr(2,3) = fqs(px2);
+qr(2,4) = fqs(dx2);
+qr(2,5) = fqs(lx2);
+qr(2,6) = fqs(pdx2);
 
 qr(:,7) = mean(qr,2);
-qrmse(:,7) = mean(qrmse,2);
 
-%%
-save([dpath 'Clim_fished_loop_LME_SAUP_catch_comp_qs.mat'],'rall','rF','rP',...
-    'rD','rmse','rmseF','rmseP','rmseD','fgrid3','pgrid3','dgrid3',...
-    'vals','qr','qrmse')
-csvwrite([dpath 'Clim_fished_loop_LME_SAUP_catch_comp_qs_corr.csv'],qr);
-csvwrite([dpath 'Clim_fished_loop_LME_SAUP_catch_comp_qs_rmse.csv'],qrmse);
+% %%
+% save([dpath 'Clim_fished_loop_LME_SAUP_catch_comp_qs.mat'],'rall','rF','rP',...
+%     'rD','rmse','rmseF','rmseP','rmseD','fgrid3','pgrid3','dgrid3',...
+%     'vals','qr','qrmse')
+% csvwrite([dpath 'Clim_fished_loop_LME_SAUP_catch_comp_qs_corr.csv'],qr);
+% csvwrite([dpath 'Clim_fished_loop_LME_SAUP_catch_comp_qs_rmse.csv'],qrmse);
 

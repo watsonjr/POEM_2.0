@@ -24,16 +24,16 @@ btemp_mean_clim=squeeze(nanmean(btm_temp,1));
 %%
 AREA_OCN = max(area,1);
 
-fqs = 0.25:0.5:3.5;
+fqs = 0.5:0.5:3.5;
 pqs = 0.25:0.25:1.5;
 dqs = 1:7;
 frate = 0.1; %Fish(F);
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
 
 %%
-for fq=1%length(fqs)
-    for pq=2:length(pqs)
-        for dq=6:length(dqs)
+for fq=1:length(fqs)
+    for pq=4;%1:length(pqs)
+        for dq=7;%1:length(dqs)
             MFsel = fqs(fq);
             LPsel = pqs(pq);
             LDsel = dqs(dq);
@@ -41,13 +41,13 @@ for fq=1%length(fqs)
             tP = num2str(1000+int64(100*frate*LPsel));
             tD = num2str(1000+int64(100*frate*LDsel));
             
-            charv = ['fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end)];
-            harv = ['F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end)];
+            charv = ['fish_lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
+            harv = ['lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
             
             ppath = [pp cfile '/'];
             dpath = [dp cfile '/'];
             
-            sfile = ['/Clim_means_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'.mat'];
+            sfile = ['/Clim_means_fish_lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'];
             load([dpath sfile]);
             
             %% Plots in space
