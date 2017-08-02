@@ -19,7 +19,7 @@ spots=spots';
 
 dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
 sname = 'Clim_';
-harv = 'fish_F020_P005_D030';
+harv = 'fish_qF005_qP010_qD030';
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))
