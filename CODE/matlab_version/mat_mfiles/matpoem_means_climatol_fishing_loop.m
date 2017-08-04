@@ -13,7 +13,7 @@ fpath=['/Volumes/GFDL/CSV/Matlab_new_size/' cfile '/'];
 %%
 MFsel = 0.5;
     LPsel = 1;
-    LDsel = 7;
+    LDsel = 3;
 % for fq=1:length(fqs)
 %     for pq=4;%1:length(pqs)
 %         for dq=7;%1:length(dqs)
@@ -25,9 +25,9 @@ MFsel = 0.5;
             tD = num2str(1000+int64(100*frate*LDsel));
             
             sfile = ['/Volumes/GFDL/CSV/Matlab_new_size/',cfile,...
-                '/Clim_means_Tfish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'];
+                '/Clim_means_fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'];
             load(sfile);
-            harv = ['Tfish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
+            harv = ['fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
             
             % Last year
             [id,nt] = size(Spinup_Bent.bio);

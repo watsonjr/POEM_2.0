@@ -105,8 +105,8 @@ tfish = num2str(100+int64(10*frate));
 
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE10_CC100_lgRE00100_mdRE00100';
 
-charv = 'Tfish_qF005_qP010_qD070';
-harv = 'qF005_qP010_qD070';
+charv = 'fish_qF005_qP010_qD030';
+harv = 'qF005_qP010_qD030';
 % charv = ['All_fish',tfish(2:end)];
 % harv = tfish(2:end);
 

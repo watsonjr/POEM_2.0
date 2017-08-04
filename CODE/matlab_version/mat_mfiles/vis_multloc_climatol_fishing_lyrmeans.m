@@ -69,7 +69,7 @@ set(groot,'defaultAxesColorOrder',cm9);
 
 %%
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE10_CC100_lgRE00100_mdRE00100';
-harv = 'Tfish_qF005_qP010_qD070';
+harv = 'fish_qF005_qP010_qD030';
 tharv = 'Harvest all fish F:0.05 P:0.1 D:0.3';
 
 fpath=['/Volumes/GFDL/CSV/Matlab_new_size/' cfile '/'];
