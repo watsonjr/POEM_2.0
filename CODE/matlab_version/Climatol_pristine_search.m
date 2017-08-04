@@ -44,12 +44,12 @@ fqs = 0.5:0.5:3.5;
 pqs = 0.25:0.25:1.5;
 dqs = 1:7;
 
-for fq=1:length(fqs)
-    for pq=4;%1:length(pqs)
-        for dq=7;%1:length(dqs)
-            MFsel = fqs(fq);
-            LPsel = pqs(pq);
-            LDsel = dqs(dq);
+% for fq=1:length(fqs)
+%     for pq=4;%1:length(pqs)
+%         for dq=7;%1:length(dqs)
+%             MFsel = fqs(fq);
+%             LPsel = pqs(pq);
+%             LDsel = dqs(dq);
             
             %for F=1%:length(Fish)
             %! Set fishing rate
@@ -124,8 +124,8 @@ for fq=1:length(fqs)
             %simname = [coup,'_enc',tefn,'_cm',tcfn,'_m-b200_c-b',tbfn(2:end),'_m-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
             %simname = [coup,'_enc',tefn,'-b',tbfn(2:end),'_cm',tcfn,'_m-b175-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
             simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
-                mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])
+            if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
+                mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
             end
             % if (~isdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
             %     mkdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
@@ -239,7 +239,7 @@ for fq=1:length(fqs)
             %%% Save
             if harv==1
                 save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,...
-                    '/Clim_means_fish_lF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'],...
+                    '/Clim_means_Tfish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'],...
                     'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
                     'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
                     'Spinup_Bent')
@@ -250,8 +250,8 @@ for fq=1:length(fqs)
                     'Spinup_Bent')
             end
             
-        end
-    end
-end
+%         end
+%     end
+% end
 
 end

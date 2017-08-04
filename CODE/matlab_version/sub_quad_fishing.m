@@ -7,7 +7,7 @@ function [bio, caught, fmort] = sub_quad_fishing(bio,F,selec,Tp,Tb,tdif)
         
     temp = (Tp.*tdif) + (Tb.*(1.0-tdif));
     % Quadratic fishing mortality
-    caught = (exp(0.063*(temp-10.0)) .* bio.^2 .* selec .* F;
+    caught = (exp(0.063*(temp-10.0))) .* bio.^2 .* selec .* F;
     fmort = caught ./ bio;
     bio = bio - caught;
     
