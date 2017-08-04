@@ -105,16 +105,13 @@ tfish = num2str(100+int64(10*frate));
 
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE10_CC100_lgRE00100_mdRE00100';
 
-charv = 'fish_qF005_qP010_qD030';
-harv = 'qF005_qP010_qD030';
-% charv = ['All_fish',tfish(2:end)];
-% harv = tfish(2:end);
+harv = 'All_fish03';
 
 ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
 %load([dpath 'LME_clim_fished',harv,'_' cfile '.mat'],'lme_mcatch');
-load([dpath 'LME_clim_fished_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
+load([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
 
 close all
 
@@ -196,7 +193,7 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_',charv,'_SAUP_log10catch_comp_types_temp.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_temp.png'])
 
 
 
@@ -303,7 +300,7 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_',charv,'_SAUP_log10catch_comp_types_LELC_temp.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp.png'])
 
 %% For ms
 figure(12)
@@ -375,7 +372,7 @@ xlabel('SAUP')
 ylabel('POEM')
 title('C. Demersals')
 % stamp(cfile)
-print('-dpng',[ppath 'Clim_',charv,'_SAUP_log10catch_comp_types_LELC_temp_ms.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp_ms.png'])
 
 
 

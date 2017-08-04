@@ -31,26 +31,25 @@ frate = 0.1; %Fish(F);
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE10_CC100_lgRE00100_mdRE00100';
 
 %%
-MFsel = 0.5;
-    LPsel = 1;
-    LDsel = 3;
 % for fq=1:length(fqs)
 %     for pq=4;%1:length(pqs)
 %         for dq=7;%1:length(dqs)
 %             MFsel = fqs(fq);
 %             LPsel = pqs(pq);
 %             LDsel = dqs(dq);
-            tF = num2str(1000+int64(100*frate*MFsel));
-            tP = num2str(1000+int64(100*frate*LPsel));
-            tD = num2str(1000+int64(100*frate*LDsel));
-            
-            charv = ['fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
-            harv = ['qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
+%             tF = num2str(1000+int64(100*frate*MFsel));
+%             tP = num2str(1000+int64(100*frate*LPsel));
+%             tD = num2str(1000+int64(100*frate*LDsel));
+%             
+%             charv = ['fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
+%             harv = ['qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end)];
+%             sfile = ['/Clim_means_fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'];
             
             ppath = [pp cfile '/'];
             dpath = [dp cfile '/'];
             
-            sfile = ['/Clim_means_fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'];
+            harv = 'All_fish03';
+            sfile = ['/Clim_means_All_fish03.mat'];
             load([dpath sfile]);
             
             %% Plots in space
@@ -135,7 +134,7 @@ MFsel = 0.5;
             end
             
             %%
-            save([dpath 'LME_clim_fished_',harv,'_loop_' cfile '.mat'],...
+            save([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],...
                 'lme_mcatch','lme_mbio','lme_area');
             
             %% Figures

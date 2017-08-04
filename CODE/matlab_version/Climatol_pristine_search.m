@@ -53,7 +53,7 @@ dqs = 1:7;
             
             %for F=1%:length(Fish)
             %! Set fishing rate
-            frate = 0.1; %Fish(F);
+            frate = 0.3; %Fish(F);
             dfrate = frate/365.0;
             %0=no fishing; 1=fishing
             if (frate>0)
@@ -239,7 +239,7 @@ dqs = 1:7;
             %%% Save
             if harv==1
                 save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,...
-                    '/Clim_means_fish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'],...
+                    '/Clim_means_',sel,'_fish',tfish(2:end),'.mat'],...
                     'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
                     'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
                     'Spinup_Bent')
