@@ -14,8 +14,8 @@ load([gpath 'esm26_lme_mask_onedeg_SAU_66.mat']);
 load([gpath 'esm26_area_1deg.mat']);
 load([cdir 'temp_100_1deg_ESM26_5yr_clim_191_195.mat'])
 load([cdir 'btm_temp_1deg_ESM26_5yr_clim_191_195.mat'])
-load([cpath 'cobalt_zoop_biom_means.mat'],'mz_mean_clim','lz_mean_clim','mzloss_mean_clim','lzloss_mean_clim')
-load([cpath 'cobalt_det_biom_means.mat'],'det_mean_clim')
+load([cpath 'cobalt_zoop_biom_means.mat']);%,'mz_mean_clim','lz_mean_clim','mzloss_mean_clim','lzloss_mean_clim')
+load([cpath 'cobalt_det_biom_means.mat']);%,'det_mean_clim')
 
 %%
 ptemp_mean_clim=squeeze(nanmean(temp_100,1));
