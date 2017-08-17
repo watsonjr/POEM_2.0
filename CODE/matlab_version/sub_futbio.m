@@ -223,9 +223,9 @@ Ld.bio = sub_update_fi(Ld.bio,Ld.rec,Ld.nu,Ld.rep,Ld.gamma,Ld.die,Ld.egg,Ld.nmor
 % [Ld.bio, Ld.caught, Ld.fmort] = sub_quad_fishing(Ld.bio,dfrate,LDsel,ENVR.Tp,ENVR.Tb,Ld.td);
 
 % Advection-Diffusion
-Sf.bio = sub_advec_vel(CGRD,Sf.bio,ENVR.U,ENVR.V,ni,nj,tstep);
-Sp.bio = sub_advec_vel(CGRD,Sp.bio,ENVR.U,ENVR.V,ni,nj,tstep);
-Sd.bio = sub_advec_vel(CGRD,Sd.bio,ENVR.U,ENVR.V,ni,nj,tstep);
+% Sf.bio = sub_advec_vel(CGRD,Sf.bio,ENVR.U,ENVR.V,ni,nj,tstep);
+% Sp.bio = sub_advec_vel(CGRD,Sp.bio,ENVR.U,ENVR.V,ni,nj,tstep);
+% Sd.bio = sub_advec_vel(CGRD,Sd.bio,ENVR.U,ENVR.V,ni,nj,tstep);
 % Mf.bio = sub_diff_sep(CGRD,Mf.bio,K,ni,nj,tstep);
 % Mp.bio = sub_diff_sep(CGRD,Mp.bio,K,ni,nj,tstep);
 % Md.bio = sub_diff_sep(CGRD,Md.bio,K,ni,nj,tstep);

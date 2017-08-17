@@ -5,7 +5,7 @@ close all
 
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
-dp = '/Volumes/GFDL/NC/Matlab_new_size/';
+dp = '/Volumes/GFDL/CSV/Matlab_new_size/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
@@ -25,7 +25,7 @@ load('cmap_ppt_angles.mat')
 AREA_OCN = max(area,1);
 
 lfile = 'Dc_enc70_cmax-metab20_b18_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00100';
-lpath = [dp lfile '/'];
+lpath = ['/Volumes/GFDL/NC/Matlab_new_size/' lfile '/'];
 load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
 lme_area_km2 = lme_area * 1e-6;
 
@@ -133,17 +133,15 @@ x5l = x-log10(5);
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70_cmax-metab20_b175_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE10_CC100_lgRE00100_mdRE00100';
 
-% charv = 'fish_F015_P010_D035';
-% harv = 'F015_P010_D035';
-charv = ['All_fish',tfish(2:end)];
-harv = tfish(2:end);
+harv = 'All_fish03';
 
 ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
-load([dpath 'LME_clim_fished',harv,'_' cfile '.mat'],'lme_mcatch');
+%load([dpath 'LME_clim_fished',harv,'_' cfile '.mat'],'lme_mcatch');
+load([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
 
 close all
 
@@ -333,7 +331,7 @@ num=nansum((p-o).^2);
 rmseD = sqrt(num/n);
 
 
-figure(11)
+figure(3)
 subplot(2,2,1)
 plot(x,x,'--k'); hold on;
 plot(x,x2h,'--b'); hold on;
@@ -439,7 +437,7 @@ num=nansum((p-o).^2);
 rmseD = sqrt(num/n);
 
 
-figure(12)
+figure(4)
 subplot(2,2,1)
 plot(x,x,'--k'); hold on;
 plot(x,x2h,'--b'); hold on;
@@ -511,7 +509,7 @@ stamp(cfile)
 print('-dpng',[ppath 'Clim_fished',harv,'_Watson_log10catch_comp_types_LELC_temp.png'])
 
 %% For ms
-% figure(12)
+% figure(5)
 % subplot(2,2,4)
 % plot(x,x,'--k'); hold on;
 % plot(x,x2h,'--b'); hold on;
@@ -584,4 +582,77 @@ print('-dpng',[ppath 'Clim_fished',harv,'_Watson_log10catch_comp_types_LELC_temp
 % 
 % 
 % 
-% 
+%% ID LMEs
+figure(7)
+subplot(2,1,1)
+plot(x,x,'--k'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
+for i=1:66
+    text(l10cF(i),l10pF(i),num2str(i)); hold on;
+end
+axis([-6 1 -2 0.5])
+% axis([-6 1 -6 1])
+% axis('square')
+xlabel('Watson F catch (log10 MT km^-^2)')
+ylabel('POEM F catch (log10 MT km^-^2)')
+title('Mean F catch all')
+
+subplot(2,1,2)
+plot(x,x,'--k'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
+for i=1:length(keep)
+    lme=keep(i);
+    text(l10cF(lme),l10pF(lme),num2str(lme)); hold on;
+end
+axis([-6 1 -2 0.5])
+% axis([-6 1 -6 1])
+% axis('square')
+xlabel('Watson F catch (log10 MT km^-^2)')
+ylabel('POEM F catch (log10 MT km^-^2)')
+title('Mean F catch no LELC')
+print('-dpng',[ppath 'Clim_',harv,'_Watson_log10catch_comp_F_LMEs.png'])
+
+
+figure(8)
+subplot(2,1,1)
+plot(x,x,'--k'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
+for i=1:66
+    text(l10lF(i),l10pF(i),num2str(i)); hold on;
+end
+axis([-6 1 -2 0.5])
+% axis([-6 1 -6 1])
+% axis('square')
+xlabel('Watson F landings (log10 MT km^-^2)')
+ylabel('POEM F catch (log10 MT km^-^2)')
+title('Mean F catch all')
+
+subplot(2,1,2)
+plot(x,x,'--k'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
+for i=1:length(keep)
+    lme=keep(i);
+    text(l10lF(lme),l10pF(lme),num2str(lme)); hold on;
+end
+axis([-6 1 -2 0.5])
+% axis([-6 1 -6 1])
+% axis('square')
+xlabel('Watson F landings (log10 MT km^-^2)')
+ylabel('POEM F catch (log10 MT km^-^2)')
+title('Mean F catch no LELC')
+print('-dpng',[ppath 'Clim_',harv,'_Watson_log10land_comp_F_LMEs.png'])
+
+
+ 
