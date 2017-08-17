@@ -12,7 +12,7 @@ Fdrpbx = '/Users/Colleen/Dropbox/';
 cpath = [Pdrpbx 'Princeton/POEM_other/grid_cobalt/'];
 pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 
-cfile = 'Dc_enc70_cmax-metab20_fcrit20_D075_J100_A050_Sm025_nmort5_BE05_CC050_lgRE00100_mdRE00400';
+cfile = 'Diff_Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE10_CC100_RE00100';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
 ppath = [pp cfile '/'];
@@ -20,11 +20,19 @@ if (~isdir(ppath))
     mkdir(ppath)
 end
 
-load([fpath 'Means_spinup_' cfile '.mat']);
+load([fpath 'Means_spinup_fished_' cfile '.mat']);
 
 load([Pdrpbx 'Princeton/POEM_other/grid_cobalt/hindcast_gridspec.mat'],...
     'geolon_t','geolat_t');
 grid = csvread([cpath 'grid_csv.csv']);
+
+[ni,nj]=size(geolon_t);
+plotminlat=-90; %Set these bounds for your data
+plotmaxlat=90;
+plotminlon=-280;
+plotmaxlon=80;
+latlim=[plotminlat plotmaxlat];
+lonlim=[plotminlon plotmaxlon];
 
 %% colors
 cm10=[0.5 0.5 0;... %tan/army
@@ -72,11 +80,11 @@ plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(mp_tmean),'r','Linewidth',1); hold on;
 plot(y,log10(lp_tmean),'k','Linewidth',1); hold on;
 xlim([y(1) y(end)])
-title('Spinup Pelagic Piscivores')
+title('Spinup fished Pelagic Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
 legend('location','southeast')
-%stamp(cfile)
+stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sp_tmean),'b','Linewidth',1); hold on;
@@ -96,7 +104,7 @@ xlim([y(1) y(end)])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
-print('-dpng',[ppath 'Spinup_P_time.png'])
+print('-dpng',[ppath 'Spinup_fished_P_time.png'])
 
 % Planktivore
 sf_tmean=sf_tmean(1:length(y));
@@ -105,12 +113,12 @@ subplot(3,1,1)
 plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(mf_tmean),'r','Linewidth',1); hold on;
 xlim([y(1) y(end)])
-title('Spinup Forage Fishes')
+title('Spinup fished Forage Fishes')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Immature','Adults')
 legend('location','southeast')
-%stamp(cfile)
+stamp(cfile)
 
 subplot(3,1,2)
 plot(y,log10(sf_tmean),'b','Linewidth',1); hold on;
@@ -124,7 +132,7 @@ xlim([y(1) y(end)])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
-print('-dpng',[ppath 'Spinup_F_time.png'])
+print('-dpng',[ppath 'Spinup_fished_F_time.png'])
 
 % Detritivore
 figure(3)
@@ -133,11 +141,11 @@ plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
 plot(y,log10(md_tmean),'r','Linewidth',1); hold on;
 plot(y,log10(ld_tmean),'k','Linewidth',1); hold on;
 xlim([y(1) y(end)])
-title('Spinup Demersal Piscivores')
+title('Spinup fished Demersal Piscivores')
 ylabel('log10 Biomass (g m^-^2)')
 legend('Larvae','Juveniles','Adults')
 legend('location','southeast')
-%stamp(cfile)
+stamp(cfile)
 
 subplot(4,1,2)
 plot(y,log10(sd_tmean),'b','Linewidth',1); hold on;
@@ -157,14 +165,14 @@ xlim([y(1) y(end)])
 title('Adults')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
-print('-dpng',[ppath 'Spinup_D_time.png'])
+print('-dpng',[ppath 'Spinup_fished_D_time.png'])
 
 %% Benthic inverts
 figure(92)
 subplot(2,1,1)
 plot(y,log10(b_tmean),'b','Linewidth',1); hold on;
 xlim([y(1) y(end)])
-title('Spinup Benthic Inverts')
+title('Spinup fished Benthic Inverts')
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 
@@ -172,7 +180,7 @@ subplot(2,1,2)
 plot(y,(b_tmean),'b','Linewidth',1); hold on;
 xlim([y(1) y(end)])
 ylabel('Biomass (g m^-^2)')
-print('-dpng',[ppath 'Spinup_B_time.png'])
+print('-dpng',[ppath 'Spinup_fished_B_time.png'])
 
 %% All size classes of all
 
@@ -193,8 +201,8 @@ ylim([-5 2])
 xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 title('Spinup')
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_all_sizes.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_all_sizes.png'])
 
 figure(5)
 F = sf_tmean+mf_tmean;
@@ -213,7 +221,7 @@ ylim([-5 2])
 xlabel('Time (y)')
 ylabel('log10 Biomass (g m^-^2)')
 title(['Spinup'])
-print('-dpng',[ppath 'Spinup_all_types.png'])
+print('-dpng',[ppath 'Spinup_fished_all_types.png'])
 
 
 %% Plots in space
@@ -250,31 +258,41 @@ ocean(grid(:,1))=ones(size(sf_mean));
 % colormap('jet')
 % colorbar('h')
 % caxis([1 2])
-% %stamp(cfile)
+% stamp(cfile)
 % print('-dpng',[ppath 'Ocean_cells.png'])
 
 % bent
 figure(50)
-surf(geolon_t,geolat_t,log10(Zb)); view(2); hold on;
-shading flat
-title('log10 mean benthic biomass (g m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(Zb))
 colormap('jet')
-colorbar('h')
-caxis([-2.5 0.5])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-2.5 0.5]);
+hcb = colorbar('h');
+ylim(hcb,[-2.5 0.5])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('log10 mean benthic biomass (g m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_BENT.png'])
 
 %
 mgZb = (Zb/9)*1e3;
 figure(51)
-surf(geolon_t,geolat_t,log10(mgZb)); view(2); hold on;
-shading flat
-title('log10 mean benthic biomass (mg C m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(mgZb))
 colormap('jet')
-colorbar('h')
-caxis([-0.8 2.3])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_BENT_mgC.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-0.8 2.3]);
+hcb = colorbar('h');
+ylim(hcb,[-0.8 2.3])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('log10 mean benthic biomass (mg C m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_BENT_mgC.png'])
 
 % sp
 figure(11)
@@ -284,8 +302,8 @@ title('log10 mean Larval P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_SP.png'])
 
 % sf
 figure(12)
@@ -295,8 +313,8 @@ title('log10 mean Larval F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SF.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_SF.png'])
 
 % sd
 figure(13)
@@ -306,8 +324,8 @@ title('log10 mean Larval D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_SD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_SD.png'])
 
 % mp
 figure(14)
@@ -317,8 +335,8 @@ title('log10 mean Juvenile P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_MP.png'])
 
 % mf
 figure(15)
@@ -328,8 +346,8 @@ title('log10 mean Adult F biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MF.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_MF.png'])
 
 % md
 figure(16)
@@ -339,8 +357,8 @@ title('log10 mean Juvenile D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_MD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_MD.png'])
 
 % lp
 figure(17)
@@ -350,8 +368,8 @@ title('log10 mean Adult P biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_LP.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_LP.png'])
 
 % ld
 figure(18)
@@ -361,8 +379,8 @@ title('log10 mean Adult D biomass (g m^-^2)')
 colormap('jet')
 colorbar('h')
 caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_LD.png'])
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_LD.png'])
 
 %% Diff maps of all fish
 All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
@@ -385,69 +403,99 @@ FracPFvDm = (Zmp+Zmf) ./ (Zmp+Zmf+Zmd);
 
 %% ALL
 figure(21)
-surf(geolon_t,geolat_t,log10(All)); view(2); hold on;
-shading flat
-title('log10 mean biomass All Fishes (g m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(All))
 colormap('jet')
-colorbar('h')
-caxis([-1 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_All.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 2]);
+hcb = colorbar('h');
+ylim(hcb,[-1 2])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('log10 mean biomass All Fishes (g m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_All.png'])
 
 % all F
 figure(22)
-surf(geolon_t,geolat_t,log10(AllF)); view(2); hold on;
-shading flat
-title('log10 mean biomass All F (g m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(AllF))
 colormap('jet')
-colorbar('h')
-caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllF.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+hcb = colorbar('h');
+ylim(hcb,[-1 1])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('log10 mean biomass All F (g m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_AllF.png'])
 
 % all D
 figure(23)
-surf(geolon_t,geolat_t,log10(AllD)); view(2); hold on;
-shading flat
-title('log10 mean biomass All D (g m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(AllD))
 colormap('jet')
-colorbar('h')
-caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllD.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+hcb = colorbar('h');
+ylim(hcb,[-1 1])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('log10 mean biomass All D (g m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_AllD.png'])
 
 % All P
 figure(24)
-surf(geolon_t,geolat_t,log10(AllP)); view(2); hold on;
-shading flat
-title('log10 mean biomass All P (g m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(AllP))
 colormap('jet')
-colorbar('h')
-caxis([-2 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_AllP.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+hcb = colorbar('h');
+ylim(hcb,[-1 1])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('log10 mean biomass All P (g m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_AllP.png'])
 
 % FracPD
 figure(25)
-surf(geolon_t,geolat_t,FracPD); view(2); hold on;
-shading flat
-title('P:D mean biomass(g m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,FracPD)
 colormap('jet')
-colorbar('h')
-caxis([0 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPD.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+hcb = colorbar('h');
+ylim(hcb,[0 1])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('P:D mean biomass(g m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_FracPD.png'])
 
 % FracPF
 figure(26)
-surf(geolon_t,geolat_t,FracPF); view(2); hold on;
-shading flat
-title('P:F mean biomass (g m^-^2)')
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,FracPF)
 colormap('jet')
-colorbar('h')
-caxis([0 1])
-%stamp(cfile)
-print('-dpng',[ppath 'Spinup_global_FracPF.png'])
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+hcb = colorbar('h');
+ylim(hcb,[0 1])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('P:F mean biomass (g m^-^2)')
+stamp(cfile)
+print('-dpng',[ppath 'Spinup_fished_global_FracPF.png'])
 
 % %% FracPFvD
 % figure(27)
@@ -457,8 +505,8 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% %stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_FracPFvD.png'])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_fished_global_FracPFvD.png'])
 % 
 % % FracPDs
 % figure(28)
@@ -468,8 +516,8 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% %stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_FracPDs.png'])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_fished_global_FracPDs.png'])
 % 
 % % FracPFs
 % figure(29)
@@ -479,8 +527,8 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% %stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_FracPFs.png'])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_fished_global_FracPFs.png'])
 % 
 % % FracPFvDs
 % figure(30)
@@ -490,8 +538,8 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% %stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_FracPFvDs.png'])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_fished_global_FracPFvDs.png'])
 % 
 % % FracPDm
 % figure(31)
@@ -501,8 +549,8 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% %stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_FracPDm.png'])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_fished_global_FracPDm.png'])
 % 
 % % FracPFm
 % figure(32)
@@ -512,8 +560,8 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% %stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_FracPFm.png'])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_fished_global_FracPFm.png'])
 % 
 % % FracPFvDm
 % figure(33)
@@ -523,6 +571,6 @@ print('-dpng',[ppath 'Spinup_global_FracPF.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([0 1])
-% %stamp(cfile)
-% print('-dpng',[ppath 'Spinup_global_FracPFvDm.png'])
+% stamp(cfile)
+% print('-dpng',[ppath 'Spinup_fished_global_FracPFvDm.png'])
 % 
