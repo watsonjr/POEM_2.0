@@ -13,18 +13,24 @@ function [bio_out, pred] = sub_update_be(bio_in,BE,det,CC,con,bio)
 %     pred = sum(eaten);
 %     bio_out = bio_in - sum(eaten) - bio_in*omort;
     
-    %! Quadratic mortality from carrying capacity
     eaten = con.*bio;
     pred = sum(eaten,2);
+    
+    %! No carrying capacity
+    r = BE*det; %Needs to be in units of per time (g/m2/d) * (g/m2)
+    bio_out = bio_in + r - pred;
+    
+    %! Quadratic mortality from carrying capacity
     
     %Half of detritus becomes small, half becomes medium benthic inverts
     %det2 = det.*0.5;
     
     % Chemostat
-    %r = BE*det;
-    %bio_out = bio_in + r * (r*CC - bio_in) - pred;
+%     r = BE*det;
+%     bio_out = bio_in + r * (r*CC - bio_in) - pred;
     
     % Logistic
-    r = BE*det ./ bio_in; %Needs to be in units of per time (g/m2/d) * (g/m2)
-    bio_out = bio_in + r .* bio_in .* (1 - bio_in./CC) - pred;
+%     r = BE*det ./ bio_in; %Needs to be in units of per time (g/m2/d) * (g/m2)
+%     bio_out = bio_in + r .* bio_in .* (1 - bio_in./CC) - pred;
+
 end

@@ -12,12 +12,6 @@ global MFsel MPsel MDsel LPsel LDsel efn cfn
 global tstep K CGRD ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
-%! Feeding preferences
-Sm = 0.25;  %Feeding 2 sizes down
-J = 1.0;    %Juvenile feeding reduction
-D = 0.75;   %Demersal feeding in pelagic reduction
-A = 0.50;    %Adult predation reduction
-
 %! Set fishing rate
 frate = 0.3; %Fish(F);
 dfrate = frate/365.0;

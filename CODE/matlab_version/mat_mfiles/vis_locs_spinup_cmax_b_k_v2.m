@@ -8,11 +8,6 @@ close all
 datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
-%RE = {'1000','0500','0100','0050','0010','00050'};
-RE = {'10000','05000','01000','00500','00100','00050'};
-RE2 = {'10000','05000','01000','00500','00100','00050'};
-reff = [1.0,0.5,0.1,0.05,0.01,0.005];
-sreff = {'1.0','0.5','0.1','0.05','0.01','0.005'};
 efn = 70;
 tefn = num2str(efn);
 cfn = 20;
@@ -25,12 +20,10 @@ J = 'J100';
 Ad = 'A050';
 Sm = 'Sm025';
 BE = '05';
-CC = '050';
 rfrac = '00100';
-rfrac2 = '00100';
 
 kays = 0.0405:0.01:0.0916;
-bees = 0.1:0.05:0.35;
+bees = 0.1:0.025:0.3;
 
 spots = {'GB','EBS','OSP','HOT','BATS','NS','EEP','K2','S1','Aus','PUp'};
 cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
@@ -39,7 +32,7 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 
 sname = 'Spinup_';
-sname2 = '';
+harv = 'All_fish03';
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
 load('MyColormaps.mat')
@@ -94,15 +87,17 @@ stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 %%
 for C = 1:length(kays)
     kt = kays(C);
-    tkfn = num2str(100+int64(100*kt));
     for E = 1:length(bees)
         bpow = bees(E);
-        tbfn = num2str(100+int64(100*bpow));
+        tkfn = num2str(100+int64(100*kt));
+        tbfn = num2str(1000+int64(1000*bpow));
         
         close all
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),...
-            '_fcrit',num2str(fcrit),'_',D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+%         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),...
+%             '_fcrit',num2str(fcrit),'_',D,'_',J,'_',Ad,'_',Sm,...
+%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+        dp = ['Dc_enc70-b200_cm20_m-b',tbfn(2:end),'-k',tkfn(2:end),...
+            '_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100'];
         dpath = [datap char(dp) '/'];
         fpath = [figp char(dp) '/'];
         %         if (~isdir([figp char(dp)]))
@@ -113,7 +108,7 @@ for C = 1:length(kays)
         all_mean=NaN*ones(3,4,length(spots));
         z = NaN*ones(length(spots),3);
         
-        load([dpath sname 'locs.mat'])
+        load([dpath sname 'locs_' harv '.mat'])
         SP = S_Sml_p;
         SF = S_Sml_f;
         SD = S_Sml_d;
@@ -304,7 +299,7 @@ for C = 1:length(kays)
         Fgge=[SF_gge;MF_gge];
         Dgge=[SD_gge;MD_gge;LD_gge];
         
-        save([dpath sname 'lastyr_sum_mean_biom.mat'],'Pmean','Fmean','Dmean','all_mean',...
+        save([dpath sname '_' harv '_lastyr_sum_mean_biom.mat'],'Pmean','Fmean','Dmean','all_mean',...
             'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
             'Prep','Frep','Drep','Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
             'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch',...
@@ -323,24 +318,26 @@ mcon  = NaN*ones(3,nc+1,ne+1);
 mlev  = NaN*ones(3,nc+1,ne+1);
 for C = 1:length(kays)
     kt = kays(C);
-    tkfn = num2str(100+int64(100*kt));
     for E = 1:length(bees)
         bpow = bees(E);
-        tbfn = num2str(100+int64(100*bpow));
+        tkfn = num2str(100+int64(100*kt));
+        tbfn = num2str(1000+int64(1000*bpow));
         
         close all
-        dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),...
-            '_fcrit',num2str(fcrit),'_',D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+        %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),...
+%             '_fcrit',num2str(fcrit),'_',D,'_',J,'_',Ad,'_',Sm,...
+%             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
+        dp = ['Dc_enc70-b200_cm20_m-b',tbfn(2:end),'-k',tkfn(2:end),...
+            '_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100'];
         dpath = [datap char(dp) '/'];
         fpath = [figp char(dp) '/'];
         cfile = char(dp);
         cfile2 = ['Dc_enc',tefn,'_cmax-metab',tcfn,...
             '_fcrit',num2str(fcrit),'_',D,'_',J,'_',Ad,'_',Sm,...
-            '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,...
+            '_nmort',nmort,'_BE',BE,'_noCC_RE',rfrac,...
             '_CmaxBKtests'];
         
-        load([dpath sname 'lastyr_sum_mean_biom.mat']);
+        load([dpath sname '_' harv '_lastyr_sum_mean_biom.mat']);
         
         %% Biomass of each type
         allF(:,C,E) = squeeze(nansum(all_mean(:,1,:)));
@@ -369,8 +366,8 @@ end %kays
 save([datap 'Bio_rates/' cfile2 '.mat'],'allF','allP','allD','mcon','mlev');
 
 %%
-kays2 = 0.0405:0.01:0.105;
-bees2 = 0.1:0.05:0.4;
+kays2 = [kays 0.105];
+bees2 = [bees 0.325];
 [bgrid,kgrid]=meshgrid(bees2,kays2);
 FPrat = allF./(allF+allP);
 DPrat = allD./(allD+allP);
