@@ -1,4 +1,5 @@
 %POEM catch vs. SAUP catch by LME
+%Exclude elasmobranchs, bathydemersals, bathypelagics
 
 clear all
 close all
@@ -6,7 +7,6 @@ close all
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/Matlab_new_size/';
-%dp = '/Volumes/GFDL/CSV/Matlab_new_size/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
@@ -16,8 +16,8 @@ load([cpath 'esm26_area_1deg.mat']);
 load([cpath 'LME_clim_temp.mat']);
 
 %use weighted catches
-load([spath 'SAUP_LME_Catch_annual.mat'],'yr','totcatch','lme_catch',...
-    'Flme_wcatch','Dlme_wcatch','Plme_wcatch');
+load([spath 'SAUP_LME_Catch_annual_no_elasmo_bathy.mat'],'yr','totcatch',...
+    'lme_catch','Flme_wcatch','Dlme_wcatch','Plme_wcatch');
 
 %Colormap
 load('MyColormaps.mat')
@@ -112,7 +112,6 @@ ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
 load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],'lme_mcatch');
-%load([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
 
 close all
 
@@ -150,7 +149,7 @@ end
 axis([-6 2 -6 2])
 xlabel('SAUP mean of top 10 years')
 ylabel('POEM mean of Climatology')
-title('Mean catch')
+title('Mean catch (no elasmo nor bathy)')
 
 subplot(2,2,2)
 plot(x,x,'--k'); hold on;
@@ -194,7 +193,7 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_temp.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_temp_NoElasmoBathy.png'])
 
 
 
@@ -248,7 +247,7 @@ text(-3.5,1.0,['RMSE = ' num2str(rmse)])
 axis([-4 2 -4 2])
 xlabel('SAUP mean of top 10 years')
 ylabel('POEM total mean of Climatology')
-title('Mean catch without Polar and Australia')
+title('Mean catch (no elasmo nor bathy) without Polar and Australia')
 
 subplot(2,2,2)
 plot(x,x,'--k'); hold on;
@@ -301,7 +300,7 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp_NoElasmoBathy.png'])
 
 %% For ms
 figure(3)
@@ -373,42 +372,5 @@ xlabel('SAUP')
 ylabel('POEM')
 title('C. Demersals')
 % stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp_ms.png'])
-
-%% ID LMEs
-% figure(4)
-% subplot(2,1,1)
-% plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-% for i=1:66
-%     text(l10sF(i),l10pF(i),num2str(i)); hold on;
-% end
-% axis([-6 1 -2 0.5])
-% % axis([-6 1 -6 1])
-% % axis('square')
-% xlabel('SAUP F catch (log10 MT km^-^2)')
-% ylabel('POEM F catch (log10 MT km^-^2)')
-% title('Mean F catch all')
-% 
-% subplot(2,1,2)
-% plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     text(l10sF(lme),l10pF(lme),num2str(lme)); hold on;
-% end
-% axis([-6 1 -2 0.5])
-% % axis([-6 1 -6 1])
-% % axis('square')
-% xlabel('SAUP F catch (log10 MT km^-^2)')
-% ylabel('POEM F catch (log10 MT km^-^2)')
-% title('Mean F catch no LELC')
-% print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_F_LMEs.png'])
-
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp_ms_NoElasmoBathy.png'])
 
