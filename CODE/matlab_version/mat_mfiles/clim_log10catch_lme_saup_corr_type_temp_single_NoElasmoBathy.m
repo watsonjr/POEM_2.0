@@ -46,7 +46,7 @@ land=-999*ones(ni,nj);
 land(ID)=NaN*ones(size(ID));
 
 %%
-
+lme_catch_all = nansum(lme_catch,3);
 Flme_catch_all = nansum(Flme_wcatch,3);
 Plme_catch_all = nansum(Plme_wcatch,3);
 Dlme_catch_all = nansum(Dlme_wcatch,3);
@@ -54,7 +54,7 @@ Dlme_catch_all = nansum(Dlme_wcatch,3);
 %1956-2005 SAUP average
 id = find(yr>1955 & yr<=2005);
 
-slme_mcatch = nanmean(lme_catch(id,:));
+slme_mcatch = nanmean(lme_catch_all(id,:));
 slme_mcatch = slme_mcatch';
 Fslme_mcatch = nanmean(Flme_catch_all(id,:));
 Fslme_mcatch = Fslme_mcatch';
@@ -67,9 +67,9 @@ slme_mcatch10 = NaN*ones(size(slme_mcatch));
 Flme_mcatch10 = NaN*ones(size(slme_mcatch));
 Plme_mcatch10 = NaN*ones(size(slme_mcatch));
 Dlme_mcatch10 = NaN*ones(size(slme_mcatch));
-%Top 10 yrs SAUP
+%% Top 10 yrs SAUP
 for i=1:66
-    [sort_lme_catch,ix] = sort(lme_catch(:,i),'descend');
+    [sort_lme_catch,ix] = sort(lme_catch_all(:,i),'descend');
     sort_Flme_catch = Flme_catch_all(ix,i);
     sort_Plme_catch = Plme_catch_all(ix,i);
     sort_Dlme_catch = Dlme_catch_all(ix,i);
@@ -104,7 +104,7 @@ x5l = x-log10(5);
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC1000_lgRE00100_mdRE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
