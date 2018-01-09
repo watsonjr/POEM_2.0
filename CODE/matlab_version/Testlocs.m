@@ -10,13 +10,13 @@ global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel MPsel MDsel LPsel LDsel efn cfn
 
-encs = linspace(10,100,10);
-cmaxs = linspace(10,100,10);
+encs = 110:10:190; %10:10:100; %linspace(10,100,10);
+% cmaxs = linspace(10,100,10);
 % kays = 0.0405:0.01:0.0916;
 % bees = 0.1:0.025:0.3;
 
-for n = 1:length(cmaxs)
-    h = cmaxs(n);
+% for n = 1:length(cmaxs)
+%     h = cmaxs(n);
     
     for g = 1:length(encs)
         gam = encs(g);
@@ -191,5 +191,5 @@ for n = 1:length(cmaxs)
         end
         
     end %g
-end %n
+% end %n
 end

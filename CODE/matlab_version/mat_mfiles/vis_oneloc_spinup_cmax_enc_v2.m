@@ -82,7 +82,9 @@ Consumption = A / (epsassim*(f0-fc)) * mass.^n;
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
-encs = linspace(10,100,10);
+% encs = 10:10:100;
+encs = 100:100:1e3;
+% encs = [10:10:100 200:100:1e3];
 cmaxs = linspace(10,100,10);
 for C = 1:length(cmaxs)
     cfn = cmaxs(C);
@@ -94,7 +96,7 @@ for C = 1:length(cmaxs)
 %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b18_k09_fcrit',num2str(fcrit),'_',...
 %             D,'_',J,'_',Ad,'_',Sm,...
 %             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
-        dp=['Dc_enc',tefn,'-b200_cm',tcfn,'_m-b200-k09_fcrit20_c-b250',...
+        dp=['Dc_enc',tefn,'-b200_cm',tcfn,'_m-b150-k09_fcrit20_c-b250',...
             '_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100'];
         dpath = [datap char(dp) '/'];
         fpath = [figp char(dp) '/'];
@@ -313,7 +315,9 @@ allF  = NaN*ones(length(spots),nc+1,ne+1);
 allP  = NaN*ones(length(spots),nc+1,ne+1);
 allD  = NaN*ones(length(spots),nc+1,ne+1);
 mcon  = NaN*ones(3,nc+1,ne+1);
-mlev  = NaN*ones(3,nc+1,ne+1);
+mlev_size  = NaN*ones(3,nc+1,ne+1);
+mlev_type  = NaN*ones(3,nc+1,ne+1);
+mlev_adult = NaN*ones(3,nc+1,ne+1);
 for C = 1:length(cmaxs)
     cfn = cmaxs(C);
     tcfn = num2str(cfn);
@@ -328,7 +332,7 @@ for C = 1:length(cmaxs)
 %         dp = ['Dc_enc',tefn,'_cmax-metab',tcfn,'_b18_k09_fcrit',num2str(fcrit),'_',...
 %             D,'_',J,'_',Ad,'_',Sm,...
 %             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2];
-        dp=['Dc_enc',tefn,'-b200_cm',tcfn,'_m-b200-k09_fcrit20_c-b250',...
+        dp=['Dc_enc',tefn,'-b200_cm',tcfn,'_m-b150-k09_fcrit20_c-b250',...
             '_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100'];
         dpath = [datap char(dp) '/'];
         fpath = [figp char(dp) '/'];
@@ -340,8 +344,8 @@ for C = 1:length(cmaxs)
 %             D,'_',J,'_',Ad,'_',Sm,...
 %             '_nmort',nmort,'_BE',BE,'_CC',CC,'_lgRE',rfrac,'_mdRE',rfrac2,...
 %             '_CmaxEnctests'];
-        cfile2 = ['Dc_enc-b200_m-b200-k09_fcrit20_c-b250',...
-            '_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100_EncCmaxTests'];
+        cfile2 = ['Dc_enc-b200_m-b150-k09_fcrit20_c-b250',...
+            '_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100_EncCmaxTests2'];
         
         load([dpath sname '_' harv '_lastyr_sum_mean_biom.mat']);
         
@@ -361,18 +365,26 @@ for C = 1:length(cmaxs)
         
         %% Feeding level
         Flev(3,:) = nan;
-        Tlev = [Flev,Plev,Dlev];
-        Mlev = nanmean(Tlev,2);
-        mlev(:,C,E) = Mlev;
+        Slev = [Flev,Plev,Dlev];
+        Mlev = nanmean(Slev,2);
+        mlev_size(:,C,E) = Mlev;
+        
+        Tlev = [nanmean(Flev(:));nanmean(Plev(:));nanmean(Dlev(:))];
+        mlev_type(:,C,E) = Tlev;
+        
+        Alev = [nanmean(Flev(2,:));nanmean(Plev(3,:));nanmean(Dlev(3,:))];
+        mlev_adult(:,C,E) = Alev;
         
     end %enc
 end %cmaxs
 
 %% Save values for all locs and all cmaxs that combo
-save([datap 'Bio_rates/' cfile2 '.mat'],'allF','allP','allD','mcon','mlev');
+save([datap 'Bio_rates/' cfile2 '.mat'],'allF','allP','allD','mcon',...
+    'mlev_size','mlev_type','mlev_adult');
 
 %%
-[egrid,cgrid]=meshgrid([cmaxs 110],[encs 110]);
+% [egrid,cgrid]=meshgrid([encs 110],[cmaxs 110]);
+[egrid,cgrid]=meshgrid([encs 1100],[cmaxs 110]);
 FPrat = allF./(allF+allP);
 DPrat = allD./(allD+allP);
 for s=1:length(spots)
@@ -384,6 +396,7 @@ for s=1:length(spots)
     subplot(4,3,s)
     pcolor(cgrid,egrid,squeeze(log10(allF(s,:,:))))
     colorbar
+    colormap('jet')
     caxis([-2 2])
     if (s==2)
         title({'log10 Mean F Biom (g m^-^2) in final year'; loc})
@@ -398,6 +411,7 @@ for s=1:length(spots)
     subplot(4,3,s)
     pcolor(cgrid,egrid,squeeze(log10(allP(s,:,:))))
     colorbar
+    colormap('jet')
     caxis([-2 2])
     if (s==2)
         title({'log10 Mean P Biom (g m^-^2) in final year'; loc})
@@ -413,6 +427,7 @@ for s=1:length(spots)
     subplot(4,3,s)
     pcolor(cgrid,egrid,squeeze(log10(allD(s,:,:))))
     colorbar
+    colormap('jet')
     caxis([-2 2])
     if (s==2)
         title({'log10 Mean D Biom (g m^-^2) in final year'; loc})
@@ -427,7 +442,7 @@ for s=1:length(spots)
     subplot(4,3,s)
     pcolor(cgrid,egrid,squeeze(FPrat(s,:,:)))
     colorbar
-    colormap(cmap_color_rb)
+    cmocean('balance')
     caxis([0 1])
     if (s==2)
         title({'Frac F:P in final year'; loc})
@@ -442,7 +457,7 @@ for s=1:length(spots)
     subplot(4,3,s)
     pcolor(cgrid,egrid,squeeze(DPrat(s,:,:)))
     colorbar
-    colormap(cmap_color_rb)
+    cmocean('balance')
     caxis([0 1])
     if (s==2)
         title({'Frac D:P in final year'; loc})
@@ -463,26 +478,88 @@ print(f6,'-dpng',[figp sname cfile2 '_DP_frac_all_locs.png'])
 %% Feeding level
 figure(10)
 subplot(2,2,1)
-pcolor(cgrid,egrid,squeeze(mlev(1,:,:)))
+pcolor(cgrid,egrid,squeeze(mlev_size(1,:,:)))
 colorbar
-caxis([0 1])
+cmocean('balance')
+caxis([0.2 1])
 xlabel('Cmax coeff')
 ylabel('Enc coeff')
 title('S Mean feeding level')
 
 subplot(2,2,2)
-pcolor(cgrid,egrid,squeeze(mlev(2,:,:)))
+pcolor(cgrid,egrid,squeeze(mlev_size(2,:,:)))
 colorbar
-caxis([0 1])
+cmocean('balance')
+caxis([0.2 1])
 xlabel('Cmax coeff')
 ylabel('Enc coeff')
 title('M Mean feeding level')
 
 subplot(2,2,3)
-pcolor(cgrid,egrid,squeeze(mlev(3,:,:)))
+pcolor(cgrid,egrid,squeeze(mlev_size(3,:,:)))
 colorbar
-caxis([0 1])
+cmocean('balance')
+caxis([0.2 1])
 xlabel('Cmax coeff')
 ylabel('Enc coeff')
 title('L Mean feeding level')
 print('-dpng',[figp sname cfile2 '_mean_flev_size_all_locs.png'])
+%%
+figure(11)
+subplot(2,2,1)
+pcolor(cgrid,egrid,squeeze(mlev_type(1,:,:)))
+colorbar
+cmocean('balance')
+caxis([0.2 1])
+xlabel('Cmax coeff')
+ylabel('Enc coeff')
+title('F Mean feeding level')
+
+subplot(2,2,2)
+pcolor(cgrid,egrid,squeeze(mlev_type(2,:,:)))
+colorbar
+cmocean('balance')
+caxis([0.2 1])
+xlabel('Cmax coeff')
+ylabel('Enc coeff')
+title('P Mean feeding level')
+
+subplot(2,2,3)
+pcolor(cgrid,egrid,squeeze(mlev_type(3,:,:)))
+colorbar
+cmocean('balance')
+caxis([0.2 1])
+xlabel('Cmax coeff')
+ylabel('Enc coeff')
+title('D Mean feeding level')
+print('-dpng',[figp sname cfile2 '_mean_flev_type_all_locs.png'])
+
+%%
+figure(12)
+subplot(2,2,1)
+pcolor(cgrid,egrid,squeeze(mlev_adult(1,:,:)))
+colorbar
+cmocean('balance')
+caxis([0.2 1])
+xlabel('Cmax coeff')
+ylabel('Enc coeff')
+title('MF Mean feeding level')
+
+subplot(2,2,2)
+pcolor(cgrid,egrid,squeeze(mlev_adult(2,:,:)))
+colorbar
+cmocean('balance')
+caxis([0.2 1])
+xlabel('Cmax coeff')
+ylabel('Enc coeff')
+title('LP Mean feeding level')
+
+subplot(2,2,3)
+pcolor(cgrid,egrid,squeeze(mlev_adult(3,:,:)))
+colorbar
+cmocean('balance')
+caxis([0.2 1])
+xlabel('Cmax coeff')
+ylabel('Enc coeff')
+title('LD Mean feeding level')
+print('-dpng',[figp sname cfile2 '_mean_flev_adult_all_locs.png'])

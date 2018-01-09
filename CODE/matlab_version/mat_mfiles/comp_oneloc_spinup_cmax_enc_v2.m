@@ -103,6 +103,8 @@ eepRat(:,:,3) = FPrat(7,:,:);
 pupRat(:,:,3) = FPrat(11,:,:);
 clear allF allP FPrat
 
+fign = 'Dc_enc-b200_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100_EncCmaxTests';
+
 %%
 [egrid,cgrid]=meshgrid([cmaxs 110],[encs 110]);
 kb={'b=0.175;k=0.08','b=0.175;k=0.09','b=0.2;k=0.09'};
@@ -192,35 +194,8 @@ for s=1:3
     %stamp(cfile2)
     
 end %spots
-% print(f2,'-dpng',[figp sname cfile2 '_totF_mean_biomass_type_all_locs.png'])
-% print(f3,'-dpng',[figp sname cfile2 '_totP_mean_biomass_type_all_locs.png'])
-% print(f4,'-dpng',[figp sname cfile2 '_totD_mean_biomass_type_all_locs.png'])
-% print(f5,'-dpng',[figp sname cfile2 '_FP_frac_all_locs.png'])
-% print(f6,'-dpng',[figp sname cfile2 '_DP_frac_all_locs.png'])
-% 
-% %% Feeding level
-% figure(10)
-% subplot(2,2,1)
-% pcolor(cgrid,egrid,squeeze(mlev(1,:,:)))
-% colorbar
-% caxis([0 1])
-% xlabel('Cmax coeff')
-% ylabel('Enc coeff')
-% title('S Mean feeding level')
-% 
-% subplot(2,2,2)
-% pcolor(cgrid,egrid,squeeze(mlev(2,:,:)))
-% colorbar
-% caxis([0 1])
-% xlabel('Cmax coeff')
-% ylabel('Enc coeff')
-% title('M Mean feeding level')
-% 
-% subplot(2,2,3)
-% pcolor(cgrid,egrid,squeeze(mlev(3,:,:)))
-% colorbar
-% caxis([0 1])
-% xlabel('Cmax coeff')
-% ylabel('Enc coeff')
-% title('L Mean feeding level')
-% print('-dpng',[figp sname cfile2 '_mean_flev_size_all_locs.png'])
+print(f1,'-dpng',[figp sname fign '_FP_biomass_EEP.png'])
+print(f2,'-dpng',[figp sname fign '_FP_biomass_PUp.png'])
+
+
+
