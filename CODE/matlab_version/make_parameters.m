@@ -64,8 +64,8 @@ function make_parameters()
 
     %%%! Metabolism constants (activity and basal)
     fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
-    h = 30;         % coeff on Cmax
-    gam = 80;      % coeff on search area
+    h = 20;         % coeff on Cmax
+    gam = 70;      % coeff on search area
     kt = 0.0905;    % coeff on T-dep fn (orig 0.063)
     bpow = 0.175;   % power on metab fn (orig 0.25)
     benc = 0.20;    % power on enc fn (orig 0.20)
@@ -105,7 +105,7 @@ function make_parameters()
     
     Sm = 0.25;  %Feeding 2 sizes down
     J = 1.0;    %Juvenile feeding reduction
-    D = 0.75;   %Demersal feeding in pelagic reduction
+    D = 0.80;   %Demersal feeding in pelagic reduction
     A = 0.5;    %Adult predation reduction
 
     MF_phi_MZ = Sm;
