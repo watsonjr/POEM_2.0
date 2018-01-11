@@ -9,7 +9,7 @@ cmaxs = 10:10:50;
 frate = 0.3; %Fish(F);
 
 %%
-for c=1:3;%length(cmaxs)
+for c=4:length(cmaxs)
     for e=1:length(encs)
             gam = encs(e);
             h = cmaxs(c);
