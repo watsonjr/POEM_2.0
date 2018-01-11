@@ -15,7 +15,7 @@ global tstep K CGRD ni nj
 load('/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_daily.mat');
 
 %! How long to run the model
-YEARS = 150;
+YEARS = 100;
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
@@ -36,20 +36,14 @@ Sm = 0.25;  %Feeding 2 sizes down
 J = 1.0;    %Juvenile feeding reduction
 D = 0.75;   %Demersal feeding in pelagic reduction
 A = 0.50;    %Adult predation reduction
-% kays = 0.0405:0.01:0.125;
-% bees = 0.125:0.025:0.25; %bees = 0.1:0.05:0.35;
-% bees = 0.175:0.005:0.195;
-% Fish = 0.1:0.1:0.6;
-fqs = 0.5:0.5:3.5;
-pqs = 0.25:0.25:1.5;
-dqs = 1:7;
 
-% for fq=1:length(fqs)
-%     for pq=4;%1:length(pqs)
-%         for dq=7;%1:length(dqs)
-%             MFsel = fqs(fq);
-%             LPsel = pqs(pq);
-%             LDsel = dqs(dq);
+encs = 10:10:100;
+cmaxs = 10:10:50;
+
+    for c=5:length(cmaxs)
+        for e=1:length(encs)
+            gam = encs(e);
+            h = cmaxs(c);
             
             %for F=1%:length(Fish)
             %! Set fishing rate
@@ -123,7 +117,8 @@ dqs = 1:7;
             %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
             %simname = [coup,'_enc',tefn,'_cm',tcfn,'_m-b200_c-b',tbfn(2:end),'_m-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
             %simname = [coup,'_enc',tefn,'-b',tbfn(2:end),'_cm',tcfn,'_m-b175-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+            %simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+            simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
             if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
                 mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
             end
@@ -250,8 +245,7 @@ dqs = 1:7;
                     'Spinup_Bent')
             end
             
-%         end
-%     end
-% end
+        end
+    end
 
 end

@@ -1,7 +1,7 @@
 % Visualize output of POEM
 % ESM2.6 Climatology of 5 yrs
-% 150 years
-% Saved as nc files
+% 100 years
+% Only last 12 months saved to compare to SAUP for tuning
 
 clear all
 close all
