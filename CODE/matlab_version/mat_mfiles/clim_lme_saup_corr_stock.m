@@ -1,4 +1,5 @@
 %POEM catch vs. SAUP catch by LME
+%Use same methods as Stock et al. 2017 to reduce SAUP dataset
 
 clear all
 close all
@@ -6,14 +7,13 @@ close all
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/Matlab_new_size/';
-%dp = '/Volumes/GFDL/CSV/Matlab_new_size/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 load([cpath 'esm26_lme_mask_onedeg_SAU_66.mat']);
 load([cpath 'esm26_area_1deg.mat']);
-load([cpath 'LME_clim_temp.mat']);
+load([cpath 'LME_clim_temp_zoop_det.mat']);
 
 %use weighted catches
 load([spath 'SAUP_LME_Catch_annual.mat'],'yr','totcatch','lme_catch',...
@@ -35,14 +35,14 @@ lme_area_km2 = lme_area * 1e-6;
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc100-b200_cm30_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
 ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
-load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],'lme_mcatch');
+load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],'lme_mcatch','lme_mbio','lme_sbio');
 %load([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
 
 
@@ -69,7 +69,9 @@ I(:,2)=1:length(lme_ptemp);
 tid = I(I2,:);
 close all
 
-keep = [1:9,11:34,36:38,46:54,59:60,62,65];
+load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
+    'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
+keep = notLELC;
 
 x=-6:0.5:8;
 x2h = x+log10(2);
@@ -82,8 +84,8 @@ Flme_catch_all = nansum(Flme_wcatch,3);
 Plme_catch_all = nansum(Plme_wcatch,3);
 Dlme_catch_all = nansum(Dlme_wcatch,3);
 
-%1956-2005 SAUP average
-id = find(yr>1955 & yr<=2005);
+%1950-2006 SAUP average
+id = find(yr>1950 & yr<=2006);
 
 slme_mcatch = nanmean(lme_catch(id,:));
 slme_mcatch = slme_mcatch';
@@ -98,7 +100,8 @@ slme_mcatch10 = NaN*ones(size(slme_mcatch));
 Flme_mcatch10 = NaN*ones(size(slme_mcatch));
 Plme_mcatch10 = NaN*ones(size(slme_mcatch));
 Dlme_mcatch10 = NaN*ones(size(slme_mcatch));
-%Top 10 yrs SAUP
+
+%Top 10 yrs by LME SAUP 
 for i=1:66
     [sort_lme_catch,ix] = sort(lme_catch(:,i),'descend');
     sort_Flme_catch = Flme_catch_all(ix,i);
@@ -116,90 +119,73 @@ Flme_mcatch10 = Flme_mcatch10 ./ lme_area_km2;
 Plme_mcatch10 = Plme_mcatch10 ./ lme_area_km2;
 Dlme_mcatch10 = Dlme_mcatch10 ./ lme_area_km2;
 
+l10s=log10(slme_mcatch10+eps);
+l10sF=log10(Flme_mcatch10+eps);
+l10sP=log10(Plme_mcatch10+eps);
+l10sD=log10(Dlme_mcatch10+eps);
+
 %% POEM LME biomass in MT
 plme_mcatch = nansum(lme_mcatch,2) * 1e-6;
 plme_Fmcatch = (lme_mcatch(:,1)) * 1e-6;
 plme_Pmcatch = (lme_mcatch(:,2)+lme_mcatch(:,4)) * 1e-6;
 plme_Dmcatch = (lme_mcatch(:,3)+lme_mcatch(:,5)) * 1e-6;
+plme_Bmbio = lme_mbio(:,9) * 1e-6;
+plme_Bsbio = lme_sbio(:,9) * 1e-6;
 % MT/km2
 plme_mcatch = plme_mcatch ./ lme_area_km2;
 plme_Fmcatch = plme_Fmcatch ./ lme_area_km2;
 plme_Pmcatch = plme_Pmcatch ./ lme_area_km2;
 plme_Dmcatch = plme_Dmcatch ./ lme_area_km2;
+plme_Bmbio = plme_Bmbio ./ lme_area_km2;
+plme_Bsbio = plme_Bsbio ./ lme_area_km2;
 
-%% Plots
-l10s=log10(slme_mcatch10+eps);
 l10p=log10(plme_mcatch);
-l10sF=log10(Flme_mcatch10+eps);
 l10pF=log10(plme_Fmcatch);
-l10sP=log10(Plme_mcatch10+eps);
 l10pP=log10(plme_Pmcatch);
-l10sD=log10(Dlme_mcatch10+eps);
 l10pD=log10(plme_Dmcatch);
 
-figure(1)
-subplot(2,2,1)
-plot(x,x,'--k'); hold on;
-plot(x,x2h,'--b'); hold on;
-plot(x,x2l,'--b'); hold on;
-plot(x,x5h,'--r'); hold on;
-plot(x,x5l,'--r'); hold on;
-for i=1:66
-    plot(l10s(i),l10p(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
-end
-axis([-6 2 -6 2])
-xlabel('SAUP mean of top 10 years')
-ylabel('POEM mean of Climatology')
-title('Mean catch')
-
-subplot(2,2,2)
-plot(x,x,'--k'); hold on;
-plot(x,x2h,'--b'); hold on;
-plot(x,x2l,'--b'); hold on;
-plot(x,x5h,'--r'); hold on;
-plot(x,x5l,'--r'); hold on;
-for i=1:66
-    plot(l10sF(i),l10pF(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
-end
-axis([-6 2 -6 2])
-xlabel('SAUP F catch (log10 MT km^-^2)')
-ylabel('POEM F catch (log10 MT km^-^2)')
-title('Mean F catch')
-
-subplot(2,2,3)
-plot(x,x,'--k'); hold on;
-plot(x,x2h,'--b'); hold on;
-plot(x,x2l,'--b'); hold on;
-plot(x,x5h,'--r'); hold on;
-plot(x,x5l,'--r'); hold on;
-for i=1:66
-    plot(l10sP(i),l10pP(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
-end
-axis([-6 2 -6 2])
-xlabel('SAUP P catch (log10 MT km^-^2)')
-ylabel('POEM P catch (log10 MT km^-^2)')
-title('Mean P catch')
-
-subplot(2,2,4)
-plot(x,x,'--k'); hold on;
-plot(x,x2h,'--b'); hold on;
-plot(x,x2l,'--b'); hold on;
-plot(x,x5h,'--r'); hold on;
-plot(x,x5l,'--r'); hold on;
-for i=1:66
-    plot(l10sD(i),l10pD(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
-end
-axis([-6 2 -6 2])
-xlabel('SAUP D catch (log10 MT km^-^2)')
-ylabel('POEM D catch (log10 MT km^-^2)')
-title('Mean D catch')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_temp.png'])
-
-
-
 %% Drop Arctic, Antarctic, Hawaii, Australia -------------------------
-% Stats
+
+% Table of Zoop, Det, Bent, Temp, modcatch, SAUcatch
+%mean zoop (lme_az) in g(WW) from mgC/m2
+%mean zoop loss (lme_azl) in g(WW) from mgC/m2/d
+%mean det (lme_adet) in g(WW) from mgC/m2/d 
+
+% MT/km2
+%means of all grid cells in an LME
+lme_az_mtkm2 = lme_az * 1e-6 ./ lme_area_km2;
+lme_azl_mtkm2 = lme_azl * 1e-6 ./ lme_area_km2;
+lme_adet_mtkm2 = lme_adet * 1e-6 ./ lme_area_km2;
+%sum of all grid cells in an LME
+lme_asz_mtkm2 = lme_asz * 1e-6 ./ lme_area_km2;
+lme_aszl_mtkm2 = lme_aszl * 1e-6 ./ lme_area_km2;
+lme_asdet_mtkm2 = lme_asdet * 1e-6 ./ lme_area_km2;
+
+% MT/km2
+tab(:,1)=keep;
+tab(:,2)=lme_aszl_mtkm2(keep);
+tab(:,3)=lme_asdet_mtkm2(keep);
+tab(:,4)=plme_Bsbio(keep);
+tab(:,5)=lme_ptemp(keep);
+tab(:,6)=plme_mcatch(keep);
+tab(:,7)=slme_mcatch10(keep);
+
+% gC/m2
+%MTWW -> gWW = 1e6
+%gWW -> gC = 1/9
+%1/km2 -> 1/m2 = 1e-6
+tab2 = tab;
+tab2(:,2:4) = tab(:,2:4)*(1/9);
+tab2(:,6:7) = tab(:,6:7)*(1/9);
+
+T1 = array2table(tab,'VariableNames',{'LME','ZP','Det','Bent','T','Pcatch','Scatch'});
+T2 = array2table(tab2,'VariableNames',{'LME','ZP','Det','Bent','T','Pcatch','Scatch'});
+
+writetable(T1,[dpath 'LME_prod_catch_SAUP_mtkm2_' cfile '.csv'],'Delimiter',',')
+writetable(T2,[dpath 'LME_prod_catch_SAUP_gCm2_' cfile '.csv'],'Delimiter',',')
+save([dpath 'LME_prod_catch_SAUP_' cfile '.mat'],'tab','tab2')
+
+%% Stats
 %r
 rall=corr(l10s(keep),l10p(keep));
 rF=corr(l10sF(keep),l10pF(keep));
@@ -237,8 +223,8 @@ FF=10^(median(l10sF(keep)-l10pF(keep)));
 FP=10^(median(l10sP(keep)-l10pP(keep)));
 FD=10^(median(l10sD(keep)-l10pD(keep)));
 
-%%
-figure(2)
+%% Plots
+figure(1)
 subplot(2,2,1)
 plot(x,x,'--k'); hold on;
 plot(x,x2h,'--b'); hold on;
@@ -311,10 +297,10 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC.png'])
 
 %% For ms
-figure(3)
+figure(2)
 subplot(2,2,4)
 plot(x,x,'--k'); hold on;
 plot(x,x2h,'--b'); hold on;
@@ -383,42 +369,5 @@ xlabel('SAUP')
 ylabel('POEM')
 title('C. Demersals')
 % stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp_ms.png'])
-
-%% ID LMEs
-% figure(4)
-% subplot(2,1,1)
-% plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-% for i=1:66
-%     text(l10sF(i),l10pF(i),num2str(i)); hold on;
-% end
-% axis([-6 1 -2 0.5])
-% % axis([-6 1 -6 1])
-% % axis('square')
-% xlabel('SAUP F catch (log10 MT km^-^2)')
-% ylabel('POEM F catch (log10 MT km^-^2)')
-% title('Mean F catch all')
-% 
-% subplot(2,1,2)
-% plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     text(l10sF(lme),l10pF(lme),num2str(lme)); hold on;
-% end
-% axis([-6 1 -2 0.5])
-% % axis([-6 1 -6 1])
-% % axis('square')
-% xlabel('SAUP F catch (log10 MT km^-^2)')
-% ylabel('POEM F catch (log10 MT km^-^2)')
-% title('Mean F catch no LELC')
-% print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_F_LMEs.png'])
-
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ms.png'])
 

@@ -24,7 +24,7 @@ btemp_mean_clim=squeeze(nanmean(btm_temp,1));
 %%
 AREA_OCN = max(area,1);
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D080_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc100-b200_cm30_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -90,6 +90,7 @@ tlme = lme_mask_onedeg;
 
 lme_mcatch = NaN*ones(66,5);
 lme_mbio = NaN*ones(66,9);
+lme_sbio = NaN*ones(66,9);
 lme_area = NaN*ones(66,1);
 
 for L=1:66
@@ -110,13 +111,23 @@ for L=1:66
     lme_mbio(L,7) = nanmean(Alp_mean(lid));
     lme_mbio(L,8) = nanmean(Ald_mean(lid));
     lme_mbio(L,9) = nanmean(Ab_mean(lid));
+    %total biomass
+    lme_sbio(L,1) = nansum(Asf_mean(lid));
+    lme_sbio(L,2) = nansum(Asp_mean(lid));
+    lme_sbio(L,3) = nansum(Asd_mean(lid));
+    lme_sbio(L,4) = nansum(Amf_mean(lid));
+    lme_sbio(L,5) = nansum(Amp_mean(lid));
+    lme_sbio(L,6) = nansum(Amd_mean(lid));
+    lme_sbio(L,7) = nansum(Alp_mean(lid));
+    lme_sbio(L,8) = nansum(Ald_mean(lid));
+    lme_sbio(L,9) = nansum(Ab_mean(lid));
     %total area of LME
     lme_area(L,1) = nansum(AREA_OCN(lid));
 end
 
 %%
 save([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],...
-    'lme_mcatch','lme_mbio','lme_area');
+    'lme_mcatch','lme_mbio','lme_sbio','lme_area');
 
 %% Figures
 

@@ -84,6 +84,7 @@ Dlme_catch_all = nansum(Dlme_wcatch,3);
 
 %1956-2005 SAUP average
 id = find(yr>1955 & yr<=2005);
+tot_catch = totcatch(id);
 
 slme_mcatch = nanmean(lme_catch(id,:));
 slme_mcatch = slme_mcatch';
@@ -94,21 +95,18 @@ Pslme_mcatch = Pslme_mcatch';
 Dslme_mcatch = nanmean(Dlme_catch_all(id,:));
 Dslme_mcatch = Dslme_mcatch';
 
-slme_mcatch10 = NaN*ones(size(slme_mcatch));
-Flme_mcatch10 = NaN*ones(size(slme_mcatch));
-Plme_mcatch10 = NaN*ones(size(slme_mcatch));
-Dlme_mcatch10 = NaN*ones(size(slme_mcatch));
-%Top 10 yrs SAUP
-for i=1:66
-    [sort_lme_catch,ix] = sort(lme_catch(:,i),'descend');
-    sort_Flme_catch = Flme_catch_all(ix,i);
-    sort_Plme_catch = Plme_catch_all(ix,i);
-    sort_Dlme_catch = Dlme_catch_all(ix,i);
-    slme_mcatch10(i) = nanmean(sort_lme_catch(1:10));
-    Flme_mcatch10(i) = nanmean(sort_Flme_catch(1:10));
-    Plme_mcatch10(i) = nanmean(sort_Plme_catch(1:10));
-    Dlme_mcatch10(i) = nanmean(sort_Dlme_catch(1:10));
-end
+%Top 10 yrs SAUP annually (not by LME)
+[sort_ann_catch,ix] = sort(tot_catch,'descend');
+Ysort = yr(ix);
+sort_lme_catch = lme_catch(ix,:);
+sort_Flme_catch = Flme_catch_all(ix,:);
+sort_Plme_catch = Plme_catch_all(ix,:);
+sort_Dlme_catch = Dlme_catch_all(ix,:);
+slme_mcatch10 = nanmean(sort_lme_catch(1:10,:))';
+Flme_mcatch10 = nanmean(sort_Flme_catch(1:10,:))';
+Plme_mcatch10 = nanmean(sort_Plme_catch(1:10,:))';
+Dlme_mcatch10 = nanmean(sort_Dlme_catch(1:10,:))';
+
 
 % MT/km2
 slme_mcatch10 = slme_mcatch10 ./ lme_area_km2;
@@ -194,7 +192,7 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_temp.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_top10ann_log10catch_comp_types_temp.png'])
 
 
 
@@ -311,7 +309,7 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_top10ann_log10catch_comp_types_LELC_temp.png'])
 
 %% For ms
 figure(3)
@@ -383,7 +381,7 @@ xlabel('SAUP')
 ylabel('POEM')
 title('C. Demersals')
 % stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp_ms.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_top10ann_log10catch_comp_types_LELC_temp_ms.png'])
 
 %% ID LMEs
 % figure(4)
@@ -419,6 +417,6 @@ print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_types_LELC_temp_ms.png'
 % xlabel('SAUP F catch (log10 MT km^-^2)')
 % ylabel('POEM F catch (log10 MT km^-^2)')
 % title('Mean F catch no LELC')
-% print('-dpng',[ppath 'Clim_',harv,'_SAUP_log10catch_comp_F_LMEs.png'])
+% print('-dpng',[ppath 'Clim_',harv,'_SAUP_top10ann_log10catch_comp_F_LMEs.png'])
 
 

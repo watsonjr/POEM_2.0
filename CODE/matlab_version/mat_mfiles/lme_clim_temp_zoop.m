@@ -26,6 +26,13 @@ z_loss = mzloss_mean_clim+lzloss_mean_clim;
 
 AREA_OCN = max(area,1);
 
+% mg/m2 --> total g
+Az_mean = 1e-3 * z_mean .* AREA_OCN;
+% mg/m2/d --> total g
+Az_loss = 1e-3 * 365 * z_loss .* AREA_OCN;
+% mg/m2/d --> total g; Mult flux by 365 - YES
+Adet_mean = 1e-3 * 365 * det_mean_clim .* AREA_OCN;
+
 %% Calc LMEs
 tlme = lme_mask_onedeg;
 
@@ -34,6 +41,12 @@ lme_btemp = NaN*ones(66,1);
 lme_z = NaN*ones(66,1);
 lme_zl = NaN*ones(66,1);
 lme_det = NaN*ones(66,1);
+lme_az = NaN*ones(66,1);
+lme_azl = NaN*ones(66,1);
+lme_adet = NaN*ones(66,1);
+lme_asz = NaN*ones(66,1);
+lme_aszl = NaN*ones(66,1);
+lme_asdet = NaN*ones(66,1);
 
 for L=1:66
     lid = find(tlme==L);
@@ -43,11 +56,18 @@ for L=1:66
     lme_z(L) = nanmean(z_mean(lid));
     lme_zl(L) = nanmean(z_loss(lid));
     lme_det(L) = nanmean(det_mean_clim(lid));
+    lme_az(L) = nanmean(Az_mean(lid));
+    lme_azl(L) = nanmean(Az_loss(lid));
+    lme_adet(L) = nanmean(Adet_mean(lid));
+    lme_asz(L) = nansum(Az_mean(lid));
+    lme_aszl(L) = nansum(Az_loss(lid));
+    lme_asdet(L) = nansum(Adet_mean(lid));
 end
 
 %%
 save([gpath 'LME_clim_temp_zoop_det.mat'],'lme_ptemp','lme_btemp',...
-    'lme_z','lme_zl','lme_det');
+    'lme_z','lme_zl','lme_det','lme_az','lme_azl','lme_adet',...
+    'lme_asz','lme_aszl','lme_asdet');
 
 %% Figures
 [ni,nj] = size(lon);
