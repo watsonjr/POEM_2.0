@@ -16,7 +16,7 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D080_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k08_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -86,7 +86,7 @@ cm21=[1 0.5 0;...   %orange
 set(groot,'defaultAxesColorOrder',cm9);
 
 
-% Plots in time
+%% Plots in time
 y = time;
 nt = length(time);
 
@@ -259,7 +259,7 @@ title(['Climatol ' tharv])
 print('-dpng',[ppath 'Climatol_' harv '_catch_all_types.png'])
 
 
-% Plots in space
+%% Plots in space
 Zsf=NaN*ones(ni,nj);
 Zsp=NaN*ones(ni,nj);
 Zsd=NaN*ones(ni,nj);
@@ -340,7 +340,7 @@ title('Climatology log10 mean Benthic inverts (mg m^-^2)')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_BENT_mgC.png'])
 
-% % sp
+%% sp
 % figure(11)
 % surf(lon,lat,log10(Zsp)); view(2); hold on;
 % shading flat

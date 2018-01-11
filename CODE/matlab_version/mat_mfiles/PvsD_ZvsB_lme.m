@@ -37,7 +37,7 @@ tid = I(I2,:);
 %% POEM results
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
-cfile = 'Dc_enc70_cmax-metab20_b175_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = ['All_fish',tfish(2:end)];
 tharv = ['Harvest all fish ' num2str(frate)];
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -46,7 +46,7 @@ if (~isdir(ppath))
     mkdir(ppath)
 end
 load([fpath 'Means_Climatol_' harv '_' cfile '.mat']);
-load([fpath 'LME_clim_fished',tfish(2:end),'_' cfile '.mat']);
+load([fpath 'LME_clim_fished_' harv '_' cfile '.mat']);
 lme_area_km2 = lme_area * 1e-6;
 
 %%
@@ -342,7 +342,7 @@ ylim([-0.1 1.1])
 print('-dpng',[ppath 'lme_scatter_frac_bent.png'])
 
 
-
+%%
 figure(8)
 subplot(3,2,1)
 for i=1:66
@@ -391,6 +391,56 @@ ylabel('L / (L+M)')
 ylim([-0.1 1.1])
 print('-dpng',[ppath 'lme_scatter_ratio_bent.png'])
 
+%%
+figure(9)
+subplot(3,2,1)
+for i=1:66
+    plot(log10(RatZDet(i)),FracPD(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
+end
+xlabel('log10 Zoop:Det')
+ylabel('P / (P+D)')
+ylim([-0.1 1.1])
+title('Color = LME mean temp')
+subplot(3,2,2)
+for i=1:66
+    plot(log10(RatZlDet(i)),FracPD(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
+end
+xlabel('log10 ZoopLoss:Det')
+ylabel('P / (P+D)')
+ylim([-0.1 1.1])
+
+subplot(3,2,3)
+for i=1:66
+    plot(log10(RatZDet(i)),FracPF(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
+end
+xlabel('log10 Zoop:Det')
+ylabel('P / (P+F)')
+ylim([-0.1 1.1])
+subplot(3,2,4)
+for i=1:66
+    plot(log10(RatZlDet(i)),FracPF(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
+end
+xlabel('log10 ZoopLoss:Det')
+ylabel('P / (P+F)')
+ylim([-0.1 1.1])
+
+subplot(3,2,5)
+for i=1:66
+    plot(log10(RatZDet(i)),FracLM(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
+end
+xlabel('log10 Zoop:Bent')
+ylabel('L / (L+M)')
+ylim([-0.1 1.1])
+subplot(3,2,6)
+for i=1:66
+    plot(log10(RatZlDet(i)),FracLM(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
+end
+xlabel('log10 ZoopLoss:Det')
+ylabel('L / (L+M)')
+ylim([-0.1 1.1])
+print('-dpng',[ppath 'lme_scatter_ratio_det.png'])
 
 
-
+save([fpath 'LME_ZBratios_clim_fished_',harv,'_' cfile '.mat'],...
+    'RatZDet','RatZB','RatZlDet','RatZlB','FracPD','FracPF','FracLM',...
+    'lme_ptemp')

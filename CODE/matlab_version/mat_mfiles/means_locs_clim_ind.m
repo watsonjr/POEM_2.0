@@ -128,38 +128,197 @@ for s=1:length(spots)
     
     %% Bubble/arrow plot ----------------------------------------------------
     
-    
     figure(1)
     clf
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',z_mean_locs(s)); hold on;
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(s)); hold on;
     plot(1,1,'.','color','k','MarkerSize',10*det_locs(s)); hold on;
     plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(s)); hold on;
     plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(s)); hold on;
     plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(s)); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',10*conZ(s,1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',10*conF(s,2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',10*conB(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(s,1)); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(s,2)); hold on;
+    plot(x3,y1,'color','k','Linewidth',50*conB(s,3)); hold on;
     if (conF(s,3) > 0)
         plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*conF(s,3)); hold on;
     end
     if (conP(s,3) > 0)
         plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*conP(s,3)); hold on;
     end
-    text(1,2.4,num2str(z_mean_locs(s))); hold on;
-    text(1,0.6,num2str(det_locs(s))); hold on;
-    text(3,2.4,num2str(F(s))); hold on;
-    text(5,2.4,num2str(P(s))); hold on;
-    text(5,0.6,num2str(D(s))); hold on;
-    text(2,2.2,num2str(conZ(s,1))); hold on;
-    text(4,2.2,num2str(conF(s,2))); hold on;
-    text(3,0.8,num2str(conB(s,3))); hold on;
-    text(4,1.5,num2str(conF(s,3))); hold on;
-    text(5.5,1.5,num2str(conP(s,3))); hold on;
+    text(1,2.4,sprintf('%2.1f',z_mean_locs(s))); hold on;
+    text(1,0.6,sprintf('%2.1f',det_locs(s))); hold on;
+    text(3,2.4,sprintf('%2.1f',F(s))); hold on;
+    text(5,2.4,sprintf('%2.1f',P(s))); hold on;
+    text(5,0.6,sprintf('%2.1f',D(s))); hold on;
+    text(2,2.2,sprintf('%2.1e',conZ(s,1))); hold on;
+    text(4,2.2,sprintf('%2.1e',conF(s,2))); hold on;
+    text(3,0.8,sprintf('%2.1e',conB(s,3))); hold on;
+    text(4,1.5,sprintf('%2.1e',conF(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',conP(s,3))); hold on;
     xlim([0 6])
     ylim([0 3])
     title(loc)
     set(gca,'XTickLabel','','YTickLabel','')
-    print('-dpng',[fpath sname harv '_fluxes_' loc '.png'])
+    print('-dpng',[fpath sname harv '_fluxes_Zbio_' loc '.png'])
+    
+    figure(2)
+    clf
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_loss_locs(s)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*det_locs(s)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(s)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(s)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(s)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(s,1)); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(s,2)); hold on;
+    plot(x3,y1,'color','k','Linewidth',50*conB(s,3)); hold on;
+    if (conF(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*conF(s,3)); hold on;
+    end
+    if (conP(s,3) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*conP(s,3)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',z_mean_locs(s))); hold on;
+    text(1,0.6,sprintf('%2.1f',det_locs(s))); hold on;
+    text(3,2.4,sprintf('%2.1f',F(s))); hold on;
+    text(5,2.4,sprintf('%2.1f',P(s))); hold on;
+    text(5,0.6,sprintf('%2.1f',D(s))); hold on;
+    text(2,2.2,sprintf('%2.1e',conZ(s,1))); hold on;
+    text(4,2.2,sprintf('%2.1e',conF(s,2))); hold on;
+    text(3,0.8,sprintf('%2.1e',conB(s,3))); hold on;
+    text(4,1.5,sprintf('%2.1e',conF(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',conP(s,3))); hold on;
+    xlim([0 6])
+    ylim([0 3])
+    title(loc)
+    set(gca,'XTickLabel','','YTickLabel','')
+    print('-dpng',[fpath sname harv '_fluxes_Zloss_' loc '.png'])
     
 end
+
+%% Subplots of each type
+shelf = [6;10];
+upw = [15:16];
+olig = [12:14];
+
+% Shelf Sea
+for s=1:length(shelf)
+    loc = spots{shelf(s)};
+    lname = [loc '_'];
+    
+    %% Bubble/arrow plot ----------------------------------------------------
+    
+    f3=figure(3);
+    subplot(1,2,s)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(shelf(s))); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*det_locs(shelf(s))); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(shelf(s))); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(shelf(s))); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(shelf(s))); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(shelf(s),1)); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(shelf(s),2)); hold on;
+    plot(x3,y1,'color','k','Linewidth',50*conB(shelf(s),3)); hold on;
+    if (conF(shelf(s),3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(shelf(s),3)); hold on;
+    end
+    if (conP(shelf(s),3) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(shelf(s),3)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',z_mean_locs(shelf(s)))); hold on;
+    text(1,0.6,sprintf('%2.1f',det_locs(shelf(s)))); hold on;
+    text(3,2.4,sprintf('%2.1f',F(shelf(s)))); hold on;
+    text(5,2.4,sprintf('%2.1f',P(shelf(s)))); hold on;
+    text(5,0.6,sprintf('%2.1f',D(shelf(s)))); hold on;
+    text(2,2.2,sprintf('%2.1e',conZ(shelf(s),1))); hold on;
+    text(4,2.2,sprintf('%2.1e',conF(shelf(s),2))); hold on;
+    text(3,0.8,sprintf('%2.1e',conB(shelf(s),3))); hold on;
+    text(4,1.5,sprintf('%2.1e',conF(shelf(s),3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',conP(shelf(s),3))); hold on;
+    xlim([0 6])
+    ylim([0 3])
+    title(loc)
+    set(gca,'XTickLabel','','YTickLabel','')
+    
+end
+print(f3,'-dpng',[fpath sname harv '_fluxes_Zbio_shelf.png'])
+
+% Upwelling
+for s=1:length(upw)
+    loc = spots{upw(s)};
+    lname = [loc '_'];
+    
+    %% Bubble/arrow plot ----------------------------------------------------
+    
+    f4=figure(4);
+    subplot(1,2,s)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(upw(s))); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*det_locs(upw(s))); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(upw(s))); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(upw(s))); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(upw(s))); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(upw(s),1)); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(upw(s),2)); hold on;
+    plot(x3,y1,'color','k','Linewidth',50*conB(upw(s),3)); hold on;
+    if (conF(upw(s),3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(upw(s),3)); hold on;
+    end
+    if (conP(upw(s),3) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(upw(s),3)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',z_mean_locs(upw(s)))); hold on;
+    text(1,0.6,sprintf('%2.1f',det_locs(upw(s)))); hold on;
+    text(3,2.4,sprintf('%2.1f',F(upw(s)))); hold on;
+    text(5,2.4,sprintf('%2.1f',P(upw(s)))); hold on;
+    text(5,0.6,sprintf('%2.1f',D(upw(s)))); hold on;
+    text(2,2.2,sprintf('%2.1e',conZ(upw(s),1))); hold on;
+    text(4,2.2,sprintf('%2.1e',conF(upw(s),2))); hold on;
+    text(3,0.8,sprintf('%2.1e',conB(upw(s),3))); hold on;
+    text(4,1.5,sprintf('%2.1f',conF(upw(s),3))); hold on;
+    text(5.25,1.5,sprintf('%2.1f',conP(upw(s),3))); hold on;
+    xlim([0 6])
+    ylim([0 3])
+    title(loc)
+    set(gca,'XTickLabel','','YTickLabel','')
+    
+end
+print(f4,'-dpng',[fpath sname harv '_fluxes_Zbio_upwelling.png'])
+
+% Oligotrophic
+for s=1:length(olig)
+    loc = spots{olig(s)};
+    lname = [loc '_'];
+    
+    %% Bubble/arrow plot ----------------------------------------------------
+    
+    f5=figure(5);
+    subplot(2,2,s)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(olig(s))); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*det_locs(olig(s))); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(olig(s))); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(olig(s))); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(olig(s))); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(olig(s),1)); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(olig(s),2)); hold on;
+    plot(x3,y1,'color','k','Linewidth',50*conB(olig(s),3)); hold on;
+    if (conF(olig(s),3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(olig(s),3)); hold on;
+    end
+    if (conP(olig(s),3) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(olig(s),3)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',z_mean_locs(olig(s)))); hold on;
+    text(1,0.6,sprintf('%2.1f',det_locs(olig(s)))); hold on;
+    text(3,2.4,sprintf('%2.1f',F(olig(s)))); hold on;
+    text(5,2.4,sprintf('%2.1f',P(olig(s)))); hold on;
+    text(5,0.6,sprintf('%2.1f',D(olig(s)))); hold on;
+    text(2,2.2,sprintf('%2.1e',conZ(olig(s),1))); hold on;
+    text(4,2.2,sprintf('%2.1e',conF(olig(s),2))); hold on;
+    text(3,0.8,sprintf('%2.1e',conB(olig(s),3))); hold on;
+    text(4,1.5,sprintf('%2.1f',conF(olig(s),3))); hold on;
+    text(5.25,1.5,sprintf('%2.1f',conP(olig(s),3))); hold on;
+    xlim([0 6])
+    ylim([0 3])
+    title(loc)
+    set(gca,'XTickLabel','','YTickLabel','')
+    
+end
+print(f5,'-dpng',[fpath sname harv '_fluxes_Zbio_oligotrophic.png'])
 
