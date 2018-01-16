@@ -17,6 +17,19 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 spots=spots';
 
+dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+sname = 'Clim_';
+harv = 'All_fish03';
+dpath = [datap char(dp) '/'];
+fpath = [figp char(dp) '/'];
+if (~isdir([figp char(dp)]))
+    mkdir([figp char(dp)])
+end
+cfile = char(dp);
+load([dpath sname 'locs_' harv '.mat'])
+load([dpath sname 'locs_' harv '_lastyr_sum_mean_biom.mat']);
+
+% Colors
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
 %load('/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
 cmap3=cmap_ppt([3,1,5],:);
@@ -58,24 +71,8 @@ L = [L_s;L_m;L_l];
 
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
-%%
-dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
-sname = 'Clim_';
-harv = 'fish_F020_P005_D030';
-dpath = [datap char(dp) '/'];
-fpath = [figp char(dp) '/'];
-if (~isdir([figp char(dp)]))
-    mkdir([figp char(dp)])
-end
-cfile = char(dp);
+%% POEM means
 
-all_mean=NaN*ones(3,4,length(spots));
-z = NaN*ones(length(spots),3);
-
-load([dpath sname 'locs_' harv '.mat'])
-load([dpath sname 'locs_' harv '_lastyr_sum_mean_biom.mat']);
-
-%%
 mlev = [Flev;Plev;Dlev];
 F = squeeze(nansum(all_mean(:,1,:)));
 P = squeeze(nansum(all_mean(:,2,:)));
@@ -198,6 +195,7 @@ end
 shelf = [6;10];
 upw = [15:16];
 olig = [12:14];
+fave = [6;16;14];
 
 % Shelf Sea
 for s=1:length(shelf)
@@ -321,4 +319,88 @@ for s=1:length(olig)
     
 end
 print(f5,'-dpng',[fpath sname harv '_fluxes_Zbio_oligotrophic.png'])
+
+
+%% Faves of each
+for s=1:length(fave)
+    loc = spots{fave(s)};
+    lname = [loc '_'];
+    
+    %% Bubble/arrow plot ----------------------------------------------------
+    
+    f6=figure(6);
+    subplot(1,3,s)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(fave(s))); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*det_locs(fave(s))); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(fave(s))); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(fave(s))); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(fave(s))); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(fave(s),1)); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),2)); hold on;
+    plot(x3,y1,'color','k','Linewidth',50*conB(fave(s),3)); hold on;
+    if (conF(fave(s),3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),3)); hold on;
+    end
+    if (conP(fave(s),3) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(fave(s),3)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',z_mean_locs(fave(s)))); hold on;
+    text(1,0.6,sprintf('%2.1f',det_locs(fave(s)))); hold on;
+    text(3,2.4,sprintf('%2.1f',F(fave(s)))); hold on;
+    text(5,2.4,sprintf('%2.1f',P(fave(s)))); hold on;
+    text(5,0.6,sprintf('%2.1f',D(fave(s)))); hold on;
+    text(2,2.2,sprintf('%2.1e',conZ(fave(s),1))); hold on;
+    text(4,2.2,sprintf('%2.1e',conF(fave(s),2))); hold on;
+    text(3,0.8,sprintf('%2.1e',conB(fave(s),3))); hold on;
+    if (s==1)
+        text(4,1.6,sprintf('%2.1e',conF(shelf(s),3))); hold on;
+        text(5.25,1.5,sprintf('%2.1e',conP(shelf(s),3))); hold on;
+    else
+        text(4,1.6,sprintf('%2.1f',conF(fave(s),3))); hold on;
+        text(5.25,1.5,sprintf('%2.1f',conP(fave(s),3))); hold on;
+    end
+    xlim([0 6])
+    ylim([0 3])
+    title(loc)
+    set(gca,'XTickLabel','','YTickLabel','')
+    
+    f7=figure(7);
+    subplot(3,1,s)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(fave(s))); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*det_locs(fave(s))); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(fave(s))); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(fave(s))); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(fave(s))); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(fave(s),1)); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),2)); hold on;
+    plot(x3,y1,'color','k','Linewidth',50*conB(fave(s),3)); hold on;
+    if (conF(fave(s),3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),3)); hold on;
+    end
+    if (conP(fave(s),3) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(fave(s),3)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',z_mean_locs(fave(s)))); hold on;
+    text(1,0.6,sprintf('%2.1f',det_locs(fave(s)))); hold on;
+    text(3,2.4,sprintf('%2.1f',F(fave(s)))); hold on;
+    text(5,2.4,sprintf('%2.1f',P(fave(s)))); hold on;
+    text(5,0.6,sprintf('%2.1f',D(fave(s)))); hold on;
+    text(2,2.2,sprintf('%2.1e',conZ(fave(s),1))); hold on;
+    text(4,2.2,sprintf('%2.1e',conF(fave(s),2))); hold on;
+    text(3,0.8,sprintf('%2.1e',conB(fave(s),3))); hold on;
+    if (s==1)
+        text(4,1.5,sprintf('%2.1e',conF(shelf(s),3))); hold on;
+        text(5.25,1.5,sprintf('%2.1e',conP(shelf(s),3))); hold on;
+    else
+        text(4,1.5,sprintf('%2.1f',conF(fave(s),3))); hold on;
+        text(5.25,1.5,sprintf('%2.1f',conP(fave(s),3))); hold on;
+    end
+    xlim([0 6])
+    ylim([0 3])
+    title(loc)
+    set(gca,'XTickLabel','','YTickLabel','')
+    
+end
+print(f6,'-dpng',[fpath sname harv '_fluxes_Zbio_favesH.png'])
+print(f7,'-dpng',[fpath sname harv '_fluxes_Zbio_favesV.png'])
 

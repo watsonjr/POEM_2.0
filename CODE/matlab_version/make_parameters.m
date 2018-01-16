@@ -7,7 +7,7 @@ function make_parameters()
     global Tu_s Tu_m Tu_l Nat_mrt MORT
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE  
-    global MFsel MPsel MDsel LPsel LDsel
+    global MFsel MPsel MDsel LPsel LDsel Jsel
     global tstep K 
     
     %! Integration parameters
@@ -21,8 +21,9 @@ function make_parameters()
     MFsel = 1;
     LPsel = 1;
     LDsel = 1;
-    MPsel = 0.1 * LPsel;
-    MDsel = 0.1 * LDsel;
+    Jsel  = 0;
+    MPsel = Jsel * LPsel;
+    MDsel = Jsel * LDsel;
     
     %! Benthic-pelagic coupling cutoff (depth, m)
     PI_be_cutoff = 200;
@@ -64,7 +65,7 @@ function make_parameters()
 
     %%%! Metabolism constants (activity and basal)
     fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
-    h = 20;         % coeff on Cmax
+    h = 25;         % coeff on Cmax
     gam = 70;      % coeff on search area
     kt = 0.0905;    % coeff on T-dep fn (orig 0.063)
     bpow = 0.175;   % power on metab fn (orig 0.25)

@@ -16,7 +16,7 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 spots=spots';
 
-dp = 'Dc_enc70_cmax-metab20_b175_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 sname = 'Clim_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
@@ -81,8 +81,8 @@ LD_phi_MP = D;
 LD_phi_MD = 1.0;
 LD_phi_BE = 1.0;
 
-bio2=squeeze((MP(:,1,:)));
 bio1=squeeze((MF(:,1,:)));
+bio2=squeeze((MP(:,1,:)));
 bio3=squeeze((MD(:,1,:)));
 bio4=squeeze((CO(:,1,:)));
 
@@ -91,9 +91,15 @@ biod = LD_phi_MD*bio3 + LD_phi_BE*bio4;
 
 tdif = biop ./ (biop + biod);
 
+%% means in last year
+coast = [3;4;6;8;10];
+coastal=spots(coast)';
+mtdiff=mean(tdif(lyr,coast));
+save([dpath sname 'Coastal_locs_LD_frac_time_pel.png'],'tdif','mtdiff',...
+    'spots','coast','coastal');
+
 %%
 yr=t/12;
-coast = [3;4;6;8;10];
 figure(1)
 plot(yr,tdif(:,coast),'LineWidth',1.5)
 legend(spots{coast})

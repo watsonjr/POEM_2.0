@@ -35,8 +35,8 @@ lme_area_km2 = lme_area * 1e-6;
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc100-b200_cm30_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
-harv = 'All_fish03';
+cfile = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+harv = 'All_fish03_Juve00';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
 ppath = [pp cfile '/'];
@@ -222,6 +222,25 @@ Fall=10^(median(l10s(keep)-l10p(keep)));
 FF=10^(median(l10sF(keep)-l10pF(keep)));
 FP=10^(median(l10sP(keep)-l10pP(keep)));
 FD=10^(median(l10sD(keep)-l10pD(keep)));
+
+% Table
+fish_stat(1,1) = rall;
+fish_stat(2,1) = rF;
+fish_stat(3,1) = rP;
+fish_stat(4,1) = rD;
+fish_stat(1,2) = rmse;
+fish_stat(2,2) = rmseF;
+fish_stat(3,2) = rmseP;
+fish_stat(4,2) = rmseD;
+fish_stat(1,3) = Fall;
+fish_stat(2,3) = FF;
+fish_stat(3,3) = FP;
+fish_stat(4,3) = FD;
+
+Fstat = array2table(fish_stat,'VariableNames',{'r','RMSE','Fmed'},...
+    'RowNames',{'All','F','P','D'});
+writetable(Fstat,[dpath 'LME_SAUP_stats_' cfile '.csv'],'Delimiter',',')
+save([dpath 'LME_SAUP_stats_' cfile '.mat'],'fish_stat')
 
 %% Plots
 figure(1)

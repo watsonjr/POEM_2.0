@@ -1,4 +1,4 @@
-% Calculate different skill metrics for each oneloc bent eff simulation
+% Calculate different skill metrics for global bent eff simulation
 
 clear all
 close all
