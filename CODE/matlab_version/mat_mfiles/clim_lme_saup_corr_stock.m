@@ -35,7 +35,7 @@ lme_area_km2 = lme_area * 1e-6;
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03_Juve00';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -239,7 +239,8 @@ fish_stat(4,3) = FD;
 
 Fstat = array2table(fish_stat,'VariableNames',{'r','RMSE','Fmed'},...
     'RowNames',{'All','F','P','D'});
-writetable(Fstat,[dpath 'LME_SAUP_stats_' cfile '.csv'],'Delimiter',',')
+writetable(Fstat,[dpath 'LME_SAUP_stats_' cfile '.csv'],'Delimiter',',',...
+    'WriteRowNames',true)
 save([dpath 'LME_SAUP_stats_' cfile '.mat'],'fish_stat')
 
 %% Plots

@@ -101,6 +101,9 @@ rPD_biom = lme_AllP ./ (lme_AllP+lme_AllD);
 rPD_catch = clme_AllP ./ (clme_AllP+clme_AllD);
 rPD_catch_mtkm2 = plme_AllP ./ (plme_AllP+plme_AllD);
 
+save([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],...
+    'rPD_biom','rPD_catch','rPD_catch_mtkm2','-append');
+
 %% Plot info
 [ni,nj]=size(lon);
 geolon_t = double(lon);

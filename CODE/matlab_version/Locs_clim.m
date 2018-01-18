@@ -22,11 +22,6 @@ else
     harv = 0;
 end
 
-jays = 0:0.1:1;
-
-    for c=1:length(jays)
-            Jsel = jays(c);
-
 %! Make core parameters/constants (global)
 make_parameters()
 
@@ -206,7 +201,5 @@ else
         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
 end
 
-
-    end
 
 end
