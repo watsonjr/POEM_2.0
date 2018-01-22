@@ -74,6 +74,16 @@ FracPD = P ./ (P+D);
 FracPF = P ./ (P+F);
 FracLM = L ./ (L+M);
 
+lme=1:66;
+
+T=table(lme',lme_ptemp(:,1),RatZDet,RatZB,RatZlDet,RatZlB,...
+    FracPD,FracPF,FracLM,'VariableNames',{'LME','LME_ptemp',...
+    'RatZDet','RatZB','RatZlDet','RatZlB','FracPD','FracPF','FracLM'});
+writetable(T,[fpath 'LME_ZBratios_clim_fished_',harv,'.csv'],'Delimiter',',');
+save([fpath 'LME_ZBratios_clim_fished_',harv,'_' cfile '.mat'],...
+    'RatZDet','RatZB','RatZlDet','RatZlB','FracPD','FracPF','FracLM',...
+    'lme_ptemp');
+
 %% Scatter plot
 % COMPARE BY LME?
 % COLOR-CODE BY TEMP?
@@ -441,6 +451,4 @@ ylim([-0.1 1.1])
 print('-dpng',[ppath 'lme_scatter_ratio_det.png'])
 
 
-save([fpath 'LME_ZBratios_clim_fished_',harv,'_' cfile '.mat'],...
-    'RatZDet','RatZB','RatZlDet','RatZlB','FracPD','FracPF','FracLM',...
-    'lme_ptemp')
+

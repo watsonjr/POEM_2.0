@@ -45,6 +45,7 @@ load([Pdrpbx 'Princeton/POEM_2.0/CODE/Data/Hindcast_cgrid_cp2D.mat']);
 
 %! Create a directory for output
 tfcrit = num2str(int64(100*fcrit));
+tkap = num2str(100+int64(10*K_a));
 td = num2str(1000+int64(100*LD_phi_MP));
 tj = num2str(1000+int64(100*MP_phi_S));
 tsm = num2str(1000+int64(100*MF_phi_MZ));
@@ -121,33 +122,6 @@ S_Med_d = zeros(NX,DAYS);
 S_Lrg_p = zeros(NX,DAYS);
 S_Lrg_d = zeros(NX,DAYS);
 
-S_Sml_f_rec = zeros(NX,DAYS);
-S_Sml_p_rec = zeros(NX,DAYS);
-S_Sml_d_rec = zeros(NX,DAYS);
-S_Med_f_rec = zeros(NX,DAYS);
-S_Med_p_rec = zeros(NX,DAYS);
-S_Med_d_rec = zeros(NX,DAYS);
-S_Lrg_p_rec = zeros(NX,DAYS);
-S_Lrg_d_rec = zeros(NX,DAYS);
-
-% S_Sml_f_con = zeros(NX,DAYS);
-% S_Sml_p_con = zeros(NX,DAYS);
-% S_Sml_d_con = zeros(NX,DAYS);
-% S_Med_f_con = zeros(NX,DAYS);
-% S_Med_p_con = zeros(NX,DAYS);
-% S_Med_d_con = zeros(NX,DAYS);
-% S_Lrg_p_con = zeros(NX,DAYS);
-% S_Lrg_d_con = zeros(NX,DAYS);
-% 
-% S_Sml_f_nu = zeros(NX,DAYS);
-% S_Sml_p_nu = zeros(NX,DAYS);
-% S_Sml_d_nu = zeros(NX,DAYS);
-% S_Med_f_nu = zeros(NX,DAYS);
-% S_Med_p_nu = zeros(NX,DAYS);
-% S_Med_d_nu = zeros(NX,DAYS);
-% S_Lrg_p_nu = zeros(NX,DAYS);
-% S_Lrg_d_nu = zeros(NX,DAYS);
-
 S_Sml_f_prod = zeros(NX,DAYS);
 S_Sml_p_prod = zeros(NX,DAYS);
 S_Sml_d_prod = zeros(NX,DAYS);
@@ -157,6 +131,39 @@ S_Med_d_prod = zeros(NX,DAYS);
 S_Lrg_p_prod = zeros(NX,DAYS);
 S_Lrg_d_prod = zeros(NX,DAYS);
 
+S_Med_f_fish = zeros(NX,DAYS);
+S_Med_p_fish = zeros(NX,DAYS);
+S_Med_d_fish = zeros(NX,DAYS);
+S_Lrg_p_fish = zeros(NX,DAYS);
+S_Lrg_d_fish = zeros(NX,DAYS);
+
+% S_Sml_f_rec = zeros(NX,DAYS);
+% S_Sml_p_rec = zeros(NX,DAYS);
+% S_Sml_d_rec = zeros(NX,DAYS);
+% S_Med_f_rec = zeros(NX,DAYS);
+% S_Med_p_rec = zeros(NX,DAYS);
+% S_Med_d_rec = zeros(NX,DAYS);
+% S_Lrg_p_rec = zeros(NX,DAYS);
+% S_Lrg_d_rec = zeros(NX,DAYS);
+% 
+% S_Sml_f_con = zeros(NX,DAYS);
+% S_Sml_p_con = zeros(NX,DAYS);
+% S_Sml_d_con = zeros(NX,DAYS);
+% S_Med_f_con = zeros(NX,DAYS);
+% S_Med_p_con = zeros(NX,DAYS);
+% S_Med_d_con = zeros(NX,DAYS);
+% S_Lrg_p_con = zeros(NX,DAYS);
+% S_Lrg_d_con = zeros(NX,DAYS);
+
+% S_Sml_f_nu = zeros(NX,DAYS);
+% S_Sml_p_nu = zeros(NX,DAYS);
+% S_Sml_d_nu = zeros(NX,DAYS);
+% S_Med_f_nu = zeros(NX,DAYS);
+% S_Med_p_nu = zeros(NX,DAYS);
+% S_Med_d_nu = zeros(NX,DAYS);
+% S_Lrg_p_nu = zeros(NX,DAYS);
+% S_Lrg_d_nu = zeros(NX,DAYS);
+
 % S_Sml_f_gamma = zeros(NX,DAYS);
 % S_Sml_p_gamma = zeros(NX,DAYS);
 % S_Sml_d_gamma = zeros(NX,DAYS);
@@ -165,16 +172,10 @@ S_Lrg_d_prod = zeros(NX,DAYS);
 % S_Med_d_gamma = zeros(NX,DAYS);
 % S_Lrg_p_gamma = zeros(NX,DAYS);
 % S_Lrg_d_gamma = zeros(NX,DAYS);
-% 
+
 % S_Med_f_rep = zeros(NX,DAYS);
 % S_Lrg_p_rep = zeros(NX,DAYS);
 % S_Lrg_d_rep = zeros(NX,DAYS);
-
-S_Med_f_fish = zeros(NX,DAYS);
-S_Med_p_fish = zeros(NX,DAYS);
-S_Med_d_fish = zeros(NX,DAYS);
-S_Lrg_p_fish = zeros(NX,DAYS);
-S_Lrg_d_fish = zeros(NX,DAYS);
 
 % S_Sml_f_die = zeros(NX,DAYS);
 % S_Sml_p_die = zeros(NX,DAYS);
@@ -213,25 +214,25 @@ if harv==0
     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_lrg_d.nc'];
     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_bent.nc'];
 else
-%     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_f.nc'];
-%     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_p.nc'];
-%     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_d.nc'];
-%     file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_f.nc'];
-%     file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_p.nc'];
-%     file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_d.nc'];
-%     file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_p.nc'];
-%     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_d.nc'];
-%     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_bent.nc'];
-%     
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_d.nc'];
-    file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_bent.nc'];
+    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_f.nc'];
+    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_p.nc'];
+    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_d.nc'];
+    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_f.nc'];
+    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_p.nc'];
+    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_d.nc'];
+    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_p.nc'];
+    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_d.nc'];
+    file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_bent.nc'];
+    
+%     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_f.nc'];
+%     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_p.nc'];
+%     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_d.nc'];
+%     file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_f.nc'];
+%     file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_p.nc'];
+%     file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_d.nc'];
+%     file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_p.nc'];
+%     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_d.nc'];
+%     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_bent.nc'];
     %     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_f.nc'];
     %     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_p.nc'];
     %     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_d.nc'];
@@ -264,7 +265,7 @@ xy_dim      = netcdf.defDim(ncidSF,'nid',NX);
 time_dim    = netcdf.defDim(ncidSF,'ntime',nt);
 vidbioSF    = netcdf.defVar(ncidSF,'biomass','double',[xy_dim,time_dim]);
 vidprodSF   = netcdf.defVar(ncidSF,'prod','double',[xy_dim,time_dim]);
-vidrecSF    = netcdf.defVar(ncidSF,'rec','double',[xy_dim,time_dim]);
+% vidrecSF    = netcdf.defVar(ncidSF,'rec','double',[xy_dim,time_dim]);
 % vidconSF    = netcdf.defVar(ncidSF,'con','double',[xy_dim,time_dim]);
 % vidnuSF     = netcdf.defVar(ncidSF,'nu','double',[xy_dim,time_dim]);
 % vidgammaSF  = netcdf.defVar(ncidSF,'gamma','double',[xy_dim,time_dim]);
@@ -276,7 +277,7 @@ xy_dim      = netcdf.defDim(ncidSP,'nid',NX);
 time_dim    = netcdf.defDim(ncidSP,'ntime',nt);
 vidbioSP    = netcdf.defVar(ncidSP,'biomass','double',[xy_dim,time_dim]);
 vidprodSP   = netcdf.defVar(ncidSP,'prod','double',[xy_dim,time_dim]);
-vidrecSP    = netcdf.defVar(ncidSP,'rec','double',[xy_dim,time_dim]);
+% vidrecSP    = netcdf.defVar(ncidSP,'rec','double',[xy_dim,time_dim]);
 % vidconSP    = netcdf.defVar(ncidSP,'con','double',[xy_dim,time_dim]);
 % vidnuSP     = netcdf.defVar(ncidSP,'nu','double',[xy_dim,time_dim]);
 % vidgammaSP  = netcdf.defVar(ncidSP,'gamma','double',[xy_dim,time_dim]);
@@ -288,7 +289,7 @@ xy_dim      = netcdf.defDim(ncidSD,'nid',NX);
 time_dim    = netcdf.defDim(ncidSD,'ntime',nt);
 vidbioSD    = netcdf.defVar(ncidSD,'biomass','double',[xy_dim,time_dim]);
 vidprodSD   = netcdf.defVar(ncidSD,'prod','double',[xy_dim,time_dim]);
-vidrecSD    = netcdf.defVar(ncidSD,'rec','double',[xy_dim,time_dim]);
+% vidrecSD    = netcdf.defVar(ncidSD,'rec','double',[xy_dim,time_dim]);
 % vidconSD    = netcdf.defVar(ncidSD,'con','double',[xy_dim,time_dim]);
 % vidnuSD     = netcdf.defVar(ncidSD,'nu','double',[xy_dim,time_dim]);
 % vidgammaSD  = netcdf.defVar(ncidSD,'gamma','double',[xy_dim,time_dim]);
@@ -300,68 +301,68 @@ xy_dim      = netcdf.defDim(ncidMF,'nid',NX);
 time_dim    = netcdf.defDim(ncidMF,'ntime',nt);
 vidbioMF    = netcdf.defVar(ncidMF,'biomass','double',[xy_dim,time_dim]);
 vidprodMF   = netcdf.defVar(ncidMF,'prod','double',[xy_dim,time_dim]);
-vidrecMF    = netcdf.defVar(ncidMF,'rec','double',[xy_dim,time_dim]);
+vidfishMF   = netcdf.defVar(ncidMF,'yield','double',[xy_dim,time_dim]);
+% vidrecMF    = netcdf.defVar(ncidMF,'rec','double',[xy_dim,time_dim]);
 % vidconMF    = netcdf.defVar(ncidMF,'con','double',[xy_dim,time_dim]);
 % vidnuMF     = netcdf.defVar(ncidMF,'nu','double',[xy_dim,time_dim]);
 % vidgammaMF  = netcdf.defVar(ncidMF,'gamma','double',[xy_dim,time_dim]);
 % vidrepMF    = netcdf.defVar(ncidMF,'rep','double',[xy_dim,time_dim]);
 % viddieMF    = netcdf.defVar(ncidMF,'die','double',[xy_dim,time_dim]);
 % vidclevMF   = netcdf.defVar(ncidMF,'clev','double',[xy_dim,time_dim]);
-vidfishMF   = netcdf.defVar(ncidMF,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidMF);
 
 xy_dim      = netcdf.defDim(ncidMP,'nid',NX);
 time_dim    = netcdf.defDim(ncidMP,'ntime',nt);
 vidbioMP    = netcdf.defVar(ncidMP,'biomass','double',[xy_dim,time_dim]);
 vidprodMP   = netcdf.defVar(ncidMP,'prod','double',[xy_dim,time_dim]);
-vidrecMP    = netcdf.defVar(ncidMP,'rec','double',[xy_dim,time_dim]);
+vidfishMP   = netcdf.defVar(ncidMP,'yield','double',[xy_dim,time_dim]);
+% vidrecMP    = netcdf.defVar(ncidMP,'rec','double',[xy_dim,time_dim]);
 % vidconMP    = netcdf.defVar(ncidMP,'con','double',[xy_dim,time_dim]);
 % vidnuMP     = netcdf.defVar(ncidMP,'nu','double',[xy_dim,time_dim]);
 % vidgammaMP  = netcdf.defVar(ncidMP,'gamma','double',[xy_dim,time_dim]);
 % viddieMP    = netcdf.defVar(ncidMP,'die','double',[xy_dim,time_dim]);
 % vidclevMP   = netcdf.defVar(ncidMP,'clev','double',[xy_dim,time_dim]);
-vidfishMP   = netcdf.defVar(ncidMP,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidMP);
 
 xy_dim      = netcdf.defDim(ncidMD,'nid',NX);
 time_dim    = netcdf.defDim(ncidMD,'ntime',nt);
 vidbioMD    = netcdf.defVar(ncidMD,'biomass','double',[xy_dim,time_dim]);
 vidprodMD   = netcdf.defVar(ncidMD,'prod','double',[xy_dim,time_dim]);
-vidrecMD    = netcdf.defVar(ncidMD,'rec','double',[xy_dim,time_dim]);
+vidfishMD   = netcdf.defVar(ncidMD,'yield','double',[xy_dim,time_dim]);
+% vidrecMD    = netcdf.defVar(ncidMD,'rec','double',[xy_dim,time_dim]);
 % vidconMD    = netcdf.defVar(ncidMD,'con','double',[xy_dim,time_dim]);
 % vidnuMD     = netcdf.defVar(ncidMD,'nu','double',[xy_dim,time_dim]);
 % vidgammaMD  = netcdf.defVar(ncidMD,'gamma','double',[xy_dim,time_dim]);
 % viddieMD    = netcdf.defVar(ncidMD,'die','double',[xy_dim,time_dim]);
 % vidclevMD   = netcdf.defVar(ncidMD,'clev','double',[xy_dim,time_dim]);
-vidfishMD   = netcdf.defVar(ncidMD,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidMD);
 
 xy_dim      = netcdf.defDim(ncidLP,'nid',NX);
 time_dim    = netcdf.defDim(ncidLP,'ntime',nt);
 vidbioLP    = netcdf.defVar(ncidLP,'biomass','double',[xy_dim,time_dim]);
 vidprodLP   = netcdf.defVar(ncidLP,'prod','double',[xy_dim,time_dim]);
-vidrecLP    = netcdf.defVar(ncidLP,'rec','double',[xy_dim,time_dim]);
+vidfishLP   = netcdf.defVar(ncidLP,'yield','double',[xy_dim,time_dim]);
+% vidrecLP    = netcdf.defVar(ncidLP,'rec','double',[xy_dim,time_dim]);
 % vidconLP    = netcdf.defVar(ncidLP,'con','double',[xy_dim,time_dim]);
 % vidnuLP     = netcdf.defVar(ncidLP,'nu','double',[xy_dim,time_dim]);
 % vidgammaLP  = netcdf.defVar(ncidLP,'gamma','double',[xy_dim,time_dim]);
 % vidrepLP    = netcdf.defVar(ncidLP,'rep','double',[xy_dim,time_dim]);
 % viddieLP    = netcdf.defVar(ncidLP,'die','double',[xy_dim,time_dim]);
 % vidclevLP   = netcdf.defVar(ncidLP,'clev','double',[xy_dim,time_dim]);
-vidfishLP   = netcdf.defVar(ncidLP,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidLP);
 
 xy_dim      = netcdf.defDim(ncidLD,'nid',NX);
 time_dim    = netcdf.defDim(ncidLD,'ntime',nt);
 vidbioLD    = netcdf.defVar(ncidLD,'biomass','double',[xy_dim,time_dim]);
 vidprodLD   = netcdf.defVar(ncidLD,'prod','double',[xy_dim,time_dim]);
-vidrecLD    = netcdf.defVar(ncidLD,'rec','double',[xy_dim,time_dim]);
+vidfishLD   = netcdf.defVar(ncidLD,'yield','double',[xy_dim,time_dim]);
+% vidrecLD    = netcdf.defVar(ncidLD,'rec','double',[xy_dim,time_dim]);
 % vidconLD    = netcdf.defVar(ncidLD,'con','double',[xy_dim,time_dim]);
 % vidnuLD     = netcdf.defVar(ncidLD,'nu','double',[xy_dim,time_dim]);
 % vidgammaLD  = netcdf.defVar(ncidLD,'gamma','double',[xy_dim,time_dim]);
 % vidrepLD    = netcdf.defVar(ncidLD,'rep','double',[xy_dim,time_dim]);
 % viddieLD    = netcdf.defVar(ncidLD,'die','double',[xy_dim,time_dim]);
 % vidclevLD   = netcdf.defVar(ncidLD,'clev','double',[xy_dim,time_dim]);
-vidfishLD   = netcdf.defVar(ncidLD,'yield','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidLD);
 
 xy_dim     = netcdf.defDim(ncidB,'nid',NX);
@@ -395,16 +396,31 @@ for YR = 1:YEARS % years
         S_Med_d(:,DY) = Med_d.bio;
         S_Lrg_p(:,DY) = Lrg_p.bio;
         S_Lrg_d(:,DY) = Lrg_d.bio;
-        
-        S_Sml_f_rec(:,DY) = Sml_f.rec;
-        S_Sml_p_rec(:,DY) = Sml_p.rec;
-        S_Sml_d_rec(:,DY) = Sml_d.rec;
-        S_Med_f_rec(:,DY) = Med_f.rec;
-        S_Med_p_rec(:,DY) = Med_p.rec;
-        S_Med_d_rec(:,DY) = Med_d.rec;
-        S_Lrg_p_rec(:,DY) = Lrg_p.rec;
-        S_Lrg_d_rec(:,DY) = Lrg_d.rec;
-        
+
+        S_Sml_f_prod(:,DY) = Sml_f.prod;
+        S_Sml_p_prod(:,DY) = Sml_p.prod;
+        S_Sml_d_prod(:,DY) = Sml_d.prod;
+        S_Med_f_prod(:,DY) = Med_f.prod;
+        S_Med_p_prod(:,DY) = Med_p.prod;
+        S_Med_d_prod(:,DY) = Med_d.prod;
+        S_Lrg_p_prod(:,DY) = Lrg_p.prod;
+        S_Lrg_d_prod(:,DY) = Lrg_d.prod;
+      
+        S_Med_f_fish(:,DY) = Med_f.caught;
+        S_Med_p_fish(:,DY) = Med_p.caught;
+        S_Med_d_fish(:,DY) = Med_d.caught;
+        S_Lrg_p_fish(:,DY) = Lrg_p.caught;
+        S_Lrg_d_fish(:,DY) = Lrg_d.caught;
+       
+%         S_Sml_f_rec(:,DY) = Sml_f.rec;
+%         S_Sml_p_rec(:,DY) = Sml_p.rec;
+%         S_Sml_d_rec(:,DY) = Sml_d.rec;
+%         S_Med_f_rec(:,DY) = Med_f.rec;
+%         S_Med_p_rec(:,DY) = Med_p.rec;
+%         S_Med_d_rec(:,DY) = Med_d.rec;
+%         S_Lrg_p_rec(:,DY) = Lrg_p.rec;
+%         S_Lrg_d_rec(:,DY) = Lrg_d.rec;
+%         
 %         S_Sml_f_con(:,DY) = Sml_f.I;
 %         S_Sml_p_con(:,DY) = Sml_p.I;
 %         S_Sml_d_con(:,DY) = Sml_d.I;
@@ -414,6 +430,10 @@ for YR = 1:YEARS % years
 %         S_Lrg_p_con(:,DY) = Lrg_p.I;
 %         S_Lrg_d_con(:,DY) = Lrg_d.I;
 %         
+%         S_Med_f_rep(:,DY) = Med_f.rep;
+%         S_Lrg_p_rep(:,DY) = Lrg_p.rep;
+%         S_Lrg_d_rep(:,DY) = Lrg_d.rep;
+
 %         S_Sml_f_nu(:,DY) = Sml_f.nu;
 %         S_Sml_p_nu(:,DY) = Sml_p.nu;
 %         S_Sml_d_nu(:,DY) = Sml_d.nu;
@@ -423,15 +443,6 @@ for YR = 1:YEARS % years
 %         S_Lrg_p_nu(:,DY) = Lrg_p.nu;
 %         S_Lrg_d_nu(:,DY) = Lrg_d.nu;
         
-        S_Sml_f_prod(:,DY) = Sml_f.prod;
-        S_Sml_p_prod(:,DY) = Sml_p.prod;
-        S_Sml_d_prod(:,DY) = Sml_d.prod;
-        S_Med_f_prod(:,DY) = Med_f.prod;
-        S_Med_p_prod(:,DY) = Med_p.prod;
-        S_Med_d_prod(:,DY) = Med_d.prod;
-        S_Lrg_p_prod(:,DY) = Lrg_p.prod;
-        S_Lrg_d_prod(:,DY) = Lrg_d.prod;
-        
 %         S_Sml_f_gamma(:,DY) = Sml_f.gamma;
 %         S_Sml_p_gamma(:,DY) = Sml_p.gamma;
 %         S_Sml_d_gamma(:,DY) = Sml_d.gamma;
@@ -440,11 +451,7 @@ for YR = 1:YEARS % years
 %         S_Med_d_gamma(:,DY) = Med_d.gamma;
 %         S_Lrg_p_gamma(:,DY) = Lrg_p.gamma;
 %         S_Lrg_d_gamma(:,DY) = Lrg_d.gamma;
-%         
-%         S_Med_f_rep(:,DY) = Med_f.rep;
-%         S_Lrg_p_rep(:,DY) = Lrg_p.rep;
-%         S_Lrg_d_rep(:,DY) = Lrg_d.rep;
-%         
+               
 %         S_Sml_f_die(:,DY) = Sml_f.die;
 %         S_Sml_p_die(:,DY) = Sml_p.die;
 %         S_Sml_d_die(:,DY) = Sml_d.die;
@@ -463,11 +470,6 @@ for YR = 1:YEARS % years
 %         S_Lrg_p_clev(:,DY) = Lrg_p.clev;
 %         S_Lrg_d_clev(:,DY) = Lrg_d.clev;
         
-        S_Med_f_fish(:,DY) = Med_f.caught;
-        S_Med_p_fish(:,DY) = Med_p.caught;
-        S_Med_d_fish(:,DY) = Med_d.caught;
-        S_Lrg_p_fish(:,DY) = Lrg_p.caught;
-        S_Lrg_d_fish(:,DY) = Lrg_d.caught;
         
     end %Days
     
@@ -490,7 +492,13 @@ for YR = 1:YEARS % years
         netcdf.putVar(ncidMD,vidbioMD,[0 MNT-1],[NX 1],mean(S_Med_d(:,a(i):b(i)),2));
         netcdf.putVar(ncidLP,vidbioLP,[0 MNT-1],[NX 1],mean(S_Lrg_p(:,a(i):b(i)),2));
         netcdf.putVar(ncidLD,vidbioLD,[0 MNT-1],[NX 1],mean(S_Lrg_d(:,a(i):b(i)),2));
-        
+ 
+        netcdf.putVar(ncidMF,vidfishMF,[0 MNT-1],[NX 1],mean(S_Med_f_fish(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMP,vidfishMP,[0 MNT-1],[NX 1],mean(S_Med_p_fish(:,a(i):b(i)),2));
+        netcdf.putVar(ncidMD,vidfishMD,[0 MNT-1],[NX 1],mean(S_Med_d_fish(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLP,vidfishLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_fish(:,a(i):b(i)),2));
+        netcdf.putVar(ncidLD,vidfishLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_fish(:,a(i):b(i)),2));
+
         netcdf.putVar(ncidSF,vidprodSF,[0 MNT-1],[NX 1],mean(S_Sml_f_prod(:,a(i):b(i)),2));
         netcdf.putVar(ncidSP,vidprodSP,[0 MNT-1],[NX 1],mean(S_Sml_p_prod(:,a(i):b(i)),2));
         netcdf.putVar(ncidSD,vidprodSD,[0 MNT-1],[NX 1],mean(S_Sml_d_prod(:,a(i):b(i)),2));
@@ -500,15 +508,19 @@ for YR = 1:YEARS % years
         netcdf.putVar(ncidLP,vidprodLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_prod(:,a(i):b(i)),2));
         netcdf.putVar(ncidLD,vidprodLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_prod(:,a(i):b(i)),2));
         
-        netcdf.putVar(ncidSF,vidrecSF,[0 MNT-1],[NX 1],mean(S_Sml_f_rec(:,a(i):b(i)),2));
-        netcdf.putVar(ncidSP,vidrecSP,[0 MNT-1],[NX 1],mean(S_Sml_p_rec(:,a(i):b(i)),2));
-        netcdf.putVar(ncidSD,vidrecSD,[0 MNT-1],[NX 1],mean(S_Sml_d_rec(:,a(i):b(i)),2));
-        netcdf.putVar(ncidMF,vidrecMF,[0 MNT-1],[NX 1],mean(S_Med_f_rec(:,a(i):b(i)),2));
-        netcdf.putVar(ncidMP,vidrecMP,[0 MNT-1],[NX 1],mean(S_Med_p_rec(:,a(i):b(i)),2));
-        netcdf.putVar(ncidMD,vidrecMD,[0 MNT-1],[NX 1],mean(S_Med_d_rec(:,a(i):b(i)),2));
-        netcdf.putVar(ncidLP,vidrecLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rec(:,a(i):b(i)),2));
-        netcdf.putVar(ncidLD,vidrecLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rec(:,a(i):b(i)),2));
-        
+%         netcdf.putVar(ncidMF,vidrepMF,[0 MNT-1],[NX 1],mean(S_Med_f_rep(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,vidrepLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rep(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,vidrepLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rep(:,a(i):b(i)),2));        
+% 
+%         netcdf.putVar(ncidSF,vidrecSF,[0 MNT-1],[NX 1],mean(S_Sml_f_rec(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSP,vidrecSP,[0 MNT-1],[NX 1],mean(S_Sml_p_rec(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidSD,vidrecSD,[0 MNT-1],[NX 1],mean(S_Sml_d_rec(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMF,vidrecMF,[0 MNT-1],[NX 1],mean(S_Med_f_rec(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMP,vidrecMP,[0 MNT-1],[NX 1],mean(S_Med_p_rec(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidMD,vidrecMD,[0 MNT-1],[NX 1],mean(S_Med_d_rec(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLP,vidrecLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rec(:,a(i):b(i)),2));
+%         netcdf.putVar(ncidLD,vidrecLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rec(:,a(i):b(i)),2));
+%         
 %         netcdf.putVar(ncidSF,vidconSF,[0 MNT-1],[NX 1],mean(S_Sml_f_con(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidSP,vidconSP,[0 MNT-1],[NX 1],mean(S_Sml_p_con(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidSD,vidconSD,[0 MNT-1],[NX 1],mean(S_Sml_d_con(:,a(i):b(i)),2));
@@ -517,7 +529,7 @@ for YR = 1:YEARS % years
 %         netcdf.putVar(ncidMD,vidconMD,[0 MNT-1],[NX 1],mean(S_Med_d_con(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidLP,vidconLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_con(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidLD,vidconLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_con(:,a(i):b(i)),2));
-%         
+        
 %         netcdf.putVar(ncidSF,vidnuSF,[0 MNT-1],[NX 1],mean(S_Sml_f_nu(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidSP,vidnuSP,[0 MNT-1],[NX 1],mean(S_Sml_p_nu(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidSD,vidnuSD,[0 MNT-1],[NX 1],mean(S_Sml_d_nu(:,a(i):b(i)),2));
@@ -553,17 +565,7 @@ for YR = 1:YEARS % years
 %         netcdf.putVar(ncidMD,viddieMD,[0 MNT-1],[NX 1],mean(S_Med_d_die(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidLP,viddieLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_die(:,a(i):b(i)),2));
 %         netcdf.putVar(ncidLD,viddieLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_die(:,a(i):b(i)),2));
-%         
-%         netcdf.putVar(ncidMF,vidrepMF,[0 MNT-1],[NX 1],mean(S_Med_f_rep(:,a(i):b(i)),2));
-%         netcdf.putVar(ncidLP,vidrepLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_rep(:,a(i):b(i)),2));
-%         netcdf.putVar(ncidLD,vidrepLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_rep(:,a(i):b(i)),2));
-%         
-        netcdf.putVar(ncidMF,vidfishMF,[0 MNT-1],[NX 1],mean(S_Med_f_fish(:,a(i):b(i)),2));
-        netcdf.putVar(ncidMP,vidfishMP,[0 MNT-1],[NX 1],mean(S_Med_p_fish(:,a(i):b(i)),2));
-        netcdf.putVar(ncidMD,vidfishMD,[0 MNT-1],[NX 1],mean(S_Med_d_fish(:,a(i):b(i)),2));
-        netcdf.putVar(ncidLP,vidfishLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_fish(:,a(i):b(i)),2));
-        netcdf.putVar(ncidLD,vidfishLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_fish(:,a(i):b(i)),2));
-        
+                
     end %Monthly mean
     
 end %Years

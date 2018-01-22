@@ -41,6 +41,7 @@ ID = ids;
 
 %! Create a directory for output
 tfcrit = num2str(int64(100*fcrit));
+tkap = num2str(100+int64(10*K_a));
 td = num2str(1000+int64(100*LD_phi_MP));
 tj = num2str(1000+int64(100*MP_phi_S));
 tsm = num2str(1000+int64(100*MF_phi_MZ));
@@ -98,7 +99,7 @@ tbcmx = num2str(1000+int64(1000*bcmx));
 %simname = [coup,'_enc',tefn,'-b',tbfn(2:end),'_cm',tcfn,'_m-b175-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
 %simname = [coup,'_enc',tefn,'_cm',tcfn,'_cm-b',tbfn(2:end),'_m-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
 %simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
+simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end),'_K',tkap(2:end)];
 if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
     mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
 end
@@ -190,10 +191,10 @@ end %Years
 
 %%% Save
 if harv==1
-%     save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs','_',sel,'_fish',tfish(2:end),'.mat'],...
-%         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
-save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs','_',sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'.mat'],...
+    save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs','_',sel,'_fish',tfish(2:end),'.mat'],...
         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
+% save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs','_',sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'.mat'],...
+%         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
 %     save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs_Tfish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'],...
 %        'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
 else

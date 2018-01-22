@@ -129,8 +129,8 @@ l10sD=log10(Dlme_mcatch10+eps);
 %% POEM LME biomass in MT
 plme_mcatch = nansum(lme_mcatch,2) * 1e-6;
 plme_Fmcatch = (lme_mcatch(:,1)) * 1e-6;
-plme_Pmcatch = (lme_mcatch(:,2)+lme_mcatch(:,4)) * 1e-6;
-plme_Dmcatch = (lme_mcatch(:,3)+lme_mcatch(:,5)) * 1e-6;
+plme_Pmcatch = (lme_mcatch(:,4)) * 1e-6;
+plme_Dmcatch = (+lme_mcatch(:,5)) * 1e-6;
 plme_Bmbio = lme_mbio(:,9) * 1e-6;
 plme_Bsbio = lme_sbio(:,9) * 1e-6;
 % MT/km2
@@ -185,9 +185,9 @@ tab2(:,6:7) = tab(:,6:7)*(1/9);
 T1 = array2table(tab,'VariableNames',{'LME','ZP','Det','Bent','T','Pcatch','Scatch'});
 T2 = array2table(tab2,'VariableNames',{'LME','ZP','Det','Bent','T','Pcatch','Scatch'});
 
-writetable(T1,[dpath 'LME_prod_catch_SAUP_mtkm2_' cfile '.csv'],'Delimiter',',')
-writetable(T2,[dpath 'LME_prod_catch_SAUP_gCm2_' cfile '.csv'],'Delimiter',',')
-save([dpath 'LME_prod_catch_SAUP_' cfile '.mat'],'tab','tab2')
+writetable(T1,[dpath 'LME_prod_catch_SAUP_mtkm2_noJuve_' cfile '.csv'],'Delimiter',',')
+writetable(T2,[dpath 'LME_prod_catch_SAUP_gCm2_noJuve_' cfile '.csv'],'Delimiter',',')
+save([dpath 'LME_prod_catch_SAUP_noJuve_' cfile '.mat'],'tab','tab2')
 
 %% Stats
 %r
@@ -254,9 +254,9 @@ fish_stat(5,3) = FPD;
 
 Fstat = array2table(fish_stat,'VariableNames',{'r','RMSE','Fmed'},...
     'RowNames',{'All','F','P','D','FracP'});
-writetable(Fstat,[dpath 'LME_SAUP_stats_' cfile '.csv'],'Delimiter',',',...
+writetable(Fstat,[dpath 'LME_SAUP_stats_noJuve_' cfile '.csv'],'Delimiter',',',...
     'WriteRowNames',true)
-save([dpath 'LME_SAUP_stats_' cfile '.mat'],'fish_stat')
+save([dpath 'LME_SAUP_stats_noJuve_' cfile '.mat'],'fish_stat')
 
 %% Plots
 figure(1)
@@ -332,7 +332,7 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_noJuve.png'])
 
 %% For ms
 figure(2)
@@ -404,7 +404,7 @@ xlabel('SAUP')
 ylabel('POEM')
 title('C. Demersals')
 % stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ms.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ms_noJuve.png'])
 
 %% FRACTION LARGE PELAGIC ----------------------------------
 % Correlation
@@ -424,7 +424,7 @@ xlabel('SAUP')
 ylabel('POEM')
 title('Fraction Large Pelagics')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_fracP.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_fracP_noJuve.png'])
 
 %% Catch map
 %on grid
@@ -477,7 +477,7 @@ caxis([0 1]);
 set(gcf,'renderer','painters')
 title('SAU Fraction LP catch')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp.png'])
+print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp_noJuve.png'])
 
 %% Subplot with maps and corr
 figure(5)
@@ -533,6 +533,6 @@ xlabel('SAUP')
 ylabel('POEM')
 title('Fraction Large Pelagics')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp_subplot.png'])
+print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp_subplot_noJuve.png'])
 
 

@@ -7,13 +7,15 @@ close all
 testoneloc = false;
 testlocs = false;
 histlocs = false;
-climlocs = true;
+climlocs = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
 spinup_pristine = false;
 climatol_loop = false;
 climatol = false;
+climatol_crr = true;
+climatol_ngdc = false;
 pre_industrial = false;
 historic_pristine = false;
 historic_fished = false;
@@ -41,6 +43,12 @@ if climatol_loop
 end
 if climatol
     Climatol_pristine()
+end
+if climatol_crr
+    Climatol_con_rec_rep()
+end
+if climatol_ngdc
+    Climatol_nu_gam_die_clev()
 end
 if pre_industrial
     Pre_industrial()
