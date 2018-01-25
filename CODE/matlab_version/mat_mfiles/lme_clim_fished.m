@@ -24,8 +24,8 @@ btemp_mean_clim=squeeze(nanmean(btm_temp,1));
 %%
 AREA_OCN = max(area,1);
 
-cfile = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-harv = 'All_fish03_Juve00';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
 ppath = [pp cfile '/'];

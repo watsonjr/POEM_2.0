@@ -19,7 +19,7 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 spots=spots';
 
-dp = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100_K10';
 sname = 'Clim_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
@@ -490,9 +490,10 @@ for s=1:length(spots)
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 17])
+    ylim([0 0.1])
     set(gca,'XTickLabel',[]);
     for n=1:16
-        text(n-0.5,0,spots{n},'Rotation',45)
+        text(n-0.5,-0.01,spots{n},'Rotation',45)
     end
     %ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('S')
@@ -508,9 +509,10 @@ for s=1:length(spots)
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 17])
+    ylim([0 0.1])
     set(gca,'XTickLabel',[]);
     for n=1:16
-        text(n-0.5,0,spots{n},'Rotation',45)
+        text(n-0.5,-0.01,spots{n},'Rotation',45)
     end
     %ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('M')
@@ -523,9 +525,10 @@ for s=1:length(spots)
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 17])
+    ylim([0 0.05])
     set(gca,'XTickLabel',[]);
     for n=1:16
-        text(n-0.5,0,spots{n},'Rotation',45)
+        text(n-0.5,-0.01,spots{n},'Rotation',45)
     end
     ylabel('Mean biom prod rate (g g^-^1 d^-^1) in final year')
     title('L')
@@ -546,9 +549,10 @@ for s=1:length(spots)
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 17])
+    ylim([0 0.02])
     set(gca,'XTickLabel',[]);
     for n=1:16
-        text(n-0.5,-0.01,spots{n},'Rotation',45)
+        text(n-0.5,-0.001,spots{n},'Rotation',45)
     end
     ylabel('Mean repro rate (g g^-^1 d^-^1) in final year')
     
@@ -563,9 +567,10 @@ for s=1:length(spots)
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
     xlim([0 17])
+    ylim([0 0.1])
     set(gca,'XTickLabel',[]);
     for n=1:16
-        text(n-0.5,-0.01,spots{n},'Rotation',45)
+        text(n-0.5,-0.005,spots{n},'Rotation',45)
     end
     ylabel('Mean biom reproduced (g d^-^1) in final year')
     if (s==1)
@@ -866,7 +871,7 @@ for s=1:length(spots)
     plot(s+0.25,(Dgge(2,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    ylim([-0.25 0.5])
+    ylim([-0.2 0.5])
     xlim([0 17])
     set(gca,'XTickLabel',[]);
     for n=1:16
@@ -882,7 +887,7 @@ for s=1:length(spots)
     plot(s+0.25,(Dgge(3,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    ylim([-0.2 0.3])
+    ylim([-0.2 0.5])
     xlim([0 17])
     set(gca,'XTickLabel',[]);
     for n=1:16

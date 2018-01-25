@@ -26,7 +26,7 @@ if (~isdir(ppath))
     mkdir(ppath)
 end
 
-load([fpath 'Means_nu_gam_die_clev_Climatol_' harv '_' cfile '.mat']);
+load([fpath 'Means_con_prod_rec_rep_Climatol_' harv '_' cfile '.mat']);
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
@@ -95,17 +95,17 @@ Zmd=NaN*ones(ni,nj);
 Zlp=NaN*ones(ni,nj);
 Zld=NaN*ones(ni,nj);
 
-Zsf(ID)=sf_mdie;
-Zsp(ID)=sp_mdie;
-Zsd(ID)=sd_mdie;
-Zmf(ID)=mf_mdie;
-Zmp(ID)=mp_mdie;
-Zmd(ID)=md_mdie;
-Zlp(ID)=lp_mdie;
-Zld(ID)=ld_mdie;
+Zsf(ID)=sf_mrec;
+Zsp(ID)=sp_mrec;
+Zsd(ID)=sd_mrec;
+Zmf(ID)=mf_mrec;
+Zmp(ID)=mp_mrec;
+Zmd(ID)=md_mrec;
+Zlp(ID)=lp_mrec;
+Zld(ID)=ld_mrec;
 
 ocean=NaN*ones(ni,nj);
-ocean(ID)=ones(size(sf_mdie));
+ocean(ID)=ones(size(sf_mrec));
 
 %% sp
 % figure(11)
@@ -118,7 +118,7 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_SP_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_SP_rec.png'])
 %
 % % sf
 % figure(12)
@@ -131,7 +131,7 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_SF_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_SF_rec.png'])
 %
 % % sd
 % figure(13)
@@ -144,7 +144,7 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_SD_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_SD_rec.png'])
 %
 % % mp
 % figure(14)
@@ -157,7 +157,7 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_MP_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_MP_rec.png'])
 %
 % % mf
 % figure(15)
@@ -170,7 +170,7 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_MF_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_MF_rec.png'])
 %
 % % md
 % figure(16)
@@ -183,7 +183,7 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_MD_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_MD_rec.png'])
 %
 % % lp
 % figure(17)
@@ -196,7 +196,7 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_LP_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_LP_rec.png'])
 %
 % % ld
 % figure(18)
@@ -209,22 +209,22 @@ ocean(ID)=ones(size(sf_mdie));
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_LD_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_LD_rec.png'])
 
 %% Diff maps of all fish
-All = (Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld)/8;
-AllF = (Zsf+Zmf)/2;
-AllP = (Zsp+Zmp+Zlp)/3;
-AllD = (Zsd+Zmd+Zld)/3;
-AllS = (Zsp+Zsf+Zsd)/3;
-AllM = (Zmp+Zmf+Zmd)/3;
-AllL = (Zlp+Zld)/2;
+All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
+AllF = Zsf+Zmf;
+AllP = Zsp+Zmp+Zlp;
+AllD = Zsd+Zmd+Zld;
+AllS = Zsp+Zsf+Zsd;
+AllM = Zmp+Zmf+Zmd;
+AllL = Zlp+Zld;
 
 %% ALL
 % figure(21)
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
 %     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,(All))
+% surfm(geolat_t,geolon_t,log10(All))
 % colormap('jet')
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -234,13 +234,13 @@ AllL = (Zlp+Zld)/2;
 % set(gcf,'renderer','painters')
 % title('Climatology  mean All fishes')
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_All_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_All_rec.png'])
 % 
 % % all F
 % figure(22)
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
 %     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,(AllF))
+% surfm(geolat_t,geolon_t,log10(AllF))
 % colormap('jet')
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -250,13 +250,13 @@ AllL = (Zlp+Zld)/2;
 % set(gcf,'renderer','painters')
 % title('Climatology  mean All F')
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_AllF_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllF_rec.png'])
 % 
 % % all D
 % figure(23)
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
 %     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,(AllD))
+% surfm(geolat_t,geolon_t,log10(AllD))
 % colormap('jet')
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -266,13 +266,13 @@ AllL = (Zlp+Zld)/2;
 % set(gcf,'renderer','painters')
 % title('Climatology  mean All D')
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_AllD_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllD_rec.png'])
 % 
 % % All P
 % figure(24)
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
 %     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,(AllP))
+% surfm(geolat_t,geolon_t,log10(AllP))
 % colormap('jet')
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -282,7 +282,7 @@ AllL = (Zlp+Zld)/2;
 % set(gcf,'renderer','painters')
 % title('Climatology  mean All P')
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_AllP_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllP_rec.png'])
 
 % All 4 on subplots
 figure(27)
@@ -290,11 +290,13 @@ figure(27)
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(AllF))
+surfm(geolat_t,geolon_t,log10(AllF))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-1.5 0.5]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title(' mean All F')
@@ -303,11 +305,13 @@ title(' mean All F')
 subplot('Position',[0 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(AllD))
+surfm(geolat_t,geolon_t,log10(AllD))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-1.5 0.5]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title(' mean All D')
 
@@ -315,11 +319,13 @@ title(' mean All D')
 subplot('Position',[0.5 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(AllP))
+surfm(geolat_t,geolon_t,log10(AllP))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-1.5 0.5]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-1.5 0.5])
 set(gcf,'renderer','painters')
 title(' mean All P')
 
@@ -327,64 +333,66 @@ title(' mean All P')
 subplot('Position',[0.5 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(All))
+surfm(geolat_t,geolon_t,log10(All))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-1.5 0.5]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title(' mean All fishes')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_die.png'])
+print('-dpng',[ppath 'Climatol_' harv '_global_All_subplot_rec.png'])
 
 %%
 % % all S
 % figure(2)
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
 %     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,(AllS))
+% surfm(geolat_t,geolon_t,log10(AllS))
 % colormap('jet')
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-% caxis([0.2 1]);
+% caxis([-1.5 0.5]);
 % hcb = colorbar('h');
-% ylim(hcb,[0.2 1])                   %Set color axis if needed
+% ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 % set(gcf,'renderer','painters')
 % title('Climatology  mean All S')
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_AllS_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllS_rec.png'])
 % 
 % % all M
 % figure(3)
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
 %     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,(AllM))
+% surfm(geolat_t,geolon_t,log10(AllM))
 % colormap('jet')
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-% caxis([0.2 1]);
+% caxis([-1.5 0.5]);
 % hcb = colorbar('h');
-% ylim(hcb,[0.2 1])                   %Set color axis if needed
+% ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 % set(gcf,'renderer','painters')
 % title('Climatology  mean All M')
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_AllM_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllM_rec.png'])
 % 
 % % All L
 % figure(4)
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
 %     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,(AllL))
+% surfm(geolat_t,geolon_t,log10(AllL))
 % colormap('jet')
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-% caxis([0.2 1]);
+% caxis([-1.5 0.5]);
 % hcb = colorbar('h');
-% ylim(hcb,[0.2 1])                   %Set color axis if needed
+% ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 % set(gcf,'renderer','painters')
 % title('Climatology  mean All L')
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Climatol_' harv '_global_AllL_die.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_global_AllL_rec.png'])
 
 % All 4 on subplots
 figure(5)
@@ -392,11 +400,13 @@ figure(5)
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(AllS))
+surfm(geolat_t,geolon_t,log10(AllS))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-2 0]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-2 0])                   %Set color axis if needed
 colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title(' mean All S')
@@ -405,11 +415,13 @@ title(' mean All S')
 subplot('Position',[0 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(AllL))
+surfm(geolat_t,geolon_t,log10(AllL))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-2 0]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-2 0])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title(' mean All L')
 
@@ -417,11 +429,13 @@ title(' mean All L')
 subplot('Position',[0.5 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(AllM))
+surfm(geolat_t,geolon_t,log10(AllM))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-2 0]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-2 0])
 set(gcf,'renderer','painters')
 title(' mean All M')
 
@@ -429,14 +443,16 @@ title(' mean All M')
 subplot('Position',[0.5 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,(All))
+surfm(geolat_t,geolon_t,log10(All))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 0.025]);
+caxis([-2 0]);
+%     hcb = colorbar('h');
+%     ylim(hcb,[-2 0])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title(' mean All fishes')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_sizes_subplot_die.png'])
+print('-dpng',[ppath 'Climatol_' harv '_global_sizes_subplot_rec.png'])
 
 

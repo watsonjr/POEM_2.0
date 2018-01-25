@@ -10,7 +10,7 @@ dp = '/Volumes/GFDL/NC/Matlab_new_size/';
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
-harv = 'All_fish03_Juve09';
+harv = 'All_fish03';
 
 ppath = [pp cfile '/']
 dpath = [dp cfile '/'];

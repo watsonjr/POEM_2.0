@@ -26,7 +26,7 @@ load([cpath 'cobalt_det_biom_means.mat'],'det_mean_clim')
 
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
-cfile = 'Dc_enc70_cmax-metab20_b175_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC100_lgRE00100_mdRE00100';
+cfile = 'Dc_enc70_cmax-metab20_b175_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = ['All_fish',tfish(2:end)];
 tharv = ['Harvest all fish ' num2str(frate)];
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];

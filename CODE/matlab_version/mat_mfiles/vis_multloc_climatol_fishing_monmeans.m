@@ -16,8 +16,8 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %
-cfile = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-harv = 'All_fish03_Juve00';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -26,7 +26,7 @@ if (~isdir(ppath))
     mkdir(ppath)
 end
 
-load([fpath 'Means_Climatol_' harv '_' cfile '.mat']);
+load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 

@@ -33,7 +33,7 @@ lme_area_km2 = lme_area * 1e-6;
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -152,7 +152,7 @@ for i=1:length(nwa)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 2 -6 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F NW Atl mean catch')
@@ -169,7 +169,7 @@ for i=1:length(nea)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 2 -6 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F NE Atl')
@@ -186,7 +186,7 @@ for i=1:length(nwp)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 2 -6 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F NW Pac')
@@ -203,7 +203,7 @@ for i=1:length(nep)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 2 -6 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F NE Pac')
@@ -224,7 +224,7 @@ for i=1:length(afr)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 2 -3 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F Africa mean catch')
@@ -241,7 +241,7 @@ for i=1:length(aus)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 2 -3 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F Australia')
@@ -258,7 +258,7 @@ for i=1:length(ind)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 2 -3 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F India-Indonesia')
@@ -275,7 +275,7 @@ for i=1:length(crb)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 2 -3 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F Caribbean')
@@ -292,7 +292,7 @@ for i=1:length(sam)
     text(l10sF(lme),l10pF(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 2 -3 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('F S Amer')
@@ -314,7 +314,7 @@ for i=1:length(nwa)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 1 -6 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P NW Atl mean catch')
@@ -331,7 +331,7 @@ for i=1:length(nea)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 1 -6 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P NE Atl')
@@ -348,7 +348,7 @@ for i=1:length(nwp)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 1 -6 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P NW Pac')
@@ -365,7 +365,7 @@ for i=1:length(nep)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-6 1 -6 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P NE Pac')
@@ -386,7 +386,7 @@ for i=1:length(afr)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-5 2 -5 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P Africa mean catch')
@@ -403,7 +403,7 @@ for i=1:length(aus)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 1 -2 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P Australia')
@@ -420,7 +420,7 @@ for i=1:length(ind)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 1 -3 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P India-Indonesia')
@@ -437,7 +437,7 @@ for i=1:length(crb)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 0 -3 0])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P Caribbean')
@@ -454,7 +454,7 @@ for i=1:length(sam)
     text(l10sP(lme),l10pP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-3 2 -3 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('P S Amer')
@@ -475,7 +475,7 @@ for i=1:length(nwa)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 2 -2 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D NW Atl mean catch')
@@ -492,7 +492,7 @@ for i=1:length(nea)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 2 -2 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D NE Atl')
@@ -509,7 +509,7 @@ for i=1:length(nwp)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 2 -2 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D NW Pac')
@@ -526,7 +526,7 @@ for i=1:length(nep)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 2 -2 2])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D NE Pac')
@@ -547,7 +547,7 @@ for i=1:length(afr)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 1 -2 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D Africa mean catch')
@@ -564,7 +564,7 @@ for i=1:length(aus)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 1 -2 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D Australia')
@@ -581,7 +581,7 @@ for i=1:length(ind)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 1 -2 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D India-Indonesia')
@@ -598,7 +598,7 @@ for i=1:length(crb)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 1 -2 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D Caribbean')
@@ -615,7 +615,7 @@ for i=1:length(sam)
     text(l10sD(lme),l10pD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center')
 end
-axis([-4 2 -4 2])
+axis([-2 1 -2 1])
 xlabel('log10 SAUP catch (MT km^-^2) top 10 yrs')
 ylabel('log10 POEM catch (MT km^-^2)')
 title('D S Amer')

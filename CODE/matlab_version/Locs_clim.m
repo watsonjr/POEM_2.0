@@ -22,6 +22,10 @@ else
     harv = 0;
 end
 
+dees = 0.1:0.1:1;
+for d=1:length(dees)
+    D = dees(d);
+
 %! Make core parameters/constants (global)
 make_parameters()
 
@@ -201,6 +205,8 @@ else
     save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs.mat'],...
         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
 end
+
+end %d
 
 
 end
