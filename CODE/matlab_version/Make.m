@@ -7,13 +7,13 @@ close all
 testoneloc = false;
 testlocs = false;
 histlocs = false;
-climlocs = true;
+climlocs = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
 spinup_pristine = false;
 climatol_loop = false;
-climatol = false;
+climatol = true;
 climatol_crr = false;
 climatol_ngdc = false;
 pre_industrial = false;

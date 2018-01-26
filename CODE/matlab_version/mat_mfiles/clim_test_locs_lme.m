@@ -4,33 +4,21 @@
 clear all
 close all
 
-datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
-figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
+Pdrpbx = '/Users/cpetrik/Dropbox/';
+Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
+gpath = [Pdrpbx 'Princeton/POEM_other/grid_cobalt/'];
+cpath = ['/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/'];
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
+dp = '/Volumes/GFDL/NC/Matlab_new_size/';
 
-load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/clim_grid_180x360_id_locs_area_dep.mat','ids','abbrev','T');
-sites = T{:,1};
-spots = abbrev;
-cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
-    'con_p','con_d','con_zm','con_zl','con_be','I','nu','gamma','die','rep',...
-    'rec','clev','prod','pred','nmort','met','caught'};
-cols=cols';
-spots=spots';
+load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
-dp = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-sname = 'Clim_';
-harv = 'All_fish03_Juve00';
-dpath = [datap char(dp) '/'];
-fpath = [figp char(dp) '/'];
-if (~isdir([figp char(dp)]))
-    mkdir([figp char(dp)])
-end
-cfile = char(dp);
-load([dpath sname 'locs_' harv '.mat'])
-load([dpath sname 'locs_' harv '_lastyr_sum_mean_biom.mat']);
+%LMEs of interest
+%[GB','WSS','CSS','ESS'],'GS','NS','NwS','BS','EBS','K2','S1','HOT','BATS','PUp'
+locs=[8;19;22;21;20;1;51;49;10;6;13];
 
 % Colors
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
-%load('/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
 cmap3=cmap_ppt([3,1,5],:);
 cm={[1 0.5 0],...   %orange
     [0.5 0.5 0],... %tan/army
@@ -54,59 +42,124 @@ cm={[1 0.5 0],...   %orange
     [255/255 192/255 203/255],... %pink
     [255/255 160/255 122/255]}; %peach
 
-M_s = 10^((log10(0.001)+log10(0.5))/2);
-M_m = 10^((log10(0.5)+log10(250))/2);
-M_l = 10^((log10(250)+log10(125000))/2);
+% plot info
+[ni,nj]=size(lon);
+plotminlat=-90; %Set these bounds for your data
+plotmaxlat=90;
+plotminlon=-280;
+plotmaxlon=80;
+latlim=[plotminlat plotmaxlat];
+lonlim=[plotminlon plotmaxlon]; %[-255 -60] = Pac
 
-%! Body lengths (mm)
-% Convert from mm to cm and use their const coeff = 0.01g/cm3
-L_s = 10.0 * (M_s/0.01)^(1/3); % small
-L_m = 10.0 * (M_m/0.01)^(1/3); % medium
-L_l = 10.0 * (M_l/0.01)^(1/3); % large
+land=-999*ones(ni,nj);
+land(ID)=NaN*ones(size(ID));
 
-mass = [M_s;M_m;M_l];
-mass = repmat(mass,1,length(spots));
-L = [L_s;L_m;L_l];
-
-stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
+geolat_t=lat;
+geolon_t=lon;
 
 %% POEM means
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+harv = 'All_fish03';
+tharv = 'Harvest all fish 0.3 yr^-^1';
+ppath = [pp cfile '/'];
+dpath = [dp cfile '/'];
+load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'])
+load([dpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
+load([dpath 'Means_con_rec_rep_Climatol_' harv '_' cfile '.mat']);
 
-mlev = [Flev;Plev;Dlev];
-F = squeeze(nansum(all_mean(:,1,:)));
-P = squeeze(nansum(all_mean(:,2,:)));
-D = squeeze(nansum(all_mean(:,3,:)));
-B = squeeze(nansum(all_mean(:,4,:)));
-conZ = conZm + conZl;
+
+%NEED CON OF EACH GROUP BY EACH GROUP
 
 %% Zoop, det, bent
-cpath = ['/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/'];
 load([cpath 'cobalt_zoop_biom_means.mat'],'mz_mean_clim','lz_mean_clim','mzloss_mean_clim','lzloss_mean_clim')
 load([cpath 'cobalt_det_biom_means.mat'],'det_mean_clim')
-load(['/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %ESM2.6 in mg C m-2 or mg C m-2 d-1
 %from mg C m-2 to g(WW) m-2
 % 1e-3 g C in 1 mg C
 % 1 g dry W in 9 g wet W (Pauly & Christiansen)
+zm_grid = (mz_mean_clim + lz_mean_clim) * 1e-3 * 9.0;
+zl_grid = (mzloss_mean_clim+lzloss_mean_clim) * 1e-3 * 9.0;
+det_grid = det_mean_clim * 1e-3 * 9.0;
 
-z_mean = (mz_mean_clim + lz_mean_clim)* 1e-3 * 9.0;
-z_loss = (mzloss_mean_clim+lzloss_mean_clim)* 1e-3 * 9.0;
+%% Grid
+Zsf=NaN*ones(ni,nj);
+Zsp=NaN*ones(ni,nj);
+Zsd=NaN*ones(ni,nj);
+Zmf=NaN*ones(ni,nj);
+Zmp=NaN*ones(ni,nj);
+Zmd=NaN*ones(ni,nj);
+Zlp=NaN*ones(ni,nj);
+Zld=NaN*ones(ni,nj);
+Zb=NaN*ones(ni,nj);
 
-z_mean_grid = z_mean(ID);
-z_loss_grid = z_loss(ID);
+%mean
+Zsf(ID)=sf_mean;
+Zsp(ID)=sp_mean;
+Zsd(ID)=sd_mean;
+Zmf(ID)=mf_mean;
+Zmp(ID)=mp_mean;
+Zmd(ID)=md_mean;
+Zlp(ID)=lp_mean;
+Zld(ID)=ld_mean;
+Zb(ID)=b_mean;
 
-det_grid = det_mean_clim(ID)* 1e-3 * 9.0;
+Csf=NaN*ones(ni,nj);
+Csp=NaN*ones(ni,nj);
+Csd=NaN*ones(ni,nj);
+Cmf=NaN*ones(ni,nj);
+Cmp=NaN*ones(ni,nj);
+Cmd=NaN*ones(ni,nj);
+Clp=NaN*ones(ni,nj);
+Cld=NaN*ones(ni,nj);
 
-z_mean_locs = z_mean_grid(ids);
-z_loss_locs = z_loss_grid(ids);
-det_locs = det_grid(ids);
+%
+Csf(ID)=sf_mcon;
+Csp(ID)=sp_mcon;
+Csd(ID)=sd_mcon;
+Cmf(ID)=mf_mcon;
+Cmp(ID)=mp_mcon;
+Cmd(ID)=md_mcon;
+Clp(ID)=lp_mcon;
+Cld(ID)=ld_mcon;
+
+All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
+AllF = Zsf+Zmf;
+AllP = Zsp+Zmp+Zlp;
+AllD = Zsd+Zmd+Zld;
+
+CAll = Csp+Csf+Csd+Cmp+Cmf+Cmd+Clp+Cld;
+CAllF = Csf+Cmf;
+CAllP = Csp+Cmp+Clp;
+CAllD = Csd+Cmd+Cld;
+
+%% Calc LMEs
+tlme = lme_mask_onedeg;
+
+lme_te = NaN*ones(66,2);
+for L=1:66
+    lid = find(tlme==L);
+    %TEeff
+    lme_te(L,1) = nanmean(TEeffM(lid));
+    lme_te(L,2) = nanmean(TEeffL(lid));
+    
+end
+
+lme_m = NaN*ones(ni,nj);
+lme_l = lme_m;
+for L=1:66
+    lid = find(tlme==L);
+
+    lme_m(lid) = lme_te(L,1);
+    lme_l(lid) = lme_te(L,2);
+end
+
 
 %% Table
-Tab=table(sites,z_mean_locs,z_loss_locs,det_locs,B,F,P,D,...
-    'VariableNames',{'Location','Z','Zloss','Det','Bent','F','P','D'});
-writetable(Tab,[dpath sname harv '_locs_biomasses.csv'],'Delimiter',',');
-save([dpath sname harv '_locs_biomasses.mat'],'Tab');
+% Tab=table(sites,z_mean_locs,z_loss_locs,det_locs,B,F,P,D,...
+%     'VariableNames',{'Location','Z','Zloss','Det','Bent','F','P','D'});
+% writetable(Tab,[dpath sname harv '_locs_biomasses.csv'],'Delimiter',',');
+% save([dpath sname harv '_locs_biomasses.mat'],'Tab');
 
 
 %% Plots
