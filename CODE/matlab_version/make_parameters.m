@@ -106,7 +106,7 @@ function make_parameters()
     
     Sm = 0.25;  %Feeding 2 sizes down
     J = 1.0;    %Juvenile feeding reduction
-    %D = 0.75;   %Demersal feeding in pelagic reduction
+    D = 0.75;   %Demersal feeding in pelagic reduction
     A = 0.5;    %Adult predation reduction
 
     MF_phi_MZ = Sm;
