@@ -73,11 +73,11 @@ stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
 %%
 for j = 1:length(jays)
-    J = jays(j);
-    tj = num2str(1000+int64(100*J));
+    A = jays(j);
+    ta = num2str(1000+int64(100*A));
     close all
-    dp = ['Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_',...
-        'J',tj(2:end),'_A100_Sm025_nmort1_BE05_noCC_RE00100'];
+    dp = ['Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075',...
+        '_J100_A',ta(2:end),'_Sm025_nmort1_BE05_noCC_RE00100'];
     dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
     cfile = char(dp);
@@ -291,16 +291,14 @@ fishsp  = NaN*ones(4,length(spots),np);
 mcon  = NaN*ones(3,np);
 mlev  = NaN*ones(3,np);
 for n = 1:length(jays)
-    J = jays(n);
-    tj = num2str(1000+int64(100*J));
+    A = jays(n);
+    ta = num2str(1000+int64(100*A));
     close all
-    dp = ['Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_',...
-        'J',tj(2:end),'_A100_Sm025_nmort1_BE05_noCC_RE00100'];
+    dp = ['Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075',...
+        '_J100_A',ta(2:end),'_Sm025_nmort1_BE05_noCC_RE00100'];
     dpath = [datap char(dp) '/'];
     fpath = [figp char(dp) '/'];
     cfile = char(dp);
-    cfile2 = ['Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_',...
-        'A100_Sm025_nmort1_BE05_noCC_RE00100_Jtests'];
     
     load([dpath sname '_lastyr_sum_mean_biom.mat']);
     
@@ -324,7 +322,8 @@ for n = 1:length(jays)
     
     
 end %bees
-
+cfile2 = ['Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_',...
+        'Sm025_nmort1_BE05_noCC_RE00100_Atests'];
 % Save values for all locs and all bees that combo
 save([datap 'Bio_rates/' cfile2 '.mat'],'fishsp','mcon','mlev');
 
@@ -360,8 +359,7 @@ for s=1:length(spots)
     f5=figure(5);
     subplot(4,4,s)
     plot(jays,FPrat(s,:),'b','LineWidth',2); hold on;
-    %ylim([0 1])
-    xlim([0 1])
+    ylim([0 1])
     if (s==2)
         title({'Frac F:P in final year'; loc})
     else
@@ -372,8 +370,7 @@ for s=1:length(spots)
     f6=figure(6);
     subplot(4,4,s)
     plot(jays,DPrat(s,:),'b','LineWidth',2); hold on;
-    %ylim([0 1])
-    xlim([0 1])
+    ylim([0 1])
     if (s==2)
         title({'Frac D:P in final year'; loc})
     else
@@ -406,7 +403,7 @@ bar(mcon(3,:))
 set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
 plot(0:np+1, Consumption(3,1:np+2),'--k','LineWidth',2)
 ylabel('L')
-xlabel('J pref')
+xlabel('A pref')
 print('-dpng',[figp sname cfile2 '_mean_con_size_all_locs.png'])
 
 %% Feeding level
@@ -429,5 +426,5 @@ bar(mlev(3,:))
 ylim([0.5 1])
 set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
 ylabel('L')
-xlabel('J pref')
+xlabel('A pref')
 print('-dpng',[figp sname cfile2 '_mean_flev_size_all_locs.png'])
