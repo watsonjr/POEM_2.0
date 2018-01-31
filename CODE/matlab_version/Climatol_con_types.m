@@ -130,23 +130,23 @@ ENVR = sub_init_env(ID);
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
 if harv==0
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_rec_rep_lrg_d.nc'];
+    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_sml_f.nc'];
+    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_sml_p.nc'];
+    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_sml_d.nc'];
+    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_med_f.nc'];
+    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_med_p.nc'];
+    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_med_d.nc'];
+    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_lrg_p.nc'];
+    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_con_types_lrg_d.nc'];
 else
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_rec_rep_lrg_d.nc'];
+    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_sml_f.nc'];
+    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_sml_p.nc'];
+    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_sml_d.nc'];
+    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_med_f.nc'];
+    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_med_p.nc'];
+    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_med_d.nc'];
+    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_lrg_p.nc'];
+    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_con_types_lrg_d.nc'];
     
 end
 

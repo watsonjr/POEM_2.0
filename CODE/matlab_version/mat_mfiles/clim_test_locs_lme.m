@@ -12,10 +12,15 @@ pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'
 dp = '/Volumes/GFDL/NC/Matlab_new_size/';
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
+load([gpath 'esm26_lme_mask_onedeg_SAU_66.mat']);
+load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
+    'J&C15_all.mat'],'LMEname')
 
 %LMEs of interest
 %[GB','WSS','CSS','ESS'],'GS','NS','NwS','BS','EBS','K2','S1','HOT','BATS','PUp'
 locs=[8;19;22;21;20;1;51;49;10;6;13];
+sites = LMEname(locs);
+name = {'SS','GS','NS','NwS','BS','EBS','OyaCur','KurCur','Haw','SEUS','Humb'};
 
 % Colors
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
@@ -65,10 +70,8 @@ ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'])
 load([dpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
-load([dpath 'Means_con_rec_rep_Climatol_' harv '_' cfile '.mat']);
+load([dpath 'Means_con_types_Climatol_' harv '_' cfile '.mat']);
 
-
-%NEED CON OF EACH GROUP BY EACH GROUP
 
 %% Zoop, det, bent
 load([cpath 'cobalt_zoop_biom_means.mat'],'mz_mean_clim','lz_mean_clim','mzloss_mean_clim','lzloss_mean_clim')
@@ -78,8 +81,8 @@ load([cpath 'cobalt_det_biom_means.mat'],'det_mean_clim')
 %from mg C m-2 to g(WW) m-2
 % 1e-3 g C in 1 mg C
 % 1 g dry W in 9 g wet W (Pauly & Christiansen)
-zm_grid = (mz_mean_clim + lz_mean_clim) * 1e-3 * 9.0;
-zl_grid = (mzloss_mean_clim+lzloss_mean_clim) * 1e-3 * 9.0;
+zmean_grid = (mz_mean_clim + lz_mean_clim) * 1e-3 * 9.0;
+zloss_grid = (mzloss_mean_clim+lzloss_mean_clim) * 1e-3 * 9.0;
 det_grid = det_mean_clim * 1e-3 * 9.0;
 
 %% Grid
@@ -107,59 +110,111 @@ Zb(ID)=b_mean;
 Csf=NaN*ones(ni,nj);
 Csp=NaN*ones(ni,nj);
 Csd=NaN*ones(ni,nj);
-Cmf=NaN*ones(ni,nj);
-Cmp=NaN*ones(ni,nj);
+CmfZm=NaN*ones(ni,nj);
+CmfZl=NaN*ones(ni,nj);
+CmfF=NaN*ones(ni,nj);
+CmfP=NaN*ones(ni,nj);
+CmpZm=NaN*ones(ni,nj);
+CmpZl=NaN*ones(ni,nj);
+CmpF=NaN*ones(ni,nj);
+CmpP=NaN*ones(ni,nj);
 Cmd=NaN*ones(ni,nj);
-Clp=NaN*ones(ni,nj);
-Cld=NaN*ones(ni,nj);
+ClpF=NaN*ones(ni,nj);
+ClpP=NaN*ones(ni,nj);
+CldF=NaN*ones(ni,nj);
+CldP=NaN*ones(ni,nj);
+CldD=NaN*ones(ni,nj);
+CldB=NaN*ones(ni,nj);
 
 %
-Csf(ID)=sf_mcon;
-Csp(ID)=sp_mcon;
-Csd(ID)=sd_mcon;
-Cmf(ID)=mf_mcon;
-Cmp(ID)=mp_mcon;
-Cmd(ID)=md_mcon;
-Clp(ID)=lp_mcon;
-Cld(ID)=ld_mcon;
+Csf(ID)=sf_mconZm;
+Csp(ID)=sp_mconZm;
+Csd(ID)=sd_mconZm;
+
+CmfZm(ID)=mf_mconZm;
+CmfZl(ID)=mf_mconZl;
+CmfF(ID)=mf_mconF;
+CmfP(ID)=mf_mconP;
+
+CmpZm(ID)=mp_mconZm;
+CmpZl(ID)=mp_mconZl;
+CmpF(ID)=mp_mconF;
+CmpP(ID)=mp_mconP;
+
+Cmd(ID)=md_mconB;
+
+ClpF(ID)=lp_mconF;
+ClpP(ID)=lp_mconP;
+
+CldF(ID)=ld_mconF;
+CldP(ID)=ld_mconP;
+CldD(ID)=ld_mconD;
+CldB(ID)=ld_mconB;
 
 All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
 AllF = Zsf+Zmf;
 AllP = Zsp+Zmp+Zlp;
 AllD = Zsd+Zmd+Zld;
 
-CAll = Csp+Csf+Csd+Cmp+Cmf+Cmd+Clp+Cld;
-CAllF = Csf+Cmf;
-CAllP = Csp+Cmp+Clp;
-CAllD = Csd+Cmd+Cld;
+CAll = Csf+CmfZm+CmfZl+CmfF+CmfP+...
+    Csp+CmpZm+CmpZl+CmpF+CmpP+ClpF+ClpP+...
+    Csd+Cmd+CldF+CldP+CldD+CldB;
+CAllF = Csf+CmfZm+CmfZl+CmfF+CmfP;
+CAllP = Csp+CmpZm+CmpZl+CmpF+CmpP+ClpF+ClpP;
+CAllD = Csd+Cmd+CldF+CldP+CldD+CldB;
+CAllS = Csf+Csp+Csd;
+CAllM = CmfZm+CmfZl+CmfF+CmfP+CmpZm+CmpZl+CmpF+CmpP+Cmd;
+CAllL = ClpF+ClpP+CldF+CldP+CldD+CldB;
+
 
 %% Calc LMEs
 tlme = lme_mask_onedeg;
 
-lme_te = NaN*ones(66,2);
+lme_biom = NaN*ones(66,4);
+lme_prey = NaN*ones(66,4);
+lme_cF = zeros(66,6);
+lme_cP = zeros(66,6);
+lme_cD = zeros(66,6);
 for L=1:66
     lid = find(tlme==L);
-    %TEeff
-    lme_te(L,1) = nanmean(TEeffM(lid));
-    lme_te(L,2) = nanmean(TEeffL(lid));
+    %prey
+    lme_prey(L,1) = nanmean(zmean_grid(lid));
+    lme_prey(L,2) = nanmean(zloss_grid(lid));
+    lme_prey(L,3) = nanmean(det_grid(lid));
+    lme_prey(L,4) = nanmean(Zb(lid));
+    %biomass
+    lme_biom(L,1) = nanmean(AllF(lid));
+    lme_biom(L,2) = nanmean(AllP(lid));
+    lme_biom(L,3) = nanmean(AllD(lid));
+    lme_biom(L,4) = nanmean(All(lid));
+    %consumption
+    lme_cF(L,1) = nanmean(Csf(lid)) + nanmean(CmfZm(lid));
+    lme_cF(L,2) = nanmean(CmfZl(lid));
+    lme_cF(L,3) = nanmean(CmfF(lid));
+    lme_cF(L,4) = nanmean(CmfP(lid));
     
-end
-
-lme_m = NaN*ones(ni,nj);
-lme_l = lme_m;
-for L=1:66
-    lid = find(tlme==L);
-
-    lme_m(lid) = lme_te(L,1);
-    lme_l(lid) = lme_te(L,2);
+    lme_cP(L,1) = nanmean(Csp(lid)) + nanmean(CmpZm(lid));
+    lme_cP(L,2) = nanmean(CmpZl(lid));
+    lme_cP(L,3) = nanmean(CmpF(lid));
+    lme_cP(L,4) = nanmean(CmpP(lid));
+    
+    lme_cD(L,1) = nanmean(Csd(lid));
+    lme_cD(L,3) = nanmean(CldF(lid));
+    lme_cD(L,4) = nanmean(CldP(lid));
+    lme_cD(L,5) = nanmean(CldD(lid));
+    lme_cD(L,6) = nanmean(Cmd(lid)) + nanmean(CldB(lid));
+    
 end
 
 
 %% Table
-% Tab=table(sites,z_mean_locs,z_loss_locs,det_locs,B,F,P,D,...
-%     'VariableNames',{'Location','Z','Zloss','Det','Bent','F','P','D'});
-% writetable(Tab,[dpath sname harv '_locs_biomasses.csv'],'Delimiter',',');
-% save([dpath sname harv '_locs_biomasses.mat'],'Tab');
+Tab=table(locs,sites,lme_prey(locs,1),lme_prey(locs,2),lme_prey(locs,3),...
+    lme_prey(locs,4),lme_biom(locs,1),lme_biom(locs,2),lme_biom(locs,3),...
+    'VariableNames',{'LME','Name','Z','Zloss','Det','Bent','F','P','D'});
+writetable(Tab,[dpath 'LME_locs_biomasses_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
+save([dpath 'LME_locs_biomasses_clim_fished_',harv,'_' cfile '.csv'],'Tab');
+
+%writetable(Tab,['LME_locs_biomasses_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
 
 
 %% Plots
@@ -171,288 +226,308 @@ y1=ones(9,1);
 y2=2*ones(9,1);
 y3=linspace(1.8,1.2,9);
 
-for s=1:length(spots)
-    loc = spots{s};
-    lname = [loc '_'];
+for n=1:length(sites)
+    s = locs(n);
+    loc = name{n};
     
     %% Bubble/arrow plot ----------------------------------------------------
     
     figure(1)
     clf
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(s)); hold on;
-    plot(1,1,'.','color','k','MarkerSize',10*det_locs(s)); hold on;
-    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(s)); hold on;
-    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(s)); hold on;
-    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(s)); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(s,1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(s,2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',50*conB(s,3)); hold on;
-    if (conF(s,3) > 0)
-        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*conF(s,3)); hold on;
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,1)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,3)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
     end
-    if (conP(s,3) > 0)
-        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*conP(s,3)); hold on;
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
     end
-    text(1,2.4,sprintf('%2.1f',z_mean_locs(s))); hold on;
-    text(1,0.6,sprintf('%2.1f',det_locs(s))); hold on;
-    text(3,2.4,sprintf('%2.1f',F(s))); hold on;
-    text(5,2.4,sprintf('%2.1f',P(s))); hold on;
-    text(5,0.6,sprintf('%2.1f',D(s))); hold on;
-    text(2,2.2,sprintf('%2.1e',conZ(s,1))); hold on;
-    text(4,2.2,sprintf('%2.1e',conF(s,2))); hold on;
-    text(3,0.8,sprintf('%2.1e',conB(s,3))); hold on;
-    text(4,1.5,sprintf('%2.1e',conF(s,3))); hold on;
-    text(5.25,1.5,sprintf('%2.1e',conP(s,3))); hold on;
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,1))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,3))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    text(4,1.5,sprintf('%2.1e',lme_cD(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
     xlim([0 6])
     ylim([0 3])
-    title(loc)
+    title(LMEname{s})
     set(gca,'XTickLabel','','YTickLabel','')
-    print('-dpng',[fpath sname harv '_fluxes_Zbio_' loc '.png'])
+    print('-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zbio_det_' loc '_LME.png'])
     
     figure(2)
     clf
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_loss_locs(s)); hold on;
-    plot(1,1,'.','color','k','MarkerSize',10*det_locs(s)); hold on;
-    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(s)); hold on;
-    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(s)); hold on;
-    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(s)); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(s,1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(s,2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',50*conB(s,3)); hold on;
-    if (conF(s,3) > 0)
-        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*conF(s,3)); hold on;
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,2)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,3)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
     end
-    if (conP(s,3) > 0)
-        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*conP(s,3)); hold on;
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
     end
-    text(1,2.4,sprintf('%2.1f',z_mean_locs(s))); hold on;
-    text(1,0.6,sprintf('%2.1f',det_locs(s))); hold on;
-    text(3,2.4,sprintf('%2.1f',F(s))); hold on;
-    text(5,2.4,sprintf('%2.1f',P(s))); hold on;
-    text(5,0.6,sprintf('%2.1f',D(s))); hold on;
-    text(2,2.2,sprintf('%2.1e',conZ(s,1))); hold on;
-    text(4,2.2,sprintf('%2.1e',conF(s,2))); hold on;
-    text(3,0.8,sprintf('%2.1e',conB(s,3))); hold on;
-    text(4,1.5,sprintf('%2.1e',conF(s,3))); hold on;
-    text(5.25,1.5,sprintf('%2.1e',conP(s,3))); hold on;
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,2))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,3))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    text(4,1.5,sprintf('%2.1e',lme_cD(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
     xlim([0 6])
     ylim([0 3])
-    title(loc)
+    title(LMEname{s})
     set(gca,'XTickLabel','','YTickLabel','')
-    print('-dpng',[fpath sname harv '_fluxes_Zloss_' loc '.png'])
+    print('-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zloss_det_' loc '_LME.png'])
+    
+    figure(3)
+    clf
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,1)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,4)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
+    end
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,1))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,4))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    text(4,1.5,sprintf('%2.1e',lme_cD(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
+    xlim([0 6])
+    ylim([0 3])
+    title(LMEname{s})
+    set(gca,'XTickLabel','','YTickLabel','')
+    print('-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zbio_bent_' loc '_LME.png'])
+    
+    figure(4)
+    clf
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,2)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,4)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
+    end
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,2))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,4))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    text(4,1.5,sprintf('%2.1e',lme_cD(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
+    xlim([0 6])
+    ylim([0 3])
+    title(LMEname{s})
+    set(gca,'XTickLabel','','YTickLabel','')
+    print('-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zloss_bent_' loc '_LME.png'])
     
 end
 
 %% Subplots of each type
-shelf = [6;10];
-upw = [15:16];
-olig = [12:14];
-fave = [6;16;14];
+%locs=[8;19;22;21;20;1;51;49;10;6;13];
+shelf = [8;19;22;21;20;1]; %1-6
+upw = 13; %11
+olig = [49;10;6];%8-10
+fave = [22;10;13];
 
 % Shelf Sea
-for s=1:length(shelf)
-    loc = spots{shelf(s)};
-    lname = [loc '_'];
-    
-    %% Bubble/arrow plot ----------------------------------------------------
-    
-    f3=figure(3);
-    subplot(1,2,s)
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(shelf(s))); hold on;
-    plot(1,1,'.','color','k','MarkerSize',10*det_locs(shelf(s))); hold on;
-    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(shelf(s))); hold on;
-    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(shelf(s))); hold on;
-    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(shelf(s))); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(shelf(s),1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(shelf(s),2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',50*conB(shelf(s),3)); hold on;
-    if (conF(shelf(s),3) > 0)
-        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(shelf(s),3)); hold on;
-    end
-    if (conP(shelf(s),3) > 0)
-        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(shelf(s),3)); hold on;
-    end
-    text(1,2.4,sprintf('%2.1f',z_mean_locs(shelf(s)))); hold on;
-    text(1,0.6,sprintf('%2.1f',det_locs(shelf(s)))); hold on;
-    text(3,2.4,sprintf('%2.1f',F(shelf(s)))); hold on;
-    text(5,2.4,sprintf('%2.1f',P(shelf(s)))); hold on;
-    text(5,0.6,sprintf('%2.1f',D(shelf(s)))); hold on;
-    text(2,2.2,sprintf('%2.1e',conZ(shelf(s),1))); hold on;
-    text(4,2.2,sprintf('%2.1e',conF(shelf(s),2))); hold on;
-    text(3,0.8,sprintf('%2.1e',conB(shelf(s),3))); hold on;
-    text(4,1.5,sprintf('%2.1e',conF(shelf(s),3))); hold on;
-    text(5.25,1.5,sprintf('%2.1e',conP(shelf(s),3))); hold on;
-    xlim([0 6])
-    ylim([0 3])
-    title(loc)
-    set(gca,'XTickLabel','','YTickLabel','')
-    
-end
-print(f3,'-dpng',[fpath sname harv '_fluxes_Zbio_shelf.png'])
-
-% Upwelling
-for s=1:length(upw)
-    loc = spots{upw(s)};
-    lname = [loc '_'];
-    
-    %% Bubble/arrow plot ----------------------------------------------------
-    
-    f4=figure(4);
-    subplot(1,2,s)
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(upw(s))); hold on;
-    plot(1,1,'.','color','k','MarkerSize',10*det_locs(upw(s))); hold on;
-    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(upw(s))); hold on;
-    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(upw(s))); hold on;
-    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(upw(s))); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(upw(s),1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(upw(s),2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',50*conB(upw(s),3)); hold on;
-    if (conF(upw(s),3) > 0)
-        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(upw(s),3)); hold on;
-    end
-    if (conP(upw(s),3) > 0)
-        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(upw(s),3)); hold on;
-    end
-    text(1,2.4,sprintf('%2.1f',z_mean_locs(upw(s)))); hold on;
-    text(1,0.6,sprintf('%2.1f',det_locs(upw(s)))); hold on;
-    text(3,2.4,sprintf('%2.1f',F(upw(s)))); hold on;
-    text(5,2.4,sprintf('%2.1f',P(upw(s)))); hold on;
-    text(5,0.6,sprintf('%2.1f',D(upw(s)))); hold on;
-    text(2,2.2,sprintf('%2.1e',conZ(upw(s),1))); hold on;
-    text(4,2.2,sprintf('%2.1e',conF(upw(s),2))); hold on;
-    text(3,0.8,sprintf('%2.1e',conB(upw(s),3))); hold on;
-    text(4,1.5,sprintf('%2.1f',conF(upw(s),3))); hold on;
-    text(5.25,1.5,sprintf('%2.1f',conP(upw(s),3))); hold on;
-    xlim([0 6])
-    ylim([0 3])
-    title(loc)
-    set(gca,'XTickLabel','','YTickLabel','')
-    
-end
-print(f4,'-dpng',[fpath sname harv '_fluxes_Zbio_upwelling.png'])
-
-% Oligotrophic
-for s=1:length(olig)
-    loc = spots{olig(s)};
-    lname = [loc '_'];
-    
-    %% Bubble/arrow plot ----------------------------------------------------
+for n=1:6
+    s = locs(n);
+    loc = name{n};
     
     f5=figure(5);
-    subplot(2,2,s)
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(olig(s))); hold on;
-    plot(1,1,'.','color','k','MarkerSize',10*det_locs(olig(s))); hold on;
-    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(olig(s))); hold on;
-    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(olig(s))); hold on;
-    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(olig(s))); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(olig(s),1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(olig(s),2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',50*conB(olig(s),3)); hold on;
-    if (conF(olig(s),3) > 0)
-        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(olig(s),3)); hold on;
+    subplot(3,2,n)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,1)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,4)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
     end
-    if (conP(olig(s),3) > 0)
-        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(olig(s),3)); hold on;
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
     end
-    text(1,2.4,sprintf('%2.1f',z_mean_locs(olig(s)))); hold on;
-    text(1,0.6,sprintf('%2.1f',det_locs(olig(s)))); hold on;
-    text(3,2.4,sprintf('%2.1f',F(olig(s)))); hold on;
-    text(5,2.4,sprintf('%2.1f',P(olig(s)))); hold on;
-    text(5,0.6,sprintf('%2.1f',D(olig(s)))); hold on;
-    text(2,2.2,sprintf('%2.1e',conZ(olig(s),1))); hold on;
-    text(4,2.2,sprintf('%2.1e',conF(olig(s),2))); hold on;
-    text(3,0.8,sprintf('%2.1e',conB(olig(s),3))); hold on;
-    text(4,1.5,sprintf('%2.1f',conF(olig(s),3))); hold on;
-    text(5.25,1.5,sprintf('%2.1f',conP(olig(s),3))); hold on;
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,1))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,4))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    text(4,1.5,sprintf('%2.1e',lme_cD(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
     xlim([0 6])
     ylim([0 3])
-    title(loc)
+    title(LMEname{s})
     set(gca,'XTickLabel','','YTickLabel','')
     
 end
-print(f5,'-dpng',[fpath sname harv '_fluxes_Zbio_oligotrophic.png'])
+print(f5,'-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zbio_bent_shelf_LMEs.png'])
+
+
+%% Oligotrophic
+count=0;
+for n=8:10
+    s = locs(n);
+    loc = name{n};
+    count = count +1;
+    
+    f6=figure(6);
+    subplot(2,2,count)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,1)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,4)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
+    end
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,1))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,4))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    text(4,1.5,sprintf('%2.1e',lme_cD(s,3))); hold on;
+    text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
+    xlim([0 6])
+    ylim([0 3])
+    title(LMEname{s})
+    set(gca,'XTickLabel','','YTickLabel','')
+    
+end
+print(f6,'-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zbio_bent_oligotrophic_LME.png'])
 
 
 %% Faves of each
-for s=1:length(fave)
-    loc = spots{fave(s)};
-    lname = [loc '_'];
-    
-    %% Bubble/arrow plot ----------------------------------------------------
-    
-    f6=figure(6);
-    subplot(1,3,s)
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(fave(s))); hold on;
-    plot(1,1,'.','color','k','MarkerSize',10*det_locs(fave(s))); hold on;
-    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(fave(s))); hold on;
-    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(fave(s))); hold on;
-    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(fave(s))); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(fave(s),1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',50*conB(fave(s),3)); hold on;
-    if (conF(fave(s),3) > 0)
-        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),3)); hold on;
-    end
-    if (conP(fave(s),3) > 0)
-        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(fave(s),3)); hold on;
-    end
-    text(1,2.4,sprintf('%2.1f',z_mean_locs(fave(s)))); hold on;
-    text(1,0.6,sprintf('%2.1f',det_locs(fave(s)))); hold on;
-    text(3,2.4,sprintf('%2.1f',F(fave(s)))); hold on;
-    text(5,2.4,sprintf('%2.1f',P(fave(s)))); hold on;
-    text(5,0.6,sprintf('%2.1f',D(fave(s)))); hold on;
-    text(2,2.2,sprintf('%2.1e',conZ(fave(s),1))); hold on;
-    text(4,2.2,sprintf('%2.1e',conF(fave(s),2))); hold on;
-    text(3,0.8,sprintf('%2.1e',conB(fave(s),3))); hold on;
-    if (s==1)
-        text(4,1.6,sprintf('%2.1e',conF(shelf(s),3))); hold on;
-        text(5.25,1.5,sprintf('%2.1e',conP(shelf(s),3))); hold on;
-    else
-        text(4,1.6,sprintf('%2.1f',conF(fave(s),3))); hold on;
-        text(5.25,1.5,sprintf('%2.1f',conP(fave(s),3))); hold on;
-    end
-    xlim([0 6])
-    ylim([0 3])
-    title(loc)
-    set(gca,'XTickLabel','','YTickLabel','')
+for n=1:length(fave)
+    s = fave(n);
     
     f7=figure(7);
-    subplot(3,1,s)
-    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*z_mean_locs(fave(s))); hold on;
-    plot(1,1,'.','color','k','MarkerSize',10*det_locs(fave(s))); hold on;
-    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*F(fave(s))); hold on;
-    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*P(fave(s))); hold on;
-    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*D(fave(s))); hold on;
-    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*conZ(fave(s),1)); hold on;
-    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),2)); hold on;
-    plot(x3,y1,'color','k','Linewidth',50*conB(fave(s),3)); hold on;
-    if (conF(fave(s),3) > 0)
-        plot(x2,y3,'color',cmap3(1,:),'Linewidth',50*conF(fave(s),3)); hold on;
+    subplot(1,3,n)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,1)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,4)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
     end
-    if (conP(fave(s),3) > 0)
-        plot(x4,y3,'color',cmap3(2,:),'Linewidth',50*conP(fave(s),3)); hold on;
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
     end
-    text(1,2.4,sprintf('%2.1f',z_mean_locs(fave(s)))); hold on;
-    text(1,0.6,sprintf('%2.1f',det_locs(fave(s)))); hold on;
-    text(3,2.4,sprintf('%2.1f',F(fave(s)))); hold on;
-    text(5,2.4,sprintf('%2.1f',P(fave(s)))); hold on;
-    text(5,0.6,sprintf('%2.1f',D(fave(s)))); hold on;
-    text(2,2.2,sprintf('%2.1e',conZ(fave(s),1))); hold on;
-    text(4,2.2,sprintf('%2.1e',conF(fave(s),2))); hold on;
-    text(3,0.8,sprintf('%2.1e',conB(fave(s),3))); hold on;
-    if (s==1)
-        text(4,1.5,sprintf('%2.1e',conF(shelf(s),3))); hold on;
-        text(5.25,1.5,sprintf('%2.1e',conP(shelf(s),3))); hold on;
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,1))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,4))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    if (n==2)
+        text(4,1.6,sprintf('%2.1f',lme_cD(s,3))); hold on;
+        text(5.25,1.5,sprintf('%2.1f',lme_cD(s,4))); hold on;
     else
-        text(4,1.5,sprintf('%2.1f',conF(fave(s),3))); hold on;
-        text(5.25,1.5,sprintf('%2.1f',conP(fave(s),3))); hold on;
+        text(4,1.6,sprintf('%2.1e',lme_cD(s,3))); hold on;
+        text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
     end
     xlim([0 6])
     ylim([0 3])
-    title(loc)
+    title(LMEname{s})
+    set(gca,'XTickLabel','','YTickLabel','')
+    
+    f8=figure(8);
+    subplot(3,1,n)
+    plot(1,2,'.','color',[0.5 0.5 0.5],'MarkerSize',10*lme_prey(s,1)); hold on;
+    plot(1,1,'.','color','k','MarkerSize',10*lme_prey(s,4)); hold on;
+    plot(3,2,'.','color',cmap3(1,:),'MarkerSize',10*lme_biom(s,1)); hold on;
+    plot(5,2,'.','color',cmap3(2,:),'MarkerSize',10*lme_biom(s,2)); hold on;
+    plot(5,1,'.','color',cmap3(3,:),'MarkerSize',10*lme_biom(s,3)); hold on;
+    plot(x1,y2,'color',[0.5 0.5 0.5],'Linewidth',50*(lme_cF(s,1)+lme_cF(s,2))); hold on;
+    plot(x2,y2,'color',cmap3(1,:),'Linewidth',50*lme_cP(s,3)); hold on;
+    plot(x3,y1,'color','k','Linewidth',lme_cD(s,6)); hold on;
+    if (lme_cD(s,3) > 0)
+        plot(x2,y3,'color',cmap3(1,:),'Linewidth',10*lme_cD(s,3)); hold on;
+    end
+    if (lme_cD(s,4) > 0)
+        plot(x4,y3,'color',cmap3(2,:),'Linewidth',10*lme_cD(s,4)); hold on;
+    end
+    text(1,2.4,sprintf('%2.1f',lme_prey(s,1))); hold on;
+    text(1,0.6,sprintf('%2.1f',lme_prey(s,4))); hold on;
+    text(3,2.4,sprintf('%2.1f',lme_biom(s,1))); hold on;
+    text(5,2.4,sprintf('%2.1f',lme_biom(s,2))); hold on;
+    text(5,0.6,sprintf('%2.1f',lme_biom(s,3))); hold on;
+    text(2,2.2,sprintf('%2.1e',(lme_cF(s,1)+lme_cF(s,2)))); hold on;
+    text(4,2.2,sprintf('%2.1e',lme_cP(s,3))); hold on;
+    text(3,0.8,sprintf('%2.1e',lme_cD(s,6))); hold on;
+    if (n==2)
+        text(4,1.5,sprintf('%2.1f',lme_cD(s,3))); hold on;
+        text(5.25,1.5,sprintf('%2.1f',lme_cD(s,4))); hold on;
+    else
+        text(4,1.5,sprintf('%2.1e',lme_cD(s,3))); hold on;
+        text(5.25,1.5,sprintf('%2.1e',lme_cD(s,4))); hold on;
+    end
+    xlim([0 6])
+    ylim([0 3])
+    title(LMEname{s})
     set(gca,'XTickLabel','','YTickLabel','')
     
 end
-print(f6,'-dpng',[fpath sname harv '_fluxes_Zbio_favesH.png'])
-print(f7,'-dpng',[fpath sname harv '_fluxes_Zbio_favesV.png'])
+print(f7,'-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zbio_bent_faves_LMEsH.png'])
+print(f8,'-dpng',[ppath 'Clim_fished_',harv,'_fluxes_Zbio_bent_faves_LMEsV.png'])
 

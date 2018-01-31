@@ -91,7 +91,7 @@ AllL = Plp+Pld;
 
 %% Production (= nu * biom) efficiency
 %Try using losses vs. standing biomass
-TEprodS = AllS./mlz_loss;   %0.0038    0.0629    0.1318    0.2039    1.9666
+TEprodS = AllS./mmz_loss;   %0.0020    0.0264    0.0522    0.0855    0.2533
 TEprodM = AllM./AllS;       %-0.0484    1.2105    2.0928    3.8484   21.4620
 TEprodL = AllL./AllM;       %-0.0748    0.0116    0.0337    0.1292    0.6602
 
@@ -116,6 +116,10 @@ TEeffL = AllL./(Plb + mmz_loss + mlz_loss); %0.0000    0.0001    0.0003    0.002
 
 %% save
 % TEprods don't seem right b/c go over 1
+
+TEM = real(TEeffM.^(1/3));
+TEL = real(TEeffL.^(1/4));
+
 save([fpath 'TEeff_Climatol_All_fish03_' cfile '.mat'],'TEeffM','TEeffL',...
     'Pmf','Pmp','Pmd','Plp','Pld','Plb','mmz_loss','mlz_loss');
 
@@ -264,6 +268,38 @@ set(gcf,'renderer','painters')
 title('Climatology TEeff L')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_TEeffL.png'])
+
+%% all M
+figure(10)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,TEM)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 0.40]);
+hcb = colorbar('h');
+ylim(hcb,[0 0.40])                   
+set(gcf,'renderer','painters')
+title('Climatology TEeff M')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_TEeffM_converted.png'])
+
+% all L
+figure(11)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,TEL)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 0.40]);
+hcb = colorbar('h');
+ylim(hcb,[0 0.40])                   
+set(gcf,'renderer','painters')
+title('Climatology TEeff L')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_TEeffL_converted.png'])
 
 %% All 4 on subplots
 % figure(10)

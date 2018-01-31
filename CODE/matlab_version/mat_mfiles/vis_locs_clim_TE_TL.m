@@ -19,7 +19,7 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 spots=spots';
 
-dp = 'Dc_enc70-b200_cm30_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE10_noCC_RE00100';
+dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 sname = 'Clim_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
@@ -292,6 +292,7 @@ MZ_prod = mmz_locs';
 LZ_prod = mlz_locs';
 MZl_prod = mmzl_locs';
 LZl_prod = mlzl_locs';
+Det_prod = mdet_locs';
 
 S_prod=(SP_prod+SF_prod+SD_prod);
 M_prod=(MP_prod+MF_prod+MD_prod);
@@ -310,9 +311,9 @@ L_prod2=(LD_prod);
 
 TEprod      = S_prod./MZl_prod;
 TEprod(2,:) = M_prod1./(S_prod+LZl_prod);
-TEprod(3,:) = M_prod2./(B_prod);
+TEprod(3,:) = M_prod2./(Det_prod); %M_prod2./(B_prod);
 TEprod(4,:) = L_prod1./M_prod1;
-TEprod(5,:) = L_prod2./(M_prod2+B_prod);
+TEprod(5,:) = L_prod2./(M_prod2+Det_prod); %L_prod2./(M_prod2+B_prod);
 
 figure
 bar(TEprod)
@@ -325,167 +326,218 @@ TEeff1(2,:) = L_prod./(B_prod + MZ_prod + LZ_prod);
 TEeff2      = M_prod./(B_prod + MZl_prod + LZl_prod);
 TEeff2(2,:) = L_prod./(B_prod + MZl_prod + LZl_prod);
 
-figure
-bar(TEeff2')
-ylim([0 0.25])
+TEeff3      = M_prod./(Det_prod + MZ_prod + LZ_prod);
+TEeff3(2,:) = L_prod./(Det_prod + MZ_prod + LZ_prod);
+
+TEeff4      = M_prod./(Det_prod + MZl_prod + LZl_prod);
+TEeff4(2,:) = L_prod./(Det_prod + MZl_prod + LZl_prod);
+
 
 %%
 save([dpath sname 'locs_' harv '_lastyr_TE_TL.mat'],...
     'Pcon','Fcon','Dcon','Pprod','Fprod','Dprod','B_prod','MZ_prod',...
     'LZ_prod','MZl_prod','LZl_prod','conF','conP','conD','conZm',...
     'conZl','conB','TLprey','Con','TEcon','TEprod_grp','TEprod',...
-    'TEeff1','TEeff2');
+    'TEeff1','TEeff2','TEeff3','TEeff4');
+
+TEM = real(TEeff2(1,:).^(1/3));
+TEL = real(TEeff2(2,:).^(1/4));
+Tab=table(spots,TEeff2(1,:)',TEeff2(2,:)',TEM',TEL',...
+    'VariableNames',{'Site','TEeffM','TEeffL','TEM','TEL'});
+writetable(Tab,[dpath 'Locs_TEeffLoss_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
+save([dpath 'Locs_TEeffLoss_clim_fished_',harv,'_' cfile '.csv'],'Tab');
+
+%writetable(Tab,['Locs_TEeffLoss_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
 
 %% Figures
-% figure(1);
-% subplot(2,1,1)
-% plot(1:length(spots),TEcon(1,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-% ylabel('mean conTE in final year')
-% xlabel('Site')
-% title('Medium/Small')
-% 
-% subplot(2,1,2)
-% plot(1:length(spots),TEcon(2,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-% ylabel('mean conTE in final year')
-% xlabel('Site')
-% title('Large/Medium')
-% stamp(cfile)
-% print('-dpng',[fpath sname 'locs_' harv '_conTEs.png'])
-% 
-% %%
-% figure(2);
-% subplot(3,2,1)
-% plot(1:length(spots),TEprod(1,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:2:length(spots),'XTickLabel',spots(1:2:end))
-% title('S')
-% 
-% subplot(3,2,3)
-% plot(1:length(spots),TEprod(2,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',2:2:length(spots),'XTickLabel',spots(2:2:end))
-% ylabel('mean prodTE in final year')
-% title('MF & MP')
-% 
-% subplot(3,2,4)
-% plot(1:length(spots),TEprod(3,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',2:2:length(spots),'XTickLabel',spots(2:2:end))
-% title('MD')
-% 
-% subplot(3,2,5)
-% plot(1:length(spots),TEprod(4,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:2:length(spots),'XTickLabel',spots(1:2:end))
-% xlabel('Site')
-% title('LP')
-% 
-% subplot(3,2,6)
-% plot(1:length(spots),TEprod(5,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:2:length(spots),'XTickLabel',spots(1:2:end))
-% xlabel('Site')
-% title('LD')
-% stamp(cfile)
-% print('-dpng',[fpath sname 'locs_' harv '_prodTEs.png'])
-% 
-% %% TE eff
-% figure(3);
-% subplot(2,1,1)
-% plot(1:length(spots),TEeff1(1,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-% ylabel('Medium')
-% xlabel('Site')
-% title('mean TE eff in final year')
-% 
-% subplot(2,1,2)
-% plot(1:length(spots),TEeff1(2,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-% ylabel('Large')
-% xlabel('Site')
-% stamp(cfile)
-% print('-dpng',[fpath sname 'locs_' harv '_effTEs.png'])
-% 
-% %Losses
-% figure(4);
-% subplot(2,1,1)
-% plot(1:length(spots),TEeff2(1,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-% ylabel('Medium')
-% xlabel('Site')
-% title('mean TE eff in final year')
-% 
-% subplot(2,1,2)
-% plot(1:length(spots),TEeff2(2,:),'.k','MarkerSize',25); hold on;
-% xlim([0 length(spots)+1])
-% set(gca,'XTick',1:length(spots),'XTickLabel',spots)
-% ylabel('Large')
-% xlabel('Site')
-% stamp(cfile)
-% print('-dpng',[fpath sname 'locs_' harv '_effTEs_losses.png'])
-% 
-% %% TL prey
-% figure(5);
-% subplot(3,1,1)
-% plot(1-0.25:16,TLprey(1,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(3,:),...
-%     'MarkerSize',15); hold on;
-% plot(1:16,TLprey(2,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(1,:),...
-%     'MarkerSize',15); hold on;
-% plot(1+0.25:17,TLprey(3,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(2,:),...
-%     'MarkerSize',15); hold on;
-% xlim([0 17])
-% set(gca,'XTick',1:16,'XTickLabel',spots);
-% title('S')
-% 
-% subplot(3,1,2)
-% plot(1-0.25:16,TLprey(4,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(3,:),...
-%     'MarkerSize',15); hold on;
-% plot(1:16,TLprey(5,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(1,:),...
-%     'MarkerSize',15); hold on;
-% plot(1+0.25:17,TLprey(6,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(2,:),...
-%     'MarkerSize',15); hold on;
-% xlim([0 17])
-% set(gca,'XTick',1:16,'XTickLabel',spots);
-% ylabel('Mean TL in final year')
-% title('M')
-% 
-% subplot(3,1,3)
-% plot(1:16,TLprey(7,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(1,:),...
-%     'MarkerSize',15); hold on;
-% plot(1+0.25:17,TLprey(8,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(2,:),...
-%     'MarkerSize',15); hold on;
-% xlim([0 17])
-% set(gca,'XTick',1:16,'XTickLabel',spots);
-% title('L')
-% stamp(cfile)
-% print('-dpng',[fpath sname 'locs_' harv '_TL.png'])
-% 
-% %%
-% figure(6);
-% plot(1+0.25:17,TLprey(8,:),'sk',...
-%     'MarkerFaceColor',cmap_ppt(2,:),...
-%     'MarkerSize',15); hold on;
-% xlim([0 17])
-% set(gca,'XTick',1:16,'XTickLabel',spots);
-% ylabel('Mean TL in final year')
-% title('L')
-% stamp(cfile)
-% print('-dpng',[fpath sname 'locs_' harv '_LD_TL.png'])
+%TEcon
+figure(1);
+subplot(2,1,1)
+plot(1:length(spots),TEcon(1,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('mean conTE in final year')
+xlabel('Site')
+title('Medium/Small')
+
+subplot(2,1,2)
+plot(1:length(spots),TEcon(2,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('mean conTE in final year')
+xlabel('Site')
+title('Large/Medium')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_conTEs.png'])
+
+%% TE prod by habitat and size
+figure(2);
+subplot(3,2,1)
+plot(1:length(spots),TEprod(1,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:2:length(spots),'XTickLabel',spots(1:2:end))
+title('S')
+
+subplot(3,2,3)
+plot(1:length(spots),TEprod(2,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',2:2:length(spots),'XTickLabel',spots(2:2:end))
+ylabel('mean prodTE in final year')
+title('MF & MP')
+
+subplot(3,2,4)
+plot(1:length(spots),TEprod(3,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',2:2:length(spots),'XTickLabel',spots(2:2:end))
+title('MD')
+
+subplot(3,2,5)
+plot(1:length(spots),TEprod(4,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:2:length(spots),'XTickLabel',spots(1:2:end))
+xlabel('Site')
+title('LP')
+
+subplot(3,2,6)
+plot(1:length(spots),TEprod(5,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:2:length(spots),'XTickLabel',spots(1:2:end))
+xlabel('Site')
+title('LD')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_prodTEs.png'])
+
+%% TE eff
+figure(3);
+subplot(2,1,1)
+plot(1:length(spots),TEeff1(1,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Medium')
+xlabel('Site')
+title('mean TE eff in final year')
+
+subplot(2,1,2)
+plot(1:length(spots),TEeff1(2,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Large')
+xlabel('Site')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_effTEs.png'])
+
+%Losses
+figure(4);
+subplot(2,1,1)
+plot(1:length(spots),TEeff2(1,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Medium')
+xlabel('Site')
+title('mean TE eff in final year')
+
+subplot(2,1,2)
+plot(1:length(spots),TEeff2(2,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Large')
+xlabel('Site')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_effTEs_losses.png'])
+
+%Bio & Det
+figure(7);
+subplot(2,1,1)
+plot(1:length(spots),TEeff3(1,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Medium')
+xlabel('Site')
+title('mean TE eff in final year')
+
+subplot(2,1,2)
+plot(1:length(spots),TEeff3(2,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Large')
+xlabel('Site')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_effTEs_det.png'])
+
+%Losses & Det
+figure(8);
+subplot(2,1,1)
+plot(1:length(spots),TEeff4(1,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Medium')
+xlabel('Site')
+title('mean TE eff in final year')
+
+subplot(2,1,2)
+plot(1:length(spots),TEeff4(2,:),'.k','MarkerSize',25); hold on;
+xlim([0 length(spots)+1])
+set(gca,'XTick',1:length(spots),'XTickLabel',spots)
+ylabel('Large')
+xlabel('Site')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_effTEs_losses_det.png'])
+
+%% TL prey
+figure(5);
+subplot(3,1,1)
+plot(1-0.25:16,TLprey(1,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(3,:),...
+    'MarkerSize',15); hold on;
+plot(1:16,TLprey(2,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(1,:),...
+    'MarkerSize',15); hold on;
+plot(1+0.25:17,TLprey(3,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(2,:),...
+    'MarkerSize',15); hold on;
+xlim([0 17])
+set(gca,'XTick',1:16,'XTickLabel',spots);
+title('S')
+
+subplot(3,1,2)
+plot(1-0.25:16,TLprey(4,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(3,:),...
+    'MarkerSize',15); hold on;
+plot(1:16,TLprey(5,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(1,:),...
+    'MarkerSize',15); hold on;
+plot(1+0.25:17,TLprey(6,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(2,:),...
+    'MarkerSize',15); hold on;
+xlim([0 17])
+set(gca,'XTick',1:16,'XTickLabel',spots);
+ylabel('Mean TL in final year')
+title('M')
+
+subplot(3,1,3)
+plot(1:16,TLprey(7,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(1,:),...
+    'MarkerSize',15); hold on;
+plot(1+0.25:17,TLprey(8,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(2,:),...
+    'MarkerSize',15); hold on;
+xlim([0 17])
+set(gca,'XTick',1:16,'XTickLabel',spots);
+title('L')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_TL.png'])
+
+%%
+figure(6);
+plot(1+0.25:17,TLprey(8,:),'sk',...
+    'MarkerFaceColor',cmap_ppt(2,:),...
+    'MarkerSize',15); hold on;
+xlim([0 17])
+set(gca,'XTick',1:16,'XTickLabel',spots);
+ylabel('Mean TL in final year')
+title('L')
+stamp(cfile)
+print('-dpng',[fpath sname 'locs_' harv '_LD_TL.png'])
 
 
 

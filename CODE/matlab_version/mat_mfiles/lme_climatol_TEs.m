@@ -69,6 +69,16 @@ end
 save([dpath 'TEeff_Climatol_All_fish03_' cfile '.mat'],'lme_te',...
     'lme_m','lme_l','-append');
 
+TEM = real(lme_te(:,1).^(1/3));
+TEL = real(lme_te(:,2).^(1/4));
+
+Tab=table([1:66]',lme_te(:,1),lme_te(:,2),TEM,TEL,...
+    'VariableNames',{'LME','TEeffM','TEeffL','TEM','TEL'});
+writetable(Tab,[dpath 'LME_TEeffLoss_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
+save([dpath 'LME_TEeffLoss_clim_fished_',harv,'_' cfile '.csv'],'Tab');
+
+writetable(Tab,['LME_TEeffLoss_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
+
 %% Figures
 % M
 figure(1)
@@ -101,4 +111,37 @@ set(gcf,'renderer','painters')
 title('Climatology TEeff L')
 stamp(cfile)
 print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffL.png'])
+
+
+%% M
+figure(3)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,real(lme_m.^(1/3)))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 0.4]);
+hcb = colorbar('h');
+ylim(hcb,[0 0.4])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('Climatology TEeff M')
+stamp(cfile)
+print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffM_converted.png'])
+
+% L
+figure(4)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,real(lme_l.^(1/4)))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 0.4]);
+hcb = colorbar('h');
+ylim(hcb,[0 0.4])                   %Set color axis if needed
+set(gcf,'renderer','painters')
+title('Climatology TEeff L')
+stamp(cfile)
+print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffL_converted.png'])
 

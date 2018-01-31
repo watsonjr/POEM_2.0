@@ -45,6 +45,17 @@ Zmd=NaN*ones(ni,nj);
 Zlp=NaN*ones(ni,nj);
 Zld=NaN*ones(ni,nj);
 Zb=NaN*ones(ni,nj);
+Zm1=NaN*ones(ni,nj);
+Zm2=NaN*ones(ni,nj);
+
+Tsf=NaN*ones(ni,nj);
+Tsp=NaN*ones(ni,nj);
+Tsd=NaN*ones(ni,nj);
+Tmf=NaN*ones(ni,nj);
+Tmp=NaN*ones(ni,nj);
+Tmd=NaN*ones(ni,nj);
+Tlp=NaN*ones(ni,nj);
+Tld=NaN*ones(ni,nj);
 
 Cmf=NaN*ones(ni,nj);
 Cmp=NaN*ones(ni,nj);
@@ -61,6 +72,17 @@ Zmd(ID)=md_mean;
 Zlp(ID)=lp_mean;
 Zld(ID)=ld_mean;
 Zb(ID)=b_mean;
+Zm1(ID)=all_median1;
+Zm2(ID)=all_median2;
+
+Tsf(ID)=sf_tot;
+Tsp(ID)=sp_tot;
+Tsd(ID)=sd_tot;
+Tmf(ID)=mf_tot;
+Tmp(ID)=mp_tot;
+Tmd(ID)=md_tot;
+Tlp(ID)=lp_tot;
+Tld(ID)=ld_tot;
 
 Cmf(ID)=mf_my;
 Cmp(ID)=mp_my;
@@ -84,6 +106,26 @@ Amd_mean = Zmd .* AREA_OCN;
 Alp_mean = Zlp .* AREA_OCN;
 Ald_mean = Zld .* AREA_OCN;
 Ab_mean  = Zb .* AREA_OCN;
+all_med1 = Zm1 .* AREA_OCN;
+all_med2 = Zm2 .* AREA_OCN;
+
+Asf_tot = Tsf .* AREA_OCN;
+Asp_tot = Tsp .* AREA_OCN;
+Asd_tot = Tsd .* AREA_OCN;
+Amf_tot = Tmf .* AREA_OCN;
+Amp_tot = Tmp .* AREA_OCN;
+Amd_tot = Tmd .* AREA_OCN;
+Alp_tot = Tlp .* AREA_OCN;
+Ald_tot = Tld .* AREA_OCN;
+
+%% Total biomass (compare to J&C15)
+tot_bio1 = nansum(all_med1(:)) * 1e-6
+tot_bio2 = nansum(all_med2(:)) * 1e-6
+
+%Too high by 1e2
+tot_bio3 = nansum(Asf_tot(:) + Asp_tot(:) + Asd_tot(:) +...
+    Amf_tot(:) + Amp_tot(:) + Amd_tot(:) +...
+    Alp_tot(:) + Ald_tot(:)) * 1e-6;
 
 %% Calc LMEs
 tlme = lme_mask_onedeg;
