@@ -16,7 +16,7 @@ load([cpath 'esm26_area_1deg.mat']);
 AREA_OCN = max(area,1);
 [ni,nj]=size(lon);
 tlme = lme_mask_onedeg;
-
+%%
 lme_area = zeros(66,2);
 lme_depth = zeros(66,1);
 for L=1:66

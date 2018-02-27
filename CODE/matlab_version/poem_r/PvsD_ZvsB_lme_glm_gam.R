@@ -244,7 +244,7 @@ gPF <- gam(FracPF ~ s(LME_ptemp,k=4) + s(logRatZlB,k=4) + s(LME_Frac200,k=4), da
 summary(gPF)
 gPFl <- gam(FracPF ~ s(LME_ptemp,k=4) + (logRatZlB) + s(LME_Frac200,k=4), data=ZB, family = betar)
 summary(gPFl)
-gPFr <- gam(FracPF ~ s(logRatZlB,k=4), data=ZB, family = betar) edf=1 linear
+gPFr <- gam(FracPF ~ s(logRatZlB,k=4), data=ZB, family = betar) #edf=1 linear
 summary(gPFr) #53.7% dev
 gPFt <- gam(FracPF ~ s(LME_ptemp,k=4), data=ZB, family = betar)
 summary(gPFt) #54.2%
@@ -503,6 +503,7 @@ dev.off()
 
 
 ### PREDICT VALUES --------------------------------------------------
+#Z:B
 logRatZlB <- data.frame(logRatZlB = seq(from=min(ZB$logRatZlB),to=max(ZB$logRatZlB),length=100))
 PD <- predict(gPDr, newdata=logRatZlB, type = "response", se=TRUE)
 PF <- predict(gPFr, newdata=logRatZlB, type = "response", se=TRUE)
@@ -523,11 +524,60 @@ LMfit[,2] <- as.data.frame(LM$se.fit)
 LMfit[,3] <- as.data.frame(logRatZlB)
 names(LMfit) <- c("fit","se","logZlB")
 
-
 write.table(PDfit,"PD_ZlB_gam_fit.csv",sep=",",row.names=F)
 write.table(PFfit,"PF_ZlB_gam_fit.csv",sep=",",row.names=F)
 write.table(LMfit,"LM_ZlB_gam_fit.csv",sep=",",row.names=F)
 
+
+#Temp
+LME_ptemp <- data.frame(LME_ptemp = seq(from=min(ZB$LME_ptemp),to=max(ZB$LME_ptemp),length=100))
+tPD <- predict(gPDt, newdata=LME_ptemp, type = "response", se=TRUE)
+tPF <- predict(gPFt, newdata=LME_ptemp, type = "response", se=TRUE)
+tLM <- predict(gLMt, newdata=LME_ptemp, type = "response", se=TRUE)
+
+tPDfit <- as.data.frame(tPD$fit)
+tPDfit[,2] <- as.data.frame(tPD$se.fit)
+tPDfit[,3] <- as.data.frame(LME_ptemp)
+names(tPDfit) <- c("fit","se","LME_ptemp")
+
+tPFfit <- as.data.frame(tPF$fit)
+tPFfit[,2] <- as.data.frame(tPF$se.fit)
+tPFfit[,3] <- as.data.frame(LME_ptemp)
+names(tPFfit) <- c("fit","se","LME_ptemp")
+
+tLMfit <- as.data.frame(tLM$fit)
+tLMfit[,2] <- as.data.frame(tLM$se.fit)
+tLMfit[,3] <- as.data.frame(LME_ptemp)
+names(tLMfit) <- c("fit","se","LME_ptemp")
+
+write.table(tPDfit,"PD_ptemp_gam_fit.csv",sep=",",row.names=F)
+write.table(tPFfit,"PF_ptemp_gam_fit.csv",sep=",",row.names=F)
+write.table(tLMfit,"LM_ptemp_gam_fit.csv",sep=",",row.names=F)
+
+#Depth
+LME_Frac200 <- data.frame(LME_Frac200 = seq(from=min(ZB$LME_Frac200),to=max(ZB$LME_Frac200),length=100))
+fPD <- predict(gPDf, newdata=LME_Frac200, type = "response", se=TRUE)
+fPF <- predict(gPFf, newdata=LME_Frac200, type = "response", se=TRUE)
+fLM <- predict(gLMf, newdata=LME_Frac200, type = "response", se=TRUE)
+
+fPDfit <- as.data.frame(fPD$fit)
+fPDfit[,2] <- as.data.frame(fPD$se.fit)
+fPDfit[,3] <- as.data.frame(LME_Frac200)
+names(fPDfit) <- c("fit","se","LME_Frac200")
+
+fPFfit <- as.data.frame(fPF$fit)
+fPFfit[,2] <- as.data.frame(fPF$se.fit)
+fPFfit[,3] <- as.data.frame(LME_Frac200)
+names(fPFfit) <- c("fit","se","LME_Frac200")
+
+fLMfit <- as.data.frame(fLM$fit)
+fLMfit[,2] <- as.data.frame(fLM$se.fit)
+fLMfit[,3] <- as.data.frame(LME_Frac200)
+names(fLMfit) <- c("fit","se","LME_Frac200")
+
+write.table(fPDfit,"PD_Frac200_gam_fit.csv",sep=",",row.names=F)
+write.table(fPFfit,"PF_Frac200_gam_fit.csv",sep=",",row.names=F)
+write.table(fLMfit,"LM_Frac200_gam_fit.csv",sep=",",row.names=F)
 
 
 

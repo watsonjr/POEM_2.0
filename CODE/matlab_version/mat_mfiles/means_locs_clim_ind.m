@@ -83,6 +83,10 @@ conZ = conZm + conZl;
 cpath = ['/Users/cpetrik/Dropbox/Princeton/POEM_other/cobalt_data/'];
 load([cpath 'cobalt_zoop_biom_means.mat'],'mz_mean_clim','lz_mean_clim','mzloss_mean_clim','lzloss_mean_clim')
 load([cpath 'cobalt_det_biom_means.mat'],'det_mean_clim')
+
+gpath='/Volumes/GFDL/GCM_DATA/ESM26_hist/';
+load([gpath 'clim_npp_Dmeans_Ytot.mat'])
+
 load(['/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %ESM2.6 in mg C m-2 or mg C m-2 d-1
@@ -90,21 +94,24 @@ load(['/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_gridspec.ma
 % 1e-3 g C in 1 mg C
 % 1 g dry W in 9 g wet W (Pauly & Christiansen)
 
-z_mean = (mz_mean_clim + lz_mean_clim)* 1e-3 * 9.0;
-z_loss = (mzloss_mean_clim+lzloss_mean_clim)* 1e-3 * 9.0;
+z_mean = (mz_mean_clim + lz_mean_clim) * 1e-3 * 9.0;
+z_loss = (mzloss_mean_clim+lzloss_mean_clim) * 1e-3 * 9.0;
 
 z_mean_grid = z_mean(ID);
 z_loss_grid = z_loss(ID);
 
-det_grid = det_mean_clim(ID)* 1e-3 * 9.0;
+det_grid = det_mean_clim(ID) * 1e-3 * 9.0;
+
+mnpp = npp_mean_clim(ID) * 1e-3 * 9.0;
 
 z_mean_locs = z_mean_grid(ids);
 z_loss_locs = z_loss_grid(ids);
 det_locs = det_grid(ids);
+npp_locs = npp_grid(ids);
 
 %% Table
-Tab=table(sites,z_mean_locs,z_loss_locs,det_locs,B,F,P,D,...
-    'VariableNames',{'Location','Z','Zloss','Det','Bent','F','P','D'});
+Tab=table(sites,npp_locs,z_mean_locs,z_loss_locs,det_locs,B,F,P,D,...
+    'VariableNames',{'Location','NPP','Z','Zloss','Det','Bent','F','P','D'});
 writetable(Tab,[dpath sname harv '_locs_biomasses.csv'],'Delimiter',',');
 save([dpath sname harv '_locs_biomasses.mat'],'Tab');
 

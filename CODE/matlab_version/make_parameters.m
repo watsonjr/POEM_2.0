@@ -68,7 +68,7 @@ function make_parameters()
     h = 20;         % coeff on Cmax
     gam = 70;      % coeff on search area
     kt = 0.0905;    % coeff on T-dep fn (orig 0.063)
-    bpow = 0.175;   % power on metab fn (orig 0.25)
+    bpow = 0.25;   % power on metab fn (orig 0.25)
     benc = 0.20;    % power on enc fn (orig 0.20)
     bcmx = 0.25;    % power on cmax fn (orig 0.25)
     
@@ -107,7 +107,7 @@ function make_parameters()
     Sm = 0.25;  %Feeding 2 sizes down
     J = 1.0;    %Juvenile feeding reduction
     D = 0.75;   %Demersal feeding in pelagic reduction
-    A = 0.5;    %Adult predation reduction
+    A = 1.0;    %Adult predation reduction
 
     MF_phi_MZ = Sm;
     MF_phi_LZ = 1.0;

@@ -121,7 +121,7 @@ title('Climatology log10 Biomass All fishes (g m^-^2)')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_All_biomass_JCscale.png'])
 
-% All Prod
+%% All Prod
 figure(2)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -197,4 +197,18 @@ text(0.2,1.75,'Production:Biomass',...
 set(gcf,'renderer','painters')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_All_JCscale.png'])
+
+%% All Biom
+figure(5)
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',[-180 180])
+surfm(geolat_t,geolon_t,log10(All));
+%xlim([-180 180])
+%ylim([-90 90])
+colormap('jet')
+caxis([-1 2]);
+colorbar('h')
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+title('Climatology log10 Biomass All fishes (g m^-^2)')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_global_All_biomass_JCscale_axes.png'])
 

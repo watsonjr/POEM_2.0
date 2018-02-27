@@ -93,16 +93,22 @@ end
 clme_AllP = clme_mp+clme_lp;
 clme_AllD = clme_md+clme_ld;
 
+lme_AllF = lme_sf+lme_mf;
 lme_AllP = lme_sp+lme_mp+lme_lp;
 lme_AllD = lme_sd+lme_md+lme_ld;
+lme_AllM = lme_mf+lme_mp+lme_md;
+lme_AllL = lme_lp+lme_ld;
 
 %% Ratios
 rPD_biom = lme_AllP ./ (lme_AllP+lme_AllD);
+rPF_biom = lme_AllP ./ (lme_AllP+lme_AllF);
+rLM_biom = lme_AllL ./ (lme_AllL+lme_AllM);
 rPD_catch = clme_AllP ./ (clme_AllP+clme_AllD);
 rPD_catch_mtkm2 = plme_AllP ./ (plme_AllP+plme_AllD);
 
 save([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],...
-    'rPD_biom','rPD_catch','rPD_catch_mtkm2','-append');
+    'rPD_biom','rPF_biom','rLM_biom','rPD_catch','rPD_catch_mtkm2',...
+    '-append');
 
 %% Plot info
 [ni,nj]=size(lon);
@@ -177,4 +183,45 @@ set(gcf,'renderer','painters')
 title('Climatology LME mean ratio P:D catch (MT km^-^2)')
 stamp(cfile)
 print('-dpng',[ppath 'Clim_fished_',harv,'_LME_ratioPD_catch_mtkm2.png'])
+
+%% 3 figure subplot P:D, P:F, M:L
+figure(30)
+subplot('Position',[0 0.53 0.5 0.5])
+%P:D
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,rPD_biom)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+set(gcf,'renderer','painters')
+title('Fraction Large Pelagics vs. Demersals')
+
+%P:F
+subplot('Position',[0.5 0.53 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,rPF_biom)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+set(gcf,'renderer','painters')
+title('Fraction Large Pelagics vs. Forage Fishes')
+
+%L:M
+subplot('Position',[0.25 0.0 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,rLM_biom)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+colorbar('Position',[0.2 0.485 0.6 0.05],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Fraction Large vs. Medium')
+%stamp([harv '_' cfile])
+print('-dpng',[ppath 'Clim_fished_' harv '_LME_ratios_subplot.png'])
 

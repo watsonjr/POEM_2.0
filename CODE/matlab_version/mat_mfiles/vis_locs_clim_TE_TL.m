@@ -85,10 +85,11 @@ AB = (0.35 .* 4.5 .* mass.^(-0.25)) ./365;
 
 stages={'SF','MF','SP','MP','LP','SD','MD','LD'};
 
-%% Zoop and det
+%% Zoop and det and npp
 cpath = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
 gpath='/Volumes/GFDL/GCM_DATA/ESM26_hist/';
 load([gpath 'clim_det_biom_Dmeans_Ytot.mat'])
+load([gpath 'clim_npp_Dmeans_Ytot.mat'])
 load([cpath 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %ESM2.6 in mg C m-2 or mg C m-2 d-1
@@ -109,6 +110,9 @@ tlz_loss = lzl_tot_clim(ID) * 1e-3 * 9.0;
 mdet = det_mean_clim(ID)* 1e-3 * 9.0;
 tdet = det_tot_clim(ID)* 1e-3 * 9.0;
 
+mnpp = npp_mean_clim(ID)* 1e-3 * 9.0;
+tnpp = npp_tot_clim(ID)* 1e-3 * 9.0;
+
 mmz_locs = mmz_mean(ids);
 mlz_locs = mlz_mean(ids);
 tmz_locs = tmz_mean(ids);
@@ -119,6 +123,8 @@ tmzl_locs = tmz_loss(ids);
 tlzl_locs = tlz_loss(ids);
 mdet_locs = mdet(ids);
 tdet_locs = tdet(ids);
+mnpp_locs = mnpp(ids);
+tnpp_locs = tnpp(ids);
 
 %%
 all_mean=NaN*ones(3,4,length(spots));

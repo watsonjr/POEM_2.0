@@ -45,6 +45,8 @@ Zmd=NaN*ones(ni,nj);
 Zlp=NaN*ones(ni,nj);
 Zld=NaN*ones(ni,nj);
 Zb=NaN*ones(ni,nj);
+Zd1=NaN*ones(ni,nj);
+Zd2=NaN*ones(ni,nj);
 Zm1=NaN*ones(ni,nj);
 Zm2=NaN*ones(ni,nj);
 
@@ -72,8 +74,10 @@ Zmd(ID)=md_mean;
 Zlp(ID)=lp_mean;
 Zld(ID)=ld_mean;
 Zb(ID)=b_mean;
-Zm1(ID)=all_median1;
-Zm2(ID)=all_median2;
+Zd1(ID)=all_median1;
+Zd2(ID)=all_median2;
+Zm1(ID)=all_mean1;
+Zm2(ID)=all_mean2;
 
 Tsf(ID)=sf_tot;
 Tsp(ID)=sp_tot;
@@ -106,8 +110,10 @@ Amd_mean = Zmd .* AREA_OCN;
 Alp_mean = Zlp .* AREA_OCN;
 Ald_mean = Zld .* AREA_OCN;
 Ab_mean  = Zb .* AREA_OCN;
-all_med1 = Zm1 .* AREA_OCN;
-all_med2 = Zm2 .* AREA_OCN;
+all_men1 = Zm1 .* AREA_OCN;
+all_men2 = Zm2 .* AREA_OCN;
+all_med1 = Zd1 .* AREA_OCN;
+all_med2 = Zd2 .* AREA_OCN;
 
 Asf_tot = Tsf .* AREA_OCN;
 Asp_tot = Tsp .* AREA_OCN;
@@ -121,9 +127,11 @@ Ald_tot = Tld .* AREA_OCN;
 %% Total biomass (compare to J&C15)
 tot_bio1 = nansum(all_med1(:)) * 1e-6
 tot_bio2 = nansum(all_med2(:)) * 1e-6
+tot_bio3 = nansum(all_men1(:)) * 1e-6
+tot_bio4 = nansum(all_men2(:)) * 1e-6
 
 %Too high by 1e2
-tot_bio3 = nansum(Asf_tot(:) + Asp_tot(:) + Asd_tot(:) +...
+tot_bio5 = nansum(Asf_tot(:) + Asp_tot(:) + Asd_tot(:) +...
     Amf_tot(:) + Amp_tot(:) + Amd_tot(:) +...
     Alp_tot(:) + Ald_tot(:)) * 1e-6;
 
@@ -134,6 +142,7 @@ lme_mcatch = NaN*ones(66,5);
 lme_mbio = NaN*ones(66,9);
 lme_sbio = NaN*ones(66,9);
 lme_area = NaN*ones(66,1);
+lme_med = NaN*ones(66,2);
 
 for L=1:66
     lid = find(tlme==L);
@@ -153,6 +162,9 @@ for L=1:66
     lme_mbio(L,7) = nanmean(Alp_mean(lid));
     lme_mbio(L,8) = nanmean(Ald_mean(lid));
     lme_mbio(L,9) = nanmean(Ab_mean(lid));
+    %median/mean of all
+    lme_med(L,1) = nansum(all_med1(lid));
+    lme_med(L,2) = nansum(all_men1(lid));
     %total biomass
     lme_sbio(L,1) = nansum(Asf_mean(lid));
     lme_sbio(L,2) = nansum(Asp_mean(lid));
@@ -166,6 +178,10 @@ for L=1:66
     %total area of LME
     lme_area(L,1) = nansum(AREA_OCN(lid));
 end
+
+Tlme_med = sum(lme_med)* 1e-6;
+frac_med_lme = Tlme_med(1)/tot_bio1
+frac_men_lme = Tlme_med(2)/tot_bio3
 
 %%
 save([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],...

@@ -16,7 +16,7 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D025_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -454,6 +454,7 @@ AllM = Zmp+Zmf+Zmd;
 AllL = Zlp+Zld;
 FracPD = AllP ./ (AllP+AllD);
 FracPF = AllP ./ (AllP+AllF);
+FracLM = AllL ./ (AllM+AllL);
 FracPFvD = (AllP+AllF) ./ (AllP+AllF+AllD);
 FracPDs = Zsp ./ (Zsp+Zsd);
 FracPDm = Zmp ./ (Zmp+Zmd);
@@ -527,7 +528,22 @@ title('Climatology log10 mean All P (g m^-^2)')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_AllP.png'])
 
-% FracPD
+%% LP
+figure(84)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(Zlp/100))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-10 -1]);
+colorbar('h');
+set(gcf,'renderer','painters')
+title('Climatology log10 mean LP (g m^-^3)')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_global_LP_Watson.png'])
+
+%% FracPD
 figure(25)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -841,6 +857,47 @@ set(gcf,'renderer','painters')
 title('B. Large Pelagics : Demersals')
 %     stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_ratios_subplot_v2.png'])
+
+%% 3 figure subplot P:D, P:F, M:L
+figure(30)
+subplot('Position',[0 0.53 0.5 0.5])
+%P:D
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,FracPD)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+set(gcf,'renderer','painters')
+title('Fraction Large Pelagics vs. Demersals')
+
+%P:F
+subplot('Position',[0.5 0.53 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,FracPF)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+set(gcf,'renderer','painters')
+title('Fraction Large Pelagics vs. Forage Fishes')
+
+%L:M
+subplot('Position',[0.25 0.0 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,FracLM)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+colorbar('Position',[0.2 0.485 0.6 0.05],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Fraction Large vs. Medium')
+%stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_global_ratios_subplot_v3.png'])
 
 
 %% CATCH

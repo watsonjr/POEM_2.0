@@ -13,7 +13,7 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 load([gpath 'esm26_area_1deg.mat']);
-load([gpath 'LME_clim_temp_zoop_det.mat']);
+load([gpath 'LME_clim_temp_zoop_det_npp.mat']);
 load([gpath 'LME_depth_area.mat'],'lme_depth','lme_shal_frac');
 
 %% grid info
@@ -52,10 +52,11 @@ load([fpath 'LME_clim_fished_' harv '_' cfile '.mat']);
 lme_area_km2 = lme_area * 1e-6;
 
 %%
-% units ESM2.6 in mg C m-2 or mg C m-2 d-1
+% now units in g m-2 or g m-2 d-1
 
 lme_zl = lme_zl*365;
 lme_det = lme_det*365;
+lme_npp = lme_npp*365;
 
 FracZDet = lme_z ./ (lme_z+lme_det);
 FracZB = lme_z ./ (lme_z+lme_mbio(:,9));
@@ -79,13 +80,13 @@ FracLM = L ./ (L+M);
 lme=1:66;
 
 T=table(lme',lme_ptemp(:,1),RatZDet,RatZB,RatZlDet,RatZlB,...
-    FracPD,FracPF,FracLM,lme_depth,lme_shal_frac,'VariableNames',...
+    FracPD,FracPF,FracLM,lme_depth,lme_shal_frac,lme_npp,'VariableNames',...
     {'LME','LME_ptemp','RatZDet','RatZB','RatZlDet','RatZlB','FracPD',...
-    'FracPF','FracLM','LME_depth','LME_Frac200'});
+    'FracPF','FracLM','LME_depth','LME_Frac200','NPP'});
 writetable(T,[fpath 'LME_ZBratios_clim_fished_',harv,'.csv'],'Delimiter',',');
 save([fpath 'LME_ZBratios_clim_fished_',harv,'_' cfile '.mat'],...
     'RatZDet','RatZB','RatZlDet','RatZlB','FracPD','FracPF','FracLM',...
-    'lme_ptemp','lme_depth','lme_shal_frac');
+    'lme_ptemp','lme_depth','lme_shal_frac','lme_npp');
 
 %% Scatter plot
 % COMPARE BY LME?

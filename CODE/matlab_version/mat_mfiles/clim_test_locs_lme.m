@@ -212,7 +212,7 @@ Tab=table(locs,sites,lme_prey(locs,1),lme_prey(locs,2),lme_prey(locs,3),...
     lme_prey(locs,4),lme_biom(locs,1),lme_biom(locs,2),lme_biom(locs,3),...
     'VariableNames',{'LME','Name','Z','Zloss','Det','Bent','F','P','D'});
 writetable(Tab,[dpath 'LME_locs_biomasses_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
-save([dpath 'LME_locs_biomasses_clim_fished_',harv,'_' cfile '.csv'],'Tab');
+save([dpath 'LME_locs_biomasses_clim_fished_',harv,'_' cfile '.mat'],'Tab');
 
 %writetable(Tab,['LME_locs_biomasses_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
 

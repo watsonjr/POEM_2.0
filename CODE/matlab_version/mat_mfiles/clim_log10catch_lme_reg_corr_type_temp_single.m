@@ -403,7 +403,7 @@ stamp(cfile)
 print('-dpng',[ppath 'Clim_fished',harv,'_Watson_log10land_comp_types_LELC_temp.png'])
 
 
-%CATCHES ---------------------------
+%% CATCHES ---------------------------
 % Stats
 %r
 rall=corr(l10c(keep),l10p(keep));
