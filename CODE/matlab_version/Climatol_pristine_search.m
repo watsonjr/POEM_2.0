@@ -15,13 +15,12 @@ global tstep K CGRD ni nj
 load('/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_daily.mat');
 
 %! How long to run the model
-YEARS = 100;
+YEARS = 150;
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %! choose where and when to run the model
 Pdrpbx = '/Users/cpetrik/Dropbox/';
-Fdrpbx = '/Users/Colleen/Dropbox/';
 load('/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_grid.mat');
 NX = length(GRD.Z);
 ID = 1:NX;
@@ -31,215 +30,209 @@ load([Pdrpbx 'Princeton/POEM_2.0/CODE/Data/Hindcast_cgrid_cp2D.mat']);
 
 
 %%%%%%%%%%%%%%% Initialize Model Variables
-encs = 10:10:100;
-cmaxs = 10:10:50;
+%! Set fishing rate
+frate = 0.3; %Fish(F);
+dfrate = frate/365.0;
+%0=no fishing; 1=fishing
+if (frate>0)
+    harv = 1;
+else
+    harv = 0;
+end
 
-    for c=5:length(cmaxs)
-        for e=1:length(encs)
-            gam = encs(e);
-            h = cmaxs(c);
-            
-            %for F=1%:length(Fish)
-            %! Set fishing rate
-            frate = 0.3; %Fish(F);
-            dfrate = frate/365.0;
-            %0=no fishing; 1=fishing
-            if (frate>0)
-                harv = 1;
-            else
-                harv = 0;
-            end
-            
-            
-            %! Make core parameters/constants (global)
-            make_parameters()
-            
-            
-            %! Create a directory for output
-            tfcrit = num2str(int64(100*fcrit));
-            td = num2str(1000+int64(100*LD_phi_MP));
-            tj = num2str(1000+int64(100*MP_phi_S));
-            tsm = num2str(1000+int64(100*MF_phi_MZ));
-            ta = num2str(1000+int64(100*LP_phi_MF));
-            tbe = num2str(100+int64(100*bent_eff));
-            tmort = num2str(MORT);
-            tcc = num2str(1000+int64(100*CC));
-            tre = num2str(100000+int64(round(10000*rfrac)));
-            tre2 = num2str(100000+int64(round(10000*rfrac*1)));
-            if (frate >= 0.1)
-                tfish = num2str(100+int64(10*frate));
-                tF = num2str(1000+int64(100*frate*MFsel));
-                tP = num2str(1000+int64(100*frate*LPsel));
-                tD = num2str(1000+int64(100*frate*LDsel));
-            else
-                tfish = num2str(1000+int64(100*frate));
-                tF = num2str(1000+int64(100*frate*MFsel));
-                tP = num2str(1000+int64(100*frate*LPsel));
-                tD = num2str(1000+int64(100*frate*LDsel));
-            end
-            if (MFsel > 0)
-                if (LPsel > 0 && LDsel > 0)
-                    sel='All';
-                else
-                    sel='F';
-                end
-            else
-                if (LPsel > 0 && LDsel > 0)
-                    sel = 'L';
-                elseif (LPsel > 0)
-                    sel = 'P';
-                elseif (LDsel > 0)
-                    sel = 'D';
-                end
-            end
-            if (pdc == 0)
-                coup = 'NoDc';
-            elseif (pdc == 1)
-                coup = 'Dc';
-            elseif (pdc == 2)
-                coup = 'PDc';
-            end
-            tcfn = num2str(h);
-            tefn = num2str(round(gam));
-            tkfn = num2str(100+int64(100*kt));
-            tbfn = num2str(1000+int64(1000*bpow));
-            tbenc = num2str(1000+int64(1000*benc));
-            tbcmx = num2str(1000+int64(1000*bcmx));
-            %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-            %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            %simname = ['Diff_',coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-            %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            %simname = [coup,'_enc',tefn,'_cm',tcfn,'_m-b200_c-b',tbfn(2:end),'_m-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            %simname = [coup,'_enc',tefn,'-b',tbfn(2:end),'_cm',tcfn,'_m-b175-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            %simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-            simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
-            if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
-                mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
-            end
-            % if (~isdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
-            %     mkdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
-            % end
-            
-            %! Storage variables
-            % Dims
-            nt = 12;
-            
-            S_Bent_bio = zeros(NX,DAYS);
-            
-            S_Sml_f = zeros(NX,DAYS);
-            S_Sml_p = zeros(NX,DAYS);
-            S_Sml_d = zeros(NX,DAYS);
-            S_Med_f = zeros(NX,DAYS);
-            S_Med_p = zeros(NX,DAYS);
-            S_Med_d = zeros(NX,DAYS);
-            S_Lrg_p = zeros(NX,DAYS);
-            S_Lrg_d = zeros(NX,DAYS);
-            
-            S_Med_f_fish = zeros(NX,DAYS);
-            S_Med_p_fish = zeros(NX,DAYS);
-            S_Med_d_fish = zeros(NX,DAYS);
-            S_Lrg_p_fish = zeros(NX,DAYS);
-            S_Lrg_d_fish = zeros(NX,DAYS);
-            
-            Spinup_Sml_f.bio = NaN*ones(NX,nt);
-            Spinup_Sml_p.bio = NaN*ones(NX,nt);
-            Spinup_Sml_d.bio = NaN*ones(NX,nt);
-            Spinup_Med_f.bio = NaN*ones(NX,nt);
-            Spinup_Med_p.bio = NaN*ones(NX,nt);
-            Spinup_Med_d.bio = NaN*ones(NX,nt);
-            Spinup_Lrg_p.bio = NaN*ones(NX,nt);
-            Spinup_Lrg_d.bio = NaN*ones(NX,nt);
-            Spinup_Bent.bio = NaN*ones(NX,nt);
-            
-            Spinup_Med_f.yield = NaN*ones(NX,nt);
-            Spinup_Med_p.yield = NaN*ones(NX,nt);
-            Spinup_Med_d.yield = NaN*ones(NX,nt);
-            Spinup_Lrg_p.yield = NaN*ones(NX,nt);
-            Spinup_Lrg_d.yield = NaN*ones(NX,nt);
-            
-            
-            %! Initialize
-            [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish(ID,DAYS);
-            Med_d.td(1:NX) = 0.0;
-            Lrg_d.td(1:NX) = 0.0;
-            ENVR = sub_init_env(ID);
-            
-            
-            %% %%%%%%%%%%%%%%%%%%%% Run the Model
-            %! Run model with no fishing
-            MNT=0;
-            for YR = 1:YEARS % years
-                
-                for DAY = 1:DT:DAYS % days
-                    
-                    %%%! Future time step
-                    DY = int64(ceil(DAY));
-                    [num2str(YR),' , ', num2str(mod(DY,365))]
-                    [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,ENVR] = ...
-                        sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,...
-                        Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,CC);
-                    
-                    if (YR==YEARS)
-                        S_Bent_bio(:,DY) = BENT.mass;
-                        
-                        S_Sml_f(:,DY) = Sml_f.bio;
-                        S_Sml_p(:,DY) = Sml_p.bio;
-                        S_Sml_d(:,DY) = Sml_d.bio;
-                        S_Med_f(:,DY) = Med_f.bio;
-                        S_Med_p(:,DY) = Med_p.bio;
-                        S_Med_d(:,DY) = Med_d.bio;
-                        S_Lrg_p(:,DY) = Lrg_p.bio;
-                        S_Lrg_d(:,DY) = Lrg_d.bio;
-                        
-                        S_Med_f_fish(:,DY) = Med_f.caught;
-                        S_Med_p_fish(:,DY) = Med_p.caught;
-                        S_Med_d_fish(:,DY) = Med_d.caught;
-                        S_Lrg_p_fish(:,DY) = Lrg_p.caught;
-                        S_Lrg_d_fish(:,DY) = Lrg_d.caught;
-                    end
-                    
-                end %Days
-                
-            end %Years
-            
-            %! Calculate monthly means and save
-            aa = (cumsum(MNTH)+1);
-            a = [1,aa(1:end-1)]; % start of the month
-            b = cumsum(MNTH); % end of the month
-            for i = 1:12
-                %! Put vars of netcdf file
-                Spinup_Bent.bio(:,i) = mean(S_Bent_bio(:,a(i):b(i)),2);
-                Spinup_Sml_f.bio(:,i) = mean(S_Sml_f(:,a(i):b(i)),2);
-                Spinup_Sml_p.bio(:,i) = mean(S_Sml_p(:,a(i):b(i)),2);
-                Spinup_Sml_d.bio(:,i) = mean(S_Sml_d(:,a(i):b(i)),2);
-                Spinup_Med_f.bio(:,i) = mean(S_Med_f(:,a(i):b(i)),2);
-                Spinup_Med_p.bio(:,i) = mean(S_Med_p(:,a(i):b(i)),2);
-                Spinup_Med_d.bio(:,i) = mean(S_Med_d(:,a(i):b(i)),2);
-                Spinup_Lrg_p.bio(:,i) = mean(S_Lrg_p(:,a(i):b(i)),2);
-                Spinup_Lrg_d.bio(:,i) = mean(S_Lrg_d(:,a(i):b(i)),2);
-                
-                Spinup_Med_f.yield(:,i) = mean(S_Med_f_fish(:,a(i):b(i)),2);
-                Spinup_Med_p.yield(:,i) = mean(S_Med_p_fish(:,a(i):b(i)),2);
-                Spinup_Med_d.yield(:,i) = mean(S_Med_d_fish(:,a(i):b(i)),2);
-                Spinup_Lrg_p.yield(:,i) = mean(S_Lrg_p_fish(:,a(i):b(i)),2);
-                Spinup_Lrg_d.yield(:,i) = mean(S_Lrg_d_fish(:,a(i):b(i)),2);
-                
-            end %Monthly mean
-            %%% Save
-            if harv==1
-                save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,...
-                    '/Clim_means_',sel,'_fish',tfish(2:end),'.mat'],...
-                    'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
-                    'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
-                    'Spinup_Bent')
-            else
-                save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_means.mat'],...
-                    'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
-                    'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
-                    'Spinup_Bent')
-            end
-            
+kays = 0.0405:0.01:0.1205;
+
+for c=1:length(kays)
+    kt=kays(c);
+    
+    %! Make core parameters/constants (global)
+    make_parameters()
+    
+    
+    %! Create a directory for output
+    tfcrit = num2str(int64(100*fcrit));
+    td = num2str(1000+int64(100*LD_phi_MP));
+    tj = num2str(1000+int64(100*MP_phi_S));
+    tsm = num2str(1000+int64(100*MF_phi_MZ));
+    ta = num2str(1000+int64(100*LP_phi_MF));
+    tbe = num2str(100+int64(100*bent_eff));
+    tmort = num2str(MORT);
+    tcc = num2str(1000+int64(100*CC));
+    tre = num2str(100000+int64(round(10000*rfrac)));
+    tre2 = num2str(100000+int64(round(10000*rfrac*1)));
+    if (frate >= 0.1)
+        tfish = num2str(100+int64(10*frate));
+        tF = num2str(1000+int64(100*frate*MFsel));
+        tP = num2str(1000+int64(100*frate*LPsel));
+        tD = num2str(1000+int64(100*frate*LDsel));
+    else
+        tfish = num2str(1000+int64(100*frate));
+        tF = num2str(1000+int64(100*frate*MFsel));
+        tP = num2str(1000+int64(100*frate*LPsel));
+        tD = num2str(1000+int64(100*frate*LDsel));
+    end
+    if (MFsel > 0)
+        if (LPsel > 0 && LDsel > 0)
+            sel='All';
+        else
+            sel='F';
+        end
+    else
+        if (LPsel > 0 && LDsel > 0)
+            sel = 'L';
+        elseif (LPsel > 0)
+            sel = 'P';
+        elseif (LDsel > 0)
+            sel = 'D';
         end
     end
+    if (pdc == 0)
+        coup = 'NoDc';
+    elseif (pdc == 1)
+        coup = 'Dc';
+    elseif (pdc == 2)
+        coup = 'PDc';
+    end
+    tcfn = num2str(h);
+    tefn = num2str(round(gam));
+    tkfn = num2str(100+int64(100*kt));
+    tbfn = num2str(1000+int64(1000*bpow));
+    tbenc = num2str(1000+int64(1000*benc));
+    tbcmx = num2str(1000+int64(1000*bcmx));
+    %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+    %simname = ['Diff_',coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
+    %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+    %simname = [coup,'_enc',tefn,'_cm',tcfn,'_m-b200_c-b',tbfn(2:end),'_m-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+    %simname = [coup,'_enc',tefn,'-b',tbfn(2:end),'_cm',tcfn,'_m-b175-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+    %simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
+    simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
+    if (~isdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname]))
+        mkdir(['/Volumes/GFDL/CSV/Matlab_new_size/',simname])
+    end
+    % if (~isdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
+    %     mkdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
+    % end
+    
+    %! Storage variables
+    % Dims
+    nt = 12;
+    
+    S_Bent_bio = zeros(NX,DAYS);
+    
+    S_Sml_f = zeros(NX,DAYS);
+    S_Sml_p = zeros(NX,DAYS);
+    S_Sml_d = zeros(NX,DAYS);
+    S_Med_f = zeros(NX,DAYS);
+    S_Med_p = zeros(NX,DAYS);
+    S_Med_d = zeros(NX,DAYS);
+    S_Lrg_p = zeros(NX,DAYS);
+    S_Lrg_d = zeros(NX,DAYS);
+    
+    S_Med_f_fish = zeros(NX,DAYS);
+    S_Med_p_fish = zeros(NX,DAYS);
+    S_Med_d_fish = zeros(NX,DAYS);
+    S_Lrg_p_fish = zeros(NX,DAYS);
+    S_Lrg_d_fish = zeros(NX,DAYS);
+    
+    Spinup_Sml_f.bio = NaN*ones(NX,nt);
+    Spinup_Sml_p.bio = NaN*ones(NX,nt);
+    Spinup_Sml_d.bio = NaN*ones(NX,nt);
+    Spinup_Med_f.bio = NaN*ones(NX,nt);
+    Spinup_Med_p.bio = NaN*ones(NX,nt);
+    Spinup_Med_d.bio = NaN*ones(NX,nt);
+    Spinup_Lrg_p.bio = NaN*ones(NX,nt);
+    Spinup_Lrg_d.bio = NaN*ones(NX,nt);
+    Spinup_Bent.bio = NaN*ones(NX,nt);
+    
+    Spinup_Med_f.yield = NaN*ones(NX,nt);
+    Spinup_Med_p.yield = NaN*ones(NX,nt);
+    Spinup_Med_d.yield = NaN*ones(NX,nt);
+    Spinup_Lrg_p.yield = NaN*ones(NX,nt);
+    Spinup_Lrg_d.yield = NaN*ones(NX,nt);
+    
+    
+    %! Initialize
+    [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish(ID,DAYS);
+    Med_d.td(1:NX) = 0.0;
+    Lrg_d.td(1:NX) = 0.0;
+    ENVR = sub_init_env(ID);
+    
+    
+    %% %%%%%%%%%%%%%%%%%%%% Run the Model
+    %! Run model with no fishing
+    MNT=0;
+    for YR = 1:YEARS % years
+        
+        for DAY = 1:DT:DAYS % days
+            
+            %%%! Future time step
+            DY = int64(ceil(DAY));
+            [num2str(YR),' , ', num2str(mod(DY,365))]
+            [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,ENVR] = ...
+                sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,...
+                Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,CC);
+            
+            if (YR==YEARS)
+                S_Bent_bio(:,DY) = BENT.mass;
+                
+                S_Sml_f(:,DY) = Sml_f.bio;
+                S_Sml_p(:,DY) = Sml_p.bio;
+                S_Sml_d(:,DY) = Sml_d.bio;
+                S_Med_f(:,DY) = Med_f.bio;
+                S_Med_p(:,DY) = Med_p.bio;
+                S_Med_d(:,DY) = Med_d.bio;
+                S_Lrg_p(:,DY) = Lrg_p.bio;
+                S_Lrg_d(:,DY) = Lrg_d.bio;
+                
+                S_Med_f_fish(:,DY) = Med_f.caught;
+                S_Med_p_fish(:,DY) = Med_p.caught;
+                S_Med_d_fish(:,DY) = Med_d.caught;
+                S_Lrg_p_fish(:,DY) = Lrg_p.caught;
+                S_Lrg_d_fish(:,DY) = Lrg_d.caught;
+            end
+            
+        end %Days
+        
+    end %Years
+    
+    %! Calculate monthly means and save
+    aa = (cumsum(MNTH)+1);
+    a = [1,aa(1:end-1)]; % start of the month
+    b = cumsum(MNTH); % end of the month
+    for i = 1:12
+        %! Put vars of netcdf file
+        Spinup_Bent.bio(:,i) = mean(S_Bent_bio(:,a(i):b(i)),2);
+        Spinup_Sml_f.bio(:,i) = mean(S_Sml_f(:,a(i):b(i)),2);
+        Spinup_Sml_p.bio(:,i) = mean(S_Sml_p(:,a(i):b(i)),2);
+        Spinup_Sml_d.bio(:,i) = mean(S_Sml_d(:,a(i):b(i)),2);
+        Spinup_Med_f.bio(:,i) = mean(S_Med_f(:,a(i):b(i)),2);
+        Spinup_Med_p.bio(:,i) = mean(S_Med_p(:,a(i):b(i)),2);
+        Spinup_Med_d.bio(:,i) = mean(S_Med_d(:,a(i):b(i)),2);
+        Spinup_Lrg_p.bio(:,i) = mean(S_Lrg_p(:,a(i):b(i)),2);
+        Spinup_Lrg_d.bio(:,i) = mean(S_Lrg_d(:,a(i):b(i)),2);
+        
+        Spinup_Med_f.yield(:,i) = mean(S_Med_f_fish(:,a(i):b(i)),2);
+        Spinup_Med_p.yield(:,i) = mean(S_Med_p_fish(:,a(i):b(i)),2);
+        Spinup_Med_d.yield(:,i) = mean(S_Med_d_fish(:,a(i):b(i)),2);
+        Spinup_Lrg_p.yield(:,i) = mean(S_Lrg_p_fish(:,a(i):b(i)),2);
+        Spinup_Lrg_d.yield(:,i) = mean(S_Lrg_d_fish(:,a(i):b(i)),2);
+        
+    end %Monthly mean
+    %%% Save
+    if harv==1
+        save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,...
+            '/Clim_means_',sel,'_fish',tfish(2:end),'.mat'],...
+            'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
+            'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
+            'Spinup_Bent')
+    else
+        save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_means.mat'],...
+            'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
+            'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
+            'Spinup_Bent')
+    end
+    
+end
 
 end
