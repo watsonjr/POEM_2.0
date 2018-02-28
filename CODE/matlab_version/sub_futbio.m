@@ -107,15 +107,15 @@ Ld.con_p  = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_p,Ld.enc_f,Ld.enc_d,Ld.en
 Ld.con_d  = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_d,Ld.enc_p,Ld.enc_f,Ld.enc_be]);
 Ld.con_be = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_be,Ld.enc_f,Ld.enc_p,Ld.enc_d]);
 
-% Offline coupling
-%MZ consumption cannot exceed amount lost to higher predation in COBALT runs
-[Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,ENVR.fZm] = ...
-    sub_offline_zm(Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,ENVR.dZm);
-%LZ consumption cannot exceed amount lost to higher predation in COBALT runs
-[Mf.con_zl,Mp.con_zl,ENVR.fZl] = ...
-    sub_offline_zl(Mf.con_zl,Mp.con_zl,Mf.bio,Mp.bio,ENVR.dZl);
-%Track fraction of benthic material consumed
-[ENVR.fB] = sub_offline_bent([Md.con_be,Ld.con_be],[Md.bio,Ld.bio],BENT.mass);
+% % Offline coupling
+% %MZ consumption cannot exceed amount lost to higher predation in COBALT runs
+% [Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,ENVR.fZm] = ...
+%     sub_offline_zm(Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,ENVR.dZm);
+% %LZ consumption cannot exceed amount lost to higher predation in COBALT runs
+% [Mf.con_zl,Mp.con_zl,ENVR.fZl] = ...
+%     sub_offline_zl(Mf.con_zl,Mp.con_zl,Mf.bio,Mp.bio,ENVR.dZl);
+% %Track fraction of benthic material consumed
+% [ENVR.fB] = sub_offline_bent([Md.con_be,Ld.con_be],[Md.bio,Ld.bio],BENT.mass);
 
 % Total consumption rates (could factor in handling times here; g m-2 d-1)
 Sf.I = Sf.con_zm;
