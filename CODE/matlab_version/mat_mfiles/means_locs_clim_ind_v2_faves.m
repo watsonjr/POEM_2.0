@@ -1,4 +1,5 @@
 % Visualize output of POEM Climatology at single locations
+% Foodweb diagram
 % 150 years, monthly means saved
 
 clear all
