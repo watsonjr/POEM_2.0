@@ -33,10 +33,7 @@ load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
 lme_area_km2 = lme_area * 1e-6;
 
 % POEM file info
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
-fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
-ppath = [pp cfile '/'];
 
 %% plot info
 [ni,nj]=size(lon);
@@ -65,7 +62,7 @@ load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
     'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
 keep = notLELC;
 
-x=-6:0.5:8;
+x=-8:0.5:8;
 x2h = x+log10(2);
 x2l = x-log10(2);
 x5h = x+log10(5);
@@ -118,280 +115,154 @@ l10sD=log10(Dlme_mcatch10+eps);
 
 sFracPD = Plme_mcatch10 ./ (Plme_mcatch10 + Dlme_mcatch10);
 
-%% loop over effort scaling
-kays = 0.0405:0.01:0.0905;
+%% loop over temp scaling
+kays = 0.0405:0.01:0.1205;
+skays={'.04','.05','.06','.07','.08','.09','.10','.11','.12'};
 
-r   = NaN*ones(length(kays),5);
-rmse = NaN*ones(length(kays),5);
-F   = NaN*ones(length(kays),5);
+r   = NaN*ones(length(kays),2);
+rmse = NaN*ones(length(kays),2);
+F   = NaN*ones(length(kays),2);
 
 for i=1:length(kays)
     kt=kays(i);
     tkfn = num2str(100+int64(100*kt));
     cfile = ['Dc_enc70-b200_cm20_m-b175-k',tkfn(2:end),...
         '_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100'];
-    load([fpath 'LME_clim_',harv,cfile,'.mat'],'lme_mcatch');
+    fpath=['/Volumes/GFDL/CSV/Matlab_new_size/' cfile '/'];
+    ppath = [pp cfile '/'];
+    load([fpath 'LME_clim_',harv,'_loop.mat'],'lme_mcatch');
     
     
     %% POEM LME biomass in MT
-    plme_mcatch = nansum(lme_mcatch,2) * 1e-6;
-    plme_Fmcatch = (lme_mcatch(:,1)) * 1e-6;
     plme_Pmcatch = (lme_mcatch(:,2)+lme_mcatch(:,4)) * 1e-6;
     plme_Dmcatch = (lme_mcatch(:,3)+lme_mcatch(:,5)) * 1e-6;
     % MT/km2
-    plme_mcatch = plme_mcatch ./ lme_area_km2;
-    plme_Fmcatch = plme_Fmcatch ./ lme_area_km2;
     plme_Pmcatch = plme_Pmcatch ./ lme_area_km2;
     plme_Dmcatch = plme_Dmcatch ./ lme_area_km2;
     
-    l10p=log10(plme_mcatch);
-    l10pF=log10(plme_Fmcatch);
     l10pP=log10(plme_Pmcatch);
     l10pD=log10(plme_Dmcatch);
-    
-    pFracPD = plme_Pmcatch ./ (plme_Pmcatch + plme_Dmcatch);
     
     %% Stats
     % Drop Arctic, Antarctic, Hawaii, Australia -------------------------
     %r
-    r(i,1)=corr(l10s(keep),l10p(keep));
-    r(i,2)=corr(l10sF(keep),l10pF(keep));
-    r(i,3)=corr(l10sP(keep),l10pP(keep));
-    r(i,4)=corr(l10sD(keep),l10pD(keep));
-    r(i,5)=corr(sFracPD(keep),pFracPD(keep));
+    r(i,1)=corr(l10sP(keep),l10pP(keep));
+    r(i,2)=corr(l10sD(keep),l10pD(keep));
     
     %root mean square error
-    o=l10s(keep);
-    p=l10p(keep);
-    n = length(o);
-    num=nansum((p-o).^2);
-    rmse(i,1) = sqrt(num/n);
-    
-    o=l10sF(keep);
-    p=l10pF(keep);
-    n = length(o);
-    num=nansum((p-o).^2);
-    rmse(i,2) = sqrt(num/n);
-    
     o=l10sP(keep);
     p=l10pP(keep);
     n = length(o);
     num=nansum((p-o).^2);
-    rmse(i,3) = sqrt(num/n);
+    rmse(i,1) = sqrt(num/n);
     
     o=l10sD(keep);
     p=l10pD(keep);
     n = length(o);
     num=nansum((p-o).^2);
-    rmse(i,4) = sqrt(num/n);
-    
-    o=sFracPD(keep);
-    p=pFracPD(keep);
-    n = length(o);
-    num=nansum((p-o).^2);
-    rmse(i,5) = sqrt(num/n);
+    rmse(i,2) = sqrt(num/n);
     
     %Fmed
-    F(i,1)=10^(median(l10s(keep)-l10p(keep)));
-    F(i,2)=10^(median(l10sF(keep)-l10pF(keep)));
-    F(i,3)=10^(median(l10sP(keep)-l10pP(keep)));
-    F(i,4)=10^(median(l10sD(keep)-l10pD(keep)));
-    F(i,5)=10^(median(sFracPD(keep)-pFracPD(keep)));
+    F(i,1)=10^(median(l10sP(keep)-l10pP(keep)));
+    F(i,2)=10^(median(l10sD(keep)-l10pD(keep)));
     
     %% Plot corr
-    figure(10)
-    clf
+    f1=figure(1);
+    subplot(3,3,i)
     plot(x,x,'--k');hold on;
     for j=1:length(keep)
         lme=keep(j);
-        plot(sFracPD(lme),pFracPD(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-        text(sFracPD(lme),pFracPD(lme),num2str(lme),...
-            'Color','k','HorizontalAlignment','center'); hold on;
+        plot(l10sP(lme),l10pP(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
     end
-    text(0.05,0.95,['r = ' sprintf('%2.2f',r(i,5))])
-    text(0.05,0.9,['RMSE = ' sprintf('%2.2f',rmse(i,5))])
-    text(0.05,0.85,['Fmed = ' sprintf('%2.2f',F(i,5))])
-    axis([0 1 0 1])
-    xlabel('SAUP')
+    %plot(l10sP,l10pP,'.k','MarkerSize',10); hold on;
+    text(-7.5,1.5,['r = ' sprintf('%2.2f',r(i,1))])
+    text(-7.5,0.5,['RMSE = ' sprintf('%2.2f',rmse(i,1))])
+    axis([-8 2 -8 2])
+    if (i>6)
+        xlabel('SAU')
+    end
     ylabel('POEM')
-    title('Fraction Large Pelagics')
-    stamp([harv '_' cfile])
-    print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_fracP',cfile2,'.png'])
-    
-    figure(11)
-    clf
-    subplot(2,2,4)
-    plot(x,x,'--k'); hold on;
-    plot(x,x2h,'--b'); hold on;
-    plot(x,x2l,'--b'); hold on;
-    plot(x,x5h,'--r'); hold on;
-    plot(x,x5l,'--r'); hold on;
+    if (i==2)
+        title('Large Pelagics')
+    else
+        title(['k=0' skays{i}])
+    end
+    stamp('')
+
+    f5=figure(5);
+    subplot(3,3,i)
+    plot(x,x,'--k');hold on;
     for j=1:length(keep)
         lme=keep(j);
-        plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+        plot(l10sD(lme),l10pD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
     end
-    text(-1.5,1.5,['r = ' sprintf('%2.2f',r(i,1))])
-    text(-1.5,1.0,['RMSE = ' sprintf('%2.2f',rmse(i,1))])
+    %plot(l10sD,l10pD,'.k','MarkerSize',10); hold on;
+    text(-1.75,1.7,['r = ' sprintf('%2.2f',r(i,2))])
+    text(-1.75,1.3,['RMSE = ' sprintf('%2.2f',rmse(i,2))])
     axis([-2 2 -2 2])
-    xlabel('SAUP')
-    ylabel('POEM')
-    title('D. All fishes')
-    
-    subplot(2,2,1)
-    plot(x,x,'--k'); hold on;
-    plot(x,x2h,'--b'); hold on;
-    plot(x,x2l,'--b'); hold on;
-    plot(x,x5h,'--r'); hold on;
-    plot(x,x5l,'--r'); hold on;
-    for j=1:length(keep)
-        lme=keep(j);
-        plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    if (i>6)
+        xlabel('SAU')
     end
-    text(-5.5,1.5,['r = ' sprintf('%2.2f',r(i,2))])
-    text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmse(i,2))])
-    axis([-6 2 -6 2])
-    xlabel('SAUP')
     ylabel('POEM')
-    title('A. Forage Fishes')
-    
-    subplot(2,2,2)
-    plot(x,x,'--k'); hold on;
-    plot(x,x2h,'--b'); hold on;
-    plot(x,x2l,'--b'); hold on;
-    plot(x,x5h,'--r'); hold on;
-    plot(x,x5l,'--r'); hold on;
-    for j=1:length(keep)
-        lme=keep(j);
-        plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    if (i==2)
+        title('Demersals')
+    else
+        title(['k=0' skays{i}])
     end
-    text(-5.5,1.5,['r = ' sprintf('%2.2f',r(i,3))])
-    text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmse(i,3))])
-    axis([-6 2 -6 2])
-    xlabel('SAUP')
-    ylabel('POEM')
-    title('B. Large Pelagics')
-    
-    subplot(2,2,3)
-    plot(x,x,'--k'); hold on;
-    plot(x,x2h,'--b'); hold on;
-    plot(x,x2l,'--b'); hold on;
-    plot(x,x5h,'--r'); hold on;
-    plot(x,x5l,'--r'); hold on;
-    for j=1:length(keep)
-        lme=keep(j);
-        plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-    end
-    text(-1.5,1.5,['r = ' sprintf('%2.2f',r(i,4))])
-    text(-1.5,1.0,['RMSE = ' sprintf('%2.2f',rmse(i,4))])
-    axis([-2 2 -2 2])
-    xlabel('SAUP')
-    ylabel('POEM')
-    title('C. Demersals')
-    stamp([harv '_' cfile])
-    print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_Stock_LELC',cfile2,'.png'])
-    
+    stamp('')
+
 end
-
+print(f1,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_scatterP.png'])
+print(f5,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_scatterD.png'])
+    
 %% Plots
-% r
-figure(1)
-subplot(2,2,1)
-bar(r(:,1))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('corr All')
 
-subplot(2,2,2)
-bar(r(:,2))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('corr F')
-
-subplot(2,2,3)
-bar(r(:,3))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('corr P')
-
-subplot(2,2,4)
-bar(r(:,4))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('corr D')
-print('-dpng',[ppath cfile2 '_effort_dist_SAUP_r.png'])
-
-%% rmse
 figure(2)
 subplot(2,2,1)
-bar(rmse(:,1))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('RMSE All')
+bar(r)
+set(gca,'XTick',1:length(kays),'XTickLabel',skays)
+xlabel('k')
+ylabel('r')
 
 subplot(2,2,2)
-bar(rmse(:,2))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('RMSE F')
+bar(rmse)
+set(gca,'XTick',1:length(kays),'XTickLabel',skays)
+xlabel('k')
+ylabel('rmse')
+legend('P','D')
+legend('location','northwest')
 
 subplot(2,2,3)
-bar(rmse(:,3))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('RMSE P')
+bar(F)
+set(gca,'XTick',1:length(kays),'XTickLabel',skays)
+xlabel('k')
+ylabel('Fmed')
+print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_stats_bar.png'])
 
-subplot(2,2,4)
-bar(rmse(:,4))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('RMSE D')
-print('-dpng',[ppath cfile2 '_effort_dist_SAUP_RMSE.png'])
-
-%% Fmed
+%%
 figure(3)
 subplot(2,2,1)
-bar(F(:,1))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('Fmed All')
+plot(kays,r(:,1),'b','LineWidth',2); hold on;
+plot(kays,r(:,2),'color',[0.082353 0.6902 0.10196],'LineWidth',2)
+xlabel('k')
+ylabel('r')
+xlim([0.04 0.12])
 
 subplot(2,2,2)
-bar(F(:,2))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('Fmed F')
+plot(kays,rmse(:,1),'b','LineWidth',2); hold on;
+plot(kays,rmse(:,2),'color',[0.082353 0.6902 0.10196],'LineWidth',2)
+xlabel('k')
+ylabel('rmse')
+xlim([0.04 0.12])
+legend('P','D')
+legend('location','northwest')
 
 subplot(2,2,3)
-bar(F(:,3))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('Fmed P')
-
-subplot(2,2,4)
-bar(F(:,4))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('Fmed D')
-print('-dpng',[ppath cfile2 '_effort_dist_SAUP_Fmed.png'])
-
-%% Frac LP
-figure(4)
-subplot(2,2,1)
-bar(r(:,5))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('Frac P vs. D r')
-
-subplot(2,2,2)
-bar(rmse(:,5))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('Frac P vs. D rmse')
-
-subplot(2,2,3)
-bar(F(:,5))
-set(gca,'XTick',1:length(kays),'XTickLabel',eff)
-xlabel('Effort min max')
-ylabel('Frac P vs. D Fmed')
-print('-dpng',[ppath cfile2 '_effort_dist_SAUP_PD.png'])
+plot(kays,F(:,1),'b','LineWidth',2); hold on;
+plot(kays,F(:,2),'color',[0.082353 0.6902 0.10196],'LineWidth',2)
+xlabel('k')
+ylabel('Fmed')
+xlim([0.04 0.12])
+stamp('')
+print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_stats_line.png'])
 
