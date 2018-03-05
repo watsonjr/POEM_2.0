@@ -31,6 +31,7 @@ function enc = sub_enc(Tp,Tb,wgt,prey,tpel,tprey,pref)
     
     %A = (exp(0.063*(temp-10.0)) .* gam .* wgt^(-0.2)) ./365.0;
     A = (exp(0.063*(temp-10.0)) .* gam .* wgt^(-benc)) ./365.0;
+    
     %Encounter per predator, mult by biomass later
     frac = zeros(NX,1);
     ID = (tprey>0);

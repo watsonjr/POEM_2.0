@@ -16,7 +16,7 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A100_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100_noHPLoss';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -541,7 +541,7 @@ colorbar('h');
 set(gcf,'renderer','painters')
 title('Climatology log10 mean LP (g m^-^3)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_LP_Watson.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_LP_Watson.png'])
 
 %% FracPD
 figure(25)
@@ -557,7 +557,7 @@ ylim(hcb,[0 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology Fraction P:D')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_FracPD.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_FracPD.png'])
 
 % FracPF
 figure(26)
@@ -573,7 +573,7 @@ ylim(hcb,[0 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology Fraction P:F')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_FracPF.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_FracPF.png'])
 
 % All 4 on subplots
 figure(27)
@@ -856,7 +856,7 @@ caxis([0 1]);
 set(gcf,'renderer','painters')
 title('B. Large Pelagics : Demersals')
 %     stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_ratios_subplot_v2.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_ratios_subplot_v2.png'])
 
 %% 3 figure subplot P:D, P:F, M:L
 figure(30)

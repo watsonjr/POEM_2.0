@@ -25,6 +25,7 @@ function con = sub_cons(Tp,Tb,tpel,wgt,enc)
 %         % J&C15 (g/g/day) ref to 10C
 %         cmax = (exp(0.063*(temp-10.0)) .* 25.0 .* wgt^(-0.33)) ./365.0;
 %     end
+
     %cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-0.25)) ./365.0;
     cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-bcmx)) ./365.0;
     

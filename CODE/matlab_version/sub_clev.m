@@ -23,6 +23,7 @@ function clev = sub_clev(con,Tp,Tb,tdif,wgt)
     
     %cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-0.25)) ./365.0;
     cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-bcmx)) ./365.0;
+    
     %clev
     clev = con./cmax;
 end
