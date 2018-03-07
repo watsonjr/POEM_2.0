@@ -65,8 +65,8 @@ function make_parameters()
 
     %%%! Metabolism constants (activity and basal)
     fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
-%     amet = 20;      % coeff on met
-%     h = 20;         % coeff on Cmax
+    amet = 2;      % coeff on met
+    h = 10;         % coeff on Cmax
     gam = 70;       % coeff on search area
     kt = 0.0905;    % coeff on T-dep fn (orig 0.063)
     bpow = 0.175;   % power on metab fn (orig 0.25)

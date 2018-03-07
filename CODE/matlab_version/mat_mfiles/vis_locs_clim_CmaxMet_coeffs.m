@@ -312,22 +312,41 @@ for M=1:length(mets)
         Fgge=[SF_gge;MF_gge];
         Dgge=[SD_gge;MD_gge;LD_gge];
         
-        save([dpath sname '_lastyr_sum_mean_biom.mat'],'Pmean','Fmean','Dmean','all_mean',...
-            'Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon','z','Pprod','Fprod','Dprod',...
-            'Prep','Frep','Drep','Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
-            'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish','Ptotcatch','Ftotcatch',...
-            'Dtotcatch','Pgge','Fgge','Dgge','Plev','Flev','Dlev','Bmean');
+        save([dpath sname '_lastyr_sum_mean_biom.mat'],'Pmean','Fmean',...
+            'Dmean','all_mean','Pmgr','Fmgr','Dmgr','Pcon','Fcon','Dcon',...
+            'z','Pprod','Fprod','Dprod','Prep','Frep','Drep',...
+            'Pmet','Fmet','Dmet','Ppred','Fpred','Dpred',...
+            'Pnat','Fnat','Dnat','Pfish','Ffish','Dfish',...
+            'Ptotcatch','Ftotcatch','Dtotcatch','Pgge','Fgge','Dgge',...
+            'Plev','Flev','Dlev','Bmean');
         
     end %C
 end %M
 cfile2 = ['Dc_enc70-b200_mb175-k09_cb250_D075_J100_A050_Sm025_nmort1_',...
     'BE05_noCC_RE00100_CmaxMetTests'];
 % Save values for all locs and all bees that combo
-save([datap 'Bio_rates/' cfile2 '.mat'],'fishsp','mcon','mlev');
+save([datap 'Bio_rates/' cfile2 '.mat'],'mcon','mlev',...
+    'allF','allP','allD','allB');
 
 %%
 FPrat = squeeze(allF./(allF+allP));
 DPrat = squeeze(allD./(allD+allP));
+
+cmaxs2 = [cmaxs 110];
+mets2 = [mets 11];
+[cgrid,mgrid]=meshgrid(cmaxs2,mets2);
+
+allF2 = NaN*ones(11,11,16);
+allP2 = NaN*ones(11,11,16);
+allD2 = NaN*ones(11,11,16);
+FP2 = NaN*ones(11,11,16);
+DP2 = NaN*ones(11,11,16);
+
+allF2(1:10,1:10,:)=allF;
+allP2(1:10,1:10,:)=allP;
+allD2(1:10,1:10,:)=allD;
+FP2(1:10,1:10,:)=FPrat;
+DP2(1:10,1:10,:)=DPrat;
 
 for s=1:length(spots)
     loc = spots{s};
@@ -336,93 +355,126 @@ for s=1:length(spots)
     %% Sum mean biom over stages
     f2=figure(2);
     subplot(4,4,s)
-    plot(1-0.25:np,log10(squeeze(fishsp(1,s,:))),'sk','MarkerFaceColor',cmap_ppt(3,:),...
-        'MarkerSize',15); hold on;
-    plot(1:np,log10(squeeze(fishsp(2,s,:))),'sk','MarkerFaceColor',cmap_ppt(1,:),...
-        'MarkerSize',15); hold on;
-    plot(1+0.25:np+1,log10(squeeze(fishsp(3,s,:))),'sk','MarkerFaceColor',cmap_ppt(2,:),...
-        'MarkerSize',15); hold on;
-    xlim([0 np+1])
-    ylim([-2 2])
-    if (s==5)
-        ylabel('log10 Mean Biom (g m^-^2) in final year')
+    pcolor(mgrid,cgrid,squeeze(log10(allF2(:,:,s))))
+    colorbar
+    caxis([-2 2])
+    set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
+    if (s==2)
+        title({'log10 Mean F Biom (g m^-^2) in final year'; loc})
+    else
+        title(loc)
     end
-    set(gca,'XTick',1:np,'XTickLabel',[]);
-    for t=1:np
-        text(t,-2.1,num2str(jays(t)),'Rotation',45,'HorizontalAlignment','right')
-    end
+    xlabel('Met coeff')
+    ylabel('Cmax coeff')
     stamp(cfile2)
-    title([loc ' All stages'])
+    
+    f3=figure(3);
+    subplot(4,4,s)
+    pcolor(mgrid,cgrid,squeeze(log10(allP2(:,:,s))))
+    colorbar
+    caxis([-2 2])
+    set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
+    if (s==2)
+        title({'log10 Mean P Biom (g m^-^2) in final year'; loc})
+    else
+        title(loc)
+    end
+    xlabel('Met coeff')
+    ylabel('Cmax coeff')
+    stamp(cfile2)
+    
+    
+    f4=figure(4);
+    subplot(4,4,s)
+    pcolor(mgrid,cgrid,squeeze(log10(allD2(:,:,s))))
+    colorbar
+    caxis([-2 2])
+    set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
+    if (s==2)
+        title({'log10 Mean D Biom (g m^-^2) in final year'; loc})
+    else
+        title(loc)
+    end
+    xlabel('Met coeff')
+    ylabel('Cmax coeff')
+    stamp(cfile2)
     
     f5=figure(5);
     subplot(4,4,s)
-    plot(jays,FPrat(s,:),'b','LineWidth',2); hold on;
-    ylim([0 1])
+    pcolor(mgrid,cgrid,squeeze(FP2(:,:,s)))
+    colorbar
+    cmocean('balance')
+    caxis([0 1])
+    set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
     if (s==2)
         title({'Frac F:P in final year'; loc})
     else
         title(loc)
     end
+    xlabel('Met coeff')
+    ylabel('Cmax coeff')
     stamp(cfile2)
     
     f6=figure(6);
     subplot(4,4,s)
-    plot(jays,DPrat(s,:),'b','LineWidth',2); hold on;
-    ylim([0 1])
+    pcolor(mgrid,cgrid,squeeze(DP2(:,:,s)))
+    colorbar
+    cmocean('balance')
+    caxis([0 1])
+    set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
     if (s==2)
         title({'Frac D:P in final year'; loc})
     else
         title(loc)
     end
+    xlabel('Met coeff')
+    ylabel('Cmax coeff')
     stamp(cfile2)
     
 end %spots
-print(f2,'-dpng',[figp sname cfile2 '_tot_mean_biomass_type_all_locs.png'])
+print(f2,'-dpng',[figp sname cfile2 '_totF_mean_biomass_type_all_locs.png'])
+print(f3,'-dpng',[figp sname cfile2 '_totP_mean_biomass_type_all_locs.png'])
+print(f4,'-dpng',[figp sname cfile2 '_totD_mean_biomass_type_all_locs.png'])
 print(f5,'-dpng',[figp sname cfile2 '_FP_frac_all_locs.png'])
 print(f6,'-dpng',[figp sname cfile2 '_DP_frac_all_locs.png'])
 
-%% Consump vs. weight
-figure(1)
-subplot(3,1,1)
-bar(mcon(1,:))
-set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
-plot(0:np+1, Consumption(1,1:np+2),'--k','LineWidth',2)
-ylabel('S')
-title('Mean consumption (g yr^-^1)')
-
-subplot(3,1,2)
-bar(mcon(2,:))
-set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
-plot(0:np+1, Consumption(2,1:np+2),'--k','LineWidth',2)
-ylabel('M')
-
-subplot(3,1,3)
-bar(mcon(3,:))
-set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
-plot(0:np+1, Consumption(3,1:np+2),'--k','LineWidth',2)
-ylabel('L')
-xlabel('A pref')
-print('-dpng',[figp sname cfile2 '_mean_con_size_all_locs.png'])
-
 %% Feeding level
-figure(3)
-subplot(3,1,1)
-bar(mlev(1,:))
-ylim([0.5 1])
-set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
-ylabel('S')
-title('Mean feeding level')
+mlev2 = NaN*ones(11,11,3);
+mlev2(1:10,1:10,:)=mlev;
 
-subplot(3,1,2)
-bar(mlev(2,:))
-ylim([0.5 1])
-set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
-ylabel('M')
+figure(10)
+subplot(2,2,1)
+pcolor(mgrid,cgrid,squeeze(mlev2(:,:,1)))
+colorbar
+caxis([0 1])
+set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
+xlabel('Met coeff')
+    ylabel('Cmax coeff')
+title('S Mean feeding level')
 
-subplot(3,1,3)
-bar(mlev(3,:))
-ylim([0.5 1])
-set(gca,'XTick',1:np,'XTickLabel',jays); hold on;
-ylabel('L')
-xlabel('A pref')
+subplot(2,2,2)
+pcolor(mgrid,cgrid,squeeze(mlev2(:,:,2)))
+colorbar
+caxis([0 1])
+set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
+xlabel('Met coeff')
+    ylabel('Cmax coeff')
+title('M Mean feeding level')
+
+subplot(2,2,3)
+pcolor(mgrid,cgrid,squeeze(mlev2(:,:,3)))
+colorbar
+caxis([0 1])
+set(gca,'XTick',mets,'XTickLabel',mets,...
+        'YTick',cmaxs,'YTickLabel',cmaxs)
+xlabel('Met coeff')
+    ylabel('Cmax coeff')
+title('L Mean feeding level')
 print('-dpng',[figp sname cfile2 '_mean_flev_size_all_locs.png'])
