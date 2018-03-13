@@ -1,6 +1,6 @@
 %POEM catch vs. SAUP catch by LME
 %Use same methods as Stock et al. 2017 to reduce SAUP dataset
-%Diff k values for temp-dep
+%Diff BE values 
 
 clear all
 close all
@@ -8,7 +8,7 @@ close all
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/CSV/Matlab_new_size/';
-pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
+pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Bio_rates/';
 
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
@@ -115,22 +115,22 @@ l10sD=log10(Dlme_mcatch10+eps);
 
 sFracPD = Plme_mcatch10 ./ (Plme_mcatch10 + Dlme_mcatch10);
 
-%% loop over temp scaling
-kays = 0.0405:0.01:0.1205;
-skays={'.04','.05','.06','.07','.08','.09','.10','.11','.12'};
+%% loop over BEs
+kays = 0.025:0.025:0.13;
+skays={'.025','.05','.075','.1','.125'};
 
 r   = NaN*ones(length(kays),5);
 rmse = NaN*ones(length(kays),5);
 F   = NaN*ones(length(kays),5);
 
 for i=1:length(kays)
-    kt=kays(i);
-    tkfn = num2str(100+int64(100*kt));
-    cfile = ['Dc_enc70-b200_cm20_m-b175-k',tkfn(2:end),...
-        '_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100'];
-    fpath=['/Volumes/GFDL/CSV/Matlab_new_size/' cfile '/'];
+    bent_eff=kays(i);
+    tbe = num2str(100+int64(100*bent_eff));
+    cfile = ['Dc_enc70-b200_m4-b175-k09_c20-b250_D075_J100_A050_Sm025_',...
+        'nmort1_BE',tbe(2:end),'_noCC_RE00100'];
+    fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
     ppath = [pp cfile '/'];
-    load([fpath 'LME_clim_',harv,'_loop.mat'],'lme_mcatch');
+    load([fpath 'LME_clim_fished_All_fish03_',cfile,'.mat'],'lme_mcatch');
     
     
     %% POEM LME biomass in MT
@@ -198,7 +198,7 @@ for i=1:length(kays)
     
     %% Plot corr
     f1=figure(1);
-    subplot(3,3,i)
+    subplot(3,2,i)
     plot(x,x,'--k');hold on;
     for j=1:length(keep)
         lme=keep(j);
@@ -206,7 +206,7 @@ for i=1:length(kays)
     end
     text(-1.75,1.7,['r = ' sprintf('%2.2f',r(i,1))])
     text(-1.75,1.3,['RMSE = ' sprintf('%2.2f',rmse(i,1))])
-    axis([-3 2 -3 2])
+    axis([-2 2 -2 2])
     if (i>6)
         xlabel('SAU')
     end
@@ -214,12 +214,12 @@ for i=1:length(kays)
     if (i==2)
         title('All')
     else
-        title(['k=0' skays{i}])
+        title(['BE=0' skays{i}])
     end
     stamp('')
     
     f2=figure(2);
-    subplot(3,3,i)
+    subplot(3,2,i)
     plot(x,x,'--k');hold on;
     for j=1:length(keep)
         lme=keep(j);
@@ -235,12 +235,12 @@ for i=1:length(kays)
     if (i==2)
         title('Forage')
     else
-        title(['k=0' skays{i}])
+        title(['BE=0' skays{i}])
     end
     stamp('')
     
     f3=figure(3);
-    subplot(3,3,i)
+    subplot(3,2,i)
     plot(x,x,'--k');hold on;
     for j=1:length(keep)
         lme=keep(j);
@@ -257,12 +257,12 @@ for i=1:length(kays)
     if (i==2)
         title('Large Pelagics')
     else
-        title(['k=0' skays{i}])
+        title(['BE=0' skays{i}])
     end
     stamp('')
 
     f4=figure(4);
-    subplot(3,3,i)
+    subplot(3,2,i)
     plot(x,x,'--k');hold on;
     for j=1:length(keep)
         lme=keep(j);
@@ -279,12 +279,12 @@ for i=1:length(kays)
     if (i==2)
         title('Demersals')
     else
-        title(['k=0' skays{i}])
+        title(['BE=0' skays{i}])
     end
     stamp('')
     
     f5=figure(5);
-    subplot(3,3,i)
+    subplot(3,2,i)
     plot(x,x,'--k');hold on;
     for j=1:length(keep)
         lme=keep(j);
@@ -300,16 +300,16 @@ for i=1:length(kays)
     if (i==2)
         title('P/(P+D)')
     else
-        title(['k=0' skays{i}])
+        title(['BE=0' skays{i}])
     end
     stamp('')
 
 end
-print(f1,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_scatterAll.png'])
-print(f2,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_scatterF.png'])
-print(f3,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_scatterP.png'])
-print(f4,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_scatterD.png'])
-print(f5,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_scatterPD.png'])
+print(f1,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_BE_tests_scatterAll.png'])
+print(f2,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_BE_tests_scatterF.png'])
+print(f3,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_BE_tests_scatterP.png'])
+print(f4,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_BE_tests_scatterD.png'])
+print(f5,'-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_BE_tests_scatterPD.png'])
     
 %% Plots
 
@@ -320,7 +320,7 @@ plot(kays,r(:,2),'color',[0.97647 0.45098 0.023529],'LineWidth',2)
 plot(kays,r(:,3),'b','LineWidth',2); hold on;
 plot(kays,r(:,4),'color',[0.082353 0.6902 0.10196],'LineWidth',2)
 plot(kays,r(:,5),'color',[0.49412 0.11765 0.61176],'LineWidth',2)
-xlabel('k')
+xlabel('BE')
 ylabel('r')
 xlim([0.04 0.12])
 
@@ -330,11 +330,9 @@ plot(kays,rmse(:,2),'color',[0.97647 0.45098 0.023529],'LineWidth',2)
 plot(kays,rmse(:,3),'b','LineWidth',2); hold on;
 plot(kays,rmse(:,4),'color',[0.082353 0.6902 0.10196],'LineWidth',2)
 plot(kays,rmse(:,5),'color',[0.49412 0.11765 0.61176],'LineWidth',2)
-xlabel('k')
+xlabel('BE')
 ylabel('rmse')
 xlim([0.04 0.12])
-legend('All','F','P','D','P:D')
-legend('location','northwest')
 
 subplot(2,2,3)
 plot(kays,F(:,1),'k','LineWidth',2); hold on;
@@ -342,32 +340,34 @@ plot(kays,F(:,2),'color',[0.97647 0.45098 0.023529],'LineWidth',2)
 plot(kays,F(:,3),'b','LineWidth',2); hold on;
 plot(kays,F(:,4),'color',[0.082353 0.6902 0.10196],'LineWidth',2)
 plot(kays,F(:,5),'color',[0.49412 0.11765 0.61176],'LineWidth',2)
-xlabel('k')
+xlabel('BE')
 ylabel('Fmed')
 xlim([0.04 0.12])
+legend('All','F','P','D','P:D')
+legend('location','northeast')
 stamp('')
-print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_stats_line.png'])
+print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_BE_tests_stats_line.png'])
 
 %%
 figure(7)
 subplot(2,2,1)
 plot(kays,r(:,5),'k','LineWidth',2); hold on;
-xlabel('k')
+xlabel('BE')
 ylabel('r')
 xlim([0.04 0.12])
 title('P/(P+D)')
 
 subplot(2,2,2)
 plot(kays,rmse(:,5),'k','LineWidth',2); hold on;
-xlabel('k')
+xlabel('BE')
 ylabel('rmse')
 xlim([0.04 0.12])
 
 subplot(2,2,3)
 plot(kays,F(:,5),'k','LineWidth',2); hold on;
-xlabel('k')
+xlabel('BE')
 ylabel('Fmed')
 xlim([0.04 0.12])
 stamp('')
-print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_kt_tests_PDstats_line.png'])
+print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_BE_tests_PDstats_line.png'])
 

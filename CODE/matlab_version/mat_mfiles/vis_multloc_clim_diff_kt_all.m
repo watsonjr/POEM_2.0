@@ -76,57 +76,39 @@ set(groot,'defaultAxesColorOrder',cm9);
 
 cfileA = 'Dc_enc70-b200_cm20_m-b175-k05_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathA=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileA '/'];
-load([fpathA 'Clim_means_All_fish03.mat'],...
-    'sp_mean','mp_mean','lp_mean');
-Asp=NaN*ones(ni,nj);
-Amp=NaN*ones(ni,nj);
-Alp=NaN*ones(ni,nj);
-Asp(ID)=sp_mean;
-Amp(ID)=mp_mean;
-Alp(ID)=lp_mean;
-clear sp_mean mp_mean lp_mean
+load([fpathA 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
+    'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
+Afish=sf_mean+sp_mean+sd_mean+mf_mean+mp_mean+md_mean+lp_mean+ld_mean;
+Aall=NaN*ones(ni,nj);
+Aall(ID)=Afish;
+clear sf_mean mf_mean sp_mean mp_mean lp_mean sd_mean md_mean ld_mean
 
 cfileB = 'Dc_enc70-b200_cm20_m-b175-k07_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathB=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileB '/'];
-load([fpathB 'Clim_means_All_fish03.mat'],...
-    'sp_mean','mp_mean','lp_mean');
-Bsp=NaN*ones(ni,nj);
-Bmp=NaN*ones(ni,nj);
-Blp=NaN*ones(ni,nj);
-Bsp(ID)=sp_mean;
-Bmp(ID)=mp_mean;
-Blp(ID)=lp_mean;
-clear sp_mean mp_mean lp_mean
+load([fpathB 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
+    'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
+Bfish=sf_mean+sp_mean+sd_mean+mf_mean+mp_mean+md_mean+lp_mean+ld_mean;
+Ball=NaN*ones(ni,nj);
+Ball(ID)=Bfish;
+clear sf_mean mf_mean sp_mean mp_mean lp_mean sd_mean md_mean ld_mean
 
 cfileC = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathC=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileC '/'];
-load([fpathC 'Clim_means_All_fish03.mat'],...
-    'sp_mean','mp_mean','lp_mean');
-Csp=NaN*ones(ni,nj);
-Cmp=NaN*ones(ni,nj);
-Clp=NaN*ones(ni,nj);
-Csp(ID)=sp_mean;
-Cmp(ID)=mp_mean;
-Clp(ID)=lp_mean;
-clear sp_mean mp_mean lp_mean
+load([fpathC 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
+    'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
+Cfish=sf_mean+sp_mean+sd_mean+mf_mean+mp_mean+md_mean+lp_mean+ld_mean;
+Call=NaN*ones(ni,nj);
+Call(ID)=Cfish;
+clear sf_mean mf_mean sp_mean mp_mean lp_mean sd_mean md_mean ld_mean
 
 cfileD = 'Dc_enc70-b200_cm20_m-b175-k11_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathD=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileD '/'];
-load([fpathD 'Clim_means_All_fish03.mat'],...
-    'sp_mean','mp_mean','lp_mean');
-Dsp=NaN*ones(ni,nj);
-Dmp=NaN*ones(ni,nj);
-Dlp=NaN*ones(ni,nj);
-Dsp(ID)=sp_mean;
-Dmp(ID)=mp_mean;
-Dlp(ID)=lp_mean;
-clear sp_mean mp_mean lp_mean
-
-% Diff maps of all fish
-AP = Asp+Amp+Alp;
-BP = Bsp+Bmp+Blp;
-CP = Csp+Cmp+Clp;
-DP = Dsp+Dmp+Dlp;
+load([fpathD 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
+    'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
+Dfish=sf_mean+sp_mean+sd_mean+mf_mean+mp_mean+md_mean+lp_mean+ld_mean;
+Dall=NaN*ones(ni,nj);
+Dall(ID)=Dfish;
+clear sf_mean mf_mean sp_mean mp_mean lp_mean sd_mean md_mean ld_mean
 
 %% 
 figure(1)
@@ -134,7 +116,7 @@ figure(1)
 subplot('Position',[0 0.51 0.5 0.4])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AP))
+surfm(geolat_t,geolon_t,log10(Aall))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -146,7 +128,7 @@ text(-2.75,1.75,'A')
 subplot('Position',[0.5 0.51 0.5 0.4])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(BP))
+surfm(geolat_t,geolon_t,log10(Ball))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -158,7 +140,7 @@ text(-2.75,1.75,'B')
 subplot('Position',[0 0.1 0.5 0.4])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(CP))
+surfm(geolat_t,geolon_t,log10(Call))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -170,7 +152,7 @@ text(-2.75,1.75,'C')
 subplot('Position',[0.5 0.1 0.5 0.4])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(DP))
+surfm(geolat_t,geolon_t,log10(Dall))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -179,5 +161,5 @@ colorbar('Position',[0.25 0.075 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
 text(-2.75,1.75,'D')
 %stamp([harv '_' cfile])
-print('-dpng',[pp 'Climatol_' harv '_Pcomp_kt.png'])
+print('-dpng',[pp 'Climatol_' harv '_All_comp_kt.png'])
 

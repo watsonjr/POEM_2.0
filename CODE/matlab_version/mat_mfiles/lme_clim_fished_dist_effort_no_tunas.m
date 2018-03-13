@@ -29,14 +29,14 @@ load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
 lme_area_km2 = lme_area * 1e-6;
 
 %SAUP
-load([spath 'SAUP_LME_Catch_top10_Stock.mat']);
+load([spath 'SAUP_LME_Catch_top10_Stock_no_tunas_bathy.mat']);
 l10s=log10(slme_mcatch10+eps);
 l10sF=log10(Flme_mcatch10+eps);
 l10sP=log10(Plme_mcatch10+eps);
 l10sD=log10(Dlme_mcatch10+eps);
 
 %POEM
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 fpath = [dp cfile '/'];
 ppath = [pp cfile '/'];
@@ -96,21 +96,15 @@ Cld(ID)=ld_my;
 
 %% Effort scalings
 eff = min_dist;
-eff(eff>370) = 0;
+eff(eff>600) = 0;
 eff(eff>0) = 1;
-%Make LMEs 10 (Hawaii), 37&38 (Coral Triangle), 65 (Aleutian Is) = 1
-%60 Faroe Plateu?
-keep = [notLELC(1:43); notLELC(45)];
+%Make LMEs 10 (Hawaii), 65 (Aleutian Is) = 1
 lid10 = find(tlme==10);
-lid37 = find(tlme==37);
-lid38 = find(tlme==38);
 lid65 = find(tlme==65);
 eff(lid10) = 1;
-eff(lid37) = 1;
-eff(lid38) = 1;
 eff(lid65) = 1;
-cfile2 = '_effort_370km';
-tit2 = 'Effort 370km';
+cfile2 = '_effort_600km_no_tunas_bathy';
+tit2 = 'Effort 600km';
 
 % Distance
 figure(10)
@@ -139,7 +133,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title(tit2)
 stamp('')
-print('-dpng',[pp harv,cfile2,'_LME.png'])
+% print('-dpng',[pp harv,cfile2,'_LME.png'])
 
 
 %% apply effort scaling
@@ -370,62 +364,62 @@ title('Fraction Large Pelagics')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Clim_',harv,cfile2,'_SAUP_comp_fracP.png'])
 
-%% Catch Map & corr
+%% Catch Map 
 % all
-figure(3)
-clf
-subplot('Position',[0.5 0 0.5 0.5])
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,real(log10(clme_All)))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3.5 1.5]);
-set(gcf,'renderer','painters')
-title('All Fishes')
-
-% all F
-subplot('Position',[0 0.51 0.5 0.5])
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,real(log10(clme_AllF)))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3.5 1.5]);
-%hcb = colorbar('h');
-colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
-set(gcf,'renderer','painters')
-title('mean log10 total annual catch (MT) Forage Fishes')
-
-% all P
-subplot('Position',[0.5 0.51 0.5 0.5])
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,real(log10(clme_AllP)))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3.5 1.5]);
-%hcb = colorbar('h');
-set(gcf,'renderer','painters')
-title('Large Pelagic Fishes')
-
-% All D
-subplot('Position',[0 0 0.5 0.5])
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,real(log10(clme_AllD)))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3.5 1.5]);
-%hcb = colorbar('h');
-set(gcf,'renderer','painters')
-title('Demersal Fishes')
-stamp(cfile)
-print('-dpng',[ppath 'Clim_fished_',harv,cfile2,'_LME_catch.png'])
+% figure(3)
+% clf
+% subplot('Position',[0.5 0 0.5 0.5])
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,real(log10(clme_All)))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-3.5 1.5]);
+% set(gcf,'renderer','painters')
+% title('All Fishes')
+% 
+% % all F
+% subplot('Position',[0 0.51 0.5 0.5])
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,real(log10(clme_AllF)))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-3.5 1.5]);
+% %hcb = colorbar('h');
+% colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
+% set(gcf,'renderer','painters')
+% title('mean log10 total annual catch (MT) Forage Fishes')
+% 
+% % all P
+% subplot('Position',[0.5 0.51 0.5 0.5])
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,real(log10(clme_AllP)))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-3.5 1.5]);
+% %hcb = colorbar('h');
+% set(gcf,'renderer','painters')
+% title('Large Pelagic Fishes')
+% 
+% % All D
+% subplot('Position',[0 0 0.5 0.5])
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,real(log10(clme_AllD)))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-3.5 1.5]);
+% %hcb = colorbar('h');
+% set(gcf,'renderer','painters')
+% title('Demersal Fishes')
+% stamp(cfile)
+% print('-dpng',[ppath 'Clim_fished_',harv,cfile2,'_LME_catch.png'])
 
 %% subplot with SAU comparison map & corr
 figure(4)

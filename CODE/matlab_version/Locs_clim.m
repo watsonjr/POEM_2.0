@@ -22,13 +22,13 @@ else
     harv = 0;
 end
 
-mets = 1:10;
-cmaxs = 10:10:100;
-
-for M=1:length(mets)
-    for C=1:length(cmaxs)
-        amet = mets(M);
-        h = cmaxs(C);
+% mets = 1:10;
+% cmaxs = 10:10:100;
+% 
+% for M=1:length(mets)
+%     for C=1:length(cmaxs)
+%         amet = mets(M);
+%         h = cmaxs(C);
         
         %! Make core parameters/constants (global)
         make_parameters()
@@ -96,7 +96,7 @@ for M=1:length(mets)
         tmfn = num2str(amet);
         tcfn = num2str(h);
         tefn = num2str(round(gam));
-        tkfn = num2str(100+int64(100*kt));
+        tkfn = num2str(1000+int64(1000*kt));
         tbfn = num2str(1000+int64(1000*bpow));
         tbenc = num2str(1000+int64(1000*benc));
         tbcmx = num2str(1000+int64(1000*bcmx));
@@ -222,7 +222,7 @@ for M=1:length(mets)
                 'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
         end
         
-    end %cmax
-end %met
+%     end %cmax
+% end %met
 
 end

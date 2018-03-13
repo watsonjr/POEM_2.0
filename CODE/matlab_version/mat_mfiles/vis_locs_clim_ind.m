@@ -19,7 +19,7 @@ cols = {'bio','enc_f','enc_p','enc_d','enc_zm','enc_zl','enc_be','con_f',...
 cols=cols';
 spots=spots';
 
-dp = 'Dc_enc4_m4_c4_D100_J100_A100_Sm025_nmort4_BE05_noCC_RE01000';
+dp = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 sname = 'Clim_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
@@ -852,7 +852,7 @@ for s=1:length(spots)
     plot(s+0.25,Dgge(1,s),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    ylim([-0.25 0.75])
+    ylim([-0.2 0.8])
     xlim([0 17])
     set(gca,'XTickLabel',[]);
     for n=1:16
@@ -871,7 +871,7 @@ for s=1:length(spots)
     plot(s+0.25,(Dgge(2,s)),'sk',...
         'MarkerFaceColor',cmap_ppt(2,:),...
         'MarkerSize',15); hold on;
-    ylim([-0.2 0.5])
+    ylim([-0.2 0.6])
     xlim([0 17])
     set(gca,'XTickLabel',[]);
     for n=1:16

@@ -35,7 +35,7 @@ lme_area_km2 = lme_area * 1e-6;
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE10_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -73,7 +73,7 @@ load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
     'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
 keep = notLELC;
 
-x=-6:0.5:8;
+x=-8:0.5:8;
 x2h = x+log10(2);
 x2l = x-log10(2);
 x5h = x+log10(5);
@@ -407,113 +407,113 @@ title('C. Demersals')
 print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ms.png'])
 
 %% For ppt
-figure(20)
-subplot(2,2,1)
-plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-end
-text(-1.75,1.75,['r = ' sprintf('%2.2f',rall)])
-text(-1.75,1.50,['RMSE = ' sprintf('%2.2f',rmse)])
-axis([-2 2 -2 2])
-xlabel('SAU')
-ylabel('POEM')
-title('All fishes')
-
-subplot(2,2,2)
-plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-end
-text(-5.5,1.5,['r = ' sprintf('%2.2f',rF)])
-text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseF)])
-axis([-6 2 -6 2])
-xlabel('SAU')
-ylabel('POEM')
-title('Forage Fishes')
-
-subplot(2,2,3)
-plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-end
-text(-5.5,1.5,['r = ' sprintf('%2.2f',rP)])
-text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseP)])
-axis([-6 2 -6 2])
-xlabel('SAU')
-ylabel('POEM')
-title('Large Pelagics')
-
-subplot(2,2,4)
-plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-end
-text(-1.75,1.75,['r = ' sprintf('%2.2f',rD)])
-text(-1.75,1.50,['RMSE = ' sprintf('%2.2f',rmseD)])
-axis([-2 2 -2 2])
-xlabel('SAU')
-ylabel('POEM')
-title('Demersals')
+% figure(20)
+% subplot(2,2,1)
+% plot(x,x,'--k'); hold on;
+% % plot(x,x2h,'--b'); hold on;
+% % plot(x,x2l,'--b'); hold on;
+% % plot(x,x5h,'--r'); hold on;
+% % plot(x,x5l,'--r'); hold on;
+% for i=1:length(keep)
+%     lme=keep(i);
+%     plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+% end
+% text(-1.75,1.75,['r = ' sprintf('%2.2f',rall)])
+% text(-1.75,1.50,['RMSE = ' sprintf('%2.2f',rmse)])
+% axis([-2 2 -2 2])
+% xlabel('SAU')
+% ylabel('POEM')
+% title('All fishes')
+% 
+% subplot(2,2,2)
+% plot(x,x,'--k'); hold on;
+% % plot(x,x2h,'--b'); hold on;
+% % plot(x,x2l,'--b'); hold on;
+% % plot(x,x5h,'--r'); hold on;
+% % plot(x,x5l,'--r'); hold on;
+% for i=1:length(keep)
+%     lme=keep(i);
+%     plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+% end
+% text(-5.5,1.5,['r = ' sprintf('%2.2f',rF)])
+% text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseF)])
+% axis([-6 2 -6 2])
+% xlabel('SAU')
+% ylabel('POEM')
+% title('Forage Fishes')
+% 
+% subplot(2,2,3)
+% plot(x,x,'--k'); hold on;
+% % plot(x,x2h,'--b'); hold on;
+% % plot(x,x2l,'--b'); hold on;
+% % plot(x,x5h,'--r'); hold on;
+% % plot(x,x5l,'--r'); hold on;
+% for i=1:length(keep)
+%     lme=keep(i);
+%     plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+% end
+% text(-5.5,1.5,['r = ' sprintf('%2.2f',rP)])
+% text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseP)])
+% axis([-6 2 -6 2])
+% xlabel('SAU')
+% ylabel('POEM')
+% title('Large Pelagics')
+% 
+% subplot(2,2,4)
+% plot(x,x,'--k'); hold on;
+% % plot(x,x2h,'--b'); hold on;
+% % plot(x,x2l,'--b'); hold on;
+% % plot(x,x5h,'--r'); hold on;
+% % plot(x,x5l,'--r'); hold on;
+% for i=1:length(keep)
+%     lme=keep(i);
+%     plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+% end
+% text(-1.75,1.75,['r = ' sprintf('%2.2f',rD)])
+% text(-1.75,1.50,['RMSE = ' sprintf('%2.2f',rmseD)])
+% axis([-2 2 -2 2])
+% xlabel('SAU')
+% ylabel('POEM')
+% title('Demersals')
+% % stamp([harv '_' cfile])
+% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ppt.png'])
+% 
+% %
+% rlelc=corr(l10s,l10p);
+% figure(21)
+% plot(x,x,'--k'); hold on;
+% % plot(x,x2h,'--b'); hold on;
+% % plot(x,x2l,'--b'); hold on;
+% % plot(x,x5h,'--r'); hold on;
+% % plot(x,x5l,'--r'); hold on;
+% for i=1:66
+%     lme=i;
+%     plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+% end
+% axis([-3.5 1.5 -3.5 1.5])
+% xlabel('SAU')
+% ylabel('POEM')
+% title('All fishes')
 % stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ppt.png'])
-
-
-rlelc=corr(l10s,l10p);
-figure(21)
-plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-for i=1:66
-    lme=i;
-    plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-end
-axis([-3.5 1.5 -3.5 1.5])
-xlabel('SAU')
-ylabel('POEM')
-title('All fishes')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_temp_Stock_ppt.png'])
-
-figure(22)
-plot(x,x,'--k'); hold on;
-% plot(x,x2h,'--b'); hold on;
-% plot(x,x2l,'--b'); hold on;
-% plot(x,x5h,'--r'); hold on;
-% plot(x,x5l,'--r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-end
-text(-5.5,1.5,['r = ' sprintf('%2.2f',rall)])
-axis([-3.5 1.5 -3.5 1.5])
-xlabel('SAU')
-ylabel('POEM')
-title('All fishes')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_temp_Stock_LELC_ppt.png'])
+% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_temp_Stock_ppt.png'])
+% 
+% figure(22)
+% plot(x,x,'--k'); hold on;
+% % plot(x,x2h,'--b'); hold on;
+% % plot(x,x2l,'--b'); hold on;
+% % plot(x,x5h,'--r'); hold on;
+% % plot(x,x5l,'--r'); hold on;
+% for i=1:length(keep)
+%     lme=keep(i);
+%     plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+% end
+% text(-5.5,1.5,['r = ' sprintf('%2.2f',rall)])
+% axis([-3.5 1.5 -3.5 1.5])
+% xlabel('SAU')
+% ylabel('POEM')
+% title('All fishes')
+% stamp([harv '_' cfile])
+% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_temp_Stock_LELC_ppt.png'])
 
 %% Just P
 figure(50)
@@ -530,7 +530,7 @@ for i=1:length(keep)
 end
 text(-5.5,1.5,['r = ' sprintf('%2.2f',rP)])
 text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseP)])
-axis([-6 2 -6 2])
+axis([-7 2 -7 2])
 xlabel('SAUP')
 ylabel('POEM')
 title('Large Pelagics')
@@ -539,23 +539,23 @@ print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_Stock_LELC_P.png'])
 
 %% FRACTION LARGE PELAGIC ----------------------------------
 % Correlation
-figure(3)
-plot(x,x,'--k');hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(sFracPD(lme),pFracPD(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-    text(sFracPD(lme),pFracPD(lme),num2str(lme),...
-        'Color','k','HorizontalAlignment','center'); hold on;
-end
-text(0.05,0.95,['r = ' sprintf('%2.2f',rPD)])
-text(0.05,0.9,['RMSE = ' sprintf('%2.2f',rmsePD)])
-text(0.05,0.85,['Fmed = ' sprintf('%2.2f',FPD)])
-axis([0 1 0 1])
-xlabel('SAUP')
-ylabel('POEM')
-title('Fraction Large Pelagics')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_fracP.png'])
+% figure(3)
+% plot(x,x,'--k');hold on;
+% for i=1:length(keep)
+%     lme=keep(i);
+%     plot(sFracPD(lme),pFracPD(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+%     text(sFracPD(lme),pFracPD(lme),num2str(lme),...
+%         'Color','k','HorizontalAlignment','center'); hold on;
+% end
+% text(0.05,0.95,['r = ' sprintf('%2.2f',rPD)])
+% text(0.05,0.9,['RMSE = ' sprintf('%2.2f',rmsePD)])
+% text(0.05,0.85,['Fmed = ' sprintf('%2.2f',FPD)])
+% axis([0 1 0 1])
+% xlabel('SAUP')
+% ylabel('POEM')
+% title('Fraction Large Pelagics')
+% stamp([harv '_' cfile])
+% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_fracP.png'])
 
 %% Catch map
 %on grid

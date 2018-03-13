@@ -27,7 +27,7 @@ tlme = lme_mask_onedeg;
 AREA_OCN = max(area,1);
 
 %% POEM
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D100_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE10_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 ppath = [pp cfile '/'];
@@ -152,7 +152,7 @@ fish_stat(3,3) = FPD;
 
 Fstat = array2table(fish_stat,'RowNames',{'r','RMSE','Fmed'},...
     'VariableNames',{'DvDAllLMEs','DvDnoLELC','SAUnoLELC'});
-writetable(Fstat,[dpath 'LME_DvD)SAU_stats_' cfile '.csv'],'Delimiter',',','WriteRowNames',true)
+writetable(Fstat,[dpath 'LME_DvD_SAU_stats_' cfile '.csv'],'Delimiter',',','WriteRowNames',true)
 save([dpath 'LME_DvD_SAU_stats_' cfile '.mat'],'fish_stat')
 
 %% Plot info

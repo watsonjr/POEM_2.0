@@ -22,6 +22,23 @@ else
     harv = 0;
 end
 
+%m-b=150
+% mets  = [3;  5; 6; 7; 8; 8; 9;10;10];
+% cmaxs = [20;30;30;40;40;50;50;50;60];
+%m-b=175
+% mets  = [6; 7; 8; 8; 9;10;10];
+% cmaxs = [30;30;30;40;40;40;50];
+%m-b=200
+% mets  = [3;  6; 8; 9];
+% cmaxs = [10;20;30;30];
+% 
+% for M=1:length(mets)
+%     amet = mets(M);
+%     h = cmaxs(M);
+
+bees = [0.05,0.075,0.1];
+for M=1:length(bees)
+     bent_eff = bees(M);
 
 %! Make core parameters/constants (global)
 make_parameters()
@@ -92,7 +109,7 @@ end
 tmfn = num2str(amet);
 tcfn = num2str(h);
 tefn = num2str(round(gam));
-tkfn = num2str(100+int64(100*kt));
+tkfn = num2str(1000+int64(1000*kt));
 tbfn = num2str(1000+int64(1000*bpow));
 tbenc = num2str(1000+int64(1000*benc));
 tbcmx = num2str(1000+int64(1000*bcmx));
@@ -362,7 +379,7 @@ netcdf.close(ncidLP);
 netcdf.close(ncidLD);
 netcdf.close(ncidB);
 
-
+end
 
 
 end

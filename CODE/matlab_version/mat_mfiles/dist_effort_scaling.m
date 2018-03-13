@@ -23,30 +23,7 @@ mask = tlme;
 mask(isnan(mask))=0;
 mask(mask>0)=1;
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
-harv = 'All_fish03';
-fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
-ppath = [pp cfile '/'];
-if (~isdir(ppath))
-    mkdir(ppath)
-end
-load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
-
 %% Plots in space
-[ni,nj]=size(lon);
-
-Cmf=NaN*ones(ni,nj);
-Cmp=NaN*ones(ni,nj);
-Cmd=NaN*ones(ni,nj);
-Clp=NaN*ones(ni,nj);
-Cld=NaN*ones(ni,nj);
-
-Cmf(ID)=mf_my;
-Cmp(ID)=mp_my;
-Cmd(ID)=md_my;
-Clp(ID)=lp_my;
-Cld(ID)=ld_my;
-
 % plot info
 [ni,nj]=size(lon);
 geolat_t=lat;
@@ -92,7 +69,28 @@ maxd = max(min_dist4(:));
 mind = min(min_dist4(:));
 eff4 = mins(n) + (maxs(n)-mins(n)).*(min_dist4-mind) ./ (maxd-mind);
 
+%The logistic function is given by:
+% f(x) = L / (1 + exp(-k*(x-x0)));
+%where
+%L ? Curve?s maximum value
+%k ? Steepness of the curve
+%x0 ? x value of Sigmoid?s midpoint
+min_dist5 = 1 ./ (1 + exp(-(10/500)*(min_dist-500)));
+maxd = max(min_dist5(:));
+mind = min(min_dist5(:));
+eff5 = mins(n) + (maxs(n)-mins(n)).*(min_dist5-mind) ./ (maxd-mind);
 
+min_dist6 = 1+tanh((10/500)*(min_dist-500));
+maxd = max(min_dist6(:));
+mind = min(min_dist6(:));
+eff6 = mins(n) + (maxs(n)-mins(n)).*(min_dist6-mind) ./ (maxd-mind);
+
+min_dist7 = exp(-500.*exp((-10/500)*min_dist));
+maxd = max(min_dist7(:));
+mind = min(min_dist7(:));
+eff7 = mins(n) + (maxs(n)-mins(n)).*(min_dist7-mind) ./ (maxd-mind);
+
+%%
 figure(1)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -145,8 +143,48 @@ set(gcf,'renderer','painters')
 title('cube root')
 print('-dpng',[pp 'Effort_dist_scaling_cube.png'])
 
+figure(5)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,(1-eff5).*mask)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%caxis([0 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('sigmoid')
+print('-dpng',[pp 'Effort_dist_scaling_sig.png'])
+
+figure(6)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,(1-eff6).*mask)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%caxis([0 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('tanh')
+print('-dpng',[pp 'Effort_dist_scaling_tanh.png'])
+
+figure(7)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,(1-eff7).*mask)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%caxis([0 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('Gompertz')
+print('-dpng',[pp 'Effort_dist_scaling_gompertz.png'])
+
+
 %%
-figure(1)
+figure(10)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,eff1)
@@ -158,7 +196,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('linear')
 
-figure(2)
+figure(11)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,eff2)
@@ -170,7 +208,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('quad')
 
-figure(3)
+figure(12)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,eff3)
@@ -182,7 +220,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('sqrt')
 
-figure(4)
+figure(13)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,eff4)
@@ -193,4 +231,51 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('cube root')
+
+figure(14)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,eff5)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%caxis([0 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('sigmoid')
+
+figure(15)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,1-eff6)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%caxis([0 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('tanh')
+
+figure(16)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,1-eff7)
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+%caxis([0 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('Gompertz')
+
+%%
+figure(17)
+plot(min_dist,eff1,'.k'); hold on;
+plot(min_dist,eff2,'.b'); hold on;
+plot(min_dist,eff3,'.r'); hold on;
+plot(min_dist,eff4,'.g'); hold on;
+plot(min_dist,1-eff5,'.c'); hold on;
+plot(min_dist,1-eff6,'.m'); hold on;
+plot(min_dist,1-eff7,'.','color',[.5 .5 .5]); hold on;
+xlim([0 500])
 

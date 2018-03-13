@@ -16,7 +16,7 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100_noHPLoss';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE10_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -529,53 +529,53 @@ stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_AllP.png'])
 
 %% LP
-figure(84)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(Zlp/100))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-10 -1]);
-colorbar('h');
-set(gcf,'renderer','painters')
-title('Climatology log10 mean LP (g m^-^3)')
-stamp([harv '_' cfile])
-%print('-dpng',[ppath 'Climatol_' harv '_global_LP_Watson.png'])
+% figure(84)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,log10(Zlp/100))
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([-10 -1]);
+% colorbar('h');
+% set(gcf,'renderer','painters')
+% title('Climatology log10 mean LP (g m^-^3)')
+% stamp([harv '_' cfile])
+% print('-dpng',[ppath 'Climatol_' harv '_global_LP_Watson.png'])
+% 
+% %% FracPD
+% figure(25)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,FracPD)
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([0 1]);
+% hcb = colorbar('h');
+% ylim(hcb,[0 1])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology Fraction P:D')
+% stamp([harv '_' cfile])
+% print('-dpng',[ppath 'Climatol_' harv '_global_FracPD.png'])
+% 
+% % FracPF
+% figure(26)
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,FracPF)
+% colormap('jet')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([0 1]);
+% hcb = colorbar('h');
+% ylim(hcb,[0 1])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('Climatology Fraction P:F')
+% stamp([harv '_' cfile])
+% print('-dpng',[ppath 'Climatol_' harv '_global_FracPF.png'])
 
-%% FracPD
-figure(25)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,FracPD)
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 1]);
-hcb = colorbar('h');
-ylim(hcb,[0 1])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology Fraction P:D')
-stamp([harv '_' cfile])
-%print('-dpng',[ppath 'Climatol_' harv '_global_FracPD.png'])
-
-% FracPF
-figure(26)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,FracPF)
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0 1]);
-hcb = colorbar('h');
-ylim(hcb,[0 1])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('Climatology Fraction P:F')
-stamp([harv '_' cfile])
-%print('-dpng',[ppath 'Climatol_' harv '_global_FracPF.png'])
-
-% All 4 on subplots
+%% All 4 on subplots
 figure(27)
 % all F
 subplot('Position',[0 0.51 0.5 0.5])

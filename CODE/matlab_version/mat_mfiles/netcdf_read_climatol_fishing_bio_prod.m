@@ -3,8 +3,20 @@
 clear all
 close all
 
+%m-b=200
+% mets  = [3;  6; 8; 9];
+% cmaxs = [10;20;30;30];
+% 
+% for M=1:length(mets)
+%     amet = mets(M);
+%     h = cmaxs(M);
+%     tmfn = num2str(amet);
+%     tcfn = num2str(h);
+%     
+%     cfile = ['Dc_enc70-b200_m',tmfn,'-b200-k09_c',tcfn,...
+%         '-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100'];
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100_noHPLoss';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE10_noCC_RE00100';
 harv = 'All_fish03';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -289,7 +301,7 @@ save([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat'],...
     'all_median1','all_median2','all_mean1','all_mean2');
 
 
-
+%end
 
 
 

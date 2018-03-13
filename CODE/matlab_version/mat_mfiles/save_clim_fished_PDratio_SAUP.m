@@ -29,7 +29,7 @@ btemp_mean_clim=squeeze(nanmean(btm_temp,1));
 %%
 AREA_OCN = max(area,1);
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D100_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -85,6 +85,9 @@ vec(:,6)=D_catch_gm2d(:);
 vec(:,7)=F_catch_g(:);
 vec(:,8)=P_catch_g(:);
 vec(:,9)=D_catch_g(:);
+
+oc=find(vec(:,3)~=1);
+vec = vec(oc,:);
 
 VecT = array2table(vec,'VariableNames',{'lat','lon','area',...
     'F_catch_gm2d','P_catch_gm2d','D_catch_gm2d',...
