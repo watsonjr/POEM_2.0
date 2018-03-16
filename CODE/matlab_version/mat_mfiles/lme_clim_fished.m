@@ -24,7 +24,7 @@ btemp_mean_clim=squeeze(nanmean(btm_temp,1));
 %%
 AREA_OCN = max(area,1);
 
-cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE10_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -32,6 +32,7 @@ ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
 load([dpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
+%load([dpath 'Means_Climatol_' harv '_' cfile '.mat']);
 
 %% Plots in space
 [ni,nj]=size(lon);

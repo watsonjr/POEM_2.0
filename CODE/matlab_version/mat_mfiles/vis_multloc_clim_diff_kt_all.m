@@ -11,7 +11,7 @@ Fdrpbx = '/Users/Colleen/Dropbox/';
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
 
 cpath = [Pdrpbx 'Princeton/POEM_other/grid_cobalt/'];
-pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
+pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Bio_rates/'];
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
@@ -74,7 +74,7 @@ set(groot,'defaultAxesColorOrder',cm9);
 
 %% Plots in space
 
-cfileA = 'Dc_enc70-b200_cm20_m-b175-k05_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfileA = 'Dc_enc70-b200_cm20_m-b175-k06_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathA=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileA '/'];
 load([fpathA 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
     'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
@@ -83,7 +83,7 @@ Aall=NaN*ones(ni,nj);
 Aall(ID)=Afish;
 clear sf_mean mf_mean sp_mean mp_mean lp_mean sd_mean md_mean ld_mean
 
-cfileB = 'Dc_enc70-b200_cm20_m-b175-k07_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfileB = 'Dc_enc70-b200_cm20_m-b175-k08_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathB=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileB '/'];
 load([fpathB 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
     'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
@@ -92,7 +92,7 @@ Ball=NaN*ones(ni,nj);
 Ball(ID)=Bfish;
 clear sf_mean mf_mean sp_mean mp_mean lp_mean sd_mean md_mean ld_mean
 
-cfileC = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfileC = 'Dc_enc70-b200_cm20_m-b175-k10_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathC=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileC '/'];
 load([fpathC 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
     'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
@@ -101,7 +101,7 @@ Call=NaN*ones(ni,nj);
 Call(ID)=Cfish;
 clear sf_mean mf_mean sp_mean mp_mean lp_mean sd_mean md_mean ld_mean
 
-cfileD = 'Dc_enc70-b200_cm20_m-b175-k11_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfileD = 'Dc_enc70-b200_cm20_m-b175-k12_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathD=['/Volumes/GFDL/CSV/Matlab_new_size/' cfileD '/'];
 load([fpathD 'Clim_means_All_fish03.mat'],'sf_mean','mf_mean','sp_mean',...
     'mp_mean','lp_mean','sd_mean','md_mean','ld_mean');
@@ -161,5 +161,5 @@ colorbar('Position',[0.25 0.075 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
 text(-2.75,1.75,'D')
 %stamp([harv '_' cfile])
-print('-dpng',[pp 'Climatol_' harv '_All_comp_kt.png'])
+print('-dpng',[pp 'Climatol_' harv '_All_comp_kt_6-12.png'])
 

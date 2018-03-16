@@ -267,7 +267,7 @@ print('-dpng',[pp 'Climatol_' harv '_global_PvsD_comp_BE.png'])
 %% 
 figure(2)
 %A
-subplot('Position',[0 0.51 0.5 0.4])
+subplot('Position',[0.01 0.68 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,grid_APD)
@@ -276,10 +276,9 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'A')
+text(-2.75,1.75,'BE=0.025')
 
-%B
-subplot('Position',[0.5 0.51 0.5 0.4])
+subplot('Position',[0.41 0.68 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,grid_BPD)
@@ -288,10 +287,10 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'B')
+text(-2.75,1.75,'BE=0.05')
 
-%C
-subplot('Position',[0 0.1 0.5 0.4])
+%B
+subplot('Position',[0.01 0.37 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,grid_CPD)
@@ -300,10 +299,9 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'C')
+text(-2.75,1.75,'BE=0.075')
 
-%D
-subplot('Position',[0.5 0.1 0.5 0.4])
+subplot('Position',[0.41 0.37 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,grid_DPD)
@@ -311,35 +309,94 @@ cmocean('balance')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
-colorbar('Position',[0.25 0.075 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'D')
+text(-2.75,1.75,'BE=0.10')
+
+%C
+subplot('Position',[0.01 0.06 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,grid_EPD)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([0 1]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'BE=0.125')
+%stamp([harv '_' cfile])
+
+% subplot('Position',[0.41 0.06 0.4 0.3])
+% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+% surfm(geolat_t,geolon_t,grid_FPD)
+% cmocean('balance')
+% load coast;                     %decent looking coastlines
+% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+% caxis([0 1]);
+% colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
+% set(gcf,'renderer','painters')
+% text(-2.75,1.75,'BE=0.15')
 %stamp([harv '_' cfile])
 print('-dpng',[pp 'Climatol_' harv '_lme_PvsD_comp_BE.png'])
 
 %%
 figure(3)
-subplot(2,2,1)
-plot(AlmePD(:),lme_lat(:),'.k','MarkerSize',10)
-ylim([-90 90])
-
-subplot(2,2,2)
-plot(BlmePD(:),lme_lat(:),'.k','MarkerSize',10)
-ylim([-90 90])
-
-subplot(2,2,3)
-plot(ClmePD(:),lme_lat(:),'.k','MarkerSize',10)
-ylim([-90 90])
-
-subplot(2,2,4)
-plot(DlmePD(:),lme_lat(:),'.k','MarkerSize',10)
-ylim([-90 90])
-%%
-figure(4)
 plot(AlmePD(:),lme_lat(:),'.k','MarkerSize',10); hold on;
 plot(BlmePD(:),lme_lat(:),'+r','MarkerSize',10); hold on;
 plot(ClmePD(:),lme_lat(:),'^b','MarkerSize',10); hold on;
 plot(DlmePD(:),lme_lat(:),'og','MarkerSize',10); hold on;
 plot(ElmePD(:),lme_lat(:),'*c','MarkerSize',10); hold on;
 ylim([-90 90])
+
+[slme_lat,ix] = sort(lme_lat);
+rmat(:,1) = lme_lat(ix);
+rmat(:,2) = AlmePD(ix);
+rmat(:,3) = BlmePD(ix);
+rmat(:,4) = ClmePD(ix);
+rmat(:,5) = DlmePD(ix);
+rmat(:,6) = ElmePD(ix);
+rmat(:,7) = round(slme_lat,-1);
+
+rtab = array2table(rmat,'VariableNames',{'LMElat','B025','B050','B075',...
+    'B100','B125','RoundLat'});
+writetable(rtab,'/Volumes/GFDL/NC/Matlab_new_size/bio_rates/LME_Pfrac_BEs.csv','Delimiter',',')
+
+%%
+figure(33)
+subplot(3,2,1)
+boxplot(AlmePD,rmat(:,7))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('BE=0.025')
+
+subplot(3,2,2)
+boxplot(BlmePD,rmat(:,7))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('BE=0.05')
+
+subplot(3,2,3)
+boxplot(ClmePD,rmat(:,7))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('BE=0.075')
+
+subplot(3,2,4)
+boxplot(DlmePD,rmat(:,7))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('BE=0.10')
+
+subplot(3,2,5)
+boxplot(ElmePD,rmat(:,7))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('BE=0.125')
+stamp('')
+print('-dpng',[pp 'Climatol_' harv '_latitude_box_PvsD_comp_BE.png'])
 

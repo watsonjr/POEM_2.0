@@ -11,11 +11,12 @@ Fdrpbx = '/Users/Colleen/Dropbox/';
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
 
 cpath = [Pdrpbx 'Princeton/POEM_other/grid_cobalt/'];
-pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
+pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/Bio_rates/'];
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 load([cpath 'esm26_lme_mask_onedeg_SAU_66.mat']);
 load([cpath 'esm26_area_1deg.mat']);
+load([cpath 'LME_clim_temp.mat']);
 AREA_OCN = max(area,1);
 
 %
@@ -74,6 +75,31 @@ cm21=[1 0.5 0;...   %orange
     255/255 160/255 122/255]; %peach
 
 set(groot,'defaultAxesColorOrder',cm9);
+
+% Assign a color to each LME based on temp
+tmap=colormap(jet(66));
+lme_ptemp(:,2)=1:length(lme_ptemp);
+[B,I] = sort(lme_ptemp(:,1));
+I(:,2)=1:length(lme_ptemp);
+[B2,I2] = sort(I(:,1));
+tid = I(I2,:);
+close all
+
+load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
+    'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
+keep = notLELC;
+
+x=-8:0.5:8;
+x2h = x+log10(2);
+x2l = x-log10(2);
+x5h = x+log10(5);
+x5l = x-log10(5);
+
+%% SAUP data
+spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
+load([spath 'SAUP_LME_Catch_top10_Stock.mat']);
+l10sD=log10(Dlme_mcatch10+eps);
+sFracPD = Plme_mcatch10 ./ (Plme_mcatch10 + Dlme_mcatch10);
 
 %% Plots in space
 cfileA = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D025_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
@@ -156,8 +182,8 @@ for L=1:66
     lme_B(L,2) = nansum(BDcatch(lid));
     lme_C(L,1) = nansum(CPcatch(lid));
     lme_C(L,2) = nansum(CDcatch(lid));
-    lme_D(L,1) = nanmean(DPcatch(lid));
-    lme_D(L,2) = nanmean(DDcatch(lid));
+    lme_D(L,1) = nansum(DPcatch(lid));
+    lme_D(L,2) = nansum(DDcatch(lid));
     %total area of LME
     lme_area(L) = nansum(AREA_OCN(lid));
     %mean latt of LME
@@ -189,7 +215,12 @@ for L=1:66
     grid_DPD(lid) = DlmePD(L,1);
 end
 
-%% 
+Al10pD=log10(lme_A2(:,2));
+Bl10pD=log10(lme_B2(:,2));
+Cl10pD=log10(lme_C2(:,2));
+Dl10pD=log10(lme_D2(:,2));
+
+%%
 figure(1)
 %A
 subplot('Position',[0 0.51 0.5 0.4])
@@ -201,7 +232,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'A')
+text(-2.75,1.75,'D=0.25')
 
 %B
 subplot('Position',[0.5 0.51 0.5 0.4])
@@ -213,7 +244,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'B')
+text(-2.75,1.75,'D=0.50')
 
 %C
 subplot('Position',[0 0.1 0.5 0.4])
@@ -225,7 +256,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'C')
+text(-2.75,1.75,'D=0.75')
 
 %D
 subplot('Position',[0.5 0.1 0.5 0.4])
@@ -238,11 +269,11 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 colorbar('Position',[0.25 0.075 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'D')
+text(-2.75,1.75,'D=1.0')
 %stamp([harv '_' cfile])
 print('-dpng',[pp 'Climatol_' harv '_global_PvsD_comp_Dpref.png'])
 
-%% 
+%%
 figure(2)
 %A
 subplot('Position',[0 0.51 0.5 0.4])
@@ -254,7 +285,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'A')
+text(-2.75,1.75,'D=0.25')
 
 %B
 subplot('Position',[0.5 0.51 0.5 0.4])
@@ -266,7 +297,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'B')
+text(-2.75,1.75,'D=0.50')
 
 %C
 subplot('Position',[0 0.1 0.5 0.4])
@@ -278,7 +309,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'C')
+text(-2.75,1.75,'D=0.75')
 
 %D
 subplot('Position',[0.5 0.1 0.5 0.4])
@@ -291,8 +322,8 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 colorbar('Position',[0.25 0.075 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'D')
-%stamp([harv '_' cfile])
+text(-2.75,1.75,'D=1.0')
+stamp('')
 print('-dpng',[pp 'Climatol_' harv '_lme_PvsD_comp_Dpref.png'])
 
 %% Do in R as a box-whisker plot
@@ -302,4 +333,167 @@ plot(BlmePD(:),lme_lat(:),'+r','MarkerSize',10); hold on;
 plot(ClmePD(:),lme_lat(:),'^b','MarkerSize',10); hold on;
 plot(DlmePD(:),lme_lat(:),'og','MarkerSize',10); hold on;
 ylim([-90 90])
+xlim([0 1])
+ylabel('Latitude')
+title('P/(P+D)')
+legend('.25','.5','.75','1')
+stamp('')
+print('-dpng',[pp 'Climatol_' harv '_latitude_PvsD_comp_Dpref.png'])
+
+[slme_lat,ix] = sort(lme_lat);
+rmat(:,1) = lme_lat(ix);
+rmat(:,2) = AlmePD(ix);
+rmat(:,3) = BlmePD(ix);
+rmat(:,4) = ClmePD(ix);
+rmat(:,5) = DlmePD(ix);
+rmat(:,6) = round(slme_lat,-1);
+
+rtab = array2table(rmat,'VariableNames',{'LMElat','D25','D50','D75','D100'});
+writetable(rtab,'/Volumes/GFDL/NC/Matlab_new_size/bio_rates/LME_Pfrac_Dprefs.csv','Delimiter',',')
+
+%%
+figure(33)
+subplot(2,2,1)
+boxplot(AlmePD,rmat(:,6))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('D=0.25')
+
+subplot(2,2,2)
+boxplot(BlmePD,rmat(:,6))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('D=0.5')
+
+subplot(2,2,3)
+boxplot(ClmePD,rmat(:,6))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('D=0.75')
+
+subplot(2,2,4)
+boxplot(DlmePD,rmat(:,6))
+%xlim([-90 90])
+ylim([0 1])
+xlabel('Latitude')
+title('D=1.0')
+stamp('')
+print('-dpng',[pp 'Climatol_' harv '_latitude_box_PvsD_comp_Dpref.png'])
+
+%% SAU corrs
+rA=corr(l10sD(keep),Al10pD(keep));
+rB=corr(l10sD(keep),Bl10pD(keep));
+rC=corr(l10sD(keep),Cl10pD(keep));
+rD=corr(l10sD(keep),Dl10pD(keep));
+rPA=corr(sFracPD(keep),AlmePD(keep));
+rPB=corr(sFracPD(keep),BlmePD(keep));
+rPC=corr(sFracPD(keep),ClmePD(keep));
+rPD=corr(sFracPD(keep),DlmePD(keep));
+
+figure(4);
+subplot(2,2,1)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(l10sD(lme),Al10pD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(-1.75,1.7,['r = ' sprintf('%2.2f',rA)])
+axis([-2 2 -2 2])
+xlabel('SAU')
+ylabel('POEM')
+title('D=0.25')
+
+subplot(2,2,2)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(l10sD(lme),Bl10pD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(-1.75,1.7,['r = ' sprintf('%2.2f',rB)])
+axis([-2 2 -2 2])
+xlabel('SAU')
+ylabel('POEM')
+title('D=0.50')
+
+subplot(2,2,3)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(l10sD(lme),Cl10pD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(-1.75,1.7,['r = ' sprintf('%2.2f',rC)])
+axis([-2 2 -2 2])
+xlabel('SAU')
+ylabel('POEM')
+title('D=0.75')
+
+subplot(2,2,4)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(l10sD(lme),Dl10pD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(-1.75,1.7,['r = ' sprintf('%2.2f',rD)])
+axis([-2 2 -2 2])
+xlabel('SAU')
+ylabel('POEM')
+title('D=1.0')
+stamp('')
+print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_Dpref_tests_scatterD.png'])
+
+
+figure(5);
+subplot(2,2,1)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(sFracPD(lme),AlmePD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(0.8,0.35,['r = ' sprintf('%2.2f',rPA)])
+axis([0 1 0 1])
+xlabel('SAU')
+ylabel('POEM')
+title('D=0.25')
+
+subplot(2,2,2)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(sFracPD(lme),BlmePD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(0.8,0.35,['r = ' sprintf('%2.2f',rPB)])
+axis([0 1 0 1])
+xlabel('SAU')
+ylabel('POEM')
+title('D=0.50')
+
+subplot(2,2,3)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(sFracPD(lme),ClmePD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(0.8,0.35,['r = ' sprintf('%2.2f',rPC)])
+axis([0 1 0 1])
+xlabel('SAU')
+ylabel('POEM')
+title('D=0.75')
+
+subplot(2,2,4)
+plot(x,x,'--k');hold on;
+for j=1:length(keep)
+    lme=keep(j);
+    plot(sFracPD(lme),DlmePD(lme),'.','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+end
+text(0.8,0.35,['r = ' sprintf('%2.2f',rPD)])
+axis([0 1 0 1])
+xlabel('SAU')
+ylabel('POEM')
+title('D=1.0')
+stamp('')
+print('-dpng',[pp 'Clim_',harv,'_SAUP_comp_Stock_LELC_Dpref_tests_scatterPD.png'])
+
 
