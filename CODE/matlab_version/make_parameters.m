@@ -65,8 +65,8 @@ function make_parameters()
 
     %%%! Metabolism constants (activity and basal)
     fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
-    amet = 2;       % coeff on met
-    h = 10;         % coeff on Cmax
+    amet = 4;       % coeff on met
+    h = 20;         % coeff on Cmax
     gam = 70;       % coeff on search area
     kt = 0.0805;    % coeff on T-dep fn (orig 0.063)
     bpow = 0.175;   % power on metab fn (orig 0.25)
@@ -74,7 +74,7 @@ function make_parameters()
     bcmx = 0.25;    % power on cmax fn (orig 0.25)
     
     %%%! Transfer efficiency of detritus to benthic prey
-%     bent_eff = 0.05;
+    bent_eff = 0.075;
     CC = 100.0;
 
     %%%! Reproductive efficiency
