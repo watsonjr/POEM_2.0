@@ -16,7 +16,7 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -26,7 +26,7 @@ if (~isdir(ppath))
     mkdir(ppath)
 end
 
-load([fpath 'Means_con_prod_rec_rep_Climatol_' harv '_' cfile '.mat']);
+load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
@@ -290,11 +290,11 @@ figure(27)
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllF))
+surfm(geolat_t,geolon_t,real(log10(AllF)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 0.5]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
@@ -305,11 +305,11 @@ title(' mean All F')
 subplot('Position',[0 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllD))
+surfm(geolat_t,geolon_t,real(log10(AllD)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 0.5]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
@@ -319,11 +319,11 @@ title(' mean All D')
 subplot('Position',[0.5 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllP))
+surfm(geolat_t,geolon_t,real(log10(AllP)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 0.5]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-1.5 0.5])
 set(gcf,'renderer','painters')
@@ -333,11 +333,11 @@ title(' mean All P')
 subplot('Position',[0.5 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(All))
+surfm(geolat_t,geolon_t,real(log10(All)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.5 0.5]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-1.5 0.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
@@ -400,11 +400,11 @@ figure(5)
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllS))
+surfm(geolat_t,geolon_t,real(log10(AllS)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2 0]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-2 0])                   %Set color axis if needed
 colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
@@ -415,11 +415,11 @@ title(' mean All S')
 subplot('Position',[0 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllL))
+surfm(geolat_t,geolon_t,real(log10(AllL)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2 0]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-2 0])                   %Set color axis if needed
 set(gcf,'renderer','painters')
@@ -429,11 +429,11 @@ title(' mean All L')
 subplot('Position',[0.5 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(AllM))
+surfm(geolat_t,geolon_t,real(log10(AllM)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2 0]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-2 0])
 set(gcf,'renderer','painters')
@@ -443,11 +443,11 @@ title(' mean All M')
 subplot('Position',[0.5 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(All))
+surfm(geolat_t,geolon_t,real(log10(All)))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2 0]);
+caxis([-2.5 -0.5]);
 %     hcb = colorbar('h');
 %     ylim(hcb,[-2 0])                   %Set color axis if needed
 set(gcf,'renderer','painters')
