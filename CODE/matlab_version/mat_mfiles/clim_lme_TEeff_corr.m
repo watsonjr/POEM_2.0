@@ -20,7 +20,7 @@ load([spath 'Maureaud_etal_2017_s002_ECI.mat']);
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -308,10 +308,11 @@ surfm(geolat_t,geolon_t,log10(pECI_grid))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3 -1.5]);
+caxis([-3 -1]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff HTL')
+text(-2.75,1.25,'A')
 
 % Diff
 subplot('Position',[0.0 0.025 0.5 0.5])
@@ -325,6 +326,7 @@ caxis([-1 1]);
 colorbar('Position',[0.025 0.05 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('POEM - Mauread log10 difference')
+text(-2.75,1.25,'C')
 
 % Mauread
 subplot('Position',[0.5 0.53 0.5 0.5])
@@ -334,10 +336,11 @@ surfm(geolat_t,geolon_t,log10(mECI_grid))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3 -1.5]);
+caxis([-3 -1]);
 colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Mauread log10 mean ECI 1991-1995')
+text(-2.75,1.25,'B')
 
 %Corr
 subplot('Position',[0.575 0.075 0.375 0.375])
@@ -346,13 +349,14 @@ for i=1:length(keep)
     lme=keep(i);
     plot(log10(mECI(i)),log10(pECI(i)),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
 end
-text(-1.75,-2.9,['r = ' sprintf('%2.2f',rL)])
-text(-1.75,-3.1,['RMSE = ' sprintf('%2.2f',rmseL)])
-text(-1.75,-3.3,['Fmed = ' sprintf('%2.2f',FL)])
-axis([-3.5 -1 -3.5 -1])
+text(-1.6,-2.2,['r = ' sprintf('%2.2f',rL)])
+text(-1.6,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
+%text(-1.5,-3.3,['Fmed = ' sprintf('%2.2f',FL)])
+axis([-3 -1 -3 -1])
 xlabel('Mauread ECI')
 ylabel('POEM TEeff HTL')
 title('log10 Transfer efficiency by LME')
+text(-2.9,-1.15,'D')
 %stamp(cfile)
 print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Mauread_comp_subplot.png'])
 

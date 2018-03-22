@@ -100,6 +100,10 @@ clear Pmet Fmet Dmet
 cfile = 'Dc_enc70-b200_m4-b175_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100_kt08-09';
 
 %%
+aDPmet = ADmet./APmet;
+bDPmet = BDmet./BPmet;
+
+%%
 for s=1:length(spots)
     loc = spots{s};
     lname = [loc '_'];

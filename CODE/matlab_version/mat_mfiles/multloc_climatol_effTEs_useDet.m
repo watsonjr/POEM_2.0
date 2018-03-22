@@ -14,7 +14,7 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 % POEM
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -262,7 +262,22 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-2 -0.5]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('A. log10 TEeff LTL')
+title('log10 TEeff LTL')
+text(-2.75,1.25,'A')
+
+%HTL
+subplot('Position',[0.5 0.53 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(TEeff_HTLd))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-3.5 -0.5]);
+colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
+set(gcf,'renderer','painters')
+title('log10 TEeff HTL')
+text(-2.75,1.25,'B')
 
 %L
 subplot('Position',[0.25 0.025 0.5 0.5])
@@ -275,20 +290,8 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-5.5 -1.5]);
 colorbar('Position',[0.275 0.05 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('C. log10 TEeff L')
-
-subplot('Position',[0.5 0.53 0.5 0.5])
-%HTL
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(TEeff_HTLd))
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-4 -1]);
-colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
-set(gcf,'renderer','painters')
-title('B. log10 TEeff HTL')
+title('log10 TEeff L')
+text(-2.75,1.25,'C')
 %stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_DeffTEs_subplot.png'])
 

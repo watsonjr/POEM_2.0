@@ -1,7 +1,7 @@
 % Visualize output of POEM
 % ESM2.6 Climatology of 5 yrs
 % 150 years
-% Saved as nc fcloiles
+% Saved as nc files
 
 clear all
 close all

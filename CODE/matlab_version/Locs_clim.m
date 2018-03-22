@@ -4,7 +4,7 @@ function Locs_clim()
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam kt bpow amet
-global bent_eff rfrac CC D J Sm A benc bcmx
+global bent_eff rfrac CC D J Sm A benc bcmx Dact
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
@@ -22,13 +22,10 @@ else
     harv = 0;
 end
 
-% mets = 1:10;
-% cmaxs = 10:10:100;
-% 
-% for M=1:length(mets)
-%     for C=1:length(cmaxs)
-%         amet = mets(M);
-%         h = cmaxs(C);
+acts = 0.1:0.1:1;
+
+for M=1:length(acts)
+    Dact = acts(M);
         
         %! Make core parameters/constants (global)
         make_parameters()
@@ -96,10 +93,11 @@ end
         tmfn = num2str(amet);
         tcfn = num2str(h);
         tefn = num2str(round(gam));
-        tkfn = num2str(1000+int64(1000*kt));
+        tkfn = num2str(100+int64(100*kt));
         tbfn = num2str(1000+int64(1000*bpow));
         tbenc = num2str(1000+int64(1000*benc));
         tbcmx = num2str(1000+int64(1000*bcmx));
+        tdact = num2str(1000+int64(100*Dact));
         %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
         %simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
         %simname = ['Diff_',coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
@@ -112,8 +110,8 @@ end
         
         %simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
         %simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end),'_noHPLoss'];
-        
-        simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_m',tmfn,'-b',tbfn(2:end),'-k',tkfn(2:end),'_c',tcfn,'-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
+        %simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_m',tmfn,'-b',tbfn(2:end),'-k',tkfn(2:end),'_c',tcfn,'-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
+        simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_m',tmfn,'-b',tbfn(2:end),'-k',tkfn(2:end),'-Dac',tdact(2:end),'_c',tcfn,'-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
         
         % cfn=4;
         % efn=4;
@@ -222,7 +220,7 @@ end
                 'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
         end
         
-%     end %cmax
-% end %met
+
+end 
 
 end
