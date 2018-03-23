@@ -70,7 +70,7 @@ function make_parameters()
     h = 20;         % coeff on Cmax
     gam = 70;       % coeff on search area
     kt = 0.0805;    % coeff on T-dep fn (orig 0.063)
-    bpow = 0.25;   % power on metab fn (orig 0.25)
+    bpow = 0.175;   % power on metab fn (orig 0.25)
     benc = 0.20;    % power on enc fn (orig 0.20)
     bcmx = 0.25;    % power on cmax fn (orig 0.25)
     

@@ -91,7 +91,7 @@ end
 tmfn = num2str(amet);
 tcfn = num2str(h);
 tefn = num2str(round(gam));
-tkfn = num2str(100+int64(1000*kt));
+tkfn = num2str(100+int64(100*kt));
 tbfn = num2str(1000+int64(1000*bpow));
 tbenc = num2str(1000+int64(1000*benc));
 tbcmx = num2str(1000+int64(1000*bcmx));
