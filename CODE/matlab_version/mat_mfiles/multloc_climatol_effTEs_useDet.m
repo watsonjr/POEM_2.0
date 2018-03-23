@@ -15,6 +15,7 @@ load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 % POEM
 cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+BE = 0.075;
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -97,19 +98,19 @@ AllL = Plp+Pld;
 
 %% Effective TEs
 % With BE*det instead of Bent
-TEeffM = AllM./(0.05*mdet + mmz_loss + mlz_loss); 
+TEeffM = AllM./(BE*mdet + mmz_loss + mlz_loss); 
 %TEeff_L = production_L/NPP
 TEeff_L = AllL./mnpp;
 TEeff_L(TEeff_L==-Inf) = NaN;
 TEeff_L(TEeff_L==Inf) = NaN;
 TEeff_L(TEeff_L<0) = NaN;
 %TEeff_LTL = (production_benthic_invert+mesozoo_prod_to_fish)/NPP
-TEeff_LTLd = (0.05*mdet + mmz_loss + mlz_loss)./mnpp;
+TEeff_LTLd = (BE*mdet + mmz_loss + mlz_loss)./mnpp;
 TEeff_LTLd(TEeff_LTLd==-Inf) = NaN;
 TEeff_LTLd(TEeff_LTLd==Inf) = NaN;
 TEeff_LTLd(TEeff_LTLd<0) = NaN;
 %TEeff_HTL = production_L/(production_benthic_invert+mesozoo_prod_to_fish)
-TEeff_HTLd = AllL./(0.05*mdet + mmz_loss + mlz_loss); 
+TEeff_HTLd = AllL./(BE*mdet + mmz_loss + mlz_loss); 
 TEeff_HTLd(TEeff_HTLd<0) = NaN;
 
 TEM = real(TEeffM.^(1/2));
@@ -273,7 +274,7 @@ surfm(geolat_t,geolon_t,log10(TEeff_HTLd))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3.5 -0.5]);
+caxis([-3.5 -1]);
 colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('log10 TEeff HTL')

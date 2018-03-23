@@ -36,6 +36,7 @@ land(ID)=NaN*ones(size(ID));
 AREA_OCN = max(area,1);
 
 cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+BE = 0.075;
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -94,9 +95,9 @@ Tab=table([1:66]',lme_te(:,2),lme_te(:,3),lme_te(:,4),lme_te(:,5),...
     'TEeffLTLb','TEeffLTLd','TEL','TEHTLb','TEHTLd',...
     'TELTLb','TELTLd'});
 writetable(Tab,[dpath 'LME_TEeff_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
-save([dpath 'LME_TEeff_clim_fished_',harv,'_' cfile '.csv'],'Tab');
+save([dpath 'LME_TEeff_clim_fished_',harv,'_' cfile '.mat'],'Tab');
 
-writetable(Tab,['LME_TEeff_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
+writetable(Tab,[dpath 'LME_TEeff_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
 
 %% Figures
 % M

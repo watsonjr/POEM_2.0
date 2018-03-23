@@ -39,7 +39,7 @@ close all
 %% POEM results
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
-cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = ['All_fish',tfish(2:end)];
 tharv = ['Harvest all fish ' num2str(frate)];
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -124,7 +124,7 @@ end
 xlabel('ZoopLoss / (ZoopLoss+Bent)')
 ylabel('P / (P+D)')
 ylim([-0.1 1.1])
-print('-dpng',[ppath 'lme_scatter_frac_PD.png'])
+%print('-dpng',[ppath 'lme_scatter_frac_PD.png'])
 
 %%
 figure(2)
@@ -159,7 +159,7 @@ for i=1:66
 end
 xlabel('ZoopLoss / (ZoopLoss+Bent)')
 ylabel('P / (P+F)')
-print('-dpng',[ppath 'lme_scatter_frac_PF.png'])
+%print('-dpng',[ppath 'lme_scatter_frac_PF.png'])
 ylim([-0.1 1.1])
 
 
@@ -195,7 +195,7 @@ for i=1:66
 end
 xlabel('ZoopLoss / (ZoopLoss+Bent)')
 ylabel('L / (L+M)')
-print('-dpng',[ppath 'lme_scatter_frac_LM.png'])
+%print('-dpng',[ppath 'lme_scatter_frac_LM.png'])
 ylim([-0.1 1.1])
 
 %
@@ -232,7 +232,7 @@ end
 xlabel('log10 ZoopLoss:Bent')
 ylabel('P / (P+D)')
 ylim([-0.1 1.1])
-print('-dpng',[ppath 'lme_scatter_ratio_PD.png'])
+%print('-dpng',[ppath 'lme_scatter_ratio_PD.png'])
 
 
 figure(5)
@@ -268,7 +268,7 @@ end
 xlabel('log10 ZoopLoss:Bent')
 ylabel('P / (P+F)')
 ylim([-0.1 1.1])
-print('-dpng',[ppath 'lme_scatter_ratio_PF.png'])
+%print('-dpng',[ppath 'lme_scatter_ratio_PF.png'])
 
 
 figure(6)
@@ -304,7 +304,7 @@ end
 xlabel('log10 ZoopLoss:Bent')
 ylabel('L / (L+M)')
 ylim([-0.1 1.1])
-print('-dpng',[ppath 'lme_scatter_ratio_LM.png'])
+%print('-dpng',[ppath 'lme_scatter_ratio_LM.png'])
 
 %% Best ones
 figure(7)
@@ -353,7 +353,7 @@ end
 xlabel('ZoopLoss / (ZoopLoss+Bent)')
 ylabel('L / (L+M)')
 ylim([-0.1 1.1])
-print('-dpng',[ppath 'lme_scatter_frac_bent.png'])
+%print('-dpng',[ppath 'lme_scatter_frac_bent.png'])
 
 
 %%
@@ -403,7 +403,7 @@ end
 xlabel('log10 ZoopLoss:Bent')
 ylabel('L / (L+M)')
 ylim([-0.1 1.1])
-print('-dpng',[ppath 'lme_scatter_ratio_bent.png'])
+%print('-dpng',[ppath 'lme_scatter_ratio_bent.png'])
 
 %%
 figure(9)
@@ -442,7 +442,7 @@ subplot(3,2,5)
 for i=1:66
     plot(log10(RatZDet(i)),FracLM(i),'.','MarkerSize',25,'color',tmap(tid(i,2),:)); hold on;
 end
-xlabel('log10 Zoop:Bent')
+xlabel('log10 Zoop:Det')
 ylabel('L / (L+M)')
 ylim([-0.1 1.1])
 subplot(3,2,6)

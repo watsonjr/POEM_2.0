@@ -22,7 +22,7 @@ olig = 3:5;
 upw = 6:7;
 fave = [2;7;4];
 
-dp = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+dp = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 sname = 'Clim_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];

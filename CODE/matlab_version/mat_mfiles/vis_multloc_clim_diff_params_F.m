@@ -74,7 +74,7 @@ set(groot,'defaultAxesColorOrder',cm9);
 
 %% Plots in space
 
-cfileA = 'Dc_enc70-b200_cm20_m-b250-k09_fcrit20_c-b250_D075_J100_A100_Sm025_nmort1_BE05_noCC_RE00100';
+cfileA = 'Dc_enc70-b200_m4-b250-k08_c20-b250_D075_J100_A100_Sm025_nmort1_BE08_noCC_RE00100';
 fpathA=['/Volumes/GFDL/NC/Matlab_new_size/' cfileA '/'];
 load([fpathA 'Means_bio_prod_fish_Climatol_' harv '_' cfileA '.mat'],...
     'sf_mean','mf_mean','sp_mean','mp_mean','lp_mean');
@@ -90,7 +90,7 @@ Amp(ID)=mp_mean;
 Alp(ID)=lp_mean;
 clear sf_mean mf_mean sp_mean mp_mean lp_mean
 
-cfileB = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A100_Sm025_nmort1_BE05_noCC_RE00100';
+cfileB = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A100_Sm025_nmort1_BE08_noCC_RE00100';
 fpathB=['/Volumes/GFDL/NC/Matlab_new_size/' cfileB '/'];
 load([fpathB 'Means_bio_prod_fish_Climatol_' harv '_' cfileB '.mat'],...
     'sf_mean','mf_mean','sp_mean','mp_mean','lp_mean');
@@ -106,8 +106,9 @@ Bmp(ID)=mp_mean;
 Blp(ID)=lp_mean;
 clear sf_mean mf_mean sp_mean mp_mean lp_mean
 
-cfileC = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfileC = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 fpathC=['/Volumes/GFDL/NC/Matlab_new_size/' cfileC '/'];
+ppath = [pp cfileC '/'];
 load([fpathC 'Means_bio_prod_fish_Climatol_' harv '_' cfileC '.mat'],...
     'sf_mean','mf_mean','sp_mean','mp_mean','lp_mean');
 Csf=NaN*ones(ni,nj);
@@ -169,7 +170,7 @@ colorbar('Position',[0.33 0.04 0.34 0.025],'orientation','horizontal')
 set(gcf,'renderer','painters')
 text(-2.75,1.75,'C')
 %stamp([harv '_' cfile])
-print('-dpng',[pp 'Climatol_' harv '_Fcomp_params.png'])
+print('-dpng',[ppath 'Climatol_' harv '_Fcomp_params.png'])
 
 %%
 figure(2)
@@ -242,7 +243,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
 set(gcf,'renderer','painters')
-print('-dpng',[pp 'Climatol_' harv '_FPcomp_params.png'])
+print('-dpng',[ppath 'Climatol_' harv '_FPcomp_params.png'])
 
 
 

@@ -20,6 +20,7 @@ cols=cols';
 spots=spots';
 
 dp = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+BE = 0.075;
 sname = 'Clim_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
@@ -182,10 +183,10 @@ TEeff(2,:) = L_prod./(B_prod + MZl_prod + LZl_prod);
 TEeff(3,:) = L_prod./NPP;
 TEeff(4,:) = (B_prod + MZl_prod + LZl_prod)./NPP;
 
-TEeff(5,:) = M_prod./(0.05*Det_prod + MZl_prod + LZl_prod);
-TEeff(6,:) = L_prod./(0.05*Det_prod + MZl_prod + LZl_prod);
+TEeff(5,:) = M_prod./(BE*Det_prod + MZl_prod + LZl_prod);
+TEeff(6,:) = L_prod./(BE*Det_prod + MZl_prod + LZl_prod);
 TEeff(7,:) = L_prod./NPP;
-TEeff(8,:) = (0.05*Det_prod + MZl_prod + LZl_prod)./NPP;
+TEeff(8,:) = (BE*Det_prod + MZl_prod + LZl_prod)./NPP;
 
 %%
 save([dpath sname 'locs_' harv '_lastyr_effTEs.mat'],...
@@ -205,16 +206,14 @@ Tab=table(spots,TEeff(1,:)',TEeff(2,:)',TEeff(3,:)',TEeff(4,:)',...
     'VariableNames',{'Site','TEeff_Mb','TEeff_HTLb','TEeff_Lb','TEeff_LTLb',...
     'TEeff_Md','TEeff_HTLd','TEeff_Ld','TEeff_LTLd'});
 writetable(Tab,[dpath 'Locs_TEeff_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
-writetable(Tab,['Locs_TEeff_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
-save([dpath 'Locs_TEeff_clim_fished_',harv,'_' cfile '.csv'],'Tab');
+save([dpath 'Locs_TEeff_clim_fished_',harv,'_' cfile '.mat'],'Tab');
 
 Tab2=table(spots,TE(1,:)',TE(2,:)',TE(3,:)',TE(4,:)',...
     TE(5,:)',TE(6,:)',TE(7,:)',TE(8,:)',...
     'VariableNames',{'Site','TE_Mb','TE_HTLb','TE_Lb','TE_LTLb',...
     'TE_Md','TE_HTLd','TE_Ld','TE_LTLd'});
 writetable(Tab2,[dpath 'Locs_TE_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
-writetable(Tab2,['Locs_TE_clim_fished_',harv,'_' cfile '.csv'],'Delimiter',',');
-save([dpath 'Locs_TE_clim_fished_',harv,'_' cfile '.csv'],'Tab2');
+save([dpath 'Locs_TE_clim_fished_',harv,'_' cfile '.mat'],'Tab2');
 
 
 %% Figures

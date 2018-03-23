@@ -200,7 +200,6 @@ caxis([-1 1]);
 set(gcf,'renderer','painters')
 text(-2.75,1.75,'0.10')
 
-
 %B
 subplot('Position',[0.01 0.37 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -227,5 +226,7 @@ text(-2.75,1.75,'0.12')
 %stamp([harv '_' cfile])
 
 print('-dpng',[pp 'Climatol_' harv '_FPcomp_met-b_10-12.png'])
+
+
 
 

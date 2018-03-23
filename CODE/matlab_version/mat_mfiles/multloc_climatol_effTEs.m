@@ -14,6 +14,7 @@ load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 % POEM
 cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+BE = 0.075;
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -110,9 +111,9 @@ TEeff_HTL(TEeff_HTL<0) = NaN;
 
 % With BE*det instead of Bent
 %TEeff_LTL = (production_benthic_invert+mesozoo_prod_to_fish)/NPP
-TEeff_LTLd = (0.05*mdet + mmz_loss + mlz_loss)./mnpp;
+TEeff_LTLd = (BE*mdet + mmz_loss + mlz_loss)./mnpp;
 %TEeff_HTL = production_L/(production_benthic_invert+mesozoo_prod_to_fish)
-TEeff_HTLd = AllL./(0.05*mdet + mmz_loss + mlz_loss); 
+TEeff_HTLd = AllL./(BE*mdet + mmz_loss + mlz_loss); 
 TEeff_HTLd(TEeff_HTLd<0) = NaN;
 
 %% save
