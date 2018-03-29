@@ -35,7 +35,7 @@ land(ID)=NaN*ones(size(ID));
 %%
 AREA_OCN = max(area,1);
 
-cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k083_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 BE = 0.075;
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
@@ -145,7 +145,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('Climatology TEeff HTL (bent)')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffHTL.png'])
+%print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffHTL.png'])
 
 % HTLd
 figure(4)
@@ -175,7 +175,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('Climatology TEeff LTL (bent)')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffLTL.png'])
+%print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffLTL.png'])
 
 % LTLd
 figure(6)
@@ -237,7 +237,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('Climatology TE HTL (bent)')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffHTL_converted.png'])
+%print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffHTL_converted.png'])
 
 % HTLd
 figure(10)
@@ -268,9 +268,9 @@ ylim(hcb,[0.05 0.35])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology TE LTL (bent)')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffLTL_converted.png'])
+%print('-dpng',[ppath 'Clim_fished_',harv,'_LME_TEeffLTL_converted.png'])
 
-% LLTd
+%% LLTd
 figure(12)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -278,7 +278,7 @@ surfm(geolat_t,geolon_t,real(lme_ltlD))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0.05 0.35]);
+caxis([0.05 0.15]);
 hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('Climatology TE LTL (det)')

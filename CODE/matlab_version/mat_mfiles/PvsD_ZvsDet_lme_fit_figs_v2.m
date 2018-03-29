@@ -513,3 +513,34 @@ axis([-0.5 1 0 1])
 %text(-0.4,0.9,'L')
 print('-dpng',[ppath 'lme_scatter_ZlDet_allGAMfit_BW_fits.png'])
 
+
+%% WITH NPP GAM
+% Plot GAM fit color
+figure(8)
+subplot(2,2,1)
+for i=1:66
+    plot(log10(RatZlDet(i)),FracPD(i),'.','MarkerSize',10,'color',tmap(tid(i,2),:)); hold on;
+end
+plot(ZlDet(:,1),ZlDet(:,2),'k'); hold on;
+plot(ZlDet(:,1),ZlDet(:,2)+2*ZlDet(:,3),'--k'); hold on;
+plot(ZlDet(:,1),ZlDet(:,2)-2*ZlDet(:,3),'--k'); hold on;
+%title('Color = LME mean temp')
+xlabel('log10 ZoopLoss:Det')
+ylabel('P / (P+D)')
+axis([-1 0.75 0 1])
+
+%npp
+subplot(2,2,2)
+for i=1:66
+    plot(log10(lme_npp(i)/365),FracPD(i),'.','MarkerSize',10,'color',tmap(tid(i,2),:)); hold on;
+end
+plot(npp(:,1),npp(:,2),'k'); hold on;
+plot(npp(:,1),npp(:,2)+2*npp(:,3),'--k'); hold on;
+plot(npp(:,1),npp(:,2)-2*npp(:,3),'--k'); hold on;
+%title('Color = LME mean temp')
+%ylabel('P / (P+D)')
+xlabel('log10 NPP')
+axis([-0.5 1 0 1])
+print('-dpng',[ppath 'lme_scatter_PDgam_ZlDet_NPP_colorT.png'])
+
+

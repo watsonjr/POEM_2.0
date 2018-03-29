@@ -13,7 +13,8 @@ pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 % POEM
-cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+%cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k083_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 BE = 0.075;
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
@@ -156,7 +157,7 @@ ylim(hcb,[0.005 0.04])
 set(gcf,'renderer','painters')
 title('Climatology TEeff M')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffM.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffM.png'])
 
 %% all L
 figure(2)
@@ -172,7 +173,7 @@ ylim(hcb,[-5.5 -2.5])
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff L')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffL.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffL.png'])
 
 %LTL w/bent
 figure(3)
@@ -188,7 +189,7 @@ ylim(hcb,[-2 0])
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff LTL (bent)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffLTL.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffLTL.png'])
 
 %LTL w/det
 figure(4)
@@ -204,7 +205,7 @@ ylim(hcb,[-2 0])
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff LTL (det)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffLTLd.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffLTLd.png'])
 
 %HTL w/bent
 figure(5)
@@ -220,7 +221,7 @@ ylim(hcb,[-5 -1])
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff HTL (bent)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffHTL.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffHTL.png'])
 
 %HTL w/det
 figure(6)
@@ -236,7 +237,7 @@ ylim(hcb,[-5 -1])
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff HTL (det)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffHTLd.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffHTLd.png'])
 
 %% all M
 figure(7)
@@ -252,7 +253,7 @@ ylim(hcb,[0.05 0.4])
 set(gcf,'renderer','painters')
 title('Climatology TE M')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffM_converted.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffM_converted.png'])
 
 % all L1
 figure(8)
@@ -268,7 +269,7 @@ ylim(hcb,[0.05 0.30])
 set(gcf,'renderer','painters')
 title('Climatology TE L')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffL_converted.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffL_converted.png'])
 
 figure(9)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -283,7 +284,7 @@ ylim(hcb,[0.05 0.35])
 set(gcf,'renderer','painters')
 title('Climatology TE HTL (bent)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffHTL_converted.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffHTL_converted.png'])
 
 figure(10)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -298,7 +299,7 @@ ylim(hcb,[0.05 0.35])
 set(gcf,'renderer','painters')
 title('Climatology TE HTL (det)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffHTLd_converted.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_TEeffHTLd_converted.png'])
 
 %% All 4 on subplots
 figure(11)
@@ -341,7 +342,7 @@ colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('log10 TEeff HTL (bent)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_BeffTEs_subplot.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_BeffTEs_subplot.png'])
 
 %Detritus----------------------
 figure(12)
@@ -384,7 +385,7 @@ colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('log10 TEeff HTL (det)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_DeffTEs_subplot.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_DeffTEs_subplot.png'])
 
 %% All 4 converted on subplots
 figure(13)
@@ -427,7 +428,7 @@ colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('TE HTL (bent)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_BTEs_subplot.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_BTEs_subplot.png'])
 
 %Detritus----------------------
 figure(14)
@@ -470,6 +471,6 @@ colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('TE HTL (det)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_global_DTEs_subplot.png'])
+%print('-dpng',[ppath 'Climatol_' harv '_global_DTEs_subplot.png'])
 
 

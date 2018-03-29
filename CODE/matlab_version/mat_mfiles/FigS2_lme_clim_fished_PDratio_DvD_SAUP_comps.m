@@ -27,7 +27,7 @@ tlme = lme_mask_onedeg;
 AREA_OCN = max(area,1);
 
 %% POEM
-cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE13_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 ppath = [pp cfile '/'];

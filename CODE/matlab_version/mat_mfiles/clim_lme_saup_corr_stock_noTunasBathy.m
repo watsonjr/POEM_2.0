@@ -1,5 +1,6 @@
 %POEM catch vs. SAUP catch by LME
 %Use same methods as Stock et al. 2017 to reduce SAUP dataset
+%No tunas
 
 clear all
 close all
@@ -14,10 +15,6 @@ load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 load([cpath 'esm26_lme_mask_onedeg_SAU_66.mat']);
 load([cpath 'esm26_area_1deg.mat']);
 load([cpath 'LME_clim_temp_zoop_det.mat']);
-
-%use weighted catches
-load([spath 'SAUP_LME_Catch_annual.mat'],'yr','totcatch','lme_catch',...
-    'Flme_wcatch','Dlme_wcatch','Plme_wcatch');
 
 %Colormap
 load('MyColormaps.mat')
@@ -35,7 +32,8 @@ lme_area_km2 = lme_area * 1e-6;
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+%cfile = 'Dc_enc70-b200_cm20_m-b175-k088_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k083_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -45,6 +43,13 @@ dpath = [dp cfile '/'];
 load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],'lme_mcatch','lme_mbio','lme_sbio');
 %load([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
 
+%% SAUP
+load([spath 'SAUP_LME_Catch_top10_Stock_no_tunas_bathy.mat']);
+l10s=log10(slme_mcatch10+eps);
+l10sF=log10(Flme_mcatch10+eps);
+l10sP=log10(Plme_mcatch10+eps);
+l10sD=log10(Dlme_mcatch10+eps);
+sFracPD = Plme_mcatch10 ./ (Plme_mcatch10 + Dlme_mcatch10);
 
 %% plot info
 [ni,nj]=size(lon);
@@ -73,20 +78,11 @@ load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
     'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
 keep = notLELC;
 
-x=-8:0.5:8;
+x=-6:0.5:8;
 x2h = x+log10(2);
 x2l = x-log10(2);
 x5h = x+log10(5);
 x5l = x-log10(5);
-
-%% SAUP
-load([spath 'SAUP_LME_Catch_top10_Stock.mat']);
-sFracPD = Plme_mcatch10 ./ (Plme_mcatch10 + Dlme_mcatch10);
-
-l10s=log10(slme_mcatch10+eps);
-l10sF=log10(Flme_mcatch10+eps);
-l10sP=log10(Plme_mcatch10+eps);
-l10sD=log10(Dlme_mcatch10+eps);
 
 %% POEM LME biomass in MT
 plme_mcatch = nansum(lme_mcatch,2) * 1e-6;
@@ -109,37 +105,6 @@ l10p=log10(plme_mcatch);
 l10pF=log10(plme_Fmcatch);
 l10pP=log10(plme_Pmcatch);
 l10pD=log10(plme_Dmcatch);
-
-%% on grid
-tlme = lme_mask_onedeg;
-pFracPD_grid = NaN*ones(180,360);
-sFracPD_grid = NaN*ones(180,360);
-l10sF_grid = NaN*ones(180,360);
-l10pF_grid = NaN*ones(180,360);
-l10sP_grid = NaN*ones(180,360);
-l10pP_grid = NaN*ones(180,360);
-for L=1:66
-    lid = find(tlme==L);
-    pFracPD_grid(lid) = pFracPD(L);
-    sFracPD_grid(lid) = sFracPD(L);
-%     l10sF_grid(lid) = l10sF(L);
-%     l10pF_grid(lid) = l10pF(L);
-%     l10sP_grid(lid) = l10sP(L);
-%     l10pP_grid(lid) = l10pP(L);
-end
-
-for L=1:length(keep)
-    lme=keep(L);
-    lid = find(tlme==lme);
-    l10sF_grid(lid) = l10sF(lme);
-    l10pF_grid(lid) = l10pF(lme);
-    l10sP_grid(lid) = l10sP(lme);
-    l10pP_grid(lid) = l10pP(lme);
-end
-
-diffPD = pFracPD_grid - sFracPD_grid;
-diffF = (l10pF_grid - l10sF_grid);
-diffP = (l10pP_grid - l10sP_grid);
 
 %% Drop Arctic, Antarctic, Hawaii, Australia -------------------------
 
@@ -178,9 +143,9 @@ tab2(:,6:7) = tab(:,6:7)*(1/9);
 T1 = array2table(tab,'VariableNames',{'LME','ZP','Det','Bent','T','Pcatch','Scatch'});
 T2 = array2table(tab2,'VariableNames',{'LME','ZP','Det','Bent','T','Pcatch','Scatch'});
 
-writetable(T1,[dpath 'LME_prod_catch_SAUP_mtkm2_' cfile '.csv'],'Delimiter',',')
-writetable(T2,[dpath 'LME_prod_catch_SAUP_gCm2_' cfile '.csv'],'Delimiter',',')
-save([dpath 'LME_prod_catch_SAUP_' cfile '.mat'],'tab','tab2')
+writetable(T1,[dpath 'LME_prod_catch_SAUP_mtkm2_noTunasBathy_' cfile '.csv'],'Delimiter',',')
+writetable(T2,[dpath 'LME_prod_catch_SAUP_gCm2_noTunasBathy_' cfile '.csv'],'Delimiter',',')
+save([dpath 'LME_prod_catch_SAUP_noTunasBathy_' cfile '.mat'],'tab','tab2')
 
 %% Stats
 %r
@@ -247,9 +212,9 @@ fish_stat(5,3) = FPD;
 
 Fstat = array2table(fish_stat,'VariableNames',{'r','RMSE','Fmed'},...
     'RowNames',{'All','F','P','D','FracP'});
-writetable(Fstat,[dpath 'LME_SAUP_stats_' cfile '.csv'],'Delimiter',',',...
+writetable(Fstat,[dpath 'LME_SAUP_stats_noTunasBathy_' cfile '.csv'],'Delimiter',',',...
     'WriteRowNames',true)
-save([dpath 'LME_SAUP_stats_' cfile '.mat'],'fish_stat')
+save([dpath 'LME_SAUP_stats_noTunasBathy_' cfile '.mat'],'fish_stat')
 
 %% Plots
 figure(1)
@@ -325,33 +290,33 @@ xlabel('SAUP D catch (log10 MT km^-^2)')
 ylabel('POEM D catch (log10 MT km^-^2)')
 title('Mean D catch')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_no_tunas.png'])
 
 %% For ms
 figure(2)
 subplot(2,2,4)
 plot(x,x,'--k'); hold on;
-plot(x,x2h,':b'); hold on;
-plot(x,x2l,':b'); hold on;
-plot(x,x5h,':r'); hold on;
-plot(x,x5l,':r'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
     plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
 end
-text(-1.75,1.7,['r = ' sprintf('%2.2f',rall)])
-text(-1.75,1.4,['RMSE = ' sprintf('%2.2f',rmse)])
-axis([-2 2 -2 2])
+text(-5.5,1.5,['r = ' sprintf('%2.2f',rall)])
+text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmse)])
+axis([-6 2 -6 2])
 xlabel('SAUP')
 ylabel('POEM')
 title('D. All fishes')
 
 subplot(2,2,1)
 plot(x,x,'--k'); hold on;
-plot(x,x2h,':b'); hold on;
-plot(x,x2l,':b'); hold on;
-plot(x,x5h,':r'); hold on;
-plot(x,x5l,':r'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
     plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
@@ -365,10 +330,10 @@ title('A. Forage Fishes')
 
 subplot(2,2,2)
 plot(x,x,'--k'); hold on;
-plot(x,x2h,':b'); hold on;
-plot(x,x2l,':b'); hold on;
-plot(x,x5h,':r'); hold on;
-plot(x,x5l,':r'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
     plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
@@ -382,232 +347,57 @@ title('B. Large Pelagics')
 
 subplot(2,2,3)
 plot(x,x,'--k'); hold on;
-plot(x,x2h,':b'); hold on;
-plot(x,x2l,':b'); hold on;
-plot(x,x5h,':r'); hold on;
-plot(x,x5l,':r'); hold on;
+plot(x,x2h,'--b'); hold on;
+plot(x,x2l,'--b'); hold on;
+plot(x,x5h,'--r'); hold on;
+plot(x,x5l,'--r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
     plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
 end
-text(-1.75,1.7,['r = ' sprintf('%2.2f',rD)])
-text(-1.75,1.4,['RMSE = ' sprintf('%2.2f',rmseD)])
-axis([-2 2 -2 2])
+text(-5.5,1.5,['r = ' sprintf('%2.2f',rD)])
+text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseD)])
+axis([-6 2 -6 2])
 xlabel('SAUP')
 ylabel('POEM')
 title('C. Demersals')
 % stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ms.png'])
-
-%% For ppt
-% figure(3)
-% subplot(2,2,1)
-% plot(x,x,'--k'); hold on;
-% % plot(x,x2h,'--b'); hold on;
-% % plot(x,x2l,'--b'); hold on;
-% % plot(x,x5h,'--r'); hold on;
-% % plot(x,x5l,'--r'); hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-% end
-% text(-1.75,1.75,['r = ' sprintf('%2.2f',rall)])
-% text(-1.75,1.50,['RMSE = ' sprintf('%2.2f',rmse)])
-% axis([-2 2 -2 2])
-% xlabel('SAU')
-% ylabel('POEM')
-% title('All fishes')
-% 
-% subplot(2,2,2)
-% plot(x,x,'--k'); hold on;
-% % plot(x,x2h,'--b'); hold on;
-% % plot(x,x2l,'--b'); hold on;
-% % plot(x,x5h,'--r'); hold on;
-% % plot(x,x5l,'--r'); hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-% end
-% text(-5.5,1.5,['r = ' sprintf('%2.2f',rF)])
-% text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseF)])
-% axis([-6 2 -6 2])
-% xlabel('SAU')
-% ylabel('POEM')
-% title('Forage Fishes')
-% 
-% subplot(2,2,3)
-% plot(x,x,'--k'); hold on;
-% % plot(x,x2h,'--b'); hold on;
-% % plot(x,x2l,'--b'); hold on;
-% % plot(x,x5h,'--r'); hold on;
-% % plot(x,x5l,'--r'); hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-% end
-% text(-5.5,1.5,['r = ' sprintf('%2.2f',rP)])
-% text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseP)])
-% axis([-6 2 -6 2])
-% xlabel('SAU')
-% ylabel('POEM')
-% title('Large Pelagics')
-% 
-% subplot(2,2,4)
-% plot(x,x,'--k'); hold on;
-% % plot(x,x2h,'--b'); hold on;
-% % plot(x,x2l,'--b'); hold on;
-% % plot(x,x5h,'--r'); hold on;
-% % plot(x,x5l,'--r'); hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-% end
-% text(-1.75,1.75,['r = ' sprintf('%2.2f',rD)])
-% text(-1.75,1.50,['RMSE = ' sprintf('%2.2f',rmseD)])
-% axis([-2 2 -2 2])
-% xlabel('SAU')
-% ylabel('POEM')
-% title('Demersals')
-% % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ppt.png'])
-% 
-% %
-% rlelc=corr(l10s,l10p);
-% figure(4)
-% plot(x,x,'--k'); hold on;
-% % plot(x,x2h,'--b'); hold on;
-% % plot(x,x2l,'--b'); hold on;
-% % plot(x,x5h,'--r'); hold on;
-% % plot(x,x5l,'--r'); hold on;
-% for i=1:66
-%     lme=i;
-%     plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-% end
-% axis([-3.5 1.5 -3.5 1.5])
-% xlabel('SAU')
-% ylabel('POEM')
-% title('All fishes')
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_temp_Stock_ppt.png'])
-% 
-% figure(5)
-% plot(x,x,'--k'); hold on;
-% % plot(x,x2h,'--b'); hold on;
-% % plot(x,x2l,'--b'); hold on;
-% % plot(x,x5h,'--r'); hold on;
-% % plot(x,x5l,'--r'); hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
-% end
-% text(-5.5,1.5,['r = ' sprintf('%2.2f',rall)])
-% axis([-3.5 1.5 -3.5 1.5])
-% xlabel('SAU')
-% ylabel('POEM')
-% title('All fishes')
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_temp_Stock_LELC_ppt.png'])
-
-%% Just P
-%Corr
-figure(6)
-plot(x,x,'--k'); hold on;
-plot(x,x2h,':b'); hold on;
-plot(x,x2l,':b'); hold on;
-plot(x,x5h,':r'); hold on;
-plot(x,x5l,':r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sP(lme),l10pP(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-    text(l10sP(lme),l10pP(lme),num2str(lme),...
-        'Color','k','HorizontalAlignment','center'); hold on;
-end
-text(-5.5,1.5,['r = ' sprintf('%2.2f',rP)])
-text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseP)])
-axis([-7 2 -7 2])
-xlabel('SAUP')
-ylabel('POEM')
-title('Large Pelagics')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_Stock_LELC_Pcorr.png'])
-
-%Map
-figure(7)
-% Diff
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,diffP)
-cmocean('balance')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.4 1.4]);
-colorbar('Ticks',[-1.4 -0.7 -0.3 0 0.3 0.7 1.4])
-set(gcf,'renderer','painters')
-title('POEM - SAU P difference')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_Stock_LELC_Pmap.png'])
-
-%% Just F
-%Corr
-figure(8)
-plot(x,x,'--k'); hold on;
-plot(x,x2h,':b'); hold on;
-plot(x,x2l,':b'); hold on;
-plot(x,x5h,':r'); hold on;
-plot(x,x5l,':r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sF(lme),l10pF(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-    text(l10sF(lme),l10pF(lme),num2str(lme),...
-        'Color','k','HorizontalAlignment','center'); hold on;
-end
-text(-5.5,1.5,['r = ' sprintf('%2.2f',rF)])
-text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseF)])
-axis([-7 2 -7 2])
-xlabel('SAUP')
-ylabel('POEM')
-title('Forage fishes')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_Stock_LELC_Fcorr.png'])
-
-%Map
-figure(9)
-% Diff
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,diffF)
-cmocean('balance')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1.4 1.4]);
-colorbar('Ticks',[-1.4 -0.7 -0.3 0 0.3 0.7 1.4])
-set(gcf,'renderer','painters')
-title('POEM - SAU F difference')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_Stock_LELC_Fmap.png'])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ms_no_tunas.png'])
 
 %% FRACTION LARGE PELAGIC ----------------------------------
 % Correlation
-% figure(10)
-% plot(x,x,'--k');hold on;
-% for i=1:length(keep)
-%     lme=keep(i);
-%     plot(sFracPD(lme),pFracPD(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-%     text(sFracPD(lme),pFracPD(lme),num2str(lme),...
-%         'Color','k','HorizontalAlignment','center'); hold on;
-% end
-% text(0.05,0.95,['r = ' sprintf('%2.2f',rPD)])
-% text(0.05,0.9,['RMSE = ' sprintf('%2.2f',rmsePD)])
-% text(0.05,0.85,['Fmed = ' sprintf('%2.2f',FPD)])
-% axis([0 1 0 1])
-% xlabel('SAUP')
-% ylabel('POEM')
-% title('Fraction Large Pelagics')
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_fracP.png'])
+figure(3)
+plot(x,x,'--k');hold on;
+for i=1:length(keep)
+    lme=keep(i);
+    plot(sFracPD(lme),pFracPD(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+    text(sFracPD(lme),pFracPD(lme),num2str(lme),...
+        'Color','k','HorizontalAlignment','center'); hold on;
+end
+text(0.05,0.95,['r = ' sprintf('%2.2f',rPD)])
+text(0.05,0.9,['RMSE = ' sprintf('%2.2f',rmsePD)])
+text(0.05,0.85,['Fmed = ' sprintf('%2.2f',FPD)])
+axis([0 1 0 1])
+xlabel('SAUP')
+ylabel('POEM')
+title('Fraction Large Pelagics')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_fracP_no_tunas.png'])
 
 %% Catch map
-figure(11)
+%on grid
+tlme = lme_mask_onedeg;
+pFracPD_grid = NaN*ones(180,360);
+sFracPD_grid = NaN*ones(180,360);
+for L=1:66
+    lid = find(tlme==L);
+    pFracPD_grid(lid) = pFracPD(L);
+    sFracPD_grid(lid) = sFracPD(L);
+end
+
+
+diffP = pFracPD_grid - sFracPD_grid;
+figure(4)
 % POEM
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -625,7 +415,7 @@ title('Climatology Fraction LP catch')
 subplot('Position',[0.25 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,diffPD)
+surfm(geolat_t,geolon_t,diffP)
 cmocean('balance')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -645,10 +435,10 @@ caxis([0 1]);
 set(gcf,'renderer','painters')
 title('SAU Fraction LP catch')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp.png'])
+print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp_no_tunas.png'])
 
 %% Subplot with maps and corr
-figure(12)
+figure(5)
 % POEM
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -666,7 +456,7 @@ title('Climatology Fraction LP catch')
 subplot('Position',[0.0 0 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,diffPD)
+surfm(geolat_t,geolon_t,diffP)
 cmocean('balance')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
@@ -701,6 +491,6 @@ xlabel('SAUP')
 ylabel('POEM')
 title('Fraction Large Pelagics')
 stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp_subplot.png'])
+print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_comp_subplot_no_tunas.png'])
 
 

@@ -2,7 +2,7 @@
 
 # GLMs of frac pelagic as a function of 
 # Zl:D ratio, temperature, NPP, coastal area
-# New parameters kt=0.0805, BE=0.075
+# New parameters kt=0.0855, BE=0.075
 
 ################################################################################
 
@@ -24,7 +24,7 @@ library(mgcv) #gam
 
 #PU laptop
 source(file = "/Users/cpetrik/Dropbox/UCSC/CVC-LCM/CVC_data/outmigration_model/HighstatLibV6.r")
-cfile = "Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100"
+cfile = "Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100"
 setwd(paste0("/Volumes/GFDL/NC/Matlab_new_size/", cfile, "/"))
 fpath <- paste0("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/", cfile, "/")
 
@@ -58,19 +58,19 @@ Myxyplot(ZB,vars,"FracLM") #all or none?
 ### LINEAR MODEL ------------------------------------------------------------------
 ## FRACTION P VS. D
 mPDf <- betareg(FracPD ~ LME_ptemp + logRatZlDet + LME_Frac200, data=ZB)
-summary(mPDf)
+summary(mPDf) #Pseudo R-squared: 0.5403
 mPDd <- betareg(FracPD ~ LME_ptemp + logRatZlDet + LME_depth, data=ZB)
-summary(mPDd)
+summary(mPDd) #0.5274
 mPDt <- betareg(FracPD ~ LME_ptemp, data=ZB)
-summary(mPDt) 
+summary(mPDt) #0.2136
 mPDr <- betareg(FracPD ~ logRatZlDet, data=ZB)
-summary(mPDr)
+summary(mPDr) #0.4819
 mPDf2 <- betareg(FracPD ~ LME_Frac200, data=ZB)
-summary(mPDf2)
+summary(mPDf2) #0.148
 mPDd2 <- betareg(FracPD ~ LME_depth, data=ZB) #depth better than frac200
-summary(mPDd2)
+summary(mPDd2) #0.2755
 mPDn <- betareg(FracPD ~ logNPP, data=ZB)
-summary(mPDn)
+summary(mPDn) #0.4834
 
 par(mfrow=c(2,2))
 visreg(mPDf)
@@ -78,6 +78,9 @@ par(mfrow=c(2,2))
 visreg(mPDd)
 par(mfrow=c(1,1))
 visreg(mPDr)
+par(mfrow=c(1,2))
+visreg(mPDr)
+visreg(mPDn)
 
 
 ## FRACTION P VS. F
@@ -102,6 +105,9 @@ par(mfrow=c(2,2))
 visreg(mPFd)
 par(mfrow=c(1,1))
 visreg(mPFr)
+par(mfrow=c(1,2))
+visreg(mPFr)
+visreg(mPFn)
 
 
 ## FRACTION L VS. M
@@ -197,7 +203,7 @@ abline(h=0,lty=2)
 hist(EPF,xlab="",ylab="",breaks=10)
 plot(sort(EPF),type="h",xlab="Sorted residuals",ylab="Residuals")
 dev.off()
-#okay
+#nonlin temp
 
 # LM
 ELM <- resid(mLMf)
@@ -241,47 +247,47 @@ dev.off()
 
 ## Model selection using ZlDet
 gPD <- gam(FracPD ~ s(LME_ptemp,k=4) + s(logRatZlDet,k=4) + s(LME_Frac200,k=4), data=ZB, family = betar)
-summary(gPD) #86.8% deviance
+summary(gPD) #82.9% deviance
 gPDl <- gam(FracPD ~ s(LME_ptemp,k=4) + (logRatZlDet) + s(LME_Frac200,k=4), data=ZB, family = betar)
-summary(gPDl) #84.9% dev
+summary(gPDl) #79.8%
 gPDr <- gam(FracPD ~ s(logRatZlDet,k=4), data=ZB, family = betar)
-summary(gPDr) #69.2%
+summary(gPDr) #67.7%
 gPDt <- gam(FracPD ~ s(LME_ptemp,k=4), data=ZB, family = betar)
-summary(gPDt) #66.2%
+summary(gPDt) #57.1%
 gPDf <- gam(FracPD ~ s(LME_Frac200,k=4), data=ZB, family = betar) #edf=1 linear
-summary(gPDf) #26.6%
+summary(gPDf) #26.1%
 gPDn <- gam(FracPD ~ s(logNPP,k=4), data=ZB, family = betar) 
-summary(gPDn) #71%
-AIC(gPD,gPDr,gPDl,gPDt,gPDf,gPDn) #gPD > gPDl > gPDn > gPDr
+summary(gPDn) #62%
+AIC(gPD,gPDr,gPDl,gPDt,gPDf,gPDn) #gPD > gPDl > gPDr > gPDn
 AIC(gPD,mPDf) #gPD
 
 gPF <- gam(FracPF ~ s(LME_ptemp,k=4) + s(logRatZlDet,k=4) + s(LME_Frac200,k=4), data=ZB, family = betar)
-summary(gPF) #71.1%
+summary(gPF) #67.2%
 gPFl <- gam(FracPF ~ s(LME_ptemp,k=4) + (logRatZlDet) + s(LME_Frac200,k=4), data=ZB, family = betar)
-summary(gPFl) #68%
+summary(gPFl) #63.1%
 gPFr <- gam(FracPF ~ s(logRatZlDet,k=4), data=ZB, family = betar) #edf=1 linear
-summary(gPFr) #46.9% dev
+summary(gPFr) #37.7%
 gPFt <- gam(FracPF ~ s(LME_ptemp,k=4), data=ZB, family = betar)
-summary(gPFt) #43.7%
+summary(gPFt) #38.4%
 gPFf <- gam(FracPF ~ s(LME_Frac200,k=4), data=ZB, family = betar)
-summary(gPFf) #10.4%
+summary(gPFf) #9.39%
 gPFn <- gam(FracPF ~ s(logNPP,k=4), data=ZB, family = betar) 
-summary(gPFn) #58.6%
+summary(gPFn) #40.4%
 AIC(gPF,gPFr,gPFl,gPFt,gPFf,gPFn) #gPF > gPFl > gPFn > gPFr
 AIC(gPF,mPFf) #gPF
 
 gLM <- gam(FracLM ~ s(LME_ptemp,k=4) + s(logRatZlDet,k=4) + s(LME_Frac200,k=4), data=ZB, family = betar)
-summary(gLM) #70.8%
+summary(gLM) #75.8%
 gLMl <- gam(FracLM ~ s(LME_ptemp,k=4) + (logRatZlDet) + s(LME_Frac200,k=4), data=ZB, family = betar)
-summary(gLMl) #70.8%
+summary(gLMl) #75.8%
 gLMr <- gam(FracLM ~ s(logRatZlDet,k=4), data=ZB, family = betar)
-summary(gLMr) #23.8% dev
+summary(gLMr) #24.3%
 gLMt <- gam(FracLM ~ s(LME_ptemp,k=4), data=ZB, family = betar)
-summary(gLMt) #57.3%
+summary(gLMt) #62.9%
 gLMf <- gam(FracLM ~ s(LME_Frac200,k=4), data=ZB, family = betar) #edf=1 linear
-summary(gLMf) #12.7%
+summary(gLMf) #13.4%
 gLMn <- gam(FracLM ~ s(logNPP,k=4), data=ZB, family = betar) 
-summary(gLMn) #22.8%
+summary(gLMn) #20.3%
 AIC(gLM,gLMr,gLMl,gLMt,gLMf,gLMn) #gLM=gLMl > gLMt > gLMr 
 AIC(gLM,mLMf) #gLM
 
@@ -342,7 +348,7 @@ abline(h=0,lty=2)
 hist(EPD,xlab="",ylab="",breaks=10)
 plot(sort(EPD),type="h",xlab="Sorted residuals",ylab="Residuals")
 dev.off()
-#no nonlinearity, just outliers
+#maybe temp nonlinearity, outliers
 
 # PF
 EPF <- resid(gPF)
@@ -418,12 +424,12 @@ dev.off()
 gPDr3 <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar)
 gPDr5 <- gam(FracPD ~ s(logRatZlDet,k=5), data=ZB, family = betar)
 gPDr6 <- gam(FracPD ~ s(logRatZlDet,k=6), data=ZB, family = betar)
-AIC(gPDr3,gPDr,gPDr5,gPDr6) #3 by 0.02
+AIC(gPDr3,gPDr,gPDr5,gPDr6) #4 by 0.4
 
 gPFr3 <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar)
 gPFr5 <- gam(FracPF ~ s(logRatZlDet,k=5), data=ZB, family = betar)
 gPFr6 <- gam(FracPF ~ s(logRatZlDet,k=6), data=ZB, family = betar)
-AIC(gPFr3,gPFr,gPFr5,gPFr6) #3 by 0.8
+AIC(gPFr3,gPFr,gPFr5,gPFr6) #3 by 0.55
 
 gLMr3 <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar)
 gLMr5 <- gam(FracLM ~ s(logRatZlDet,k=5), data=ZB, family = betar)
@@ -434,88 +440,17 @@ AIC(gLMr3,gLMr,gLMr5,gLMr6) #practically identical
 gPDrP <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="probit"))
 gPDrL <- gam(FracPD ~ s(logRatZlDet,k=5), data=ZB, family = betar(link="cloglog"))
 gPDrC <- gam(FracPD ~ s(logRatZlDet,k=6), data=ZB, family = betar(link="cauchit"))
-AIC(gPDrP,gPDr,gPDrL,gPDrC) #probit>logit by 0.01
+AIC(gPDrP,gPDr,gPDrL,gPDrC) #logit by 0.1
 
 gPFrP <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="probit"))
 gPFrL <- gam(FracPF ~ s(logRatZlDet,k=5), data=ZB, family = betar(link="cloglog"))
 gPFrC <- gam(FracPF ~ s(logRatZlDet,k=6), data=ZB, family = betar(link="cauchit"))
-AIC(gPFrP,gPFr,gPFrL,gPFrC) #probit>logit by 0.4
+AIC(gPFrP,gPFr,gPFrL,gPFrC) #probit>logit by 0.23
 
 gLMrP <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="probit"))
 gLMrL <- gam(FracLM ~ s(logRatZlDet,k=5), data=ZB, family = betar(link="cloglog"))
 gLMrC <- gam(FracLM ~ s(logRatZlDet,k=6), data=ZB, family = betar(link="cauchit"))
-AIC(gLMrP,gLMr,gLMrL,gLMrC) #cloglog by 0.006
-
-
-### UPDATE TO 3 KNOTS --------------------------------------------------
-## Model selection using ZlDet
-g3PD <- gam(FracPD ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3), data=ZB, family = betar)
-summary(g3PD) #83.7% deviance
-g3PDl <- gam(FracPD ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3), data=ZB, family = betar)
-summary(g3PDl) #83.7% dev
-g3PDr <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar)
-summary(g3PDr) #68.6%
-g3PDt <- gam(FracPD ~ s(LME_ptemp,k=3), data=ZB, family = betar)
-summary(g3PDt) #65.8%
-g3PDf <- gam(FracPD ~ s(LME_Frac200,k=3), data=ZB, family = betar) #edf=1 linear
-summary(g3PDf) #26.6%
-g3PDn <- gam(FracPD ~ s(logNPP,k=3), data=ZB, family = betar) 
-summary(g3PDn) #69.9%
-AIC(g3PD,g3PDr,g3PDl,g3PDt,g3PDf,g3PDn) #g3PD=g3PDl > g3PDn > g3PDr
-AIC(g3PD,mPDf) #g3PD
-
-g3PF <- gam(FracPF ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3), data=ZB, family = betar)
-summary(g3PF) #64.6%
-g3PFl <- gam(FracPF ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3), data=ZB, family = betar)
-summary(g3PFl) #64.6%
-g3PFr <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar) #edf=1 linear
-summary(g3PFr) #46.8% dev
-g3PFt <- gam(FracPF ~ s(LME_ptemp,k=3), data=ZB, family = betar)
-summary(g3PFt) #42.1%
-g3PFf <- gam(FracPF ~ s(LME_Frac200,k=3), data=ZB, family = betar)
-summary(g3PFf) #10.4%
-g3PFn <- gam(FracPF ~ s(logNPP,k=3), data=ZB, family = betar) 
-summary(g3PFn) #58.5%
-AIC(g3PF,g3PFr,g3PFl,g3PFt,g3PFf,g3PFn) #g3PF > g3PFl > g3PFn > g3PFr
-AIC(g3PF,mPFf) #g3PF
-
-g3LM <- gam(FracLM ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3), data=ZB, family = betar)
-summary(g3LM) #68.7%
-g3LMl <- gam(FracLM ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3), data=ZB, family = betar)
-summary(g3LMl) #68.7%
-g3LMr <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar)
-summary(g3LMr) #23.8% dev
-g3LMt <- gam(FracLM ~ s(LME_ptemp,k=3), data=ZB, family = betar)
-summary(g3LMt) #55.6%
-g3LMf <- gam(FracLM ~ s(LME_Frac200,k=3), data=ZB, family = betar) #edf=1 linear
-summary(g3LMf) #12.7%
-g3LMn <- gam(FracLM ~ s(logNPP,k=3), data=ZB, family = betar) 
-summary(g3LMn) #4.49%
-AIC(g3LM,g3LMr,g3LMl,g3LMt,g3LMf,g3LMn) #g3LM=g3LMl > g3LMt > g3LMr 
-AIC(g3LM,mLMf) #g3LM
-
-par(mfrow=c(2,2))
-visreg(g3PD)
-par(mfrow=c(2,2))
-visreg(g3PF)
-par(mfrow=c(2,2))
-visreg(g3LM)
-#All have a kind of quadratic, concave-down relat with temp
-
-par(mfrow=c(2,2))
-visreg(g3PDr)
-visreg(g3PFr)
-visreg(g3LMr)
-
-#Zl:D rat linear
-par(mfrow=c(1,3))
-visreg(g3PDl)
-par(mfrow=c(1,3))
-visreg(g3PFl)
-par(mfrow=c(1,3))
-visreg(g3LMl)
-#All have a kind of quadratic, concave-down relat with temp
-
+AIC(gLMrP,gLMr,gLMrL,gLMrC) #probit by 0.01
 
 
 
@@ -680,11 +615,6 @@ names(Nfit) <- c("logNPP","PDfit","PDse","PFfit","PFse","LMfit","LMse")
 write.table(Nfit,"npp_gam_fit.csv",sep=",",row.names=F)
 
 
-visreg(gPDr)
-visreg(gPDn)
-visreg(gPDr,scale="response")
-visreg(gPDn,scale="response")
-
 ### TABLE --------------------------------------------------
 library("texreg")
 screenreg(list(gPDr,gPDt,gPDf,gPDn))
@@ -696,4 +626,6 @@ htmlreg(list(gPDr,gPDt,gPDf,gPDn), file = "PDgam_table.doc", inline.css = FALSE,
 htmlreg(list(gPDr,gPDt,gPDf,gPDn), file = "PDgam_table.html")
 htmlreg(list(gPFr,gPFt,gPFf,gPFn), file = "PFgam_table.html")
 htmlreg(list(gLMr,gLMt,gLMf,gLMn), file = "LMgam_table.html")
+
+
 

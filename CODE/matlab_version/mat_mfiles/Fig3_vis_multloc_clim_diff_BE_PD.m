@@ -102,6 +102,7 @@ clear mp_my lp_my md_my ld_my
 
 cfileC = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 fpathC=['/Volumes/GFDL/NC/Matlab_new_size/' cfileC '/'];
+ppath = [pp cfileC '/'];
 load([fpathC 'Means_bio_prod_fish_Climatol_All_fish03_',cfileC,'.mat'],...
     'mp_my','lp_my','md_my','ld_my');
 CallP=mp_my+lp_my;
@@ -262,7 +263,7 @@ colorbar('Position',[0.25 0.075 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
 text(-2.75,1.75,'D')
 %stamp([harv '_' cfile])
-print('-dpng',[pp 'Climatol_' harv '_global_PvsD_comp_BE.png'])
+print('-dpng',[ppath 'Climatol_' harv '_global_PvsD_comp_BE.png'])
 
 %% 
 figure(2)
@@ -276,8 +277,9 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'BE=0.025')
-
+text(-0.75,1.75,'\beta=0.025')
+text(-2.75,1.75,'A')
+%
 subplot('Position',[0.41 0.68 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -287,9 +289,9 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'BE=0.05')
-
-%B
+text(-0.75,1.75,'\beta=0.05')
+text(-2.75,1.75,'B')
+%
 subplot('Position',[0.01 0.37 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -299,8 +301,9 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'BE=0.075')
-
+text(-0.75,1.75,'\beta=0.075')
+text(-2.75,1.75,'C')
+%
 subplot('Position',[0.41 0.37 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -310,9 +313,9 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'BE=0.10')
-
-%C
+text(-0.75,1.75,'\beta=0.10')
+text(-2.75,1.75,'D')
+%
 subplot('Position',[0.01 0.06 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -322,8 +325,9 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
 set(gcf,'renderer','painters')
-text(-2.75,1.75,'BE=0.125')
-%stamp([harv '_' cfile])
+text(-0.75,1.75,'\beta=0.125')
+text(-2.75,1.75,'E')
+stamp(cfileC)
 
 % subplot('Position',[0.41 0.06 0.4 0.3])
 % axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -335,9 +339,9 @@ text(-2.75,1.75,'BE=0.125')
 % caxis([0 1]);
 % colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
 % set(gcf,'renderer','painters')
-% text(-2.75,1.75,'BE=0.15')
+% text(-2.75,1.75,'\beta=0.15')
 %stamp([harv '_' cfile])
-print('-dpng',[pp 'Climatol_' harv '_lme_PvsD_comp_BE.png'])
+print('-dpng',[ppath 'Climatol_' harv '_lme_PvsD_comp_BE.png'])
 
 %%
 figure(3)
@@ -361,42 +365,4 @@ rtab = array2table(rmat,'VariableNames',{'LMElat','B025','B050','B075',...
     'B100','B125','RoundLat'});
 writetable(rtab,'/Volumes/GFDL/NC/Matlab_new_size/bio_rates/LME_Pfrac_BEs.csv','Delimiter',',')
 
-%%
-figure(33)
-subplot(3,2,1)
-boxplot(AlmePD,rmat(:,7))
-%xlim([-90 90])
-ylim([0 1])
-xlabel('Latitude')
-title('BE=0.025')
-
-subplot(3,2,2)
-boxplot(BlmePD,rmat(:,7))
-%xlim([-90 90])
-ylim([0 1])
-xlabel('Latitude')
-title('BE=0.05')
-
-subplot(3,2,3)
-boxplot(ClmePD,rmat(:,7))
-%xlim([-90 90])
-ylim([0 1])
-xlabel('Latitude')
-title('BE=0.075')
-
-subplot(3,2,4)
-boxplot(DlmePD,rmat(:,7))
-%xlim([-90 90])
-ylim([0 1])
-xlabel('Latitude')
-title('BE=0.10')
-
-subplot(3,2,5)
-boxplot(ElmePD,rmat(:,7))
-%xlim([-90 90])
-ylim([0 1])
-xlabel('Latitude')
-title('BE=0.125')
-stamp('')
-print('-dpng',[pp 'Climatol_' harv '_latitude_box_PvsD_comp_BE.png'])
 

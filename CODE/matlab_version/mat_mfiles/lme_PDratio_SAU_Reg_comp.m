@@ -29,44 +29,16 @@ load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
 lme_area_km2 = lme_area * 1e-6;
 
 %% SAUP
-%use weighted catches
-load([spath 'SAUP_LME_Catch_annual.mat'],'yr','totcatch','lme_catch',...
-    'Dlme_wcatch','Plme_wcatch');
+load([spath 'SAUP_LME_Catch_top10_Stock.mat']);
+load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
+    'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
 
-Plme_catch_all = nansum(Plme_wcatch,3);
-Dlme_catch_all = nansum(Dlme_wcatch,3);
-lme_catch_all = nansum(lme_catch,3);
+sFracPD = Plme_mcatch10 ./ (Plme_mcatch10 + Dlme_mcatch10);
 
-%1950-2006 SAUP average
-id = find(yr>1950 & yr<=2006);
-
-slme_mcatch = nanmean(lme_catch_all(id,:));
-slme_mcatch = slme_mcatch';
-Pslme_mcatch = nanmean(Plme_catch_all(id,:));
-Pslme_mcatch = Pslme_mcatch';
-Dslme_mcatch = nanmean(Dlme_catch_all(id,:));
-Dslme_mcatch = Dslme_mcatch';
-
-slme_mcatch10 = NaN*ones(size(slme_mcatch));
-Plme_mcatch10 = NaN*ones(size(slme_mcatch));
-Dlme_mcatch10 = NaN*ones(size(slme_mcatch));
-
-%Top 10 yrs by LME SAUP 
-for i=1:66
-    [sort_lme_catch,ix] = sort(lme_catch_all(:,i),'descend');
-    sort_Plme_catch = Plme_catch_all(ix,i);
-    sort_Dlme_catch = Dlme_catch_all(ix,i);
-    slme_mcatch10(i) = nanmean(sort_lme_catch(1:10));
-    Plme_mcatch10(i) = nanmean(sort_Plme_catch(1:10));
-    Dlme_mcatch10(i) = nanmean(sort_Dlme_catch(1:10));
-end
-
-% MT/km2
-sAlme_mcatch10 = slme_mcatch10 ./ lme_area_km2;
-sPlme_mcatch10 = Plme_mcatch10 ./ lme_area_km2;
-sDlme_mcatch10 = Dlme_mcatch10 ./ lme_area_km2;
-
-sFracPD = sPlme_mcatch10 ./ (sPlme_mcatch10 + sDlme_mcatch10);
+l10s=log10(slme_mcatch10+eps);
+l10sF=log10(Flme_mcatch10+eps);
+l10sP=log10(Plme_mcatch10+eps);
+l10sD=log10(Dlme_mcatch10+eps);
 
 %on grid
 tlme = lme_mask_onedeg;
@@ -76,7 +48,7 @@ for L=1:66
     sFracPD_grid(lid) = sFracPD(L);
 end
 
-clear yr totcatch lme_catch Dlme_wcatch Plme_wcatch
+clear slme_mcatch10 Dlme_mcatch10 Plme_mcatch10 Flme_mcatch10
 
 %% Reg
 %use weighted catches
@@ -165,27 +137,33 @@ for L=1:66
 end
 
 %% Comparison stats
-keep=[1:61,63];
-load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
-    'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
-notLELC = notLELC(notLELC<=63);
+keep=1:63;
 
 diffL = sFracPD_grid - lFracPD_grid;
 diffC = sFracPD_grid - cFracPD_grid;
 
-sAlme_mcatch10 = log10(sAlme_mcatch10);
-sPlme_mcatch10 = log10(sPlme_mcatch10);
-sDlme_mcatch10 = log10(sDlme_mcatch10);
-Alme_mcatch10 = log10(Alme_mcatch10);
-Plme_mcatch10 = log10(Plme_mcatch10);
-Dlme_mcatch10 = log10(Dlme_mcatch10);
+l10c=log10(Alme_mcatch10+eps);
+l10cF=log10(Flme_mcatch10+eps);
+l10cP=log10(Plme_mcatch10+eps);
+l10cD=log10(Dlme_mcatch10+eps);
+
+l10s_grid = NaN*ones(180,360);
+l10c_grid = NaN*ones(180,360);
+for L=1:length(keep)
+    lme=keep(L);
+    lid = find(tlme==lme);
+    l10s_grid(lid) = l10s(lme);
+    l10c_grid(lid) = l10c(lme);
+end
+diffA = (l10s_grid - l10c_grid);
 
 %r
 rLfrac=corr(sFracPD(keep),lFracPD(keep));
 rCfrac=corr(sFracPD(keep),cFracPD(keep));
-rCA=corr(sAlme_mcatch10(keep),Alme_mcatch10(keep));
-rCP=corr(sPlme_mcatch10(keep),Plme_mcatch10(keep));
-rCD=corr(sDlme_mcatch10(keep),Dlme_mcatch10(keep));
+rCA=corr(l10s(keep),l10c(keep));
+rCF=corr(l10sF(keep),l10cF(keep));
+rCP=corr(l10sP(keep),l10cP(keep));
+rCD=corr(l10sD(keep),l10cD(keep));
 
 %root mean square error
 o=sFracPD(keep);
@@ -200,20 +178,26 @@ n = length(o);
 num=nansum((p-o).^2);
 rmseCfrac = sqrt(num/n);
 
-o=sAlme_mcatch10(keep);
-p=Alme_mcatch10(keep);
+o=l10s(keep);
+p=l10c(keep);
 n = length(o);
 num=nansum((p-o).^2);
 rmseCA = sqrt(num/n);
 
-o=sPlme_mcatch10(keep);
-p=Plme_mcatch10(keep);
+o=l10sF(keep);
+p=l10cF(keep);
+n = length(o);
+num=nansum((p-o).^2);
+rmseCF = sqrt(num/n);
+
+o=l10sP(keep);
+p=l10cP(keep);
 n = length(o);
 num=nansum((p-o).^2);
 rmseCP = sqrt(num/n);
 
-o=sDlme_mcatch10(keep);
-p=Dlme_mcatch10(keep);
+o=l10sD(keep);
+p=l10cD(keep);
 n = length(o);
 num=nansum((p-o).^2);
 rmseCD = sqrt(num/n);
@@ -221,9 +205,10 @@ rmseCD = sqrt(num/n);
 %Fmed
 FLfrac=10^(median(sFracPD(keep)-lFracPD(keep)));
 FCfrac=10^(median(sFracPD(keep)-cFracPD(keep)));
-FCA=10^(median(sAlme_mcatch10(keep)-Alme_mcatch10(keep)));
-FCP=10^(median(sPlme_mcatch10(keep)-Plme_mcatch10(keep)));
-FCD=10^(median(sDlme_mcatch10(keep)-Dlme_mcatch10(keep)));
+FCA=10^(median(l10s(keep)-l10c(keep)));
+FCF=10^(median(l10sF(keep)-l10cF(keep)));
+FCP=10^(median(l10sP(keep)-l10cP(keep)));
+FCD=10^(median(l10sD(keep)-l10cD(keep)));
 
 % Table
 fish_stat(1,1) = rLfrac;
@@ -235,15 +220,18 @@ fish_stat(3,2) = FCfrac;
 fish_stat(1,3) = rCA;
 fish_stat(2,3) = rmseCA;
 fish_stat(3,3) = FCA;
-fish_stat(1,4) = rCP;
-fish_stat(2,4) = rmseCP;
-fish_stat(3,4) = FCP;
-fish_stat(1,5) = rCD;
-fish_stat(2,5) = rmseCD;
-fish_stat(3,5) = FCD;
+fish_stat(1,4) = rCF;
+fish_stat(2,4) = rmseCF;
+fish_stat(3,4) = FCF;
+fish_stat(1,5) = rCP;
+fish_stat(2,5) = rmseCP;
+fish_stat(3,5) = FCP;
+fish_stat(1,6) = rCD;
+fish_stat(2,6) = rmseCD;
+fish_stat(3,6) = FCD;
 
 Fstat = array2table(fish_stat,'RowNames',{'r','RMSE','Fmed'},...
-    'VariableNames',{'PvsDLandings','PvsDCatch','AllCatch','PCatch','DCatch'});
+    'VariableNames',{'PvsDLandings','PvsDCatch','AllCatch','FCatch','PCatch','DCatch'});
 writetable(Fstat,[spath 'LME_SAU_vs_Reg_stats.csv'],'Delimiter',',','WriteRowNames',true)
 save([spath 'LME_SAU_vs_Reg_stats.mat'],'fish_stat')
 
@@ -335,8 +323,8 @@ plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(Alme_mcatch10(lme),sAlme_mcatch10(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-    text(Alme_mcatch10(lme),sAlme_mcatch10(lme),num2str(lme),...
+    plot(l10c(lme),l10s(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+    text(l10c(lme),l10s(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center'); hold on;
 end
 text(-3.5,1.75,['r = ' sprintf('%2.2f',rCA)])
@@ -347,10 +335,26 @@ xlabel('Reg catch')
 ylabel('SAU')
 title('log10 All catch (MT km^-^2)')
 stamp('')
-print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_fracP.png'])
+print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_all.png'])
 
-% P catch
+%Map
 figure(4)
+% Diff
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,diffA)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1.4 1.4]);
+colorbar('Ticks',[-1.4 -0.7 -0.3 0 0.3 0.7 1.4])
+set(gcf,'renderer','painters')
+title('SAU - Reg difference')
+stamp('')
+print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_all_map.png'])
+
+% F catch
+figure(5)
 plot(x,x,'--k');hold on;
 plot(x,x2h,':b'); hold on;
 plot(x,x2l,':b'); hold on;
@@ -358,8 +362,31 @@ plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(Plme_mcatch10(lme),sPlme_mcatch10(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-    text(Plme_mcatch10(lme),sPlme_mcatch10(lme),num2str(lme),...
+    plot(l10cF(lme),l10sF(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+    text(l10cF(lme),l10sF(lme),num2str(lme),...
+        'Color','k','HorizontalAlignment','center'); hold on;
+end
+text(-6.5,0.75,['r = ' sprintf('%2.2f',rCF)])
+text(-6.5,0.5,['RMSE = ' sprintf('%2.2f',rmseCF)])
+text(-6.5,0.25,['Fmed = ' sprintf('%2.2f',FCF)])
+axis([-7 1 -7 1])
+xlabel('Reg catch')
+ylabel('SAU')
+title('log10 F catch (MT km^-^2)')
+stamp('')
+print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_F.png'])
+
+% P catch
+figure(6)
+plot(x,x,'--k');hold on;
+plot(x,x2h,':b'); hold on;
+plot(x,x2l,':b'); hold on;
+plot(x,x5h,':r'); hold on;
+plot(x,x5l,':r'); hold on;
+for i=1:length(keep)
+    lme=keep(i);
+    plot(l10cP(lme),l10sP(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+    text(l10cP(lme),l10sP(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center'); hold on;
 end
 text(-6.5,0.75,['r = ' sprintf('%2.2f',rCP)])
@@ -370,10 +397,10 @@ xlabel('Reg catch')
 ylabel('SAU')
 title('log10 P catch (MT km^-^2)')
 stamp('')
-print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_fracP.png'])
+print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_P.png'])
 
-%% D catch
-figure(5)
+% D catch
+figure(7)
 plot(x,x,'--k');hold on;
 plot(x,x2h,':b'); hold on;
 plot(x,x2l,':b'); hold on;
@@ -381,8 +408,8 @@ plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(Dlme_mcatch10(lme),sDlme_mcatch10(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
-    text(Dlme_mcatch10(lme),sDlme_mcatch10(lme),num2str(lme),...
+    plot(l10cD(lme),l10sD(lme),'o','MarkerSize',15,'color',tmap(tid(lme,2),:)); hold on;
+    text(l10cD(lme),l10sD(lme),num2str(lme),...
         'Color','k','HorizontalAlignment','center'); hold on;
 end
 text(-3.5,1.75,['r = ' sprintf('%2.2f',rCD)])
@@ -393,11 +420,11 @@ xlabel('Reg catch')
 ylabel('SAU')
 title('log10 D catch (MT km^-^2)')
 stamp('')
-print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_fracP.png'])
+print('-dpng',[spath 'LME_SAU_vs_Reg_catch_comp_D.png'])
 
 
 %% Subplot with maps and corr
-figure(6)
+figure(8)
 % SAU
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -453,7 +480,7 @@ stamp('')
 print('-dpng',[spath 'LME_fracPD_SAU_vs_Reg_landings_comp_subplot.png'])
 
 
-figure(7)
+figure(9)
 % SAU
 subplot('Position',[0 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...

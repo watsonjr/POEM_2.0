@@ -7,7 +7,7 @@ datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 %dp = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
-dp = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+dp = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 sname = 'Clim_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
@@ -61,7 +61,7 @@ for ii = 1:4
     G{ii}.Nodes.y = xybio(:,2);
 end
 
-% Some scaling setup
+%% Some scaling setup
 
 rmax = 0.5; % maximum radius 
 bmax = 30;  % biomass represented by max radius

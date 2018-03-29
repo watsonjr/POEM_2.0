@@ -2,6 +2,7 @@
 clear all
 close all
 
+mspath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/';
 spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/SAUP/';
 cpath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/';
 dp = '/Volumes/GFDL/NC/Matlab_new_size/';
@@ -228,6 +229,8 @@ Fstat = array2table(fish_stat,'VariableNames',{'r','RMSE','Fmed'},...
     'RowNames',{'SAU All Fish','SAU F','SAU P','SAU D','SAU Frac Pelagic',...
     'vanD Frac Pelagic','Stock All Fish'});
 writetable(Fstat,[fpath 'LME_all_ms_stats_' cfile '.csv'],'Delimiter',',',...
+    'WriteRowNames',true)
+writetable(Fstat,[mspath 'LME_all_ms_stats_' cfile '.csv'],'Delimiter',',',...
     'WriteRowNames',true)
 save([fpath 'LME_all_ms_stats_' cfile '.mat'],'fish_stat')
 

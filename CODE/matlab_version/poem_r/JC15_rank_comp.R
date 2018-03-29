@@ -10,7 +10,8 @@ library(visreg)
 
 #PU laptop
 source(file = "/Users/cpetrik/Dropbox/UCSC/CVC-LCM/CVC_data/outmigration_model/HighstatLibV6.r")
-cfile = "Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100"
+#cfile = "Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100"
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 setwd(paste0("/Volumes/GFDL/NC/Matlab_new_size/", cfile, "/"))
 fpath <- paste0("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/", cfile, "/")
 
@@ -20,20 +21,22 @@ lelc <- read.csv("/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/LME_St
 
 # Rankings of LME biomass           
 corr <- cor.test(lme$JCrank, y=lme$Prank, method = 'spearman')
-#S = 48570, p-value = 0.9118
+#S = 44870, p-value = 0.6125
 
 corr <- cor.test(lme$JCrank, y=lme$Prank, method = 'kendall')
-#z = -0.12728, p-value = 0.8987
+#z = 0.51467, p-value = 0.6068
 
 # NPP
 corr <- cor.test(lelc$JCPP, y=lelc$CNPP, method = 'pearson')
 #t = 4.2269, df = 43, p-value = 0.0001212
 
 npp<-glm(JCPP~CNPP,data=lelc)
+summary(npp)
 #(Intercept)   0.1287     0.1413   0.910 0.367652    
 #CNPP          1.0731     0.2539   4.227 0.000121 ***
 
 npp2<-glm(JCPP~CNPP-1,data=lelc)
+summary(npp2)
 #CNPP  1.29012    0.08704   14.82   <2e-16 ***
 
 par(mfrow=c(1,2))
