@@ -75,7 +75,7 @@ function make_parameters()
     bcmx = 0.25;    % power on cmax fn (orig 0.25)
     
     %%%! Transfer efficiency of detritus to benthic prey
-    bent_eff = 0.075;
+    bent_eff = 0.025;
     CC = 100.0;
 
     %%%! Reproductive efficiency

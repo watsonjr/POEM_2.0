@@ -20,7 +20,7 @@ ENVR.dZm = sub_neg(ENVR.dZm);
 ENVR.dZl = sub_neg(ENVR.dZl);
 
 % Update benthic biomass with new detritus avail at that time step
-[BENT.mass,BENT.pred] = sub_update_be(BENT.mass,bent_eff,ENVR.det,CC,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
+[BENT.mass,BENT.pred] = sub_update_be(ENVR.Tb,BENT.mass,bent_eff,ENVR.det,[Md.con_be,Ld.con_be],[Md.bio,Ld.bio]);
 BENT.mass = sub_check(BENT.mass);
 
 % Pelagic-demersal coupling
