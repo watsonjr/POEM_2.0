@@ -18,10 +18,10 @@ function [bio_out, pred] = sub_update_be(Tb,bio_in,BE,det,con,bio)
     
     %! Temp-dep
     %Incr w/T
-    r = exp(0.063*(Tb-10.0)) .* BE .* det;
+%     r = exp(0.063*(Tb-10.0)) .* BE .* det;
     %Decr w/T
-%     mx = exp(0.063*(33.1-10.0));
-%     r = (mx - exp(0.063*(Tb-10.0))) .* BE .* det;
+    mx = exp(0.063*(33.1-10.0));
+    r = (mx - exp(0.063*(Tb-10.0))) .* BE .* det;
     %Opt T
     
     %! No carrying capacity

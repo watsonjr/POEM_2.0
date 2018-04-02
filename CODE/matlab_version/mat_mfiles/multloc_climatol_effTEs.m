@@ -14,8 +14,8 @@ load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 % POEM
 %cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-cfile = 'Dc_enc70-b200_m4-b175-k083_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-BE = 0.075;
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BEincrT03_noCC_RE00100';
+%BE = 0.075;
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -31,6 +31,13 @@ load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
 gpath='/Volumes/GFDL/GCM_DATA/ESM26_hist/';
 load([gpath 'clim_det_biom_Dmeans_Ytot.mat'])
 load([gpath 'clim_npp_Dmeans_Ytot.mat'])
+load([gpath 'btm_temp_1deg_ESM26_5yr_clim_191_195.mat'])
+
+mTb = squeeze(nanmean(btm_temp));
+
+BE = exp(0.063*(mTb-10.0)) .* 0.025;
+% mx = exp(0.063*(33.1-10.0)); 
+% BE = (mx - exp(0.063*(mTb-10.0))) .* 0.025;
 
 %ESM2.6 in mg C m-2 or mg C m-2 d-1
 %from mg C m-2 to g(WW) m-2
@@ -112,9 +119,9 @@ TEeff_HTL(TEeff_HTL<0) = NaN;
 
 % With BE*det instead of Bent
 %TEeff_LTL = (production_benthic_invert+mesozoo_prod_to_fish)/NPP
-TEeff_LTLd = (BE*mdet + mmz_loss + mlz_loss)./mnpp;
+TEeff_LTLd = (BE.*mdet + mmz_loss + mlz_loss)./mnpp;
 %TEeff_HTL = production_L/(production_benthic_invert+mesozoo_prod_to_fish)
-TEeff_HTLd = AllL./(BE*mdet + mmz_loss + mlz_loss); 
+TEeff_HTLd = AllL./(BE.*mdet + mmz_loss + mlz_loss); 
 TEeff_HTLd(TEeff_HTLd<0) = NaN;
 
 %% save
