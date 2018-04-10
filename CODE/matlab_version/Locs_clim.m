@@ -40,7 +40,7 @@ names = abbrev;
 ID = ids;
 
 %! Create a directory for output
-[simname,sel,tfish] = sub_fname(frate);
+fname = sub_fname(frate);
 
 NX = length(ID);
 %! Initialize
@@ -125,17 +125,10 @@ for YR = 1:YEARS % years
 end %Years
 
 %%% Save
-if harv==1
-    save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs','_',sel,'_fish',tfish(2:end),'.mat'],...
-        'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
-    % save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs','_',sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'.mat'],...
-    %         'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
-    %     save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs_Tfish_qF',tF(2:end),'_qP',tP(2:end),'_qD',tD(2:end),'.mat'],...
-    %        'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
-else
-    save(['/Volumes/GFDL/CSV/Matlab_new_size/',simname,'/Clim_locs.mat'],...
-        'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d','S_Lrg_p','S_Lrg_d','S_Cobalt')
-end
+save([fname '_locs.mat'],...
+'S_Sml_f','S_Sml_p','S_Sml_d','S_Med_f','S_Med_p','S_Med_d',...
+'S_Lrg_p','S_Lrg_d','S_Cobalt')
+    
 
 
 

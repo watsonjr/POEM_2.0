@@ -43,7 +43,7 @@ load([Pdrpbx 'Princeton/POEM_2.0/CODE/Data/Hindcast_cgrid_cp2D.mat']);
 [ni,nj] = size(CGRD.mask);
 
 %! Create a directory for output
-[simname,sel,tfish] = sub_fname(frate);
+fname = sub_fname(frate);
 
 %! Storage variables
 S_Bent_bio = zeros(NX,DAYS);
@@ -81,46 +81,15 @@ ENVR = sub_init_env(ID);
 
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
-if harv==0
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_lrg_d.nc'];
-    file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_bent.nc'];
-else
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_lrg_d.nc'];
-    file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_bent.nc'];
-    
-%     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_f.nc'];
-%     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_p.nc'];
-%     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_d.nc'];
-%     file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_f.nc'];
-%     file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_p.nc'];
-%     file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_d.nc'];
-%     file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_p.nc'];
-%     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_d.nc'];
-%     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_bent.nc'];
-    %     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_f.nc'];
-    %     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_p.nc'];
-    %     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_sml_d.nc'];
-    %     file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_f.nc'];
-    %     file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_p.nc'];
-    %     file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_med_d.nc'];
-    %     file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_lrg_p.nc'];
-    %     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_lrg_d.nc'];
-    %     file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end),'_bent.nc'];
-end
+file_sml_f = [fname '_sml_f.nc'];
+file_sml_p = [fname '_sml_p.nc'];
+file_sml_d = [fname '_sml_d.nc'];
+file_med_f = [fname '_med_f.nc'];
+file_med_p = [fname '_med_p.nc'];
+file_med_d = [fname '_med_d.nc'];
+file_lrg_p = [fname '_lrg_p.nc'];
+file_lrg_d = [fname '_lrg_d.nc'];
+file_bent  = [fname '_bent.nc'];
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
 ncidSP = netcdf.create(file_sml_p,'NC_WRITE');
@@ -223,7 +192,7 @@ for YR = 1:YEARS % years
         S_Med_d(:,DY) = Med_d.bio;
         S_Lrg_p(:,DY) = Lrg_p.bio;
         S_Lrg_d(:,DY) = Lrg_d.bio;
-
+        
         S_Sml_f_prod(:,DY) = Sml_f.prod;
         S_Sml_p_prod(:,DY) = Sml_p.prod;
         S_Sml_d_prod(:,DY) = Sml_d.prod;
@@ -232,14 +201,14 @@ for YR = 1:YEARS % years
         S_Med_d_prod(:,DY) = Med_d.prod;
         S_Lrg_p_prod(:,DY) = Lrg_p.prod;
         S_Lrg_d_prod(:,DY) = Lrg_d.prod;
-      
+        
         S_Med_f_fish(:,DY) = Med_f.caught;
         S_Med_p_fish(:,DY) = Med_p.caught;
         S_Med_d_fish(:,DY) = Med_d.caught;
         S_Lrg_p_fish(:,DY) = Lrg_p.caught;
         S_Lrg_d_fish(:,DY) = Lrg_d.caught;
-       
-
+        
+        
     end %Days
     
     %! Calculate monthly means and save
@@ -261,13 +230,13 @@ for YR = 1:YEARS % years
         netcdf.putVar(ncidMD,vidbioMD,[0 MNT-1],[NX 1],mean(S_Med_d(:,a(i):b(i)),2));
         netcdf.putVar(ncidLP,vidbioLP,[0 MNT-1],[NX 1],mean(S_Lrg_p(:,a(i):b(i)),2));
         netcdf.putVar(ncidLD,vidbioLD,[0 MNT-1],[NX 1],mean(S_Lrg_d(:,a(i):b(i)),2));
- 
+        
         netcdf.putVar(ncidMF,vidfishMF,[0 MNT-1],[NX 1],mean(S_Med_f_fish(:,a(i):b(i)),2));
         netcdf.putVar(ncidMP,vidfishMP,[0 MNT-1],[NX 1],mean(S_Med_p_fish(:,a(i):b(i)),2));
         netcdf.putVar(ncidMD,vidfishMD,[0 MNT-1],[NX 1],mean(S_Med_d_fish(:,a(i):b(i)),2));
         netcdf.putVar(ncidLP,vidfishLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_fish(:,a(i):b(i)),2));
         netcdf.putVar(ncidLD,vidfishLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_fish(:,a(i):b(i)),2));
-
+        
         netcdf.putVar(ncidSF,vidprodSF,[0 MNT-1],[NX 1],mean(S_Sml_f_prod(:,a(i):b(i)),2));
         netcdf.putVar(ncidSP,vidprodSP,[0 MNT-1],[NX 1],mean(S_Sml_p_prod(:,a(i):b(i)),2));
         netcdf.putVar(ncidSD,vidprodSD,[0 MNT-1],[NX 1],mean(S_Sml_d_prod(:,a(i):b(i)),2));
@@ -276,7 +245,7 @@ for YR = 1:YEARS % years
         netcdf.putVar(ncidMD,vidprodMD,[0 MNT-1],[NX 1],mean(S_Med_d_prod(:,a(i):b(i)),2));
         netcdf.putVar(ncidLP,vidprodLP,[0 MNT-1],[NX 1],mean(S_Lrg_p_prod(:,a(i):b(i)),2));
         netcdf.putVar(ncidLD,vidprodLD,[0 MNT-1],[NX 1],mean(S_Lrg_d_prod(:,a(i):b(i)),2));
-                      
+        
     end %Monthly mean
     
 end %Years

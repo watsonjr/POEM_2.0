@@ -19,8 +19,8 @@ function make_parameters()
     
     %! Which fishes harvested
     MFsel = 1;
-    LPsel = 1;
-    LDsel = 1;
+    LPsel = 0.5;
+    LDsel = 0.5;
     Jsel  = 0.1;
     MPsel = Jsel * LPsel;
     MDsel = Jsel * LDsel;
@@ -75,7 +75,7 @@ function make_parameters()
     bcmx = 0.25;    % power on cmax fn (orig 0.25)
     
     %%%! Transfer efficiency of detritus to benthic prey
-    bent_eff = 0.025;
+    bent_eff = 0.075;
     CC = 100.0;
 
     %%%! Reproductive efficiency
