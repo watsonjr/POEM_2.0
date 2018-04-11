@@ -84,9 +84,9 @@ diffD = rPD_catch - dlme_Pfrac;
 diffS = rPD_catch - sFracPD_grid;
 
 %r
-rall=corr(FracLP(did),plme_rPDcatch(did));
-rall2=corr(FracLP(did2),plme_rPDcatch(did2));
-rPD=corr(sFracPD(notLELC),plme_rPDcatch(notLELC));
+[rall,pall]=corr(FracLP(did),plme_rPDcatch(did));
+[rall2,pall2]=corr(FracLP(did2),plme_rPDcatch(did2));
+[rPD,pPD]=corr(sFracPD(notLELC),plme_rPDcatch(notLELC));
 
 %root mean square error
 o=FracLP(did);
