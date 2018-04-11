@@ -25,7 +25,12 @@ function nmort = sub_nmort(Tp,Tb,tpel,wgt)
     if (MORT==4) % Jennings & Collingridge Temperature-dependent mortality
         temp = (Tp.*tpel) + (Tb.*(1.0-tpel));
         % J&C
-        nmort = exp(0.063*(temp-10.0)) .* 0.5 .* wgt^(-0.33) /365.0;
+        temp2 = temp+273;
+        Tref = 283;
+        E=0.6;
+        k=8.62e-5;
+        tfact = exp((-1*E/k)*((1./temp2)-(1./Tref)));
+        nmort = tfact .* 0.5 .* wgt^(-0.33) /365.0;
     end
     if (MORT==5) % Peterson & Wrob Temperature-dependent mortality
         temp = (Tp.*tpel) + (Tb.*(1.0-tpel));

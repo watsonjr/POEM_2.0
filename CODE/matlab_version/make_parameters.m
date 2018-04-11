@@ -19,8 +19,8 @@ function make_parameters()
     
     %! Which fishes harvested
     MFsel = 1;
-    LPsel = 0.5;
-    LDsel = 0.5;
+    LPsel = 1;
+    LDsel = 1;
     Jsel  = 0.1;
     MPsel = Jsel * LPsel;
     MDsel = Jsel * LDsel;

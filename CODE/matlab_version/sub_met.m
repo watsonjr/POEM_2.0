@@ -24,7 +24,12 @@ function met = sub_met(Tp,Tb,tdif,wgt)
 %         cmax = (exp(0.063*(temp-10.0)) .* 40.0 .* wgt^(-0.25)) ./365.0;
 %     elseif (cfn==4)
 %         % J&C15 (g/g/day) ref to 10C
-%         cmax = (exp(0.063*(temp-10.0)) .* 25.0 .* wgt^(-0.33)) ./365.0;
+%         temp2 = temp+273;
+%         Tref = 283;
+%         E=0.6;
+%         k=8.62e-5;
+%         tfact = exp((-1*E/k)*((1./temp2)-(1./Tref)));
+%         cmax = tfact .* 25.0 .* wgt^(-0.33)) ./365.0;
 %     end
     
     % cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-0.25)) ./365.0;
@@ -49,7 +54,12 @@ function met = sub_met(Tp,Tb,tdif,wgt)
 %         met = (exp(0.063*(temp-10.0)) .* 4.8 .* wgt^(-0.25)) ./365.0;
 %     elseif (mfn==4)
 %         % J&C15 et al (g/g/day) k=2.5 ref to 10C
-%         met = (exp(0.063*(temp-10.0)) .* 2.5 .* wgt^(-0.25)) ./365.0;
+%         temp2 = temp+273;
+%         Tref = 283;
+%         E=0.6;
+%         k=8.62e-5;
+%         tfact = exp((-1*E/k)*((1./temp2)-(1./Tref)));
+%         met = tfact .* 2.5 .* wgt^(-0.25)) ./365.0;
 %     end
 
 end
