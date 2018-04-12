@@ -10,10 +10,11 @@ function enc = sub_enc(Tp,Tb,wgt,prey,tpel,tprey,pref)
     % tprey: time spent in area with that prey item.
     % pref: preference for prey item
     
-    global efn gam NX bpow benc bcmx
+    global efn gam NX benc
     
     temp = (Tp.*tpel) + (Tb.*(1.0-tpel));
     
+    %Enc rates from other models
 %     if (efn==1)
 %         % Specific clearance rates from Kiorboe & Hirst (m3/g/day)
 %         % divide by 100m to put in m2/g/day b/c zoop is integrated over 100m depth
@@ -28,8 +29,7 @@ function enc = sub_enc(Tp,Tb,wgt,prey,tpel,tprey,pref)
 %         % J&C15 et al (m3/g/day) gamma = 2.9e3? ref to 10C
 %         A = (exp(0.063*(temp-10.0)) .* 1.37e4 .* wgt^(0.9-1.0)) ./365.0;
 %     end
-    
-    %A = (exp(0.063*(temp-10.0)) .* gam .* wgt^(-0.2)) ./365.0;
+    %Enc rate
     A = (exp(0.063*(temp-10.0)) .* gam .* wgt^(-benc)) ./365.0;
     
     %Encounter per predator, mult by biomass later

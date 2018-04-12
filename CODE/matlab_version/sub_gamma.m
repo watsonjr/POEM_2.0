@@ -3,11 +3,11 @@ function gamma = sub_gamma(K,Z,nu,d,B,nmrt,Frate,selec)
     % d = predation loss
     % nmort = natural mortality rate
     % Frate = fishing mortality rate
-    % selec = if harvested
+    % selec = harvested selectivity (adults 100%, juveniles 10%)
     
     % convert predation mortality to biomass specific rate
-    if (selec == 1)
-        D = (d./B) + nmrt + Frate;
+    if (selec > 0)
+        D = (d./B) + nmrt + (Frate*selec);
     else
         D = (d./B) + nmrt;
     end
