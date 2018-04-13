@@ -14,8 +14,8 @@ load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 % POEM
 %cfile = 'Dc_enc70-b200_cm20_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BEincrT03_noCC_RE00100';
-%BE = 0.075;
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+BE = 0.075;
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -34,10 +34,6 @@ load([gpath 'clim_npp_Dmeans_Ytot.mat'])
 load([gpath 'btm_temp_1deg_ESM26_5yr_clim_191_195.mat'])
 
 mTb = squeeze(nanmean(btm_temp));
-
-BE = exp(0.063*(mTb-10.0)) .* 0.025;
-% mx = exp(0.063*(33.1-10.0)); 
-% BE = (mx - exp(0.063*(mTb-10.0))) .* 0.025;
 
 %ESM2.6 in mg C m-2 or mg C m-2 d-1
 %from mg C m-2 to g(WW) m-2
@@ -318,7 +314,7 @@ surfm(geolat_t,geolon_t,log10(TEeff_LTL))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2 0]);
+caxis([-1.5 1]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('log10 TEeff LTL (bent)')
@@ -331,7 +327,7 @@ surfm(geolat_t,geolon_t,log10(TEeff_L))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-5.5 -2.5]);
+caxis([-5.5 -2]);
 colorbar('Position',[0.275 0.05 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff L')
@@ -344,7 +340,7 @@ surfm(geolat_t,geolon_t,log10(TEeff_HTL))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-5 -2]);
+caxis([-4.5 -1]);
 colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('log10 TEeff HTL (bent)')
@@ -361,7 +357,7 @@ surfm(geolat_t,geolon_t,log10(TEeff_LTLd))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2 0]);
+caxis([-2 -0.5]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('log10 TEeff LTL (det)')
@@ -374,7 +370,7 @@ surfm(geolat_t,geolon_t,log10(TEeff_L))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-5.5 -2.5]);
+caxis([-5.5 -2]);
 colorbar('Position',[0.275 0.05 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff L')
@@ -387,14 +383,14 @@ surfm(geolat_t,geolon_t,log10(TEeff_HTLd))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-5 -2]);
+caxis([-4.5 -1]);
 colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('log10 TEeff HTL (det)')
 stamp([harv '_' cfile])
 %print('-dpng',[ppath 'Climatol_' harv '_global_DeffTEs_subplot.png'])
 
-%% All 4 converted on subplots
+%% All 3 converted on subplots
 figure(13)
 subplot('Position',[0 0.53 0.5 0.5])
 %LTL
@@ -417,7 +413,7 @@ surfm(geolat_t,geolon_t,TEL)
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0.05 0.35]);
+caxis([0.05 0.3]);
 colorbar('Position',[0.275 0.05 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Climatology TE L')
@@ -430,7 +426,7 @@ surfm(geolat_t,geolon_t,TEHTL)
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0.05 0.35]);
+caxis([0.05 0.3]);
 colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('TE HTL (bent)')
@@ -447,7 +443,7 @@ surfm(geolat_t,geolon_t,(TEeff_LTLd))
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0.05 0.35]);
+caxis([0.05 0.15]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('TE LTL (det)')
@@ -460,7 +456,7 @@ surfm(geolat_t,geolon_t,TEL)
 colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0.05 0.35]);
+caxis([0.05 0.3]);
 colorbar('Position',[0.275 0.05 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Climatology TE L')

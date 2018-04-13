@@ -48,6 +48,10 @@ land(ID)=NaN*ones(size(ID));
 geolat_t=lat;
 geolon_t=lon;
 
+cmS=cbrewer('div','Spectral',11);
+cmS2=cmS(6:end,:);
+cmS2=flipud(cmS2);
+
 %% Plots in space
 Zsf=NaN*ones(ni,nj);
 Zsp=NaN*ones(ni,nj);
@@ -188,6 +192,7 @@ axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,PB)
 colormap('jet')
+%colormap(cmS2)
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0.25 1.5]);

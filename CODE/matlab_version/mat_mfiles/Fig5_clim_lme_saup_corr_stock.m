@@ -25,12 +25,6 @@ load('cmap_ppt_angles.mat')
 
 AREA_OCN = max(area,1);
 
-% "lfile" never changes, has lme areas
-lfile = 'Dc_enc70_cmax-metab20_b18_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00100';
-lpath = ['/Volumes/GFDL/NC/Matlab_new_size/' lfile '/'];
-load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
-lme_area_km2 = lme_area * 1e-6;
-
 % POEM file info
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
@@ -42,8 +36,8 @@ tharv = 'Harvest all fish 0.3 yr^-^1';
 ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
-load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],'lme_mcatch','lme_mbio','lme_sbio');
-%load([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
+load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat']);
+lme_area_km2 = lme_area * 1e-6;
 
 
 %% plot info
@@ -60,8 +54,13 @@ lonlim=[plotminlon plotmaxlon]; %[-255 -60] = Pac
 land=-999*ones(ni,nj);
 land(ID)=NaN*ones(size(ID));
 
+cmYOR=cbrewer('seq','YlOrRd',28);
+cmRP=cbrewer('seq','RdPu',28);
+cmPR=cbrewer('seq','PuRd',28);
+
 % Assign a color to each LME based on temp
-tmap=colormap(jet(66));
+%tmap=colormap(jet(66));
+tmap=cmocean('thermal',66);
 lme_ptemp(:,2)=1:length(lme_ptemp);
 [B,I] = sort(lme_ptemp(:,1));
 I(:,2)=1:length(lme_ptemp);
@@ -206,7 +205,7 @@ plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
 text(-5.5,1.5,'A')
 text(-5.5,1.0,['r = ' sprintf('%2.2f',rF)])
@@ -224,7 +223,7 @@ plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
 text(-5.5,1.5,'B')
 text(-5.5,1.0,['r = ' sprintf('%2.2f',rP)])
@@ -242,7 +241,7 @@ plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
 text(-1.75,1.7,'C')
 text(-1.75,1.4,['r = ' sprintf('%2.2f',rD)])
@@ -260,7 +259,7 @@ plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(l10s(lme),l10p(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(l10s(lme),l10p(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
 text(-1.75,1.7,'D')
 text(-1.75,1.4,['r = ' sprintf('%2.2f',rall)])

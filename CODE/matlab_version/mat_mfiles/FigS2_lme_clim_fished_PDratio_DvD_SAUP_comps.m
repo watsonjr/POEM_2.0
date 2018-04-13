@@ -27,7 +27,7 @@ tlme = lme_mask_onedeg;
 AREA_OCN = max(area,1);
 
 %% POEM
-cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE13_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 ppath = [pp cfile '/'];
@@ -146,8 +146,13 @@ land(ID)=NaN*ones(size(ID));
 
 revamp=colormap(cmocean('amp'));
 revamp=flipud(revamp);
+cmYOR=cbrewer('seq','YlOrRd',28);
+cmRP=cbrewer('seq','RdPu',28);
+cmPR=cbrewer('seq','PuRd',28);
+
 % Assign a color to each LME based on temp
-tmap=colormap(jet(66));
+%tmap=colormap(jet(66));
+tmap=cmocean('thermal',66);
 lme_ptemp(:,2)=1:length(lme_ptemp);
 [B,I] = sort(lme_ptemp(:,1));
 I(:,2)=1:length(lme_ptemp);
@@ -189,11 +194,11 @@ subplot('Position',[0.075 0.075 0.4 0.4])
 plot(x,x,'--k');hold on;
 for i=1:length(notLELC)
     lme=notLELC(i);
-    plot(sFracPD(lme),plme_rPDcatch(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(sFracPD(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
-text(0.75,0.65,['r = ' sprintf('%2.2f',rPD)])
-text(0.75,0.6,['RMSE = ' sprintf('%2.2f',rmsePD)])
-text(0.75,0.55,['Fmed = ' sprintf('%2.2f',FPD)])
+text(0.75,0.55,['r = ' sprintf('%2.2f',rPD)])
+text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmsePD)])
+text(0.75,0.45,['Fmed = ' sprintf('%2.2f',FPD)])
 axis([0 1.05 0 1.05])
 xlabel('SAU')
 ylabel('POEM')
@@ -204,11 +209,11 @@ subplot('Position',[0.55 0.075 0.4 0.4])
 plot(x,x,'--k');hold on;
 for i=1:length(did)
     lme=did(i);
-    plot(FracLP(lme),plme_rPDcatch(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(FracLP(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
-text(0.75,0.65,['r = ' sprintf('%2.2f',rall)])
-text(0.75,0.6,['RMSE = ' sprintf('%2.2f',rmse)])
-text(0.75,0.55,['Fmed = ' sprintf('%2.2f',Fall)])
+text(0.75,0.55,['r = ' sprintf('%2.2f',rall)])
+text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmse)])
+text(0.75,0.45,['Fmed = ' sprintf('%2.2f',Fall)])
 axis([0 1.05 0 1.05])
 xlabel('DvD')
 ylabel('POEM')
@@ -248,10 +253,10 @@ subplot('Position',[0.075 0.075 0.4 0.4])
 plot(x,x,'--k');hold on;
 for i=1:length(notLELC)
     lme=notLELC(i);
-    plot(sFracPD(lme),plme_rPDcatch(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(sFracPD(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
-text(0.75,0.65,['r = ' sprintf('%2.2f',rPD)])
-text(0.75,0.6,['RMSE = ' sprintf('%2.2f',rmsePD)])
+text(0.75,0.55,['r = ' sprintf('%2.2f',rPD)])
+text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmsePD)])
 axis([0 1.05 0 1.05])
 xlabel('SAU')
 ylabel('POEM')
@@ -262,10 +267,10 @@ subplot('Position',[0.55 0.075 0.4 0.4])
 plot(x,x,'--k');hold on;
 for i=1:length(did)
     lme=did(i);
-    plot(FracLP(lme),plme_rPDcatch(lme),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(FracLP(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
-text(0.75,0.65,['r = ' sprintf('%2.2f',rall)])
-text(0.75,0.6,['RMSE = ' sprintf('%2.2f',rmse)])
+text(0.75,0.55,['r = ' sprintf('%2.2f',rall)])
+text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmse)])
 axis([0 1.05 0 1.05])
 xlabel('DvD')
 ylabel('POEM')

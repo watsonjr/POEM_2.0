@@ -26,6 +26,10 @@ end
 load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
 %load([fpath 'Means_Climatol_' harv '_' cfile '.mat']);
 
+cmYOR=cbrewer('seq','YlOrRd',50);
+cmRP=cbrewer('seq','RdPu',50);
+cmPR=cbrewer('seq','PuRd',50);
+
 
 %% Zoop and det and npp
 gpath='/Volumes/GFDL/GCM_DATA/ESM26_hist/';
@@ -138,28 +142,12 @@ save([fpath 'TEeffDet_Climatol_All_fish03_' cfile '.mat'],'TEeffM',...
 
 %% Figures
 % Effective
-%all M
-figure(1)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,TEeffM)
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0.005 0.04]);
-hcb = colorbar('h');
-ylim(hcb,[0.005 0.04])                   
-set(gcf,'renderer','painters')
-title('Climatology TEeff M')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffM.png'])
-
-%% all L
+% all L
 figure(2)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(TEeff_L))
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-5.5 -2.5]);
@@ -175,7 +163,7 @@ figure(4)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(TEeff_LTLd))
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-2 0]);
@@ -191,7 +179,7 @@ figure(6)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(TEeff_HTLd))
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-5 -1]);
@@ -202,28 +190,12 @@ title('Climatology log10 TEeff HTL (det)')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_TEeffHTLd.png'])
 
-%% all M
-figure(7)
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,TEM)
-colormap('jet')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([0.05 0.4]);
-hcb = colorbar('h');
-ylim(hcb,[0.05 0.4])                   
-set(gcf,'renderer','painters')
-title('Climatology TE M')
-stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_TEeffM_converted.png'])
-
-% all L1
+%% all L1
 figure(8)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,TEL)
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0.05 0.30]);
@@ -238,7 +210,7 @@ figure(10)
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,TEHTLd)
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0.05 0.35]);
@@ -249,7 +221,7 @@ title('Climatology TE HTL (det)')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_TEeffHTLd_converted.png'])
 
-%% All 4 on subplots
+%% All 3 on subplots
 %Detritus----------------------
 figure(12)
 subplot('Position',[0 0.53 0.5 0.5])
@@ -257,10 +229,10 @@ subplot('Position',[0 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(TEeff_LTLd))
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2 -0.5]);
+caxis([-2 -0.6]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('log10 TEeff LTL')
@@ -271,7 +243,7 @@ subplot('Position',[0.5 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(TEeff_HTLd))
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-3.5 -1]);
@@ -285,7 +257,7 @@ subplot('Position',[0.25 0.025 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(TEeff_L))
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-5.5 -1.5]);
@@ -304,7 +276,7 @@ subplot('Position',[0 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,(TEeff_LTLd))
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0.03 0.15]);
@@ -317,7 +289,7 @@ subplot('Position',[0.25 0.025 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,TEL)
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0.05 0.3]);
@@ -330,7 +302,7 @@ subplot('Position',[0.5 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,TEHTLd)
-colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0.05 0.4]);

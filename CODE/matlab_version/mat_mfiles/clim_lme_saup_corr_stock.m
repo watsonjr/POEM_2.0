@@ -25,25 +25,19 @@ load('cmap_ppt_angles.mat')
 
 AREA_OCN = max(area,1);
 
-% "lfile" never changes, has lme areas
-lfile = 'Dc_enc70_cmax-metab20_b18_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00100';
-lpath = ['/Volumes/GFDL/NC/Matlab_new_size/' lfile '/'];
-load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
-lme_area_km2 = lme_area * 1e-6;
-
 % POEM file info
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
-cfile = 'NoDc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
 ppath = [pp cfile '/'];
 dpath = [dp cfile '/'];
 
-load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],'lme_mcatch','lme_mbio','lme_sbio');
-%load([dpath 'LME_clim_',harv,'_loop_' cfile '.mat'],'lme_mcatch');
+load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat']);
+lme_area_km2 = lme_area * 1e-6;
 
 
 %% plot info

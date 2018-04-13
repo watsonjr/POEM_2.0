@@ -24,7 +24,7 @@ btemp_mean_clim=squeeze(nanmean(btm_temp,1));
 %%
 AREA_OCN = max(area,1);
 
-cfile = 'NoDc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
 
@@ -135,6 +135,12 @@ tot_bio4 = nansum(all_men2(:)) * 1e-6
 tot_bio5 = nansum(Asf_tot(:) + Asp_tot(:) + Asd_tot(:) +...
     Amf_tot(:) + Amp_tot(:) + Amd_tot(:) +...
     Alp_tot(:) + Ald_tot(:)) * 1e-6;
+tot_bio6 = nansum(Asf_mean(:) + Asp_mean(:) + Asd_mean(:) +...
+    Amf_mean(:) + Amp_mean(:) + Amd_mean(:) +...
+    Alp_mean(:) + Ald_mean(:)) * 1e-6;
+tot_bioML = nansum(Amf_mean(:) + Amp_mean(:) + Amd_mean(:) +...
+    Alp_mean(:) + Ald_mean(:)) * 1e-6;
+
 
 %% Calc LMEs
 tlme = lme_mask_onedeg;

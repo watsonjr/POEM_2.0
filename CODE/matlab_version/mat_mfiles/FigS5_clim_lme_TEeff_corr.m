@@ -33,6 +33,10 @@ load([dpath 'TEeff_Climatol_All_fish03_' cfile '.mat']);
 %Colormap
 load('MyColormaps.mat')
 load('cmap_ppt_angles.mat')
+cmYOR=cbrewer('seq','YlOrRd',28);
+cmRP=cbrewer('seq','RdPu',28);
+cmPR=cbrewer('seq','PuRd',28);
+
 
 %% plot info
 [ni,nj]=size(lon);
@@ -49,7 +53,8 @@ land=-999*ones(ni,nj);
 land(ID)=NaN*ones(size(ID));
 
 % Assign a color to each LME based on temp
-tmap=colormap(jet(66));
+%tmap=colormap(jet(66));
+tmap=cmocean('thermal',66);
 lme_ptemp(:,2)=1:length(lme_ptemp);
 [B,I] = sort(lme_ptemp(:,1));
 I(:,2)=1:length(lme_ptemp);
@@ -300,16 +305,18 @@ stamp(cfile)
 print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Mauread_comp_log10.png'])
 
 %% Subplot with maps and corr
+
 figure(6)
 % POEM
 subplot('Position',[0 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(pECI_grid))
-colormap('jet')
+%colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3 -1]);
+caxis([-2.8 -1.4]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Climatology log10 TEeff HTL')
@@ -334,10 +341,11 @@ subplot('Position',[0.5 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,log10(mECI_grid))
-colormap('jet')
+%colormap('jet')
+colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-3 -1]);
+caxis([-2.8 -1.4]);
 colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Mauread log10 mean ECI 1991-1995')
@@ -348,7 +356,7 @@ subplot('Position',[0.575 0.075 0.375 0.375])
 plot(x,x,'--k');hold on;
 for i=1:length(keep)
     lme=keep(i);
-    plot(log10(mECI(i)),log10(pECI(i)),'.k','MarkerSize',25,'color',tmap(tid(lme,2),:)); hold on;
+    plot(log10(mECI(i)),log10(pECI(i)),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
 end
 text(-1.6,-2.2,['r = ' sprintf('%2.2f',rL)])
 text(-1.6,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
