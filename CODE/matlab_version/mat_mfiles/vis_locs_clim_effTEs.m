@@ -7,7 +7,7 @@ close all
 
 warning off
 
-datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
+datap = '/Volumes/GFDL/NC/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/clim_grid_180x360_id_locs_area_dep.mat','ids','abbrev');
@@ -21,7 +21,7 @@ spots=spots';
 
 dp = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 BE = 0.075;
-sname = 'Clim_';
+sname = 'Climatol_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
@@ -29,7 +29,7 @@ if (~isdir([figp char(dp)]))
     mkdir([figp char(dp)])
 end
 cfile = char(dp);
-load([dpath sname 'locs_' harv '.mat'])
+load([dpath sname harv '_locs.mat'])
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
 %load('/Users/Colleen/Dropbox/Princeton/POEM_2.0/CODE/Figs/poem_mfiles/cmap_ppt_angles.mat')
@@ -189,7 +189,7 @@ TEeff(7,:) = L_prod./NPP;
 TEeff(8,:) = (BE*Det_prod + MZl_prod + LZl_prod)./NPP;
 
 %%
-save([dpath sname 'locs_' harv '_lastyr_effTEs.mat'],...
+save([dpath sname harv '_locs_lastyr_effTEs.mat'],...
     'Pprod','Fprod','Dprod','B_prod','MZ_prod',...
     'LZ_prod','MZl_prod','LZl_prod','TEeff');
 
@@ -262,7 +262,7 @@ end
 title('L')
 legend('bent','det')
 stamp(cfile)
-print('-dpng',[fpath sname 'locs_' harv '_effTEs.png'])
+print('-dpng',[fpath sname harv '_locs_effTEs.png'])
 
 %% TE eff converted
 figure(2);
@@ -305,9 +305,9 @@ plot(1:length(spots),TE(7,:),'.k','MarkerSize',25); hold on;
 xlim([0 length(spots)+1])
 set(gca,'XTick',1:length(spots),'XTickLabel',[])
 for n=1:16
-    text(n,-0.01,spots{n},'HorizontalAlignment','right','Rotation',90)
+    text(n,0.04,spots{n},'HorizontalAlignment','right','Rotation',90)
 end
 title('L')
 stamp(cfile)
-print('-dpng',[fpath sname 'locs_' harv '_TEs.png'])
+print('-dpng',[fpath sname harv '_locs_TEs.png'])
 

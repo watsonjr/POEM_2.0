@@ -20,8 +20,8 @@ spots=spots';
 
 dp = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 sname = 'Climatol_';
-%harv = 'All_fish03';
-harv = 'fish_F030_P015_D015';
+harv = 'All_fish03';
+%harv = 'fish_F015_P030_D030';
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
 if (~isdir([figp char(dp)]))

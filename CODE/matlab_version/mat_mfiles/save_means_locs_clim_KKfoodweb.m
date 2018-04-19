@@ -5,7 +5,7 @@
 clear all
 close all
 
-datap = '/Volumes/GFDL/CSV/Matlab_new_size/';
+datap = '/Volumes/GFDL/NC/Matlab_new_size/';
 figp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 
 load('/Users/cpetrik/Dropbox/Princeton/POEM_other/grid_cobalt/clim_grid_180x360_id_locs_area_dep.mat','ids','abbrev','T');
@@ -23,7 +23,7 @@ upw = 6:7;
 fave = [2;7;4];
 
 dp = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-sname = 'Clim_';
+sname = 'Climatol_';
 harv = 'All_fish03';
 dpath = [datap char(dp) '/'];
 fpath = [figp char(dp) '/'];
@@ -31,7 +31,7 @@ if (~isdir([figp char(dp)]))
     mkdir([figp char(dp)])
 end
 cfile = char(dp);
-load([dpath sname 'locs_' harv '.mat'])
+load([dpath sname harv '_locs.mat'])
 load([dpath sname 'locs_' harv '_lastyr_sum_mean_biom.mat']);
 
 % Colors

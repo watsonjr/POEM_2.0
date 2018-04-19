@@ -3,24 +3,24 @@ function Climatol_pristine()
 
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
-global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam kt bpow
-global bent_eff rfrac CC D J Sm A benc bcmx amet Dact
+global Z_s Z_m Z_l Lambda K_l K_j K_a h gam kt bpow
+global bent_eff rfrac D J Sm A benc bcmx amet 
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel MPsel MDsel LPsel LDsel Jsel efn cfn
+global MFsel MPsel MDsel LPsel LDsel Jsel efn cfn mfn
 global tstep K CGRD ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
 frate = 0.3; %Fish(F);
 dfrate = frate/365.0;
-%0=no fishing; 1=fishing
-if (frate>0)
-    harv = 1;
-else
-    harv = 0;
-end
+
+%! Choose parameters from other models of my own combo
+%1=Kiorboe&Hirst, 2=Hartvig, 3=mizer, 4=JC15, NA=mine
+cfn=nan;
+efn=nan;
+mfn=nan;
 
 %! Make core parameters/constants (global)
 make_parameters()
@@ -180,7 +180,7 @@ for YR = 1:YEARS % years
         [num2str(YR),' , ', num2str(mod(DY,365))]
         [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,ENVR] = ...
             sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,...
-            Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,CC);
+            Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate);
         
         S_Bent_bio(:,DY) = BENT.mass;
         

@@ -64,22 +64,19 @@ function make_parameters()
     K_a = 0.5;
 
     %%%! Metabolism constants (activity and basal)
-%    fcrit = 0.20;	% feeding level needed to meet resting metabolic demands; 0.05-0.2
-%     Dact = 1.0;     % activity reduction on demersal metabolism
     amet = 4;       % coeff on met
     h = 20;         % coeff on Cmax
     gam = 70;       % coeff on search area
-%     kt = 0.0855;    % coeff on T-dep fn (orig 0.063)
+    kt = 0.0855;    % coeff on T-dep fn (orig 0.063)
     bpow = 0.175;   % power on metab fn (orig 0.25)
     benc = 0.20;    % power on enc fn (orig 0.20)
     bcmx = 0.25;    % power on cmax fn (orig 0.25)
     
     %%%! Transfer efficiency of detritus to benthic prey
     bent_eff = 0.075;
-    CC = 100.0;
-
+    
     %%%! Reproductive efficiency
-    rfrac = 0.01;
+    rfrac = 0.01; %*****
 
     %! Fraction of time spent swimming (from Van Leeuwen)
     Tu_s = 1.0;
@@ -88,9 +85,9 @@ function make_parameters()
 
     %%%! Background mortality
     Nat_mrt = 0.1/365; 
-    %0=none, 1=constant, 6=const wgt, T-dep
+    %0=none, 1=constant, 6=const wgt, T-dep, 7=const T, wgt-dep
     %2=Hartvig T-dep, 3=mizer T-dep, 4=J&C T-dep, 5=P&W T-dep
-    MORT = 1;
+    MORT = 1;   %*****
 
     %%%! Diet Preference Phi
     % The predator prey mass ratio is assumed 3 orders of mag, i.e. 1000, i.e. one step down
@@ -109,7 +106,7 @@ function make_parameters()
     Sm = 0.25;  %Feeding 2 sizes down
     J = 1.0;    %Juvenile feeding reduction
     D = 0.75;   %Demersal feeding in pelagic reduction
-    A = 1.0;    %Adult predation reduction
+    A = 0.5;    %Adult predation reduction %*****
 
     MF_phi_MZ = Sm;
     MF_phi_LZ = 1.0;

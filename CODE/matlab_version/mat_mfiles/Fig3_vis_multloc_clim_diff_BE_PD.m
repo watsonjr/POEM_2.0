@@ -78,7 +78,7 @@ set(groot,'defaultAxesColorOrder',cm9);
 %% Plots in space
 cfileA = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE03_noCC_RE00100';
 fpathA=['/Volumes/GFDL/NC/Matlab_new_size/' cfileA '/'];
-load([fpathA 'Means_bio_prod_fish_Climatol_All_fish03_',cfileA,'.mat'],...
+load([fpathA 'Climatol_All_fish03.mat'],...
     'mp_my','lp_my','md_my','ld_my');
 AallP=mp_my+lp_my;
 AallD=md_my+ld_my;
@@ -90,7 +90,7 @@ clear mp_my lp_my md_my ld_my
 
 cfileB = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE05_noCC_RE00100';
 fpathB=['/Volumes/GFDL/NC/Matlab_new_size/' cfileB '/'];
-load([fpathB 'Means_bio_prod_fish_Climatol_All_fish03_',cfileB,'.mat'],...
+load([fpathB 'Climatol_All_fish03.mat'],...
     'mp_my','lp_my','md_my','ld_my');
 BallP=mp_my+lp_my;
 BallD=md_my+ld_my;
@@ -115,7 +115,7 @@ clear mp_my lp_my md_my ld_my
 
 cfileD = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE10_noCC_RE00100';
 fpathD=['/Volumes/GFDL/NC/Matlab_new_size/' cfileD '/'];
-load([fpathD 'Means_bio_prod_fish_Climatol_All_fish03_',cfileD,'.mat'],...
+load([fpathD 'Climatol_All_fish03.mat'],...
     'mp_my','lp_my','md_my','ld_my');
 DallP=mp_my+lp_my;
 DallD=md_my+ld_my;
@@ -127,7 +127,7 @@ clear mp_my lp_my md_my ld_my
 
 cfileE = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE13_noCC_RE00100';
 fpathE=['/Volumes/GFDL/NC/Matlab_new_size/' cfileE '/'];
-load([fpathE 'Means_bio_prod_fish_Climatol_All_fish03_',cfileE,'.mat'],...
+load([fpathE 'Climatol_All_fish03.mat'],...
     'mp_my','lp_my','md_my','ld_my');
 EallP=mp_my+lp_my;
 EallD=md_my+ld_my;

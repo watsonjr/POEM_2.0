@@ -17,12 +17,11 @@ load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
 
 %
 cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-%harv = 'All_fish03';
-harv = 'fish_F030_P060_D060';
-tharv = 'Harvest all fish 0.3 yr^-^1';
+harv = 'fish_F060_P030_D030';
+tharv = 'F=0.6, P=D=0.3';
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
-ppath = [pp cfile '/'];
+ppath = [pp cfile '/' harv '/'];
 if (~isdir(ppath))
     mkdir(ppath)
 end

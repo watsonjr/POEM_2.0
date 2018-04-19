@@ -17,19 +17,15 @@ load([cpath 'LME_clim_temp_zoop_det.mat']);
 
 AREA_OCN = max(area,1);
 tlme = lme_mask_onedeg;
-% "lfile" never changes, has lme areas
-lfile = 'Dc_enc70_cmax-metab20_b18_k09_fcrit20_D075_J100_A050_Sm025_nmort1_BE05_CC050_lgRE00100_mdRE00100';
-lpath = ['/Volumes/GFDL/NC/Matlab_new_size/' lfile '/'];
-load([lpath 'LME_clim_fished03_' lfile '.mat'],'lme_area');
-lme_area_km2 = lme_area * 1e-6;
 
 %% POEM
-cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BEdecrT03_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 fpath = [dp cfile '/'];
 %load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
 load([fpath 'LME_clim_fished_',harv,'_' cfile '.mat'],'lme_mcatch',...
-    'lme_mbio','lme_sbio');
+    'lme_mbio','lme_sbio','lme_area');
+lme_area_km2 = lme_area * 1e-6;
 
 % POEM LME biomass in MT
 plme_mcatch = nansum(lme_mcatch,2) * 1e-6;

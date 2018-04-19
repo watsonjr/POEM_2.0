@@ -41,4 +41,7 @@ function nmort = sub_nmort(Tp,Tb,tpel,wgt)
         temp = (Tp.*tpel) + (Tb.*(1.0-tpel));
         nmort = exp(0.063*(temp-10.0)) .* Nat_mrt;
     end
+    if (MORT==7) % wgt-dep but constant by temp
+        nmort = 0.5 .* wgt^(-0.25) /365.0;
+    end
 end

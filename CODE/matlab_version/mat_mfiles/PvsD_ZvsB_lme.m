@@ -28,7 +28,8 @@ geolat_t=lat;
 geolon_t=lon;
 
 %% Assign a color to each LME based on temp
-tmap=colormap(jet(66));
+%tmap=colormap(jet(66));
+tmap=cmocean('thermal',66);
 lme_ptemp(:,2)=1:length(lme_ptemp);
 [B,I] = sort(lme_ptemp(:,1));
 I(:,2)=1:length(lme_ptemp);
@@ -39,7 +40,7 @@ close all
 %% POEM results
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
-cfile = 'Dc_enc70-b200_m4-b175-k083_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = ['All_fish',tfish(2:end)];
 tharv = ['Harvest all fish ' num2str(frate)];
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];

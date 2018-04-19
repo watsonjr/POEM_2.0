@@ -20,7 +20,7 @@ load([gpath 'LME_depth_area.mat'],'lme_depth','lme_shal_frac');
 %% POEM results
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
-cfile = 'Dc_enc70-b200_m4-b175-k08_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = ['All_fish',tfish(2:end)];
 tharv = ['Harvest all fish ' num2str(frate)];
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
@@ -32,7 +32,8 @@ load([fpath 'LME_ZBratios_clim_fished_',harv,'_' cfile '.mat']);
 load([fpath 'All_gam_fits.mat']);
 
 %% Assign a color to each LME based on temp
-tmap=colormap(jet(66));
+%tmap=colormap(jet(66));
+tmap=cmocean('thermal',66);
 lme_ptemp(:,2)=1:length(lme_ptemp);
 [B,I] = sort(lme_ptemp(:,1));
 I(:,2)=1:length(lme_ptemp);
