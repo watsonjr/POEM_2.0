@@ -58,16 +58,6 @@ cmYOR=cbrewer('seq','YlOrRd',28);
 cmRP=cbrewer('seq','RdPu',28);
 cmPR=cbrewer('seq','PuRd',28);
 
-% Assign a color to each LME based on temp
-%tmap=colormap(jet(66));
-tmap=cmocean('thermal',66);
-lme_ptemp(:,2)=1:length(lme_ptemp);
-[B,I] = sort(lme_ptemp(:,1));
-I(:,2)=1:length(lme_ptemp);
-[B2,I2] = sort(I(:,1));
-tid = I(I2,:);
-close all
-
 load(['/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/',...
     'Stock_PNAS_catch_oceanprod_output.mat'],'notLELC')
 keep = notLELC;
@@ -203,10 +193,9 @@ plot(x,x2h,':b'); hold on;
 plot(x,x2l,':b'); hold on;
 plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sF(lme),l10pF(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
+scatter(l10sF(keep),l10pF(keep),20,lme_ptemp(keep,1),'filled'); hold on;
+cmocean('thermal');
+colorbar('Position',[0.375 0.5 0.3 0.025],'orientation','horizontal')
 text(-5.5,1.5,'A')
 text(-5.5,1.0,['r = ' sprintf('%2.2f',rF)])
 text(-5.5,0.5,['RMSE = ' sprintf('%2.2f',rmseF)])
@@ -221,10 +210,8 @@ plot(x,x2h,':b'); hold on;
 plot(x,x2l,':b'); hold on;
 plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sP(lme),l10pP(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
+scatter(l10sP(keep),l10pP(keep),20,lme_ptemp(keep,1),'filled'); hold on;
+cmocean('thermal');
 text(-5.5,1.5,'B')
 text(-5.5,1.0,['r = ' sprintf('%2.2f',rP)])
 text(-5.5,0.5,['RMSE = ' sprintf('%2.2f',rmseP)])
@@ -239,10 +226,8 @@ plot(x,x2h,':b'); hold on;
 plot(x,x2l,':b'); hold on;
 plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10sD(lme),l10pD(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
+scatter(l10sD(keep),l10pD(keep),20,lme_ptemp(keep,1),'filled'); hold on;
+cmocean('thermal');
 text(-1.75,1.7,'C')
 text(-1.75,1.4,['r = ' sprintf('%2.2f',rD)])
 text(-1.75,1.1,['RMSE = ' sprintf('%2.2f',rmseD)])
@@ -257,10 +242,8 @@ plot(x,x2h,':b'); hold on;
 plot(x,x2l,':b'); hold on;
 plot(x,x5h,':r'); hold on;
 plot(x,x5l,':r'); hold on;
-for i=1:length(keep)
-    lme=keep(i);
-    plot(l10s(lme),l10p(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
+scatter(l10s(keep),l10p(keep),20,lme_ptemp(keep,1),'filled'); hold on;
+cmocean('thermal');
 text(-1.75,1.7,'D')
 text(-1.75,1.4,['r = ' sprintf('%2.2f',rall)])
 text(-1.75,1.1,['RMSE = ' sprintf('%2.2f',rmse)])

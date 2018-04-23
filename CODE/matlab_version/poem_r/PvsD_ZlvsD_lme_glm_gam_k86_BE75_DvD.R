@@ -11,16 +11,8 @@ rm(list=ls())
 
 library(betareg)
 library(visreg)
-# library(ggplot2)
-# library(gridExtra)
-# library(arm)
-# library(effects)
-# library(plyr)
 library(lattice) #multipanel plots
 library(mgcv) #gam
-# library(MuMIn)
-# library(mnormt)
-# library(modEvA)
 
 
 #PU laptop
@@ -264,52 +256,69 @@ y.transf.betareg <- function(y){
 }
 ### relationships with ratioflux and large fish
 #FitT<-gam(y.transf.betareg(f_large)~s(log10(ratioflux),k=3),family=betar(link = cauchit),data=ECR) #
+ZB$transFracPD <- y.transf.betareg(ZB$FracPD)
+ZB$transFracPF <- y.transf.betareg(ZB$FracPF)
+ZB$transFracLM <- y.transf.betareg(ZB$FracLM)
+
+gPDr <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+gPDrt <- gam(transFracPD ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+AIC(gPDr,gPDrt)
+
+gPFr <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+gPFrt <- gam(transFracPF ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+AIC(gPFr,gPFrt)
+
+gLMr <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+gLMrt <- gam(transFracLM ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+AIC(gLMr,gLMrt)
+
+### NO TRANSFORMATION (never 0 or 1), PROBIT LINK (cauchit doesn't converge), 3 KNOTS
 
 ## Model selection using ZlDet
-gPD <- gam(FracPD ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPD) #83% deviance
-gPDl <- gam(FracPD ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPDl) #80.5%
-gPDr <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPDr) #71.4%
-gPDt <- gam(FracPD ~ s(LME_ptemp,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPDt) #47.6%
-gPDf <- gam(FracPD ~ s(LME_Frac200,k=3), data=ZB, family=betar(link = cauchit)) #edf=1 linear
-summary(gPDf) #31.3%
-gPDn <- gam(FracPD ~ s(logNPP,k=3), data=ZB, family=betar(link = cauchit)) 
-summary(gPDn) #53.4%
+gPD <- gam(FracPD ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = probit))
+summary(gPD) 
+gPDl <- gam(FracPD ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = probit))
+summary(gPDl) 
+gPDr <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+summary(gPDr) 
+gPDt <- gam(FracPD ~ s(LME_ptemp,k=3), data=ZB, family=betar(link = probit))
+summary(gPDt) 
+gPDf <- gam(FracPD ~ s(LME_Frac200,k=3), data=ZB, family=betar(link = probit)) #edf=1 linear
+summary(gPDf) 
+gPDn <- gam(FracPD ~ s(logNPP,k=3), data=ZB, family=betar(link = probit)) 
+summary(gPDn) 
 AIC(gPD,gPDr,gPDl,gPDt,gPDf,gPDn) #gPD > gPDl > gPDr > gPDn
-AIC(gPD,mPDf) #gPD
+AIC(gPDr,mPDr) #gPDr by 0.03
 
-gPF <- gam(FracPF ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPF) #77.7%
-gPFl <- gam(FracPF ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPFl) #76.9%
-gPFr <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = cauchit)) #edf=1 linear
-summary(gPFr) #25.9%
-gPFt <- gam(FracPF ~ s(LME_ptemp,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPFt) #34.2%
-gPFf <- gam(FracPF ~ s(LME_Frac200,k=3), data=ZB, family=betar(link = cauchit))
-summary(gPFf) #9%
-gPFn <- gam(FracPF ~ s(logNPP,k=3), data=ZB, family=betar(link = cauchit)) 
-summary(gPFn) #22.3%
+gPF <- gam(FracPF ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = probit))
+summary(gPF) 
+gPFl <- gam(FracPF ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = probit))
+summary(gPFl) 
+gPFr <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit)) #edf=1 linear
+summary(gPFr) 
+gPFt <- gam(FracPF ~ s(LME_ptemp,k=3), data=ZB, family=betar(link = probit))
+summary(gPFt) 
+gPFf <- gam(FracPF ~ s(LME_Frac200,k=3), data=ZB, family=betar(link = probit))
+summary(gPFf) 
+gPFn <- gam(FracPF ~ s(logNPP,k=3), data=ZB, family=betar(link = probit)) 
+summary(gPFn) 
 AIC(gPF,gPFr,gPFl,gPFt,gPFf,gPFn) #gPF > gPFl >> gPFt > gPFr > gPFn
-AIC(gPF,mPFf) #gPF
+AIC(gPFr,mPFr) #gPFr by 0.03
 
-gLM <- gam(FracLM ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = cauchit))
-summary(gLM) #88.1%
-gLMl <- gam(FracLM ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = cauchit))
-summary(gLMl) #87.9%
-gLMr <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = cauchit))
-summary(gLMr) #23.7%
-gLMt <- gam(FracLM ~ s(LME_ptemp,k=3), data=ZB, family=betar(link = cauchit))
-summary(gLMt) #59.1%
-gLMf <- gam(FracLM ~ s(LME_Frac200,k=3), data=ZB, family=betar(link = cauchit)) #edf=1 linear
-summary(gLMf) #13.4%
-gLMn <- gam(FracLM ~ s(logNPP,k=3), data=ZB, family=betar(link = cauchit)) 
-summary(gLMn) #4.26%
+gLM <- gam(FracLM ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = probit))
+summary(gLM)
+gLMl <- gam(FracLM ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family=betar(link = probit))
+summary(gLMl) 
+gLMr <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family=betar(link = probit))
+summary(gLMr) 
+gLMt <- gam(FracLM ~ s(LME_ptemp,k=3), data=ZB, family=betar(link = probit))
+summary(gLMt) 
+gLMf <- gam(FracLM ~ s(LME_Frac200,k=3), data=ZB, family=betar(link = probit)) #edf=1 linear
+summary(gLMf) 
+gLMn <- gam(FracLM ~ s(logNPP,k=3), data=ZB, family=betar(link = probit)) 
+summary(gLMn) 
 AIC(gLM,gLMr,gLMl,gLMt,gLMf,gLMn) #gLMl > gLM >> gLMt >> gLMr 
-AIC(gLM,mLMf) #gLM
+AIC(gLMr,mLMr) #mLMr by 0.02
 
 par(mfrow=c(2,2))
 visreg(gPD)

@@ -324,6 +324,7 @@ cmocean('balance')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([0 1]);
+colorbar('Position',[0.4375 0.32 0.34 0.025],'orientation','horizontal','AxisLocation','in')
 set(gcf,'renderer','painters')
 text(-0.75,1.75,'\beta=0.125')
 text(-2.75,1.75,'E')
@@ -337,11 +338,10 @@ stamp(cfileC)
 % load coast;                     %decent looking coastlines
 % h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 % caxis([0 1]);
-% colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
 % set(gcf,'renderer','painters')
 % text(-2.75,1.75,'\beta=0.15')
 %stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_lme_PvsD_comp_BE.png'])
+print('-dpng',[ppath 'Climatol_' harv '_lme_PvsD_comp_BE_ms.png'])
 
 %%
 figure(3)

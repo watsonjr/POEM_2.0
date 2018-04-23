@@ -168,7 +168,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 2]);
 colorbar('Position',[0.69 0.71 0.025 0.25],'orientation','vertical')
-text(0.2,1.75,'log10 Biomass All fishes (g m^-^2)',...
+text(0.2,1.75,'log_1_0 Biomass All fishes (g m^-^2)',...
     'HorizontalAlignment','center');
 set(gcf,'renderer','painters')
 
@@ -182,7 +182,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-2 1.5]);
 colorbar('Position',[0.69 0.38 0.025 0.25],'orientation','vertical')
-text(0.2,1.75,'log10 Prodution All fishes (g m^-^2 y^-^1)',...
+text(0.2,1.75,'log_1_0 Prodution All fishes (g m^-^2 y^-^1)',...
     'HorizontalAlignment','center');
 set(gcf,'renderer','painters')
 

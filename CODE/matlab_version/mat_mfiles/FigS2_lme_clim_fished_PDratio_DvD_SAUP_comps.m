@@ -144,21 +144,9 @@ lonlim=[plotminlon plotmaxlon]; %[-255 -60] = Pac
 land=-999*ones(ni,nj);
 land(ID)=NaN*ones(size(ID));
 
-revamp=colormap(cmocean('amp'));
-revamp=flipud(revamp);
 cmYOR=cbrewer('seq','YlOrRd',28);
 cmRP=cbrewer('seq','RdPu',28);
 cmPR=cbrewer('seq','PuRd',28);
-
-% Assign a color to each LME based on temp
-%tmap=colormap(jet(66));
-tmap=cmocean('thermal',66);
-lme_ptemp(:,2)=1:length(lme_ptemp);
-[B,I] = sort(lme_ptemp(:,1));
-I(:,2)=1:length(lme_ptemp);
-[B2,I2] = sort(I(:,1));
-tid = I(I2,:);
-close all
 
 x=0:0.1:1;
 
@@ -192,10 +180,8 @@ title('POEM - DvD difference')
 %SAU corr
 subplot('Position',[0.075 0.075 0.4 0.4])
 plot(x,x,'--k');hold on;
-for i=1:length(notLELC)
-    lme=notLELC(i);
-    plot(sFracPD(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
+scatter(sFracPD(notLELC),plme_rPDcatch(notLELC),20,lme_ptemp(notLELC,1),'filled'); hold on;
+cmocean('thermal');
 text(0.75,0.55,['r = ' sprintf('%2.2f',rPD)])
 text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmsePD)])
 text(0.75,0.45,['Fmed = ' sprintf('%2.2f',FPD)])
@@ -207,10 +193,8 @@ ylabel('POEM')
 %DvD Corr
 subplot('Position',[0.55 0.075 0.4 0.4])
 plot(x,x,'--k');hold on;
-for i=1:length(did)
-    lme=did(i);
-    plot(FracLP(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
+scatter(FracLP(did),plme_rPDcatch(did),20,lme_ptemp(did,1),'filled'); hold on;
+cmocean('thermal');
 text(0.75,0.55,['r = ' sprintf('%2.2f',rall)])
 text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmse)])
 text(0.75,0.45,['Fmed = ' sprintf('%2.2f',Fall)])
@@ -224,7 +208,7 @@ print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_DvD_comp_subplot_Fmed.
 %% Subplot with maps and corr no Fmed
 figure(2)
 %SAU
-subplot('Position',[0 0.51 0.5 0.5])
+subplot('Position',[0 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,diffS)
@@ -232,12 +216,12 @@ cmocean('balance')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
-colorbar('Position',[0.25 0.525 0.5 0.05],'orientation','horizontal')
+colorbar('Position',[0.25 0.56 0.5 0.025],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('POEM - SAU difference')
 
 %DvD
-subplot('Position',[0.5 0.51 0.5 0.5])
+subplot('Position',[0.5 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
 surfm(geolat_t,geolon_t,diffD)
@@ -249,28 +233,25 @@ set(gcf,'renderer','painters')
 title('POEM - DvD difference')
 
 %SAU corr
-subplot('Position',[0.075 0.075 0.4 0.4])
+subplot('Position',[0.1 0.16 0.35 0.35])
 plot(x,x,'--k');hold on;
-for i=1:length(notLELC)
-    lme=notLELC(i);
-    plot(sFracPD(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
-text(0.75,0.55,['r = ' sprintf('%2.2f',rPD)])
-text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmsePD)])
+scatter(sFracPD(notLELC),plme_rPDcatch(notLELC),20,lme_ptemp(notLELC,1),'filled'); hold on;
+cmocean('thermal');
+text(0.725,0.55,['r = ' sprintf('%2.2f',rPD)])
+text(0.725,0.49,['RMSE = ' sprintf('%2.2f',rmsePD)])
 axis([0 1.05 0 1.05])
 xlabel('SAU')
 ylabel('POEM')
 %title('Fraction Large Pelagics')
 
 %DvD Corr
-subplot('Position',[0.55 0.075 0.4 0.4])
+subplot('Position',[0.575 0.16 0.35 0.35])
 plot(x,x,'--k');hold on;
-for i=1:length(did)
-    lme=did(i);
-    plot(FracLP(lme),plme_rPDcatch(lme),'.k','MarkerSize',20,'color',tmap(tid(lme,2),:)); hold on;
-end
-text(0.75,0.55,['r = ' sprintf('%2.2f',rall)])
-text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmse)])
+scatter(FracLP(did),plme_rPDcatch(did),20,lme_ptemp(did,1),'filled'); hold on;
+cmocean('thermal');
+colorbar('Position',[0.25 0.05 0.5 0.025],'orientation','horizontal')
+text(0.725,0.55,['r = ' sprintf('%2.2f',rall)])
+text(0.725,0.49,['RMSE = ' sprintf('%2.2f',rmse)])
 axis([0 1.05 0 1.05])
 xlabel('DvD')
 ylabel('POEM')

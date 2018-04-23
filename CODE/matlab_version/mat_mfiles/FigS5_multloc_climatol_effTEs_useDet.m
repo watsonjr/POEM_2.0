@@ -235,7 +235,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-2 -0.6]);
 colorbar('Position',[0.025 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('log10 TEeff LTL')
+title('log_1_0 TEeff LTL')
 text(-2.75,1.25,'A')
 
 %HTL
@@ -249,7 +249,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-3.5 -1]);
 colorbar('Position',[0.525 0.555 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('log10 TEeff HTL')
+title('log_1_0 TEeff HTL')
 text(-2.75,1.25,'B')
 
 %L
@@ -263,7 +263,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-5.5 -1.5]);
 colorbar('Position',[0.275 0.05 0.45 0.05],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('log10 TEeff L')
+title('log_1_0 TEeff L')
 text(-2.75,1.25,'C')
 %stamp([harv '_' cfile])
 print('-dpng',[ppath 'Climatol_' harv '_global_DeffTEs_subplot.png'])

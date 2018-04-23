@@ -245,47 +245,47 @@ dev.off()
 ## NEED TO GIVE IT BETA DISTRIBUTION (family=beta)?
 
 ## Model selection using ZlDet
-gPD <- gam(FracPD ~ s(LME_ptemp,k=4) + s(logRatZlDet,k=4) + s(LME_Frac200,k=4) + s(logNPP,k=4), data=ZB, family = betar)
+gPD <- gam(FracPD ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family = betar)
 summary(gPD) #85.7% deviance
-gPDl <- gam(FracPD ~ s(LME_ptemp,k=4) + (logRatZlDet) + s(LME_Frac200,k=4) + s(logNPP,k=4), data=ZB, family = betar)
+gPDl <- gam(FracPD ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family = betar)
 summary(gPDl) #82.7%
-gPDr <- gam(FracPD ~ s(logRatZlDet,k=4), data=ZB, family = betar)
+gPDr <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar)
 summary(gPDr) #70.9%
-gPDt <- gam(FracPD ~ s(LME_ptemp,k=4), data=ZB, family = betar)
+gPDt <- gam(FracPD ~ s(LME_ptemp,k=3), data=ZB, family = betar)
 summary(gPDt) #50.2%
-gPDf <- gam(FracPD ~ s(LME_Frac200,k=4), data=ZB, family = betar) #edf=1 linear
+gPDf <- gam(FracPD ~ s(LME_Frac200,k=3), data=ZB, family = betar) #edf=1 linear
 summary(gPDf) #30.4%
-gPDn <- gam(FracPD ~ s(logNPP,k=4), data=ZB, family = betar) 
+gPDn <- gam(FracPD ~ s(logNPP,k=3), data=ZB, family = betar) 
 summary(gPDn) #54.6%
 AIC(gPD,gPDr,gPDl,gPDt,gPDf,gPDn) #gPD > gPDl > gPDr > gPDn
 AIC(gPD,mPDf) #gPD
 
-gPF <- gam(FracPF ~ s(LME_ptemp,k=4) + s(logRatZlDet,k=4) + s(LME_Frac200,k=4) + s(logNPP,k=4), data=ZB, family = betar)
+gPF <- gam(FracPF ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family = betar)
 summary(gPF) #79.6%
-gPFl <- gam(FracPF ~ s(LME_ptemp,k=4) + (logRatZlDet) + s(LME_Frac200,k=4) + s(logNPP,k=4), data=ZB, family = betar)
+gPFl <- gam(FracPF ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family = betar)
 summary(gPFl) #75.5%
-gPFr <- gam(FracPF ~ s(logRatZlDet,k=4), data=ZB, family = betar) #edf=1 linear
+gPFr <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar) #edf=1 linear
 summary(gPFr) #25.5%
-gPFt <- gam(FracPF ~ s(LME_ptemp,k=4), data=ZB, family = betar)
+gPFt <- gam(FracPF ~ s(LME_ptemp,k=3), data=ZB, family = betar)
 summary(gPFt) #36.6%
-gPFf <- gam(FracPF ~ s(LME_Frac200,k=4), data=ZB, family = betar)
+gPFf <- gam(FracPF ~ s(LME_Frac200,k=3), data=ZB, family = betar)
 summary(gPFf) #9.13%
-gPFn <- gam(FracPF ~ s(logNPP,k=4), data=ZB, family = betar) 
+gPFn <- gam(FracPF ~ s(logNPP,k=3), data=ZB, family = betar) 
 summary(gPFn) #21.8%
 AIC(gPF,gPFr,gPFl,gPFt,gPFf,gPFn) #gPF > gPFl >> gPFt > gPFr > gPFn
 AIC(gPF,mPFf) #gPF
 
-gLM <- gam(FracLM ~ s(LME_ptemp,k=4) + s(logRatZlDet,k=4) + s(LME_Frac200,k=4) + s(logNPP,k=4), data=ZB, family = betar)
+gLM <- gam(FracLM ~ s(LME_ptemp,k=3) + s(logRatZlDet,k=3) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family = betar)
 summary(gLM) #88.1%
-gLMl <- gam(FracLM ~ s(LME_ptemp,k=4) + (logRatZlDet) + s(LME_Frac200,k=4) + s(logNPP,k=4), data=ZB, family = betar)
+gLMl <- gam(FracLM ~ s(LME_ptemp,k=3) + (logRatZlDet) + s(LME_Frac200,k=3) + s(logNPP,k=3), data=ZB, family = betar)
 summary(gLMl) #87.8%
-gLMr <- gam(FracLM ~ s(logRatZlDet,k=4), data=ZB, family = betar)
+gLMr <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar)
 summary(gLMr) #23.9%
-gLMt <- gam(FracLM ~ s(LME_ptemp,k=4), data=ZB, family = betar)
+gLMt <- gam(FracLM ~ s(LME_ptemp,k=3), data=ZB, family = betar)
 summary(gLMt) #60.5%
-gLMf <- gam(FracLM ~ s(LME_Frac200,k=4), data=ZB, family = betar) #edf=1 linear
+gLMf <- gam(FracLM ~ s(LME_Frac200,k=3), data=ZB, family = betar) #edf=1 linear
 summary(gLMf) #13.2%
-gLMn <- gam(FracLM ~ s(logNPP,k=4), data=ZB, family = betar) 
+gLMn <- gam(FracLM ~ s(logNPP,k=3), data=ZB, family = betar) 
 summary(gLMn) #20.2%
 AIC(gLM,gLMr,gLMl,gLMt,gLMf,gLMn) #gLMl > gLM >> gLMt >> gLMr 
 AIC(gLM,mLMf) #gLM
@@ -425,35 +425,36 @@ dev.off()
 #resids have strong relat with temp
 
 ##Test knots
-gPDr3 <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar)
+gPDr4 <- gam(FracPD ~ s(logRatZlDet,k=4), data=ZB, family = betar)
 gPDr5 <- gam(FracPD ~ s(logRatZlDet,k=5), data=ZB, family = betar)
 gPDr6 <- gam(FracPD ~ s(logRatZlDet,k=6), data=ZB, family = betar)
-AIC(gPDr3,gPDr,gPDr5,gPDr6) #3 better by 2.03
+AIC(gPDr,gPDr4,gPDr5,gPDr6) #4 > 5 > 3
 
-gPFr3 <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar)
+gPFr4 <- gam(FracPF ~ s(logRatZlDet,k=4), data=ZB, family = betar)
 gPFr5 <- gam(FracPF ~ s(logRatZlDet,k=5), data=ZB, family = betar)
 gPFr6 <- gam(FracPF ~ s(logRatZlDet,k=6), data=ZB, family = betar)
-AIC(gPFr3,gPFr,gPFr5,gPFr6) #indent
+AIC(gPFr,gPFr4,gPFr5,gPFr6) #indentical
 
-gLMr3 <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar)
+gLMr4 <- gam(FracLM ~ s(logRatZlDet,k=4), data=ZB, family = betar)
 gLMr5 <- gam(FracLM ~ s(logRatZlDet,k=5), data=ZB, family = betar)
 gLMr6 <- gam(FracLM ~ s(logRatZlDet,k=6), data=ZB, family = betar)
-AIC(gLMr3,gLMr,gLMr5,gLMr6) #practically identical
+AIC(gLMr,gLMr4,gLMr5,gLMr6) #practically identical
 
 ##Test link fun
+gPDrG <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="logit"))
 gPDrP <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="probit"))
-gPDrL <- gam(FracPD ~ s(logRatZlDet,k=5), data=ZB, family = betar(link="cloglog"))
-gPDrC <- gam(FracPD ~ s(logRatZlDet,k=6), data=ZB, family = betar(link="cauchit"))
-AIC(gPDrP,gPDr,gPDrL,gPDrC) #probit by <1
+gPDrL <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="cloglog"))
+gPDrC <- gam(FracPD ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="cauchit"))
+AIC(gPDrG,gPDrP,gPDrL,gPDrC) #cauchit by 4
 
 gPFrP <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="probit"))
-gPFrL <- gam(FracPF ~ s(logRatZlDet,k=5), data=ZB, family = betar(link="cloglog"))
-gPFrC <- gam(FracPF ~ s(logRatZlDet,k=6), data=ZB, family = betar(link="cauchit"))
+gPFrL <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="cloglog"))
+gPFrC <- gam(FracPF ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="cauchit"))
 AIC(gPFrP,gPFr,gPFrL,gPFrC) #probit>logit by 0.1
 
 gLMrP <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="probit"))
-gLMrL <- gam(FracLM ~ s(logRatZlDet,k=5), data=ZB, family = betar(link="cloglog"))
-gLMrC <- gam(FracLM ~ s(logRatZlDet,k=6), data=ZB, family = betar(link="cauchit"))
+gLMrL <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="cloglog"))
+gLMrC <- gam(FracLM ~ s(logRatZlDet,k=3), data=ZB, family = betar(link="cauchit"))
 AIC(gLMrP,gLMr,gLMrL,gLMrC) #probit by 0.005
 
 
