@@ -3,31 +3,32 @@ function Pre_industrial()
 
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
-global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam
-global bent_eff rfrac CC D J Sm A
+global Z_s Z_m Z_l Lambda K_l K_j K_a h gam kt bpow
+global bent_eff rfrac D J Sm A benc bcmx amet 
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel LPsel LDsel efn cfn
+global MFsel MPsel MDsel LPsel LDsel Jsel efn cfn mfn
+global tstep K CGRD ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
-%! Feeding preferences
-Sm = 0.25;  %Feeding 2 sizes down
-J = 1.0;    %Juvenile feeding reduction
-D = 0.75;   %Demersal feeding in pelagic reduction
-A = 0.5;    %Adult predation reduction
 %! Set fishing rate
 frate = 0;
 dfrate = frate/365.0;
+
+%! Choose parameters from other models of my own combo
+%1=Kiorboe&Hirst, 2=Hartvig, 3=mizer, 4=JC15, NA=mine
+cfn=nan;
+efn=nan;
+mfn=nan;
 
 %! Make core parameters/constants (global)
 make_parameters() % make core parameters/constants
 
 %! Grid
 Pdrpbx = '/Users/cpetrik/Dropbox/';
-Fdrpbx = '/Users/Colleen/Dropbox/';
 load([Pdrpbx '/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat']);
-NX = 48111;
+NX = length(GRD.Z);
 ID = 1:NX;
 
 %! How long to run the model
@@ -36,57 +37,9 @@ DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %! Create a directory for output
-tfcrit = num2str(int64(100*fcrit));
-td = num2str(1000+int64(100*LD_phi_MP));
-tj = num2str(1000+int64(100*MP_phi_S));
-tsm = num2str(1000+int64(100*MF_phi_MZ));
-ta = num2str(1000+int64(100*LP_phi_MF));
-tbe = num2str(100+int64(100*bent_eff));
-tmort = num2str(MORT);
-tcc = num2str(1000+int64(100*CC));
-tre = num2str(100000+int64(round(10000*rfrac)));
-tre2 = num2str(100000+int64(round(10000*rfrac*4)));
-if (frate >= 0.1)
-    tfish = num2str(100+int64(10*frate));
-else
-    tfish = num2str(1000+int64(100*frate));
-end
-if (MFsel == 1)
-    if (LPsel == 1 && LDsel == 1)
-        sel='All';
-    else
-        sel='F';
-    end
-else
-    if (LPsel == 1 && LDsel == 1)
-        sel = 'L';
-    elseif (LPsel == 1)
-        sel = 'P';
-    elseif (LDsel == 1)
-        sel = 'D';
-    end
-end
-if (pdc == 0)
-    coup = 'NoDc';
-elseif (pdc == 1)
-    coup = 'Dc';
-elseif (pdc == 2)
-    coup = 'PDc';
-end
-tcfn = num2str(h);
-tefn = num2str(round(gam));
-%simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-%simname = ['Diff_',coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
-    mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])
-end
-if (~isdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
-    mkdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
-end
+fname = sub_fname_pre(frate);
 
 %! Storage variables
-
 S_Bent_bio = zeros(NX,DAYS);
 
 S_Sml_f = zeros(NX,DAYS);
@@ -174,17 +127,15 @@ ENVR = sub_init_env(ID);
 
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
-file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_sml_f.nc'];
-file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_sml_p.nc'];
-file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_sml_d.nc'];
-file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_med_f.nc'];
-file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_med_p.nc'];
-file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_med_d.nc'];
-file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_lrg_p.nc'];
-file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_lrg_d.nc'];
-file_bent  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Preindust_bent.nc'];
-
-oldFormat = netcdf.setDefaultFormat('NC_FORMAT_64BIT');
+file_sml_f = [fname,'_sml_f.nc'];
+file_sml_p = [fname,'_sml_p.nc'];
+file_sml_d = [fname,'_sml_d.nc'];
+file_med_f = [fname,'_med_f.nc'];
+file_med_p = [fname,'_med_p.nc'];
+file_med_d = [fname,'_med_d.nc'];
+file_lrg_p = [fname,'_lrg_p.nc'];
+file_lrg_d = [fname,'_lrg_d.nc'];
+file_bent  = [fname,'_bent.nc'];
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
 ncidSP = netcdf.create(file_sml_p,'NC_WRITE');
@@ -198,6 +149,7 @@ ncidB  = netcdf.create(file_bent,'NC_WRITE');
 
 %! Dims of netcdf file
 nt = 12*YEARS;
+netcdf.setDefaultFormat('NC_FORMAT_64BIT');
 
 %% ! Def vars of netcdf file
 ['Defining netcdfs, takes ~5 minutes ... ']
@@ -321,7 +273,7 @@ for YR = 1:YEARS % years
         [num2str(YR),' , ', num2str(mod(DY,365))]
         [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,ENVR] = ...
             sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,...
-            Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,CC);
+            Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate);
         
         %! Store
         S_Bent_bio(:,DY) = BENT.mass;

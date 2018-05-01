@@ -168,8 +168,8 @@ vidTB      = netcdf.defVar(ncidB,'time','double',time_dim);
 netcdf.endDef(ncidB);
 
 
-%% %%%%%%%%%%%%%%%%%%%% Run the Model
-%! Run model with no fishing
+%% %%%%%%%%%%%%%%%%%%%% Run the Model %%%%%%%%%%%%%%%%%%%%
+%! Run model 
 MNT=0;
 for YR = 1:YEARS % years
     

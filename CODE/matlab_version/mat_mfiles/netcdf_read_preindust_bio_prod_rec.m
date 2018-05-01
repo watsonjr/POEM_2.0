@@ -21,17 +21,12 @@ end
 netcdf.close(ncid);
 
 SP.bio = biomass;
-% SP.clev = clev;
-% SP.con = con;
-% SP.die = die;
-% SP.gamma = gamma;
-% SP.nu = nu;
 SP.prod = prod;
 SP.rec = rec;
 
 Sml_p.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec time prod
+clear biomass rec prod
 
 %% SF
 ncid = netcdf.open([fpath 'Preindust_sml_f.nc'],'NC_NOWRITE');
@@ -44,17 +39,12 @@ end
 netcdf.close(ncid);
 
 SF.bio = biomass(:,1:nt);
-% SF.clev = clev(:,1:nt);
-% SF.con = con(:,1:nt);
-% SF.die = die(:,1:nt);
-% SF.gamma = gamma(:,1:nt);
-% SF.nu = nu(:,1:nt);
 SF.prod = prod(:,1:nt);
 SF.rec = rec(:,1:nt);
 
 Sml_f.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec time prod
+clear biomass rec prod
 
 % SD
 ncid = netcdf.open([fpath 'Preindust_sml_d.nc'],'NC_NOWRITE');
@@ -67,17 +57,12 @@ end
 netcdf.close(ncid);
 
 SD.bio = biomass;
-% SD.clev = clev;
-% SD.con = con;
-% SD.die = die;
-% SD.gamma = gamma;
-% SD.nu = nu;
 SD.prod = prod;
 SD.rec = rec;
 
 Sml_d.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec time prod
+clear biomass rec prod
 
 %% MP
 ncid = netcdf.open([fpath 'Preindust_med_p.nc'],'NC_NOWRITE');
@@ -90,17 +75,12 @@ end
 netcdf.close(ncid);
 
 MP.bio = biomass;
-% MP.clev = clev;
-% MP.con = con;
-% MP.die = die;
-% MP.gamma = gamma;
-% MP.nu = nu;
 MP.prod = prod;
 MP.rec = rec;
 
 Med_p.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec time prod
+clear biomass rec prod
 
 % MF
 ncid = netcdf.open([fpath 'Preindust_med_f.nc'],'NC_NOWRITE');
@@ -113,18 +93,12 @@ end
 netcdf.close(ncid);
 
 MF.bio = biomass;
-% MF.clev = clev;
-% MF.con = con;
-% MF.die = die;
-% MF.gamma = gamma;
-% MF.nu = nu;
 MF.prod = prod;
 MF.rec = rec;
-% MF.rep = rep;
 
 Med_f.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec rep time prod
+clear biomass rec prod
 
 % MD
 ncid = netcdf.open([fpath 'Preindust_med_d.nc'],'NC_NOWRITE');
@@ -137,17 +111,12 @@ end
 netcdf.close(ncid);
 
 MD.bio = biomass;
-% MD.clev = clev;
-% MD.con = con;
-% MD.die = die;
-% MD.gamma = gamma;
-% MD.nu = nu;
 MD.prod = prod;
 MD.rec = rec;
 
 Med_d.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec time prod
+clear biomass rec prod
 
 % LP
 ncid = netcdf.open([fpath 'Preindust_lrg_p.nc'],'NC_NOWRITE');
@@ -160,18 +129,12 @@ end
 netcdf.close(ncid);
 
 LP.bio = biomass;
-% LP.clev = clev;
-% LP.con = con;
-% LP.die = die;
-% LP.gamma = gamma;
-% LP.nu = nu;
 LP.prod = prod;
 LP.rec = rec;
-% LP.rep = rep;
 
 Lrg_p.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec rep time prod
+clear biomass rec prod
 
 % LD
 ncid = netcdf.open([fpath 'Preindust_lrg_d.nc'],'NC_NOWRITE');
@@ -184,18 +147,12 @@ end
 netcdf.close(ncid);
 
 LD.bio = biomass;
-% LD.clev = clev;
-% LD.con = con;
-% LD.die = die;
-% LD.gamma = gamma;
-% LD.nu = nu;
 LD.prod = prod;
 LD.rec = rec;
-% LD.rep = rep;
 
 Lrg_d.bio = biomass(:,nt);
 
-clear biomass clev con die gamma nu rec rep time prod
+clear biomass rec prod
 
 % Benthic material
 ncid = netcdf.open([fpath 'Preindust_bent.nc'],'NC_NOWRITE');
@@ -212,6 +169,9 @@ BENT.bio = biomass(:,nt);
 clear biomass 
 
 %% Take means
+nt = length(time);
+MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
+
 
 %Time
 sp_tmean=mean(SP.bio,1);
@@ -242,7 +202,7 @@ md_trec=mean(MD.rec,1);
 lp_trec=mean(LP.rec,1);
 ld_trec=mean(LD.rec,1);
 
-%% Last 50 years
+% Last 50 years
 yr50=time((end-(50*12)+1):end);
 sp_mean=mean(SP.bio(:,yr50),2);
 sf_mean=mean(SF.bio(:,yr50),2);

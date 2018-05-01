@@ -29,8 +29,6 @@ end
 
 load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
 
-load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
-
 close all
 
 % plot info

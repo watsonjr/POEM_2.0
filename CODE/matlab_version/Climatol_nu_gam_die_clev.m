@@ -3,25 +3,24 @@ function Climatol_nu_gam_die_clev()
 
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
-global Z_s Z_m Z_l Lambda K_l K_j K_a fcrit h gam kt bpow
-global bent_eff rfrac CC D J Sm A benc bcmx amet
+global Z_s Z_m Z_l Lambda K_l K_j K_a h gam kt bpow
+global bent_eff rfrac D J Sm A benc bcmx amet 
 global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
-global MFsel MPsel MDsel LPsel LDsel Jsel efn cfn
+global MFsel MPsel MDsel LPsel LDsel Jsel efn cfn mfn
 global tstep K CGRD ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
 frate = 0.3; %Fish(F);
 dfrate = frate/365.0;
-%0=no fishing; 1=fishing
-if (frate>0)
-    harv = 1;
-else
-    harv = 0;
-end
 
+%! Choose parameters from other models of my own combo
+%1=Kiorboe&Hirst, 2=Hartvig, 3=mizer, 4=JC15, NA=mine
+cfn=nan;
+efn=nan;
+mfn=nan;
 
 %! Make core parameters/constants (global)
 make_parameters()
@@ -44,73 +43,7 @@ load([Pdrpbx 'Princeton/POEM_2.0/CODE/Data/Hindcast_cgrid_cp2D.mat']);
 [ni,nj] = size(CGRD.mask);
 
 %! Create a directory for output
-tfcrit = num2str(int64(100*fcrit));
-tkap = num2str(100+int64(10*K_a));
-td = num2str(1000+int64(100*LD_phi_MP));
-tj = num2str(1000+int64(100*MP_phi_S));
-tsm = num2str(1000+int64(100*MF_phi_MZ));
-ta = num2str(1000+int64(100*LP_phi_MF));
-tbe = num2str(100+int64(100*bent_eff));
-tmort = num2str(MORT);
-tcc = num2str(1000+int64(100*CC));
-tre = num2str(100000+int64(round(10000*rfrac)));
-tre2 = num2str(100000+int64(round(10000*rfrac*1)));
-if (frate >= 0.1)
-    tfish = num2str(100+int64(10*frate));
-    tF = num2str(1000+int64(100*frate*MFsel));
-    tP = num2str(1000+int64(100*frate*LPsel));
-    tD = num2str(1000+int64(100*frate*LDsel));
-    tJ = num2str(100+int64(10*Jsel));
-else
-    tfish = num2str(1000+int64(100*frate));
-    tF = num2str(1000+int64(100*frate*MFsel));
-    tP = num2str(1000+int64(100*frate*LPsel));
-    tD = num2str(1000+int64(100*frate*LDsel));
-end
-if (MFsel > 0)
-    if (LPsel > 0 && LDsel > 0)
-        sel='All';
-    else
-        sel='F';
-    end
-else
-    if (LPsel > 0 && LDsel > 0)
-        sel = 'L';
-    elseif (LPsel > 0)
-        sel = 'P';
-    elseif (LDsel > 0)
-        sel = 'D';
-    end
-end
-if (pdc == 0)
-    coup = 'NoDc';
-elseif (pdc == 1)
-    coup = 'Dc';
-elseif (pdc == 2)
-    coup = 'PDc';
-end
-tmfn = num2str(amet);
-tcfn = num2str(h);
-tefn = num2str(round(gam));
-tkfn = num2str(100+int64(100*kt));
-tbfn = num2str(1000+int64(1000*bpow));
-tbenc = num2str(1000+int64(1000*benc));
-tbcmx = num2str(1000+int64(1000*bcmx));
-%simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-%simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-%simname = ['Diff_',coup,'_enc',tefn,'_cmax-metab',tcfn,'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_RE',tre(2:end)];
-%simname = [coup,'_enc',tefn,'_cmax-metab',tcfn,'_b',tbfn(2:end),'_k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-%simname = [coup,'_enc',tefn,'_cm',tcfn,'_m-b200_c-b',tbfn(2:end),'_m-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-%simname = [coup,'_enc',tefn,'-b',tbfn(2:end),'_cm',tcfn,'_m-b175-k',tkfn(2:end),'_fcrit',tfcrit,'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-%simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_CC',tcc(2:end),'_lgRE',tre(2:end),'_mdRE',tre2(2:end)];
-%simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_cm',tcfn,'_m-b',tbfn(2:end),'-k',tkfn(2:end),'_fcrit',tfcrit,'_c-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
-simname = [coup,'_enc',tefn,'-b',tbenc(2:end),'_m',tmfn,'-b',tbfn(2:end),'-k',tkfn(2:end),'_c',tcfn,'-b',tbcmx(2:end),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
-if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
-    mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])
-end
-% if (~isdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname]))
-%     mkdir([Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/',simname])
-% end
+fname = sub_fname(frate);
 
 %! Storage variables
 S_Sml_f_nu = zeros(NX,DAYS);
@@ -157,34 +90,14 @@ ENVR = sub_init_env(ID);
 
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
-if harv==0
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_pristine_nu_gam_die_clev_lrg_d.nc'];
-else
-    file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_sml_f.nc'];
-    file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_sml_p.nc'];
-    file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_sml_d.nc'];
-    file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_med_f.nc'];
-    file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_med_p.nc'];
-    file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_med_d.nc'];
-    file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_lrg_p.nc'];
-    file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_nu_gam_die_clev_lrg_d.nc'];
-    
-%     file_sml_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_f.nc'];
-%     file_sml_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_p.nc'];
-%     file_sml_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_sml_d.nc'];
-%     file_med_f = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_f.nc'];
-%     file_med_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_p.nc'];
-%     file_med_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_med_d.nc'];
-%     file_lrg_p = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_p.nc'];
-%     file_lrg_d = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Climatol_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end),'_lrg_d.nc'];
-end
+file_sml_f = [fname,'_nu_gam_die_clev_sml_f.nc'];
+file_sml_p = [fname,'_nu_gam_die_clev_sml_p.nc'];
+file_sml_d = [fname,'_nu_gam_die_clev_sml_d.nc'];
+file_med_f = [fname,'_nu_gam_die_clev_med_f.nc'];
+file_med_p = [fname,'_nu_gam_die_clev_med_p.nc'];
+file_med_d = [fname,'_nu_gam_die_clev_med_d.nc'];
+file_lrg_p = [fname,'_nu_gam_die_clev_lrg_p.nc'];
+file_lrg_d = [fname,'_nu_gam_die_clev_lrg_d.nc'];
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
 ncidSP = netcdf.create(file_sml_p,'NC_WRITE');
@@ -267,8 +180,8 @@ vidclevLD   = netcdf.defVar(ncidLD,'clev','double',[xy_dim,time_dim]);
 netcdf.endDef(ncidLD);
 
 
-%% %%%%%%%%%%%%%%%%%%%% Run the Model
-%! Run model with no fishing
+%% %%%%%%%%%%%%%%%%%%%% Run the Model %%%%%%%%%%%%%%%%%%%%
+%! Run model 
 MNT=0;
 for YR = 1:YEARS % years
     
@@ -279,7 +192,7 @@ for YR = 1:YEARS % years
         [num2str(YR),' , ', num2str(mod(DY,365))]
         [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,ENVR] = ...
             sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,...
-            Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate,CC);
+            Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate);
         
         S_Sml_f_nu(:,DY) = Sml_f.nu;
         S_Sml_p_nu(:,DY) = Sml_p.nu;
