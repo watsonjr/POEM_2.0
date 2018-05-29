@@ -213,7 +213,7 @@ stamp([harv '_' cfile])
 print('-dpng',[pp 'Climatol_' harv '_All_comp_kt_4-13.png'])
 
 %%
-figure(3)
+figure(2)
 %A
 subplot('Position',[0.01 0.68 0.4 0.3])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -290,4 +290,166 @@ text(-2.75,1.75,'F')
 text(-0.75,1.75,'kt=0.1155')
 colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
 print('-dpng',[pp 'Climatol_' harv '_All_comp_kt_4-115.png'])
+%%
+figure(3)
+%A
+subplot('Position',[0.01 0.68 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A1))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'A')
+text(-0.75,1.75,'kt=0.0405')
+%B
+subplot('Position',[0.01 0.37 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A4))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'B')
+text(-0.75,1.75,'kt=0.0855')
+%C
+subplot('Position',[0.01 0.06 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A7))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'C')
+text(-0.75,1.75,'kt=0.1305')
+stamp('')
+colorbar('Position',[0.04 0.04 0.339 0.025],'orientation','horizontal')
+print('-dpng',[pp 'Climatol_' harv '_All_comp_kt_4-13.png'])
+
+%%
+figure(4)
+%A
+subplot('Position',[0.01 0.68 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A2))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'A')
+text(-0.75,1.75,'kt=0.0555')
+%B
+subplot('Position',[0.01 0.37 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A4))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'B')
+text(-0.75,1.75,'kt=0.0855')
+%C
+subplot('Position',[0.01 0.06 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A6))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'C')
+text(-0.75,1.75,'kt=0.1155')
+stamp('')
+colorbar('Position',[0.04 0.04 0.339 0.025],'orientation','horizontal')
+print('-dpng',[pp 'Climatol_' harv '_All_comp_kt_55-115.png'])
+
+%%
+figure(5)
+%A
+subplot('Position',[0.01 0.68 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A1))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1.5]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'A')
+text(-0.75,1.75,'kt=0.0405')
+%B
+subplot('Position',[0.41 0.68 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A2))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1.5]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'B')
+text(-0.75,1.75,'kt=0.0555')
+%C
+subplot('Position',[0.01 0.37 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A3))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1.5]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'C')
+text(-0.75,1.75,'kt=0.0705')
+%D
+subplot('Position',[0.41 0.37 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A4))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1.5]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'D')
+text(-0.75,1.75,'kt=0.0855')
+%E
+subplot('Position',[0.01 0.06 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A5))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1.5]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'E')
+text(-0.75,1.75,'kt=0.1005')
+%colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
+stamp('')
+%F
+subplot('Position',[0.41 0.06 0.4 0.3])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(A6))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1.5]);
+set(gcf,'renderer','painters')
+text(-2.75,1.75,'F')
+text(-0.75,1.75,'kt=0.1155')
+colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
+print('-dpng',[pp 'Climatol_' harv '_All_comp_kt_4-115_v2.png'])
 

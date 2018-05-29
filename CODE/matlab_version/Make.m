@@ -13,12 +13,13 @@ oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
 spinup_pristine = false;
 climatol_loop = false;
+climatol_IC = true;
 climatol = false;
 climatol_crr = false;
 climatol_con = false;
 climatol_ngdc = false;
 pre_industrial = false;
-historic_pristine = true;
+historic_pristine = false;
 historic_fished = false;
 forecast_pristine = false;
 forecast_fished = false;
@@ -41,6 +42,9 @@ if spinup_pristine
 end
 if climatol_loop
     Climatol_pristine_search()
+end
+if climatol_IC
+    Climatol_IC_loop()
 end
 if climatol
     Climatol_pristine()
