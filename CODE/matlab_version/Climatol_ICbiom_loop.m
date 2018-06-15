@@ -1,5 +1,5 @@
 %%%%!! RUN Climatol FOR ALL LOCATIONS
-function Climatol_ICday_loop()
+function Climatol_ICbiom_loop()
 
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
@@ -40,9 +40,12 @@ cfn=nan;
 efn=nan;
 mfn=nan;
 
-icd = 15:45:365;
+% icb = [1e-10;1e-7;1e-6;1e-4;1e-3;1e-2;1e3];
+% icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1e3'};
+icb = [1;10];
+icbt = {'1';'10'};
 
-for C=1:length(icd)
+for C=1:length(icb)
     
     %! Make core parameters/constants (global)
     make_parameters()
@@ -89,7 +92,8 @@ for C=1:length(icd)
     
     
     %! Initialize
-    [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish(ID,DAYS);
+    [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = ...
+        sub_init_fish_IC(icb(C),ID,DAYS);
     Med_d.td(1:NX) = 0.0;
     Lrg_d.td(1:NX) = 0.0;
     ENVR = sub_init_env(ID);
@@ -99,13 +103,7 @@ for C=1:length(icd)
     %! Run model with no fishing
     MNT=0;
     for YR = 1:YEARS % years
-        if (YR==1)
-            dayic = icd(C);
-        else
-            dayic = 1;
-        end
-        
-        for DAY = dayic:DT:DAYS % days
+        for DAY = 1:DT:DAYS % days
             %%%! Future time step
             DY = int64(ceil(DAY));
             [num2str(YR),' , ', num2str(mod(DY,365))]
@@ -160,7 +158,7 @@ for C=1:length(icd)
         
     end %Monthly mean
     %%% Save
-    save([fname,'_ICday_',num2str(icd(C)),'.mat'],...
+    save([fname,'_ICbiom_',icbt{C},'.mat'],...
         'Spinup_Sml_f','Spinup_Sml_p','Spinup_Sml_d','Spinup_Med_f',...
         'Spinup_Med_p','Spinup_Med_d','Spinup_Lrg_p','Spinup_Lrg_d',...
         'Spinup_Bent')

@@ -13,7 +13,8 @@ oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
 spinup_pristine = false;
 climatol_loop = false;
-climatol_IC = true;
+climatol_IC_day = false;
+climatol_IC_biom = true;
 climatol = false;
 climatol_crr = false;
 climatol_con = false;
@@ -43,8 +44,11 @@ end
 if climatol_loop
     Climatol_pristine_search()
 end
-if climatol_IC
-    Climatol_IC_loop()
+if climatol_IC_day
+    Climatol_ICday_loop()
+end
+if climatol_IC_biom
+    Climatol_ICbiom_loop()
 end
 if climatol
     Climatol_pristine()

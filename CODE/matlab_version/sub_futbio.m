@@ -11,6 +11,8 @@ global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel MPsel MDsel LPsel LDsel
 global tstep K CGRD ni nj
 
+%%% If biomass < individual fish mass per grid cell, set all rates to zero? %%%
+
 %%% COBALT information
 ENVR = get_COBALT(COBALT,ID,DY);
 ENVR.det = sub_neg(ENVR.det);
