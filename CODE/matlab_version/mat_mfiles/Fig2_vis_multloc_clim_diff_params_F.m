@@ -9,11 +9,13 @@ close all
 Pdrpbx = '/Users/cpetrik/Dropbox/';
 Fdrpbx = '/Users/Colleen/Dropbox/';
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
-
+spath = '/Users/cpetrik/Dropbox/Princeton/POEM_other/poem_ms/v4_kt85_BE75/';
 cpath = [Pdrpbx 'Princeton/POEM_other/grid_cobalt/'];
 pp = [Pdrpbx 'Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'];
 
 load([Pdir 'ESM26_1deg_5yr_clim_191_195_gridspec.mat']);
+load([cpath 'esm26_area_1deg.mat']);
+AREA_OCN = max(area,1);
 
 %
 harv = 'All_fish03';
@@ -244,6 +246,45 @@ caxis([-1 1]);
 colorbar('Position',[0.25 0.04 0.34 0.025],'orientation','horizontal')
 set(gcf,'renderer','painters')
 print('-dpng',[ppath 'Climatol_' harv '_FPcomp_params.png'])
+
+%% Differences in biomass
+AFtot = AF .* AREA_OCN;
+BFtot = BF .* AREA_OCN;
+CFtot = CF .* AREA_OCN;
+APtot = AP .* AREA_OCN;
+BPtot = BP .* AREA_OCN;
+CPtot = CP .* AREA_OCN;
+
+tot_bioAF = nansum(AF(:)) * 1e-6;
+tot_bioBF = nansum(BF(:)) * 1e-6;
+tot_bioCF = nansum(CF(:)) * 1e-6;
+tot_bioAP = nansum(AP(:)) * 1e-6;
+tot_bioBP = nansum(BP(:)) * 1e-6;
+tot_bioCP = nansum(CP(:)) * 1e-6;
+
+diffABF=(tot_bioAF-tot_bioBF)./tot_bioAF % 3930%
+diffABP=(tot_bioAP-tot_bioBP)./tot_bioAP % 38.4%
+
+diffBCF=(tot_bioBF-tot_bioCF)./tot_bioBF % 202%
+diffBCP=(tot_bioBP-tot_bioCP)./tot_bioBP % 35.2%
+
+multABF=(tot_bioBF)./tot_bioAF % 40.3034x greater
+multABP=(tot_bioBP)./tot_bioAP % 0.6156x = 1/1.6156 = 1.6243x less
+
+multBCF=(tot_bioCF)./tot_bioBF % 3.0194x
+multBCP=(tot_bioCP)./tot_bioBP % 0.6480x = 1/1.6480 = 1.5433x less
+
+tab(1,1) = tot_bioAF;
+tab(2,1) = tot_bioBF;
+tab(3,1) = tot_bioCF;
+tab(1,2) = tot_bioAP;
+tab(2,2) = tot_bioBP; 
+tab(3,2) = tot_bioCP;
+Tab=array2table(tab,'VariableNames',{'F','P'},...
+    'RowNames',{'A','B','C'});
+writetable(Tab,[spath 'Tot_biom_FPcomp_params.csv'],'Delimiter',',','WriteRowNames',true);
+save([fpathC 'Tot_biom_FPcomp_params_Climatol_',harv,'_' cfile '.mat'],'tab','Tab');
+
 
 
 

@@ -21,7 +21,7 @@ load([dpath sname harv '_red_locs_biom_flux_KKfoodweb.mat']);
 % Fluxes (consumption rates)
 %rows 1:Npp->zoop, 2:zoop->F, 3:F->P, 4:NPP->det, 5:B->D, 6:P->D, 7:F->D 
 %cols example, EBS, PUp, HOT
-edgesN(:,1) = [5e-1;5e-2;5e-3;5e-1;5e-2;5e-4;5e-3];
+edgesN(:,1) = [5e-1;5e-2;5e-3;0;0;0;0];
 edgesN(:,2) = flux(2,:)';
 edgesN(:,3) = flux(7,:)';
 edgesN(:,4) = flux(4,:)';
@@ -50,12 +50,12 @@ edges = [edgesC edgesNC];
 %rows 1:Npp, 2:zoop, 3:F, 4:P, 5:B, 6:D 
 %cols example, EBS, PUp, HOT
 xybio = [...
-1 2  5   % 'purple'
-2 2  10  % 'grey'  
+1 2  10   % 'purple'
+2 2  5  % 'grey'  
 3 2  2.5 % 'orange'
 4 2  1   % 'blue'  
-2 1  0.5 % 'black' 
-4 1  1]; % 'green'
+2 1  0 % 'black' 
+4 1  0]; % 'green'
 
 xybio(:,4) = bios(2,:)';
 xybio(:,5) = bios(7,:)';
@@ -118,44 +118,17 @@ set([h.ax], 'dataaspectratio', [1 1 1], ...
 %
 subplot(2,2,1)
 %Numbers
-text(1,2.6,sprintf('%2.1f',xybio(1,3)),'HorizontalAlignment','center'); hold on;
-text(2,2.6,sprintf('%2.1f',xybio(2,3)),'HorizontalAlignment','center'); hold on;
-text(2,0.6,sprintf('%2.1f',xybio(5,3)),'HorizontalAlignment','center'); hold on;
-text(3,2.6,sprintf('%2.1f',xybio(3,3)),'HorizontalAlignment','center'); hold on;
-text(4,2.6,sprintf('%2.1f',xybio(4,3)),'HorizontalAlignment','center'); hold on;
-text(4,0.6,sprintf('%2.1f',xybio(6,3)),'HorizontalAlignment','center'); hold on;
-text(1.5,2.3,sprintf('%2.1f',edges{1,3}),'HorizontalAlignment','center'); hold on;
-text(2.5,2.3,sprintf('%1.0e',edges{2,3}),'HorizontalAlignment','center'); hold on;
-text(3.5,2.3,sprintf('%1.0e',edges{3,3}),'HorizontalAlignment','center'); hold on;
-text(1.25,1.3,sprintf('%2.1f',edges{4,3}),'HorizontalAlignment','center'); hold on;
-text(3,0.8,sprintf('%1.0e',edges{5,3}),'HorizontalAlignment','center'); hold on;
-text(3.25,1.35,sprintf('%1.0e',edges{7,3}),'HorizontalAlignment','center'); hold on;
-text(4.25,1.5,sprintf('%1.0e',edges{6,3}),'HorizontalAlignment','center'); hold on;
+text(1,2.4,sprintf('%2.1f',xybio(1,3)),'HorizontalAlignment','center'); hold on;
+text(2,2.4,sprintf('%2.1f',xybio(2,3)),'HorizontalAlignment','center'); hold on;
+text(3,2.4,sprintf('%2.1f',xybio(3,3)),'HorizontalAlignment','center'); hold on;
+text(4,2.4,sprintf('%2.1f',xybio(4,3)),'HorizontalAlignment','center'); hold on;
+text(1.5,1.7,sprintf('%2.1f',edges{1,3}),'HorizontalAlignment','center'); hold on;
+text(2.5,1.7,sprintf('%1.0e',edges{2,3}),'HorizontalAlignment','center'); hold on;
+text(3.5,1.7,sprintf('%1.0e',edges{3,3}),'HorizontalAlignment','center'); hold on;
 
-% text(1,2.6,'5','HorizontalAlignment','center'); hold on;
-% text(2,2.6,'10','HorizontalAlignment','center'); hold on;
-% text(2,0.6,'0.5','HorizontalAlignment','center'); hold on;
-% text(3,2.6,'2.5','HorizontalAlignment','center'); hold on;
-% text(4,2.6,'1','HorizontalAlignment','center'); hold on;
-% text(4,0.6,'1','HorizontalAlignment','center'); hold on;
-
-%Text
-% text(1,2.6,'NPP','HorizontalAlignment','center'); hold on;
-% text(2,2.6,'Z','HorizontalAlignment','center'); hold on;
-% text(2,0.6,'B','HorizontalAlignment','center'); hold on;
-% text(3,2.6,'F','HorizontalAlignment','center'); hold on;
-% text(4,2.6,'P','HorizontalAlignment','center'); hold on;
-% text(4,0.6,'D','HorizontalAlignment','center'); hold on;
 
 
 %% Colors
-% cmap = [...
-%      0.49412      0.11765      0.61176   %purple
-%      0.57255      0.58431      0.56863   %grey
-%      0.97647      0.45098     0.023529   %orange
-%      0.17255      0.43529      0.73333   %blue
-%            0            0            0   %black
-%     0.082353       0.6902      0.10196]; %green
 cmap = [...
      0.57255      0.58431      0.56863   %grey
            1       0.8431            0   %yellow
@@ -167,4 +140,4 @@ colormap(cmap);
 
 set(gcf, 'color', 'w');
 stamp(cfile)
-print(gcf, '-dpng',[fpath 'foodweb_cbrt_eg_names_v3']);
+print(gcf, '-dpng',[fpath 'foodweb_cbrt_eg_names_v4']);

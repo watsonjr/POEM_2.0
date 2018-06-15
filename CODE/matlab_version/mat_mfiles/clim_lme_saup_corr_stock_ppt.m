@@ -134,10 +134,11 @@ rmseD = sqrt(num/n);
 % All LMEs
 figure(1)
 plot(x,x,'--k'); hold on;
-scatter(l10s,l10p,30,lme_ptemp(:,1),'filled'); hold on;
-cmocean('thermal');
-colorbar('location','eastoutside')
-caxis([-2 28])
+%scatter(l10s,l10p,30,lme_ptemp(:,1),'filled'); hold on;
+scatter(l10s,l10p,30,'k','filled'); hold on;
+% cmocean('thermal');
+% colorbar('location','eastoutside')
+% caxis([-2 28])
 axis([-2 2 -2 2])
 print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_all_temp_Stock_ppt.png'])
 
@@ -145,13 +146,14 @@ print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_all_temp_Stock_ppt.png'])
 % no LELC
 figure(2)
 plot(x,x,'--k'); hold on;
-scatter(l10s(keep),l10p(keep),30,lme_ptemp(keep,1),'filled'); hold on;
-cmocean('thermal');
+%scatter(l10s(keep),l10p(keep),30,lme_ptemp(keep,1),'filled'); hold on;
+scatter(l10s(keep),l10p(keep),30,'k','filled'); hold on;
+% cmocean('thermal');
 text(-1.75,1.4,['r = ' sprintf('%2.2f',rall)])
 text(-1.75,1.1,['RMSE = ' sprintf('%2.2f',rmse)])
 axis([-2 2 -2 2])
-colorbar('location','eastoutside')
-caxis([-2 28])
+% colorbar('location','eastoutside')
+% caxis([-2 28])
 print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_all_temp_Stock_LELC_ppt.png'])
 
 
@@ -159,9 +161,10 @@ print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_all_temp_Stock_LELC_ppt.png'])
 figure(3)
 subplot(2,2,2)
 plot(x,x,'--k'); hold on;
-scatter(l10sF(keep),l10pF(keep),25,lme_ptemp(keep,1),'filled'); hold on;
-cmocean('thermal');
-caxis([-2 28])
+%scatter(l10sF(keep),l10pF(keep),25,lme_ptemp(keep,1),'filled'); hold on;
+scatter(l10sF(keep),l10pF(keep),25,'k','filled'); hold on;
+% cmocean('thermal');
+% caxis([-2 28])
 %colorbar('Position',[0.375 0.5 0.3 0.025],'orientation','horizontal')
 text(-5.5,1.5,['r = ' sprintf('%2.2f',rF)])
 text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseF)])
@@ -170,9 +173,10 @@ title('Forage Fishes')
 
 subplot(2,2,3)
 plot(x,x,'--k'); hold on;
-scatter(l10sP(keep),l10pP(keep),25,lme_ptemp(keep,1),'filled'); hold on;
-cmocean('thermal');
-caxis([-2 28])
+%scatter(l10sP(keep),l10pP(keep),25,lme_ptemp(keep,1),'filled'); hold on;
+scatter(l10sP(keep),l10pP(keep),25,'k','filled'); hold on;
+% cmocean('thermal');
+% caxis([-2 28])
 text(-5.5,1.5,['r = ' sprintf('%2.2f',rP)])
 text(-5.5,1.0,['RMSE = ' sprintf('%2.2f',rmseP)])
 axis([-6 2 -6 2])
@@ -180,9 +184,10 @@ title('Large Pelagics')
 
 subplot(2,2,4)
 plot(x,x,'--k'); hold on;
-scatter(l10sD(keep),l10pD(keep),25,lme_ptemp(keep,1),'filled'); hold on;
-cmocean('thermal');
-caxis([-2 28])
+%scatter(l10sD(keep),l10pD(keep),25,lme_ptemp(keep,1),'filled'); hold on;
+scatter(l10sD(keep),l10pD(keep),25,'k','filled'); hold on;
+% cmocean('thermal');
+% caxis([-2 28])
 text(-1.75,1.7,['r = ' sprintf('%2.2f',rD)])
 text(-1.75,1.4,['RMSE = ' sprintf('%2.2f',rmseD)])
 axis([-2 2 -2 2])
@@ -190,9 +195,10 @@ title('Demersals')
 
 subplot(2,2,1)
 plot(x,x,'--k'); hold on;
-scatter(l10s(keep),l10p(keep),25,lme_ptemp(keep,1),'filled'); hold on;
-cmocean('thermal');
-caxis([-2 28])
+%scatter(l10s(keep),l10p(keep),25,lme_ptemp(keep,1),'filled'); hold on;
+scatter(l10s(keep),l10p(keep),25,'k','filled'); hold on;
+% cmocean('thermal');
+% caxis([-2 28])
 text(-1.75,1.7,['r = ' sprintf('%2.2f',rall)])
 text(-1.75,1.4,['RMSE = ' sprintf('%2.2f',rmse)])
 axis([-2 2 -2 2])
