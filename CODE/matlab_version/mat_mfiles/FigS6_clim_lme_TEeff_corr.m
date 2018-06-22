@@ -1,4 +1,4 @@
-%POEM TEs vs. Mauread ECIs by LME
+%FIESTY TEs vs. Maureaud ECIs by LME
 
 clear all
 close all
@@ -16,7 +16,7 @@ load([cpath 'LME_clim_temp_zoop_det.mat']);
 
 load([spath 'Maureaud_etal_2017_s002_ECI.mat']);
 
-% POEM file info
+% FIESTY file info
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
@@ -33,7 +33,7 @@ load([dpath 'TEeff_Climatol_All_fish03_' cfile '.mat']);
 %Colormap
 load('MyColormaps.mat')
 load('cmap_ppt_angles.mat')
-cmYOR=cbrewer('seq','YlOrRd',28);
+cmYOR=cbrewer('seq','YlOrRd',66);
 cmRP=cbrewer('seq','RdPu',28);
 cmPR=cbrewer('seq','PuRd',28);
 
@@ -62,19 +62,19 @@ x5l = x-log10(5);
 mECI = mean(ECI(:,2:6),2);
 keep = ECI(:,1);
 
-%% POEM LME TEeffs
+%% FIESTY LME TEeffs
 %     lme_te(L,2) = nanmean(TEeff_L(lid));
 %     lme_te(L,4) = nanmean(TEeff_HTLd(lid));
 %     lme_te(L,6) = nanmean(TEeff_LTLd(lid));
 pECI = lme_te(keep,4);
 
-%% Drop same as Mauread -------------------------
+%% Drop same as Maureaud -------------------------
 % table
 tab(:,1)=keep;
 tab(:,2)=mECI;
 tab(:,3)=pECI;
 
-T1 = array2table(tab,'VariableNames',{'LME','Mauread','POEM'});
+T1 = array2table(tab,'VariableNames',{'LME','Maureaud','POEM'});
 
 writetable(T1,[spath 'LME_TEeff_Mauread_comp_' cfile '.csv'],'Delimiter',',')
 save([dpath 'LME_TEeff_Mauread_comp_' cfile '.mat'],'tab','keep',...
@@ -147,12 +147,12 @@ colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-2.8 -1.4]);
-colorbar('Position',[0.025 0.555 0.45 0.035],'orientation','horizontal')                   
+colorbar('Position',[0.025 0.555 0.45 0.03],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
 title('Climatology log_1_0 TEeff HTL')
 text(-2.75,1.25,'A')
 
-% Mauread
+% Maureaud
 subplot('Position',[0.5 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -161,9 +161,9 @@ colormap(cmYOR);
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-2.8 -1.4]);
-colorbar('Position',[0.525 0.555 0.45 0.035],'orientation','horizontal')                   
+colorbar('Position',[0.525 0.555 0.45 0.03],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('Mauread log_1_0 mean ECI 1991-1995')
+title('Maureaud log_1_0 mean ECI 1991-1995')
 text(-2.75,1.25,'B')
 
 % Diff
@@ -175,9 +175,9 @@ cmocean('balance')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
-colorbar('Position',[0.025 0.05 0.45 0.035],'orientation','horizontal')                   
+colorbar('Position',[0.025 0.05 0.45 0.03],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('POEM - Mauread log_1_0 difference')
+title('FIESTY - Maureaud log_1_0 difference')
 text(-2.75,1.25,'C')
 
 %Corr
@@ -185,16 +185,16 @@ subplot('Position',[0.59 0.125 0.345 0.345])
 plot(x,x,'--k');hold on;
 scatter(log10(mECI),log10(pECI),20,lme_ptemp(keep,1),'filled'); hold on;
 cmocean('thermal');
-colorbar('Position',[0.525 0.05 0.45 0.035],'orientation','horizontal')
+colorbar('Position',[0.525 0.05 0.45 0.03],'orientation','horizontal')
 text(-1.65,-2.2,['r = ' sprintf('%2.2f',rL)])
 text(-1.65,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
 axis([-3 -1 -3 -1])
-xlabel('Mauread ECI')
-ylabel('POEM TEeff HTL')
+xlabel('Maureaud ECI')
+ylabel('FIESTY TEeff HTL')
 title('log_1_0 Transfer efficiency by LME')
 text(-2.9,-1.15,'D')
 %stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Mauread_comp_subplot_v1.png'])
+print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Maureaud_comp_subplot_v1.png'])
 
 %%
 figure(2)
@@ -212,7 +212,7 @@ set(gcf,'renderer','painters')
 title('Climatology log_1_0 TEeff HTL')
 text(-2.75,1.25,'A')
 
-% Mauread
+% Maureaud
 subplot('Position',[0.5 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -223,7 +223,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-2.8 -1.4]);
 colorbar('Position',[0.525 0.555 0.45 0.035],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('Mauread log_1_0 mean ECI 1991-1995')
+title('Maureaud log_1_0 mean ECI 1991-1995')
 text(-2.75,1.25,'B')
 
 % Diff
@@ -237,7 +237,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 colorbar('Position',[0.025 0.05 0.45 0.035],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('POEM - Mauread log_1_0 difference')
+title('FIESTY - Maureaud log_1_0 difference')
 text(-2.75,1.25,'C')
 
 %Corr
@@ -245,16 +245,16 @@ subplot('Position',[0.58 0.115 0.34 0.34])
 plot(x,x,'--k');hold on;
 scatter(log10(mECI),log10(pECI),20,lme_ptemp(keep,1),'filled'); hold on;
 cmocean('thermal');
-colorbar('Position',[0.935 0.11 0.03 0.34])
+colorbar('Position',[0.935 0.11 0.025 0.34])
 text(-1.65,-2.2,['r = ' sprintf('%2.2f',rL)])
 text(-1.65,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
 axis([-3 -1 -3 -1])
-xlabel('Mauread ECI')
-ylabel('POEM TEeff HTL')
+xlabel('Maureaud ECI')
+ylabel('FIESTY TEeff HTL')
 title('log_1_0 Transfer efficiency by LME')
 text(-2.9,-1.15,'D')
 %stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Mauread_comp_subplot_v2.png'])
+print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Maureaud_comp_subplot_v2.png'])
 
 
 

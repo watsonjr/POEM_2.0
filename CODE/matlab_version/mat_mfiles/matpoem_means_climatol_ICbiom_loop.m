@@ -4,8 +4,8 @@
 clear all
 close all
 
-icb = [1e-10;1e-7;1e-6;1e-4;1e-3;1e-2;1e3];
-icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1e3'};
+icb = [1e-10;1e-7;1e-6;1e-4;1e-3;1e-2;1;10;1e3];
+icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1';'10';'1e3'};
 
 for M=1:length(icb)
     cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';

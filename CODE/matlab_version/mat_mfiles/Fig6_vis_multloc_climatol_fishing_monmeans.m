@@ -153,7 +153,7 @@ colormap('jet')
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
-colorbar('Position',[0.25 0.5 0.5 0.05],'orientation','horizontal')
+colorbar('Position',[0.25 0.525 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('log_1_0 mean All F (g m^-^2)')
 text(-2.75,1.25,'A')
@@ -214,7 +214,7 @@ colormap(cmPBG)
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
-colorbar('Position',[0.25 0.5 0.5 0.045],'orientation','horizontal')
+colorbar('Position',[0.25 0.525 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('log_1_0 mean All F (g m^-^2)')
 text(-2.75,1.25,'A')
@@ -271,7 +271,7 @@ colormap(cmGy)
 load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[1 1 1]);
 caxis([-1 1]);
-colorbar('Position',[0.25 0.5 0.5 0.045],'orientation','horizontal')
+colorbar('Position',[0.25 0.525 0.5 0.03],'orientation','horizontal')
 set(gcf,'renderer','painters')
 title('log_1_0 mean All F (g m^-^2)')
 text(-2.75,1.25,'A')

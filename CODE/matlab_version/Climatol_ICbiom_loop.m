@@ -45,7 +45,7 @@ mfn=nan;
 icb = [1;10];
 icbt = {'1';'10'};
 
-for C=1:length(icb)
+for C=2:length(icb)
     
     %! Make core parameters/constants (global)
     make_parameters()

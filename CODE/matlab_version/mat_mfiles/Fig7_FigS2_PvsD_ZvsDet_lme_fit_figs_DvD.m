@@ -43,7 +43,7 @@ plot(ZlDet(:,1),ZlDet(:,2)-2*ZlDet(:,3),'--k'); hold on;
 %title('Color = LME mean temp')
 cmocean('thermal');
 %colorbar
-xlabel('log_1_0 ZoopLoss:Det')
+xlabel('log_1_0 ZLoss:Det')
 ylabel('P / (P+D)')
 axis([-1 0.75 0 1])
 text(-0.9,0.9,'A')
@@ -54,8 +54,8 @@ plot(ZlDet(:,1),ZlDet(:,4),'k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,4)+2*ZlDet(:,5),'--k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,4)-2*ZlDet(:,5),'--k'); hold on;
 cmocean('thermal');
-colorbar('Position',[0.475 0.38 0.025 0.3])
-xlabel('log_1_0 ZoopLoss:Det')
+colorbar('Position',[0.475 0.38 0.02 0.3])
+xlabel('log_1_0 ZLoss:Det')
 ylabel('P / (P+F)')
 axis([-1 0.75 0 1])
 text(-0.9,0.9,'B')
@@ -67,7 +67,7 @@ plot(ZlDet(:,1),ZlDet(:,6)+2*ZlDet(:,7),'--k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,6)-2*ZlDet(:,7),'--k'); hold on;
 cmocean('thermal');
 %colorbar
-xlabel('log_1_0 ZoopLoss:Det')
+xlabel('log_1_0 ZLoss:Det')
 ylabel('L / (L+M)')
 axis([-1 0.75 0 1])
 text(-0.9,0.9,'C')
@@ -81,7 +81,7 @@ plot(ZlDet(:,1),ZlDet(:,2),'k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,2)+2*ZlDet(:,3),'--k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,2)-2*ZlDet(:,3),'--k'); hold on;
 %title('Color = LME mean temp')
-%xlabel('log_1_0 ZoopLoss:Det')
+%xlabel('log_1_0 ZLoss:Det')
 ylabel('P / (P+D)')
 axis([-1 0.75 0 1])
 text(-0.9,0.9,'A')
@@ -91,7 +91,7 @@ plot(log10(RatZlDet),FracPF,'.k','MarkerSize',10); hold on;
 plot(ZlDet(:,1),ZlDet(:,4),'k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,4)+2*ZlDet(:,5),'--k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,4)-2*ZlDet(:,5),'--k'); hold on;
-%xlabel('log_1_0 ZoopLoss:Det')
+%xlabel('log_1_0 ZLoss:Det')
 ylabel('P / (P+F)')
 axis([-1 0.75 0 1])
 text(-0.9,0.9,'E')
@@ -101,7 +101,7 @@ plot(log10(RatZlDet),FracLM,'.k','MarkerSize',10); hold on;
 plot(ZlDet(:,1),ZlDet(:,6),'k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,6)+2*ZlDet(:,7),'--k'); hold on;
 plot(ZlDet(:,1),ZlDet(:,6)-2*ZlDet(:,7),'--k'); hold on;
-xlabel('log_1_0 ZoopLoss:Det')
+xlabel('log_1_0 ZLoss:Det')
 ylabel('L / (L+M)')
 axis([-1 0.75 0 1])
 text(-0.9,0.9,'I')

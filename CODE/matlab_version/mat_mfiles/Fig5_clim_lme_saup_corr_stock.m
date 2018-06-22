@@ -1,4 +1,4 @@
-%POEM catch vs. SAUP catch by LME
+%FIESTY catch vs. SAUP catch by LME
 %Use same methods as Stock et al. 2017 to reduce SAUP dataset
 
 clear all
@@ -25,7 +25,7 @@ load('cmap_ppt_angles.mat')
 
 AREA_OCN = max(area,1);
 
-% POEM file info
+% FIESTY file info
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
@@ -115,7 +115,7 @@ l10sF=log10(Flme_mcatch10+eps);
 l10sP=log10(Plme_mcatch10+eps);
 l10sD=log10(Dlme_mcatch10+eps);
 
-%% POEM LME biomass in MT
+%% FIESTY LME biomass in MT
 plme_mcatch = nansum(lme_mcatch,2) * 1e-6;
 plme_Fmcatch = (lme_mcatch(:,1)) * 1e-6;
 plme_Pmcatch = (lme_mcatch(:,2)+lme_mcatch(:,4)) * 1e-6;
@@ -201,7 +201,7 @@ text(-5.5,1.0,['r = ' sprintf('%2.2f',rF)])
 text(-5.5,0.5,['RMSE = ' sprintf('%2.2f',rmseF)])
 axis([-6 2 -6 2])
 xlabel('SAU')
-ylabel('POEM')
+ylabel('FIESTY')
 title('Forage Fishes')
 
 subplot(2,2,2)
@@ -217,7 +217,7 @@ text(-5.5,1.0,['r = ' sprintf('%2.2f',rP)])
 text(-5.5,0.5,['RMSE = ' sprintf('%2.2f',rmseP)])
 axis([-6 2 -6 2])
 xlabel('SAU')
-ylabel('POEM')
+ylabel('FIESTY')
 title('Large Pelagics')
 
 subplot(2,2,3)
@@ -233,7 +233,7 @@ text(-1.75,1.4,['r = ' sprintf('%2.2f',rD)])
 text(-1.75,1.1,['RMSE = ' sprintf('%2.2f',rmseD)])
 axis([-2 2 -2 2])
 xlabel('SAU')
-ylabel('POEM')
+ylabel('FIESTY')
 title('Demersals')
 
 subplot(2,2,4)
@@ -249,7 +249,7 @@ text(-1.75,1.4,['r = ' sprintf('%2.2f',rall)])
 text(-1.75,1.1,['RMSE = ' sprintf('%2.2f',rmse)])
 axis([-2 2 -2 2])
 xlabel('SAU')
-ylabel('POEM')
+ylabel('FIESTY')
 title('All fishes')
 % stamp([harv '_' cfile])
 print('-dpng',[ppath 'Clim_',harv,'_SAUP_comp_types_temp_Stock_LELC_ms.png'])
