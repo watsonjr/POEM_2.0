@@ -40,12 +40,10 @@ cfn=nan;
 efn=nan;
 mfn=nan;
 
-% icb = [1e-10;1e-7;1e-6;1e-4;1e-3;1e-2;1e3];
-% icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1e3'};
-icb = [1;10];
-icbt = {'1';'10'};
+icb = [1e-10;1e-7;1e-6;1e-4;1e-3;1e-2;1;10;1e3];
+icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1';'10';'1e3'};
 
-for C=2:length(icb)
+for C=1:length(icb)
     
     %! Make core parameters/constants (global)
     make_parameters()

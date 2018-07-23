@@ -78,8 +78,8 @@ set(groot,'defaultAxesColorOrder',cm9);
 
 %% Loop over init biomasses
 % POEM file info
-icb = [1e-10;1e-7;1e-6;1e-4;1e-3;1e-2;1;1e3];
-icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1';'1e3'};
+icb = [1e-10;1e-7;1e-6;1e-4;1e-3;1e-2;1;10;1e3];
+icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1';'10';'1e3'};
 Pfish = NaN*ones(length(ID),10);
 Ffish = Pfish;
 Dfish = Pfish;
@@ -259,19 +259,19 @@ set(gcf,'renderer','painters')
 title(['IC biom ' icbt{8}]);
 print('-dpng',[pp 'Climatol_' harv '_ICbiom_comp_',icbt{8},'.png'])
 
-%9
-% figure(9)
-% axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,diff9)
-% cmocean('balance')
-% load coast;                     %decent looking coastlines
-% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-% caxis([-0.25 0.25]);
-% colorbar
-% set(gcf,'renderer','painters')
-% title(['IC biom ' icbt{9}]);
-% print('-dpng',[pp 'Climatol_' harv '_ICbiom_comp_',icbt{9},'.png'])
+%% 9
+figure(9)
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,diff9)
+cmocean('balance')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-0.25 0.25]);
+colorbar
+set(gcf,'renderer','painters')
+title(['IC biom ' icbt{9}]);
+print('-dpng',[pp 'Climatol_' harv '_ICbiom_comp_',icbt{9},'.png'])
 
 %% Calc differences in total biomass
 A1tot = A1 .* AREA_OCN;
@@ -305,7 +305,7 @@ dbiom(5,2) = (tot_bioA5 - tot_bioA10) ./ tot_bioA10;
 dbiom(6,2) = (tot_bioA6 - tot_bioA10) ./ tot_bioA10;
 dbiom(7,2) = (tot_bioA7 - tot_bioA10) ./ tot_bioA10;
 dbiom(8,2) = (tot_bioA8 - tot_bioA10) ./ tot_bioA10;
-% dbiom(9,2) = (tot_bioA9 - tot_bioA10) ./ tot_bioA10;
+dbiom(9,2) = (tot_bioA9 - tot_bioA10) ./ tot_bioA10;
 
 dbiom(1,3) = nanmax(diff1(:));
 dbiom(2,3) = nanmax(diff2(:));
@@ -315,7 +315,7 @@ dbiom(5,3) = nanmax(diff5(:));
 dbiom(6,3) = nanmax(diff6(:));
 dbiom(7,3) = nanmax(diff7(:));
 dbiom(8,3) = nanmax(diff8(:));
-% dbiom(9,3) = nanmax(diff9(:));
+dbiom(9,3) = nanmax(diff9(:));
 
 dbiom(1,4) = nanmin(diff1(:));
 dbiom(2,4) = nanmin(diff2(:));
@@ -325,7 +325,7 @@ dbiom(5,4) = nanmin(diff5(:));
 dbiom(6,4) = nanmin(diff6(:));
 dbiom(7,4) = nanmin(diff7(:));
 dbiom(8,4) = nanmin(diff8(:));
-% dbiom(9,4) = nanmin(diff9(:));
+dbiom(9,4) = nanmin(diff9(:));
 
 dbiom(1,5) = nanmean(diff1(:));
 dbiom(2,5) = nanmean(diff2(:));
@@ -335,12 +335,12 @@ dbiom(5,5) = nanmean(diff5(:));
 dbiom(6,5) = nanmean(diff6(:));
 dbiom(7,5) = nanmean(diff7(:));
 dbiom(8,5) = nanmean(diff8(:));
-% dbiom(9,5) = nanmean(diff9(:));
+dbiom(9,5) = nanmean(diff9(:));
 
 Tab=array2table(dbiom,'VariableNames',{'ICbiom','TotalDiffg','MaxDiffgm2',...
     'MinDiffgm2','MeanDiffgm2'});
-% writetable(Tab,[fpath 'Climatol_' harv '_ICbiom_comp.csv'],'Delimiter',',','WriteRowNames',true);
-% save([fpath 'Climatol_' harv '_ICbiom_comp.mat']);
+writetable(Tab,[fpath 'Climatol_' harv '_ICbiom_comp.csv'],'Delimiter',',','WriteRowNames',true);
+save([fpath 'Climatol_' harv '_ICbiom_comp.mat']);
 
 
 

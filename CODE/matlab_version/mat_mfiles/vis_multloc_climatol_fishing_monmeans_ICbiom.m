@@ -28,9 +28,9 @@ if (~isdir(ppath))
 end
 
 %load([fpath 'Means_bio_prod_fish_Climatol_' harv '_' cfile '.mat']);
-load([fpath 'Climatol_All_fish03_ICbiom_1e3.mat']);
+load([fpath 'Climatol_All_fish03_ICbiom_1.mat']);
 %icbt = {'1e-10';'1e-7';'1e-6';'1e-4';'1e-3';'1e-2';'1e3'};
-icbt = '1e3';
+icbt = '1';
 
 close all
 

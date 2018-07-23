@@ -140,6 +140,18 @@ xlim([1761 1860])
 title('Demersals')
 print('-dpng',[ppath 'Preindust_recruitment.png'])
 
+%%
+all_bio = sp_tmean+sf_tmean+sd_tmean+mp_tmean+mf_tmean+md_tmean+lp_tmean+ld_tmean;
+
+figure(70)
+plot(y,log10(all_bio),'k','LineWidth',2)
+ylim([-2 2])
+xlim([1760 1860])
+xlabel('Year')
+ylabel('All fish mean biomass (g/m^2)')
+title('Preindust pristine')
+print('-dpng',[ppath 'Preindust_pristine_ts_mbio.png'])
+
 %% Plots in space
 [ni,nj]=size(geolon_t);
 
