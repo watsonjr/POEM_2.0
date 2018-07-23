@@ -1,4 +1,4 @@
-%FIESTY TEs vs. Maureaud ECIs by LME
+%FEISTY  TEs vs. Maureaud ECIs by LME
 
 clear all
 close all
@@ -16,7 +16,7 @@ load([cpath 'LME_clim_temp_zoop_det.mat']);
 
 load([spath 'Maureaud_etal_2017_s002_ECI.mat']);
 
-% FIESTY file info
+% FEISTY  file info
 frate = 0.3;
 tfish = num2str(100+int64(10*frate));
 
@@ -62,7 +62,7 @@ x5l = x-log10(5);
 mECI = mean(ECI(:,2:6),2);
 keep = ECI(:,1);
 
-%% FIESTY LME TEeffs
+%% FEISTY  LME TEeffs
 %     lme_te(L,2) = nanmean(TEeff_L(lid));
 %     lme_te(L,4) = nanmean(TEeff_HTLd(lid));
 %     lme_te(L,6) = nanmean(TEeff_LTLd(lid));
@@ -177,7 +177,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 colorbar('Position',[0.025 0.05 0.45 0.03],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('FIESTY - Maureaud log_1_0 difference')
+title('FEISTY  - Maureaud log_1_0 difference')
 text(-2.75,1.25,'C')
 
 %Corr
@@ -190,7 +190,7 @@ text(-1.65,-2.2,['r = ' sprintf('%2.2f',rL)])
 text(-1.65,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
 axis([-3 -1 -3 -1])
 xlabel('Maureaud ECI')
-ylabel('FIESTY TEeff HTL')
+ylabel('FEISTY  TEeff HTL')
 title('log_1_0 Transfer efficiency by LME')
 text(-2.9,-1.15,'D')
 %stamp(cfile)
@@ -237,7 +237,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 colorbar('Position',[0.025 0.05 0.45 0.035],'orientation','horizontal')                   
 set(gcf,'renderer','painters')
-title('FIESTY - Maureaud log_1_0 difference')
+title('FEISTY  - Maureaud log_1_0 difference')
 text(-2.75,1.25,'C')
 
 %Corr
@@ -250,7 +250,7 @@ text(-1.65,-2.2,['r = ' sprintf('%2.2f',rL)])
 text(-1.65,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
 axis([-3 -1 -3 -1])
 xlabel('Maureaud ECI')
-ylabel('FIESTY TEeff HTL')
+ylabel('FEISTY  TEeff HTL')
 title('log_1_0 Transfer efficiency by LME')
 text(-2.9,-1.15,'D')
 %stamp(cfile)

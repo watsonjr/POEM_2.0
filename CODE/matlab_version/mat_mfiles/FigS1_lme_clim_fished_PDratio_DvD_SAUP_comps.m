@@ -26,7 +26,7 @@ btemp_mean_clim=squeeze(nanmean(btm_temp,1));
 tlme = lme_mask_onedeg;
 AREA_OCN = max(area,1);
 
-%% FIESTY
+%% FEISTY 
 cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 harv = 'All_fish03';
 tharv = 'Harvest all fish 0.3 yr^-^1';
@@ -37,7 +37,7 @@ load([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],...
 
 lme_area_km2 = lme_area * 1e-6;
 
-% FIESTY LME biomass in MT
+% FEISTY  LME biomass in MT
 plme_Pmcatch = (lme_mcatch(:,2)+lme_mcatch(:,4)) * 1e-6;
 plme_Dmcatch = (lme_mcatch(:,3)+lme_mcatch(:,5)) * 1e-6;
 % MT/km2
@@ -163,7 +163,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 colorbar('Position',[0.25 0.525 0.5 0.05],'orientation','horizontal')
 set(gcf,'renderer','painters')
-title('FIESTY - SAU difference')
+title('FEISTY  - SAU difference')
 
 %vanD
 subplot('Position',[0.5 0.51 0.5 0.5])
@@ -175,7 +175,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 set(gcf,'renderer','painters')
-title('FIESTY - vanD difference')
+title('FEISTY  - vanD difference')
 
 %SAU corr
 subplot('Position',[0.075 0.075 0.4 0.4])
@@ -187,7 +187,7 @@ text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmsePD)])
 text(0.75,0.45,['Fmed = ' sprintf('%2.2f',FPD)])
 axis([0 1.05 0 1.05])
 xlabel('SAU')
-ylabel('FIESTY')
+ylabel('FEISTY ')
 %title('Fraction Large Pelagics')
 
 %vanD Corr
@@ -200,7 +200,7 @@ text(0.75,0.5,['RMSE = ' sprintf('%2.2f',rmse)])
 text(0.75,0.45,['Fmed = ' sprintf('%2.2f',Fall)])
 axis([0 1.05 0 1.05])
 xlabel('vanD')
-ylabel('FIESTY')
+ylabel('FEISTY ')
 %title('Fraction Large Pelagics')
 %stamp(cfile)
 print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_DvD_comp_subplot_Fmed.png'])
@@ -218,7 +218,7 @@ h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 colorbar('Position',[0.25 0.56 0.5 0.025],'orientation','horizontal')
 set(gcf,'renderer','painters')
-title('FIESTY - SAU difference')
+title('FEISTY  - SAU difference')
 
 %DvD
 subplot('Position',[0.5 0.53 0.5 0.5])
@@ -230,7 +230,7 @@ load coast;                     %decent looking coastlines
 h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
 caxis([-1 1]);
 set(gcf,'renderer','painters')
-title('FIESTY - vanD difference')
+title('FEISTY  - vanD difference')
 
 %SAU corr
 subplot('Position',[0.1 0.16 0.35 0.35])
@@ -241,7 +241,7 @@ text(0.725,0.55,['r = ' sprintf('%2.2f',rPD)])
 text(0.725,0.49,['RMSE = ' sprintf('%2.2f',rmsePD)])
 axis([0 1.05 0 1.05])
 xlabel('SAU')
-ylabel('FIESTY')
+ylabel('FEISTY ')
 %title('Fraction Large Pelagics')
 
 %DvD Corr
@@ -254,7 +254,7 @@ text(0.725,0.55,['r = ' sprintf('%2.2f',rall)])
 text(0.725,0.49,['RMSE = ' sprintf('%2.2f',rmse)])
 axis([0 1.05 0 1.05])
 xlabel('vanD')
-ylabel('FIESTY')
+ylabel('FEISTY ')
 %title('Fraction Large Pelagics')
 %stamp(cfile)
 print('-dpng',[ppath 'Clim_' harv '_LME_fracPD_catch_SAUP_DvD_comp_subplot.png'])

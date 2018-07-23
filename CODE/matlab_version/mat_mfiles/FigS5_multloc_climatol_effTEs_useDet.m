@@ -117,9 +117,12 @@ TEeff_LTLd(TEeff_LTLd<0) = NaN;
 TEeff_HTLd = AllL./(BE*mdet + mmz_loss + mlz_loss); 
 TEeff_HTLd(TEeff_HTLd<0) = NaN;
 
-TEM = real(TEeffM.^(1/2));
-TEL = real(TEeff_L.^(1/4));
-TEHTLd = real(TEeff_HTLd.^(1/3));
+TELTLd1 = real(TEeff_LTLd.^(1/1.25));
+TELTLd2 = real(TEeff_LTLd.^(1/1.5));
+
+TEM = real(TEeffM.^(1/2));          %should this be 1/1?
+TEL = real(TEeff_L.^(1/4));         %should this be 1/3?
+TEHTLd = real(TEeff_HTLd.^(1/3));   %should this be 1/2?
 
 q(:,1) = [0.01 0.05 0.25 0.5 0.75 0.95 0.99]';
 q(:,2) = quantile((TEeff_LTLd(:)),[0.01 0.05 0.25 0.5 0.75 0.95 0.99])';
