@@ -1,5 +1,5 @@
 %%%% File naming system
-function [fname,simname] = sub_fname_hist(frate)
+function [fname,simname] = sub_fname_hist10km(frate)
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a h gam kt bpow
@@ -8,7 +8,7 @@ global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel MPsel MDsel LPsel LDsel Jsel efn cfn mfn
-global tstep K CGRD ni nj
+global tstep ni nj
 
 td = num2str(1000+int64(100*LD_phi_MP));
 tj = num2str(1000+int64(100*MP_phi_S));
@@ -65,19 +65,19 @@ else
     simname = [coup,'_efn',num2str(efn),'_mfn',num2str(mfn),'_cfn',num2str(cfn),'_D',td(2:end),'_J',tj(2:end),'_A',ta(2:end),'_Sm',tsm(2:end),'_nmort',tmort,'_BE',tbe(2:end),'_noCC_RE',tre(2:end)];
 end
 
-if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname]))
-    mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname])
+if (~isdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname,'/CalCurr']))
+    mkdir(['/Volumes/GFDL/NC/Matlab_new_size/',simname,'/CalCurr'])
 end
 
 %! Setup netcdf path to store to
 if (frate==0)
-    fname = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Historic_pristine'];
+    fname = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/CalCurr//Historic10km_pristine'];
 elseif (Jsel~=0.1)
-    fname = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Historic_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end)];
+    fname = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/CalCurr//Historic10km_', sel,'_fish',tfish(2:end),'_Juve',tJ(2:end)];
 elseif (MFsel~=LPsel)
-    fname = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Historic_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end)];
+    fname = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/CalCurr//Historic10km_fish_F',tF(2:end),'_P',tP(2:end),'_D',tD(2:end)];
 else
-    fname  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/Historic_', sel,'_fish',tfish(2:end)];  
+    fname  = ['/Volumes/GFDL/NC/Matlab_new_size/',simname, '/CalCurr//Historic10km_', sel,'_fish',tfish(2:end)];  
 end
 
 

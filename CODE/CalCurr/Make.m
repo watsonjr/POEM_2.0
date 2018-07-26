@@ -4,31 +4,20 @@ clear all
 close all
 
 %%%%!! EXPERIMENTS
-testoneloc = false;
 testlocs = false;
 histlocs = false;
 climlocs = false;
-oneloc_fishing = false;
-oneloc_hind_pristine = false;
-oneloc_fore_pristine = false;
-spinup_pristine = false;
-climatol_loop = false;
-climatol_IC_day = false;
-climatol_IC_biom = false;
-climatol = true;
-climatol_crr = false;
-climatol_con = false;
-climatol_ngdc = false;
+spinup_3 = true;
+spinup_10 = false;
+climatol = false;
 pre_industrial = false;
 historic_pristine = false;
-historic_fished = false;
+historic_fished3 = false;
+historic_fished10 = false;
 forecast_pristine = false;
 forecast_fished = false;
 
 tic
-if testoneloc
-    Testoneloc()
-end
 if testlocs
     Testlocs()
 end
@@ -38,29 +27,14 @@ end
 if climlocs
     Locs_clim()
 end
-if spinup_pristine
-    Spinup_pristine()
+if spinup_3
+    Spinup_pristine_3km()
 end
-if climatol_loop
-    Climatol_pristine_search()
-end
-if climatol_IC_day
-    Climatol_ICday_loop()
-end
-if climatol_IC_biom
-    Climatol_ICbiom_loop()
+if spinup_10
+    Spinup_pristine_10km()
 end
 if climatol
     Climatol_pristine()
-end
-if climatol_con
-    Climatol_con_types()
-end
-if climatol_crr
-    Climatol_con_rec_rep()
-end
-if climatol_ngdc
-    Climatol_nu_gam_die_clev()
 end
 if pre_industrial
     Pre_industrial()
@@ -68,8 +42,11 @@ end
 if historic_pristine
     Historic_pristine()
 end
-if historic_fished
-    Historic_fished()
+if historic_fished3
+    Historic_fished_3km()
+end
+if historic_fished10
+    Historic_fished_10km()
 end
 if forecast_pristine
     Forecast_pristine()

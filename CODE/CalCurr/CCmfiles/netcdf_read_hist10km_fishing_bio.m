@@ -4,13 +4,30 @@ clear all
 close all
 
 
-cfile = 'Dc_enc70-b200_cm25_m-b175-k09_fcrit20_c-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-harv = 'All_fish03_Juve00';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+%harv = 'pristine';
+harv = 'All_fish03';
 
-fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/'];
+fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
+
+%% Benthic material
+ncid = netcdf.open([fpath 'Historic10km_' harv '_bent.nc'],'NC_NOWRITE');
+[ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
+for i = 1:nvars
+    varname = netcdf.inqVar(ncid, i-1);
+    eval([ varname ' = netcdf.getVar(ncid,i-1);']);
+    eval([ varname '(' varname ' == 99999) = NaN;']);
+end
+netcdf.close(ncid);
+
+nt = length(time);
+
+Bent.bio = biomass;
+BENT.bio = biomass(:,nt);
+clear biomass
 
 %% SP
-ncid = netcdf.open([fpath 'Climatol_' harv '_sml_p.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic10km_' harv '_sml_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -20,10 +37,11 @@ end
 netcdf.close(ncid);
 
 SP.bio = biomass;
-clear biomass
+Sml_p.bio = biomass(:,nt);
+clear biomass 
 
 % SF
-ncid = netcdf.open([fpath 'Climatol_' harv '_sml_f.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic10km_' harv '_sml_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -32,11 +50,12 @@ for i = 1:nvars
 end
 netcdf.close(ncid);
 
-SF.bio = biomass;
-clear biomass
+SF.bio = biomass(:,1:nt);
+Sml_f.bio = biomass(:,nt);
+clear biomass 
 
 % SD
-ncid = netcdf.open([fpath 'Climatol_' harv '_sml_d.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic10km_' harv '_sml_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -46,10 +65,11 @@ end
 netcdf.close(ncid);
 
 SD.bio = biomass;
-clear biomass
+Sml_d.bio = biomass(:,nt);
+clear biomass 
 
 % MP
-ncid = netcdf.open([fpath 'Climatol_' harv '_med_p.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic10km_' harv '_med_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -60,10 +80,11 @@ netcdf.close(ncid);
 
 MP.bio = biomass;
 MP.yield = yield;
+Med_p.bio = biomass(:,nt);
 clear biomass yield
 
-%% MF
-ncid = netcdf.open([fpath 'Climatol_' harv '_med_f.nc'],'NC_NOWRITE');
+% MF
+ncid = netcdf.open([fpath 'Historic10km_' harv '_med_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -74,10 +95,11 @@ netcdf.close(ncid);
 
 MF.bio = biomass;
 MF.yield = yield;
+Med_f.bio = biomass(:,nt);
 clear biomass yield
 
-%% MD
-ncid = netcdf.open([fpath 'Climatol_' harv '_med_d.nc'],'NC_NOWRITE');
+% MD
+ncid = netcdf.open([fpath 'Historic10km_' harv '_med_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -88,10 +110,11 @@ netcdf.close(ncid);
 
 MD.bio = biomass;
 MD.yield = yield;
+Med_d.bio = biomass(:,nt);
 clear biomass yield
 
 % LP
-ncid = netcdf.open([fpath 'Climatol_' harv '_lrg_p.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic10km_' harv '_lrg_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -102,10 +125,11 @@ netcdf.close(ncid);
 
 LP.bio = biomass;
 LP.yield = yield;
+Lrg_p.bio = biomass(:,nt);
 clear biomass yield
 
 % LD
-ncid = netcdf.open([fpath 'Climatol_' harv '_lrg_d.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic10km_' harv '_lrg_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -116,24 +140,10 @@ netcdf.close(ncid);
 
 LD.bio = biomass;
 LD.yield = yield;
+Lrg_d.bio = biomass(:,nt);
 clear biomass yield
 
-% Benthic material
-ncid = netcdf.open([fpath 'Climatol_' harv '_bent.nc'],'NC_NOWRITE');
-[ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
-for i = 1:nvars
-    varname = netcdf.inqVar(ncid, i-1);
-    eval([ varname ' = netcdf.getVar(ncid,i-1);']);
-    eval([ varname '(' varname ' == 99999) = NaN;']);
-end
-netcdf.close(ncid);
-
-BENT.bio = biomass;
-clear biomass
-
 %% Take means
-nt = length(time);
-
 %Time
 sp_tmean=mean(SP.bio,1);
 sf_tmean=mean(SF.bio(:,1:nt),1);
@@ -143,7 +153,7 @@ mf_tmean=mean(MF.bio,1);
 md_tmean=mean(MD.bio,1);
 lp_tmean=mean(LP.bio,1);
 ld_tmean=mean(LD.bio,1);
-b_tmean=mean(BENT.bio,1);
+b_tmean=mean(Bent.bio,1);
 
 mf_tmy=mean(MF.yield,1);
 mp_tmy=mean(MP.yield,1);
@@ -153,6 +163,7 @@ ld_tmy=mean(LD.yield,1);
 
 % Last year
 lyr=time((end-12+1):end);
+%lyr=1:12;
 sp_mean=mean(SP.bio(:,lyr),2);
 sf_mean=mean(SF.bio(:,lyr),2);
 sd_mean=mean(SD.bio(:,lyr),2);
@@ -161,7 +172,7 @@ mf_mean=mean(MF.bio(:,lyr),2);
 md_mean=mean(MD.bio(:,lyr),2);
 lp_mean=mean(LP.bio(:,lyr),2);
 ld_mean=mean(LD.bio(:,lyr),2);
-b_mean=mean(BENT.bio(:,lyr),2);
+b_mean=mean(Bent.bio(:,lyr),2);
 
 mf_my=mean(MF.yield(:,lyr),2);
 mp_my=mean(MP.yield(:,lyr),2);
@@ -169,13 +180,44 @@ md_my=mean(MD.yield(:,lyr),2);
 lp_my=mean(LP.yield(:,lyr),2);
 ld_my=mean(LD.yield(:,lyr),2);
 
-%
-save([fpath 'Means_Climatol_' harv '_' cfile '.mat'],...
+%% Each year
+a = 1:12:nt; % start of each yr
+b = 12:12:nt; % end of each yr
+mB = NaN*ones(length(b_mean),(nt/12));
+mSF = mB;
+mSP = mB;
+mSD = mB;
+mMF = mB;
+mMP = mB;
+mMD = mB;
+mLP = mB;
+mLD = mB;
+for i = 1:(nt/12)
+    %yr = (i+1987);
+    %! Put vars of netcdf file
+    mB(:,i) = mean(Bent.bio(:,a(i):b(i)),2);
+    mSF(:,i) = mean(SF.bio(:,a(i):b(i)),2);
+    mSP(:,i) = mean(SP.bio(:,a(i):b(i)),2);
+    mSD(:,i) = mean(SD.bio(:,a(i):b(i)),2);
+    mMF(:,i) = mean(SF.bio(:,a(i):b(i)),2);
+    mMP(:,i) = mean(SP.bio(:,a(i):b(i)),2);
+    mMD(:,i) = mean(SD.bio(:,a(i):b(i)),2);
+    mLP(:,i) = mean(SP.bio(:,a(i):b(i)),2);
+    mLD(:,i) = mean(SD.bio(:,a(i):b(i)),2);
+end
+    
+%%
+save([fpath 'Means_Historic10km_' harv '_' cfile '.mat'],...
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
     'lp_mean','ld_mean','sf_tmean','sp_tmean','sd_tmean','mf_tmean','mp_tmean',...
     'md_tmean','b_tmean','lp_tmean','ld_tmean','time','lyr',...
     'mf_tmy','mp_tmy','md_tmy','lp_tmy','ld_tmy',...
-    'mf_my','mp_my','md_my','lp_my','ld_my');
+    'mf_my','mp_my','md_my','lp_my','ld_my',...
+    'mB','mSF','mSP','mSD','mMF','mMP','mMD','mLP','mLD');
+
+% Save last year for initializing forecast runs
+save([fpath 'Last_mo_Historic10km_' harv '_' cfile '.mat'],'Sml_f','Sml_p','Sml_d',... 
+    'Med_f','Med_p','Med_d','Lrg_p','Lrg_d','BENT')
 
 
 

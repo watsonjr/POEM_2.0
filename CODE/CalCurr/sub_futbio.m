@@ -1,6 +1,6 @@
 %%%% THE MODEL
 %%% DEMOGRAPHIC CALCULATIONS
-function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,ENVR] = sub_futbio(ID,DY,COBALT,ENVR,Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,dfrate)
+function [Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,ENVR] = sub_futbio(ID,DY,NEMURO,ENVR,Sf,Sp,Sd,Mf,Mp,Md,Lp,Ld,BENT,dfrate)
 
 global DAYS GRD NX
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
@@ -13,8 +13,8 @@ global tstep K CGRD ni nj
 
 %%% If biomass < individual fish mass per grid cell, set all rates to zero? %%%
 
-%%% COBALT information
-ENVR = get_COBALT(COBALT,ID,DY);
+%%% NEMURO information
+ENVR = get_NEMURO(NEMURO,ID,DY);
 ENVR.det = sub_neg(ENVR.det);
 ENVR.Zm  = sub_neg(ENVR.Zm);
 ENVR.Zl  = sub_neg(ENVR.Zl);
@@ -110,10 +110,10 @@ Ld.con_d  = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_d,Ld.enc_p,Ld.enc_f,Ld.en
 Ld.con_be = sub_cons(ENVR.Tp,ENVR.Tb,Ld.td,M_l,[Ld.enc_be,Ld.enc_f,Ld.enc_p,Ld.enc_d]);
 
 % Offline coupling
-%MZ consumption cannot exceed amount lost to higher predation in COBALT runs
+%MZ consumption cannot exceed amount lost to higher predation in NEMURO runs
 [Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,ENVR.fZm] = ...
     sub_offline_zm(Sf.con_zm,Sp.con_zm,Sd.con_zm,Mf.con_zm,Mp.con_zm,Sf.bio,Sp.bio,Sd.bio,Mf.bio,Mp.bio,ENVR.dZm);
-%LZ consumption cannot exceed amount lost to higher predation in COBALT runs
+%LZ consumption cannot exceed amount lost to higher predation in NEMURO runs
 [Mf.con_zl,Mp.con_zl,ENVR.fZl] = ...
     sub_offline_zl(Mf.con_zl,Mp.con_zl,Mf.bio,Mp.bio,ENVR.dZl);
 %Track fraction of benthic material consumed

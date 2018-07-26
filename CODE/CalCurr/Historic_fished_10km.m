@@ -9,7 +9,7 @@ global Tu_s Tu_m Tu_l Nat_mrt MORT
 global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE
 global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE
 global MFsel MPsel MDsel LPsel LDsel Jsel efn cfn mfn
-global tstep K CGRD ni nj
+global tstep ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
@@ -26,17 +26,17 @@ mfn=nan;
 make_parameters() % make core parameters/constants
 
 %! Grid
-load('/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Data/Data_grid_hindcast_NOTflipped.mat');
+load('/Volumes/GFDL/NEMURO/10km/Data_grid_10km_hist.mat');
 NX = length(GRD.Z);
 ID = 1:NX;
 
 %! How long to run the model
-YEARS = 145;
+YEARS = 23; %1988-2010
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %! Create a directory for output
-[fname,simname] = sub_fname_hist(frate);
+[fname,simname] = sub_fname_hist10km(frate);
 
 %! Storage variables
 S_Bent_bio = zeros(NX,DAYS);
@@ -49,6 +49,12 @@ S_Med_p = zeros(NX,DAYS);
 S_Med_d = zeros(NX,DAYS);
 S_Lrg_p = zeros(NX,DAYS);
 S_Lrg_d = zeros(NX,DAYS);
+
+S_Med_f_fish = zeros(NX,DAYS);
+S_Med_p_fish = zeros(NX,DAYS);
+S_Med_d_fish = zeros(NX,DAYS);
+S_Lrg_p_fish = zeros(NX,DAYS);
+S_Lrg_d_fish = zeros(NX,DAYS);
 
 % S_Sml_f_rec = zeros(NX,DAYS);
 % S_Sml_p_rec = zeros(NX,DAYS);
@@ -117,15 +123,9 @@ S_Lrg_d = zeros(NX,DAYS);
 % S_Lrg_p_clev = zeros(NX,DAYS);
 % S_Lrg_d_clev = zeros(NX,DAYS);
 
-S_Med_f_fish = zeros(NX,DAYS);
-S_Med_p_fish = zeros(NX,DAYS);
-S_Med_d_fish = zeros(NX,DAYS);
-S_Lrg_p_fish = zeros(NX,DAYS);
-S_Lrg_d_fish = zeros(NX,DAYS);
-
 %% ! Initialize
 init_sim = simname;
-load(['/Volumes/GFDL/NC/Matlab_new_size/',init_sim '/Last_mo_preindust_' init_sim '.mat']);
+load(['/Volumes/GFDL/NC/Matlab_new_size/',init_sim '/CalCurr/Last_mo_Spinup10km_All_fish03_' init_sim '.mat']);
 BENT.mass = BENT.bio;
 [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish_hist(ID,DAYS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 Med_d.td(1:NX) = 0.0;
@@ -159,7 +159,7 @@ nt = 12*YEARS;
 netcdf.setDefaultFormat('NC_FORMAT_64BIT');
 
 %% ! Def vars of netcdf file
-['Defining netcdfs, takes ~5 minutes ... ']
+['Defining netcdfs, takes ~1 minute ... ']
 xy_dim      = netcdf.defDim(ncidSF,'nid',NX);
 time_dim    = netcdf.defDim(ncidSF,'ntime',nt+1);
 vidbioSF    = netcdf.defVar(ncidSF,'biomass','double',[xy_dim,time_dim]);
@@ -274,9 +274,9 @@ netcdf.endDef(ncidB);
 MNT = 0;
 %! Run model with no fishing
 for YR = 1:YEARS % years
-    %! Load a year's COBALT data
-    ti = num2str(YR+1860);
-    load(['/Volumes/GFDL/POEM_JLD/esm2m_hist/Data_ESM2Mhist_',ti,'.mat']);
+    %! Load a year's NEMURO data
+    ti = num2str(YR+1987);
+    load(['/Volumes/GFDL/NEMURO/10km/daily10km/Data_10km_',ti,'.mat']);
     
     for DAY = 1:DT:DAYS % days
         
@@ -284,7 +284,7 @@ for YR = 1:YEARS % years
         DY = int64(ceil(DAY));
         [num2str(YR),' , ',num2str(mod(DY,365))]
         [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,ENVR] = ...
-            sub_futbio(ID,DY,COBALT,ENVR,Sml_f,Sml_p,Sml_d,...
+            sub_futbio(ID,DY,NEMURO,ENVR,Sml_f,Sml_p,Sml_d,...
             Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT,dfrate);
         
         %! Store
@@ -298,6 +298,12 @@ for YR = 1:YEARS % years
         S_Med_d(:,DY) = Med_d.bio;
         S_Lrg_p(:,DY) = Lrg_p.bio;
         S_Lrg_d(:,DY) = Lrg_d.bio;
+        
+        S_Med_f_fish(:,DY) = Med_f.caught;
+        S_Med_p_fish(:,DY) = Med_p.caught;
+        S_Med_d_fish(:,DY) = Med_d.caught;
+        S_Lrg_p_fish(:,DY) = Lrg_p.caught;
+        S_Lrg_d_fish(:,DY) = Lrg_d.caught;
         
         %         S_Sml_f_rec(:,DY) = Sml_f.rec;
         %         S_Sml_p_rec(:,DY) = Sml_p.rec;
@@ -365,12 +371,6 @@ for YR = 1:YEARS % years
         %         S_Med_d_clev(:,DY) = Med_d.clev;
         %         S_Lrg_p_clev(:,DY) = Lrg_p.clev;
         %         S_Lrg_d_clev(:,DY) = Lrg_d.clev;
-        
-        S_Med_f_fish(:,DY) = Med_f.caught;
-        S_Med_p_fish(:,DY) = Med_p.caught;
-        S_Med_d_fish(:,DY) = Med_d.caught;
-        S_Lrg_p_fish(:,DY) = Lrg_p.caught;
-        S_Lrg_d_fish(:,DY) = Lrg_d.caught;
         
     end %Days
     
