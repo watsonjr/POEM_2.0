@@ -1,4 +1,5 @@
-% FEISTY output at all locations
+% FEISTY output CC
+% 3 km model
 
 clear all
 close all
@@ -11,7 +12,7 @@ harv = 'All_fish03';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 
 %% Benthic material
-ncid = netcdf.open([fpath 'Historic10km_' harv '_bent.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_bent.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -27,7 +28,7 @@ BENT.bio = biomass(:,nt);
 clear biomass
 
 % SP
-ncid = netcdf.open([fpath 'Historic10km_' harv '_sml_p.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_sml_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -41,7 +42,7 @@ Sml_p.bio = biomass(:,nt);
 clear biomass 
 
 % SF
-ncid = netcdf.open([fpath 'Historic10km_' harv '_sml_f.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_sml_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -55,7 +56,7 @@ Sml_f.bio = biomass(:,nt);
 clear biomass 
 
 % SD
-ncid = netcdf.open([fpath 'Historic10km_' harv '_sml_d.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_sml_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -69,7 +70,7 @@ Sml_d.bio = biomass(:,nt);
 clear biomass 
 
 % MP
-ncid = netcdf.open([fpath 'Historic10km_' harv '_med_p.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_med_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -84,7 +85,7 @@ Med_p.bio = biomass(:,nt);
 clear biomass yield
 
 % MF
-ncid = netcdf.open([fpath 'Historic10km_' harv '_med_f.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_med_f.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -99,7 +100,7 @@ Med_f.bio = biomass(:,nt);
 clear biomass yield
 
 % MD
-ncid = netcdf.open([fpath 'Historic10km_' harv '_med_d.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_med_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -114,7 +115,7 @@ Med_d.bio = biomass(:,nt);
 clear biomass yield
 
 % LP
-ncid = netcdf.open([fpath 'Historic10km_' harv '_lrg_p.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_lrg_p.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -129,7 +130,7 @@ Lrg_p.bio = biomass(:,nt);
 clear biomass yield
 
 % LD
-ncid = netcdf.open([fpath 'Historic10km_' harv '_lrg_d.nc'],'NC_NOWRITE');
+ncid = netcdf.open([fpath 'Historic3km_' harv '_lrg_d.nc'],'NC_NOWRITE');
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
 for i = 1:nvars
     varname = netcdf.inqVar(ncid, i-1);
@@ -207,7 +208,7 @@ for i = 1:(nt/12)
 end
     
 %%
-save([fpath 'Means_Historic10km_' harv '_' cfile '.mat'],...
+save([fpath 'Means_Historic3km_' harv '_' cfile '.mat'],...
     'sf_mean','sp_mean','sd_mean','mf_mean','mp_mean','md_mean','b_mean',...
     'lp_mean','ld_mean','sf_tmean','sp_tmean','sd_tmean','mf_tmean','mp_tmean',...
     'md_tmean','b_tmean','lp_tmean','ld_tmean','time',...
@@ -216,7 +217,7 @@ save([fpath 'Means_Historic10km_' harv '_' cfile '.mat'],...
     'mB','mSF','mSP','mSD','mMF','mMP','mMD','mLP','mLD');
 
 % Save last year for initializing forecast runs
-save([fpath 'Last_mo_Historic10km_' harv '_' cfile '.mat'],'Sml_f','Sml_p','Sml_d',... 
+save([fpath 'Last_mo_Historic3km_' harv '_' cfile '.mat'],'Sml_f','Sml_p','Sml_d',... 
     'Med_f','Med_p','Med_d','Lrg_p','Lrg_d','BENT')
 
 

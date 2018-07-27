@@ -9,8 +9,8 @@ close all
 % Fish data
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-harv = 'pristine';
-%harv = 'All_fish03';
+%harv = 'pristine';
+harv = 'All_fish03';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 ppath = [pp cfile '/CC/'];
 if (~isdir(ppath))
@@ -270,7 +270,7 @@ ylim(hcb,[-2.5 0.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('log10 mean benthic biomass (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
+print('-dpng',[ppath 'Spinup10km_',harv,'_CC_BENT.png'])
 
 %
 % mgZb = (Zb/9)*1e3;
@@ -285,7 +285,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % set(gcf,'renderer','painters')
 % title('log10 mean benthic biomass (mg C m^-^2)')
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT_mgC.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_BENT_mgC.png'])
 %
 % % sp
 % figure(11)
@@ -296,7 +296,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_SP.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_SP.png'])
 % 
 % % sf
 % figure(12)
@@ -307,7 +307,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_SF.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_SF.png'])
 % 
 % % sd
 % figure(13)
@@ -318,7 +318,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_SD.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_SD.png'])
 % 
 % % mp
 % figure(14)
@@ -329,7 +329,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_MP.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_MP.png'])
 % 
 % % mf
 % figure(15)
@@ -340,7 +340,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_MF.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_MF.png'])
 % 
 % % md
 % figure(16)
@@ -351,7 +351,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_MD.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_MD.png'])
 % 
 % % lp
 % figure(17)
@@ -362,7 +362,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_LP.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_LP.png'])
 % 
 % % ld
 % figure(18)
@@ -373,7 +373,7 @@ print('-dpng',[ppath 'Spinup10km_',harv,'_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp(cfile)
-% print('-dpng',[ppath 'Spinup10km_',harv,'_global_LD.png'])
+% print('-dpng',[ppath 'Spinup10km_',harv,'_CC_LD.png'])
 
 %% Diff maps of all fish
 All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
@@ -399,7 +399,7 @@ ylim(hcb,[-1 2])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('log10 mean biomass All Fishes (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Spinup10km_',harv,'_global_All.png'])
+print('-dpng',[ppath 'Spinup10km_',harv,'_CC_All.png'])
 
 % all F
 figure(22)
@@ -412,7 +412,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('log10 mean biomass All F (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Spinup10km_',harv,'_global_AllF.png'])
+print('-dpng',[ppath 'Spinup10km_',harv,'_CC_AllF.png'])
 
 % all D
 figure(23)
@@ -425,7 +425,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('log10 mean biomass All D (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Spinup10km_',harv,'_global_AllD.png'])
+print('-dpng',[ppath 'Spinup10km_',harv,'_CC_AllD.png'])
 
 % All P
 figure(24)
@@ -438,7 +438,7 @@ hcb = colorbar('h');
 set(gcf,'renderer','painters')
 title('log10 mean biomass All P (g m^-^2)')
 stamp(cfile)
-print('-dpng',[ppath 'Spinup10km_',harv,'_global_AllP.png'])
+print('-dpng',[ppath 'Spinup10km_',harv,'_CC_AllP.png'])
 
 %% All 4 on subplots
 figure(18)
@@ -484,7 +484,7 @@ caxis([-1 2]);
 set(gcf,'renderer','painters')
 text(0,0.93,'\bf log_1_0 mean All fishes (g m^-^2)','HorizontalAlignment','center')
 stamp(cfile)
-print('-dpng',[ppath 'Spinup10km_',harv,'_global_All_subplot.png'])
+print('-dpng',[ppath 'Spinup10km_',harv,'_CC_All_subplot.png'])
 
 %% Ratios on subplots red-white-blue
 % 3 figure subplot P:D, P:F, M:L
@@ -520,5 +520,5 @@ caxis([0 1]);
 set(gcf,'renderer','painters')
 text(0,0.93,'\bf Fraction Large vs. Medium','HorizontalAlignment','center')
 stamp(cfile)
-print('-dpng',[ppath 'Spinup10km_',harv,'_global_ratios_subplot.png'])
+print('-dpng',[ppath 'Spinup10km_',harv,'_CC_ratios_subplot.png'])
 

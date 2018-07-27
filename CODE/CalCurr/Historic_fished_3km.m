@@ -1,5 +1,5 @@
 %%%%!! RUN HISTORIC WITH FISHING FOR ALL LOCATIONS
-function Historic_fished_10km()
+function Historic_fished_3km()
 
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
@@ -26,7 +26,7 @@ mfn=nan;
 make_parameters() % make core parameters/constants
 
 %! Grid
-load('/Volumes/GFDL/NEMURO/10km/Data_grid_10km_hist.mat');
+load('/Volumes/GFDL/NEMURO/3km/Data_grid_3km_hist.mat');
 NX = length(GRD.Z);
 ID = 1:NX;
 
@@ -36,7 +36,7 @@ DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %! Create a directory for output
-[fname,simname] = sub_fname_hist10km(frate);
+[fname,simname] = sub_fname_hist3km(frate);
 
 %! Storage variables
 S_Bent_bio = zeros(NX,DAYS);
@@ -125,7 +125,7 @@ S_Lrg_d_fish = zeros(NX,DAYS);
 
 %% ! Initialize
 init_sim = simname;
-load(['/Volumes/GFDL/NC/Matlab_new_size/',init_sim '/CalCurr/Last_mo_Spinup10km_All_fish03_' init_sim '.mat']);
+load(['/Volumes/GFDL/NC/Matlab_new_size/',init_sim '/CalCurr/Last_mo_Spinup3km_All_fish03_' init_sim '.mat']);
 BENT.mass = BENT.bio;
 [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish_hist(ID,DAYS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 Med_d.td(1:NX) = 0.0;
@@ -276,7 +276,7 @@ MNT = 0;
 for YR = 1:YEARS % years
     %! Load a year's NEMURO data
     ti = num2str(YR+1987);
-    load(['/Volumes/GFDL/NEMURO/10km/daily10km/Data_10km_',ti,'.mat']);
+    load(['/Volumes/GFDL/NEMURO/3km/daily3km/Data_3km_',ti,'.mat']);
     
     for DAY = 1:DT:DAYS % days
         
