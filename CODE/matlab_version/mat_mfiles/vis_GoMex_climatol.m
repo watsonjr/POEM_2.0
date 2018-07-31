@@ -112,7 +112,7 @@ xlabel('Time (mo)')
 ylabel('log10 Biomass (g m^-^2)')
 title(['Climatol ' tharv])
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'Climatol_' harv '_all_sizes.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_all_sizes.png'])
 
 figure(5)
 F = sf_tmean(1:nt)+mf_tmean;
@@ -130,7 +130,7 @@ xlabel('Time (y)')
 ylabel('log10 Biomass (g m^-^2)')
 title(['Climatol ' tharv])
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_all_types.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_all_types.png'])
 
 % FISHING All size classes of all
 
@@ -148,7 +148,7 @@ xlabel('Time (mo)')
 ylabel('log10 Catch (g m^-^2)')
 title(['Climatol ' tharv])
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_catch_all_sizes.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_catch_all_sizes.png'])
 
 figure(7)
 F = mf_tmy;
@@ -165,7 +165,7 @@ ylim([-7 0])
 xlabel('Time (y)')
 ylabel('log10 Catch (g m^-^2)')
 title(['Climatol ' tharv])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_catch_all_types.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_catch_all_types.png'])
 
 
 %% Plots in space
@@ -234,7 +234,7 @@ ylim(hcb,[-2.5 0.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology log10 mean Benthic inverts (g m^-^2)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_BENT.png'])
 
 %% sp
 % figure(11)
@@ -247,7 +247,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_SP.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_SP.png'])
 %
 % % sf
 % figure(12)
@@ -260,7 +260,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_SF.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_SF.png'])
 %
 % % sd
 % figure(13)
@@ -273,7 +273,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_SD.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_SD.png'])
 %
 % % mp
 % figure(14)
@@ -286,7 +286,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_MP.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_MP.png'])
 %
 % % mf
 % figure(15)
@@ -299,7 +299,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_MF.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_MF.png'])
 %
 % % md
 % figure(16)
@@ -312,7 +312,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_MD.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_MD.png'])
 %
 % % lp
 % figure(17)
@@ -325,7 +325,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_LP.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_LP.png'])
 %
 % % ld
 % figure(18)
@@ -338,7 +338,7 @@ print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_BENT.png'])
 % colorbar('h')
 % caxis([-2 1])
 % stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_LD.png'])
+% print('-dpng',[ppath 'Climatol_' harv '_GoMex_LD.png'])
 
 % Diff maps of all fish
 All = Zsp+Zsf+Zsd+Zmp+Zmf+Zmd+Zlp+Zld;
@@ -360,7 +360,7 @@ FracPFm = Zmp ./ (Zmp+Zmf);
 FracPFvDs = (Zsp+Zsf) ./ (Zsp+Zsf+Zsd);
 FracPFvDm = (Zmp+Zmf) ./ (Zmp+Zmf+Zmd);
 
-% ALL
+%% ALL
 figure(21)
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
@@ -374,7 +374,7 @@ ylim(hcb,[-1 2])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology log10 mean All fishes (g m^-^2)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_All.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_All.png'])
 
 % all F
 figure(22)
@@ -390,7 +390,7 @@ ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology log10 mean All F (g m^-^2)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllF.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_AllF.png'])
 
 % all D
 figure(23)
@@ -406,7 +406,7 @@ ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology log10 mean All D (g m^-^2)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllD.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_AllD.png'])
 
 % All P
 figure(24)
@@ -422,7 +422,7 @@ ylim(hcb,[-1 1])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('Climatology log10 mean All P (g m^-^2)')
 stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllP.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_AllP.png'])
 
 %% All 4 on subplots
 figure(27)
@@ -480,38 +480,7 @@ set(gcf,'renderer','painters')
 %title('log10 mean All fishes (g m^-^2)')
 title('All fishes (log_1_0 g m^-^2)')
 %     stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_All_subplot.png'])
-
-%% Ratios on subplots
-% figure(28)
-% % all P:F
-% subplot('Position',[0 0.55 1 0.4])
-% axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,FracPF)
-% colormap('jet')
-% load coast;                     %decent looking coastlines
-% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-% caxis([0 1]);
-% %     hcb = colorbar('h');
-% %     ylim(hcb,[0 1])
-% colorbar('Position',[0.2 0.475 0.6 0.05],'orientation','horizontal')
-% set(gcf,'renderer','painters')
-% title('A. Large Pelagics : Forage Fishes')
-% 
-% % all P:D
-% subplot('Position',[0 0 1 0.4])
-% axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-%     'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-% surfm(geolat_t,geolon_t,FracPD)
-% colormap('jet')
-% load coast;                     %decent looking coastlines
-% h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-% caxis([0 1]);
-% set(gcf,'renderer','painters')
-% title('B. Large Pelagics : Demersals')
-% %     stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_ratios_subplot.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_All_subplot.png'])
 
 %% 3 figure subplot P:D, P:F, M:L
 figure(30)
@@ -552,237 +521,66 @@ colorbar('Position',[0.7 0.02 0.035 0.425],'orientation','vertical')
 set(gcf,'renderer','painters')
 title('Fraction Large vs. Medium')
 %stamp([harv '_' cfile])
-print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_ratios_subplot_v3.png'])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_ratios_subplot_v3.png'])
 
 
-%% CATCH
-% mp
-% figure(34)
-% surf(lon,lat,log10(Cmp)); view(2); hold on;
-% shading flat
-% xlim([0 360])
-% ylim([-90 90])
-% title('log10 mean Juvenile P catch (g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-5 -2])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_MP_catch.png'])
+%% Interpolate to a finer grid
+%geolon_t: 0.5:359.5
+%geolat_t: -89.5:89.5
+lats = -89.5:0.25:89.5;
+lons = 0.5:0.25:359.5;
+[glon,glat] = meshgrid(lons,lats);
 
-% mf
-%         figure(35)
-%         surf(lon,lat,log10(Cmf)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean Adult F catch (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_MF_catch.png'])
-%
-% md
-% figure(36)
-% surf(lon,lat,log10(Cmd)); view(2); hold on;
-% shading flat
-% xlim([0 360])
-% ylim([-90 90])
-% title('log10 mean Juvenile D catch (g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([-5 -2])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_MD_catch.png'])
 
-% lp
-%         figure(37)
-%         surf(lon,lat,log10(Clp)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean Adult P catch (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_LP_catch.png'])
-%
-%         % ld
-%         figure(38)
-%         surf(lon,lat,log10(Cld)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean Adult D catch (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_LD_catch.png'])
-%
-%         %% Diff maps of all fish
-%         CAll = Cmp+Cmf+Cmd+Clp+Cld;
-%         CAllF = Cmf;
-%         CAllP = Cmp+Clp;
-%         CAllD = Cmd+Cld;
-%         CAllM = Cmp+Cmf+Cmd;
-%         CAllL = Clp+Cld;
-%
-%         % ALL
-%         figure(39)
-%         surf(lon,lat,log10(CAll)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean catch All Fishes (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_All_catch.png'])
-%
-%         % all F
-%         figure(40)
-%         surf(lon,lat,log10(CAllF)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean catch All F (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllF_catch.png'])
-%
-%         % all D
-%         figure(41)
-%         surf(lon,lat,log10(CAllD)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean catch All D (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllD_catch.png'])
-%
-%         % All P
-%         figure(42)
-%         surf(lon,lat,log10(CAllP)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean catch All P (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllP_catch.png'])
-%
-%         % all M
-%         figure(43)
-%         surf(lon,lat,log10(CAllM)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean catch All M (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllM_catch.png'])
-%
-%         % All L
-%         figure(44)
-%         surf(lon,lat,log10(CAllL)); view(2); hold on;
-%         shading flat
-%         xlim([0 360])
-%         ylim([-90 90])
-%         title('log10 mean catch All L (g m^-^2)')
-%         colormap('jet')
-%         colorbar('h')
-%         caxis([-5 -2])
-%         stamp([harv '_' cfile])
-%         print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_AllL_catch.png'])
-%
-%% FracPFvD
-% figure(27)
-% surf(lon,lat,FracPFvD); view(2); hold on;
-% shading flat
-% title('(P+F):D mean biomass(g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([0 1])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_FracPFvD.png'])
-%
-% % FracPDs
-% figure(28)
-% surf(lon,lat,FracPDs); view(2); hold on;
-% shading flat
-% title('SP:SD mean biomass(g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([0 1])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_FracPDs.png'])
-%
-% % FracPFs
-% figure(29)
-% surf(lon,lat,FracPFs); view(2); hold on;
-% shading flat
-% title('SP:SF mean biomass (g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([0 1])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_FracPFs.png'])
-%
-% % FracPFvDs
-% figure(30)
-% surf(lon,lat,FracPFvDs); view(2); hold on;
-% shading flat
-% title('(SP+SF):SD mean biomass(g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([0 1])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_FracPFvDs.png'])
-%
-% % FracPDm
-% figure(31)
-% surf(lon,lat,FracPDm); view(2); hold on;
-% shading flat
-% title('MP:MD mean biomass(g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([0 1])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_FracPDm.png'])
-%
-% % FracPFm
-% figure(32)
-% surf(lon,lat,FracPFm); view(2); hold on;
-% shading flat
-% title('MP:MF mean biomass (g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([0 1])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_FracPFm.png'])
-%
-% % FracPFvDm
-% figure(33)
-% surf(lon,lat,FracPFvDm); view(2); hold on;
-% shading flat
-% title('(MP+MF):MD mean biomass(g m^-^2)')
-% colormap('jet')
-% colorbar('h')
-% caxis([0 1])
-% stamp([harv '_' cfile])
-% print('-dpng',[ppath 'GoMex_Climatol_' harv '_global_FracPFvDm.png'])
-%
+hF = griddata(geolat_t,geolon_t,AllF,glat,glon);
+hP = griddata(geolat_t,geolon_t,AllP,glat,glon);
+hD = griddata(geolat_t,geolon_t,AllD,glat,glon);
+hS = griddata(geolat_t,geolon_t,AllS,glat,glon);
+hM = griddata(geolat_t,geolon_t,AllM,glat,glon);
+hL = griddata(geolat_t,geolon_t,AllL,glat,glon);
+
+%%
+figure(100)
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(glat,glon,real(log10(hF)))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('Climatology log10 mean F (g m^-^2)')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_F_highres.png'])
+
+figure(101)
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(glat,glon,real(log10(hP)))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('Climatology log10 mean P (g m^-^2)')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_P_highres.png'])
+
+figure(102)
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(glat,glon,real(log10(hD)))
+colormap('jet')
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1 1]);
+hcb = colorbar('h');
+set(gcf,'renderer','painters')
+title('Climatology log10 mean D (g m^-^2)')
+stamp([harv '_' cfile])
+print('-dpng',[ppath 'Climatol_' harv '_GoMex_D_highres.png'])
+
 
 

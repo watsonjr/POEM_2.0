@@ -15,7 +15,7 @@ spinup_pristine = false;
 climatol_loop = false;
 climatol_IC_day = false;
 climatol_IC_biom = false;
-climatol = true;
+climatol = false;
 climatol_crr = false;
 climatol_con = false;
 climatol_ngdc = false;
@@ -23,7 +23,7 @@ pre_industrial = false;
 historic_pristine = false;
 historic_fished = false;
 forecast_pristine = false;
-forecast_fished = false;
+forecast_fished = true;
 
 tic
 if testoneloc

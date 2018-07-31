@@ -17,7 +17,7 @@ frate = 0.3; %Fish(F);
 dfrate = frate/365.0;
 
 %! Initial biomass
-icb = 1e3;
+%icb = 1e-5;
 
 %! Choose parameters from other models of my own combo
 %1=Kiorboe&Hirst, 2=Hartvig, 3=mizer, 4=JC15, NA=mine
@@ -36,7 +36,7 @@ YEARS = 150;
 DAYS = 365;
 MNTH = [31,28,31,30,31,30,31,31,30,31,30,31];
 
-%! choose where and when to run the model
+%! Grid; choose where and when to run the model
 Pdrpbx = '/Users/cpetrik/Dropbox/';
 load('/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_grid.mat');
 NX = length(GRD.Z);
@@ -78,22 +78,22 @@ S_Lrg_d_fish = zeros(NX,DAYS);
 
 %! Initialize
 [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = ...
-        sub_init_fish_IC(icb,ID,DAYS);
+        sub_init_fish(ID,DAYS);
 Med_d.td(1:NX) = 0.0;
 Lrg_d.td(1:NX) = 0.0;
 ENVR = sub_init_env(ID);
 
 %%%%%%%%%%%%%%% Setup NetCDF save
 %! Setup netcdf path to store to
-file_sml_f = [fname,'_ICbiom',num2str(icb),'_sml_f.nc'];
-file_sml_p = [fname,'_ICbiom',num2str(icb), '_sml_p.nc'];
-file_sml_d = [fname,'_ICbiom',num2str(icb), '_sml_d.nc'];
-file_med_f = [fname,'_ICbiom',num2str(icb), '_med_f.nc'];
-file_med_p = [fname,'_ICbiom',num2str(icb), '_med_p.nc'];
-file_med_d = [fname,'_ICbiom',num2str(icb), '_med_d.nc'];
-file_lrg_p = [fname,'_ICbiom',num2str(icb), '_lrg_p.nc'];
-file_lrg_d = [fname,'_ICbiom',num2str(icb), '_lrg_d.nc'];
-file_bent  = [fname,'_ICbiom',num2str(icb), '_bent.nc'];
+file_sml_f = [fname,'_sml_f.nc'];
+file_sml_p = [fname,'_sml_p.nc'];
+file_sml_d = [fname,'_sml_d.nc'];
+file_med_f = [fname,'_med_f.nc'];
+file_med_p = [fname,'_med_p.nc'];
+file_med_d = [fname,'_med_d.nc'];
+file_lrg_p = [fname,'_lrg_p.nc'];
+file_lrg_d = [fname,'_lrg_d.nc'];
+file_bent  = [fname,'_bent.nc'];
 
 ncidSF = netcdf.create(file_sml_f,'NC_WRITE');
 ncidSP = netcdf.create(file_sml_p,'NC_WRITE');
