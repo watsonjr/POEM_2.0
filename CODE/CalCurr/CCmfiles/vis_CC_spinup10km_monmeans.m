@@ -10,7 +10,7 @@ close all
 pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/';
 cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 %harv = 'pristine';
-harv = 'All_fish03';
+harv = 'All_fish01';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 ppath = [pp cfile '/CC/'];
 if (~isdir(ppath))

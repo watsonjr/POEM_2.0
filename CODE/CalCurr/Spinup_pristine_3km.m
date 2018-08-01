@@ -13,7 +13,7 @@ global tstep ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
-frate = 0.3;
+frate = 0.1;
 dfrate = frate/365.0;
 
 %! Choose parameters from other models of my own combo

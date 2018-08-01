@@ -99,12 +99,12 @@ for y = 1:length(yrs)
         % medium zoo mortality: from micro mol N m-2 d-1 to g(WW) m-2 d-1
         Y = squeeze(dZm(m,n,:));
         yi = interp1(Time(1:12), Y, 1:365,'linear','extrap');
-        D_dZm(j,:) = yi * 1e-3  * (106.0/16.0) * 12.01 * 9.0 * 24;
+        D_dZm(j,:) = yi * 1e-3  * (106.0/16.0) * 12.01 * 9.0;
         
         % large zoo mortality: from micro mol N m-2 d-1 to g(WW) m-2 d-1
         Y = squeeze(dZl(m,n,:));
         yi = interp1(Time(1:12), Y, 1:365,'linear','extrap');
-        D_dZl(j,:) = yi * 1e-3  * (106.0/16.0) * 12.01 * 9.0 * 24;
+        D_dZl(j,:) = yi * 1e-3  * (106.0/16.0) * 12.01 * 9.0;
         
         % detrital flux to benthos: from micro mol C m-2 s-1 to g(WW) m-2 d-1
         Y = squeeze(det(m,n,:));

@@ -13,7 +13,7 @@ global tstep ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
-frate = 0.0;
+frate = 0.1;
 dfrate = frate/365.0;
 
 %! Choose parameters from other models of my own combo
@@ -128,12 +128,12 @@ S_Lrg_d_fish = zeros(NX,DAYS);
 
 %! Initialize
 %!From a very small number
-% [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish(ID,DAYS);
+[Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish(ID,DAYS);
 %!From a previous run
-init_sim = simname;
-load(['/Volumes/GFDL/NC/Matlab_new_size/',init_sim '/CalCurr/Last_mo_Spinup10km_pristine_' init_sim '.mat']);
-BENT.mass = BENT.bio;
-[Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish_hist(ID,DAYS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
+% init_sim = simname;
+% load(['/Volumes/GFDL/NC/Matlab_new_size/',init_sim '/CalCurr/Last_mo_Spinup10km_pristine_' init_sim '.mat']);
+% BENT.mass = BENT.bio;
+% [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish_hist(ID,DAYS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
 
 Med_d.td(1:NX) = 0.0;
 Lrg_d.td(1:NX) = 0.0;
