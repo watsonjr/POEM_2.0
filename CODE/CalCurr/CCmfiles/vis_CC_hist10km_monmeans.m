@@ -10,8 +10,8 @@ pp = '/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/'
 cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 %harv = 'pristine';
 %tharv = 'F=0';
-harv = 'All_fish06';
-tharv = 'All fish F=0.6';
+harv = 'All_fish03';
+tharv = 'All fish F=0.3';
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 ppath = [pp cfile '/CC/'];
 if (~isdir(ppath))
@@ -89,7 +89,7 @@ ylim([-5 2])
 xlabel('Time (y)')
 ylabel('log10 Biomass (g m^-^2)')
 title(['Historic 10km ' tharv])
-stamp(cfile)
+stamp(harv)
 print('-dpng',[ppath 'Historic10km_',harv,'_log10_all_sizes.png'])
 
 figure(5)
@@ -146,7 +146,7 @@ ocean(GRD.ID)=ones(size(sf_mean));
 % colormap('jet')
 % colorbar('h')
 % caxis([1 2])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Ocean_cells.png'])
 
 % bent
@@ -162,7 +162,7 @@ hcb = colorbar('h');
 ylim(hcb,[-2.5 0.5])                   %Set color axis if needed
 set(gcf,'renderer','painters')
 title('log10 mean benthic biomass (g m^-^2)')
-stamp(cfile)
+stamp(harv)
 print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 
 %
@@ -177,7 +177,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % ylim(hcb,[-0.8 2.3])                   %Set color axis if needed
 % set(gcf,'renderer','painters')
 % title('log10 mean benthic biomass (mg C m^-^2)')
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT_mgC.png'])
 %
 % % sp
@@ -188,7 +188,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_SP.png'])
 % 
 % % sf
@@ -199,7 +199,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_SF.png'])
 % 
 % % sd
@@ -210,7 +210,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_SD.png'])
 % 
 % % mp
@@ -221,7 +221,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_MP.png'])
 % 
 % % mf
@@ -232,7 +232,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_MF.png'])
 % 
 % % md
@@ -243,7 +243,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_MD.png'])
 % 
 % % lp
@@ -254,7 +254,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_LP.png'])
 % 
 % % ld
@@ -265,7 +265,7 @@ print('-dpng',[ppath 'Historic10km_',harv,'_CC_BENT.png'])
 % colormap('jet')
 % colorbar('h')
 % caxis([-2 1])
-% stamp(cfile)
+% stamp(harv)
 % print('-dpng',[ppath 'Historic10km_',harv,'_CC_LD.png'])
 
 %% Diff maps of all fish
@@ -281,57 +281,57 @@ FracPF = AllP ./ (AllP+AllF);
 FracLM = AllL ./ (AllL+AllM);
 
 %% ALL
-figure(21)
-axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','on','FLineWidth',1)
-surfm(LAT,LON,log10(All))
-colormap('jet')
-caxis([-1 2]);
-hcb = colorbar('h');
-ylim(hcb,[-1 2])                   %Set color axis if needed
-set(gcf,'renderer','painters')
-title('log10 mean biomass All Fishes (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Historic10km_',harv,'_CC_All.png'])
-
-% all F
-figure(22)
-axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','on','FLineWidth',1)
-surfm(LAT,LON,log10(AllF))
-colormap('jet')
-caxis([-1 1.5]);
-hcb = colorbar('h');
-set(gcf,'renderer','painters')
-title('log10 mean biomass All F (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Historic10km_',harv,'_CC_AllF.png'])
-
-% all D
-figure(23)
-axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','on','FLineWidth',1)
-surfm(LAT,LON,log10(AllD))
-colormap('jet')
-caxis([-1 1.5]);
-hcb = colorbar('h');
-set(gcf,'renderer','painters')
-title('log10 mean biomass All D (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Historic10km_',harv,'_CC_AllD.png'])
-
-% All P
-figure(24)
-axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','on','FLineWidth',1)
-surfm(LAT,LON,log10(AllP))
-colormap('jet')
-caxis([-1 1.5]);
-hcb = colorbar('h');
-set(gcf,'renderer','painters')
-title('log10 mean biomass All P (g m^-^2)')
-stamp(cfile)
-print('-dpng',[ppath 'Historic10km_',harv,'_CC_AllP.png'])
+% figure(21)
+% axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','on','FLineWidth',1)
+% surfm(LAT,LON,log10(All))
+% colormap('jet')
+% caxis([-1 2]);
+% hcb = colorbar('h');
+% ylim(hcb,[-1 2])                   %Set color axis if needed
+% set(gcf,'renderer','painters')
+% title('log10 mean biomass All Fishes (g m^-^2)')
+% stamp(harv)
+% print('-dpng',[ppath 'Historic10km_',harv,'_CC_All.png'])
+% 
+% % all F
+% figure(22)
+% axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','on','FLineWidth',1)
+% surfm(LAT,LON,log10(AllF))
+% colormap('jet')
+% caxis([-1 1.5]);
+% hcb = colorbar('h');
+% set(gcf,'renderer','painters')
+% title('log10 mean biomass All F (g m^-^2)')
+% stamp(harv)
+% print('-dpng',[ppath 'Historic10km_',harv,'_CC_AllF.png'])
+% 
+% % all D
+% figure(23)
+% axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','on','FLineWidth',1)
+% surfm(LAT,LON,log10(AllD))
+% colormap('jet')
+% caxis([-1 1.5]);
+% hcb = colorbar('h');
+% set(gcf,'renderer','painters')
+% title('log10 mean biomass All D (g m^-^2)')
+% stamp(harv)
+% print('-dpng',[ppath 'Historic10km_',harv,'_CC_AllD.png'])
+% 
+% % All P
+% figure(24)
+% axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+%     'Grid','on','FLineWidth',1)
+% surfm(LAT,LON,log10(AllP))
+% colormap('jet')
+% caxis([-1 1.5]);
+% hcb = colorbar('h');
+% set(gcf,'renderer','painters')
+% title('log10 mean biomass All P (g m^-^2)')
+% stamp(harv)
+% print('-dpng',[ppath 'Historic10km_',harv,'_CC_AllP.png'])
 
 %% All 4 on subplots
 figure(18)
@@ -376,7 +376,7 @@ colormap('jet')
 caxis([-1 2]);
 set(gcf,'renderer','painters')
 text(0,0.93,'\bf log_1_0 mean All fishes (g m^-^2)','HorizontalAlignment','center')
-stamp(cfile)
+stamp(harv)
 print('-dpng',[ppath 'Historic10km_',harv,'_CC_All_subplot.png'])
 
 %% Ratios on subplots red-white-blue
@@ -412,6 +412,6 @@ cmocean('balance')
 caxis([0 1]);
 set(gcf,'renderer','painters')
 text(0,0.93,'\bf Fraction Large vs. Medium','HorizontalAlignment','center')
-stamp(cfile)
+stamp(harv)
 print('-dpng',[ppath 'Historic10km_',harv,'_CC_ratios_subplot.png'])
 

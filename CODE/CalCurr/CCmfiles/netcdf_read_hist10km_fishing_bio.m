@@ -8,9 +8,9 @@ cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_no
 %harv = 'pristine';
 %harv = 'All_fish06';
 
-F = 10:15;
+F = 1:3;
 for f=1:length(F)
-harv = ['All_fish' num2str(F(f))];
+harv = ['All_fish0' num2str(F(f))];
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 

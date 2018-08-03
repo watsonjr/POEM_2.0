@@ -13,7 +13,10 @@ global tstep ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
-frate = 0.3;
+F = 0.1:0.1:1.2;
+for f=1:length(F)
+frate = F(f);
+%frate = 0.1;
 dfrate = frate/365.0;
 
 %! Choose parameters from other models of my own combo
@@ -483,7 +486,6 @@ netcdf.close(ncidLP);
 netcdf.close(ncidLD);
 netcdf.close(ncidB);
 
-%     end
-% end
+end
 
 end

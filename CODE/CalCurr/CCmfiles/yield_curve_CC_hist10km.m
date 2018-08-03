@@ -101,22 +101,13 @@ title('All')
 stamp([harv '_' cfile])
 print('-dpng',[ppath 'Hist10km_yield_curve_All.png'])
 
-%% RAM stocks in California or P Coast (30 total)
-%sum(CCram$mLandings,na.rm=T)
-% 56,754.98 MT
-%sum(CCram$mCatch,na.rm=T)
-% 447,356.9 MT
-%sum(CCram$mBiomass,na.rm=T)
-% 2,596,265
-%mean(CCram$mnF,na.rm=T)
-% 0.06590057
-%mean(CCram$mdF,na.rm=T)
-% 0.060325
-%mean(CCram$mnER,na.rm=T)
-% 0.08126313
-%mean(CCram$mdER,na.rm=T)
-% 0.07224141
+%% RAM stocks in California, P Coast, or N Pac (34 total)
+%FnType		F		ER
+%Demerals	0.0661280	0.08049502
+%Forage		NaN		0.13173684
+%Pelagics	0.5824727	0.25318586
 
-% F=0.1 MAY BE A MORE REALISTIC FISHING RATE
+% F=0.15 MAY BE A MORE REALISTIC FISHING RATE
+% OR VARY F BY TYPE
 
 

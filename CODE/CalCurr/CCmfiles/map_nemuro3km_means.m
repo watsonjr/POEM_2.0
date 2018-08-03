@@ -22,8 +22,8 @@ gc_m2 = (1.0/9.0) * 1e3;
 % det_mean_3km = det_mean_3km *gc_m2;
 % mz_mean_3km = mz_mean_3km *gc_m2;
 % lz_mean_3km = lz_mean_3km *gc_m2;
-mzloss_mean_3km = mz_mean_3km * 0.06;
-lzloss_mean_3km = lz_mean_3km * 0.08;
+% mzloss_mean_3km = mz_mean_3km * 0.06;
+% lzloss_mean_3km = lz_mean_3km * 0.08;
 
 %% Map data
 load([cpath 'gridspec_3km.mat'],'LON','LAT');

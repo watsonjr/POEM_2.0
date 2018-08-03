@@ -34,8 +34,8 @@ pp = ['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 ppath = [pp cfile '/CC/'];
 
-harv = 'All_fish03';
-tharv = 'Harvest all fish 0.3 yr^-^1';
+harv = 'All_fish01';
+tharv = 'Harvest all fish 0.1 yr^-^1';
 
 load([fpath 'Means_Historic10km_' harv '_' cfile '.mat'],...
     'sf_mean','sp_mean','sd_mean',...
@@ -165,10 +165,20 @@ hFracPD = hP ./ (hP+hD);
 hFracPF = hP ./ (hP+hF);
 hFracLM = hL ./ (hL+hM);
 
-diffF = (cF-hF) ./ cF;
-diffP = (cP-hP) ./ cP;
-diffD = (cD-hD) ./ cD;
-diffAll = (cAll-hAll) ./ cAll;
+pdiffF = (cF-hF) ./ cF;
+pdiffP = (cP-hP) ./ cP;
+pdiffD = (cD-hD) ./ cD;
+pdiffAll = (cAll-hAll) ./ cAll;
+
+diffF = (cF-hF);
+diffP = (cP-hP);
+diffD = (cD-hD);
+diffAll = (cAll-hAll);
+
+ldiffF = (log10(cF)-log10(hF));
+ldiffP = (log10(cP)-log10(hP));
+ldiffD = (log10(cD)-log10(hD));
+ldiffAll = (log10(cAll)-log10(hAll));
 
 %% Maps
 figure(1)
@@ -266,7 +276,7 @@ print('-dpng',[ppath 'Hist_10km_3km_' harv '_global_All.png'])
 figure(5)
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffF)
+surfm(glat,glon,pdiffF)
 cmocean('balance')
 caxis([-1 1]);
 colorbar
@@ -278,7 +288,7 @@ print('-dpng',[ppath 'Hist_10km_3km_' harv '_global_pdiffF.png'])
 figure(6)
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffP)
+surfm(glat,glon,pdiffP)
 cmocean('balance')
 caxis([-1 1]);
 colorbar
@@ -290,7 +300,7 @@ figure(7)
 %7
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffD)
+surfm(glat,glon,pdiffD)
 cmocean('balance')
 caxis([-1 1]);
 colorbar
@@ -302,7 +312,7 @@ print('-dpng',[ppath 'Hist_10km_3km_' harv '_global_pdiffD.png'])
 figure(8)
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffAll)
+surfm(glat,glon,pdiffAll)
 cmocean('balance')
 caxis([-1 1]);
 colorbar
@@ -315,7 +325,7 @@ figure(9)
 subplot('Position',[0 0.5 0.48 0.45])
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffF)
+surfm(glat,glon,pdiffF)
 cmocean('balance')
 caxis([-1 1]);
 set(gcf,'renderer','painters')
@@ -324,7 +334,7 @@ title('Percent difference 3km - 10km F');
 subplot('Position',[0.5 0.5 0.48 0.45])
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffP)
+surfm(glat,glon,pdiffP)
 cmocean('balance')
 caxis([-1 1]);
 set(gcf,'renderer','painters')
@@ -333,7 +343,7 @@ title('Percent difference 3km - 10km P');
 subplot('Position',[0 0 0.48 0.45])
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffD)
+surfm(glat,glon,pdiffD)
 cmocean('balance')
 caxis([-1 1]);
 colorbar('Position',[0.45 0.25 0.03 0.5],'orientation','vertical')
@@ -343,11 +353,92 @@ title('Percent difference 3km - 10km D');
 subplot('Position',[0.5 0 0.48 0.45])
 axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
     'Grid','off','FLineWidth',1) 
-surfm(glat,glon,diffAll)
+surfm(glat,glon,pdiffAll)
 cmocean('balance')
 caxis([-1 1]);
 set(gcf,'renderer','painters')
 title('Percent difference 3km - 10km All');
 print('-dpng',[ppath 'Hist_10km_3km_' harv '_global_pdiff_subplot.png'])
+
+
+%% Subplot
+figure(10)
+subplot('Position',[0 0.5 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,diffF)
+cmocean('balance')
+caxis([-30 30]);
+set(gcf,'renderer','painters')
+title('Difference 3km - 10km F');
+
+subplot('Position',[0.5 0.5 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,diffP)
+cmocean('balance')
+caxis([-30 30]);
+set(gcf,'renderer','painters')
+title('Difference 3km - 10km P');
+
+subplot('Position',[0 0 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,diffD)
+cmocean('balance')
+caxis([-30 30]);
+colorbar('Position',[0.45 0.25 0.03 0.5],'orientation','vertical')
+set(gcf,'renderer','painters')
+title('Difference 3km - 10km D');
+
+subplot('Position',[0.5 0 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,diffAll)
+cmocean('balance')
+caxis([-30 30]);
+set(gcf,'renderer','painters')
+title('Difference 3km - 10km All');
+print('-dpng',[ppath 'Hist_10km_3km_' harv '_global_diff_subplot.png'])
+
+
+figure(11)
+subplot('Position',[0 0.5 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,(ldiffF))
+cmocean('balance')
+caxis([-2 2]);
+set(gcf,'renderer','painters')
+title('log_1_0 Difference 3km - 10km F');
+
+subplot('Position',[0.5 0.5 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,(ldiffP))
+cmocean('balance')
+caxis([-2 2]);
+set(gcf,'renderer','painters')
+title('log_1_0 Difference 3km - 10km P');
+
+subplot('Position',[0 0 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,real(ldiffD))
+cmocean('balance')
+caxis([-2 2]);
+colorbar('Position',[0.45 0.25 0.03 0.5],'orientation','vertical')
+set(gcf,'renderer','painters')
+title('log_1_0 Difference 3km - 10km D');
+
+subplot('Position',[0.5 0 0.48 0.45])
+axesm ('Miller','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1) 
+surfm(glat,glon,(ldiffAll))
+cmocean('balance')
+caxis([-2 2]);
+set(gcf,'renderer','painters')
+title('log_1_0 Difference 3km - 10km All');
+print('-dpng',[ppath 'Hist_10km_3km_' harv '_global_logdiff_subplot.png'])
 
 

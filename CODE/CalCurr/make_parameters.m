@@ -18,10 +18,10 @@ function make_parameters()
     K = 600.0;
     
     %! Which fishes harvested
-    MFsel = 1;
-    LPsel = 1;
-    LDsel = 1;
-    Jsel  = 0.1;
+    MFsel = 0; %For realistic rates 1988-2010: 0.52;
+    LPsel = 1; %For realistic rates 1988-2010: frate=0.25; LPsel=1
+    LDsel = 1; %For realistic rates 1988-2010: 0.32;
+    Jsel  = 0; %0.1;
     MPsel = Jsel * LPsel;
     MDsel = Jsel * LDsel;
     

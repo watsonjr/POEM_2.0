@@ -13,8 +13,8 @@ global tstep ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
-F = 0.1:0.1:1.5;
-for f=2:length(F)
+F = 0.1:0.1:0.3;
+for f=1:length(F)
 frate = F(f);
 dfrate = frate/365.0;
 

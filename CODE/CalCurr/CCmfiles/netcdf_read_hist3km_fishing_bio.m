@@ -7,7 +7,15 @@ close all
 
 cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 %harv = 'pristine';
-harv = 'All_fish03';
+%harv = 'All_fish06';
+
+F = 6:12;
+for f=1:length(F)
+    if (F(f)<10)
+        harv = ['All_fish0' num2str(F(f))];
+    else
+        harv = ['All_fish' num2str(F(f))];
+    end
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 
@@ -217,10 +225,10 @@ save([fpath 'Means_Historic3km_' harv '_' cfile '.mat'],...
     'mB','mSF','mSP','mSD','mMF','mMP','mMD','mLP','mLD');
 
 % Save last year for initializing forecast runs
-save([fpath 'Last_mo_Historic3km_' harv '_' cfile '.mat'],'Sml_f','Sml_p','Sml_d',... 
-    'Med_f','Med_p','Med_d','Lrg_p','Lrg_d','BENT')
+% save([fpath 'Last_mo_Historic3km_' harv '_' cfile '.mat'],'Sml_f','Sml_p','Sml_d',... 
+%     'Med_f','Med_p','Med_d','Lrg_p','Lrg_d','BENT')
 
-
+end
 
 
 

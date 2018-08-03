@@ -43,8 +43,8 @@ pp = ['/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];
 ppath = [pp cfile '/CC/'];
 
-harv = 'All_fish01';
-tharv = 'F = 0.1 yr^-^1';
+harv = 'All_fish03';
+tharv = 'F = 0.3 yr^-^1';
 
 load([fpath 'Means_Historic10km_' harv '_' cfile '.mat'],...
     'mf_my','mp_my','md_my',...

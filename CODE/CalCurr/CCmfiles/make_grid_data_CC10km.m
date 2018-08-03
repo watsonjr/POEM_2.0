@@ -5,6 +5,7 @@ close all
 
 Cdir = '/Volumes/GFDL/NEMURO/10km/';
 
+%%
 ncid = netcdf.open([Cdir 'wc12_avgmo_1988.nc'],'NC_NOWRITE');
 
 [ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
@@ -25,6 +26,20 @@ GRD.LAT = LAT(ID);
 GRD.Z   = H(ID);
 GRD.AREA  = AREA(ID);
 GRD.lmask = MASK(ID);
+
+%%
+ncid = netcdf.open([Cdir 'wc12_dist.nc'],'NC_NOWRITE');
+
+[ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
+
+for i = 1:nvars
+    varname = netcdf.inqVar(ncid, i-1);
+    eval([ varname ' = netcdf.getVar(ncid,i-1);']);
+    %eval([ varname '(' varname ' == 99999) = NaN;']);
+end
+netcdf.close(ncid);
+
+%DIST is 186x181, but all others 184x179
 
 %% Save needed variables
 save([Cdir 'gridspec_10km.mat'],'AREA','H','LAT','LON','MASK');

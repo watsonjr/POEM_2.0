@@ -26,6 +26,18 @@ GRD.Z   = H(ID);
 GRD.AREA  = AREA(ID);
 GRD.lmask = MASK(ID);
 
+%%
+ncid = netcdf.open([Cdir 'wc15n_dist.nc'],'NC_NOWRITE');
+
+[ndims,nvars,ngatts,unlimdimid] = netcdf.inq(ncid);
+
+for i = 1:nvars
+    varname = netcdf.inqVar(ncid, i-1);
+    eval([ varname ' = netcdf.getVar(ncid,i-1);']);
+    %eval([ varname '(' varname ' == 99999) = NaN;']);
+end
+netcdf.close(ncid);
+
 %% Save needed variables
 save([Cdir 'gridspec_3km.mat'],'AREA','H','LAT','LON','MASK');
 save([Cdir 'Data_grid_3km_hist.mat'],'GRD');
