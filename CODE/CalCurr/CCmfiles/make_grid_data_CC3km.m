@@ -38,8 +38,12 @@ for i = 1:nvars
 end
 netcdf.close(ncid);
 
+[ni,nj] = size(LON);
+DIST = dist(2:(end-1),2:(end-1));
+GRD.DIST = DIST(ID);
+
 %% Save needed variables
-save([Cdir 'gridspec_3km.mat'],'AREA','H','LAT','LON','MASK');
+save([Cdir 'gridspec_3km.mat'],'AREA','H','LAT','LON','MASK','DIST');
 save([Cdir 'Data_grid_3km_hist.mat'],'GRD');
           
         

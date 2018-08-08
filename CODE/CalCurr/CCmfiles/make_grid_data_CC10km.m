@@ -40,9 +40,11 @@ end
 netcdf.close(ncid);
 
 %DIST is 186x181, but all others 184x179
+Dist = DIST(2:(end-1),2:(end-1));
+GRD.DIST = Dist(ID);
 
 %% Save needed variables
-save([Cdir 'gridspec_10km.mat'],'AREA','H','LAT','LON','MASK');
+save([Cdir 'gridspec_10km.mat'],'AREA','H','LAT','LON','MASK','Dist');
 save([Cdir 'Data_grid_10km_hist.mat'],'GRD');
           
         

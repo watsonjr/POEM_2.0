@@ -13,10 +13,10 @@ global tstep ni nj
 
 %%%%%%%%%%%%%%% Initialize Model Variables
 %! Set fishing rate
-F = 0.1:0.1:1.2;
-for f=1:length(F)
-frate = F(f);
-%frate = 0.1;
+ad = 0.1:0.1:1.0;
+for n=1:length(ad)
+J = ad(n);
+frate = 0.1;
 dfrate = frate/365.0;
 
 %! Choose parameters from other models of my own combo
@@ -127,7 +127,8 @@ S_Lrg_d_fish = zeros(NX,DAYS);
 % S_Lrg_d_clev = zeros(NX,DAYS);
 
 %% ! Initialize
-init_sim = simname;
+%init_sim = simname;
+init_sim = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
 load(['/Volumes/GFDL/NC/Matlab_new_size/',init_sim '/CalCurr/Last_mo_Spinup3km_All_fish03_' init_sim '.mat']);
 BENT.mass = BENT.bio;
 [Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT] = sub_init_fish_hist(ID,DAYS,Sml_f,Sml_p,Sml_d,Med_f,Med_p,Med_d,Lrg_p,Lrg_d,BENT);
