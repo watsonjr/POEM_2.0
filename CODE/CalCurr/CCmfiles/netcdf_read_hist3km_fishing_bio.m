@@ -14,10 +14,10 @@ for n=1:length(ad)
 J = ad(n);
 if J<100
     cfile = ['Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J0',num2str(J),'_A100',...
-    '_Sm050_nmort1_BE08_noCC_RE00100'];
+    '_Sm075_nmort1_BE08_noCC_RE00100'];
 else
     cfile = ['Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J',num2str(J),'_A100',...
-    '_Sm050_nmort1_BE08_noCC_RE00100'];
+    '_Sm075_nmort1_BE08_noCC_RE00100'];
 end
 
 fpath=['/Volumes/GFDL/NC/Matlab_new_size/' cfile '/CalCurr/'];

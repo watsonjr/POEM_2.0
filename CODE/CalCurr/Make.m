@@ -12,7 +12,8 @@ spinup_10 = false;
 climatol = false;
 pre_industrial = false;
 historic_pristine = false;
-historic_fished3 = true;
+historic_fished3_loop = true;
+historic_fished3 = false;
 historic_fished10 = false;
 forecast_pristine = false;
 forecast_fished = false;
@@ -41,6 +42,9 @@ if pre_industrial
 end
 if historic_pristine
     Historic_pristine()
+end
+if historic_fished3_loop
+    Historic_fished_3km_search()
 end
 if historic_fished3
     Historic_fished_3km()
