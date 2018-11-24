@@ -2,17 +2,17 @@
 function clev = sub_clev(con,Tp,Tb,tdif,wgt)
     % calculates consumption rate of first element of enc
     
-    global cfn h bcmx
+    global cfn h bcmx kc
     
     temp = (Tp.*tdif) + (Tb.*(1.0-tdif));
     
     %Cmax rates from other models
     if (cfn==2)
         % Hartvig et al (g/g/day) ref to 10C
-        cmax = (exp(0.063*(temp-10.0)) .* 85.0 .* wgt^(-0.25)) ./365.0;
+        cmax = (exp(kc*(temp-10.0)) .* 85.0 .* wgt^(-0.25)) ./365.0;
     elseif (cfn==3)
         % mizer (g/g/day) ref to 10C
-        cmax = (exp(0.063*(temp-10.0)) .* 40.0 .* wgt^(-0.25)) ./365.0;
+        cmax = (exp(kc*(temp-10.0)) .* 40.0 .* wgt^(-0.25)) ./365.0;
     elseif (cfn==4)
         % J&C15 (g/g/day) ref to 10C
         temp2 = temp+273;
@@ -23,7 +23,7 @@ function clev = sub_clev(con,Tp,Tb,tdif,wgt)
         cmax = (tfact .* 25.0 .* wgt^(-0.33)) ./365.0;
     else
     %Cmax rate
-        cmax = (exp(0.063*(temp-10.0)) .* h .* wgt^(-bcmx)) ./365.0;
+        cmax = (exp(kc*(temp-10.0)) .* h .* wgt^(-bcmx)) ./365.0;
     end
     
     %Clev

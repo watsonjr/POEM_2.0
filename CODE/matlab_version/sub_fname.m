@@ -22,12 +22,13 @@ if (frate >= 0.1)
     tF = num2str(1000+int64(100*frate*MFsel));
     tP = num2str(1000+int64(100*frate*LPsel));
     tD = num2str(1000+int64(100*frate*LDsel));
-    tJ = num2str(100+int64(10*Jsel));
+    tJ = num2str(1000+int64(100*Jsel));
 else
     tfish = num2str(1000+int64(100*frate));
     tF = num2str(1000+int64(100*frate*MFsel));
     tP = num2str(1000+int64(100*frate*LPsel));
     tD = num2str(1000+int64(100*frate*LDsel));
+    tJ = num2str(1000+int64(100*Jsel));
 end
 if (MFsel > 0)
     if (LPsel > 0 && LDsel > 0)

@@ -8,7 +8,7 @@ function make_parameters()
     global MF_phi_MZ MF_phi_LZ MF_phi_S MP_phi_MZ MP_phi_LZ MP_phi_S MD_phi_BE 
     global LP_phi_MF LP_phi_MP LP_phi_MD LD_phi_MF LD_phi_MP LD_phi_MD LD_phi_BE  
     global MFsel MPsel MDsel LPsel LDsel Jsel
-    global tstep K 
+    global tstep K frate kc ke
     
     %! Integration parameters
     DT = 1.0;       % time step
@@ -18,6 +18,7 @@ function make_parameters()
     K = 600.0;
     
     %! Which fishes harvested
+    frate = 0.3;
     MFsel = 1;
     LPsel = 1;
     LDsel = 1;
@@ -68,7 +69,9 @@ function make_parameters()
     amet = 4;       % coeff on met
     h = 20;         % coeff on Cmax
     gam = 70;       % coeff on search area
-    kt = 0.0855;    % coeff on T-dep fn (orig 0.063)
+    kc = 0.063;     % coeff on cmax T-dep fn 
+    ke = 0.063;     % coeff on enc T-dep fn 
+    kt = 0.0855;    % coeff on met T-dep fn (orig 0.063)
     bpow = 0.175;   % power on metab fn (orig 0.25)
     benc = 0.20;    % power on enc fn (orig 0.20)
     bcmx = 0.25;    % power on cmax fn (orig 0.25)

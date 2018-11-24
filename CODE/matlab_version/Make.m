@@ -15,6 +15,7 @@ spinup_pristine = false;
 climatol_loop = false;
 climatol_IC_day = false;
 climatol_IC_biom = false;
+climatol_param = true;
 climatol = false;
 climatol_crr = false;
 climatol_con = false;
@@ -23,7 +24,7 @@ pre_industrial = false;
 historic_pristine = false;
 historic_fished = false;
 forecast_pristine = false;
-forecast_fished = true;
+forecast_fished = false;
 
 tic
 if testoneloc
@@ -49,6 +50,9 @@ if climatol_IC_day
 end
 if climatol_IC_biom
     Climatol_ICbiom_loop()
+end
+if climatol_param
+    Climatol_bycatch_sens()
 end
 if climatol
     Climatol_pristine()
