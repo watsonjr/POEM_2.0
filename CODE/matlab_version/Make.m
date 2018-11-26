@@ -52,7 +52,7 @@ if climatol_IC_biom
     Climatol_ICbiom_loop()
 end
 if climatol_param
-    Climatol_bycatch_sens()
+    Climatol_param_sens_v2()
 end
 if climatol
     Climatol_pristine()
