@@ -112,22 +112,14 @@ function make_parameters_mid()
     D = 0.75;   %Demersal feeding in pelagic reduction
     A = 0.75;    %Adult predation reduction %*****
 
-    MF_phi_MZ = Sm;
     MF_phi_LZ = 1.0;
     MF_phi_S  = 1.0;
     
-    MP_phi_MZ = Sm*J;
-    MP_phi_LZ = J;
-    MP_phi_S  = J;
-    
     MD_phi_BE = 1.0;
     
-    LP_phi_MF = 1.0*A;
     LP_phi_MP = 1.0;
     LP_phi_MD = 0.0;
     
-    LD_phi_MF = D*A;
-    LD_phi_MP = D;
     LD_phi_MD = 1.0;
     LD_phi_BE = 1.0;
     

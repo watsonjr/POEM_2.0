@@ -36,11 +36,13 @@ cfn=nan;
 efn=nan;
 mfn=nan;
 
-%! Make core parameters/constants (global)
-make_parameters_mid()
-
 % PARAMETER SENSITIVITY TEST
 for j = 1:39
+    
+    %! Make core parameters/constants (global)
+    make_parameters_mid()
+
+    %! Change individual parameters
     if j ==1
         h = 5;
         ptext = 'h5';
@@ -123,8 +125,8 @@ for j = 1:39
         K_a = 0.25;
         ptext = 'kap25';
     elseif j==28
-        K_a = 1.0;
-        ptext = 'kap100';
+        K_a = 0.75;
+        ptext = 'kap075';
     elseif j==29
         Nat_mrt = 0.05/365;
         ptext = 'unat05';
@@ -159,8 +161,15 @@ for j = 1:39
         ptext = 'base';
     end
       
-    %! Set fishing rate
+    %! Set globals that are function of other parameters
     dfrate = frate/365.0;
+    MF_phi_MZ = Sm;
+    MP_phi_MZ = Sm*J;
+    MP_phi_LZ = J;
+    MP_phi_S  = J;
+    LP_phi_MF = 1.0*A;
+    LD_phi_MF = D*A;
+    LD_phi_MP = D;
     
     %! Create a directory for output
     fname = sub_fname_param_v2(ptext);
