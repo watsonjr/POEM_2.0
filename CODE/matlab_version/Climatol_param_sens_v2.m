@@ -37,24 +37,24 @@ efn=nan;
 mfn=nan;
 
 % PARAMETER SENSITIVITY TEST
-for j = 1:39
+for j = [1:4,17:18]
     
     %! Make core parameters/constants (global)
     make_parameters_mid()
 
     %! Change individual parameters
-    if j ==1
-        h = 5;
-        ptext = 'h5';
+    if j==1
+        h = 25;
+        ptext = 'h25';
     elseif j==2
-        h = 500;
-        ptext = 'h500';
+        h = 100;
+        ptext = 'h100';
     elseif j==3
-        gam = 5;
-        ptext = 'gam5';
+        gam = 25;
+        ptext = 'gam25';
     elseif j==4
-        gam = 500;
-        ptext = 'gam500';
+        gam = 100;
+        ptext = 'gam100';
     elseif j==5
         amet = 2;
         ptext = 'amet2';
@@ -92,11 +92,11 @@ for j = 1:39
         bent_eff = 0.15;
         ptext = 'BE15';
     elseif j==17
-        rfrac = 0.001;
-        ptext = 'RE0001';
+        rfrac = 0.005;
+        ptext = 'RE0005';
     elseif j==18
-        rfrac = 0.1;
-        ptext = 'RE01';
+        rfrac = 0.02;
+        ptext = 'RE002';
     elseif j==19
         frate = 0.15;
         ptext = 'fish015';
@@ -126,7 +126,7 @@ for j = 1:39
         ptext = 'kap25';
     elseif j==28
         K_a = 0.75;
-        ptext = 'kap075';
+        ptext = 'kap75';
     elseif j==29
         Nat_mrt = 0.05/365;
         ptext = 'unat05';

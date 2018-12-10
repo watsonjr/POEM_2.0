@@ -8,7 +8,7 @@ close all
 cfile = 'Dc_enc50-b210_m4-b210-k060_c50-b210_D075_J075_A075_Sm025_nmort1_BE08_noCC_RE00100';
 nfile = ['/Volumes/GFDL/NC/Matlab_new_size/',cfile,'/param_sens/'];
 
-load([nfile 'Climatol_All_fish03_means_param_sens_v2.mat'])
+load([nfile 'Climatol_All_fish03_means_param_sens_v3.mat'])
 %ptext{29}='kap75';
 
 Pdir = '/Volumes/GFDL/POEM_JLD/esm26_hist/';
@@ -86,7 +86,7 @@ end
 %% Cluster analysis (in R)
 vtab = table(v1',v2',v3',v4',v5','VariableNames',{'F','P','D','All','lat'},...
     'RowNames',ptext');
-writetable(vtab,[nfile 'Climatol_All_fish03_param_sens_v2_vecs.csv'],...
+writetable(vtab,[nfile 'Climatol_All_fish03_param_sens_v3_vecs.csv'],...
     'WriteRowNames',true)
 
 

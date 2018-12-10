@@ -88,8 +88,8 @@ Lma = log10(mECI); %log10(mECI)
 Lpo = log10(pECI);
 
 %r
-rall=corr(ma,po);
-rL=corr(Lma,Lpo);
+[rall,pall]=corr(ma,po);
+[rL,pL]=corr(Lma,Lpo);
 
 %root mean square error
 o=ma;
@@ -118,9 +118,6 @@ fish_stat(2,3) = FL;
 
 Fstat = array2table(fish_stat,'VariableNames',{'r','RMSE','Fmed'},...
     'RowNames',{'raw','log10'});
-writetable(Fstat,[dpath 'LME_TEeff_Mauread_stats_' cfile '.csv'],'Delimiter',',',...
-    'WriteRowNames',true)
-save([dpath 'LME_TEeff_Mauread_stats_' cfile '.mat'],'fish_stat')
 
 %% Catch map
 %on grid
@@ -139,66 +136,6 @@ diffL = log10(pECI_grid) - log10(mECI_grid);
 
 %% Subplot with maps and corr
 figure(1)
-% POEM
-subplot('Position',[0 0.53 0.5 0.5])
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(pECI_grid))
-colormap(cmYOR);
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2.8 -1.4]);
-colorbar('Position',[0.025 0.555 0.45 0.03],'orientation','horizontal')                   
-set(gcf,'renderer','painters')
-title('Climatology log_1_0 TEeff HTL')
-text(-2.75,1.25,'A')
-
-% Maureaud
-subplot('Position',[0.5 0.53 0.5 0.5])
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,log10(mECI_grid))
-colormap(cmYOR);
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-2.8 -1.4]);
-colorbar('Position',[0.525 0.555 0.45 0.03],'orientation','horizontal')                   
-set(gcf,'renderer','painters')
-title('Maureaud log_1_0 mean ECI 1991-1995')
-text(-2.75,1.25,'B')
-
-% Diff
-subplot('Position',[0.0 0.03 0.5 0.5])
-axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
-surfm(geolat_t,geolon_t,diffL)
-cmocean('balance')
-load coast;                     %decent looking coastlines
-h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
-caxis([-1 1]);
-colorbar('Position',[0.025 0.05 0.45 0.03],'orientation','horizontal')                   
-set(gcf,'renderer','painters')
-title('FEISTY  - Maureaud log_1_0 difference')
-text(-2.75,1.25,'C')
-
-%Corr
-subplot('Position',[0.59 0.125 0.345 0.345])
-plot(x,x,'--k');hold on;
-scatter(log10(mECI),log10(pECI),20,lme_ptemp(keep,1),'filled'); hold on;
-cmocean('thermal');
-colorbar('Position',[0.525 0.05 0.45 0.03],'orientation','horizontal')
-text(-1.65,-2.2,['r = ' sprintf('%2.2f',rL)])
-text(-1.65,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
-axis([-3 -1 -3 -1])
-xlabel('Maureaud ECI')
-ylabel('FEISTY  TEeff HTL')
-title('log_1_0 Transfer efficiency by LME')
-text(-2.9,-1.15,'D')
-%stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Maureaud_comp_subplot_v1.png'])
-
-%%
-figure(2)
 % POEM
 subplot('Position',[0 0.53 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
@@ -248,14 +185,15 @@ scatter(log10(mECI),log10(pECI),20,lme_ptemp(keep,1),'filled'); hold on;
 cmocean('thermal');
 colorbar('Position',[0.935 0.11 0.025 0.34])
 text(-1.65,-2.2,['r = ' sprintf('%2.2f',rL)])
-text(-1.65,-2.4,['RMSE = ' sprintf('%2.2f',rmseL)])
+text(-1.65,-2.4,['(p = ' sprintf('%2.2f',pL) ')'])
+text(-1.65,-2.6,['RMSE = ' sprintf('%2.2f',rmseL)])
 axis([-3 -1 -3 -1])
 xlabel('Maureaud ECI')
 ylabel('FEISTY  TEeff HTL')
 title('log_1_0 Transfer efficiency by LME')
 text(-2.9,-1.15,'D')
 %stamp(cfile)
-print('-dpng',[ppath 'Clim_' harv '_LME_TEeff_Maureaud_comp_subplot_v2.png'])
+print('-dpng',[ppath 'FigS6_Clim_' harv '_LME_TEeff_Maureaud_comp_subplot_pval.png'])
 
 
 

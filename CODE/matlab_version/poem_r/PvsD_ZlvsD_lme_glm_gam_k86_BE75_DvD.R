@@ -33,16 +33,22 @@ ZB$logNPP <- log10(ZB$NPP/365)
 # Outliers
 dat <- c("LME_ptemp","FracPD","FracPF","FracLM","LME_depth","LME_Frac200",
          "logRatZDet","logRatZB","logRatZlDet","logRatZlB","logNPP")
+pdf(paste0(fpath,"LME_ZBratio_dotplot.pdf"))
 Mydotplot(as.matrix(ZB[,dat]))
+dev.off()
 #npp has a few low values
 
 # Collinearity
 vars <- c("LME_ptemp","LME_Frac200","logRatZlDet","logNPP")
+pdf(paste0(fpath,"LME_ZBratio_covar_pairplot.pdf"))
 pairs(ZB[,vars],lower.panel = panel.cor)
+dev.off()
 #lme frac200 = -0.7 with ZlDet
 #npp 0.5 with ZlDet and 0.6 with lme temp
-corvif(ZB[,vars])
+vifs <- corvif(ZB[,vars])
 #all<3.02
+write.table(vifs,"LME_ZBratio_covar_VIFs.csv",sep=",",row.names=T)
+
 
 # Linear relationships?
 Myxyplot(ZB,vars,"FracPD") #temp nonlin
