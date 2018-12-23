@@ -12,10 +12,10 @@ oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
 spinup_pristine = false;
-climatol_loop = false;
+climatol_loop = true;
 climatol_IC_day = false;
 climatol_IC_biom = false;
-climatol_param = true;
+climatol_param = false;
 climatol = false;
 climatol_crr = false;
 climatol_con = false;
@@ -31,7 +31,7 @@ if testoneloc
     Testoneloc()
 end
 if testlocs
-    Testlocs()
+    Locs_clim_param_search()
 end
 if histlocs
     Locs_hist()
@@ -43,7 +43,7 @@ if spinup_pristine
     Spinup_pristine()
 end
 if climatol_loop
-    Climatol_pristine_search()
+    Climatol_param_search_name()
 end
 if climatol_IC_day
     Climatol_ICday_loop()
@@ -52,7 +52,7 @@ if climatol_IC_biom
     Climatol_ICbiom_loop()
 end
 if climatol_param
-    Climatol_param_sens_v2()
+    Climatol_param_sens_v3()
 end
 if climatol
     Climatol_pristine()

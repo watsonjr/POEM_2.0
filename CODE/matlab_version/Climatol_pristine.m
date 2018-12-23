@@ -26,7 +26,18 @@ efn=nan;
 mfn=nan;
 
 %! Make core parameters/constants (global)
-make_parameters()
+make_parameters_mid()
+A = 0.5;
+bpow = 0.175;
+bcmx = 0.25;    
+    MF_phi_MZ = Sm;
+    MP_phi_MZ = Sm*J;
+    MP_phi_LZ = J;
+    MP_phi_S  = J;
+    LP_phi_MF = 1.0*A;
+    LD_phi_MF = D*A;
+    LD_phi_MP = D;
+    
 
 %! Setup Climatol (loop 5-year climatology of ESM2.6-COBALT)
 load('/Volumes/GFDL/POEM_JLD/esm26_hist/ESM26_1deg_5yr_clim_191_195_daily.mat');
