@@ -24,11 +24,11 @@ setwd(paste0("/Volumes/GFDL/NC/Matlab_new_size/", cfile, "/param_sens/"))
 fpath <- paste0("/Users/cpetrik/Dropbox/Princeton/POEM_2.0/CODE/Figs/PNG/Matlab_New_sizes/", cfile, "/param_sens/")
 
 # load data
-vec <- read.csv("Climatol_All_fish03_param_sens_v5_vecs_pdiff.csv",sep=",",header = T)
+vec <- read.csv("Climatol_All_fish03_param_sens_10p_vecs_pdiff.csv",sep=",",header = T)
 
 # magnitude
 vec$mag <- sqrt(vec$F^2 + vec$P^2 + vec$D^2 + vec$Trop^2 + vec$Temp^2)
-summary(vec$mag[2:39]) #1st Q = 0.136
+summary(vec$mag[2:39]) #1st Q = 0.018
 
 #raw data
 vmat <- as.matrix(vec[2:39,c(2:6,8)])
@@ -44,50 +44,49 @@ obs3 <- names(rvec)[17:24]
 obs4 <- names(rvec)[25:32]
 obs5 <- names(rvec)[33:38]
 
-pdf(paste0(fpath,"Climatol_All_fish03_param_sensv5_pairplot_response1.pdf"))
+pdf(paste0(fpath,"Climatol_All_fish03_param_sens10p_pairplot_response1.pdf"))
 pairs((rvec[1:5,obs1]), lower.panel = panel.cor)
 dev.off()
-pdf(paste0(fpath,"Climatol_All_fish03_param_sensv5_pairplot_response2.pdf"))
+pdf(paste0(fpath,"Climatol_All_fish03_param_sens10p_pairplot_response2.pdf"))
 pairs((rvec[1:5,obs2]), lower.panel = panel.cor)
 dev.off()
-pdf(paste0(fpath,"Climatol_All_fish03_param_sensv5_pairplot_response3.pdf"))
+pdf(paste0(fpath,"Climatol_All_fish03_param_sens10p_pairplot_response3.pdf"))
 pairs((rvec[1:5,obs3]), lower.panel = panel.cor)
 dev.off()
-pdf(paste0(fpath,"Climatol_All_fish03_param_sensv5_pairplot_response4.pdf"))
+pdf(paste0(fpath,"Climatol_All_fish03_param_sens10p_pairplot_response4.pdf"))
 pairs((rvec[1:5,obs4]), lower.panel = panel.cor)
 dev.off()
-pdf(paste0(fpath,"Climatol_All_fish03_param_sensv5_pairplot_response5.pdf"))
+pdf(paste0(fpath,"Climatol_All_fish03_param_sens10p_pairplot_response5.pdf"))
 pairs((rvec[1:5,obs5]), lower.panel = panel.cor)
 dev.off()
 
-# Things that are positively correlated:
-#bc, kt
+# All Corr = -1
 
 # Get rid of params with small response (mag < 1st Q)
-high <- which(rvec[6,]>=0.136)
-bvec <- rvec[,high]
-bvec$J100 <- rvec$J100
-bvec$RE0005 <- rvec$RE0005
+high <- which(rvec[6,]>=0.018)
+bvec <- rvec[,c(high,20,36)]
+
 
 # Multiply params with corr by -1 so both changes incr F
+#h=cmax, gam=enc
+newn <- c("ac-10","ac+10","ae-10","ae+10","am-10","am+10","lam-10","lam+10",
+          "bc-10","bc+10","be-10","be+10","bm-10","bm+10","BE-10","BE+10",
+          "fish-10","kc-10","kc+10","ke-10","ke+10","km-10","km+10","kap-10",
+          "kap+10","A-10","A+10","J-10","fish+10","J+10")
+names(bvec) <- newn
+
 posF <- which(bvec[1,]>0)
 negF <- which(bvec[1,]<0)
 keep <- names(bvec)[posF]
 mult <- names(bvec)[negF]
 
-bvec[,31:43] <- -1*bvec[,c("h100","gam100","amet2","lam084","be100","bm320","BE0375",
-            "RE0005","kc1208","ke0302","kap25","A100","J100")]
-names(bvec)[31:43] <- c("-h100","-gam100","-amet2","-lam084","-be100","-bm320",
-                        "-BE0375","-RE0005","-kc1208","-ke0302","-kap25","-A100",
-                        "-J100")
-params <- c("h25","gam25","amet8","lam056","bc100","bc320","be320","bm100","BE15",   
-            "RE002","kc0302","ke1208","kt0302","kt1208","kap75","A025","J025",
-            "-h100","-gam100","-amet2","-lam084","-be100","-bm320",
-            "-BE0375","-RE0005","-kc1208","-ke0302","-kap25","-A100",
-            "-J100")
+bvec[,30:44] <- -1*bvec[,negF]
+names(bvec)[30:44] <- c("-ac+10","-ae+10","-am-10","-lam+10","-bc-10","-be-10",
+                        "-bm+10","-BE-10","-fish-10","-kc+10","-ke-10","-km+10",
+                        "-kap-10","-A+10","-J+10")
+params <- c(posF,30:44)
 tvec <- bvec[1:5,params]
-
-tvec <- bvec[1:5,]
+#tvec <- bvec[1:5,]
 tvec <- as.data.frame(t(tvec))
   
 ## -------------------------------- dendextend -------------------------------------------
@@ -110,7 +109,7 @@ dend <- hang.dendrogram(dend,hang_height=0.1)
 dend <- set(dend, "labels_cex", 0.5)
 
 # And plot:
-pdf(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_complete_pdiff.pdf"))
+pdf(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_complete_pdiff.pdf"))
 par(mfrow = c(1,1))
 par(mar = c(3,3,3,7))
 plot(dend, 
@@ -124,7 +123,7 @@ col_breaks = c(-15,-5,-2,-1.1, # for low
                seq(-1,1,length=21), # for blue
                1.1,2,5,15) # for high
 test <- colorspace::diverge_hcl(28)
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_complete_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_complete_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -159,7 +158,7 @@ names(iris_dendlist) <- hclust_methods
 
 
 ## -------------- Diff methods -------------------------------
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_wardD_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_wardD_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
   height = 5*300,
   res = 300,            # 300 pixels per inch
@@ -180,7 +179,7 @@ gplots::heatmap.2(as.matrix(tvec),
 )
 dev.off()
 
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_single_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_single_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -201,7 +200,7 @@ gplots::heatmap.2(as.matrix(tvec),
 )
 dev.off()
 
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_average_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_average_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -222,7 +221,7 @@ gplots::heatmap.2(as.matrix(tvec),
 )
 dev.off()
 
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_mcquitty_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_mcquitty_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -243,7 +242,7 @@ gplots::heatmap.2(as.matrix(tvec),
 )
 dev.off()
 
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_median_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_median_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -264,7 +263,7 @@ gplots::heatmap.2(as.matrix(tvec),
 )
 dev.off()
 
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_centroid_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_centroid_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -285,7 +284,7 @@ gplots::heatmap.2(as.matrix(tvec),
 )
 dev.off()
 
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_wardD2_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_wardD2_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -319,7 +318,7 @@ dfish <- hang.dendrogram(dfish,hang_height=0.1)
 dfish <- set(dfish, "labels_cex", 0.5)
 
 # And plot:
-pdf(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_wardD_pdiff.pdf"))
+pdf(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_wardD_pdiff.pdf"))
 par(mfrow = c(1,1))
 par(mar = c(3,3,3,7))
 plot(dfish, 
@@ -331,7 +330,7 @@ col_breaks = c(-15,-5,-2,-1.1, # for low
                seq(-1,1,length=21), # for blue
                1.1,2,5,15) # for high
 test <- colorspace::diverge_hcl(28)
-png(paste0(fpath,"Climatol_All_fish03_sensv5_hclust_wardD_heatmap_pdiff.png"),    # create PNG for the heat map        
+png(paste0(fpath,"Climatol_All_fish03_sens10p_hclust_wardD_heatmap_pdiff.png"),    # create PNG for the heat map        
     width = 5*300,        # 5 x 300 pixels
     height = 5*300,
     res = 300,            # 300 pixels per inch
@@ -348,9 +347,14 @@ gplots::heatmap.2(as.matrix(tvec),
                   denscol = "grey",
                   key.title=NA, # no title
                   density.info = "none",
+                  offsetCol=-0.8,
                   col = some_col_func #, breaks=col_breaks
 )
 dev.off()
 
 ## Figure out how to put strengths/magnitudes on plot
+pvec <- tvec
+pvec$mag <- sqrt(pvec$F^2 + pvec$P^2 + pvec$D^2 + pvec$Trop^2 + pvec$Temp^2)
+write.table(pvec,"Climatol_All_fish03_param_sens_10p_table_pdiff.csv",sep=",",row.names=T)
+
 

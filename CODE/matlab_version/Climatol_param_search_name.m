@@ -45,23 +45,24 @@ dfrate = frate/365.0;
 make_parameters()
 
 % PARAMETER CALIBRATION
-ktemp = 0.0705:0.01:0.1105;
-bmp = 0.15:0.025:0.25;
-bees = 0.025:0.025:0.15;
+% ktemp = 0.0705:0.01:0.1105;
+% bmp = 0.15:0.025:0.25;
+ktemp = 0.0805:0.005:0.1005;
+bees = 0.025:0.025:0.125;
 
-z=14;
-for k=4:length(ktemp)
-    for j=1:length(bmp)   
+z=0;
+for k=1:length(ktemp)
+    for j=1:length(bees)   
         z=z+1;
-        %bent_eff = bees(j); 
-        bpow = bmp(j); 
+        bent_eff = bees(j); 
+        %bpow = bmp(j); 
         kt = ktemp(k);     
 
         tkfn = num2str(1000+int64(1000*kt));
         tbfn = num2str(1000+int64(1000*bpow));
         tbe = num2str(100+int64(100*bent_eff));
-        ptext = ['_m-b',tbfn(2:end),'-k',tkfn(2:end)];
-        %ptext = ['_m-k',tkfn(2:end),'_BE',tbe(2:end)];
+        %ptext = ['_m-b',tbfn(2:end),'-k',tkfn(2:end)];
+        ptext = ['_m-k',tkfn(2:end),'_BE',tbe(2:end)];
       
 %     %! Set globals that are function of other parameters
 %     dfrate = frate/365.0;
@@ -194,10 +195,6 @@ for k=4:length(ktemp)
     end
 end
 
-cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
-nfile = ['/Volumes/GFDL/NC/Matlab_new_size/',cfile,'/param_sens/'];
-save([nfile 'Climatol_All_fish03_means_param_search.mat'],'paramt','simt',...
-    '-append')
 
 end
 

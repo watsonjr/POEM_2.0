@@ -5,14 +5,14 @@ close all
 
 %%%%!! EXPERIMENTS
 testoneloc = false;
-testlocs = false;
+testlocs = true;
 histlocs = false;
 climlocs = false;
 oneloc_fishing = false;
 oneloc_hind_pristine = false;
 oneloc_fore_pristine = false;
 spinup_pristine = false;
-climatol_loop = true;
+climatol_loop = false;
 climatol_IC_day = false;
 climatol_IC_biom = false;
 climatol_param = false;
@@ -31,7 +31,7 @@ if testoneloc
     Testoneloc()
 end
 if testlocs
-    Locs_clim_param_search()
+    Locs_clim_param_acmax_aenc_search()
 end
 if histlocs
     Locs_hist()

@@ -26,9 +26,15 @@ Wcol = {'latitude','longitude','depth','bact.biom.mean','meio.biom.mean',...
 Wcol = Wcol';
 
 % all mean biomasses in log10 mg C/m2
+meio = seafl(:,5);
+macro = seafl(:,6);
+mega = seafl(:,7);
 invert = seafl(:,8);
 fish = seafl(:,9);
 % convert to g WW/m2
+meio = 10.^(meio) * 1e-3 * 9.0;
+macro = 10.^(macro) * 1e-3 * 9.0;
+mega = 10.^(mega) * 1e-3 * 9.0;
 invert = 10.^(invert) * 1e-3 * 9.0;
 fish = 10.^(fish) * 1e-3 * 9.0;
 
@@ -69,6 +75,9 @@ swlon = test;
 
 [geolon_w,geolat_w] = meshgrid(-179.5:179.5,-89.5:89.5);
 
+Zmi = griddata(wlat,wlon,meio,geolat_w,geolon_w);
+Zma = griddata(wlat,wlon,macro,geolat_w,geolon_w);
+Zme = griddata(wlat,wlon,mega,geolat_w,geolon_w);
 Zi = griddata(wlat,wlon,invert,geolat_w,geolon_w);
 Zf = griddata(wlat,wlon,fish,geolat_w,geolon_w);
 
@@ -84,6 +93,46 @@ Zb(ID)=b_mean;
 Zd = Zmd+Zld;
 
 %% Maps
+figure(10)
+% meio
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-180 180],'frame','on',...
+    'Grid','off','FLineWidth',1)%,'origin',[0 -100 0])
+surfm(geolat_w,geolon_w,log10(Zmi))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-2 2]);
+colorbar('Position',[0.25 0.525 0.5 0.03],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Wei et al. log_1_0 mean meiofauna (g m^-^2)')
+
+figure(11)
+% macro
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-180 180],'frame','on',...
+    'Grid','off','FLineWidth',1)%,'origin',[0 -100 0])
+surfm(geolat_w,geolon_w,log10(Zma))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-2 2]);
+colorbar('Position',[0.25 0.525 0.5 0.03],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Wei et al. log_1_0 mean macrofauna (g m^-^2)')
+
+figure(12)
+% mega
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-180 180],'frame','on',...
+    'Grid','off','FLineWidth',1)%,'origin',[0 -100 0])
+surfm(geolat_w,geolon_w,log10(Zme))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-2 2]);
+colorbar('Position',[0.25 0.525 0.5 0.03],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Wei et al. log_1_0 mean megafauna (g m^-^2)')
+
+
 % Inv
 figure(1)
 % Wei
@@ -145,7 +194,7 @@ figure(3)
 % Wei
 subplot('Position',[0.05 0.51 0.5 0.5])
 axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-180 180],'frame','on',...
-    'Grid','off','FLineWidth',1,'origin',[0 -100 0])% ,'FLonLimit',[-180 180] thos doesn't work for some reason
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0] ,'FLonLimit',[-180 180])% thos doesn't work for some reason
 surfm(geolat_w,geolon_w,log10(Zi+Zf))
 colormap(cmBP)
 load coast;                     %decent looking coastlines
@@ -168,4 +217,93 @@ caxis([-2 1]);
 set(gcf,'renderer','painters')
 title('FEISTY log_1_0 mean benthos (g m^-^2)')
 %print('-dpng',[fpath 'Clim_All_fish03_global_benthos_Wei.png'])
+
+%%
+fauna = Zmi + Zme + Zma;
+efauna = Zme + Zma;
+figure(4)
+% Wei
+subplot('Position',[0.05 0.51 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-180 180],'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0] ,'FLonLimit',[-180 180])% thos doesn't work for some reason
+surfm(geolat_w,geolon_w,log10(fauna))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+axesmui
+caxis([-2 1]);
+colorbar('Position',[0.05 0.525 0.5 0.03],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Wei et al. log_1_0 mean benthos (g m^-^2)')
+
+% FEISTY
+subplot('Position',[0.05 0 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(Zb))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-2 1]);
+set(gcf,'renderer','painters')
+title('FEISTY log_1_0 mean benthos (g m^-^2)')
+print('-dpng',[fpath 'Clim_All_fish03_global_fauna_Wei.png'])
+
+%%
+figure(5)
+% Wei
+subplot('Position',[0.05 0.51 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-180 180],'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0] ,'FLonLimit',[-180 180])% thos doesn't work for some reason
+surfm(geolat_w,geolon_w,log10(efauna))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+axesmui
+caxis([-1.5 2]);
+colorbar('Position',[0.05 0.525 0.5 0.03],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Wei et al. log_1_0 mean epifauna (g m^-^2)')
+
+% FEISTY
+subplot('Position',[0.05 0 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(Zb))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-1.5 2]);
+set(gcf,'renderer','painters')
+title('FEISTY log_1_0 mean benthos (g m^-^2)')
+print('-dpng',[fpath 'Clim_All_fish03_global_epifauna_Wei.png'])
+
+%%
+figure(6)
+% Wei
+subplot('Position',[0.05 0.51 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',[-180 180],'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0] ,'FLonLimit',[-180 180])% thos doesn't work for some reason
+surfm(geolat_w,geolon_w,log10(Zma))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+axesmui
+caxis([-2 2]);
+colorbar('Position',[0.05 0.525 0.5 0.03],'orientation','horizontal')
+set(gcf,'renderer','painters')
+title('Wei et al. log_1_0 mean macrofauna (g m^-^2)')
+
+% FEISTY
+subplot('Position',[0.05 0 0.5 0.5])
+axesm ('Robinson','MapLatLimit',latlim,'MapLonLimit',lonlim,'frame','on',...
+    'Grid','off','FLineWidth',1,'origin',[0 -100 0])
+surfm(geolat_t,geolon_t,log10(Zb))
+colormap(cmBP)
+load coast;                     %decent looking coastlines
+h=patchm(lat+0.5,long+0.5,'w','FaceColor',[0.75 0.75 0.75]);
+caxis([-2 2]);
+set(gcf,'renderer','painters')
+title('FEISTY log_1_0 mean benthos (g m^-^2)')
+print('-dpng',[fpath 'Clim_All_fish03_global_macrofauna_Wei.png'])
 

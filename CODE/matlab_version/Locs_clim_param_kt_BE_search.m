@@ -42,8 +42,12 @@ bees = 0.025:0.025:0.15;
 
 for k=1:length(ktemp)
     for j=1:length(bees)   
-        bent_eff = bees(j);         
-        kt = ktemp(k);       
+        %bent_eff = bees(j); 
+        bpow = bees(j); 
+        kt = ktemp(k);   
+        tkfn = num2str(1000+int64(1000*kt));
+        tbfn = num2str(1000+int64(1000*bpow));
+        %tbe = num2str(100+int64(100*bent_eff));
         
         %! Create a directory for output
         fname = sub_fname_param_locs();

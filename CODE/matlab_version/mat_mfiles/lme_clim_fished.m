@@ -186,9 +186,15 @@ for L=1:66
     lme_area(L,1) = nansum(AREA_OCN(lid));
 end
 
+%biomass in lmes
 Tlme_med = sum(lme_med)* 1e-6;
 frac_med_lme = Tlme_med(1)/tot_bio1
 frac_men_lme = Tlme_med(2)/tot_bio3
+%catch in lmes
+Tlme_mcatch = sum(lme_mcatch(:));
+tot_catch = (Amf_mcatch+Amp_mcatch+Amd_mcatch+Alp_mcatch+Ald_mcatch);
+tot_catch2 = nansum(tot_catch(:));
+frac_mcatch_lme = Tlme_mcatch/tot_catch2
 
 %%
 save([dpath 'LME_clim_fished_',harv,'_' cfile '.mat'],...

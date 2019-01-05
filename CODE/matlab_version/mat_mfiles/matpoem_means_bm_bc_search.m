@@ -5,8 +5,10 @@ clear all
 close all
 
 %GFDL/NC/Matlab_new_size/Dc_enc50-b210_m4-b210-k060_c50-b210_D075_J075_A075_Sm025_nmort1_BE08_noCC_RE00100/param_sens/
-cfile = 'Dc_enc50-b210_m4-b210-k060_c50-b210_D075_J075_A050_Sm025_nmort1_BE08_noCC_RE00100';
-   
+%cfile = 'Dc_enc50-b210_m4-b210-k060_c50-b210_D075_J075_A050_Sm025_nmort1_BE08_noCC_RE00100';
+%cfile = 'Dc_enc70-b200_m4-b175-k063_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc70-b200_m4-b175-k086_c20-b250_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+
 bmp = 0.1:0.025:0.325;
 bcp = 0.1:0.025:0.325;
 

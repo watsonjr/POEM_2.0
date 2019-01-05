@@ -1,5 +1,5 @@
 %%%% File naming system
-function fname = sub_fname(frate)
+function [fname,simname] = sub_fname(frate)
 global DAYS GRD NX ID
 global DT PI_be_cutoff pdc L_s L_m L_l M_s M_m M_l L_zm L_zl
 global Z_s Z_m Z_l Lambda K_l K_j K_a h gam kt bpow

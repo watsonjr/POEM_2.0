@@ -39,13 +39,20 @@ mfn=nan;
 %! Make core parameters/constants (global)
 make_parameters_mid()
 A = 0.5;
-bpow = 0.175;
-bcmx = 0.25;
+J = 1.0;
+MF_phi_MZ = Sm;
+MP_phi_MZ = Sm*J;
+MP_phi_LZ = J;
+MP_phi_S  = J;
+LP_phi_MF = 1.0*A;
+LD_phi_MF = D*A;
+LD_phi_MP = D;
+[fname0,orig] = sub_fname(frate);
 
 aep = 10:10:100;
 acp = 10:10:100;
 
-for k=1:length(acp)
+for k=3:length(acp)
     for j=1:length(aep)   
         h = acp(k);         % coeff on Cmax
         gam = aep(j);       % coeff on search area
@@ -61,7 +68,7 @@ for k=1:length(acp)
         LD_phi_MP = D;
         
         %! Create a directory for output
-        fname = sub_fname_param_locs();
+        fname = sub_fname_param_locs(orig);
         
         NX = length(ID);
         %! Initialize
@@ -153,5 +160,5 @@ for k=1:length(acp)
     end
 end
 
-
+end
 

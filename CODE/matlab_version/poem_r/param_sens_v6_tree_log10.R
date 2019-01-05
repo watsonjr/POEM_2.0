@@ -45,19 +45,19 @@ obs4 <- names(rvec)[25:32]
 obs5 <- names(rvec)[33:38]
 
 pdf(paste0(fpath,"Climatol_All_fish03_param_sensv6_pairplot_response1.pdf"))
-pairs((rvec[,obs1]), lower.panel = panel.cor)
+pairs((rvec[1:5,obs1]), lower.panel = panel.cor)
 dev.off()
 pdf(paste0(fpath,"Climatol_All_fish03_param_sensv6_pairplot_response2.pdf"))
-pairs((rvec[,obs2]), lower.panel = panel.cor)
+pairs((rvec[1:5,obs2]), lower.panel = panel.cor)
 dev.off()
 pdf(paste0(fpath,"Climatol_All_fish03_param_sensv6_pairplot_response3.pdf"))
-pairs((rvec[,obs3]), lower.panel = panel.cor)
+pairs((rvec[1:5,obs3]), lower.panel = panel.cor)
 dev.off()
 pdf(paste0(fpath,"Climatol_All_fish03_param_sensv6_pairplot_response4.pdf"))
-pairs((rvec[,obs4]), lower.panel = panel.cor)
+pairs((rvec[1:5,obs4]), lower.panel = panel.cor)
 dev.off()
 pdf(paste0(fpath,"Climatol_All_fish03_param_sensv6_pairplot_response5.pdf"))
-pairs((rvec[,obs5]), lower.panel = panel.cor)
+pairs((rvec[1:5,obs5]), lower.panel = panel.cor)
 dev.off()
 
 # Things that are positively correlated:

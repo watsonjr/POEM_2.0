@@ -5,8 +5,9 @@ clear all
 close all
 
 %GFDL/NC/Matlab_new_size/Dc_enc50-b210_m4-b210-k060_c50-b210_D075_J075_A075_Sm025_nmort1_BE08_noCC_RE00100/param_sens/
-cfile = 'Dc_enc50-b210_m4-b175-k060_c50-b250_D075_J075_A050_Sm025_nmort1_BE08_noCC_RE00100';
-   
+%cfile = 'Dc_enc50-b210_m4-b175-k060_c50-b250_D075_J075_A050_Sm025_nmort1_BE08_noCC_RE00100';
+cfile = 'Dc_enc50-b210_m4-b210-k060_c50-b210_D075_J100_A050_Sm025_nmort1_BE08_noCC_RE00100';
+
 %! Make core parameters/constants (global)
 % make_parameters_mid()
 % A = 0.5;
@@ -54,8 +55,11 @@ for k=1:length(acp)
         gam = aep(j);       % coeff on search area
 
     
+%     sfile = ['/Volumes/GFDL/NC/Matlab_new_size/',cfile,...
+%         '/param_sens/Climatol_All_fish03_enc',num2str(gam),'_c',num2str(h),'_locs.mat'];
     sfile = ['/Volumes/GFDL/NC/Matlab_new_size/',cfile,...
-        '/param_sens/Climatol_All_fish03_enc',num2str(gam),'_c',num2str(h),'_locs.mat'];
+        '/param_sens/Climatol_All_fish03_enc-a',num2str(gam),'_c-a',num2str(h),'_locs.mat'];
+    %Climatol_All_fish03_enc-a100_c-a100_locs
     load(sfile);
     
     % Last year
